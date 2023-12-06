@@ -1,0 +1,10 @@
+{
+  "tasks": {
+    "build-lua": "npm --silent run build-lua",
+    "build": "npm --silent run build-lua && npm run append",
+    "append": "deno run -A scripts/append.ts",
+    "dev": "deno run -A scripts/dev.ts",
+    "run": "/mnt/d/Warcraft\\ III/_retail_/x86_64/Warcraft\\ III.exe -loadfile \"$(wslpath -w map.w3x)\" -launch -windowmode windowed",
+    "clean": "deno run -A scripts/clean.ts"
+  }
+}

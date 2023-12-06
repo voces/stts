@@ -1,0 +1,3907 @@
+﻿STRING 13
+// Units: uC04 (Sheep), Name (Name)
+{
+Sheep
+}
+
+STRING 21
+// Units: e000 (Sheep Spirit), Name (Name)
+{
+Sheep Spirit
+}
+
+STRING 26
+// Units: uC04 (Sheep), Description (Description)
+{
+These furry creatures are fun to slaughter!
+}
+
+STRING 39
+{
+Sheep Tag ReVoLuTiOn 9.5.4
+}
+
+STRING 40
+{
+2v4
+}
+
+STRING 41
+{
+Sheep Tag ReVoLuTiOn created by GosuSheep and Chakra.
+Check quests for more information.
+
+Join our Discord https://dsc.gg/sheeptag or https://discord.gg/Y4dHvwX
+}
+
+STRING 48
+// Units: hhou (Farm), Ubertip (Tooltip - Extended)
+{
+A wall of wool
+}
+
+STRING 62
+// Units: hC05 (Invisible Farm), Name (Name)
+{
+Invisible Farm
+}
+
+STRING 66
+// Units: hC06 (Hard Farm), Name (Name)
+{
+Hard Farm
+}
+
+STRING 79
+// Abilities: A00F (Invisibility Farm), Name (Name)
+{
+Invisibility Farm
+}
+
+STRING 90
+// Abilities: A00F (Invisibility Farm), Hotkey (Hotkey - Normal)
+{
+V
+}
+
+STRING 97
+// Units: hC07 (Upgraded Farm), Name (Name)
+{
+Upgraded Farm
+}
+
+STRING 98
+// Units: h003 (Pick Farm), Tip (Tooltip - Basic)
+{
+Build |cffffcc00U|rpgraded Farm
+}
+
+STRING 99
+// Units: h003 (Pick Farm), Hotkey (Hotkey)
+{
+U
+}
+
+STRING 100
+// Units: h003 (Pick Farm), Ubertip (Tooltip - Extended)
+{
+As the farm but double hit points.
+}
+
+STRING 103
+// Units: uC04 (Sheep), Hotkey (Hotkey)
+{
+S
+}
+
+STRING 105
+// Units: hlum (Aura Farm), Name (Name)
+{
+Aura Farm
+}
+
+STRING 107
+// Units: hlum (Aura Farm), Hotkey (Hotkey)
+{
+A
+}
+
+STRING 125
+// Units: eC09 (Sentry Farm), Hotkey (Hotkey)
+{
+C
+}
+
+STRING 132
+// Units: eC09 (Sentry Farm), Name (Name)
+{
+Sentry Farm
+}
+
+STRING 141
+// Units: nC13 (Destroy), Name (Name)
+{
+Destroy
+}
+
+STRING 143
+// Units: nC13 (Destroy), Hotkey (Hotkey)
+{
+D
+}
+
+STRING 145
+// Units: nC13 (Destroy), Ubertip (Tooltip - Extended)
+{
+Destroys the building.
+}
+
+STRING 204
+// Units: EC03 (Shepherd), Hotkey (Hotkey)
+{
+W
+}
+
+STRING 241
+{
+discord.gg/Y4dHvwX
+}
+
+STRING 298
+// Units: e000 (Sheep Spirit), Ubertip (Tooltip - Extended)
+{
+These little wisps are the remains of sheep who were cruelly and harshly slaughtered by the orcish shepards. They have lost all of their furryness.
+}
+
+STRING 301
+// Units: h004 (Tiny Farm), Hotkey (Hotkey)
+{
+T
+}
+
+STRING 369
+{
+Red
+}
+
+STRING 370
+{
+Blue
+}
+
+STRING 371
+{
+Teal
+}
+
+STRING 372
+{
+Purple
+}
+
+STRING 373
+{
+Yellow
+}
+
+STRING 374
+{
+Orange
+}
+
+STRING 375
+{
+Green
+}
+
+STRING 376
+{
+Pink
+}
+
+STRING 378
+{
+Light Blue
+}
+
+STRING 379
+{
+Dark Green
+}
+
+STRING 380
+{
+Brown
+}
+
+STRING 392
+// Units: h003 (Pick Farm), Name (Name)
+{
+Pick Farm
+}
+
+STRING 425
+// Units: uC04 (Sheep), Ubertip (Tooltip - Extended)
+{
+Add Player to Sheep Team.
+}
+
+STRING 426
+// Units: uC04 (Sheep), Tip (Tooltip - Basic)
+{
+|cffffcc00S|rheep
+}
+
+STRING 427
+// Units: EC03 (Shepherd), Tip (Tooltip - Basic)
+{
+|cffffcc00W|rolf
+}
+
+STRING 428
+// Units: EC03 (Shepherd), Ubertip (Tooltip - Extended)
+{
+Add Player to Wolf Team.
+}
+
+STRING 429
+// Units: n002 (Stack Farm), Hotkey (Hotkey)
+{
+S
+}
+
+STRING 483
+// Units: h004 (Tiny Farm), Name (Name)
+{
+Tiny Farm
+}
+
+STRING 530
+// Units: h002 (Strong Farm), Hotkey (Hotkey)
+{
+D
+}
+
+STRING 532
+// Units: h000 (Wide Farm), Hotkey (Hotkey)
+{
+W
+}
+
+STRING 534
+// Units: hC06 (Hard Farm), Hotkey (Hotkey)
+{
+R
+}
+
+STRING 536
+// Units: h001 (Frost Farm), Hotkey (Hotkey)
+{
+F
+}
+
+STRING 539
+// Units: h00C (Translocation Farm), Hotkey (Hotkey)
+{
+E
+}
+
+STRING 542
+// Items: I005 (55), Hotkey (Hotkey)
+{
+E
+}
+
+STRING 548
+// Items: I00A (golem), Hotkey (Hotkey)
+{
+Q
+}
+
+STRING 550
+// Units: h00F (Start), Hotkey (Hotkey)
+{
+A
+}
+
+STRING 552
+// Units: h00H (Practice), Hotkey (Hotkey)
+{
+R
+}
+
+STRING 555
+// Items: I001 (cloak), Hotkey (Hotkey)
+{
+Z
+}
+
+STRING 567
+// Units: emow (Magic Farm), Hotkey (Hotkey)
+{
+G
+}
+
+STRING 610
+// Buffs/Effects: BEar (), Bufftip (Tooltip)
+{
+Gold Upkeep
+}
+
+STRING 620
+// Buffs/Effects: BEar (), Buffubertip (Tooltip - Extended)
+{
+This wolf gains extra gold every 5 seconds.
+}
+
+STRING 621
+// Units: h004 (Tiny Farm), Ubertip (Tooltip - Extended)
+{
+A farm that is just as small as a sheep.
+}
+
+STRING 638
+// Units: h000 (Wide Farm), Name (Name)
+{
+Wide Farm
+}
+
+STRING 687
+// Abilities: A00G (HideShow), Name (Name)
+{
+HideShow
+}
+
+STRING 689
+// Abilities: A00G (HideShow), Ubertip (Tooltip - Normal - Extended)
+{
+Toggles the leaderboard window.
+}
+
+STRING 692
+// Items: I009 (boots), Hotkey (Hotkey)
+{
+W
+}
+
+STRING 893
+{
+|CFF0054A6GosuSheep Chakra and XXXandBEER Present|r
+}
+
+STRING 894
+{
+|CFFED1C24Sheep Tag ReVoLuTiOn|r
+}
+
+STRING 943
+// Units: hC05 (Invisible Farm), Hotkey (Hotkey)
+{
+X
+}
+
+STRING 953
+// Units: nC12 (Shop1), Name (Name)
+{
+Shop1
+}
+
+STRING 954
+// Units: n001 (Shop2), Name (Name)
+{
+Shop2
+}
+
+STRING 956
+// Units: n004 (Illusion Farm), Hotkey (Hotkey)
+{
+S
+}
+
+STRING 959
+// Items: I002 (bomber), Description (Description)
+{
+Bombs the target area destroying trees and damaging farms.
+}
+
+STRING 960
+// Abilities: A003 (Bomber), Name (Name)
+{
+Bomber
+}
+
+STRING 979
+// Items: I00B (8), Hotkey (Hotkey)
+{
+Q
+}
+
+STRING 981
+// Units: N000 (Rock Golem), Propernames (Proper Names)
+{
+Golem
+}
+
+STRING 984
+// Items: I00C (invis), Description (Description)
+{
+Makes you invisible for 2 minutes. If a sheep is close enough, they can see you.
+}
+
+STRING 987
+// Abilities: A00T (Kill Farm), Hotkey (Hotkey - Normal)
+{
+X
+}
+
+STRING 992
+// Items: I00E (gem), Description (Description)
+{
+Detects invisible farms and sheep.
+}
+
+STRING 1001
+// Abilities: A00H (Sheep Locater), Name (Name)
+{
+Sheep Locater
+}
+
+STRING 1002
+// Items: I00F (speed), Hotkey (Hotkey)
+{
+W
+}
+
+STRING 1005
+// Items: I00Z (club), Hotkey (Hotkey)
+{
+Z
+}
+
+STRING 1007
+// Abilities: A00E (Strength Potion), Name (Name)
+{
+Strength Potion
+}
+
+STRING 1009
+// Abilities: A01W (Speed Potion), Name (Name)
+{
+Speed Potion
+}
+
+STRING 1011
+// Abilities: A006 (Boots of Speed), Name (Name)
+{
+Boots of Speed
+}
+
+STRING 1012
+// Abilities: A007 (Crystal Ball), Name (Name)
+{
+Crystal Ball
+}
+
+STRING 1013
+// Abilities: A008 (Potion of Mana), Name (Name)
+{
+Potion of Mana
+}
+
+STRING 1014
+// Abilities: A009 (Gloves of Haste), Name (Name)
+{
+Gloves of Haste
+}
+
+STRING 1015
+// Abilities: A00A (Potion of Invisibility), Name (Name)
+{
+Potion of Invisibility
+}
+
+STRING 1016
+// Abilities: A00B (Aura Farm), EditorSuffix (Editor Suffix)
+{
+(Regeneration)
+}
+
+STRING 1017
+// Abilities: A00B (Aura Farm), Name (Name)
+{
+Aura Farm
+}
+
+STRING 1018
+// Abilities: S000 (Aura Farm), Name (Name)
+{
+Aura Farm
+}
+
+STRING 1019
+// Abilities: S000 (Aura Farm), EditorSuffix (Editor Suffix)
+{
+(Speed)
+}
+
+STRING 1020
+// Abilities: A00C (Aura Farm), Name (Name)
+{
+Aura Farm
+}
+
+STRING 1021
+// Abilities: A00C (Aura Farm), EditorSuffix (Editor Suffix)
+{
+(Armor)
+}
+
+STRING 1025
+// Abilities: A00T (Kill Farm), Tip (Tooltip - Normal)
+{
+Kill Farm
+}
+
+STRING 1026
+// Abilities: A00T (Kill Farm), Unhotkey (Hotkey - Turn Off)
+{
+X
+}
+
+STRING 1028
+// Abilities: A00T (Kill Farm), Ubertip (Tooltip - Normal - Extended)
+{
+Destroys the last farm created by your sheep.
+}
+
+STRING 1039
+// Items: I00G (sheep), Description (Description)
+{
+Locates and pings location of all sheep on the map.
+}
+
+STRING 1047
+// Abilities: A00G (HideShow), Researchhotkey (Hotkey - Learn)
+{
+X
+}
+
+STRING 1051
+// Units: EC03 (Shepherd), Name (Name)
+{
+Shepherd
+}
+
+STRING 1053
+{
+Farms:
+}
+
+STRING 1054
+{
+Farms
+}
+
+STRING 1055
+{
+Description
+}
+
+STRING 1056
+{
+Status:
+}
+
+STRING 1057
+{
+Info
+}
+
+STRING 1058
+{
+Game Info
+}
+
+STRING 1059
+{
+Map Info
+}
+
+STRING 1060
+{
+Gold is gained over time and from killing sheep (wolves) and saving spirits (sheep).
+}
+
+STRING 1094
+{
+|CFF00AEEFSheep/Wolf Team 1
+}
+
+STRING 1095
+{
+|CFFED1C24Sheep/Wolf Team 2
+}
+
+STRING 1101
+// Items: I000 (beam), Hotkey (Hotkey)
+{
+R
+}
+
+STRING 1295
+// Units: nC13 (Destroy), Tip (Tooltip - Basic)
+{
+Destroy
+}
+
+STRING 1297
+// Abilities: A00U (Destroy), Ubertip (Tooltip - Normal - Extended)
+{
+Destroys all your farms.
+}
+
+STRING 1298
+// Abilities: A00N (Buy Golem), Researchtip (Tooltip - Learn)
+{
+Buy Golem
+}
+
+STRING 1301
+// Items: scyt (scythe), Hotkey (Hotkey)
+{
+Q
+}
+
+STRING 1306
+// Items: I008 (16), Hotkey (Hotkey)
+{
+W
+}
+
+STRING 1307
+// Abilities: A00O (Buy Speed), Name (Name)
+{
+Buy Speed
+}
+
+STRING 1321
+// Abilities: A00R (Buy Bomber), Researchtip (Tooltip - Learn)
+{
+Buy Bomber
+}
+
+STRING 1353
+// Units: h005 (Money Farm), Name (Name)
+{
+Money Farm
+}
+
+STRING 1377
+// Items: I002 (bomber), Name (Name)
+{
+bomber
+}
+
+STRING 1379
+// Items: I007 (str), Name (Name)
+{
+str
+}
+
+STRING 1380
+// Items: I004 (gloves), Name (Name)
+{
+gloves
+}
+
+STRING 1382
+// Items: I009 (boots), Name (Name)
+{
+boots
+}
+
+STRING 1383
+// Items: I00A (golem), Name (Name)
+{
+golem
+}
+
+STRING 1384
+// Items: I00C (invis), Name (Name)
+{
+invis
+}
+
+STRING 1385
+// Items: I00D (mana), Name (Name)
+{
+mana
+}
+
+STRING 1387
+// Items: I00F (speed), Name (Name)
+{
+speed
+}
+
+STRING 1389
+// Items: I00G (sheep), Name (Name)
+{
+sheep
+}
+
+STRING 1474
+{
+                              %s gave you control.
+}
+
+STRING 1475
+{
+                              %s took control from you.
+}
+
+STRING 1676
+// Units: h001 (Frost Farm), Name (Name)
+{
+Frost Farm
+}
+
+STRING 1679
+// Units: h001 (Frost Farm), Ubertip (Tooltip - Extended)
+{
+A defensive farm that attacks and slows wolves. Can be countered with tactical dodging, or invulnerability.
+}
+
+STRING 1688
+// Units: hC07 (Upgraded Farm), Ubertip (Tooltip - Extended)
+{
+A farm with double the normal health.
+}
+
+STRING 1692
+// Units: h00E (Smart), Hotkey (Hotkey)
+{
+S
+}
+
+STRING 1702
+// Abilities: A00K (Frost Farm), Name (Name)
+{
+Frost Farm
+}
+
+STRING 1710
+// Items: I00I (neck), Name (Name)
+{
+neck
+}
+
+STRING 1712
+// Units: hC05 (Invisible Farm), Ubertip (Tooltip - Extended)
+{
+An invisible farm that cannot be seen by wolves unless they have some form of detection. Upgrades to Invisibility Farm.
+}
+
+STRING 1717
+// Buffs/Effects: BOae (), Buffubertip (Tooltip - Extended)
+{
+This wolf is buying a strength potion.
+}
+
+STRING 1730
+// Abilities: A00D (Locate Allies), Name (Name)
+{
+Locate Allies
+}
+
+STRING 1735
+// Buffs/Effects: B001 (Str), EditorName (Name (Editor Only))
+{
+Str
+}
+
+STRING 1736
+// Units: h006 (AntiStuck), Name (Name)
+{
+AntiStuck
+}
+
+STRING 1737
+// Units: H007 (AntiStuck), Name (Name)
+{
+AntiStuck
+}
+
+STRING 1757
+// Units: H007 (AntiStuck), Propernames (Proper Names)
+{
+AntiStuck
+}
+
+STRING 1759
+// Abilities: A002 (Strength Potion), Tip (Tooltip - Normal)
+{
+Strength Potion
+}
+
+STRING 1761
+// Abilities: A015 (Aura Farm), Name (Name)
+{
+Aura Farm
+}
+
+STRING 1762
+// Buffs/Effects: B002 (Aura Farm), EditorName (Name (Editor Only))
+{
+Aura Farm
+}
+
+STRING 1766
+// Abilities: A01X (Upgraded Aura Farm), EditorSuffix (Editor Suffix)
+{
+(Armor)
+}
+
+STRING 1768
+// Buffs/Effects: B002 (Aura Farm), Bufftip (Tooltip)
+{
+Aura Farm
+}
+
+STRING 1769
+// Buffs/Effects: B003 (Aura Farm), EditorName (Name (Editor Only))
+{
+Aura Farm
+}
+
+STRING 1770
+// Abilities: A01Y (Upgraded Aura Farm), EditorSuffix (Editor Suffix)
+{
+(Regeneration)
+}
+
+STRING 1772
+// Buffs/Effects: B003 (Aura Farm), Bufftip (Tooltip)
+{
+Aura Farm
+}
+
+STRING 1773
+// Buffs/Effects: B004 (Aura Farm), EditorName (Name (Editor Only))
+{
+Aura Farm
+}
+
+STRING 1774
+// Abilities: S003 (Upgraded Aura Farm), EditorSuffix (Editor Suffix)
+{
+(Speed)
+}
+
+STRING 1804
+{
+Game Info (|Cfffed312F9|R)
+}
+
+STRING 1840
+// Abilities: A00D (Locate Allies), Ubertip (Tooltip - Normal - Extended)
+{
+Pings the map where all sheep currently are.
+}
+
+STRING 1894
+// Buffs/Effects: B005 (Frost Farm), EditorName (Name (Editor Only))
+{
+Frost Farm
+}
+
+STRING 1899
+// Abilities: A00Q (Buy Invis), Researchtip (Tooltip - Learn)
+{
+Buy Invis
+}
+
+STRING 2017
+// Abilities: A002 (Strength Potion), Name (Name)
+{
+Strength Potion
+}
+
+STRING 2019
+// Abilities: A002 (Strength Potion), EditorSuffix (Editor Suffix)
+{
+(Dummy)
+}
+
+STRING 2020
+// Abilities: A00X (Strength Beam), Tip (Tooltip - Normal)
+{
+Strength Potion
+}
+
+STRING 2021
+{
+Gray
+}
+
+STRING 2023
+// Abilities: A01F (Freak Mirror Image), Ubertip (Tooltip - Normal - Extended)
+{
+Creates an image of your wolf which can be used to distract or block sheep. Can also be used to jump over walls and boundaries.
+}
+
+STRING 2024
+// Units: hC06 (Hard Farm), Ubertip (Tooltip - Extended)
+{
+As the farm, but four times bigger.
+}
+
+STRING 2025
+// Units: h000 (Wide Farm), Ubertip (Tooltip - Extended)
+{
+As the tiny farm, but nine times bigger.
+}
+
+STRING 2026
+// Units: nshf (Dolly), Name (Name)
+{
+Dolly
+}
+
+STRING 2030
+// Units: oeye (Eye-Stick), Name (Name)
+{
+Eye-Stick
+}
+
+STRING 2038
+// Abilities: A00D (Locate Allies), Unubertip (Tooltip - Turn Off - Extended)
+{
+Pings the map where all sheep currently are.
+}
+
+STRING 2042
+// Abilities: A00U (Destroy), Unubertip (Tooltip - Turn Off - Extended)
+{
+Destroys all your farms.
+}
+
+STRING 2060
+// Buffs/Effects: B000 (), Bufftip (Tooltip)
+{
+Chakra
+}
+
+STRING 2061
+// Buffs/Effects: B000 (), EditorSuffix (Editor Suffix)
+{
+(Brilliance Aura)
+}
+
+STRING 2062
+// Buffs/Effects: B000 (), Buffubertip (Tooltip - Extended)
+{
+He's the current editor of this map.
+}
+
+STRING 2063
+// Buffs/Effects: B006 (), EditorSuffix (Editor Suffix)
+{
+(Devotion Aura)
+}
+
+STRING 2064
+// Buffs/Effects: B006 (), Buffubertip (Tooltip - Extended)
+{
+He's just sexy.
+}
+
+STRING 2065
+// Buffs/Effects: B006 (), Bufftip (Tooltip)
+{
+AuricRock
+}
+
+STRING 2066
+// Buffs/Effects: B007 (), EditorSuffix (Editor Suffix)
+{
+(Command Aura)
+}
+
+STRING 2067
+// Buffs/Effects: B007 (), Bufftip (Tooltip)
+{
+GosuSheep
+}
+
+STRING 2068
+// Buffs/Effects: B007 (), Buffubertip (Tooltip - Extended)
+{
+He's the original editor of this map...
+}
+
+STRING 2082
+// Abilities: A00T (Kill Farm), Unubertip (Tooltip - Turn Off - Extended)
+{
+Destroys the last farm created by your sheep.
+}
+
+STRING 2083
+// Abilities: A01P (Freak Anti Stack Stomp), Hotkey (Hotkey - Normal)
+{
+X
+}
+
+STRING 2099
+// Abilities: A00M (Blue), Name (Name)
+{
+Blue
+}
+
+STRING 2100
+// Abilities: A00M (Blue), Tip (Tooltip - Normal)
+{
+Blue
+}
+
+STRING 2102
+// Buffs/Effects: BHab (), Bufftip (Tooltip)
+{
+Blue
+}
+
+STRING 2103
+// Buffs/Effects: BHab (), Buffubertip (Tooltip - Extended)
+{
+This buff helps make de ward blue!
+}
+
+STRING 2111
+// Units: h002 (Strong Farm), Name (Name)
+{
+Strong Farm
+}
+
+STRING 2113
+// Units: h002 (Strong Farm), Ubertip (Tooltip - Extended)
+{
+A farm with triple the normal health.
+}
+
+STRING 2153
+// Abilities: A001 (Inventory), EditorSuffix (Editor Suffix)
+{
+(Golem)
+}
+
+STRING 2164
+// Items: I000 (beam), Name (Name)
+{
+beam
+}
+
+STRING 2169
+// Units: hfoo (Dummy), Name (Name)
+{
+Dummy
+}
+
+STRING 2170
+// Abilities: A00W (Strength Beam), Name (Name)
+{
+Strength Beam
+}
+
+STRING 2172
+// Buffs/Effects: B008 (Beam), EditorName (Name (Editor Only))
+{
+Beam
+}
+
+STRING 2173
+// Abilities: A00X (Strength Beam), Name (Name)
+{
+Strength Beam
+}
+
+STRING 2174
+// Abilities: A00X (Strength Beam), EditorSuffix (Editor Suffix)
+{
+(Dummy)
+}
+
+STRING 2175
+// Buffs/Effects: B001 (Str), Bufftip (Tooltip)
+{
+Strength Potion
+}
+
+STRING 2176
+// Buffs/Effects: B008 (Beam), Bufftip (Tooltip)
+{
+Strength Beam
+}
+
+STRING 2180
+// Items: I007 (str), Hotkey (Hotkey)
+{
+E
+}
+
+STRING 2188
+// Items: scyt (scythe), Name (Name)
+{
+scythe
+}
+
+STRING 2193
+// Abilities: A00Y (True Sight Sentry), Name (Name)
+{
+True Sight Sentry
+}
+
+STRING 2245
+// Abilities: A00P (Buy Strength), Name (Name)
+{
+Buy Strength
+}
+
+STRING 2247
+// Items: I00E (gem), Hotkey (Hotkey)
+{
+D
+}
+
+STRING 2249
+// Abilities: A010 (Buy Beam), Name (Name)
+{
+Buy Beam
+}
+
+STRING 2259
+// Items: I00C (invis), Hotkey (Hotkey)
+{
+E
+}
+
+STRING 2266
+// Items: I00I (neck), Hotkey (Hotkey)
+{
+E
+}
+
+STRING 2267
+// Abilities: A011 (Rune of Invisibility), Hotkey (Hotkey - Normal)
+{
+E
+}
+
+STRING 2275
+// Items: I00G (sheep), Hotkey (Hotkey)
+{
+D
+}
+
+STRING 2315
+// Items: I004 (gloves), Hotkey (Hotkey)
+{
+F
+}
+
+STRING 2331
+// Buffs/Effects: B00F (Endurance Aura), Buffubertip (Tooltip - Extended)
+{
+This unit has increased attack speed and movespeed.
+}
+
+STRING 2334
+// Buffs/Effects: B004 (Aura Farm), EditorSuffix (Editor Suffix)
+{
+(Speed)
+}
+
+STRING 2336
+// Buffs/Effects: B00A (Brilliance Aura), Buffubertip (Tooltip - Extended)
+{
+This unit has increased mana regen.
+}
+
+STRING 2339
+// Items: I003 (bril), Name (Name)
+{
+bril
+}
+
+STRING 2345
+// Abilities: A011 (Rune of Invisibility), Ubertip (Tooltip - Normal - Extended)
+{
+Makes you invisible for 30 seconds. If a sheep is close enough, they can see you. 210 Second cooldown.
+}
+
+STRING 2346
+// Abilities: A011 (Rune of Invisibility), Unubertip (Tooltip - Turn Off - Extended)
+{
+Makes you invisible for 30 seconds. If a sheep is close enough, they can see you. 210 Second cooldown.
+}
+
+STRING 2348
+// Buffs/Effects: B00F (Endurance Aura), EditorName (Name (Editor Only))
+{
+Endurance Aura
+}
+
+STRING 2349
+// Buffs/Effects: B00F (Endurance Aura), Bufftip (Tooltip)
+{
+Endurance Aura
+}
+
+STRING 2350
+// Abilities: A015 (Aura Farm), Tip (Tooltip - Normal)
+{
+Brilliance Aura
+}
+
+STRING 2363
+// Items: I003 (bril), Hotkey (Hotkey)
+{
+R
+}
+
+STRING 2364
+// Abilities: A00Z (Claws +240), Name (Name)
+{
+Claws +240
+}
+
+STRING 2384
+// Buffs/Effects: BEim (), Bufftip (Tooltip)
+{
+eenz
+}
+
+STRING 2385
+// Buffs/Effects: BEim (), Buffubertip (Tooltip - Extended)
+{
+Lester is sexy.
+}
+
+STRING 2392
+// Items: I00N (sobi), Description (Description)
+{
+Increases mana regeneration rate.
+}
+
+STRING 2393
+// Items: I00N (sobi), Name (Name)
+{
+sobi
+}
+
+STRING 2394
+// Abilities: A00B (Aura Farm), Ubertip (Tooltip - Normal - Extended)
+{
+Increases nearby friendly units life regeneration rate by 1.
+}
+
+STRING 2397
+// Abilities: A012 (Aura Brilliance), Name (Name)
+{
+Aura Brilliance
+}
+
+STRING 2400
+// Abilities: A015 (Aura Farm), EditorSuffix (Editor Suffix)
+{
+(Mana)
+}
+
+STRING 2401
+// Abilities: A016 (Sobi Mask Mana Regen), Name (Name)
+{
+Sobi Mask Mana Regen
+}
+
+STRING 2402
+// Buffs/Effects: BOae (), Bufftip (Tooltip)
+{
+Buying Strength Potion
+}
+
+STRING 2403
+// Buffs/Effects: Binv (), Buffubertip (Tooltip - Extended)
+{
+This unit is invisible.
+}
+
+STRING 2404
+// Buffs/Effects: B004 (Aura Farm), Bufftip (Tooltip)
+{
+Aura Farm
+}
+
+STRING 2405
+// Abilities: A01L (Upgraded Aura Farm), Tip (Tooltip - Normal)
+{
+Brilliance Aura
+}
+
+STRING 2407
+// Buffs/Effects: B00B (Aura Farm), EditorName (Name (Editor Only))
+{
+Aura Farm
+}
+
+STRING 2408
+// Buffs/Effects: B00B (Aura Farm), Bufftip (Tooltip)
+{
+Aura Farm
+}
+
+STRING 2409
+// Abilities: A01L (Upgraded Aura Farm), EditorSuffix (Editor Suffix)
+{
+(Mana)
+}
+
+STRING 2412
+// Buffs/Effects: B002 (Aura Farm), Buffubertip (Tooltip - Extended)
+{
+This unit has increased armor.
+}
+
+STRING 2413
+// Buffs/Effects: B003 (Aura Farm), Buffubertip (Tooltip - Extended)
+{
+This unit has increased health regeneration.
+}
+
+STRING 2418
+// Units: hlum (Aura Farm), Ubertip (Tooltip - Extended)
+{
+As the farm but has a couple auras that increase sheep movement speed, and attack rate. As well as farm's health and mana regeneration rate. Also grants additional armor to farms.
+}
+
+STRING 2428
+// Abilities: A018 (Invulnerability), Name (Name)
+{
+Invulnerability
+}
+
+STRING 2429
+// Abilities: A011 (Rune of Invisibility), Unhotkey (Hotkey - Turn Off)
+{
+E
+}
+
+STRING 2439
+// Buffs/Effects: BHbz (Blizzard (Caster)), Bufftip (Tooltip)
+{
+Blizzard
+}
+
+STRING 2440
+// Buffs/Effects: BHbz (Blizzard (Caster)), Buffubertip (Tooltip - Extended)
+{
+This unit is casting blizzard.
+}
+
+STRING 2441
+// Buffs/Effects: B005 (Frost Farm), Buffubertip (Tooltip - Extended)
+{
+This unit is slowed; it moves and attacks more slowly than it normally does.
+}
+
+STRING 2447
+// Abilities: A01G (Freak Far Sight), Ubertip (Tooltip - Normal - Extended)
+{
+Reveals a targeted area, including invisible units, for 6 seconds.
+}
+
+STRING 2452
+// Units: emow (Magic Farm), Name (Name)
+{
+Magic Farm
+}
+
+STRING 2455
+// Units: hC07 (Upgraded Farm), Hotkey (Hotkey)
+{
+G
+}
+
+STRING 2474
+// Abilities: A018 (Invulnerability), Ubertip (Tooltip - Normal - Extended)
+{
+Protects the wolf from spells, and damage for 6 seconds.
+}
+
+STRING 2479
+// Items: I00O (Rune of Invisibility), Tip (Tooltip - Basic)
+{
+Rune of Invisibility
+}
+
+STRING 2484
+// Items: I00P (Rune of Speed), Tip (Tooltip - Basic)
+{
+Rune of Speed
+}
+
+STRING 2485
+// Items: I00O (Rune of Invisibility), Name (Name)
+{
+Rune of Invisibility
+}
+
+STRING 2487
+// Items: I00P (Rune of Speed), Name (Name)
+{
+Rune of Speed
+}
+
+STRING 2488
+// Abilities: A01B (True Sight Sheep), Name (Name)
+{
+True Sight Sheep
+}
+
+STRING 2498
+// Buffs/Effects: B00D (), Bufftip (Tooltip)
+{
+Speed Pot
+}
+
+STRING 2501
+// Abilities: A01E (Anti Stack Stomp), Name (Name)
+{
+Anti Stack Stomp
+}
+
+STRING 2504
+// Units: eC09 (Sentry Farm), Ubertip (Tooltip - Extended)
+{
+As the other farms but with a VERY high area of sight. It can help you know where wolves are, so you escape faster. It can also detect invisible units and cast far sight.
+}
+
+STRING 2505
+// Units: n002 (Stack Farm), Name (Name)
+{
+Stack Farm
+}
+
+STRING 2507
+// Units: n002 (Stack Farm), Ubertip (Tooltip - Extended)
+{
+A farm that can be built anywhere your sheep can get to. Excluding areas with blight.
+}
+
+STRING 2510
+// Units: h008 (Invisible Wide Farm), Hotkey (Hotkey)
+{
+G
+}
+
+STRING 2512
+// Items: I00U (drums), Hotkey (Hotkey)
+{
+D
+}
+
+STRING 2514
+// Abilities: A01P (Freak Anti Stack Stomp), Tip (Tooltip - Normal)
+{
+Anti Stack Stomp
+}
+
+STRING 2515
+// Buffs/Effects: B00E (), Buffubertip (Tooltip - Extended)
+{
+This unit cannot build a stack farm.
+}
+
+STRING 2518
+// Abilities: A011 (Rune of Invisibility), Name (Name)
+{
+Rune of Invisibility
+}
+
+STRING 2519
+// Abilities: A004 (Rune of Speed), Name (Name)
+{
+Rune of Speed
+}
+
+STRING 2524
+// Items: I00D (mana), Description (Description)
+{
+Fully restores mana.
+}
+
+STRING 2534
+// Abilities: A00Q (Buy Invis), Researchhotkey (Hotkey - Learn)
+{
+D
+}
+
+STRING 2537
+// Abilities: A01F (Freak Mirror Image), Name (Name)
+{
+Freak Mirror Image
+}
+
+STRING 2538
+// Abilities: A01G (Freak Far Sight), Name (Name)
+{
+Freak Far Sight
+}
+
+STRING 2541
+// Units: h00G (Time), Hotkey (Hotkey)
+{
+T
+}
+
+STRING 2542
+// Abilities: A01H (Freak Invulnerability), Name (Name)
+{
+Freak Invulnerability
+}
+
+STRING 2544
+// Abilities: A01H (Freak Invulnerability), Ubertip (Tooltip - Normal - Extended)
+{
+Protects the wolf from spells, and damage for 6 seconds.
+}
+
+STRING 2551
+// Items: I008 (16), Name (Name)
+{
+16
+}
+
+STRING 2552
+// Abilities: A00I (Claws +16), Name (Name)
+{
+Claws +16
+}
+
+STRING 2558
+// Items: I00B (8), Name (Name)
+{
+8
+}
+
+STRING 2559
+// Abilities: A00J (Claws +8), Name (Name)
+{
+Claws +8
+}
+
+STRING 2620
+// Items: I00O (Rune of Invisibility), Ubertip (Tooltip - Extended)
+{
+Makes you invisible for 45 seconds. If a sheep is close enough, they can see you.
+}
+
+STRING 2621
+// Items: I00O (Rune of Invisibility), Description (Description)
+{
+Makes you invisible for 45 seconds. If a sheep is close enough, they can see you.
+}
+
+STRING 2628
+{
+Money Farms:
+}
+
+STRING 2630
+{
+The amount of money farms you have.
+}
+
+STRING 2631
+{
+Farms Built
+}
+
+STRING 2633
+{
+Max Money Farms
+}
+
+STRING 2634
+{
+Your total farms currently constructed.
+}
+
+STRING 2645
+// Abilities: A01J (Versus Cape), Name (Name)
+{
+Versus Cape
+}
+
+STRING 2647
+// Units: h009 (Invisible Hard Farm), Hotkey (Hotkey)
+{
+G
+}
+
+STRING 2648
+// Abilities: A01E (Anti Stack Stomp), Hotkey (Hotkey - Normal)
+{
+D
+}
+
+STRING 2667
+// Abilities: A01K (Redbull Dmg), Name (Name)
+{
+Redbull Dmg
+}
+
+STRING 2678
+// Buffs/Effects: B00G (), Bufftip (Tooltip)
+{
+Redbull Speed
+}
+
+STRING 2694
+// Abilities: S001 (Endurance Aura Item), Name (Name)
+{
+Endurance Aura Item
+}
+
+STRING 2698
+// Abilities: A012 (Aura Brilliance), EditorSuffix (Editor Suffix)
+{
+(Item)
+}
+
+STRING 2706
+{
+ 
+}
+
+STRING 2712
+// Items: I00C (invis), Ubertip (Tooltip - Extended)
+{
+Makes you invisible for 2 minutes. If a sheep is close enough, they can see you.|n|cffffcc0030 gold.|r |n|cff00aeef-buy invis: 42 gold.|r
+}
+
+STRING 2713
+// Items: I00D (mana), Ubertip (Tooltip - Extended)
+{
+Fully restores mana. |n|cffffcc0035 gold.|r |n|cff00aeef-buy mana: 49 gold.|r
+}
+
+STRING 2714
+// Items: I00E (gem), Ubertip (Tooltip - Extended)
+{
+Detects invisible farms and sheep.|n|cffffcc0065 gold.|r |n|cff00aeef-buy gem: 91 gold.|r
+}
+
+STRING 2718
+// Items: I00G (sheep), Ubertip (Tooltip - Extended)
+{
+Locates and pings location of all sheep on the map.  |n|cffffcc0040 gold.|r |n|cff00aeef-buy sheep: 56 gold.|r
+}
+
+STRING 2736
+// Items: I00A (golem), Ubertip (Tooltip - Extended)
+{
+Summons a Golem to help you catch sheep. Can also jump over farms and walls. |n|cffffcc00Lasts 180 seconds.|r|n|cffffcc00100 gold.|r |n|cff00aeef-buy golem: 140 gold.|r
+}
+
+STRING 2741
+// Abilities: A013 (Item Immolation), Tip (Tooltip - Normal)
+{
+Cloak of Flames
+}
+
+STRING 2746
+// Items: I002 (bomber), Hotkey (Hotkey)
+{
+S
+}
+
+STRING 2768
+// Abilities: A000 (Item Immolation), EditorSuffix (Editor Suffix)
+{
+(Effect)
+}
+
+STRING 2769
+// Abilities: A013 (Item Immolation), EditorSuffix (Editor Suffix)
+{
+(L 1)
+}
+
+STRING 2771
+// Abilities: A014 (Item Immolation), EditorSuffix (Editor Suffix)
+{
+(L 2)
+}
+
+STRING 2773
+// Abilities: A017 (Item Immolation), EditorSuffix (Editor Suffix)
+{
+(L 3)
+}
+
+STRING 2774
+// Abilities: A01C (Item Immolation), Ubertip (Tooltip - Normal - Extended)
+{
+The Item Cloak of Flames will deal 60 damage to structures.
+}
+
+STRING 2775
+// Abilities: A01C (Item Immolation), EditorSuffix (Editor Suffix)
+{
+(L 4)
+}
+
+STRING 2777
+// Abilities: A01M (Item Immolation), EditorSuffix (Editor Suffix)
+{
+(L 5)
+}
+
+STRING 2779
+// Abilities: A01N (Item Immolation), EditorSuffix (Editor Suffix)
+{
+(L 6)
+}
+
+STRING 2781
+// Buffs/Effects: B00H (), EditorSuffix (Editor Suffix)
+{
+(Effect)
+}
+
+STRING 2782
+// Buffs/Effects: B00I (Cloak Art), EditorName (Name (Editor Only))
+{
+Cloak Art
+}
+
+STRING 2808
+// Abilities: A014 (Item Immolation), Tip (Tooltip - Normal)
+{
+Cloak of Flames
+}
+
+STRING 2809
+// Abilities: A017 (Item Immolation), Tip (Tooltip - Normal)
+{
+Cloak of Flames
+}
+
+STRING 2810
+// Abilities: A01C (Item Immolation), Tip (Tooltip - Normal)
+{
+Cloak of Flames
+}
+
+STRING 2811
+// Abilities: A01M (Item Immolation), Tip (Tooltip - Normal)
+{
+Cloak of Flames
+}
+
+STRING 2812
+// Abilities: A01N (Item Immolation), Tip (Tooltip - Normal)
+{
+Cloak of Flames
+}
+
+STRING 2859
+// Items: I00N (sobi), Ubertip (Tooltip - Extended)
+{
+Increases mana regeneration rate by 2.65 when worn. |n|cffffcc0040 gold.|r |n|cff00aeef-buy sobi: 56 gold.|r
+}
+
+STRING 2860
+{
+Unable to target fellow sheep.
+}
+
+STRING 2861
+// Units: emow (Magic Farm), Ubertip (Tooltip - Extended)
+{
+A farm that can cast invisibility on sheep and other farms.
+}
+
+STRING 2862
+// Units: h008 (Invisible Wide Farm), Name (Name)
+{
+Invisible Wide Farm
+}
+
+STRING 2864
+// Units: h008 (Invisible Wide Farm), Ubertip (Tooltip - Extended)
+{
+The wide farm, but invisible.
+}
+
+STRING 2865
+// Units: h009 (Invisible Hard Farm), Name (Name)
+{
+Invisible Hard Farm
+}
+
+STRING 2867
+// Units: h00A (Invisible Tiny Farm), Hotkey (Hotkey)
+{
+G
+}
+
+STRING 2868
+// Units: h009 (Invisible Hard Farm), Ubertip (Tooltip - Extended)
+{
+The hard farm, but invisible.
+}
+
+STRING 2869
+// Units: h00A (Invisible Tiny Farm), Ubertip (Tooltip - Extended)
+{
+The tiny farm, but invisible.
+}
+
+STRING 2870
+// Units: h00B (Upgraded Aura Farm), Hotkey (Hotkey)
+{
+G
+}
+
+STRING 2871
+// Units: h00A (Invisible Tiny Farm), Name (Name)
+{
+Invisible Tiny Farm
+}
+
+STRING 2873
+// Units: e001 (Tiny Magic Farm), Hotkey (Hotkey)
+{
+G
+}
+
+STRING 2875
+// Buffs/Effects: B00A (Brilliance Aura), EditorSuffix (Editor Suffix)
+{
+(Item)
+}
+
+STRING 2887
+// Items: I00J (Rune of Mana), Tip (Tooltip - Basic)
+{
+Rune of Mana
+}
+
+STRING 2890
+// Items: I00J (Rune of Mana), Name (Name)
+{
+Rune of Mana
+}
+
+STRING 2891
+// Abilities: A01G (Freak Far Sight), Tip (Tooltip - Normal)
+{
+Far Sight
+}
+
+STRING 2893
+// Abilities: A01I (Far Sight), Ubertip (Tooltip - Normal - Extended)
+{
+Reveals a targeted area, including invisible units, for 5 seconds.
+}
+
+STRING 2895
+// Abilities: A01O (Rune of Mana), Name (Name)
+{
+Rune of Mana
+}
+
+STRING 2898
+// Abilities: A01P (Freak Anti Stack Stomp), Name (Name)
+{
+Freak Anti Stack Stomp
+}
+
+STRING 2904
+// Items: I00H (endur), Name (Name)
+{
+endur
+}
+
+STRING 2905
+// Items: I006 (crystal), Name (Name)
+{
+crystal
+}
+
+STRING 2906
+// Items: I001 (cloak), Name (Name)
+{
+cloak
+}
+
+STRING 2911
+// Items: I00K (Rune of Omniscience), Tip (Tooltip - Basic)
+{
+Rune of Omniscience
+}
+
+STRING 2914
+// Items: I00K (Rune of Omniscience), Name (Name)
+{
+Rune of Omniscience
+}
+
+STRING 2915
+// Abilities: A01E (Anti Stack Stomp), Ubertip (Tooltip - Normal - Extended)
+{
+Slams the ground disabling stack farms from nearby sheep for 4 seconds.
+}
+
+STRING 2917
+// Items: I00D (mana), Hotkey (Hotkey)
+{
+F
+}
+
+STRING 2918
+// Abilities: A01P (Freak Anti Stack Stomp), Ubertip (Tooltip - Normal - Extended)
+{
+Slams the ground disabling stack farms from nearby sheep for 4 seconds.
+}
+
+STRING 2919
+// Abilities: A01Q (Rune of Omniscience), Name (Name)
+{
+Rune of Omniscience
+}
+
+STRING 2922
+// Items: I00X (kaleidoscope), Hotkey (Hotkey)
+{
+F
+}
+
+STRING 2929
+// Units: h00H (Practice), Name (Name)
+{
+Practice
+}
+
+STRING 2930
+// Units: h00H (Practice), Tip (Tooltip - Basic)
+{
+Practice
+}
+
+STRING 2932
+// Abilities: A01R (Practice HP), Name (Name)
+{
+Practice HP
+}
+
+STRING 2933
+// Abilities: A01S (Practice Armor), Name (Name)
+{
+Practice Armor
+}
+
+STRING 2943
+// Abilities: A01T (Practice Regeneration), Name (Name)
+{
+Practice Regeneration
+}
+
+STRING 2949
+// Items: I00K (Rune of Omniscience), Ubertip (Tooltip - Extended)
+{
+Reveals the entire map for 6 seconds. Does not reveal invisible units.
+}
+
+STRING 2950
+// Items: I00K (Rune of Omniscience), Description (Description)
+{
+Reveals the entire map for 6 seconds. Does not reveal invisible units.
+}
+
+STRING 2951
+// Abilities: A01Q (Rune of Omniscience), Ubertip (Tooltip - Normal - Extended)
+{
+Reveals a targeted area, not including invisible units, for 6 seconds.
+}
+
+STRING 2970
+{
+Sheep (|Cfffed312F8|R)
+}
+
+STRING 2971
+{
+Move your Sheep!!!
+}
+
+STRING 3041
+// Items: scyt (scythe), Description (Description)
+{
+Increases farm bounty by double + 1 gold.|n|cffff0000Does not stack.|r
+}
+
+STRING 3053
+// Items: I00U (drums), Name (Name)
+{
+drums
+}
+
+STRING 3054
+// Abilities: S000 (Aura Farm), Ubertip (Tooltip - Normal - Extended)
+{
+Increases nearby friendly units movement speed by 2% and attack rate by 12%.
+}
+
+STRING 3055
+// Abilities: A013 (Item Immolation), Ubertip (Tooltip - Normal - Extended)
+{
+The Item Cloak of Flames will deal 15 damage to structures.
+}
+
+STRING 3056
+// Abilities: A014 (Item Immolation), Ubertip (Tooltip - Normal - Extended)
+{
+The Item Cloak of Flames will deal 30 damage to structures.
+}
+
+STRING 3057
+// Abilities: A017 (Item Immolation), Ubertip (Tooltip - Normal - Extended)
+{
+The Item Cloak of Flames will deal 45 damage to structures.
+}
+
+STRING 3058
+// Abilities: A01M (Item Immolation), Ubertip (Tooltip - Normal - Extended)
+{
+The Item Cloak of Flames will deal 75 damage to structures.
+}
+
+STRING 3059
+// Abilities: A01N (Item Immolation), Ubertip (Tooltip - Normal - Extended)
+{
+The Item Cloak of Flames will deal 90 damage to structures.
+}
+
+STRING 3062
+// Abilities: A01U (War Drums Aura), Name (Name)
+{
+War Drums Aura
+}
+
+STRING 3064
+// Buffs/Effects: B00B (Aura Farm), Buffubertip (Tooltip - Extended)
+{
+This unit has increased mana regeneration.
+}
+
+STRING 3069
+// Buffs/Effects: B00F (Endurance Aura), EditorSuffix (Editor Suffix)
+{
+(Item)
+}
+
+STRING 3070
+// Buffs/Effects: B00K (Command Aura), EditorName (Name (Editor Only))
+{
+Command Aura
+}
+
+STRING 3071
+// Buffs/Effects: B00K (Command Aura), Buffubertip (Tooltip - Extended)
+{
+This unit has increased damage.
+}
+
+STRING 3075
+// Items: I00S (velocity), Name (Name)
+{
+velocity
+}
+
+STRING 3082
+// Items: I00T (rVelocity), Name (Name)
+{
+rVelocity
+}
+
+STRING 3083
+// Abilities: A00N (Buy Golem), Researchhotkey (Hotkey - Learn)
+{
+Q
+}
+
+STRING 3084
+// Abilities: A018 (Invulnerability), Hotkey (Hotkey - Normal)
+{
+E
+}
+
+STRING 3085
+// Buffs/Effects: B004 (Aura Farm), Buffubertip (Tooltip - Extended)
+{
+This unit has increased movement and attack speed.
+}
+
+STRING 3092
+// Buffs/Effects: B00K (Command Aura), EditorSuffix (Editor Suffix)
+{
+(Item)
+}
+
+STRING 3104
+// Items: I00N (sobi), Hotkey (Hotkey)
+{
+A
+}
+
+STRING 3110
+// Units: h00I (Invisible Farm), Hotkey (Hotkey)
+{
+G
+}
+
+STRING 3111
+// Abilities: A01F (Freak Mirror Image), Hotkey (Hotkey - Normal)
+{
+G
+}
+
+STRING 3113
+// Abilities: A01V (Blink), Ubertip (Tooltip - Normal - Extended)
+{
+Teleports you to any target location.
+}
+
+STRING 3148
+{
+Maroon
+}
+
+STRING 3149
+{
+Navy
+}
+
+STRING 3150
+{
+Turquoise
+}
+
+STRING 3151
+{
+Violet
+}
+
+STRING 3152
+{
+Wheat
+}
+
+STRING 3153
+{
+Peach
+}
+
+STRING 3154
+{
+Mint
+}
+
+STRING 3155
+{
+Lavender
+}
+
+STRING 3156
+{
+Coal
+}
+
+STRING 3157
+{
+Snow
+}
+
+STRING 3158
+{
+Emerald
+}
+
+STRING 3159
+{
+Peanut
+}
+
+STRING 3194
+// Items: scyt (scythe), Ubertip (Tooltip - Extended)
+{
+Increases farm bounty by double + 1 gold.|n|cffff0000Does not stack.|r|n|cffffcc0080 gold.|r |n|cff00aeef-buy scythe: 112 gold.|r
+}
+
+STRING 3199
+// Units: EC03 (Shepherd), Propernames (Proper Names)
+{
+Hannibal Barca,Sun Tzu,Adolf Hitler,Genghis Khan,Alexander the Great,Napoleon Bonaparte,Fidel Castro,Joseph Stalin,Kim Jong-un,Mao Zedong,Pol Pot,Benito Mussolini,Chuck Norris,Bruce Lee,Indiana Jones,Shia LaBeouf,Jackie Chan,Optimus Prime,Darth Vadar,Bruce Wayne,Hulk Hogan,Abraham Lincoln,Donald Trump,Barack Obama
+}
+
+STRING 3225
+// Items: I002 (bomber), Ubertip (Tooltip - Extended)
+{
+Bombs the target area destroying trees and damaging farms.|n|cffffcc0055 gold.|r |n|cff00aeef-buy bomber: 75 gold.|r
+}
+
+STRING 3231
+// Items: I007 (str), Description (Description)
+{
+Allows this unit to instantly kill the next thing it attacks.
+}
+
+STRING 3232
+// Items: I007 (str), Ubertip (Tooltip - Extended)
+{
+Allows this unit to instantly kill the next thing it attacks. |n|cffff0000Does not stack.|r|n|cffffcc0030 gold.|r |n|cff00aeef-buy str: 42 gold.|r
+}
+
+STRING 3233
+// Items: I004 (gloves), Ubertip (Tooltip - Extended)
+{
+Increases this units attack speed by 33% when worn. |n|cffffcc0080 gold.|r |n|cff00aeef-buy gloves: 112 gold.|r
+}
+
+STRING 3234
+// Items: I004 (gloves), Description (Description)
+{
+Increases this units attack speed by 33% when worn.
+}
+
+STRING 3237
+// Items: I00A (golem), Description (Description)
+{
+Summons a Golem to help you catch sheep. Can also jump over farms and walls.
+}
+
+STRING 3240
+// Items: I008 (16), Ubertip (Tooltip - Extended)
+{
+Increases the attack damage of this unit by 16 when worn.|n|cffffcc0038 gold.|r |n|cff00aeef-buy c16: 53 gold.|r
+}
+
+STRING 3241
+// Items: I008 (16), Description (Description)
+{
+Increases the attack damage of this unit by 16 when worn.
+}
+
+STRING 3242
+// Items: I00B (8), Ubertip (Tooltip - Extended)
+{
+Increases the attack damage of this unit by 8 when worn. |n|cffffcc0015 gold.|r |n|cff00aeef-buy c8: 21 gold.|r
+}
+
+STRING 3243
+// Items: I00B (8), Description (Description)
+{
+Increases the attack damage of this unit by 8 when worn.
+}
+
+STRING 3244
+// Items: I00I (neck), Ubertip (Tooltip - Extended)
+{
+Renders this unit spell immune and invulnerable.|n|cffffcc0080 gold.|r |n|cff00aeef-buy neck: 112 gold.|r
+}
+
+STRING 3245
+// Items: I00I (neck), Description (Description)
+{
+Renders this unit spell immune and invulnerable.
+}
+
+STRING 3246
+// Items: I000 (beam), Description (Description)
+{
+On this units next attack, a shockwave will be cast, damaging all farms immediately in front of this unit.
+}
+
+STRING 3247
+// Items: I000 (beam), Ubertip (Tooltip - Extended)
+{
+On this units next attack, a shockwave will be cast, damaging all farms immediately in front of this unit.|n|cffff0000Does not stack.|r|n|cffffcc0080 gold.|r |n|cff00aeef-buy beam: 112 gold.|r
+}
+
+STRING 3248
+// Items: I003 (bril), Ubertip (Tooltip - Extended)
+{
+Increases the mana regen of this unit and nearby allies by 2.15 when worn.|n|cffff0000Does not stack.|r|n|cffffcc0070 gold.|r |n|cff00aeef-buy bril: 98 gold.|r
+}
+
+STRING 3249
+// Items: I003 (bril), Description (Description)
+{
+Increases the mana regen of this unit and nearby allies by 2.15 when worn.|n|cffff0000Does not stack.|r
+}
+
+STRING 3256
+// Items: I001 (cloak), Ubertip (Tooltip - Extended)
+{
+Engulfs this unit in fire which deals 15 damage per second to nearby enemy land units.|n|cffffcc00160 gold.|r |n|cff00aeef-buy cloak: 200 gold.|r
+}
+
+STRING 3257
+// Items: I001 (cloak), Description (Description)
+{
+Engulfs this unit in fire which deals 15 damage per second to nearby enemy land units.|n|cffffcc00160 gold.|r |n|cff00aeef-buy cloak: 200 gold.|r
+}
+
+STRING 3258
+// Items: I00Q (Practice), Ubertip (Tooltip - Extended)
+{
+This item makes you a king.
+}
+
+STRING 3259
+// Items: I00Q (Practice), Description (Description)
+{
+This item makes you a king.
+}
+
+STRING 3264
+// Items: I00U (drums), Ubertip (Tooltip - Extended)
+{
+Increases the attack damage of this unit and nearby allies by 16 when worn.|n|cffff0000Does not stack.|r|n|cffffcc00135 gold.|r |n|cff00aeef-buy drums: 175 gold.|r
+}
+
+STRING 3265
+// Items: I00U (drums), Description (Description)
+{
+Increases the attack damage of this unit and nearby allies by 16 when worn.|n|cffff0000Does not stack.|r
+}
+
+STRING 3276
+// Abilities: A00N (Buy Golem), Researchubertip (Tooltip - Learn - Extended)
+{
+Summons a Golem to help you catch sheep. Can also jump over farms and walls.|n|cffffcc00140 gold.|r
+}
+
+STRING 3277
+// Abilities: A00N (Buy Golem), Ubertip (Tooltip - Normal - Extended)
+{
+Summons a Golem to help you catch sheep. Can also jump over farms and walls.|n|cffffcc00140 gold.|r
+}
+
+STRING 3280
+// Abilities: A00P (Buy Strength), Researchubertip (Tooltip - Learn - Extended)
+{
+Allows this unit to instantly kill the next thing it attacks.|n|CFFFFCC0042 gold.
+}
+
+STRING 3281
+// Abilities: A00P (Buy Strength), Ubertip (Tooltip - Normal - Extended)
+{
+Allows this unit to instantly kill the next thing it attacks.|n|CFFFFCC0042 gold.
+}
+
+STRING 3282
+// Abilities: A00Q (Buy Invis), Ubertip (Tooltip - Normal - Extended)
+{
+Makes you invisible for 2 minutes. If a sheep is close enough, they can see you.|n|CFFFFCC0042 gold.
+}
+
+STRING 3283
+// Abilities: A00Q (Buy Invis), Researchubertip (Tooltip - Learn - Extended)
+{
+Makes you invisible for 2 minutes. If a sheep is close enough, they can see you.|n|CFFFFCC0042 gold.
+}
+
+STRING 3284
+// Abilities: A00R (Buy Bomber), Researchubertip (Tooltip - Learn - Extended)
+{
+Bombs the target area destroying trees and damaging farms.|n|cffffcc0075 gold.|r
+}
+
+STRING 3285
+// Abilities: A00R (Buy Bomber), Ubertip (Tooltip - Normal - Extended)
+{
+Bombs the target area destroying trees and damaging farms.|n|cffffcc0075 gold.|r
+}
+
+STRING 3286
+// Abilities: A010 (Buy Beam), Researchubertip (Tooltip - Learn - Extended)
+{
+On this units next attack, a shockwave will be cast, damaging all farms immediately in front of this unit.|n|CFFFFCC00112 gold.
+}
+
+STRING 3287
+// Abilities: A010 (Buy Beam), Ubertip (Tooltip - Normal - Extended)
+{
+On this units next attack, a shockwave will be cast, damaging all farms immediately in front of this unit.|n|CFFFFCC00112 gold.
+}
+
+STRING 3291
+// Buffs/Effects: B001 (Str), Buffubertip (Tooltip - Extended)
+{
+This unity has more strength. It will kill a farm in one hit.
+}
+
+STRING 3292
+// Buffs/Effects: B008 (Beam), Buffubertip (Tooltip - Extended)
+{
+This unit has the power of a beam in it.
+}
+
+STRING 3312
+// Items: I005 (55), Name (Name)
+{
+55
+}
+
+STRING 3314
+// Items: I005 (55), Ubertip (Tooltip - Extended)
+{
+Increases the attack damage of this unit by 55 when worn.|n|cffffcc00160 gold.|r |n|cff00aeef-buy c55: 200 gold.|r
+}
+
+STRING 3315
+// Items: I005 (55), Description (Description)
+{
+Increases the attack damage of this unit by 55 when worn.
+}
+
+STRING 3317
+// Items: I00M (r110), Ubertip (Tooltip - Extended)
+{
+Claws of Attack +110|nIncreases the attack damage of this unit by 110 when worn.|n|n|cffffff00Requires:|r|cffffcc00|n  - 2 Claws of Attack +55|r|n|n|cffffcc0080 gold.|r |n|cff00aeef-buy r110: 112 gold.|r
+}
+
+STRING 3318
+// Items: I00M (r110), Description (Description)
+{
+Claws of Attack +110|nIncreases the attack damage of this unit by 110 when worn.|n|n|cffffff00Requires:|r|cffffcc00|n  - 2 Claws of Attack +55|r
+}
+
+STRING 3319
+// Items: I00M (r110), Name (Name)
+{
+r110
+}
+
+STRING 3320
+// Items: I00L (110), Name (Name)
+{
+110
+}
+
+STRING 3321
+// Items: I00L (110), Tip (Tooltip - Basic)
+{
+Claws of Attack +110
+}
+
+STRING 3322
+// Items: I00L (110), Ubertip (Tooltip - Extended)
+{
+Increases the attack damage of this unit by 110 when worn.
+}
+
+STRING 3323
+// Items: I00L (110), Description (Description)
+{
+Increases the attack damage of this unit by 110 when worn.
+}
+
+STRING 3325
+// Items: I00T (rVelocity), Ubertip (Tooltip - Extended)
+{
+Claws of Velocity|nIncreases the attack damage of this unit by 55 and attack speed by 33% when worn.|n|n|cffffff00Requires:|r|cffffcc00|n  - Claws of Attack +55|r|cffffcc00|n  - Gloves of Haste|r|n|n|cffffcc0080 gold.|r |n|cff00aeef-buy velocity: 112 gold.|r
+}
+
+STRING 3326
+// Items: I00T (rVelocity), Description (Description)
+{
+Claws of Velocity|nIncreases the attack damage of this unit by 55 and attack speed by 33% when worn.|n|n|cffffff00Requires:|r|cffffcc00|n  - Claws of Attack +55|r|cffffcc00|n  - Gloves of Haste|r
+}
+
+STRING 3327
+// Abilities: A019 (Claws +55), Name (Name)
+{
+Claws +55
+}
+
+STRING 3328
+// Abilities: A01A (Claws +110), Name (Name)
+{
+Claws +110
+}
+
+STRING 3334
+// Buffs/Effects: B00H (), Buffubertip (Tooltip - Extended)
+{
+This unit has a Cloak of Flames; nearby enemy buildings will take damage over time.
+}
+
+STRING 3335
+// Buffs/Effects: B00I (Cloak Art), Buffubertip (Tooltip - Extended)
+{
+This unit has a Cloak of Flames; nearby enemy buildings will take damage over time.
+}
+
+STRING 3366
+// Buffs/Effects: Bspe (), Buffubertip (Tooltip - Extended)
+{
+This unit has increased movespeed.
+}
+
+STRING 3367
+// Buffs/Effects: B00G (), Buffubertip (Tooltip - Extended)
+{
+This unit has increased movespeed.
+}
+
+STRING 3372
+// Items: I00H (endur), Ubertip (Tooltip - Extended)
+{
+Increases attack speed by 18% and move speed by 1% for this unit and nearby allies when worn.|n|cffff0000Does not stack.|r|n|cffffcc0080 gold.|r |n|cff00aeef-buy endur: 112 gold.|r
+}
+
+STRING 3373
+// Items: I00H (endur), Description (Description)
+{
+Increases attack speed by 18% and move speed by 1% for this unit and nearby allies when worn.|n|cffff0000Does not stack.|r
+}
+
+STRING 3377
+// Buffs/Effects: B00D (), Buffubertip (Tooltip - Extended)
+{
+This unit has increased attack speed and move speed.
+}
+
+STRING 3414
+// Items: I00P (Rune of Speed), Ubertip (Tooltip - Extended)
+{
+Increases attack speed by 25% and movement speed by 3% for this unit for 45 seconds.
+}
+
+STRING 3415
+// Items: I00P (Rune of Speed), Description (Description)
+{
+Increases attack speed by 25% and movement speed by 3% for this unit for 45 seconds.
+}
+
+STRING 3416
+// Abilities: A004 (Rune of Speed), Ubertip (Tooltip - Normal - Extended)
+{
+Increases attack speed by 25% and movement speed by 3% for this unit for 45 seconds.
+}
+
+STRING 3417
+// Abilities: A004 (Rune of Speed), Tip (Tooltip - Normal)
+{
+Increases attack speed by 25% and movement speed by 3% for this unit for 45 seconds.
+}
+
+STRING 3468
+// Units: n003 (Nuke), Name (Name)
+{
+Nuke
+}
+
+STRING 3469
+// Items: I00R (nuke), Description (Description)
+{
+Nukes the target area destroying trees and damaging farms.
+}
+
+STRING 3470
+// Items: I00R (nuke), Name (Name)
+{
+nuke
+}
+
+STRING 3472
+// Items: I00R (nuke), Ubertip (Tooltip - Extended)
+{
+Nukes the target area destroying trees and damaging farms.
+}
+
+STRING 3473
+// Items: I00H (endur), Hotkey (Hotkey)
+{
+S
+}
+
+STRING 3474
+// Abilities: A01D (Nuke), Name (Name)
+{
+Nuke
+}
+
+STRING 3475
+// Units: h00B (Upgraded Aura Farm), Name (Name)
+{
+Upgraded Aura Farm
+}
+
+STRING 3477
+// Units: h00B (Upgraded Aura Farm), Ubertip (Tooltip - Extended)
+{
+Upgraded version of the Aura Farm, buffs all the things.
+}
+
+STRING 3478
+// Abilities: A01V (Blink), Researchhotkey (Hotkey - Learn)
+{
+G
+}
+
+STRING 3479
+// Abilities: A01L (Upgraded Aura Farm), Name (Name)
+{
+Upgraded Aura Farm
+}
+
+STRING 3481
+// Abilities: A01X (Upgraded Aura Farm), Name (Name)
+{
+Upgraded Aura Farm
+}
+
+STRING 3482
+// Abilities: A01Y (Upgraded Aura Farm), Name (Name)
+{
+Upgraded Aura Farm
+}
+
+STRING 3484
+// Abilities: S003 (Upgraded Aura Farm), Name (Name)
+{
+Upgraded Aura Farm
+}
+
+STRING 3488
+// Buffs/Effects: B002 (Aura Farm), EditorSuffix (Editor Suffix)
+{
+(Armor)
+}
+
+STRING 3489
+// Buffs/Effects: B003 (Aura Farm), EditorSuffix (Editor Suffix)
+{
+(Regeneration)
+}
+
+STRING 3491
+// Buffs/Effects: B00A (Brilliance Aura), EditorName (Name (Editor Only))
+{
+Brilliance Aura
+}
+
+STRING 3492
+// Buffs/Effects: B00B (Aura Farm), EditorSuffix (Editor Suffix)
+{
+(Mana)
+}
+
+STRING 3494
+// Units: e001 (Tiny Magic Farm), Name (Name)
+{
+Tiny Magic Farm
+}
+
+STRING 3496
+// Units: e001 (Tiny Magic Farm), Ubertip (Tooltip - Extended)
+{
+A tiny farm that can cast invisibility on sheep and other farms.
+}
+
+STRING 3497
+// Abilities: A00M (Blue), Ubertip (Tooltip - Normal - Extended)
+{
+This ability sort of makes the ward blue.
+}
+
+STRING 3498
+// Abilities: A01V (Blink), Hotkey (Hotkey - Normal)
+{
+G
+}
+
+STRING 3499
+// Abilities: A01O (Rune of Mana), Tip (Tooltip - Normal)
+{
+Restores 200 mana for all allied units.
+}
+
+STRING 3500
+// Abilities: A005 (Golem), Name (Name)
+{
+Golem
+}
+
+STRING 3502
+// Abilities: A01X (Upgraded Aura Farm), Ubertip (Tooltip - Normal - Extended)
+{
+Gives 6 additional armor to nearby friendly units.
+}
+
+STRING 3503
+// Abilities: A01Y (Upgraded Aura Farm), Ubertip (Tooltip - Normal - Extended)
+{
+Increases nearby friendly units life regeneration rate by 2.
+}
+
+STRING 3504
+// Abilities: S003 (Upgraded Aura Farm), Ubertip (Tooltip - Normal - Extended)
+{
+Increases nearby friendly units movement speed by 4% and attack rate by 24%.
+}
+
+STRING 3517
+// Abilities: A00O (Buy Speed), Researchubertip (Tooltip - Learn - Extended)
+{
+Increases attack speed by 25% and movement speed by 3% for this unit for 45 seconds.|n|CFFFFCC0042 gold.
+}
+
+STRING 3518
+// Abilities: A00O (Buy Speed), Ubertip (Tooltip - Normal - Extended)
+{
+Increases attack speed by 25% and movement speed by 3% for this unit for 45 seconds.|n|CFFFFCC0042 gold.
+}
+
+STRING 3531
+// Abilities: A01Z (Inventory), EditorSuffix (Editor Suffix)
+{
+(Sheep)
+}
+
+STRING 3536
+// Abilities: A020 (Give Allies Gold), Tip (Tooltip - Normal)
+{
+Give Allies Gold
+}
+
+STRING 3538
+// Abilities: A020 (Give Allies Gold), Name (Name)
+{
+Give Allies Gold
+}
+
+STRING 3540
+// Abilities: A020 (Give Allies Gold), Hotkey (Hotkey - Normal)
+{
+G
+}
+
+STRING 3542
+// Units: emow (Magic Farm), Tip (Tooltip - Basic)
+{
+Build Magic Farm
+}
+
+STRING 3543
+// Units: hlum (Aura Farm), Tip (Tooltip - Basic)
+{
+Build Aura Farm
+}
+
+STRING 3544
+// Units: hC05 (Invisible Farm), Tip (Tooltip - Basic)
+{
+Build Invisible Farm
+}
+
+STRING 3545
+// Units: hC06 (Hard Farm), Tip (Tooltip - Basic)
+{
+Build Hard Farm
+}
+
+STRING 3546
+// Units: eC09 (Sentry Farm), Tip (Tooltip - Basic)
+{
+Build Sentry Farm
+}
+
+STRING 3547
+// Units: hC07 (Upgraded Farm), Tip (Tooltip - Basic)
+{
+Build Upgraded Farm
+}
+
+STRING 3548
+// Units: h004 (Tiny Farm), Tip (Tooltip - Basic)
+{
+Build Tiny Farm
+}
+
+STRING 3549
+// Units: h000 (Wide Farm), Tip (Tooltip - Basic)
+{
+Build Wide Farm
+}
+
+STRING 3550
+// Units: h005 (Money Farm), Tip (Tooltip - Basic)
+{
+Build Money Farm
+}
+
+STRING 3551
+// Units: h001 (Frost Farm), Tip (Tooltip - Basic)
+{
+Build Frost Farm
+}
+
+STRING 3552
+// Units: h002 (Strong Farm), Tip (Tooltip - Basic)
+{
+Build Strong Farm
+}
+
+STRING 3553
+// Units: n002 (Stack Farm), Tip (Tooltip - Basic)
+{
+Build Stack Farm
+}
+
+STRING 3554
+// Units: h008 (Invisible Wide Farm), Tip (Tooltip - Basic)
+{
+Upgrade to Invisible Wide Farm
+}
+
+STRING 3555
+// Units: h009 (Invisible Hard Farm), Tip (Tooltip - Basic)
+{
+Upgrade to Invisible Hard Farm
+}
+
+STRING 3556
+// Units: h00A (Invisible Tiny Farm), Tip (Tooltip - Basic)
+{
+Upgrade to Invisible Tiny Farm
+}
+
+STRING 3557
+// Units: h00B (Upgraded Aura Farm), Tip (Tooltip - Basic)
+{
+Build Upgraded Aura Farm
+}
+
+STRING 3558
+// Units: e001 (Tiny Magic Farm), Tip (Tooltip - Basic)
+{
+Build Tiny Magic Farm
+}
+
+STRING 3559
+// Items: I005 (55), Tip (Tooltip - Basic)
+{
+Purchase Claws of Attack +55
+}
+
+STRING 3560
+// Items: I008 (16), Tip (Tooltip - Basic)
+{
+Purchase Claws of Attack +16
+}
+
+STRING 3561
+// Abilities: A00N (Buy Golem), Tip (Tooltip - Normal)
+{
+Buy Golem
+}
+
+STRING 3562
+// Abilities: A00N (Buy Golem), Name (Name)
+{
+Buy Golem
+}
+
+STRING 3563
+// Abilities: A00O (Buy Speed), Researchtip (Tooltip - Learn)
+{
+Buy Speed Potion
+}
+
+STRING 3564
+// Abilities: A00O (Buy Speed), Tip (Tooltip - Normal)
+{
+Buy Speed Potion
+}
+
+STRING 3565
+// Abilities: A00P (Buy Strength), Researchtip (Tooltip - Learn)
+{
+Buy Strength Potion
+}
+
+STRING 3566
+// Abilities: A00P (Buy Strength), Tip (Tooltip - Normal)
+{
+Buy Strength Potion
+}
+
+STRING 3567
+// Abilities: A00Q (Buy Invis), Tip (Tooltip - Normal)
+{
+Buy Invis
+}
+
+STRING 3568
+// Abilities: A00Q (Buy Invis), Name (Name)
+{
+Buy Invis
+}
+
+STRING 3569
+// Abilities: A00R (Buy Bomber), Tip (Tooltip - Normal)
+{
+Buy Bomber
+}
+
+STRING 3570
+// Abilities: A00R (Buy Bomber), Name (Name)
+{
+Buy Bomber
+}
+
+STRING 3571
+// Abilities: A00S (Mirror Image), Tip (Tooltip - Normal)
+{
+Mirror Image
+}
+
+STRING 3572
+// Abilities: A00D (Locate Allies), Tip (Tooltip - Normal)
+{
+Locate Allies
+}
+
+STRING 3573
+// Abilities: A00D (Locate Allies), Untip (Tooltip - Turn Off)
+{
+Locate Allies
+}
+
+STRING 3574
+// Abilities: A00U (Destroy), Name (Name)
+{
+Destroy
+}
+
+STRING 3575
+// Abilities: A00U (Destroy), Tip (Tooltip - Normal)
+{
+Destroy
+}
+
+STRING 3576
+// Abilities: A00U (Destroy), Untip (Tooltip - Turn Off)
+{
+Destroy
+}
+
+STRING 3577
+// Abilities: A00T (Kill Farm), Untip (Tooltip - Turn Off)
+{
+Kill Farm
+}
+
+STRING 3578
+// Abilities: A00T (Kill Farm), Name (Name)
+{
+Kill Farm
+}
+
+STRING 3579
+// Abilities: A010 (Buy Beam), Researchtip (Tooltip - Learn)
+{
+Buy Beam
+}
+
+STRING 3580
+// Abilities: A010 (Buy Beam), Tip (Tooltip - Normal)
+{
+Buy Beam
+}
+
+STRING 3581
+// Abilities: A011 (Rune of Invisibility), Tip (Tooltip - Normal)
+{
+Invisibility
+}
+
+STRING 3582
+// Abilities: A011 (Rune of Invisibility), Untip (Tooltip - Turn Off)
+{
+Invisibility
+}
+
+STRING 3583
+// Abilities: A00G (HideShow), Tip (Tooltip - Normal)
+{
+Hide/Show
+}
+
+STRING 3584
+// Abilities: A018 (Invulnerability), Tip (Tooltip - Normal)
+{
+Invulnerability
+}
+
+STRING 3585
+// Abilities: A01E (Anti Stack Stomp), Tip (Tooltip - Normal)
+{
+Antii Stack Stomp
+}
+
+STRING 3586
+// Abilities: A01F (Freak Mirror Image), Tip (Tooltip - Normal)
+{
+Mirror Image
+}
+
+STRING 3587
+// Abilities: A01H (Freak Invulnerability), Tip (Tooltip - Normal)
+{
+Invulnerability
+}
+
+STRING 3588
+// Abilities: A01I (Far Sight), Name (Name)
+{
+Far Sight
+}
+
+STRING 3589
+// Abilities: A01I (Far Sight), Tip (Tooltip - Normal)
+{
+Far Sight
+}
+
+STRING 3590
+// Abilities: A01Q (Rune of Omniscience), Tip (Tooltip - Normal)
+{
+Far Sight
+}
+
+STRING 3591
+// Abilities: A01V (Blink), Tip (Tooltip - Normal)
+{
+Blink
+}
+
+STRING 3592
+// Buffs/Effects: B00E (), Bufftip (Tooltip)
+{
+Anti Stack Stomp
+}
+
+STRING 3593
+// Items: I002 (bomber), Tip (Tooltip - Basic)
+{
+Purchase Bomber
+}
+
+STRING 3594
+// Items: I007 (str), Tip (Tooltip - Basic)
+{
+Purchase Potion of Strength
+}
+
+STRING 3595
+// Items: I00A (golem), Tip (Tooltip - Basic)
+{
+Purchase Golem
+}
+
+STRING 3596
+// Items: I00B (8), Tip (Tooltip - Basic)
+{
+Purchase Claws of Attack +8
+}
+
+STRING 3597
+// Items: I00I (neck), Tip (Tooltip - Basic)
+{
+Purchase Necklace of Invulnerability
+}
+
+STRING 3598
+// Items: I00G (sheep), Tip (Tooltip - Basic)
+{
+Purchase Sheep Locater
+}
+
+STRING 3599
+// Items: I000 (beam), Tip (Tooltip - Basic)
+{
+Purchase Beam of Strength
+}
+
+STRING 3600
+// Items: scyt (scythe), Tip (Tooltip - Basic)
+{
+Purchase Mining Scythe
+}
+
+STRING 3601
+// Items: I003 (bril), Tip (Tooltip - Basic)
+{
+Purchase Brilliance Aura
+}
+
+STRING 3602
+// Items: I00H (endur), Tip (Tooltip - Basic)
+{
+Purchase Endurance Aura
+}
+
+STRING 3603
+// Items: I00M (r110), Tip (Tooltip - Basic)
+{
+Purchase Claws of Attack +110 Recipe
+}
+
+STRING 3604
+// Items: I00N (sobi), Tip (Tooltip - Basic)
+{
+Purchase Sobi Mask
+}
+
+STRING 3605
+// Items: I001 (cloak), Tip (Tooltip - Basic)
+{
+Purchase Cloak of Flames
+}
+
+STRING 3606
+// Items: I00S (velocity), Tip (Tooltip - Basic)
+{
+Purchase Claws of Velocity +55 
+}
+
+STRING 3607
+// Items: I00T (rVelocity), Tip (Tooltip - Basic)
+{
+Purchase Claws of Velocity +55 Recipe
+}
+
+STRING 3608
+// Items: I00U (drums), Tip (Tooltip - Basic)
+{
+Purchase War Drums
+}
+
+STRING 3609
+// Items: I00R (nuke), Tip (Tooltip - Basic)
+{
+Purchase Nuke
+}
+
+STRING 3610
+// Abilities: A022 (Share Control), Name (Name)
+{
+Share Control
+}
+
+STRING 3611
+// Abilities: A022 (Share Control), Tip (Tooltip - Normal)
+{
+Share Control
+}
+
+STRING 3612
+// Abilities: A022 (Share Control), Ubertip (Tooltip - Normal - Extended)
+{
+Shares control with all of your allies, similar to -call.
+}
+
+STRING 3613
+// Units: h005 (Money Farm), Hotkey (Hotkey)
+{
+C
+}
+
+STRING 3644
+// Items: I009 (boots), Ubertip (Tooltip - Extended)
+{
+Increases the movement speed of this unit by 30 permanently.|n|cffff0000Does not stack.|r|n|cffffcc0080 gold.|r |n|cff00aeef-buy boots: 112 gold.|r
+}
+
+STRING 3645
+// Items: I009 (boots), Description (Description)
+{
+Increases the movement speed of this unit by 30 permanently.|n|cffff0000Does not stack.|r
+}
+
+STRING 3648
+// Items: I00S (velocity), Ubertip (Tooltip - Extended)
+{
+Increases the attack damage of this unit by 55 and attack speed by 35% when worn.
+}
+
+STRING 3649
+// Items: I00S (velocity), Description (Description)
+{
+Increases the attack damage of this unit by 55 and attack speed by 35% when worn.
+}
+
+STRING 3650
+// Items: I00F (speed), Ubertip (Tooltip - Extended)
+{
+Increases attack speed by 15% and movement speed by 3% for this unit for 45 seconds. |n|cffffcc0030 gold.|r |n|cff00aeef-buy speed: 42 gold.|r
+}
+
+STRING 3651
+// Items: I00F (speed), Description (Description)
+{
+Increases attack speed by 15% and movement speed by 3% for this unit for 45 seconds.
+}
+
+STRING 3660
+// Items: I00J (Rune of Mana), Ubertip (Tooltip - Extended)
+{
+Replinishes 200 mana for all wolves.
+}
+
+STRING 3661
+// Items: I00J (Rune of Mana), Description (Description)
+{
+Replinishes 200 mana for all wolves.
+}
+
+STRING 3674
+// Abilities: A020 (Give Allies Gold), EditorSuffix (Editor Suffix)
+{
+(wisp)
+}
+
+STRING 3678
+// Abilities: A00V (Give Ally Gold), Hotkey (Hotkey - Normal)
+{
+G
+}
+
+STRING 3679
+// Abilities: A00V (Give Ally Gold), EditorSuffix (Editor Suffix)
+{
+(wolf)
+}
+
+STRING 3680
+// Abilities: A020 (Give Allies Gold), Ubertip (Tooltip - Normal - Extended)
+{
+Gives surviving allies all of your gold.
+}
+
+STRING 3681
+// Abilities: A00V (Give Ally Gold), Name (Name)
+{
+Give Ally Gold
+}
+
+STRING 3682
+// Abilities: A00V (Give Ally Gold), Tip (Tooltip - Normal)
+{
+Give Ally Gold
+}
+
+STRING 3683
+// Abilities: A00V (Give Ally Gold), Ubertip (Tooltip - Normal - Extended)
+{
+Gives an allied wolf all of your gold.
+}
+
+STRING 3708
+// Units: n004 (Illusion Farm), Name (Name)
+{
+Illusion Farm
+}
+
+STRING 3709
+// Units: n004 (Illusion Farm), Tip (Tooltip - Basic)
+{
+Build Illusion Farm
+}
+
+STRING 3710
+// Units: n004 (Illusion Farm), Ubertip (Tooltip - Extended)
+{
+A farm that doesn't block anything. What's even the point?
+}
+
+STRING 3717
+// Units: h00C (Translocation Farm), Name (Name)
+{
+Translocation Farm
+}
+
+STRING 3718
+// Units: h00C (Translocation Farm), Tip (Tooltip - Basic)
+{
+Build Translocation Farm
+}
+
+STRING 3719
+// Abilities: A015 (Aura Farm), Ubertip (Tooltip - Normal - Extended)
+{
+Increases nearby friendly units mana regeneration by 1.5.
+}
+
+STRING 3720
+// Abilities: A01L (Upgraded Aura Farm), Ubertip (Tooltip - Normal - Extended)
+{
+Increases nearby friendly units mana regeneration by 3.
+}
+
+STRING 3721
+// Abilities: A022 (Share Control), Hotkey (Hotkey - Normal)
+{
+C
+}
+
+STRING 3722
+// Units: h00C (Translocation Farm), Ubertip (Tooltip - Extended)
+{
+Instant teleports the sheep to the opposite side of the farm.
+}
+
+STRING 3727
+// Units: h00D (Host Farm), Name (Name)
+{
+Host Farm
+}
+
+STRING 3728
+// Units: h00D (Host Farm), Tip (Tooltip - Basic)
+{
+Build |cffffcc00U|rpgraded Farm
+}
+
+STRING 3729
+// Units: h00D (Host Farm), Hotkey (Hotkey)
+{
+U
+}
+
+STRING 3730
+// Units: h00D (Host Farm), Ubertip (Tooltip - Extended)
+{
+As the farm but double hit points.
+}
+
+STRING 3731
+// Units: h00E (Smart), Name (Name)
+{
+Smart
+}
+
+STRING 3732
+// Units: h00E (Smart), Tip (Tooltip - Basic)
+{
+Smart
+}
+
+STRING 3733
+// Units: h00E (Smart), Ubertip (Tooltip - Extended)
+{
+Intelligently forms teams, balacing sheep count and player counts.
+}
+
+STRING 3734
+// Units: h00F (Start), Name (Name)
+{
+Start
+}
+
+STRING 3735
+// Units: h00F (Start), Tip (Tooltip - Basic)
+{
+Start
+}
+
+STRING 3736
+// Units: h00F (Start), Ubertip (Tooltip - Extended)
+{
+Starts with current teams.
+}
+
+STRING 3737
+// Units: h00G (Time), Name (Name)
+{
+Time
+}
+
+STRING 3738
+// Units: h00G (Time), Tip (Tooltip - Basic)
+{
+Time
+}
+
+STRING 3739
+// Units: h00G (Time), Ubertip (Tooltip - Extended)
+{
+Updates round duration to match the standard for the player count.
+}
+
+STRING 3740
+// Units: h00H (Practice), Ubertip (Tooltip - Extended)
+{
+Practice mode. Allows testing yourself and adjusting spawns.
+}
+
+STRING 3741
+// Items: I00S (velocity), Hotkey (Hotkey)
+{
+A
+}
+
+STRING 3742
+// Items: I00Q (Practice), Name (Name)
+{
+Practice
+}
+
+STRING 3743
+// Items: I00Q (Practice), Tip (Tooltip - Basic)
+{
+Practice
+}
+
+STRING 3744
+// Items: I006 (crystal), Hotkey (Hotkey)
+{
+S
+}
+
+STRING 3745
+// Items: I00M (r110), Hotkey (Hotkey)
+{
+R
+}
+
+STRING 3746
+// Abilities: A01G (Freak Far Sight), Hotkey (Hotkey - Normal)
+{
+T
+}
+
+STRING 3755
+// Items: I00W (forb), Name (Name)
+{
+forb
+}
+
+STRING 3757
+// Abilities: A021 (Orb of Fire), Name (Name)
+{
+Orb of Fire
+}
+
+STRING 3761
+// Items: I00W (forb), Ubertip (Tooltip - Extended)
+{
+Adds <A021,DataA1> bonus fire damage when carried, damaging nearby farms.|n|cffffcc00160 gold.|r |n|cff00aeef-buy forb: 200 gold.|r
+}
+
+STRING 3762
+// Items: I00W (forb), Description (Description)
+{
+Adds <A021,DataA1> bonus fire damage when carried, damaging nearby farms.|n|cffffcc00160 gold.
+}
+
+STRING 3763
+// Items: I00V (suppression), Name (Name)
+{
+suppression
+}
+
+STRING 3770
+// Units: o000 (Suppression Field), Name (Name)
+{
+Suppression Field
+}
+
+STRING 3771
+// Items: I00V (suppression), Tip (Tooltip - Basic)
+{
+Purchase Suppression Field
+}
+
+STRING 3772
+// Abilities: A023 (Suppression Field), Name (Name)
+{
+Suppression Field
+}
+
+STRING 3773
+// Abilities: A026 (Suppression Field), Name (Name)
+{
+Suppression Field
+}
+
+STRING 3774
+// Abilities: A026 (Suppression Field), EditorSuffix (Editor Suffix)
+{
+(Aura)
+}
+
+STRING 3775
+// Abilities: A026 (Suppression Field), Tip (Tooltip - Normal)
+{
+Suppression Field
+}
+
+STRING 3776
+// Abilities: A026 (Suppression Field), Ubertip (Tooltip - Normal - Extended)
+{
+Upgraded Farms take additional damage when under a suppression field.
+}
+
+STRING 3777
+// Buffs/Effects: B009 (Suppression Field), EditorSuffix (Editor Suffix)
+{
+(Aura)
+}
+
+STRING 3778
+// Buffs/Effects: B009 (Suppression Field), EditorName (Name (Editor Only))
+{
+Suppression Field
+}
+
+STRING 3779
+// Buffs/Effects: B009 (Suppression Field), Buffubertip (Tooltip - Extended)
+{
+Upgraded Farms take additional damage when under a suppression field.
+}
+
+STRING 3780
+// Buffs/Effects: B009 (Suppression Field), Bufftip (Tooltip)
+{
+Suppression Field
+}
+
+STRING 3791
+// Abilities: A024 (Give Allies Gold), Tip (Tooltip - Normal)
+{
+Give Allies Gold
+}
+
+STRING 3792
+// Abilities: A024 (Give Allies Gold), Name (Name)
+{
+Give Allies Gold
+}
+
+STRING 3793
+// Abilities: A024 (Give Allies Gold), EditorSuffix (Editor Suffix)
+{
+(sheep)
+}
+
+STRING 3794
+// Abilities: A024 (Give Allies Gold), Ubertip (Tooltip - Normal - Extended)
+{
+Upon first usage, gives your allies some of your gold (-gs). If used a second time within a second, gives all of your gold (-gsa).
+}
+
+STRING 3795
+// Abilities: A024 (Give Allies Gold), Untip (Tooltip - Turn Off)
+{
+Give Allies Gold
+}
+
+STRING 3796
+// Abilities: A024 (Give Allies Gold), Unubertip (Tooltip - Turn Off - Extended)
+{
+Upon usage, gives all of your gold to your allies (-gsa).
+}
+
+STRING 3822
+// Abilities: A025 (Santa Hat), Name (Name)
+{
+Santa Hat
+}
+
+STRING 3839
+// Units: o001 (Snowman), Name (Name)
+{
+Snowman
+}
+
+STRING 3840
+// Abilities: A027 (Snowball), Name (Name)
+{
+Snowball
+}
+
+STRING 3841
+// Items: I00R (nuke), Hotkey (Hotkey)
+{
+S
+}
+
+STRING 3842
+// Units: h00I (Invisible Farm), Name (Name)
+{
+Invisible Farm
+}
+
+STRING 3843
+// Units: h00I (Invisible Farm), Tip (Tooltip - Basic)
+{
+Build Invisible Farm
+}
+
+STRING 3844
+// Units: h00I (Invisible Farm), Ubertip (Tooltip - Extended)
+{
+An invisible farm that cannot be seen by wolves unless they have some form of detection. Upgrades to Invisibility Farm.
+}
+
+STRING 3845
+// Units: h00I (Invisible Farm), EditorSuffix (Name - Editor Suffix)
+{
+(upgrade)
+}
+
+STRING 3846
+// Abilities: A01I (Far Sight), Hotkey (Hotkey - Normal)
+{
+F
+}
+
+STRING 3847
+// Abilities: A024 (Give Allies Gold), Hotkey (Hotkey - Normal)
+{
+G
+}
+
+STRING 3848
+// Abilities: A024 (Give Allies Gold), Unhotkey (Hotkey - Turn Off)
+{
+G
+}
+
+STRING 3857
+// Items: I00V (suppression), Ubertip (Tooltip - Extended)
+{
+Creates a suppression field that causes Upgraded Farms to take extra damage.|n|cffff0000Does not stack.|r|n|cffffcc00135 gold.|r |n|cff00aeef-buy suppression: 175 gold.|r
+}
+
+STRING 3866
+// Units: n005 (Shop3), Name (Name)
+{
+Shop3
+}
+
+STRING 3867
+// Units: n006 (Shop1), Name (Name)
+{
+Shop1
+}
+
+STRING 3868
+// Units: n006 (Shop1), EditorSuffix (Name - Editor Suffix)
+{
+(Rotated)
+}
+
+STRING 3869
+// Units: n007 (Shop2), Name (Name)
+{
+Shop2
+}
+
+STRING 3870
+// Units: n007 (Shop2), EditorSuffix (Name - Editor Suffix)
+{
+(Rotated)
+}
+
+STRING 3871
+// Units: n008 (Shop3), Name (Name)
+{
+Shop3
+}
+
+STRING 3872
+// Units: n008 (Shop3), EditorSuffix (Name - Editor Suffix)
+{
+(Rotated)
+}
+
+STRING 3873
+// Items: I00E (gem), Name (Name)
+{
+gem
+}
+
+STRING 3874
+// Items: I00L (110), Hotkey (Hotkey)
+{
+R
+}
+
+STRING 3875
+// Items: I00V (suppression), Description (Description)
+{
+Creates a suppression field that causes Upgraded Farms to take extra damage.|n|cffff0000Does not stack.|r
+}
+
+STRING 3876
+// Items: I00T (rVelocity), Hotkey (Hotkey)
+{
+A
+}
+
+STRING 3877
+// Abilities: A00O (Buy Speed), Researchhotkey (Hotkey - Learn)
+{
+W
+}
+
+STRING 3878
+// Abilities: A00R (Buy Bomber), Researchhotkey (Hotkey - Learn)
+{
+S
+}
+
+STRING 3879
+// Abilities: A010 (Buy Beam), Researchhotkey (Hotkey - Learn)
+{
+R
+}
+
+STRING 3881
+// Abilities: A01H (Freak Invulnerability), Hotkey (Hotkey - Normal)
+{
+D
+}
+
+STRING 3882
+// Items: I00V (suppression), Hotkey (Hotkey)
+{
+A
+}
+
+STRING 3883
+// Items: I00X (kaleidoscope), Name (Name)
+{
+kaleidoscope
+}
+
+STRING 3884
+// Items: I00X (kaleidoscope), Tip (Tooltip - Basic)
+{
+Purchase Kaleidoscope
+}
+
+STRING 3887
+// Abilities: A00S (Mirror Image), Ubertip (Tooltip - Normal - Extended)
+{
+Creates an image of your wolf does 25% damage to farms and can be used to distract or block sheep. Can also be used to jump over walls and boundaries.
+}
+
+STRING 3888
+// Abilities: A01Q (Rune of Omniscience), Hotkey (Hotkey - Normal)
+{
+F
+}
+
+STRING 3889
+// Items: I00X (kaleidoscope), Ubertip (Tooltip - Extended)
+{
+Increases the damage of illusions by 25% of base damage.
+}
+
+STRING 3890
+// Items: I00X (kaleidoscope), Description (Description)
+{
+Increases the damage of illusions by 25% of base damage.
+}
+
+STRING 3895
+// Items: I006 (crystal), Ubertip (Tooltip - Extended)
+{
+Reveals a targeted area. Invisible units are also revealed by the Crystal Ball's effect. |n|cffffcc00Lasts 8 seconds.|r|n|cffffcc0020 gold.|r |n|cff00aeef-buy crystal: 28 gold.|r
+}
+
+STRING 3896
+// Items: I00Z (club), Name (Name)
+{
+club
+}
+
+STRING 3897
+// Items: I00Z (club), Tip (Tooltip - Basic)
+{
+Purchase War Club
+}
+
+STRING 3898
+// Items: I00Z (club), Ubertip (Tooltip - Extended)
+{
+Allows the wolf to turn a tree into a club, increasing damage to farms but slowing attack speed.|n|cffffcc0040 gold.|r |n|cff00aeef-buy club: 56 gold.|r
+}
+
+STRING 3899
+// Items: I00Z (club), Description (Description)
+{
+Allows the wolf to turn a tree into a club, increasing damage to farms but slowing attack speed.
+}
+
+STRING 3900
+// Abilities: A00G (HideShow), Hotkey (Hotkey - Normal)
+{
+Z
+}
+
+STRING 3901
+// Units: h005 (Money Farm), Ubertip (Tooltip - Extended)
+{
+A farm that generates #wolves/#sheep gold every 10 seconds.|n2 sheep vs 4 wolves: 1 gold every 5 seconds|n3 sheep vs 5 wolves: 1 gold every 6 seconds|n5 sheep vs 5 wolves: 1 gold every 10 seconds
+}
+
+STRING 3915
+// Units: n009 (Critter), Name (Name)
+{
+Critter
+}
+
+STRING 3917
+// Doodads: D000 (Light 0), Name (Name)
+{
+Light 0
+}
+
+STRING 3918
+// Doodads: D001 (Light 1), Name (Name)
+{
+Light 1
+}
+
+STRING 3919
+// Doodads: D002 (Light 2), Name (Name)
+{
+Light 2
+}
+
+STRING 3920
+// Units: n00A (Light), Name (Name)
+{
+Light
+}
+
+STRING 3929
+{
+|cff00ff00Sheep Tag ReVoLuTiOn 9.5.4|r
+}
+
+STRING 3930
+{
+|cff00ff009.5.4|r
+}
+
+STRING 3931
+{
+|cff00ff009.5.4|r
+}
+
+STRING 3932
+{
+|cff00ff009.5.4|r
+}
+

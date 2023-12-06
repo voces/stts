@@ -1,0 +1,351 @@
+//===========================================================================
+// Trigger: destroyAllFarms
+//===========================================================================
+export const Trig_destroyAllFarms_Func002002002 = (): boolean => {
+  return (IsUnitType(GetFilterUnit()!, UNIT_TYPE_STRUCTURE) === true);
+};
+
+export const Trig_destroyAllFarms_Func005002 = (): void => {
+  RemoveUnit(GetEnumUnit()!);
+};
+
+const Trig_destroyAllFarms_Func007Func001C = (): boolean => {
+  if ((!(udg_dummyWisps > 0))) {
+    return false;
+  }
+  return true;
+};
+
+const Trig_destroyAllFarms_Actions = (): void => {
+  udg_atempint = GetConvertedPlayerId(GetTriggerPlayer()!);
+  udg_atempgroup = GetUnitsOfPlayerMatching(
+    ConvertedPlayer(udg_atempint)!,
+    Condition(Trig_destroyAllFarms_Func002002002),
+  )!;
+  udg_farmCount[udg_atempint] = 0;
+  SetPlayerStateBJ(
+    ConvertedPlayer(udg_atempint)!,
+    PLAYER_STATE_RESOURCE_LUMBER,
+    udg_farmCount[udg_atempint],
+  );
+  ForGroupBJ(udg_atempgroup, Trig_destroyAllFarms_Func005002);
+  DestroyGroup(udg_atempgroup);
+  bj_forLoopAIndex = 1;
+  bj_forLoopAIndexEnd = udg_lastPlayer;
+  while (true) {
+    if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
+    if ((Trig_destroyAllFarms_Func007Func001C())) {
+      LeaderboardSetPlayerItemValueBJ(
+        ConvertedPlayer(udg_atempint)!,
+        PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
+        udg_saves[udg_atempint],
+      );
+    } else {
+      LeaderboardSetPlayerItemValueBJ(
+        ConvertedPlayer(udg_atempint)!,
+        PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
+        udg_farmCount[udg_atempint],
+      );
+    }
+    bj_forLoopAIndex = bj_forLoopAIndex + 1;
+  }
+};
+
+//===========================================================================
+export {};
+declare global {
+  // deno-lint-ignore prefer-const
+  let InitTrig_destroyAllFarms: () => void;
+}
+InitTrig_destroyAllFarms = (): void => {
+  gg_trg_destroyAllFarms = CreateTrigger();
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(0)!,
+    "-des",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(1)!,
+    "-des",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(2)!,
+    "-des",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(3)!,
+    "-des",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(4)!,
+    "-des",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(5)!,
+    "-des",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(6)!,
+    "-des",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(7)!,
+    "-des",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(8)!,
+    "-des",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(9)!,
+    "-des",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(10)!,
+    "-des",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(11)!,
+    "-des",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(12)!,
+    "-des",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(13)!,
+    "-des",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(14)!,
+    "-des",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(15)!,
+    "-des",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(16)!,
+    "-des",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(17)!,
+    "-des",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(18)!,
+    "-des",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(19)!,
+    "-des",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(20)!,
+    "-des",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(21)!,
+    "-des",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(22)!,
+    "-des",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(23)!,
+    "-des",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(0)!,
+    "-d",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(1)!,
+    "-d",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(2)!,
+    "-d",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(3)!,
+    "-d",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(4)!,
+    "-d",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(5)!,
+    "-d",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(6)!,
+    "-d",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(7)!,
+    "-d",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(8)!,
+    "-d",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(9)!,
+    "-d",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(10)!,
+    "-d",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(11)!,
+    "-d",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(12)!,
+    "-d",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(13)!,
+    "-d",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(14)!,
+    "-d",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(15)!,
+    "-d",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(16)!,
+    "-d",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(17)!,
+    "-d",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(18)!,
+    "-d",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(19)!,
+    "-d",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(20)!,
+    "-d",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(21)!,
+    "-d",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(22)!,
+    "-d",
+    true,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_destroyAllFarms,
+    Player(23)!,
+    "-d",
+    true,
+  );
+  TriggerAddAction(gg_trg_destroyAllFarms, Trig_destroyAllFarms_Actions);
+};

@@ -1,0 +1,4 @@
+map.w3x        filter=lfs diff=lfs merge=lfs -text
+map.w3x/*.json !filter
+map.w3x/*.wts  !filter
+map.w3x/*.txt  !filter

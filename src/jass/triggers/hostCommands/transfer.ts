@@ -1,0 +1,254 @@
+//===========================================================================
+// Trigger: transfer
+//===========================================================================
+const Trig_transfer_Func001C = (): boolean => {
+  if ((GetTriggerPlayer()! === udg_Custom)) {
+    return true;
+  }
+  if ((GetTriggerPlayer()! === udg_originalCustom)) {
+    return true;
+  }
+  return false;
+};
+
+const Trig_transfer_Conditions = (): boolean => {
+  if ((!Trig_transfer_Func001C())) {
+    return false;
+  }
+  if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 11, 12)!) > 0))) {
+    return false;
+  }
+  if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 11, 12)!) < 25))) {
+    return false;
+  }
+  return true;
+};
+
+const Trig_transfer_Func003Func004C = (): boolean => {
+  if ((!(udg_Teams === 3))) {
+    return false;
+  }
+  return true;
+};
+
+const Trig_transfer_Func003C = (): boolean => {
+  if (
+    (!(GetPlayerSlotState(ConvertedPlayer(udg_transfer)!) ===
+      PLAYER_SLOT_STATE_PLAYING))
+  ) {
+    return false;
+  }
+  if (
+    (!(GetPlayerSlotState(ConvertedPlayer(udg_transfer)!) !==
+      PLAYER_SLOT_STATE_LEFT))
+  ) {
+    return false;
+  }
+  if (
+    (!(GetPlayerController(ConvertedPlayer(udg_transfer)!) ===
+      MAP_CONTROL_USER))
+  ) {
+    return false;
+  }
+  if ((!(udg_AFK[udg_transfer] < 3))) {
+    return false;
+  }
+  return true;
+};
+
+const Trig_transfer_Actions = (): void => {
+  udg_transfer = S2I(SubStringBJ(GetEventPlayerChatString()!, 11, 12)!);
+  if ((Trig_transfer_Func003C())) {
+    udg_anactualtempplayer = udg_Custom;
+    udg_Custom = ConvertedPlayer(udg_transfer)!;
+    if ((Trig_transfer_Func003Func004C())) {
+      TriggerExecute(gg_trg_setupPick);
+    }
+    udg_atempplayer = GetForceOfPlayer(GetTriggerPlayer()!)!;
+    udg_atempplayer2 = GetForceOfPlayer(ConvertedPlayer(udg_transfer)!)!;
+    DisplayTextToForce(
+      udg_atempplayer,
+      "                              |CFFFFCC00Transfered game to " +
+        (udg_colorString[udg_transfer] +
+          (GetPlayerName(ConvertedPlayer(udg_transfer)!) + "|CFFFFCC00.")),
+    );
+    DisplayTextToForce(
+      udg_atempplayer2,
+      "                              |CFFFFCC00You now have control of the game.",
+    );
+    DestroyForce(udg_atempplayer);
+    DestroyForce(udg_atempplayer2);
+    LeaderboardSetPlayerItemLabelBJ(
+      udg_anactualtempplayer,
+      GetLastCreatedLeaderboard()!,
+      udg_colorString[GetConvertedPlayerId(udg_anactualtempplayer)] +
+        GetPlayerName(udg_anactualtempplayer),
+    );
+    LeaderboardSetPlayerItemLabelBJ(
+      udg_Custom,
+      GetLastCreatedLeaderboard()!,
+      "|CFFFFFFFF$" +
+        (udg_colorString[GetConvertedPlayerId(udg_Custom)] +
+          GetPlayerName(udg_Custom)),
+    );
+    transferOwnershipOfHostFarm();
+  } else {
+    udg_transfer = 0;
+  }
+};
+
+//===========================================================================
+export {};
+declare global {
+  // deno-lint-ignore prefer-const
+  let InitTrig_transfer: () => void;
+}
+InitTrig_transfer = (): void => {
+  gg_trg_transfer = CreateTrigger();
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_transfer,
+    Player(0)!,
+    "-transfer",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_transfer,
+    Player(1)!,
+    "-transfer",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_transfer,
+    Player(2)!,
+    "-transfer",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_transfer,
+    Player(3)!,
+    "-transfer",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_transfer,
+    Player(4)!,
+    "-transfer",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_transfer,
+    Player(5)!,
+    "-transfer",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_transfer,
+    Player(6)!,
+    "-transfer",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_transfer,
+    Player(7)!,
+    "-transfer",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_transfer,
+    Player(8)!,
+    "-transfer",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_transfer,
+    Player(9)!,
+    "-transfer",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_transfer,
+    Player(10)!,
+    "-transfer",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_transfer,
+    Player(11)!,
+    "-transfer",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_transfer,
+    Player(12)!,
+    "-transfer",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_transfer,
+    Player(13)!,
+    "-transfer",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_transfer,
+    Player(14)!,
+    "-transfer",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_transfer,
+    Player(15)!,
+    "-transfer",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_transfer,
+    Player(16)!,
+    "-transfer",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_transfer,
+    Player(17)!,
+    "-transfer",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_transfer,
+    Player(18)!,
+    "-transfer",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_transfer,
+    Player(19)!,
+    "-transfer",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_transfer,
+    Player(20)!,
+    "-transfer",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_transfer,
+    Player(21)!,
+    "-transfer",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_transfer,
+    Player(22)!,
+    "-transfer",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_transfer,
+    Player(23)!,
+    "-transfer",
+    false,
+  );
+  TriggerAddCondition(gg_trg_transfer, Condition(Trig_transfer_Conditions));
+  TriggerAddAction(gg_trg_transfer, Trig_transfer_Actions);
+};

@@ -1,0 +1,442 @@
+//===========================================================================
+// Trigger: giveUpCaptain
+//===========================================================================
+const Trig_giveUpCaptain_Func005Func002C = (): boolean => {
+  if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 7, 8)!) < 25))) {
+    return false;
+  }
+  if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 7, 8)!) > 0))) {
+    return false;
+  }
+  return true;
+};
+
+const Trig_giveUpCaptain_Func005C = (): boolean => {
+  if ((GetEventPlayerChatString()! === "-give")) {
+    return true;
+  }
+  if ((Trig_giveUpCaptain_Func005Func002C())) {
+    return true;
+  }
+  return false;
+};
+
+const Trig_giveUpCaptain_Conditions = (): boolean => {
+  if ((!Trig_giveUpCaptain_Func005C())) {
+    return false;
+  }
+  if ((!(udg_giveOn === true))) {
+    return false;
+  }
+  return true;
+};
+
+const Trig_giveUpCaptain_Func002Func001Func001Func001Func002001001001 =
+  (): boolean => {
+    return GetBooleanAnd(
+      udg_sheepLastGame[GetConvertedPlayerId(GetFilterPlayer()!)] === false,
+      GetBooleanAnd(
+        IsPlayerInForce(GetFilterPlayer()!, udg_Draft) === false,
+        GetFilterPlayer()! !== udg_captains[3],
+      ),
+    );
+  };
+
+const Trig_giveUpCaptain_Func002Func001Func001Func001C = (): boolean => {
+  if (
+    (!(CountPlayersInForceBJ(
+      GetPlayersMatching(
+        Condition(
+          Trig_giveUpCaptain_Func002Func001Func001Func001Func002001001001,
+        ),
+      )!,
+    ) === 0))
+  ) {
+    return false;
+  }
+  return true;
+};
+
+const Trig_giveUpCaptain_Func002Func001Func001C = (): boolean => {
+  if ((!(GetTriggerPlayer()! === udg_captains[3]))) {
+    return false;
+  }
+  return true;
+};
+
+const Trig_giveUpCaptain_Func002Func001Func002Func002001001001 =
+  (): boolean => {
+    return GetBooleanAnd(
+      udg_sheepLastGame[GetConvertedPlayerId(GetFilterPlayer()!)] === true,
+      GetBooleanAnd(
+        IsPlayerInForce(GetFilterPlayer()!, udg_Draft) === false,
+        GetFilterPlayer()! !== udg_captains[1],
+      ),
+    );
+  };
+
+const Trig_giveUpCaptain_Func002Func001Func002C = (): boolean => {
+  if (
+    (!(CountPlayersInForceBJ(
+      GetPlayersMatching(
+        Condition(Trig_giveUpCaptain_Func002Func001Func002Func002001001001),
+      )!,
+    ) === 0))
+  ) {
+    return false;
+  }
+  return true;
+};
+
+const Trig_giveUpCaptain_Func002Func001C = (): boolean => {
+  if ((!(GetTriggerPlayer()! === udg_captains[1]))) {
+    return false;
+  }
+  return true;
+};
+
+const Trig_giveUpCaptain_Func002C = (): boolean => {
+  if ((!(GetEventPlayerChatString()! === "-give"))) {
+    return false;
+  }
+  return true;
+};
+
+const Trig_giveUpCaptain_Func003Func001Func001Func010C = (): boolean => {
+  if ((!(udg_captainTurn === 3))) {
+    return false;
+  }
+  return true;
+};
+
+const Trig_giveUpCaptain_Func003Func001Func001Func012001001001 =
+  (): boolean => {
+    return GetBooleanAnd(
+      udg_sheepLastGame[GetConvertedPlayerId(GetFilterPlayer()!)] === false,
+      GetBooleanAnd(
+        IsPlayerInForce(GetFilterPlayer()!, udg_Draft) === false,
+        GetFilterPlayer()! !== udg_captains[3],
+      ),
+    );
+  };
+
+const Trig_giveUpCaptain_Func003Func001Func001C = (): boolean => {
+  if (
+    (!(IsPlayerInForce(ConvertedPlayer(udg_atempint)!, udg_Draft) === true))
+  ) {
+    return false;
+  }
+  if (
+    (!(CountPlayersInForceBJ(
+      GetPlayersMatching(
+        Condition(Trig_giveUpCaptain_Func003Func001Func001Func012001001001),
+      )!,
+    ) === 0))
+  ) {
+    return false;
+  }
+  return true;
+};
+
+const Trig_giveUpCaptain_Func003Func001C = (): boolean => {
+  if ((!(GetTriggerPlayer()! === udg_captains[3]))) {
+    return false;
+  }
+  return true;
+};
+
+const Trig_giveUpCaptain_Func003Func002Func010C = (): boolean => {
+  if ((!(udg_captainTurn === 1))) {
+    return false;
+  }
+  return true;
+};
+
+const Trig_giveUpCaptain_Func003Func002Func012001001001 = (): boolean => {
+  return GetBooleanAnd(
+    udg_sheepLastGame[GetConvertedPlayerId(GetFilterPlayer()!)] === true,
+    GetBooleanAnd(
+      IsPlayerInForce(GetFilterPlayer()!, udg_Draft) === false,
+      GetFilterPlayer()! !== udg_captains[1],
+    ),
+  );
+};
+
+const Trig_giveUpCaptain_Func003Func002C = (): boolean => {
+  if (
+    (!(IsPlayerInForce(ConvertedPlayer(udg_atempint)!, udg_Draft) === true))
+  ) {
+    return false;
+  }
+  if (
+    (!(CountPlayersInForceBJ(
+      GetPlayersMatching(
+        Condition(Trig_giveUpCaptain_Func003Func002Func012001001001),
+      )!,
+    ) === 0))
+  ) {
+    return false;
+  }
+  return true;
+};
+
+const Trig_giveUpCaptain_Func003C = (): boolean => {
+  if ((!(GetTriggerPlayer()! === udg_captains[1]))) {
+    return false;
+  }
+  return true;
+};
+
+const Trig_giveUpCaptain_Actions = (): void => {
+  udg_giveOn = false;
+  if ((Trig_giveUpCaptain_Func002C())) {
+    if ((Trig_giveUpCaptain_Func002Func001C())) {
+      if ((Trig_giveUpCaptain_Func002Func001Func002C())) {
+        udg_atempint = GetConvertedPlayerId(ForcePickRandomPlayer(udg_Draft)!);
+      }
+    } else {
+      if ((Trig_giveUpCaptain_Func002Func001Func001C())) {
+        if ((Trig_giveUpCaptain_Func002Func001Func001Func001C())) {
+          udg_atempint = GetConvertedPlayerId(
+            ForcePickRandomPlayer(udg_Draft)!,
+          );
+        }
+      }
+    }
+  } else {
+    udg_atempint = S2I(SubStringBJ(GetEventPlayerChatString()!, 7, 8)!);
+  }
+  if ((Trig_giveUpCaptain_Func003C())) {
+    if ((Trig_giveUpCaptain_Func003Func002C())) {
+      udg_captains[1] = ConvertedPlayer(udg_atempint)!;
+      udg_atempint2 = udg_multiboardRow[udg_atempint];
+      udg_multiboardRow[udg_atempint] =
+        udg_multiboardRow[GetConvertedPlayerId(GetTriggerPlayer()!)];
+      udg_multiboardRow[GetConvertedPlayerId(GetTriggerPlayer()!)] =
+        udg_atempint2;
+      MultiboardSetItemValueBJ(
+        udg_captainsMultiboard,
+        1,
+        udg_multiboardRow[udg_atempint],
+        "$" +
+          (udg_colorString[udg_atempint] +
+            GetPlayerName(ConvertedPlayer(udg_atempint)!)),
+      );
+      MultiboardSetItemValueBJ(
+        udg_captainsMultiboard,
+        2,
+        udg_multiboardRow[GetConvertedPlayerId(GetTriggerPlayer()!)],
+        udg_colorString[GetConvertedPlayerId(GetTriggerPlayer()!)] +
+          (GetPlayerName(GetTriggerPlayer()!) +
+            ("(" + (I2S(GetConvertedPlayerId(GetTriggerPlayer()!)) + ")"))),
+      );
+      udg_sheepLastGame[udg_atempint] = true;
+      ForceAddPlayerSimple(GetTriggerPlayer()!, udg_Draft);
+      ForceRemovePlayerSimple(ConvertedPlayer(udg_atempint)!, udg_Draft);
+      if ((Trig_giveUpCaptain_Func003Func002Func010C())) {
+        MultiboardSetTitleText(
+          udg_captainsMultiboard,
+          udg_colorString[udg_atempint] +
+            (GetPlayerName(ConvertedPlayer(udg_atempint)!) + "'s turn"),
+        );
+      }
+    }
+  } else {
+    if ((Trig_giveUpCaptain_Func003Func001C())) {
+      if ((Trig_giveUpCaptain_Func003Func001Func001C())) {
+        udg_captains[3] = ConvertedPlayer(udg_atempint)!;
+        udg_atempint2 = udg_multiboardRow[udg_atempint];
+        udg_multiboardRow[udg_atempint] =
+          udg_multiboardRow[GetConvertedPlayerId(GetTriggerPlayer()!)];
+        udg_multiboardRow[GetConvertedPlayerId(GetTriggerPlayer()!)] =
+          udg_atempint2;
+        MultiboardSetItemValueBJ(
+          udg_captainsMultiboard,
+          3,
+          udg_multiboardRow[udg_atempint],
+          "$" +
+            (udg_colorString[udg_atempint] +
+              GetPlayerName(ConvertedPlayer(udg_atempint)!)),
+        );
+        MultiboardSetItemValueBJ(
+          udg_captainsMultiboard,
+          2,
+          udg_multiboardRow[GetConvertedPlayerId(GetTriggerPlayer()!)],
+          udg_colorString[GetConvertedPlayerId(GetTriggerPlayer()!)] +
+            (GetPlayerName(GetTriggerPlayer()!) +
+              ("(" + (I2S(GetConvertedPlayerId(GetTriggerPlayer()!)) + ")"))),
+        );
+        udg_sheepLastGame[udg_atempint] = false;
+        ForceAddPlayerSimple(GetTriggerPlayer()!, udg_Draft);
+        ForceRemovePlayerSimple(ConvertedPlayer(udg_atempint)!, udg_Draft);
+        if ((Trig_giveUpCaptain_Func003Func001Func001Func010C())) {
+          MultiboardSetTitleText(
+            udg_captainsMultiboard,
+            udg_colorString[udg_atempint] +
+              (GetPlayerName(ConvertedPlayer(udg_atempint)!) + "'s turn"),
+          );
+        }
+      }
+    }
+  }
+  udg_giveOn = true;
+};
+
+//===========================================================================
+export {};
+declare global {
+  // deno-lint-ignore prefer-const
+  let InitTrig_giveUpCaptain: () => void;
+}
+InitTrig_giveUpCaptain = (): void => {
+  gg_trg_giveUpCaptain = CreateTrigger();
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_giveUpCaptain,
+    Player(0)!,
+    "-give",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_giveUpCaptain,
+    Player(1)!,
+    "-give",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_giveUpCaptain,
+    Player(2)!,
+    "-give",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_giveUpCaptain,
+    Player(3)!,
+    "-give",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_giveUpCaptain,
+    Player(4)!,
+    "-give",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_giveUpCaptain,
+    Player(5)!,
+    "-give",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_giveUpCaptain,
+    Player(6)!,
+    "-give",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_giveUpCaptain,
+    Player(7)!,
+    "-give",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_giveUpCaptain,
+    Player(8)!,
+    "-give",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_giveUpCaptain,
+    Player(9)!,
+    "-give",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_giveUpCaptain,
+    Player(10)!,
+    "-give",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_giveUpCaptain,
+    Player(11)!,
+    "-give",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_giveUpCaptain,
+    Player(12)!,
+    "-give",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_giveUpCaptain,
+    Player(13)!,
+    "-give",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_giveUpCaptain,
+    Player(14)!,
+    "-give",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_giveUpCaptain,
+    Player(15)!,
+    "-give",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_giveUpCaptain,
+    Player(16)!,
+    "-give",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_giveUpCaptain,
+    Player(17)!,
+    "-give",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_giveUpCaptain,
+    Player(18)!,
+    "-give",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_giveUpCaptain,
+    Player(19)!,
+    "-give",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_giveUpCaptain,
+    Player(20)!,
+    "-give",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_giveUpCaptain,
+    Player(21)!,
+    "-give",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_giveUpCaptain,
+    Player(22)!,
+    "-give",
+    false,
+  );
+  TriggerRegisterPlayerChatEvent(
+    gg_trg_giveUpCaptain,
+    Player(23)!,
+    "-give",
+    false,
+  );
+  TriggerAddCondition(
+    gg_trg_giveUpCaptain,
+    Condition(Trig_giveUpCaptain_Conditions),
+  );
+  TriggerAddAction(gg_trg_giveUpCaptain, Trig_giveUpCaptain_Actions);
+};

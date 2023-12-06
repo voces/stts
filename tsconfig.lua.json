@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "temp"
+  },
+  "include": ["./src"],
+  "exclude": ["**/*.test.ts", "**/*.test.tsx", "**/tests/**"],
+  "tstl": {
+    "noImplicitSelf": true,
+    "luaBundleEntry": "./src/main.ts",
+    "luaBundle": "out.lua",
+    "luaTarget": "5.3"
+  }
+}

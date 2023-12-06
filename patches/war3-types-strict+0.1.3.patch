@@ -1,0 +1,31 @@
+diff --git a/node_modules/war3-types-strict/1.33.0/common.j.d.ts b/node_modules/war3-types-strict/1.33.0/common.j.d.ts
+index 223f999..c60c958 100644
+--- a/node_modules/war3-types-strict/1.33.0/common.j.d.ts
++++ b/node_modules/war3-types-strict/1.33.0/common.j.d.ts
+@@ -2398,7 +2398,7 @@ declare function EndThematicMusic(): void;
+ 
+ declare function EnumDestructablesInRect(r: rect, filter: boolexpr | undefined, actionFunc: () => void): void;
+ 
+-declare function EnumItemsInRect(r: rect, filter: boolexpr | undefined, actionFunc: () => void): void;
++declare function EnumItemsInRect(r: rect, filter: boolexpr | undefined | null, actionFunc: () => void): void;
+ 
+ declare function ExecuteFunc(funcName: string): void;
+ 
+@@ -2970,7 +2970,7 @@ declare function GroupEnumUnitsInRect(whichGroup: group, r: rect, filter?: boole
+ 
+ declare function GroupEnumUnitsInRectCounted(whichGroup: group, r: rect, filter: boolexpr | undefined, countLimit: number): void;
+ 
+-declare function GroupEnumUnitsOfPlayer(whichGroup: group, whichPlayer: player, filter?: boolexpr): void;
++declare function GroupEnumUnitsOfPlayer(whichGroup: group, whichPlayer: player, filter?: boolexpr | null): void;
+ 
+ declare function GroupEnumUnitsOfType(whichGroup: group, unitname: string, filter?: boolexpr): void;
+ 
+@@ -4152,7 +4152,7 @@ declare function TimerGetRemaining(whichTimer: timer): number;
+ 
+ declare function TimerGetTimeout(whichTimer: timer): number;
+ 
+-declare function TimerStart(whichTimer: timer, timeout: number, periodic: boolean, handlerFunc: () => void): void;
++declare function TimerStart(whichTimer: timer, timeout: number, periodic: boolean, handlerFunc: (() => void) | null): void;
+ 
+ declare function TriggerAddAction(whichTrigger: trigger, actionFunc: () => void): triggeraction;
+ 
