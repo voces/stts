@@ -32,7 +32,7 @@ const Trig_Claws_240_Recipe_Func001Func002Func002C = (i: number): boolean => {
   return true;
 };
 
-const Trig_Claws_240_Recipe_Func001Func003C = (): boolean => {
+const Trig_Claws_240_Recipe_Func001Func003C = () => {
   if ((GetItemTypeId(GetManipulatedItem()!) === FourCC("I005"))) {
     return true;
   }
@@ -42,14 +42,14 @@ const Trig_Claws_240_Recipe_Func001Func003C = (): boolean => {
   return false;
 };
 
-const Trig_Claws_240_Recipe_Func001C = (): boolean => {
+const Trig_Claws_240_Recipe_Func001C = () => {
   if ((!Trig_Claws_240_Recipe_Func001Func003C())) {
     return false;
   }
   return true;
 };
 
-const Trig_Claws_240_Recipe_Actions = (): void => {
+const Trig_Claws_240_Recipe_Actions = () => {
   let tempint = 0;
   let i = 0;
   let k = 0;
@@ -102,7 +102,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_Claws_90_Recipe: () => void;
 }
-InitTrig_Claws_90_Recipe = (): void => {
+InitTrig_Claws_90_Recipe = () => {
   gg_trg_Claws_90_Recipe = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(
     gg_trg_Claws_90_Recipe,

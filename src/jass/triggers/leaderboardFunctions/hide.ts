@@ -1,14 +1,14 @@
 //===========================================================================
 // Trigger: hide
 //===========================================================================
-const Trig_hide_Func001C = (): boolean => {
-  if ((!(udg_Teams === 2))) {
+const Trig_hide_Func001C = () => {
+  if ((!(udg_Teams === TEAMS_LOCK_IE_PLAYING))) {
     return false;
   }
   return true;
 };
 
-const Trig_hide_Actions = (): void => {
+const Trig_hide_Actions = () => {
   if ((Trig_hide_Func001C())) {
     LeaderboardDisplayBJ(false, PlayerGetLeaderboardBJ(GetTriggerPlayer()!)!);
   }
@@ -21,7 +21,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_hide: () => void;
 }
-InitTrig_hide = (): void => {
+InitTrig_hide = () => {
   gg_trg_hide = CreateTrigger();
   TriggerRegisterPlayerChatEvent(gg_trg_hide, Player(0)!, "-hide", true);
   TriggerRegisterPlayerChatEvent(gg_trg_hide, Player(1)!, "-hide", true);

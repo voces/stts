@@ -3,7 +3,7 @@
 //===========================================================================
 // hideEsc
 
-const Trig_hideEsc_filterNonControlledUnits = (): boolean => {
+const Trig_hideEsc_filterNonControlledUnits = () => {
   const p = GetOwningPlayer(GetFilterUnit()!);
 
   if (p === GetTriggerPlayer()!) {
@@ -19,10 +19,10 @@ const Trig_hideEsc_filterNonControlledUnits = (): boolean => {
   return false;
 };
 
-const Trig_hideEsc_Actions = (): void => {
+const Trig_hideEsc_Actions = () => {
   const p = GetTriggerPlayer()!;
 
-  if (udg_Teams !== TEAMS_LOCK) {
+  if (udg_Teams !== TEAMS_LOCK_IE_PLAYING) {
     return;
   }
 
@@ -59,7 +59,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_hideEsc: () => void;
 }
-InitTrig_hideEsc = (): void => {
+InitTrig_hideEsc = () => {
   let i = 0;
   gg_trg_hideEsc = CreateTrigger();
   while (true) {

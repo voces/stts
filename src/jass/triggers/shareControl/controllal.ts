@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: controllal
 //===========================================================================
-const Trig_controllal_Func002C = (): boolean => {
+const Trig_controllal_Func002C = () => {
   if ((GetSpellAbilityId() === FourCC("A022"))) {
     return true;
   }
@@ -11,8 +11,8 @@ const Trig_controllal_Func002C = (): boolean => {
   return false;
 };
 
-const Trig_controllal_Conditions = (): boolean => {
-  if ((!(udg_AFK[GetConvertedPlayerId(GetTriggerPlayer()!)] === 0))) {
+const Trig_controllal_Conditions = () => {
+  if ((!(udg_AFK[GetConvertedPlayerId(GetTriggerPlayer()!)] === AFK_PLAYING))) {
     return false;
   }
   if ((!Trig_controllal_Func002C())) {
@@ -21,27 +21,27 @@ const Trig_controllal_Conditions = (): boolean => {
   if ((!(udg_shareOn === true))) {
     return false;
   }
-  if ((!(udg_Teams === 2))) {
+  if ((!(udg_Teams === TEAMS_LOCK_IE_PLAYING))) {
     return false;
   }
   return true;
 };
 
-const Trig_controllal_Func004C = (): boolean => {
+const Trig_controllal_Func004C = () => {
   if ((!(GetSpellAbilityId() === FourCC("A022")))) {
     return false;
   }
   return true;
 };
 
-const Trig_controllal_Func008Func001Func001C = (): boolean => {
+const Trig_controllal_Func008Func001Func001C = () => {
   if ((!(GetEnumPlayer()! !== udg_anactualtempplayer))) {
     return false;
   }
   return true;
 };
 
-const Trig_controllal_Func008Func001Func002C = (): boolean => {
+const Trig_controllal_Func008Func001Func002C = () => {
   if ((!(GetEnumPlayer()! !== udg_anactualtempplayer))) {
     return false;
   }
@@ -51,7 +51,7 @@ const Trig_controllal_Func008Func001Func002C = (): boolean => {
   return true;
 };
 
-const Trig_controllal_Func008Func001C = (): boolean => {
+const Trig_controllal_Func008Func001C = () => {
   if (
     (!(GetPlayerAlliance(
       udg_anactualtempplayer,
@@ -73,7 +73,7 @@ const Trig_controllal_Func008Func001C = (): boolean => {
   return true;
 };
 
-const Trig_controllal_Func008A = (): void => {
+const Trig_controllal_Func008A = () => {
   if ((Trig_controllal_Func008Func001C())) {
     if ((Trig_controllal_Func008Func001Func002C())) {
       if (pub[GetPlayerId(GetEnumPlayer()!)]) {
@@ -113,7 +113,7 @@ const Trig_controllal_Func008A = (): void => {
   }
 };
 
-const Trig_controllal_Actions = (): void => {
+const Trig_controllal_Actions = () => {
   udg_anactualtempplayer = GetTriggerPlayer()!;
   if ((Trig_controllal_Func004C())) {
     udg_anactualtempplayer = GetOwningPlayer(GetTriggerUnit()!);
@@ -129,7 +129,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_controllal: () => void;
 }
-InitTrig_controllal = (): void => {
+InitTrig_controllal = () => {
   gg_trg_controllal = CreateTrigger();
   TriggerRegisterPlayerChatEvent(gg_trg_controllal, Player(0)!, "-call", true);
   TriggerRegisterPlayerChatEvent(gg_trg_controllal, Player(1)!, "-call", true);

@@ -2,7 +2,7 @@ diff --git a/node_modules/war3-types-strict/1.33.0/common.j.d.ts b/node_modules/
 index 223f999..c60c958 100644
 --- a/node_modules/war3-types-strict/1.33.0/common.j.d.ts
 +++ b/node_modules/war3-types-strict/1.33.0/common.j.d.ts
-@@ -2398,7 +2398,7 @@ declare function EndThematicMusic(): void;
+@@ -2398,7 +2398,7 @@ declare function EndThematicMusic();
  
  declare function EnumDestructablesInRect(r: rect, filter: boolexpr | undefined, actionFunc: () => void): void;
  

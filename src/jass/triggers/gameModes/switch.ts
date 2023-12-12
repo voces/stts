@@ -1,28 +1,31 @@
 //===========================================================================
 // Trigger: switch
+
+import { president } from "../../../modes/president";
+
 //===========================================================================
-const Trig_switch_Conditions = (): boolean => {
+const Trig_switch_Conditions = () => {
   if ((!(GetTriggerPlayer()! === udg_Custom))) {
     return false;
   }
   return true;
 };
 
-const Trig_switch_Func002C = (): boolean => {
+const Trig_switch_Func002C = () => {
   if ((!(StringLength(udg_atempstring) === 1))) {
     return false;
   }
   return true;
 };
 
-const Trig_switch_Func003Func010Func001Func003C = (): boolean => {
+const Trig_switch_Func003Func010Func001Func003C = () => {
   if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 9, 9)!) === 0))) {
     return false;
   }
   return true;
 };
 
-const Trig_switch_Func003Func010Func001C = (): boolean => {
+const Trig_switch_Func003Func010Func001C = () => {
   if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 9, 9)!) >= 0))) {
     return false;
   }
@@ -32,14 +35,14 @@ const Trig_switch_Func003Func010Func001C = (): boolean => {
   return true;
 };
 
-const Trig_switch_Func003Func010Func002Func003C = (): boolean => {
+const Trig_switch_Func003Func010Func002Func003C = () => {
   if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 11, 12)!) === 0))) {
     return false;
   }
   return true;
 };
 
-const Trig_switch_Func003Func010Func002C = (): boolean => {
+const Trig_switch_Func003Func010Func002C = () => {
   if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 11, 12)!) >= 0))) {
     return false;
   }
@@ -49,7 +52,7 @@ const Trig_switch_Func003Func010Func002C = (): boolean => {
   return true;
 };
 
-const Trig_switch_Func003Func010Func003C = (): boolean => {
+const Trig_switch_Func003Func010Func003C = () => {
   if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 13, 14)!) >= 0))) {
     return false;
   }
@@ -59,7 +62,7 @@ const Trig_switch_Func003Func010Func003C = (): boolean => {
   return true;
 };
 
-const Trig_switch_Func003Func010Func004C = (): boolean => {
+const Trig_switch_Func003Func010Func004C = () => {
   if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 15, 17)!) >= 0))) {
     return false;
   }
@@ -69,28 +72,28 @@ const Trig_switch_Func003Func010Func004C = (): boolean => {
   return true;
 };
 
-const Trig_switch_Func003Func010C = (): boolean => {
+const Trig_switch_Func003Func010C = () => {
   if ((!(udg_atempstring === "-switch"))) {
     return false;
   }
   return true;
 };
 
-const Trig_switch_Func003Func011C = (): boolean => {
+const Trig_switch_Func003Func011C = () => {
   if ((!(udg_positionOn === true))) {
     return false;
   }
   return true;
 };
 
-const Trig_switch_Func003Func015C = (): boolean => {
+const Trig_switch_Func003Func015C = () => {
   if ((!(udg_positionOn === true))) {
     return false;
   }
   return true;
 };
 
-const Trig_switch_Func003C = (): boolean => {
+const Trig_switch_Func003C = () => {
   if ((!(udg_switchOn === true))) {
     return false;
   }
@@ -100,7 +103,7 @@ const Trig_switch_Func003C = (): boolean => {
   return true;
 };
 
-const Trig_switch_Actions = (): void => {
+const Trig_switch_Actions = () => {
   udg_atempstring = I2S(R2I(ModuloReal(udg_time, 60)))!;
   if ((Trig_switch_Func002C())) {
     udg_atempstring = "0" + udg_atempstring;
@@ -133,6 +136,7 @@ const Trig_switch_Actions = (): void => {
     DisableTrigger(gg_trg_sheepVamp);
     EnableTrigger(gg_trg_sheepSwitch);
     vampOn = false;
+    president.enabled = false;
     udg_switchOn = true;
     if ((Trig_switch_Func003Func010C())) {
       udg_dummyWisps = 0;
@@ -197,7 +201,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_switch: () => void;
 }
-InitTrig_switch = (): void => {
+InitTrig_switch = () => {
   gg_trg_switch = CreateTrigger();
   TriggerRegisterPlayerChatEvent(gg_trg_switch, Player(0)!, "-switch", false);
   TriggerRegisterPlayerChatEvent(gg_trg_switch, Player(1)!, "-switch", false);

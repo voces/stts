@@ -1,17 +1,17 @@
 //===========================================================================
 // Trigger: Anti Stack Stomp
 //===========================================================================
-const Stomp_Conditions = (): boolean => {
+const Stomp_Conditions = () => {
   return GetSpellAbilityId() === FourCC("A01E") ||
     GetSpellAbilityId() === FourCC("A01P");
 };
 
-const Stomp_cond2 = (): boolean => {
-  return (GetUnitTypeId(GetFilterUnit()!) === FourCC("uC04") &&
+const Stomp_cond2 = () => {
+  return (GetUnitTypeId(GetFilterUnit()!) === sheepType &&
     IsUnitIllusion(GetFilterUnit()!) === false);
 };
 
-const Stomp_cond1 = (): void => {
+const Stomp_cond1 = () => {
   DestroyEffectBJ(
     udg_antiStackEffect[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()!))],
   );
@@ -25,11 +25,10 @@ const Stomp_cond1 = (): void => {
     GetEnumUnit()!,
     "Abilities\\Spells\\Orc\\Purge\\PurgeBuffTarget.mdl",
   );
-  udg_antiStackEffect[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()!))] =
-    GetLastCreatedEffectBJ()!;
+  udg_antiStackEffect[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()!))] = GetLastCreatedEffectBJ()!;
 };
 
-const Stomp_Actions = (): void => {
+const Stomp_Actions = () => {
   const atempgroup = GetUnitsInRangeOfLocMatching(
     300,
     GetUnitLoc(GetTriggerUnit()!),
@@ -64,7 +63,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_Anti_Stack_Stomp: () => void;
 }
-InitTrig_Anti_Stack_Stomp = (): void => {
+InitTrig_Anti_Stack_Stomp = () => {
   const t = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_SPELL_EFFECT);
   TriggerAddCondition(t, Condition(Stomp_Conditions));

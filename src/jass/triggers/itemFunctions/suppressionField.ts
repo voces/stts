@@ -1,11 +1,11 @@
 //===========================================================================
 // Trigger: suppressionField
 //===========================================================================
-const Trig_suppressionField_Conditions = (): boolean => {
+const Trig_suppressionField_Conditions = () => {
   return GetUnitTypeId(GetTriggerUnit()!) === FourCC("o000");
 };
 
-const Trig_suppressionField_Actions = (): void => {
+const Trig_suppressionField_Actions = () => {
   let u = GetTriggerUnit()!;
   const p = GetOwningPlayer(u);
   const cx = GetUnitX(u);
@@ -56,7 +56,7 @@ const Trig_suppressionField_Actions = (): void => {
   EnableTrigger(GetTriggeringTrigger()!);
 };
 
-const Trig_suppressionField_Damage = (): void => {
+const Trig_suppressionField_Damage = () => {
   const u = BlzGetEventDamageTarget()!;
   if (
     UnitHasBuffBJ(u, FourCC("B009")) &&
@@ -72,7 +72,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_suppressionField: () => void;
 }
-InitTrig_suppressionField = (): void => {
+InitTrig_suppressionField = () => {
   let t = CreateTrigger();
   TriggerRegisterEnterRectSimple(t, GetEntireMapRect()!);
   TriggerAddCondition(t, Condition(Trig_suppressionField_Conditions));

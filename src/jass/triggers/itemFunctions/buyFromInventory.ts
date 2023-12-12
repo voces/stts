@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: buyFromInventory
 //===========================================================================
-const Trig_buyFromInventory_Func002Func001C = (): boolean => {
+const Trig_buyFromInventory_Func002Func001C = () => {
   if (
     (!(GetPlayerState(
       GetOwningPlayer(GetLearningUnit()!),
@@ -13,7 +13,7 @@ const Trig_buyFromInventory_Func002Func001C = (): boolean => {
   return true;
 };
 
-const Trig_buyFromInventory_Func002Func002Func001C = (): boolean => {
+const Trig_buyFromInventory_Func002Func002Func001C = () => {
   if (
     (!(GetPlayerState(
       GetOwningPlayer(GetLearningUnit()!),
@@ -25,48 +25,45 @@ const Trig_buyFromInventory_Func002Func002Func001C = (): boolean => {
   return true;
 };
 
-const Trig_buyFromInventory_Func002Func002Func002Func001Func001Func001C =
-  (): boolean => {
-    if (
-      (!(GetPlayerState(
-        GetOwningPlayer(GetLearningUnit()!),
-        PLAYER_STATE_RESOURCE_GOLD,
-      ) >= 112))
-    ) {
-      return false;
-    }
-    return true;
-  };
+const Trig_buyFromInventory_Func002Func002Func002Func001Func001Func001C = () => {
+  if (
+    (!(GetPlayerState(
+      GetOwningPlayer(GetLearningUnit()!),
+      PLAYER_STATE_RESOURCE_GOLD,
+    ) >= 112))
+  ) {
+    return false;
+  }
+  return true;
+};
 
-const Trig_buyFromInventory_Func002Func002Func002Func001Func001C =
-  (): boolean => {
-    if ((!(GetLearnedSkillBJ() === FourCC("A010")))) {
-      return false;
-    }
-    return true;
-  };
+const Trig_buyFromInventory_Func002Func002Func002Func001Func001C = () => {
+  if ((!(GetLearnedSkillBJ() === FourCC("A010")))) {
+    return false;
+  }
+  return true;
+};
 
-const Trig_buyFromInventory_Func002Func002Func002Func001Func002C =
-  (): boolean => {
-    if (
-      (!(GetPlayerState(
-        GetOwningPlayer(GetLearningUnit()!),
-        PLAYER_STATE_RESOURCE_GOLD,
-      ) >= 75))
-    ) {
-      return false;
-    }
-    return true;
-  };
+const Trig_buyFromInventory_Func002Func002Func002Func001Func002C = () => {
+  if (
+    (!(GetPlayerState(
+      GetOwningPlayer(GetLearningUnit()!),
+      PLAYER_STATE_RESOURCE_GOLD,
+    ) >= 75))
+  ) {
+    return false;
+  }
+  return true;
+};
 
-const Trig_buyFromInventory_Func002Func002Func002Func001C = (): boolean => {
+const Trig_buyFromInventory_Func002Func002Func002Func001C = () => {
   if ((!(GetLearnedSkillBJ() === FourCC("A00R")))) {
     return false;
   }
   return true;
 };
 
-const Trig_buyFromInventory_Func002Func002Func002Func002C = (): boolean => {
+const Trig_buyFromInventory_Func002Func002Func002Func002C = () => {
   if (
     (!(GetPlayerState(
       GetOwningPlayer(GetLearningUnit()!),
@@ -78,28 +75,28 @@ const Trig_buyFromInventory_Func002Func002Func002Func002C = (): boolean => {
   return true;
 };
 
-const Trig_buyFromInventory_Func002Func002Func002C = (): boolean => {
+const Trig_buyFromInventory_Func002Func002Func002C = () => {
   if ((!(GetLearnedSkillBJ() === FourCC("A00P")))) {
     return false;
   }
   return true;
 };
 
-const Trig_buyFromInventory_Func002Func002C = (): boolean => {
+const Trig_buyFromInventory_Func002Func002C = () => {
   if ((!(GetLearnedSkillBJ() === FourCC("A00O")))) {
     return false;
   }
   return true;
 };
 
-const Trig_buyFromInventory_Func002C = (): boolean => {
+const Trig_buyFromInventory_Func002C = () => {
   if ((!(GetLearnedSkillBJ() === FourCC("A00N")))) {
     return false;
   }
   return true;
 };
 
-const Trig_buyFromInventory_Actions = (): void => {
+const Trig_buyFromInventory_Actions = () => {
   udg_atempplayer = GetForceOfPlayer(GetOwningPlayer(GetLearningUnit()!))!;
   if ((Trig_buyFromInventory_Func002C())) {
     if ((Trig_buyFromInventory_Func002Func001C())) {
@@ -202,7 +199,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_buyFromInventory: () => void;
 }
-InitTrig_buyFromInventory = (): void => {
+InitTrig_buyFromInventory = () => {
   gg_trg_buyFromInventory = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(
     gg_trg_buyFromInventory,

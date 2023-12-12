@@ -1,14 +1,14 @@
 //===========================================================================
 // Trigger: position
 //===========================================================================
-const Trig_position_Conditions = (): boolean => {
+const Trig_position_Conditions = () => {
   if ((!(udg_practiceOn === true))) {
     return false;
   }
   return true;
 };
 
-const Trig_position_Func003C = (): boolean => {
+const Trig_position_Func003C = () => {
   if ((!(udg_atempint > 0))) {
     return false;
   }
@@ -18,11 +18,10 @@ const Trig_position_Func003C = (): boolean => {
   return true;
 };
 
-const Trig_position_Actions = (): void => {
+const Trig_position_Actions = () => {
   udg_atempint = S2I(SubStringBJ(GetEventPlayerChatString()!, 11, 12)!);
   if ((Trig_position_Func003C())) {
-    udg_startLocation[GetConvertedPlayerId(GetTriggerPlayer()!)] =
-      udg_masterStartLocation[udg_atempint];
+    udg_startLocation[GetConvertedPlayerId(GetTriggerPlayer()!)] = udg_masterStartLocation[udg_atempint];
     DisplayTimedTextToForce(
       GetForceOfPlayer(GetTriggerPlayer()!)!,
       8,
@@ -39,7 +38,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_position: () => void;
 }
-InitTrig_position = (): void => {
+InitTrig_position = () => {
   gg_trg_position = CreateTrigger();
   TriggerRegisterPlayerChatEvent(
     gg_trg_position,

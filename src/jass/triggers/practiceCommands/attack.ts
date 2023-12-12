@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: attack
 //===========================================================================
-const Trig_isVictim = (): boolean => {
+const Trig_isVictim = () => {
   if (
     (!(GetOwningPlayer(udg_unit2[GetConvertedPlayerId(GetTriggerPlayer()!)]) ===
       Player(bj_PLAYER_NEUTRAL_VICTIM)!))
@@ -11,7 +11,7 @@ const Trig_isVictim = (): boolean => {
   return true;
 };
 
-const Trig_attack_Actions = (): void => {
+const Trig_attack_Actions = () => {
   if ((Trig_isVictim())) {
     SetUnitOwner(
       udg_unit2[GetConvertedPlayerId(GetTriggerPlayer()!)],
@@ -33,7 +33,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_attack: () => void;
 }
-InitTrig_attack = (): void => {
+InitTrig_attack = () => {
   gg_trg_attack = CreateTrigger();
   TriggerRegisterPlayerChatEventAll(gg_trg_attack, "-a", true);
   TriggerAddAction(gg_trg_attack, Trig_attack_Actions);

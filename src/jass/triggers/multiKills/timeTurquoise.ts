@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: timeTurquoise
 //===========================================================================
-const Trig_timeTurquoise_Actions = (): void => {
+const Trig_timeTurquoise_Actions = () => {
   udg_multiKillNum[15] = 0;
 };
 
@@ -11,7 +11,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_timeTurquoise: () => void;
 }
-InitTrig_timeTurquoise = (): void => {
+InitTrig_timeTurquoise = () => {
   gg_trg_timeTurquoise = CreateTrigger();
   TriggerRegisterTimerExpireEventBJ(
     gg_trg_timeTurquoise,

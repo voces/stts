@@ -1,14 +1,14 @@
 //===========================================================================
 // Trigger: pickwolf
 //===========================================================================
-const Trig_pickwolf_Conditions = (): boolean => {
+const Trig_pickwolf_Conditions = () => {
   if ((!(GetTrainedUnitType() === FourCC("EC03")))) {
     return false;
   }
   return true;
 };
 
-const Trig_pickwolf_Actions = (): void => {
+const Trig_pickwolf_Actions = () => {
   ForceAddPlayerSimple(udg_playerList[udg_pickIndex], udg_Wolf);
   LeaderboardSetPlayerItemLabelBJ(
     udg_playerList[udg_pickIndex],
@@ -32,7 +32,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_pickwolf: () => void;
 }
-InitTrig_pickwolf = (): void => {
+InitTrig_pickwolf = () => {
   gg_trg_pickwolf = CreateTrigger();
   DisableTrigger(gg_trg_pickwolf);
   TriggerRegisterPlayerUnitEventSimple(

@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: draftPlayer
 //===========================================================================
-const Trig_draftPlayer_Conditions = (): boolean => {
+const Trig_draftPlayer_Conditions = () => {
   if ((!(udg_draftOn === true))) {
     return false;
   }
@@ -17,17 +17,19 @@ const Trig_draftPlayer_Conditions = (): boolean => {
   return true;
 };
 
-const Trig_draftPlayer_Func006Func005Func001Func002001001 = (): boolean => {
+const Trig_draftPlayer_Func006Func005Func001Func002001001 = () => {
   return GetBooleanAnd(
     GetPlayerSlotState(GetFilterPlayer()!) === PLAYER_SLOT_STATE_PLAYING,
     GetBooleanAnd(
       GetPlayerSlotState(GetFilterPlayer()!) !== PLAYER_SLOT_STATE_LEFT,
       GetBooleanAnd(
         GetBooleanOr(
-          udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === 0,
+          udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === AFK_PLAYING,
           GetBooleanOr(
-            udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === 1,
-            udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === 4,
+            udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] ===
+              AFK_PLAYING_PICK,
+            udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] ===
+              AFK_AFK_DURING_ROUND,
           ),
         ),
         GetBooleanAnd(
@@ -39,7 +41,7 @@ const Trig_draftPlayer_Func006Func005Func001Func002001001 = (): boolean => {
   );
 };
 
-const Trig_draftPlayer_Func006Func005Func001Func002Func001C = (): boolean => {
+const Trig_draftPlayer_Func006Func005Func001Func002Func001C = () => {
   if (
     (!(udg_multiboardRow[GetConvertedPlayerId(GetEnumPlayer()!)] ===
       GetForLoopIndexA()))
@@ -52,30 +54,32 @@ const Trig_draftPlayer_Func006Func005Func001Func002Func001C = (): boolean => {
   return true;
 };
 
-const Trig_draftPlayer_Func006Func005Func001Func002A = (): void => {
+const Trig_draftPlayer_Func006Func005Func001Func002A = () => {
   if ((Trig_draftPlayer_Func006Func005Func001Func002Func001C())) {
     udg_atempboolean = true;
   }
 };
 
-const Trig_draftPlayer_Func006Func005Func001Func003C = (): boolean => {
+const Trig_draftPlayer_Func006Func005Func001Func003C = () => {
   if ((!(udg_atempboolean === false))) {
     return false;
   }
   return true;
 };
 
-const Trig_draftPlayer_Func006Func005Func002Func002001001 = (): boolean => {
+const Trig_draftPlayer_Func006Func005Func002Func002001001 = () => {
   return GetBooleanAnd(
     GetPlayerSlotState(GetFilterPlayer()!) === PLAYER_SLOT_STATE_PLAYING,
     GetBooleanAnd(
       GetPlayerSlotState(GetFilterPlayer()!) !== PLAYER_SLOT_STATE_LEFT,
       GetBooleanAnd(
         GetBooleanOr(
-          udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === 0,
+          udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === AFK_PLAYING,
           GetBooleanOr(
-            udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === 1,
-            udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === 4,
+            udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] ===
+              AFK_PLAYING_PICK,
+            udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] ===
+              AFK_AFK_DURING_ROUND,
           ),
         ),
         GetBooleanAnd(
@@ -87,7 +91,7 @@ const Trig_draftPlayer_Func006Func005Func002Func002001001 = (): boolean => {
   );
 };
 
-const Trig_draftPlayer_Func006Func005Func002Func002Func001C = (): boolean => {
+const Trig_draftPlayer_Func006Func005Func002Func002Func001C = () => {
   if (
     (!(udg_multiboardRow[GetConvertedPlayerId(GetEnumPlayer()!)] ===
       GetForLoopIndexA()))
@@ -100,41 +104,41 @@ const Trig_draftPlayer_Func006Func005Func002Func002Func001C = (): boolean => {
   return true;
 };
 
-const Trig_draftPlayer_Func006Func005Func002Func002A = (): void => {
+const Trig_draftPlayer_Func006Func005Func002Func002A = () => {
   if ((Trig_draftPlayer_Func006Func005Func002Func002Func001C())) {
     udg_atempboolean = true;
   }
 };
 
-const Trig_draftPlayer_Func006Func005Func002Func003C = (): boolean => {
+const Trig_draftPlayer_Func006Func005Func002Func003C = () => {
   if ((!(udg_atempboolean === false))) {
     return false;
   }
   return true;
 };
 
-const Trig_draftPlayer_Func006Func005C = (): boolean => {
+const Trig_draftPlayer_Func006Func005C = () => {
   if ((!(udg_captainTurn === 1))) {
     return false;
   }
   return true;
 };
 
-const Trig_draftPlayer_Func006Func007C = (): boolean => {
+const Trig_draftPlayer_Func006Func007C = () => {
   if ((!(udg_captainTurn === 1))) {
     return false;
   }
   return true;
 };
 
-const Trig_draftPlayer_Func006Func009Func001Func001C = (): boolean => {
+const Trig_draftPlayer_Func006Func009Func001Func001C = () => {
   if ((!(udg_captainTurn === 3))) {
     return false;
   }
   return true;
 };
 
-const Trig_draftPlayer_Func006Func009Func001A = (): void => {
+const Trig_draftPlayer_Func006Func009Func001A = () => {
   if ((Trig_draftPlayer_Func006Func009Func001Func001C())) {
     udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)] = true;
   } else {
@@ -142,34 +146,36 @@ const Trig_draftPlayer_Func006Func009Func001A = (): void => {
   }
 };
 
-const Trig_draftPlayer_Func006Func009Func002C = (): boolean => {
+const Trig_draftPlayer_Func006Func009Func002C = () => {
   if ((!(udg_captainTurn === 1))) {
     return false;
   }
   return true;
 };
 
-const Trig_draftPlayer_Func006Func009Func006Func001Func001C = (): boolean => {
+const Trig_draftPlayer_Func006Func009Func006Func001Func001C = () => {
   if ((!(udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)] === true))) {
     return false;
   }
   return true;
 };
 
-const Trig_draftPlayer_Func006Func009Func006Func001Func003C = (): boolean => {
-  if ((udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === 0)) {
+const Trig_draftPlayer_Func006Func009Func006Func001Func003C = () => {
+  if ((udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === AFK_PLAYING)) {
     return true;
   }
-  if ((udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === 1)) {
+  if ((udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === AFK_PLAYING_PICK)) {
     return true;
   }
-  if ((udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === 4)) {
+  if (
+    (udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === AFK_AFK_DURING_ROUND)
+  ) {
     return true;
   }
   return false;
 };
 
-const Trig_draftPlayer_Func006Func009Func006Func001C = (): boolean => {
+const Trig_draftPlayer_Func006Func009Func006Func001C = () => {
   if ((!(GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING))) {
     return false;
   }
@@ -182,7 +188,7 @@ const Trig_draftPlayer_Func006Func009Func006Func001C = (): boolean => {
   return true;
 };
 
-const Trig_draftPlayer_Func006Func009Func006A = (): void => {
+const Trig_draftPlayer_Func006Func009Func006A = () => {
   if ((Trig_draftPlayer_Func006Func009Func006Func001C())) {
     if ((Trig_draftPlayer_Func006Func009Func006Func001Func001C())) {
       ForceAddPlayerSimple(GetEnumPlayer()!, udg_Sheep);
@@ -192,14 +198,14 @@ const Trig_draftPlayer_Func006Func009Func006A = (): void => {
   }
 };
 
-const Trig_draftPlayer_Func006Func009C = (): boolean => {
+const Trig_draftPlayer_Func006Func009C = () => {
   if ((!(CountPlayersInForceBJ(udg_Draft) === 1))) {
     return false;
   }
   return true;
 };
 
-const Trig_draftPlayer_Func006C = (): boolean => {
+const Trig_draftPlayer_Func006C = () => {
   if (
     (!(IsPlayerInForce(ConvertedPlayer(udg_atempint)!, udg_Draft) === true))
   ) {
@@ -208,7 +214,7 @@ const Trig_draftPlayer_Func006C = (): boolean => {
   return true;
 };
 
-const Trig_draftPlayer_Actions = (): void => {
+const Trig_draftPlayer_Actions = () => {
   udg_atempint = S2I(SubStringBJ(GetEventPlayerChatString()!, 8, 9)!);
   if ((Trig_draftPlayer_Func006C())) {
     udg_draftOn = false;
@@ -273,7 +279,7 @@ const Trig_draftPlayer_Actions = (): void => {
     if ((Trig_draftPlayer_Func006Func009C())) {
       ForForce(udg_Draft, Trig_draftPlayer_Func006Func009Func001A);
       ForForce(GetPlayersAll()!, Trig_draftPlayer_Func006Func009Func006A);
-      udg_Teams = 2;
+      udg_Teams = TEAMS_LOCK_IE_PLAYING;
       MultiboardDisplayBJ(false, udg_captainsMultiboard);
       enforceTeamResourceMultiboard();
       MultiboardMinimizeBJ(true, udg_captainsMultiboard);
@@ -306,7 +312,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_draftPlayer: () => void;
 }
-InitTrig_draftPlayer = (): void => {
+InitTrig_draftPlayer = () => {
   gg_trg_draftPlayer = CreateTrigger();
   DisableTrigger(gg_trg_draftPlayer);
   TriggerRegisterPlayerChatEvent(

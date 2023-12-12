@@ -3,11 +3,11 @@
 //===========================================================================
 //TESH.scrollpos=0
 //TESH.alwaysfold=0
-const Trig_miscSmartSave_Actions = (): void => {
+const Trig_miscSmartSave_Actions = () => {
   if (OrderId2StringBJ(GetIssuedOrderId()) === "smart") {
     if (
       IsUnitAlly(GetTriggerUnit()!, GetOwningPlayer(GetOrderTargetUnit()!)) &&
-      GetUnitTypeId(GetOrderTargetUnit()!) === wisp
+      GetUnitTypeId(GetOrderTargetUnit()!) === wispType
     ) {
       IssueTargetOrder(GetTriggerUnit()!, "attack", GetOrderTargetUnit()!);
     }
@@ -20,7 +20,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_miscSmartSave: () => void;
 }
-InitTrig_miscSmartSave = (): void => {
+InitTrig_miscSmartSave = () => {
   gg_trg_miscSmartSave = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(
     gg_trg_miscSmartSave,

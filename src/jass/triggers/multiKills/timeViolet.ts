@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: timeViolet
 //===========================================================================
-const Trig_timeViolet_Actions = (): void => {
+const Trig_timeViolet_Actions = () => {
   udg_multiKillNum[16] = 0;
 };
 
@@ -11,7 +11,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_timeViolet: () => void;
 }
-InitTrig_timeViolet = (): void => {
+InitTrig_timeViolet = () => {
   gg_trg_timeViolet = CreateTrigger();
   TriggerRegisterTimerExpireEventBJ(gg_trg_timeViolet, udg_multiKillTimer[16]);
   TriggerAddAction(gg_trg_timeViolet, Trig_timeViolet_Actions);

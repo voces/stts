@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: timeMint
 //===========================================================================
-const Trig_timeMint_Actions = (): void => {
+const Trig_timeMint_Actions = () => {
   udg_multiKillNum[19] = 0;
 };
 
@@ -11,7 +11,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_timeMint: () => void;
 }
-InitTrig_timeMint = (): void => {
+InitTrig_timeMint = () => {
   gg_trg_timeMint = CreateTrigger();
   TriggerRegisterTimerExpireEventBJ(gg_trg_timeMint, udg_multiKillTimer[19]);
   TriggerAddAction(gg_trg_timeMint, Trig_timeMint_Actions);

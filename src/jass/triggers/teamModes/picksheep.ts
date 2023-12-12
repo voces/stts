@@ -1,14 +1,14 @@
 //===========================================================================
 // Trigger: picksheep
 //===========================================================================
-const Trig_picksheep_Conditions = (): boolean => {
-  if ((!(GetTrainedUnitType() === FourCC("uC04")))) {
+const Trig_picksheep_Conditions = () => {
+  if ((!(GetTrainedUnitType() === sheepType))) {
     return false;
   }
   return true;
 };
 
-const Trig_picksheep_Actions = (): void => {
+const Trig_picksheep_Actions = () => {
   ForceAddPlayerSimple(udg_playerList[udg_pickIndex], udg_Sheep);
   LeaderboardSetPlayerItemLabelBJ(
     udg_playerList[udg_pickIndex],
@@ -32,7 +32,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_picksheep: () => void;
 }
-InitTrig_picksheep = (): void => {
+InitTrig_picksheep = () => {
   gg_trg_picksheep = CreateTrigger();
   DisableTrigger(gg_trg_picksheep);
   TriggerRegisterPlayerUnitEventSimple(

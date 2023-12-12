@@ -3,7 +3,7 @@
 //===========================================================================
 // initialization
 
-const Trig_isSheep = (): void => {
+const Trig_isSheep = () => {
   SetCameraFieldForPlayer(
     GetEnumPlayer()!,
     CAMERA_FIELD_TARGET_DISTANCE,
@@ -12,7 +12,7 @@ const Trig_isSheep = (): void => {
   );
 };
 
-const Trig_isWolf = (): void => {
+const Trig_isWolf = () => {
   SetCameraFieldForPlayer(
     GetEnumPlayer()!,
     CAMERA_FIELD_TARGET_DISTANCE,
@@ -21,11 +21,11 @@ const Trig_isWolf = (): void => {
   );
 };
 
-const Trig_initialization_forAllPlayersOne = (): void => {
+const Trig_initialization_forAllPlayersOne = () => {
   udg_atempint = GetConvertedPlayerId(GetEnumPlayer()!);
   udg_zoom[udg_atempint] = GetCameraField(CAMERA_FIELD_TARGET_DISTANCE);
   playerTimes[udg_atempint - 1] = s__times_create();
-  udg_AFK[udg_atempint] = 0;
+  udg_AFK[udg_atempint] = AFK_PLAYING;
   udg_permanentHide[udg_atempint] = false;
   udg_AFKOn[udg_atempint] = 0;
   udg_sheepZoom[udg_atempint] = 0;
@@ -44,7 +44,7 @@ const Trig_initialization_forAllPlayersOne = (): void => {
   }
 };
 
-const Trig_initialization_forAllPlayersTwo = (): void => {
+const Trig_initialization_forAllPlayersTwo = () => {
   SetPlayerFlagBJ(PLAYER_STATE_GIVES_BOUNTY, false, GetEnumPlayer()!);
   udg_atempint = GetConvertedPlayerId(GetEnumPlayer()!);
   udg_startLocation[udg_atempint + 24] = udg_startLocation[udg_atempint];
@@ -68,7 +68,7 @@ const Trig_initialization_forAllPlayersTwo = (): void => {
   }
 };
 
-const initW3mmd = (): void => {
+const initW3mmd = () => {
   DestroyTimer(GetExpiredTimer()!);
 
   MMD_DefineValue("Times", MMD_TYPE_REAL, MMD_GOAL_NONE, MMD_SUGGEST_TRACK);
@@ -164,7 +164,7 @@ const initW3mmd = (): void => {
   MMD__DefineEvent("end", 0, "The game was ended", "");
 };
 
-const Trig_initialization_Actions = (): void => {
+const Trig_initialization_Actions = () => {
   let i: number;
   StartTimerBJ(udg_gameTimer, false, 1000000000);
   udg_giveOn = true;
@@ -337,12 +337,9 @@ const Trig_initialization_Actions = (): void => {
   }
 
   udg_itemIcon[0] = "ReplaceableTextures\\CommandButtons\\BTNCancel.blp";
-  udg_itemIcon[1] =
-    "ReplaceableTextures\\CommandButtons\\BTNImprovedStrengthOfTheWild.blp";
-  udg_itemIcon[2] =
-    "ReplaceableTextures\\CommandButtons\\BTNAdvancedStrengthOfTheWild.blp.blp";
-  udg_itemIcon[3] =
-    "ReplaceableTextures\\CommandButtons\\BTNStrengthOfTheWild.blp";
+  udg_itemIcon[1] = "ReplaceableTextures\\CommandButtons\\BTNImprovedStrengthOfTheWild.blp";
+  udg_itemIcon[2] = "ReplaceableTextures\\CommandButtons\\BTNAdvancedStrengthOfTheWild.blp.blp";
+  udg_itemIcon[3] = "ReplaceableTextures\\CommandButtons\\BTNStrengthOfTheWild.blp";
   udg_itemIcon[4] = "ReplaceableTextures\\CommandButtons\\BTNCrystalBall.blp";
   udg_itemIcon[5] = "ReplaceableTextures\\CommandButtons\\BTNInfernalStone.blp";
   udg_itemIcon[6] = "ReplaceableTextures\\CommandButtons\\BTNBootsOfSpeed.blp";
@@ -350,16 +347,13 @@ const Trig_initialization_Actions = (): void => {
   udg_itemIcon[8] = "ReplaceableTextures\\CommandButtons\\BTNGem.blp";
   udg_itemIcon[9] = "ReplaceableTextures\\CommandButtons\\BTNGlove.blp";
   udg_itemIcon[10] = "ReplaceableTextures\\CommandButtons\\BTNRockGolem.blp";
-  udg_itemIcon[11] =
-    "ReplaceableTextures\\CommandButtons\\BTNLesserInvisibility.blp";
+  udg_itemIcon[11] = "ReplaceableTextures\\CommandButtons\\BTNLesserInvisibility.blp";
   udg_itemIcon[12] = "ReplaceableTextures\\CommandButtons\\BTNSnazzyPotion.blp";
-  udg_itemIcon[13] =
-    "ReplaceableTextures\\CommandButtons\\BTNPotionBlueSmall.blp";
+  udg_itemIcon[13] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueSmall.blp";
   udg_itemIcon[14] = "ReplaceableTextures\\CommandButtons\\BTNNecklace.blp";
   udg_itemIcon[15] = "ReplaceableTextures\\CommandButtons\\BTNSheep.blp";
   udg_itemIcon[16] = "ReplaceableTextures\\CommandButtons\\BTNPotionRed.blp";
-  udg_itemIcon[17] =
-    "ReplaceableTextures\\CommandButtons\\BTNPotionOfRestoration.blp";
+  udg_itemIcon[17] = "ReplaceableTextures\\CommandButtons\\BTNPotionOfRestoration.blp";
 
   udg_Custom = Player(0)!;
   udg_originalCustom = Player(0)!;
@@ -500,7 +494,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_initialization: () => void;
 }
-InitTrig_initialization = (): void => {
+InitTrig_initialization = () => {
   gg_trg_initialization = CreateTrigger();
   TriggerAddAction(gg_trg_initialization, Trig_initialization_Actions);
 };

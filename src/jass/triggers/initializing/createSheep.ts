@@ -3,19 +3,23 @@
 //===========================================================================
 // createSheep
 
-const removeEnumFromSheep = (): void => {
+import { MapPlayer, Unit } from "w3ts";
+import { president } from "../../../modes/president";
+import { withDummy } from "../../../util/withDummy";
+
+const removeEnumFromSheep = () => {
   ForceRemovePlayerSimple(GetEnumPlayer()!, udg_Sheep);
 };
 
-const removeEnumFromSpirit = (): void => {
+const removeEnumFromSpirit = () => {
   ForceRemovePlayerSimple(GetEnumPlayer()!, udg_Spirit);
 };
 
-const removeEnumFromWolf = (): void => {
+const removeEnumFromWolf = () => {
   ForceRemovePlayerSimple(GetEnumPlayer()!, udg_Wolf);
 };
 
-const setTeamOneSheep = (): void => {
+const setTeamOneSheep = () => {
   if (GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING) {
     if (GetConvertedPlayerId(GetEnumPlayer()!) < 13) {
       ForceAddPlayerSimple(GetEnumPlayer()!, udg_Sheep);
@@ -25,7 +29,7 @@ const setTeamOneSheep = (): void => {
   }
 };
 
-const Trig_createSheep_sheepActionsA = (): void => {
+const Trig_createSheep_sheepActionsA = () => {
   const enumPlayerId = GetConvertedPlayerId(GetEnumPlayer()!);
   let i = 1;
   let p: player;
@@ -36,8 +40,7 @@ const Trig_createSheep_sheepActionsA = (): void => {
     while (true) {
       if (i > bj_MAX_PLAYERS) break;
       if (IsPlayerInForce(ConvertedPlayer(i)!, udg_Sheep)) {
-        udg_accumPartner[(enumPlayerId - 1) * 24 + i] =
-          udg_accumPartner[(enumPlayerId - 1) * 24 + i] + 1;
+        udg_accumPartner[(enumPlayerId - 1) * 24 + i] = udg_accumPartner[(enumPlayerId - 1) * 24 + i] + 1;
       }
       i = i + 1;
     }
@@ -47,7 +50,9 @@ const Trig_createSheep_sheepActionsA = (): void => {
   while (true) {
     if (i > bj_MAX_PLAYERS) break;
     p = ConvertedPlayer(i)!;
-    if (IsPlayerInForce(p, udg_Sheep) || udg_AFK[i] === 3 || udg_practiceOn) {
+    if (
+      IsPlayerInForce(p, udg_Sheep) || udg_AFK[i] === AFK_AFK || udg_practiceOn
+    ) {
       if (
         IsPlayerInForce(p, udg_Sheep) &&
         ((udg_shareOn && udg_autocontrol[GetPlayerId(GetEnumPlayer()!)] &&
@@ -95,7 +100,7 @@ const Trig_createSheep_sheepActionsA = (): void => {
   );
 };
 
-const Trig_createSheep_wolfActionsA = (): void => {
+const Trig_createSheep_wolfActionsA = () => {
   const enumPlayerId = GetConvertedPlayerId(GetEnumPlayer()!);
   let i = 1;
   let p: player;
@@ -117,7 +122,7 @@ const Trig_createSheep_wolfActionsA = (): void => {
         bj_ALLIANCE_ALLIED_ADVUNITS,
       );
     } else if (
-      udg_practiceOn || udg_AFK[i] === 3 || IsPlayerInForce(p, udg_Wolf)
+      udg_practiceOn || udg_AFK[i] === AFK_AFK || IsPlayerInForce(p, udg_Wolf)
     ) {
       SetPlayerAllianceStateBJ(GetEnumPlayer()!, p, bj_ALLIANCE_ALLIED_VISION);
     } else {
@@ -136,7 +141,7 @@ const Trig_createSheep_wolfActionsA = (): void => {
   }
 };
 
-const Trig_createSheep_addToSheepAndWolf = (): void => {
+const Trig_createSheep_addToSheepAndWolf = () => {
   const p = GetEnumPlayer()!;
   if (
     GetPlayerSlotState(p) === PLAYER_SLOT_STATE_PLAYING &&
@@ -148,7 +153,7 @@ const Trig_createSheep_addToSheepAndWolf = (): void => {
   }
 };
 
-const Trig_createSheep_sheepActionsB = (): void => {
+const Trig_createSheep_sheepActionsB = () => {
   let i = 1;
   const enumPlayerId = GetConvertedPlayerId(GetEnumPlayer()!);
 
@@ -177,7 +182,7 @@ const Trig_createSheep_sheepActionsB = (): void => {
   } else {
     createSheepSpawnIndex = createSheepSpawnIndex + 1;
   }
-  if (udg_AFK[enumPlayerId] === 0) {
+  if (udg_AFK[enumPlayerId] === AFK_PLAYING) {
     PanCameraToTimedForPlayer(
       GetEnumPlayer()!,
       GetRectCenterX(udg_startLocation[createSheepSpawnIndex]),
@@ -188,22 +193,29 @@ const Trig_createSheep_sheepActionsB = (): void => {
 
   const u = CreateUnit(
     GetEnumPlayer()!,
-    sheep,
+    sheepType,
     GetRectCenterX(udg_startLocation[createSheepSpawnIndex]),
     GetRectCenterY(udg_startLocation[createSheepSpawnIndex]),
     270,
   )!;
+  if (
+    president.enabled &&
+    president.president.id === GetPlayerId(GetEnumPlayer()!)
+  ) {
+    withDummy(
+      (dummy) => {
+        dummy.addAbility(FourCC("A028"));
+        dummy.issueTargetOrder("innerfire", Unit.fromHandle(u)!);
+      },
+      GetUnitX(u),
+      GetUnitY(u),
+      MapPlayer.fromEnum(),
+    );
+  }
+
   SelectUnitForPlayerSingle(u, GetEnumPlayer()!);
   ForceUICancelBJ(GetEnumPlayer()!);
   udg_unit[enumPlayerId] = u;
-
-  SetUnitVertexColorBJ(
-    udg_unit[enumPlayerId],
-    udg_SheepColorR[enumPlayerId],
-    udg_SheepColorG[enumPlayerId],
-    udg_SheepColorB[enumPlayerId],
-    0,
-  );
 
   if (udg_switchOn || udg_practiceOn) {
     UnitRemoveAbility(u, shareControlAbility);
@@ -213,12 +225,16 @@ const Trig_createSheep_sheepActionsB = (): void => {
       UnitAddAbility(u, blinkAbility);
       UnitAddAbility(u, sheepInventoryAbility);
       UnitAddItemByIdSwapped(FourCC("I00Q"), u);
-      if (udg_disable[enumPlayerId] === false) {
-        UnitAddAbility(u, destroyAllFarms);
-      }
-    } else {
-      UnitAddAbility(u, destroyAllFarms);
-    }
+      if (!udg_disable[enumPlayerId]) UnitAddAbility(u, destroyAllFarms);
+
+      CreateUnit(
+        GetEnumPlayer()!,
+        wispType,
+        RandomX(wispArea),
+        RandomY(wispArea),
+        270,
+      );
+    } else UnitAddAbility(u, destroyAllFarms);
   }
 
   if (udg_sheepZoom[enumPlayerId] > 0) {
@@ -231,7 +247,7 @@ const Trig_createSheep_sheepActionsB = (): void => {
   }
 };
 
-const Trig_createSheep_wolfActionsB = (): void => {
+const Trig_createSheep_wolfActionsB = () => {
   const enumPlayerId = GetConvertedPlayerId(GetEnumPlayer()!);
 
   SetPlayerStateBJ(GetEnumPlayer()!, PLAYER_STATE_RESOURCE_GOLD, udg_wolfGold);
@@ -248,11 +264,10 @@ const Trig_createSheep_wolfActionsB = (): void => {
   }
 };
 
-const Trig_createSheep_disableTrigs = (): void => {
+const Trig_createSheep_disableTrigs = () => {
   DisableTrigger(GetTriggeringTrigger()!);
   DisableTrigger(gg_trg_switch);
   DisableTrigger(gg_trg_vamp);
-  DisableTrigger(gg_trg_random);
   DisableTrigger(gg_trg_reverse);
   DisableTrigger(gg_trg_time);
   DisableTrigger(gg_trg_gold);
@@ -275,7 +290,7 @@ const Trig_createSheep_disableTrigs = (): void => {
   DisableTrigger(gg_trg_Anonymous);
 };
 
-const Trig_createSheep_Actions_part4 = (): void => {
+const Trig_createSheep_Actions_part4 = () => {
   if (
     CountPlayersInForceBJ(udg_Sheep) === 0 ||
     CountPlayersInForceBJ(udg_Wolf) === 0
@@ -405,7 +420,7 @@ const Trig_createSheep_Actions_part4 = (): void => {
   }
 };
 
-const Trig_createSheep_Actions_part3 = (): void => {
+const Trig_createSheep_Actions_part3 = () => {
   DisplayTimedTextToForce(
     GetPlayersAll()!,
     1,
@@ -414,7 +429,7 @@ const Trig_createSheep_Actions_part3 = (): void => {
   TimerStart(createSheepTimer, 1, false, Trig_createSheep_Actions_part4);
 };
 
-const Trig_createSheep_Actions_part2 = (): void => {
+const Trig_createSheep_Actions_part2 = () => {
   DisplayTimedTextToForce(
     GetPlayersAll()!,
     1,
@@ -423,7 +438,7 @@ const Trig_createSheep_Actions_part2 = (): void => {
   TimerStart(createSheepTimer, 1, false, Trig_createSheep_Actions_part3);
 };
 
-const Trig_createSheep_Actions = (): void => {
+const Trig_createSheep_Actions = () => {
   let i: number;
   let n: number;
 
@@ -449,7 +464,7 @@ const Trig_createSheep_Actions = (): void => {
   while (true) {
     if (i > bj_MAX_PLAYERS) break;
     if (udg_AFK[GetForLoopIndexA()] === AFK_PLAYING_PICK) {
-      udg_AFK[GetForLoopIndexA()] = 0;
+      udg_AFK[GetForLoopIndexA()] = AFK_PLAYING;
     }
     n = 1;
     while (true) {
@@ -514,7 +529,7 @@ const Trig_createSheep_Actions = (): void => {
     ForForce(GetPlayersAll()!, setTeamOneSheep);
   }
 
-  udg_Teams = TEAMS_LOCK;
+  udg_Teams = TEAMS_LOCK_IE_PLAYING;
   udg_round2 = true;
   createSheepSpawnIndex = 0;
 
@@ -523,6 +538,19 @@ const Trig_createSheep_Actions = (): void => {
 
   TriggerExecute(gg_trg_setupLeaderboard);
   LeaderboardDisplay(PlayerGetLeaderboard(GetLocalPlayer())!, true);
+
+  if (president.enabled) {
+    president.president = MapPlayer.fromHandle(
+      ForcePickRandomPlayer(udg_Sheep),
+    )!;
+
+    ForForce(udg_Sheep, () => {
+      const p = MapPlayer.fromEnum()!;
+      p.handicap = p === president.president ? 1 : president.handicap;
+    });
+
+    ForForce(udg_Wolf, () => MapPlayer.fromEnum()!.handicap = 1);
+  }
 
   if (udg_practiceOn) {
     ForForce(GetPlayersAll()!, Trig_createSheep_addToSheepAndWolf);
@@ -564,7 +592,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_createSheep: () => void;
 }
-InitTrig_createSheep = (): void => {
+InitTrig_createSheep = () => {
   gg_trg_createSheep = CreateTrigger();
   TriggerAddAction(gg_trg_createSheep, Trig_createSheep_Actions);
   createSheepTimer = CreateTimer();

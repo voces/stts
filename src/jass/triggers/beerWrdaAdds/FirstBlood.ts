@@ -1,8 +1,8 @@
 //===========================================================================
 // Trigger: First Blood
 //===========================================================================
-const Trig_First_Blood_Conditions = (): boolean => {
-  if ((!(GetUnitTypeId(GetDyingUnit()!) === FourCC("uC04")))) {
+const Trig_First_Blood_Conditions = () => {
+  if ((!(GetUnitTypeId(GetDyingUnit()!) === sheepType))) {
     return false;
   }
   if ((!(IsUnitIllusionBJ(GetDyingUnit()!) === false))) {
@@ -14,14 +14,14 @@ const Trig_First_Blood_Conditions = (): boolean => {
   return true;
 };
 
-const Trig_First_Blood_Func005Func002C = (): boolean => {
+const Trig_First_Blood_Func005Func002C = () => {
   if ((!(TimerGetElapsed(udg_Timer) <= udg_qDeath))) {
     return false;
   }
   return true;
 };
 
-const Trig_First_Blood_Func005C = (): boolean => {
+const Trig_First_Blood_Func005C = () => {
   if (
     (!(TimerGetElapsed(udg_Timer) <
       udg_QDeathTime[GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit()!))]))
@@ -31,7 +31,7 @@ const Trig_First_Blood_Func005C = (): boolean => {
   return true;
 };
 
-const Trig_First_Blood_Actions = (): void => {
+const Trig_First_Blood_Actions = () => {
   udg_firstBlood = true;
   udg_firstbloodDeathCounter[
     GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit()!))
@@ -39,26 +39,25 @@ const Trig_First_Blood_Actions = (): void => {
     GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit()!))
   ] + 1;
   udg_firstbloodKillCounter[
-    GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))
+    GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
   ] = udg_firstbloodKillCounter[
-    GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))
+    GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
   ] + 1;
   DisplayTimedTextToForce(
     GetPlayersAll()!,
     5,
     ("                              " +
       udg_colorString[
-        GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))
+        GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
       ]) +
-      (GetPlayerName(GetOwningPlayer(GetKillingUnitBJ()!)) +
+      (GetPlayerName(GetOwningPlayer(GetKillingUnit()!)) +
         ("|r scored firstblood on " +
           (udg_colorString[
             GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit()!))
           ] + GetPlayerName(GetOwningPlayer(GetDyingUnit()!))))),
   );
   if ((Trig_First_Blood_Func005C())) {
-    udg_QDeathTime[GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit()!))] =
-      TimerGetElapsed(udg_Timer);
+    udg_QDeathTime[GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit()!))] = TimerGetElapsed(udg_Timer);
     if ((Trig_First_Blood_Func005Func002C())) {
       udg_qDeath = TimerGetElapsed(udg_Timer);
       udg_qDeathString = udg_colorString[
@@ -75,7 +74,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_First_Blood: () => void;
 }
-InitTrig_First_Blood = (): void => {
+InitTrig_First_Blood = () => {
   gg_trg_First_Blood = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(gg_trg_First_Blood, EVENT_PLAYER_UNIT_DEATH);
   TriggerAddCondition(

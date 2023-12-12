@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: control
 //===========================================================================
-const Trig_control_Conditions = (): boolean => {
+const Trig_control_Conditions = () => {
   if ((!(udg_isAnon === false))) {
     return false;
   }
@@ -34,20 +34,21 @@ const Trig_control_Conditions = (): boolean => {
     return false;
   }
   if (
-    (!(udg_AFK[S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 5)!)] === 0))
+    (!(udg_AFK[S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 5)!)] ===
+      AFK_PLAYING))
   ) {
     return false;
   }
   if ((!(udg_shareOn === true))) {
     return false;
   }
-  if ((!(udg_Teams === 2))) {
+  if ((!(udg_Teams === TEAMS_LOCK_IE_PLAYING))) {
     return false;
   }
   return true;
 };
 
-const Trig_control_Func003C = (): boolean => {
+const Trig_control_Func003C = () => {
   if (
     (!(GetPlayerAlliance(
       GetTriggerPlayer()!,
@@ -69,7 +70,7 @@ const Trig_control_Func003C = (): boolean => {
   return true;
 };
 
-const Trig_control_Actions = (): void => {
+const Trig_control_Actions = () => {
   udg_atempplayer = GetForceOfPlayer(GetTriggerPlayer()!)!;
   if ((Trig_control_Func003C())) {
     DisplayTextToForce(
@@ -118,7 +119,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_control: () => void;
 }
-InitTrig_control = (): void => {
+InitTrig_control = () => {
   gg_trg_control = CreateTrigger();
   TriggerRegisterPlayerChatEvent(gg_trg_control, Player(0)!, "-c ", false);
   TriggerRegisterPlayerChatEvent(gg_trg_control, Player(1)!, "-c ", false);

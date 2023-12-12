@@ -1,8 +1,8 @@
 //===========================================================================
 // Trigger: MultiKillCheck
 //===========================================================================
-const Trig_MultiKillCheck_Conditions = (): boolean => {
-  if ((!(GetUnitTypeId(GetDyingUnit()!) === FourCC("uC04")))) {
+const Trig_MultiKillCheck_Conditions = () => {
+  if ((!(GetUnitTypeId(GetDyingUnit()!) === sheepType))) {
     return false;
   }
   if ((!(IsUnitIllusionBJ(GetDyingUnit()!) === false))) {
@@ -14,34 +14,32 @@ const Trig_MultiKillCheck_Conditions = (): boolean => {
   return true;
 };
 
-const Trig_MultiKillCheck_Func006Func001Func001Func001Func001Func002C =
-  (): boolean => {
-    if (
-      (!(udg_multiKillNum[
-        GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))
-      ] === 5))
-    ) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_MultiKillCheck_Func006Func001Func001Func001Func001C =
-  (): boolean => {
-    if (
-      (!(udg_multiKillNum[
-        GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))
-      ] >= 4))
-    ) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_MultiKillCheck_Func006Func001Func001Func001C = (): boolean => {
+const Trig_MultiKillCheck_Func006Func001Func001Func001Func001Func002C = () => {
   if (
     (!(udg_multiKillNum[
-      GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))
+      GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
+    ] === 5))
+  ) {
+    return false;
+  }
+  return true;
+};
+
+const Trig_MultiKillCheck_Func006Func001Func001Func001Func001C = () => {
+  if (
+    (!(udg_multiKillNum[
+      GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
+    ] >= 4))
+  ) {
+    return false;
+  }
+  return true;
+};
+
+const Trig_MultiKillCheck_Func006Func001Func001Func001C = () => {
+  if (
+    (!(udg_multiKillNum[
+      GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
     ] === 3))
   ) {
     return false;
@@ -49,10 +47,10 @@ const Trig_MultiKillCheck_Func006Func001Func001Func001C = (): boolean => {
   return true;
 };
 
-const Trig_MultiKillCheck_Func006Func001Func001C = (): boolean => {
+const Trig_MultiKillCheck_Func006Func001Func001C = () => {
   if (
     (!(udg_multiKillNum[
-      GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))
+      GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
     ] === 2))
   ) {
     return false;
@@ -60,10 +58,10 @@ const Trig_MultiKillCheck_Func006Func001Func001C = (): boolean => {
   return true;
 };
 
-const Trig_MultiKillCheck_Func006Func001C = (): boolean => {
+const Trig_MultiKillCheck_Func006Func001C = () => {
   if (
     (!(udg_multiKillNum[
-      GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))
+      GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
     ] === 1))
   ) {
     return false;
@@ -71,10 +69,10 @@ const Trig_MultiKillCheck_Func006Func001C = (): boolean => {
   return true;
 };
 
-const Trig_MultiKillCheck_Func006C = (): boolean => {
+const Trig_MultiKillCheck_Func006C = () => {
   if (
     (!(udg_multiKillNum[
-      GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))
+      GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
     ] === 0))
   ) {
     return false;
@@ -82,72 +80,72 @@ const Trig_MultiKillCheck_Func006C = (): boolean => {
   return true;
 };
 
-const Trig_MultiKillCheck_Actions = (): void => {
+const Trig_MultiKillCheck_Actions = () => {
   StartTimerBJ(
     udg_multiKillTimer[
-      GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))
+      GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
     ],
     false,
     12.01,
   );
   if ((Trig_MultiKillCheck_Func006C())) {
     udg_multiKillNum[
-      GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))
+      GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
     ] = 1;
   } else {
     if ((Trig_MultiKillCheck_Func006Func001C())) {
       udg_multiKillNum[
-        GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))
+        GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
       ] = 2;
       DisplayTimedTextToForce(
         GetPlayersAll()!,
         5,
         ("                              " +
           udg_colorString[
-            GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))
+            GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
           ]) +
-          (GetPlayerName(GetOwningPlayer(GetKillingUnitBJ()!)) +
+          (GetPlayerName(GetOwningPlayer(GetKillingUnit()!)) +
             "|r |CFF00AEEFDouble Kill!|r"),
       );
       PlaySoundBJ(gg_snd_DoubleKill);
     } else {
       if ((Trig_MultiKillCheck_Func006Func001Func001C())) {
         udg_multiKillNum[
-          GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))
+          GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
         ] = 3;
         DisplayTimedTextToForce(
           GetPlayersAll()!,
           5,
           ("                              " +
             udg_colorString[
-              GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))
+              GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
             ]) +
-            (GetPlayerName(GetOwningPlayer(GetKillingUnitBJ()!)) +
+            (GetPlayerName(GetOwningPlayer(GetKillingUnit()!)) +
               "|r |CFF00AEEFTriple Kill!|r"),
         );
         PlaySoundBJ(gg_snd_TripleKill);
       } else {
         if ((Trig_MultiKillCheck_Func006Func001Func001Func001C())) {
           udg_multiKillNum[
-            GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))
+            GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
           ] = 4;
           DisplayTimedTextToForce(
             GetPlayersAll()!,
             5,
             ("                              " +
               udg_colorString[
-                GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))
+                GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
               ]) +
-              (GetPlayerName(GetOwningPlayer(GetKillingUnitBJ()!)) +
+              (GetPlayerName(GetOwningPlayer(GetKillingUnit()!)) +
                 "|r |CFF00AEEFOverkill!|r"),
           );
           PlaySoundBJ(gg_snd_Overkill);
         } else {
           if ((Trig_MultiKillCheck_Func006Func001Func001Func001Func001C())) {
             udg_multiKillNum[
-              GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))
+              GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
             ] = udg_multiKillNum[
-              GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))
+              GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
             ] + 1;
             if (
               (Trig_MultiKillCheck_Func006Func001Func001Func001Func001Func002C())
@@ -157,9 +155,9 @@ const Trig_MultiKillCheck_Actions = (): void => {
                 5,
                 ("                              " +
                   udg_colorString[
-                    GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))
+                    GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
                   ]) +
-                  (GetPlayerName(GetOwningPlayer(GetKillingUnitBJ()!)) +
+                  (GetPlayerName(GetOwningPlayer(GetKillingUnit()!)) +
                     "|r |CFF00AEEFKILLIONAIRE!!!|r"),
               );
             } else {
@@ -168,14 +166,14 @@ const Trig_MultiKillCheck_Actions = (): void => {
                 5,
                 ("                              " +
                   udg_colorString[
-                    GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))
+                    GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
                   ]) +
-                  (GetPlayerName(GetOwningPlayer(GetKillingUnitBJ()!)) +
+                  (GetPlayerName(GetOwningPlayer(GetKillingUnit()!)) +
                     ("|r |CFF00AEEFKILLIONAIRE!!!|r |CFFED1C24x" +
                       I2S(
                         udg_multiKillNum[
                           GetConvertedPlayerId(
-                            GetOwningPlayer(GetKillingUnitBJ()!),
+                            GetOwningPlayer(GetKillingUnit()!),
                           )
                         ] - 4,
                       ))),
@@ -195,7 +193,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_MultiKillCheck: () => void;
 }
-InitTrig_MultiKillCheck = (): void => {
+InitTrig_MultiKillCheck = () => {
   gg_trg_MultiKillCheck = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(gg_trg_MultiKillCheck, EVENT_PLAYER_UNIT_DEATH);
   TriggerAddCondition(

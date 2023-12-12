@@ -2,31 +2,29 @@
 // Trigger: destroyAllButSavings
 //===========================================================================
 
-const Trig_destroyAllButSavings_Func002002002 = (): boolean => {
+import { removeEnumUnit } from "../../../util/removeEnumUnit";
+
+const Trig_destroyAllButSavings_Func002002002 = () => {
   return GetBooleanAnd(
     IsUnitType(GetFilterUnit()!, UNIT_TYPE_STRUCTURE) === true,
     GetUnitTypeId(GetFilterUnit()!) !== FourCC("h005"),
   );
 };
 
-const Trig_destroyAllButSavings_Func003002 = (): void => {
-  RemoveUnit(GetEnumUnit()!);
-};
-
-const Trig_destroyAllButSavings_Func007Func001C = (): boolean => {
+const Trig_destroyAllButSavings_Func007Func001C = () => {
   if ((!(udg_dummyWisps > 0))) {
     return false;
   }
   return true;
 };
 
-const Trig_destroyAllButSavings_Actions = (): void => {
+const Trig_destroyAllButSavings_Actions = () => {
   udg_atempint = GetConvertedPlayerId(GetTriggerPlayer()!);
   udg_atempgroup = GetUnitsOfPlayerMatching(
     ConvertedPlayer(udg_atempint)!,
     Condition(Trig_destroyAllButSavings_Func002002002),
   )!;
-  ForGroupBJ(udg_atempgroup, Trig_destroyAllButSavings_Func003002);
+  ForGroupBJ(udg_atempgroup, removeEnumUnit);
   udg_farmCount[udg_atempint] = CountLivingPlayerUnitsOfTypeId(
     FourCC("h005"),
     ConvertedPlayer(udg_atempint)!,
@@ -59,12 +57,11 @@ const Trig_destroyAllButSavings_Actions = (): void => {
 };
 
 //===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_destroyAllButSavings: () => void;
 }
-InitTrig_destroyAllButSavings = (): void => {
+InitTrig_destroyAllButSavings = () => {
   gg_trg_destroyAllButSavings = CreateTrigger();
   TriggerRegisterPlayerChatEvent(
     gg_trg_destroyAllButSavings,

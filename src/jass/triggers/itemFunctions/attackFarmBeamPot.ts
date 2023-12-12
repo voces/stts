@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: attackFarmBeamPot
 //===========================================================================
-const Trig_attackFarmBeamPot_Actions = (): void => {
+const Trig_attackFarmBeamPot_Actions = () => {
   let u: unit;
   if (GetUnitAbilityLevel(GetAttacker()!, FourCC("B008")) > 0) {
     UnitRemoveAbility(GetAttacker()!, FourCC("A00W"));
@@ -30,7 +30,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_attackFarmBeamPot: () => void;
 }
-InitTrig_attackFarmBeamPot = (): void => {
+InitTrig_attackFarmBeamPot = () => {
   gg_trg_attackFarmBeamPot = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(
     gg_trg_attackFarmBeamPot,

@@ -1,14 +1,14 @@
 //===========================================================================
 // Trigger: end
 //===========================================================================
-const Trig_end_Conditions = (): boolean => {
+const Trig_end_Conditions = () => {
   if ((!(GetTriggerPlayer()! === udg_Custom))) {
     return false;
   }
   return true;
 };
 
-const Trig_end_Func011A = (): void => {
+const Trig_end_Func011A = () => {
   CustomDefeatBJ(
     GetEnumPlayer()!,
     `Join our Discord at
@@ -16,7 +16,7 @@ https://dsc.gg/sheeptag`,
   );
 };
 
-const Trig_end_Actions = (): void => {
+const Trig_end_Actions = () => {
   PauseTimerBJ(true, udg_Createtimer);
   StartTimerBJ(udg_Createtimer, false, 180);
   TimerDialogSetTitleBJ(udg_createTimerWindow, "Game ending...");
@@ -36,7 +36,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_end: () => void;
 }
-InitTrig_end = (): void => {
+InitTrig_end = () => {
   gg_trg_end = CreateTrigger();
   TriggerRegisterPlayerChatEvent(gg_trg_end, Player(0)!, "-end", true);
   TriggerRegisterPlayerChatEvent(gg_trg_end, Player(1)!, "-end", true);

@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: timeLavender
 //===========================================================================
-const Trig_timeLavender_Actions = (): void => {
+const Trig_timeLavender_Actions = () => {
   udg_multiKillNum[20] = 0;
 };
 
@@ -11,7 +11,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_timeLavender: () => void;
 }
-InitTrig_timeLavender = (): void => {
+InitTrig_timeLavender = () => {
   gg_trg_timeLavender = CreateTrigger();
   TriggerRegisterTimerExpireEventBJ(
     gg_trg_timeLavender,

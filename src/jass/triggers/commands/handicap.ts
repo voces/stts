@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: handicap
 //===========================================================================
-const setOwnHandicap = (): void => {
+const setOwnHandicap = () => {
   const handicap = S2R(myArg[0]);
   const p = GetTriggerPlayer()!;
   const playerId = GetPlayerId(p);
@@ -17,7 +17,7 @@ const setOwnHandicap = (): void => {
   }
 };
 
-const setOtherHandicap = (): void => {
+const setOtherHandicap = () => {
   const playerId = S2I(myArg[0]) - 1;
   const p = Player(playerId)!;
   const handicap = S2R(myArg[1]);
@@ -33,7 +33,7 @@ const setOtherHandicap = (): void => {
   }
 };
 
-const Trig_handicap_Actions = (): void => {
+const Trig_handicap_Actions = () => {
   Split(GetEventPlayerChatString()!, " ", true);
   if (myArgCount === 1) {
     setOwnHandicap();
@@ -42,7 +42,7 @@ const Trig_handicap_Actions = (): void => {
   }
 };
 
-const Trig_handicap_Conditions = (): boolean => {
+const Trig_handicap_Conditions = () => {
   return !udg_gameStarted;
 };
 
@@ -52,7 +52,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_handicap: () => void;
 }
-InitTrig_handicap = (): void => {
+InitTrig_handicap = () => {
   let i = 0;
   gg_trg_handicap = CreateTrigger();
   while (true) {

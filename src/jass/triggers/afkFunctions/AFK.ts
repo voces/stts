@@ -6,39 +6,25 @@
 // afk == 2, watching game (back)
 // afk == 1, was afk=3, so they came back DURING pick and have not been picked yet
 // afk == 0, here
+//===========================================================================
 
 import { inflateGoldCount } from "../commands/g";
 
-//===========================================================================
-const Trig_AFK_Func005Func001Func001Func002Func001C = (): boolean => {
-  if ((!(udg_sheepLastGame[udg_atempint] === true))) {
+const captainsAndAfk = () => {
+  if ((!(udg_Teams === TEAMS_CAPTAINS))) {
+    return false;
+  }
+  if ((!(udg_AFK[udg_atempint] === AFK_AFK))) {
     return false;
   }
   return true;
 };
 
-const Trig_AFK_Func005Func001Func001Func002C = (): boolean => {
-  if ((!(udg_Teams === 4))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_AFK_Func005Func001Func001Func003Func001C = (): boolean => {
-  if ((!(udg_Teams === 4))) {
-    return false;
-  }
-  if ((!(udg_AFK[udg_atempint] === 3))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_AFK_Func005Func001Func001Func003Func002C = (): boolean => {
+const pickingAndNotPicked = () => {
   if ((!(IsPlayerInForce(GetTriggerPlayer()!, udg_Wolf) === false))) {
     return false;
   }
-  if ((!(udg_Teams === 3))) {
+  if ((!(udg_Teams === TEAMS_PICK))) {
     return false;
   }
   if ((!(IsPlayerInForce(GetTriggerPlayer()!, udg_Sheep) === false))) {
@@ -47,31 +33,31 @@ const Trig_AFK_Func005Func001Func001Func003Func002C = (): boolean => {
   return true;
 };
 
-const Trig_AFK_Func005Func001Func001Func003C = (): boolean => {
-  if ((Trig_AFK_Func005Func001Func001Func003Func001C())) {
+const captainsAndAfkOrPickingAndNotPicked = () => {
+  if ((captainsAndAfk())) {
     return true;
   }
-  if ((Trig_AFK_Func005Func001Func001Func003Func002C())) {
+  if ((pickingAndNotPicked())) {
     return true;
   }
   return false;
 };
 
-const Trig_AFK_Func005Func001Func001C = (): boolean => {
-  if ((!Trig_AFK_Func005Func001Func001Func003C())) {
+const captainsAndAfkOrPickingAndNotPicked2 = () => {
+  if ((!captainsAndAfkOrPickingAndNotPicked())) {
     return false;
   }
   return true;
 };
 
-const Trig_AFK_Func005Func001Func002Func006Func001C = (): boolean => {
+const Trig_AFK_Func005Func001Func002Func006Func001C = () => {
   if ((!(GetEnumPlayer()! !== GetTriggerPlayer()!))) {
     return false;
   }
   return true;
 };
 
-const Trig_AFK_Func005Func001Func002Func006A = (): void => {
+const Trig_AFK_Func005Func001Func002Func006A = () => {
   if ((Trig_AFK_Func005Func001Func002Func006Func001C())) {
     SetPlayerAllianceStateBJ(
       GetTriggerPlayer()!,
@@ -86,21 +72,7 @@ const Trig_AFK_Func005Func001Func002Func006A = (): void => {
   }
 };
 
-const Trig_AFK_Func005Func001Func002C = (): boolean => {
-  if ((!(udg_AFK[udg_atempint] === 4))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_AFK_Func005Func001C = (): boolean => {
-  if ((!(udg_gameStarted === true))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_AFK_Func005Func005Func001Func002Func002A = (): void => {
+const Trig_AFK_Func005Func005Func001Func002Func002A = () => {
   PanCameraToForPlayer(
     GetTriggerPlayer()!,
     GetUnitX(udg_unit[GetPlayerId(GetEnumPlayer()!)]),
@@ -108,41 +80,13 @@ const Trig_AFK_Func005Func005Func001Func002Func002A = (): void => {
   );
 };
 
-const Trig_AFK_Func005Func005Func001Func002Func005C = (): boolean => {
-  if ((IsPlayerInForce(GetTriggerPlayer()!, udg_Sheep) === true)) {
-    return true;
-  }
-  if ((IsPlayerInForce(GetTriggerPlayer()!, udg_Spirit) === true)) {
-    return true;
-  }
-  if ((IsPlayerInForce(GetTriggerPlayer()!, udg_Wolf) === true)) {
-    return true;
-  }
-  return false;
+const inTeam = () => {
+  return IsPlayerInForce(GetTriggerPlayer()!, udg_Sheep) ||
+    IsPlayerInForce(GetTriggerPlayer()!, udg_Spirit) ||
+    IsPlayerInForce(GetTriggerPlayer()!, udg_Wolf);
 };
 
-const Trig_AFK_Func005Func005Func001Func002C = (): boolean => {
-  if ((!Trig_AFK_Func005Func005Func001Func002Func005C())) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_AFK_Func005Func005Func001C = (): boolean => {
-  if ((!(udg_Teams === 2))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_AFK_Func005Func005C = (): boolean => {
-  if ((!(udg_Teams === 3))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_AFK_Func005Func007002001001001 = (): boolean => {
+const Trig_AFK_Func005Func007002001001001 = () => {
   return GetBooleanAnd(
     GetPlayerSlotState(GetFilterPlayer()!) === PLAYER_SLOT_STATE_PLAYING,
     GetBooleanAnd(
@@ -152,21 +96,18 @@ const Trig_AFK_Func005Func007002001001001 = (): boolean => {
   );
 };
 
-const Trig_AFK_Func005Func008A = (): void => {
+const Trig_AFK_Func005Func008A = () => {
   udg_atempint2 = udg_sheepCount[GetConvertedPlayerId(GetEnumPlayer()!)];
 };
 
-const Trig_AFK_Func005Func010001001 = (): boolean => {
-  return GetBooleanAnd(
-    GetPlayerSlotState(GetFilterPlayer()!) === PLAYER_SLOT_STATE_PLAYING,
-    GetBooleanAnd(
-      GetPlayerSlotState(GetFilterPlayer()!) !== PLAYER_SLOT_STATE_LEFT,
-      udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] !== 3,
-    ),
-  );
+const playingAndNotAFKOrPub = () => {
+  return GetPlayerSlotState(GetFilterPlayer()!) === PLAYER_SLOT_STATE_PLAYING &&
+    GetPlayerSlotState(GetFilterPlayer()!) !== PLAYER_SLOT_STATE_LEFT &&
+    udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] !== 3 &&
+    !pub[GetPlayerId(GetFilterPlayer()!)];
 };
 
-const Trig_AFK_Func005Func010Func001C = (): boolean => {
+const Trig_AFK_Func005Func010Func001C = () => {
   if ((!(GetEnumPlayer()! !== GetTriggerPlayer()!))) {
     return false;
   }
@@ -178,27 +119,20 @@ const Trig_AFK_Func005Func010Func001C = (): boolean => {
   return true;
 };
 
-const Trig_AFK_Func005Func010A = (): void => {
+const Trig_AFK_Func005Func010A = () => {
   if ((Trig_AFK_Func005Func010Func001C())) {
     udg_atempint2 = udg_sheepCount[GetConvertedPlayerId(GetEnumPlayer()!)];
   }
 };
 
-const Trig_AFK_Func005Func011C = (): boolean => {
-  if ((!(udg_sheepCount[udg_atempint] < udg_atempint2))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_AFK_Func005Func013Func001Func001Func001C = (): boolean => {
+const Trig_AFK_Func005Func013Func001Func001Func001C = () => {
   if ((!(IsPlayerInForce(GetTriggerPlayer()!, udg_Draft) === true))) {
     return false;
   }
   return true;
 };
 
-const Trig_AFK_Func005Func013Func001Func001Func005C = (): boolean => {
+const Trig_AFK_Func005Func013Func001Func001Func005C = () => {
   if ((!(udg_Teams !== 3))) {
     return false;
   }
@@ -208,540 +142,513 @@ const Trig_AFK_Func005Func013Func001Func001Func005C = (): boolean => {
   return true;
 };
 
-const Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func002002001001001 =
-  (): boolean => {
-    return GetBooleanAnd(
-      GetBooleanOr(
-        udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === 0,
-        udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === 1,
-      ),
+const Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func002002001001001 = () => {
+  return GetBooleanAnd(
+    GetBooleanOr(
+      udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === AFK_PLAYING,
+      udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === AFK_PLAYING_PICK,
+    ),
+    GetBooleanAnd(
+      GetPlayerSlotState(GetFilterPlayer()!) === PLAYER_SLOT_STATE_PLAYING,
       GetBooleanAnd(
-        GetPlayerSlotState(GetFilterPlayer()!) === PLAYER_SLOT_STATE_PLAYING,
+        GetPlayerSlotState(GetFilterPlayer()!) !== PLAYER_SLOT_STATE_LEFT,
         GetBooleanAnd(
-          GetPlayerSlotState(GetFilterPlayer()!) !== PLAYER_SLOT_STATE_LEFT,
-          GetBooleanAnd(
-            udg_sheepLastGame[GetConvertedPlayerId(GetFilterPlayer()!)] ===
-              false,
-            IsPlayerInForce(GetFilterPlayer()!, udg_Draft) === false,
-          ),
+          udg_sheepLastGame[GetConvertedPlayerId(GetFilterPlayer()!)] ===
+            false,
+          IsPlayerInForce(GetFilterPlayer()!, udg_Draft) === false,
         ),
       ),
-    );
-  };
+    ),
+  );
+};
 
-const Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func003Func003Func002Func001Func004C =
-  (): boolean => {
-    if ((udg_AFK[GetForLoopIndexB()] === 0)) {
-      return true;
-    }
-    if ((udg_AFK[GetForLoopIndexB()] === 1)) {
-      return true;
-    }
-    if ((udg_AFK[GetForLoopIndexB()] === 4)) {
-      return true;
-    }
+const Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func003Func003Func002Func001Func004C = () => {
+  if ((udg_AFK[GetForLoopIndexB()] === AFK_PLAYING)) {
+    return true;
+  }
+  if ((udg_AFK[GetForLoopIndexB()] === AFK_PLAYING_PICK)) {
+    return true;
+  }
+  if ((udg_AFK[GetForLoopIndexB()] === AFK_AFK_DURING_ROUND)) {
+    return true;
+  }
+  return false;
+};
+
+const Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func003Func003Func002Func001C = () => {
+  if (
+    (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexB())!) ===
+      PLAYER_SLOT_STATE_PLAYING))
+  ) {
     return false;
-  };
-
-const Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func003Func003Func002Func001C =
-  (): boolean => {
-    if (
-      (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexB())!) ===
-        PLAYER_SLOT_STATE_PLAYING))
-    ) {
-      return false;
-    }
-    if (
-      (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexB())!) !==
-        PLAYER_SLOT_STATE_LEFT))
-    ) {
-      return false;
-    }
-    if ((!(GetEnumPlayer()! !== ConvertedPlayer(GetForLoopIndexB())!))) {
-      return false;
-    }
-    if (
-      (!Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func003Func003Func002Func001Func004C())
-    ) {
-      return false;
-    }
-    if (
-      (!(IsPlayerInForce(ConvertedPlayer(GetForLoopIndexB())!, udg_Draft) ===
-        false))
-    ) {
-      return false;
-    }
-    if ((!(udg_sheepLastGame[GetForLoopIndexB()] === false))) {
-      return false;
-    }
-    if ((!(udg_multiboardRow[GetForLoopIndexB()] === GetForLoopIndexA()))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func003Func003Func003C =
-  (): boolean => {
-    if ((!(udg_atempboolean === false))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func003A =
-  (): void => {
-    udg_captains[3] = GetEnumPlayer()!;
-    MultiboardSetItemValueBJ(
-      udg_captainsMultiboard,
-      2,
-      udg_multiboardRow[GetConvertedPlayerId(GetEnumPlayer()!)],
-      "",
-    );
-    bj_forLoopAIndex = 1;
-    bj_forLoopAIndexEnd = 24;
-    while (true) {
-      if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-      udg_atempboolean = false;
-      bj_forLoopBIndex = 1;
-      bj_forLoopBIndexEnd = 24;
-      while (true) {
-        if (bj_forLoopBIndex > bj_forLoopBIndexEnd) break;
-        if (
-          (Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func003Func003Func002Func001C())
-        ) {
-          udg_atempboolean = true;
-        }
-        bj_forLoopBIndex = bj_forLoopBIndex + 1;
-      }
-      if (
-        (Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func003Func003Func003C())
-      ) {
-        udg_multiboardRow[GetConvertedPlayerId(GetEnumPlayer()!)] =
-          GetForLoopIndexA();
-        break;
-      }
-      bj_forLoopAIndex = bj_forLoopAIndex + 1;
-    }
-    ForceRemovePlayerSimple(GetEnumPlayer()!, udg_Draft);
-    udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)] = false;
-    MultiboardSetItemValueBJ(
-      udg_captainsMultiboard,
-      3,
-      udg_multiboardRow[GetConvertedPlayerId(GetEnumPlayer()!)],
-      "$" +
-        (udg_colorString[GetConvertedPlayerId(GetEnumPlayer()!)] +
-          GetPlayerName(GetEnumPlayer()!)),
-    );
-  };
-
-const Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func005Func002Func002Func001Func004C =
-  (): boolean => {
-    if ((udg_AFK[GetForLoopIndexB()] === 0)) {
-      return true;
-    }
-    if ((udg_AFK[GetForLoopIndexB()] === 1)) {
-      return true;
-    }
-    if ((udg_AFK[GetForLoopIndexB()] === 4)) {
-      return true;
-    }
+  }
+  if (
+    (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexB())!) !==
+      PLAYER_SLOT_STATE_LEFT))
+  ) {
     return false;
-  };
+  }
+  if ((!(GetEnumPlayer()! !== ConvertedPlayer(GetForLoopIndexB())!))) {
+    return false;
+  }
+  if (
+    (!Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func003Func003Func002Func001Func004C())
+  ) {
+    return false;
+  }
+  if (
+    (!(IsPlayerInForce(ConvertedPlayer(GetForLoopIndexB())!, udg_Draft) ===
+      false))
+  ) {
+    return false;
+  }
+  if ((!(udg_sheepLastGame[GetForLoopIndexB()] === false))) {
+    return false;
+  }
+  if ((!(udg_multiboardRow[GetForLoopIndexB()] === GetForLoopIndexA()))) {
+    return false;
+  }
+  return true;
+};
 
-const Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func005Func002Func002Func001C =
-  (): boolean => {
-    if (
-      (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexB())!) ===
-        PLAYER_SLOT_STATE_PLAYING))
-    ) {
-      return false;
-    }
-    if (
-      (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexB())!) !==
-        PLAYER_SLOT_STATE_LEFT))
-    ) {
-      return false;
-    }
-    if ((!(GetEnumPlayer()! !== ConvertedPlayer(GetForLoopIndexB())!))) {
-      return false;
-    }
-    if (
-      (!Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func005Func002Func002Func001Func004C())
-    ) {
-      return false;
-    }
-    if (
-      (!(IsPlayerInForce(ConvertedPlayer(GetForLoopIndexB())!, udg_Draft) ===
-        false))
-    ) {
-      return false;
-    }
-    if ((!(udg_sheepLastGame[GetForLoopIndexB()] === false))) {
-      return false;
-    }
-    if ((!(udg_multiboardRow[GetForLoopIndexB()] === GetForLoopIndexA()))) {
-      return false;
-    }
-    return true;
-  };
+const Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func003Func003Func003C = () => {
+  if ((!(udg_atempboolean === false))) {
+    return false;
+  }
+  return true;
+};
 
-const Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func005Func002Func003C =
-  (): boolean => {
-    if ((!(udg_atempboolean === false))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func005A =
-  (): void => {
-    udg_captains[3] = GetEnumPlayer()!;
-    bj_forLoopAIndex = 1;
-    bj_forLoopAIndexEnd = 24;
+const Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func003A = () => {
+  udg_captains[3] = GetEnumPlayer()!;
+  MultiboardSetItemValueBJ(
+    udg_captainsMultiboard,
+    2,
+    udg_multiboardRow[GetConvertedPlayerId(GetEnumPlayer()!)],
+    "",
+  );
+  bj_forLoopAIndex = 1;
+  bj_forLoopAIndexEnd = 24;
+  while (true) {
+    if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
+    udg_atempboolean = false;
+    bj_forLoopBIndex = 1;
+    bj_forLoopBIndexEnd = 24;
     while (true) {
-      if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-      udg_atempboolean = false;
-      bj_forLoopBIndex = 1;
-      bj_forLoopBIndexEnd = 24;
-      while (true) {
-        if (bj_forLoopBIndex > bj_forLoopBIndexEnd) break;
-        if (
-          (Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func005Func002Func002Func001C())
-        ) {
-          udg_atempboolean = true;
-        }
-        bj_forLoopBIndex = bj_forLoopBIndex + 1;
-      }
+      if (bj_forLoopBIndex > bj_forLoopBIndexEnd) break;
       if (
-        (Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func005Func002Func003C())
+        (Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func003Func003Func002Func001C())
       ) {
-        udg_multiboardRow[GetConvertedPlayerId(GetEnumPlayer()!)] =
-          GetForLoopIndexA();
-        break;
+        udg_atempboolean = true;
       }
-      bj_forLoopAIndex = bj_forLoopAIndex + 1;
+      bj_forLoopBIndex = bj_forLoopBIndex + 1;
     }
-    MultiboardSetItemValueBJ(
-      udg_captainsMultiboard,
-      3,
-      udg_multiboardRow[GetConvertedPlayerId(udg_captains[3])],
-      "$" +
-        (udg_colorString[GetConvertedPlayerId(udg_captains[3])] +
-          GetPlayerName(udg_captains[3])),
-    );
-  };
+    if (
+      (Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func003Func003Func003C())
+    ) {
+      udg_multiboardRow[GetConvertedPlayerId(GetEnumPlayer()!)] = GetForLoopIndexA();
+      break;
+    }
+    bj_forLoopAIndex = bj_forLoopAIndex + 1;
+  }
+  ForceRemovePlayerSimple(GetEnumPlayer()!, udg_Draft);
+  udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)] = false;
+  MultiboardSetItemValueBJ(
+    udg_captainsMultiboard,
+    3,
+    udg_multiboardRow[GetConvertedPlayerId(GetEnumPlayer()!)],
+    "$" +
+      (udg_colorString[GetConvertedPlayerId(GetEnumPlayer()!)] +
+        GetPlayerName(GetEnumPlayer()!)),
+  );
+};
 
-const Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func007001001001 =
-  (): boolean => {
-    return GetBooleanAnd(
-      GetBooleanOr(
-        udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === 0,
-        udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === 1,
-      ),
+const Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func005Func002Func002Func001Func004C = () => {
+  if ((udg_AFK[GetForLoopIndexB()] === AFK_PLAYING)) {
+    return true;
+  }
+  if ((udg_AFK[GetForLoopIndexB()] === AFK_PLAYING_PICK)) {
+    return true;
+  }
+  if ((udg_AFK[GetForLoopIndexB()] === AFK_AFK_DURING_ROUND)) {
+    return true;
+  }
+  return false;
+};
+
+const Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func005Func002Func002Func001C = () => {
+  if (
+    (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexB())!) ===
+      PLAYER_SLOT_STATE_PLAYING))
+  ) {
+    return false;
+  }
+  if (
+    (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexB())!) !==
+      PLAYER_SLOT_STATE_LEFT))
+  ) {
+    return false;
+  }
+  if ((!(GetEnumPlayer()! !== ConvertedPlayer(GetForLoopIndexB())!))) {
+    return false;
+  }
+  if (
+    (!Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func005Func002Func002Func001Func004C())
+  ) {
+    return false;
+  }
+  if (
+    (!(IsPlayerInForce(ConvertedPlayer(GetForLoopIndexB())!, udg_Draft) ===
+      false))
+  ) {
+    return false;
+  }
+  if ((!(udg_sheepLastGame[GetForLoopIndexB()] === false))) {
+    return false;
+  }
+  if ((!(udg_multiboardRow[GetForLoopIndexB()] === GetForLoopIndexA()))) {
+    return false;
+  }
+  return true;
+};
+
+const Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func005Func002Func003C = () => {
+  if ((!(udg_atempboolean === false))) {
+    return false;
+  }
+  return true;
+};
+
+const Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func005A = () => {
+  udg_captains[3] = GetEnumPlayer()!;
+  bj_forLoopAIndex = 1;
+  bj_forLoopAIndexEnd = 24;
+  while (true) {
+    if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
+    udg_atempboolean = false;
+    bj_forLoopBIndex = 1;
+    bj_forLoopBIndexEnd = 24;
+    while (true) {
+      if (bj_forLoopBIndex > bj_forLoopBIndexEnd) break;
+      if (
+        (Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func005Func002Func002Func001C())
+      ) {
+        udg_atempboolean = true;
+      }
+      bj_forLoopBIndex = bj_forLoopBIndex + 1;
+    }
+    if (
+      (Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func005Func002Func003C())
+    ) {
+      udg_multiboardRow[GetConvertedPlayerId(GetEnumPlayer()!)] = GetForLoopIndexA();
+      break;
+    }
+    bj_forLoopAIndex = bj_forLoopAIndex + 1;
+  }
+  MultiboardSetItemValueBJ(
+    udg_captainsMultiboard,
+    3,
+    udg_multiboardRow[GetConvertedPlayerId(udg_captains[3])],
+    "$" +
+      (udg_colorString[GetConvertedPlayerId(udg_captains[3])] +
+        GetPlayerName(udg_captains[3])),
+  );
+};
+
+const Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func007001001001 = () => {
+  return GetBooleanAnd(
+    GetBooleanOr(
+      udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === AFK_PLAYING,
+      udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === AFK_PLAYING_PICK,
+    ),
+    GetBooleanAnd(
+      GetPlayerSlotState(GetFilterPlayer()!) === PLAYER_SLOT_STATE_PLAYING,
       GetBooleanAnd(
-        GetPlayerSlotState(GetFilterPlayer()!) === PLAYER_SLOT_STATE_PLAYING,
+        GetPlayerSlotState(GetFilterPlayer()!) !== PLAYER_SLOT_STATE_LEFT,
         GetBooleanAnd(
-          GetPlayerSlotState(GetFilterPlayer()!) !== PLAYER_SLOT_STATE_LEFT,
-          GetBooleanAnd(
-            udg_sheepLastGame[GetConvertedPlayerId(GetFilterPlayer()!)] ===
-              false,
-            IsPlayerInForce(GetFilterPlayer()!, udg_Draft) === false,
-          ),
+          udg_sheepLastGame[GetConvertedPlayerId(GetFilterPlayer()!)] ===
+            false,
+          IsPlayerInForce(GetFilterPlayer()!, udg_Draft) === false,
         ),
       ),
-    );
-  };
+    ),
+  );
+};
 
-const Trig_AFK_Func005Func013Func001Func001Func010Func001Func001C =
-  (): boolean => {
-    if (
-      (!(CountPlayersInForceBJ(
-        GetPlayersMatching(
-          Condition(
-            Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func007001001001,
-          ),
-        )!,
-      ) > 0))
-    ) {
-      return false;
-    }
-    return true;
-  };
+const Trig_AFK_Func005Func013Func001Func001Func010Func001Func001C = () => {
+  if (
+    (!(CountPlayersInForceBJ(
+      GetPlayersMatching(
+        Condition(
+          Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func007001001001,
+        ),
+      )!,
+    ) > 0))
+  ) {
+    return false;
+  }
+  return true;
+};
 
-const Trig_AFK_Func005Func013Func001Func001Func010Func001Func002C =
-  (): boolean => {
-    if ((!(udg_captainTurn === 3))) {
-      return false;
-    }
-    return true;
-  };
+const Trig_AFK_Func005Func013Func001Func001Func010Func001Func002C = () => {
+  if ((!(udg_captainTurn === 3))) {
+    return false;
+  }
+  return true;
+};
 
-const Trig_AFK_Func005Func013Func001Func001Func010Func001C = (): boolean => {
+const Trig_AFK_Func005Func013Func001Func001Func010Func001C = () => {
   if ((!(GetTriggerPlayer()! === udg_captains[3]))) {
     return false;
   }
   return true;
 };
 
-const Trig_AFK_Func005Func013Func001Func001Func010Func002Func002002001001001 =
-  (): boolean => {
-    return GetBooleanAnd(
-      GetBooleanOr(
-        udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === 0,
-        udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === 1,
-      ),
+const Trig_AFK_Func005Func013Func001Func001Func010Func002Func002002001001001 = () => {
+  return GetBooleanAnd(
+    GetBooleanOr(
+      udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === AFK_PLAYING,
+      udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === AFK_PLAYING_PICK,
+    ),
+    GetBooleanAnd(
+      GetPlayerSlotState(GetFilterPlayer()!) === PLAYER_SLOT_STATE_PLAYING,
       GetBooleanAnd(
-        GetPlayerSlotState(GetFilterPlayer()!) === PLAYER_SLOT_STATE_PLAYING,
+        GetPlayerSlotState(GetFilterPlayer()!) !== PLAYER_SLOT_STATE_LEFT,
         GetBooleanAnd(
-          GetPlayerSlotState(GetFilterPlayer()!) !== PLAYER_SLOT_STATE_LEFT,
-          GetBooleanAnd(
-            udg_sheepLastGame[GetConvertedPlayerId(GetFilterPlayer()!)] ===
-              true,
-            IsPlayerInForce(GetFilterPlayer()!, udg_Draft) === false,
-          ),
+          udg_sheepLastGame[GetConvertedPlayerId(GetFilterPlayer()!)] ===
+            true,
+          IsPlayerInForce(GetFilterPlayer()!, udg_Draft) === false,
         ),
       ),
-    );
-  };
+    ),
+  );
+};
 
-const Trig_AFK_Func005Func013Func001Func001Func010Func002Func003Func003Func002Func001Func004C =
-  (): boolean => {
-    if ((udg_AFK[GetForLoopIndexB()] === 0)) {
-      return true;
-    }
-    if ((udg_AFK[GetForLoopIndexB()] === 1)) {
-      return true;
-    }
-    if ((udg_AFK[GetForLoopIndexB()] === 4)) {
-      return true;
-    }
+const Trig_AFK_Func005Func013Func001Func001Func010Func002Func003Func003Func002Func001Func004C = () => {
+  if ((udg_AFK[GetForLoopIndexB()] === AFK_PLAYING)) {
+    return true;
+  }
+  if ((udg_AFK[GetForLoopIndexB()] === AFK_PLAYING_PICK)) {
+    return true;
+  }
+  if ((udg_AFK[GetForLoopIndexB()] === AFK_AFK_DURING_ROUND)) {
+    return true;
+  }
+  return false;
+};
+
+const Trig_AFK_Func005Func013Func001Func001Func010Func002Func003Func003Func002Func001C = () => {
+  if (
+    (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexB())!) ===
+      PLAYER_SLOT_STATE_PLAYING))
+  ) {
     return false;
-  };
-
-const Trig_AFK_Func005Func013Func001Func001Func010Func002Func003Func003Func002Func001C =
-  (): boolean => {
-    if (
-      (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexB())!) ===
-        PLAYER_SLOT_STATE_PLAYING))
-    ) {
-      return false;
-    }
-    if (
-      (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexB())!) !==
-        PLAYER_SLOT_STATE_LEFT))
-    ) {
-      return false;
-    }
-    if ((!(GetEnumPlayer()! !== ConvertedPlayer(GetForLoopIndexB())!))) {
-      return false;
-    }
-    if (
-      (!Trig_AFK_Func005Func013Func001Func001Func010Func002Func003Func003Func002Func001Func004C())
-    ) {
-      return false;
-    }
-    if (
-      (!(IsPlayerInForce(ConvertedPlayer(GetForLoopIndexB())!, udg_Draft) ===
-        false))
-    ) {
-      return false;
-    }
-    if ((!(udg_sheepLastGame[GetForLoopIndexB()] === true))) {
-      return false;
-    }
-    if ((!(udg_multiboardRow[GetForLoopIndexB()] === GetForLoopIndexA()))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_AFK_Func005Func013Func001Func001Func010Func002Func003Func003Func003C =
-  (): boolean => {
-    if ((!(udg_atempboolean === false))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_AFK_Func005Func013Func001Func001Func010Func002Func003A =
-  (): void => {
-    udg_captains[1] = GetEnumPlayer()!;
-    MultiboardSetItemValueBJ(
-      udg_captainsMultiboard,
-      2,
-      udg_multiboardRow[GetConvertedPlayerId(GetEnumPlayer()!)],
-      "",
-    );
-    bj_forLoopAIndex = 1;
-    bj_forLoopAIndexEnd = 24;
-    while (true) {
-      if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-      udg_atempboolean = false;
-      bj_forLoopBIndex = 1;
-      bj_forLoopBIndexEnd = 24;
-      while (true) {
-        if (bj_forLoopBIndex > bj_forLoopBIndexEnd) break;
-        if (
-          (Trig_AFK_Func005Func013Func001Func001Func010Func002Func003Func003Func002Func001C())
-        ) {
-          udg_atempboolean = true;
-        }
-        bj_forLoopBIndex = bj_forLoopBIndex + 1;
-      }
-      if (
-        (Trig_AFK_Func005Func013Func001Func001Func010Func002Func003Func003Func003C())
-      ) {
-        udg_multiboardRow[GetConvertedPlayerId(GetEnumPlayer()!)] =
-          GetForLoopIndexA();
-        break;
-      }
-      bj_forLoopAIndex = bj_forLoopAIndex + 1;
-    }
-    ForceRemovePlayerSimple(GetEnumPlayer()!, udg_Draft);
-    udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)] = true;
-    MultiboardSetItemValueBJ(
-      udg_captainsMultiboard,
-      1,
-      udg_multiboardRow[GetConvertedPlayerId(GetEnumPlayer()!)],
-      "$" +
-        (udg_colorString[GetConvertedPlayerId(GetEnumPlayer()!)] +
-          GetPlayerName(GetEnumPlayer()!)),
-    );
-    udg_captainTurn = 3;
-    MultiboardSetTitleText(
-      udg_captainsMultiboard,
-      udg_colorString[GetConvertedPlayerId(udg_captains[3])] +
-        (GetPlayerName(udg_captains[3]) + "'s turn"),
-    );
-  };
-
-const Trig_AFK_Func005Func013Func001Func001Func010Func002Func005Func002Func002Func001Func004C =
-  (): boolean => {
-    if ((udg_AFK[GetForLoopIndexB()] === 0)) {
-      return true;
-    }
-    if ((udg_AFK[GetForLoopIndexB()] === 1)) {
-      return true;
-    }
-    if ((udg_AFK[GetForLoopIndexB()] === 4)) {
-      return true;
-    }
+  }
+  if (
+    (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexB())!) !==
+      PLAYER_SLOT_STATE_LEFT))
+  ) {
     return false;
-  };
+  }
+  if ((!(GetEnumPlayer()! !== ConvertedPlayer(GetForLoopIndexB())!))) {
+    return false;
+  }
+  if (
+    (!Trig_AFK_Func005Func013Func001Func001Func010Func002Func003Func003Func002Func001Func004C())
+  ) {
+    return false;
+  }
+  if (
+    (!(IsPlayerInForce(ConvertedPlayer(GetForLoopIndexB())!, udg_Draft) ===
+      false))
+  ) {
+    return false;
+  }
+  if ((!(udg_sheepLastGame[GetForLoopIndexB()] === true))) {
+    return false;
+  }
+  if ((!(udg_multiboardRow[GetForLoopIndexB()] === GetForLoopIndexA()))) {
+    return false;
+  }
+  return true;
+};
 
-const Trig_AFK_Func005Func013Func001Func001Func010Func002Func005Func002Func002Func001C =
-  (): boolean => {
-    if (
-      (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexB())!) ===
-        PLAYER_SLOT_STATE_PLAYING))
-    ) {
-      return false;
-    }
-    if (
-      (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexB())!) !==
-        PLAYER_SLOT_STATE_LEFT))
-    ) {
-      return false;
-    }
-    if ((!(GetEnumPlayer()! !== ConvertedPlayer(GetForLoopIndexB())!))) {
-      return false;
-    }
-    if (
-      (!Trig_AFK_Func005Func013Func001Func001Func010Func002Func005Func002Func002Func001Func004C())
-    ) {
-      return false;
-    }
-    if (
-      (!(IsPlayerInForce(ConvertedPlayer(GetForLoopIndexB())!, udg_Draft) ===
-        false))
-    ) {
-      return false;
-    }
-    if ((!(udg_sheepLastGame[GetForLoopIndexB()] === true))) {
-      return false;
-    }
-    if ((!(udg_multiboardRow[GetForLoopIndexB()] === GetForLoopIndexA()))) {
-      return false;
-    }
-    return true;
-  };
+const Trig_AFK_Func005Func013Func001Func001Func010Func002Func003Func003Func003C = () => {
+  if ((!(udg_atempboolean === false))) {
+    return false;
+  }
+  return true;
+};
 
-const Trig_AFK_Func005Func013Func001Func001Func010Func002Func005Func002Func003C =
-  (): boolean => {
-    if ((!(udg_atempboolean === false))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_AFK_Func005Func013Func001Func001Func010Func002Func005A =
-  (): void => {
-    udg_captains[1] = GetEnumPlayer()!;
-    bj_forLoopAIndex = 1;
-    bj_forLoopAIndexEnd = 24;
+const Trig_AFK_Func005Func013Func001Func001Func010Func002Func003A = () => {
+  udg_captains[1] = GetEnumPlayer()!;
+  MultiboardSetItemValueBJ(
+    udg_captainsMultiboard,
+    2,
+    udg_multiboardRow[GetConvertedPlayerId(GetEnumPlayer()!)],
+    "",
+  );
+  bj_forLoopAIndex = 1;
+  bj_forLoopAIndexEnd = 24;
+  while (true) {
+    if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
+    udg_atempboolean = false;
+    bj_forLoopBIndex = 1;
+    bj_forLoopBIndexEnd = 24;
     while (true) {
-      if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-      udg_atempboolean = false;
-      bj_forLoopBIndex = 1;
-      bj_forLoopBIndexEnd = 24;
-      while (true) {
-        if (bj_forLoopBIndex > bj_forLoopBIndexEnd) break;
-        if (
-          (Trig_AFK_Func005Func013Func001Func001Func010Func002Func005Func002Func002Func001C())
-        ) {
-          udg_atempboolean = true;
-        }
-        bj_forLoopBIndex = bj_forLoopBIndex + 1;
-      }
+      if (bj_forLoopBIndex > bj_forLoopBIndexEnd) break;
       if (
-        (Trig_AFK_Func005Func013Func001Func001Func010Func002Func005Func002Func003C())
+        (Trig_AFK_Func005Func013Func001Func001Func010Func002Func003Func003Func002Func001C())
       ) {
-        udg_multiboardRow[GetConvertedPlayerId(GetEnumPlayer()!)] =
-          GetForLoopIndexA();
-        break;
+        udg_atempboolean = true;
       }
-      bj_forLoopAIndex = bj_forLoopAIndex + 1;
+      bj_forLoopBIndex = bj_forLoopBIndex + 1;
     }
-    MultiboardSetItemValueBJ(
-      udg_captainsMultiboard,
-      1,
-      udg_multiboardRow[GetConvertedPlayerId(udg_captains[1])],
-      "$" +
-        (udg_colorString[GetConvertedPlayerId(udg_captains[1])] +
-          GetPlayerName(udg_captains[1])),
-    );
-  };
+    if (
+      (Trig_AFK_Func005Func013Func001Func001Func010Func002Func003Func003Func003C())
+    ) {
+      udg_multiboardRow[GetConvertedPlayerId(GetEnumPlayer()!)] = GetForLoopIndexA();
+      break;
+    }
+    bj_forLoopAIndex = bj_forLoopAIndex + 1;
+  }
+  ForceRemovePlayerSimple(GetEnumPlayer()!, udg_Draft);
+  udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)] = true;
+  MultiboardSetItemValueBJ(
+    udg_captainsMultiboard,
+    1,
+    udg_multiboardRow[GetConvertedPlayerId(GetEnumPlayer()!)],
+    "$" +
+      (udg_colorString[GetConvertedPlayerId(GetEnumPlayer()!)] +
+        GetPlayerName(GetEnumPlayer()!)),
+  );
+  udg_captainTurn = 3;
+  MultiboardSetTitleText(
+    udg_captainsMultiboard,
+    udg_colorString[GetConvertedPlayerId(udg_captains[3])] +
+      (GetPlayerName(udg_captains[3]) + "'s turn"),
+  );
+};
 
-const Trig_AFK_Func005Func013Func001Func001Func010Func002Func007C =
-  (): boolean => {
-    if ((!(udg_captainTurn === 1))) {
-      return false;
-    }
+const Trig_AFK_Func005Func013Func001Func001Func010Func002Func005Func002Func002Func001Func004C = () => {
+  if ((udg_AFK[GetForLoopIndexB()] === AFK_PLAYING)) {
     return true;
-  };
+  }
+  if ((udg_AFK[GetForLoopIndexB()] === AFK_PLAYING_PICK)) {
+    return true;
+  }
+  if ((udg_AFK[GetForLoopIndexB()] === AFK_AFK_DURING_ROUND)) {
+    return true;
+  }
+  return false;
+};
 
-const Trig_AFK_Func005Func013Func001Func001Func010Func002Func008001001001 =
-  (): boolean => {
-    return GetBooleanAnd(
-      GetBooleanOr(
-        udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === 0,
-        udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === 1,
-      ),
+const Trig_AFK_Func005Func013Func001Func001Func010Func002Func005Func002Func002Func001C = () => {
+  if (
+    (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexB())!) ===
+      PLAYER_SLOT_STATE_PLAYING))
+  ) {
+    return false;
+  }
+  if (
+    (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexB())!) !==
+      PLAYER_SLOT_STATE_LEFT))
+  ) {
+    return false;
+  }
+  if ((!(GetEnumPlayer()! !== ConvertedPlayer(GetForLoopIndexB())!))) {
+    return false;
+  }
+  if (
+    (!Trig_AFK_Func005Func013Func001Func001Func010Func002Func005Func002Func002Func001Func004C())
+  ) {
+    return false;
+  }
+  if (
+    (!(IsPlayerInForce(ConvertedPlayer(GetForLoopIndexB())!, udg_Draft) ===
+      false))
+  ) {
+    return false;
+  }
+  if ((!(udg_sheepLastGame[GetForLoopIndexB()] === true))) {
+    return false;
+  }
+  if ((!(udg_multiboardRow[GetForLoopIndexB()] === GetForLoopIndexA()))) {
+    return false;
+  }
+  return true;
+};
+
+const Trig_AFK_Func005Func013Func001Func001Func010Func002Func005Func002Func003C = () => {
+  if ((!(udg_atempboolean === false))) {
+    return false;
+  }
+  return true;
+};
+
+const Trig_AFK_Func005Func013Func001Func001Func010Func002Func005A = () => {
+  udg_captains[1] = GetEnumPlayer()!;
+  bj_forLoopAIndex = 1;
+  bj_forLoopAIndexEnd = 24;
+  while (true) {
+    if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
+    udg_atempboolean = false;
+    bj_forLoopBIndex = 1;
+    bj_forLoopBIndexEnd = 24;
+    while (true) {
+      if (bj_forLoopBIndex > bj_forLoopBIndexEnd) break;
+      if (
+        (Trig_AFK_Func005Func013Func001Func001Func010Func002Func005Func002Func002Func001C())
+      ) {
+        udg_atempboolean = true;
+      }
+      bj_forLoopBIndex = bj_forLoopBIndex + 1;
+    }
+    if (
+      (Trig_AFK_Func005Func013Func001Func001Func010Func002Func005Func002Func003C())
+    ) {
+      udg_multiboardRow[GetConvertedPlayerId(GetEnumPlayer()!)] = GetForLoopIndexA();
+      break;
+    }
+    bj_forLoopAIndex = bj_forLoopAIndex + 1;
+  }
+  MultiboardSetItemValueBJ(
+    udg_captainsMultiboard,
+    1,
+    udg_multiboardRow[GetConvertedPlayerId(udg_captains[1])],
+    "$" +
+      (udg_colorString[GetConvertedPlayerId(udg_captains[1])] +
+        GetPlayerName(udg_captains[1])),
+  );
+};
+
+const Trig_AFK_Func005Func013Func001Func001Func010Func002Func007C = () => {
+  if ((!(udg_captainTurn === 1))) {
+    return false;
+  }
+  return true;
+};
+
+const Trig_AFK_Func005Func013Func001Func001Func010Func002Func008001001001 = () => {
+  return GetBooleanAnd(
+    GetBooleanOr(
+      udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === AFK_PLAYING,
+      udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === AFK_PLAYING_PICK,
+    ),
+    GetBooleanAnd(
+      GetPlayerSlotState(GetFilterPlayer()!) === PLAYER_SLOT_STATE_PLAYING,
       GetBooleanAnd(
-        GetPlayerSlotState(GetFilterPlayer()!) === PLAYER_SLOT_STATE_PLAYING,
+        GetPlayerSlotState(GetFilterPlayer()!) !== PLAYER_SLOT_STATE_LEFT,
         GetBooleanAnd(
-          GetPlayerSlotState(GetFilterPlayer()!) !== PLAYER_SLOT_STATE_LEFT,
-          GetBooleanAnd(
-            udg_sheepLastGame[GetConvertedPlayerId(GetFilterPlayer()!)] ===
-              true,
-            IsPlayerInForce(GetFilterPlayer()!, udg_Draft) === false,
-          ),
+          udg_sheepLastGame[GetConvertedPlayerId(GetFilterPlayer()!)] ===
+            true,
+          IsPlayerInForce(GetFilterPlayer()!, udg_Draft) === false,
         ),
       ),
-    );
-  };
+    ),
+  );
+};
 
-const Trig_AFK_Func005Func013Func001Func001Func010Func002C = (): boolean => {
+const Trig_AFK_Func005Func013Func001Func001Func010Func002C = () => {
   if (
     (!(CountPlayersInForceBJ(
       GetPlayersMatching(
@@ -756,22 +663,22 @@ const Trig_AFK_Func005Func013Func001Func001Func010Func002C = (): boolean => {
   return true;
 };
 
-const Trig_AFK_Func005Func013Func001Func001Func010C = (): boolean => {
+const Trig_AFK_Func005Func013Func001Func001Func010C = () => {
   if ((!(GetTriggerPlayer()! === udg_captains[1]))) {
     return false;
   }
   return true;
 };
 
-const Trig_AFK_Func005Func013Func001Func001Func011C = (): boolean => {
+const Trig_AFK_Func005Func013Func001Func001Func011C = () => {
   if ((!(udg_sheepLastGame[udg_atempint] === true))) {
     return false;
   }
   return true;
 };
 
-const Trig_AFK_Func005Func013Func001Func001C = (): boolean => {
-  if ((!(udg_Teams === 4))) {
+const captainsAndPicked = () => {
+  if ((!(udg_Teams === TEAMS_CAPTAINS))) {
     return false;
   }
   if ((!(IsPlayerInForce(GetTriggerPlayer()!, udg_Draft) === false))) {
@@ -780,7 +687,7 @@ const Trig_AFK_Func005Func013Func001Func001C = (): boolean => {
   return true;
 };
 
-const Trig_AFK_Func005Func013Func001Func005C = (): boolean => {
+const Trig_AFK_Func005Func013Func001Func005C = () => {
   if ((IsPlayerInForce(GetTriggerPlayer()!, udg_Sheep) === true)) {
     return true;
   }
@@ -790,8 +697,8 @@ const Trig_AFK_Func005Func013Func001Func005C = (): boolean => {
   return false;
 };
 
-const Trig_AFK_Func005Func013Func001C = (): boolean => {
-  if ((!(udg_Teams === 3))) {
+const pickingAndPicked = () => {
+  if ((!(udg_Teams === TEAMS_PICK))) {
     return false;
   }
   if ((!Trig_AFK_Func005Func013Func001Func005C())) {
@@ -800,55 +707,29 @@ const Trig_AFK_Func005Func013Func001C = (): boolean => {
   return true;
 };
 
-const Trig_AFK_Func005Func013Func002C = (): boolean => {
-  if ((!(udg_AFK[udg_atempint] > 0))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_AFK_Func005Func013C = (): boolean => {
-  if ((!(udg_gameStarted === true))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_AFK_Func005Func014C = (): boolean => {
-  if ((!(udg_AFK[udg_atempint] > 2))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_AFK_Func005C = (): boolean => {
-  if ((!(udg_AFK[udg_atempint] < 3))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_AFK_Func008Func001Func001Func001C = (): boolean => {
+const Trig_AFK_Func008Func001Func001Func001C = () => {
   if ((!(udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)] === true))) {
     return false;
   }
   return true;
 };
 
-const Trig_AFK_Func008Func001Func001Func003C = (): boolean => {
-  if ((udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === 0)) {
+const Trig_AFK_Func008Func001Func001Func003C = () => {
+  if ((udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === AFK_PLAYING)) {
     return true;
   }
-  if ((udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === 1)) {
+  if ((udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === AFK_PLAYING_PICK)) {
     return true;
   }
-  if ((udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === 4)) {
+  if (
+    (udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === AFK_AFK_DURING_ROUND)
+  ) {
     return true;
   }
   return false;
 };
 
-const Trig_AFK_Func008Func001Func001C = (): boolean => {
+const Trig_AFK_Func008Func001Func001C = () => {
   if ((!(GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING))) {
     return false;
   }
@@ -861,7 +742,7 @@ const Trig_AFK_Func008Func001Func001C = (): boolean => {
   return true;
 };
 
-const Trig_AFK_Func008Func001A = (): void => {
+const Trig_AFK_Func008Func001A = () => {
   if ((Trig_AFK_Func008Func001Func001C())) {
     if ((Trig_AFK_Func008Func001Func001Func001C())) {
       ForceAddPlayerSimple(GetEnumPlayer()!, udg_Sheep);
@@ -871,160 +752,154 @@ const Trig_AFK_Func008Func001A = (): void => {
   }
 };
 
-const Trig_AFK_Func008C = (): boolean => {
+const captainsAndDraftEmpty = () => {
   if ((!(CountPlayersInForceBJ(udg_Draft) === 0))) {
     return false;
   }
-  if ((!(udg_Teams === 4))) {
+  if ((!(udg_Teams === TEAMS_CAPTAINS))) {
     return false;
   }
   return true;
 };
 
-const Trig_AFK_Actions = (): void => {
-  if (rotated === GetTriggerPlayer()!) {
-    return;
-  }
+const Trig_AFK_Actions = () => {
+  if (rotated === GetTriggerPlayer()!) return;
   udg_atempint = GetConvertedPlayerId(GetTriggerPlayer()!);
-  if ((Trig_AFK_Func005C())) {
-    if ((Trig_AFK_Func005Func013C())) {
-      if ((Trig_AFK_Func005Func013Func002C())) {
+  if (udg_AFK[udg_atempint] < AFK_AFK) { // Not AFK
+    if (udg_gameStarted) {
+      if (udg_AFK[udg_atempint] > 0) {
         udg_AFKOn[udg_atempint] = 1;
-        udg_AFK[udg_atempint] = 3;
+        udg_AFK[udg_atempint] = AFK_AFK;
         LeaderboardSetPlayerItemLabelBJ(
           GetTriggerPlayer()!,
           PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
           GetPlayerName(GetTriggerPlayer()!)!,
         );
       }
-    } else {
-      if ((Trig_AFK_Func005Func013Func001C())) {
-        udg_AFKOn[udg_atempint] = 1;
-        udg_AFK[udg_atempint] = 4;
-      } else {
-        if ((Trig_AFK_Func005Func013Func001Func001C())) {
-          udg_AFKOn[udg_atempint] = 1;
-          udg_AFK[udg_atempint] = 4;
-          if ((Trig_AFK_Func005Func013Func001Func001Func010C())) {
-            if ((Trig_AFK_Func005Func013Func001Func001Func010Func002C())) {
-              udg_atempplayer = GetForceOfPlayer(
-                ForcePickRandomPlayer(
-                  GetPlayersMatching(
-                    Condition(
-                      Trig_AFK_Func005Func013Func001Func001Func010Func002Func002002001001001,
-                    ),
-                  )!,
-                )!,
-              )!;
-              ForForce(
-                udg_atempplayer,
-                Trig_AFK_Func005Func013Func001Func001Func010Func002Func005A,
-              );
-              DestroyForce(udg_atempplayer);
-              if (
-                (Trig_AFK_Func005Func013Func001Func001Func010Func002Func007C())
-              ) {
-                MultiboardSetTitleText(
-                  udg_captainsMultiboard,
-                  udg_colorString[GetConvertedPlayerId(udg_captains[1])] +
-                    (GetPlayerName(udg_captains[1]) + "'s turn"),
-                );
-              }
-            } else {
-              udg_atempplayer = GetForceOfPlayer(
-                ForcePickRandomPlayer(udg_Draft)!,
-              )!;
-              ForForce(
-                udg_atempplayer,
-                Trig_AFK_Func005Func013Func001Func001Func010Func002Func003A,
-              );
-              DestroyForce(udg_atempplayer);
-            }
-          } else {
-            if ((Trig_AFK_Func005Func013Func001Func001Func010Func001C())) {
-              if (
-                (Trig_AFK_Func005Func013Func001Func001Func010Func001Func001C())
-              ) {
-                udg_atempplayer = GetForceOfPlayer(
-                  ForcePickRandomPlayer(
-                    GetPlayersMatching(
-                      Condition(
-                        Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func002002001001001,
-                      ),
-                    )!,
-                  )!,
-                )!;
-                ForForce(
-                  udg_atempplayer,
-                  Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func005A,
-                );
-                DestroyForce(udg_atempplayer);
-              } else {
-                udg_atempplayer = GetForceOfPlayer(
-                  ForcePickRandomPlayer(udg_Draft)!,
-                )!;
-                ForForce(
-                  udg_atempplayer,
-                  Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func003A,
-                );
-                DestroyForce(udg_atempplayer);
-              }
-              if (
-                (Trig_AFK_Func005Func013Func001Func001Func010Func001Func002C())
-              ) {
-                MultiboardSetTitleText(
-                  udg_captainsMultiboard,
-                  udg_colorString[GetConvertedPlayerId(udg_captains[3])] +
-                    (GetPlayerName(udg_captains[3]) + "'s turn"),
-                );
-              }
-            }
-          }
-          if ((Trig_AFK_Func005Func013Func001Func001Func011C())) {
-            MultiboardSetItemValueBJ(
+    } else if (pickingAndPicked()) {
+      udg_AFKOn[udg_atempint] = 1;
+      udg_AFK[udg_atempint] = AFK_AFK_DURING_ROUND;
+    } else if (captainsAndPicked()) {
+      udg_AFKOn[udg_atempint] = 1;
+      udg_AFK[udg_atempint] = AFK_AFK_DURING_ROUND;
+      if ((Trig_AFK_Func005Func013Func001Func001Func010C())) {
+        if ((Trig_AFK_Func005Func013Func001Func001Func010Func002C())) {
+          udg_atempplayer = GetForceOfPlayer(
+            ForcePickRandomPlayer(
+              GetPlayersMatching(
+                Condition(
+                  Trig_AFK_Func005Func013Func001Func001Func010Func002Func002002001001001,
+                ),
+              )!,
+            )!,
+          )!;
+          ForForce(
+            udg_atempplayer,
+            Trig_AFK_Func005Func013Func001Func001Func010Func002Func005A,
+          );
+          DestroyForce(udg_atempplayer);
+          if (
+            (Trig_AFK_Func005Func013Func001Func001Func010Func002Func007C())
+          ) {
+            MultiboardSetTitleText(
               udg_captainsMultiboard,
-              1,
-              udg_multiboardRow[udg_atempint],
-              udg_colorString[udg_atempint] +
-                (GetPlayerName(GetTriggerPlayer()!) + " (AFK)"),
-            );
-          } else {
-            MultiboardSetItemValueBJ(
-              udg_captainsMultiboard,
-              3,
-              udg_multiboardRow[udg_atempint],
-              udg_colorString[udg_atempint] +
-                (GetPlayerName(GetTriggerPlayer()!) + " (AFK)"),
+              udg_colorString[GetConvertedPlayerId(udg_captains[1])] +
+                (GetPlayerName(udg_captains[1]) + "'s turn"),
             );
           }
         } else {
-          if ((Trig_AFK_Func005Func013Func001Func001Func001C())) {
-            ForceRemovePlayerSimple(GetTriggerPlayer()!, udg_Draft);
-            MultiboardSetItemValueBJ(
-              udg_captainsMultiboard,
-              2,
-              udg_multiboardRow[udg_atempint],
-              "",
-            );
-          }
-          udg_AFKOn[udg_atempint] = 1;
-          udg_AFK[udg_atempint] = 3;
-          LeaderboardRemovePlayerItemBJ(
-            GetTriggerPlayer()!,
-            GetLastCreatedLeaderboard()!,
+          udg_atempplayer = GetForceOfPlayer(
+            ForcePickRandomPlayer(udg_Draft)!,
+          )!;
+          ForForce(
+            udg_atempplayer,
+            Trig_AFK_Func005Func013Func001Func001Func010Func002Func003A,
           );
-          if ((Trig_AFK_Func005Func013Func001Func001Func005C())) {
-            LeaderboardAddItemBJ(
-              GetTriggerPlayer()!,
-              GetLastCreatedLeaderboard()!,
-              GetPlayerName(GetTriggerPlayer()!) + " (AFK)",
-              0,
+          DestroyForce(udg_atempplayer);
+        }
+      } else {
+        if ((Trig_AFK_Func005Func013Func001Func001Func010Func001C())) {
+          if (
+            (Trig_AFK_Func005Func013Func001Func001Func010Func001Func001C())
+          ) {
+            udg_atempplayer = GetForceOfPlayer(
+              ForcePickRandomPlayer(
+                GetPlayersMatching(
+                  Condition(
+                    Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func002002001001001,
+                  ),
+                )!,
+              )!,
+            )!;
+            ForForce(
+              udg_atempplayer,
+              Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func005A,
+            );
+            DestroyForce(udg_atempplayer);
+          } else {
+            udg_atempplayer = GetForceOfPlayer(
+              ForcePickRandomPlayer(udg_Draft)!,
+            )!;
+            ForForce(
+              udg_atempplayer,
+              Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func003A,
+            );
+            DestroyForce(udg_atempplayer);
+          }
+          if (
+            (Trig_AFK_Func005Func013Func001Func001Func010Func001Func002C())
+          ) {
+            MultiboardSetTitleText(
+              udg_captainsMultiboard,
+              udg_colorString[GetConvertedPlayerId(udg_captains[3])] +
+                (GetPlayerName(udg_captains[3]) + "'s turn"),
             );
           }
         }
       }
+      if ((Trig_AFK_Func005Func013Func001Func001Func011C())) {
+        MultiboardSetItemValueBJ(
+          udg_captainsMultiboard,
+          1,
+          udg_multiboardRow[udg_atempint],
+          udg_colorString[udg_atempint] +
+            (GetPlayerName(GetTriggerPlayer()!) + " (AFK)"),
+        );
+      } else {
+        MultiboardSetItemValueBJ(
+          udg_captainsMultiboard,
+          3,
+          udg_multiboardRow[udg_atempint],
+          udg_colorString[udg_atempint] +
+            (GetPlayerName(GetTriggerPlayer()!) + " (AFK)"),
+        );
+      }
+    } else {
+      if ((Trig_AFK_Func005Func013Func001Func001Func001C())) {
+        ForceRemovePlayerSimple(GetTriggerPlayer()!, udg_Draft);
+        MultiboardSetItemValueBJ(
+          udg_captainsMultiboard,
+          2,
+          udg_multiboardRow[udg_atempint],
+          "",
+        );
+      }
+      udg_AFKOn[udg_atempint] = 1;
+      udg_AFK[udg_atempint] = AFK_AFK;
+      LeaderboardRemovePlayerItemBJ(
+        GetTriggerPlayer()!,
+        GetLastCreatedLeaderboard()!,
+      );
+      if ((Trig_AFK_Func005Func013Func001Func001Func005C())) {
+        LeaderboardAddItemBJ(
+          GetTriggerPlayer()!,
+          GetLastCreatedLeaderboard()!,
+          GetPlayerName(GetTriggerPlayer()!) + " (AFK)",
+          0,
+        );
+      }
     }
-    if ((Trig_AFK_Func005Func014C())) {
+    if (udg_AFK[udg_atempint] > 2) {
       DisplayTimedTextToForce(
         GetPlayersAll()!,
         5,
@@ -1033,8 +908,8 @@ const Trig_AFK_Actions = (): void => {
       );
     }
   } else {
-    if ((Trig_AFK_Func005Func001C())) {
-      if ((Trig_AFK_Func005Func001Func002C())) {
+    if (udg_gameStarted) {
+      if (udg_AFK[udg_atempint] === AFK_AFK_DURING_ROUND) {
         ForForce(
           GetPlayersAllies(GetTriggerPlayer()!)!,
           Trig_AFK_Func005Func001Func002Func006A,
@@ -1050,7 +925,7 @@ const Trig_AFK_Actions = (): void => {
           );
           bj_forLoopAIndex = bj_forLoopAIndex + 1;
         }
-        udg_AFK[udg_atempint] = 0;
+        udg_AFK[udg_atempint] = AFK_PLAYING;
         SelectUnitForPlayerSingle(udg_unit[udg_atempint], GetTriggerPlayer()!);
         PanCameraToForPlayer(
           GetTriggerPlayer()!,
@@ -1078,35 +953,33 @@ const Trig_AFK_Actions = (): void => {
         );
         DestroyForce(udg_atempplayer);
       }
+    } else if (captainsAndAfkOrPickingAndNotPicked2()) {
+      udg_AFK[udg_atempint] = AFK_PLAYING_PICK;
+      LeaderboardAddItemBJ(
+        GetTriggerPlayer()!,
+        GetLastCreatedLeaderboard()!,
+        GetPlayerName(GetTriggerPlayer()!)!,
+        0,
+      );
     } else {
-      if ((Trig_AFK_Func005Func001Func001C())) {
-        udg_AFK[udg_atempint] = 1;
-        LeaderboardAddItemBJ(
-          GetTriggerPlayer()!,
-          GetLastCreatedLeaderboard()!,
-          GetPlayerName(GetTriggerPlayer()!)!,
-          0,
-        );
-      } else {
-        udg_AFK[udg_atempint] = 0;
-        if ((Trig_AFK_Func005Func001Func001Func002C())) {
-          if ((Trig_AFK_Func005Func001Func001Func002Func001C())) {
-            MultiboardSetItemValueBJ(
-              udg_captainsMultiboard,
-              1,
-              udg_multiboardRow[udg_atempint],
-              udg_colorString[udg_atempint] +
-                GetPlayerName(GetTriggerPlayer()!),
-            );
-          } else {
-            MultiboardSetItemValueBJ(
-              udg_captainsMultiboard,
-              3,
-              udg_multiboardRow[udg_atempint],
-              udg_colorString[udg_atempint] +
-                GetPlayerName(GetTriggerPlayer()!),
-            );
-          }
+      udg_AFK[udg_atempint] = AFK_PLAYING;
+      if (udg_Teams === TEAMS_CAPTAINS) {
+        if (udg_sheepLastGame[udg_atempint]) {
+          MultiboardSetItemValueBJ(
+            udg_captainsMultiboard,
+            1,
+            udg_multiboardRow[udg_atempint],
+            udg_colorString[udg_atempint] +
+              GetPlayerName(GetTriggerPlayer()!),
+          );
+        } else {
+          MultiboardSetItemValueBJ(
+            udg_captainsMultiboard,
+            3,
+            udg_multiboardRow[udg_atempint],
+            udg_colorString[udg_atempint] +
+              GetPlayerName(GetTriggerPlayer()!),
+          );
         }
       }
     }
@@ -1123,37 +996,35 @@ const Trig_AFK_Actions = (): void => {
       (("                              " + udg_colorString[udg_atempint]) +
         GetPlayerName(GetTriggerPlayer()!)) + " |ris back.",
     );
-    if ((Trig_AFK_Func005Func005C())) {
+    if (udg_Teams === TEAMS_PICK) {
       PanCameraToForPlayer(
         GetTriggerPlayer()!,
         GetUnitX(udg_farm),
         GetUnitY(udg_farm),
       );
-    } else {
-      if ((Trig_AFK_Func005Func005Func001C())) {
-        if ((Trig_AFK_Func005Func005Func001Func002C())) {
-          PanCameraToForPlayer(
-            GetTriggerPlayer()!,
-            GetUnitX(udg_unit[udg_atempint]),
-            GetUnitY(udg_unit[udg_atempint]),
-          );
-        } else {
-          udg_atempplayer = GetForceOfPlayer(
-            ForcePickRandomPlayer(udg_Sheep)!,
-          )!;
-          ForForce(
-            udg_atempplayer,
-            Trig_AFK_Func005Func005Func001Func002Func002A,
-          );
-          DestroyForce(udg_atempplayer);
-        }
-      } else {
+    } else if (udg_Teams === TEAMS_LOCK_IE_PLAYING) {
+      if (inTeam()) {
         PanCameraToForPlayer(
           GetTriggerPlayer()!,
-          GetRectCenterX(wolfSpawn),
-          GetRectCenterY(wolfSpawn),
+          GetUnitX(udg_unit[udg_atempint]),
+          GetUnitY(udg_unit[udg_atempint]),
         );
+      } else {
+        udg_atempplayer = GetForceOfPlayer(
+          ForcePickRandomPlayer(udg_Sheep)!,
+        )!;
+        ForForce(
+          udg_atempplayer,
+          Trig_AFK_Func005Func005Func001Func002Func002A,
+        );
+        DestroyForce(udg_atempplayer);
       }
+    } else {
+      PanCameraToForPlayer(
+        GetTriggerPlayer()!,
+        GetRectCenterX(wolfSpawn),
+        GetRectCenterY(wolfSpawn),
+      );
     }
     // If players sheepCount is lowest than the greatest players SheepCount, set them.
     udg_atempplayer = GetForceOfPlayer(
@@ -1164,19 +1035,19 @@ const Trig_AFK_Actions = (): void => {
     ForForce(udg_atempplayer, Trig_AFK_Func005Func008A);
     DestroyForce(udg_atempplayer);
     ForForce(
-      GetPlayersMatching(Condition(Trig_AFK_Func005Func010001001))!,
+      GetPlayersMatching(Condition(playingAndNotAFKOrPub))!,
       Trig_AFK_Func005Func010A,
     );
-    if ((Trig_AFK_Func005Func011C())) {
+    if (udg_sheepCount[udg_atempint] < udg_atempint2) {
       udg_sheepCount[udg_atempint] = udg_atempint2;
     }
     inflateGoldCount(GetTriggerPlayer()!);
   }
   TriggerExecute(gg_trg_createLists);
   TriggerExecute(gg_trg_setupLeaderboard);
-  if ((Trig_AFK_Func008C())) {
+  if (captainsAndDraftEmpty()) {
     ForForce(GetPlayersAll()!, Trig_AFK_Func008Func001A);
-    udg_Teams = 2;
+    udg_Teams = TEAMS_LOCK_IE_PLAYING;
     MultiboardDisplayBJ(false, udg_captainsMultiboard);
     enforceTeamResourceMultiboard();
     MultiboardMinimizeBJ(true, udg_captainsMultiboard);
@@ -1188,13 +1059,11 @@ const Trig_AFK_Actions = (): void => {
   }
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_AFK: () => void;
 }
-InitTrig_AFK = (): void => {
+InitTrig_AFK = () => {
   gg_trg_AFK = CreateTrigger();
   TriggerRegisterPlayerChatEvent(gg_trg_AFK, Player(0)!, "-afk", true);
   TriggerRegisterPlayerChatEvent(gg_trg_AFK, Player(1)!, "-afk", true);

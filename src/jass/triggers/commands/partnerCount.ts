@@ -2,7 +2,7 @@
 // Trigger: partnerCount
 //===========================================================================
 
-const Trig_partnerCount_Actions = (): void => {
+const Trig_partnerCount_Actions = () => {
   let i = 0;
   let count = 0;
   let pid: number;
@@ -33,7 +33,7 @@ const Trig_partnerCount_Actions = (): void => {
       if (i === bj_MAX_PLAYERS || count === 12) break;
       if (
         GetPlayerSlotState(Player(i)!) === PLAYER_SLOT_STATE_PLAYING &&
-        udg_AFK[i + 1] === 0 && i !== pid
+        udg_AFK[i + 1] === AFK_PLAYING && i !== pid
       ) {
         DisplayTimedTextToPlayer(
           GetTriggerPlayer()!,
@@ -63,7 +63,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_partnerCount: () => void;
 }
-InitTrig_partnerCount = (): void => {
+InitTrig_partnerCount = () => {
   let i = 0;
   gg_trg_partnerCount = CreateTrigger();
   while (true) {

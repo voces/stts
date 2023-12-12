@@ -9,7 +9,7 @@ const Trig_qds_Actions_time = (playerId: number): string => {
   }
 };
 
-const Trig_qds_Actions = (): void => {
+const Trig_qds_Actions = () => {
   let i = 0;
   let count = 0;
   DisplayTimedTextToPlayer(GetTriggerPlayer()!, 0, 0, 15, " ");
@@ -20,7 +20,7 @@ const Trig_qds_Actions = (): void => {
       if (i === bj_MAX_PLAYERS || count === 12) break;
       if (
         GetPlayerSlotState(Player(i)!) === PLAYER_SLOT_STATE_PLAYING &&
-        udg_AFK[i + 1] === 0
+        udg_AFK[i + 1] === AFK_PLAYING
       ) {
         DisplayTimedTextToPlayer(
           GetTriggerPlayer()!,
@@ -49,7 +49,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_qds: () => void;
 }
-InitTrig_qds = (): void => {
+InitTrig_qds = () => {
   let i = 0;
   gg_trg_qds = CreateTrigger();
   while (true) {

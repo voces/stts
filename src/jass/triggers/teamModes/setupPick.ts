@@ -1,8 +1,6 @@
-//===========================================================================
-// Trigger: setupPick
-//===========================================================================
+import { removeEnumUnit } from "../../../util/removeEnumUnit";
 
-const focusOnPickFarm = (): void => {
+const focusOnPickFarm = () => {
   PanCameraToTimedForPlayer(
     GetEnumPlayer()!,
     GetRectCenterX(gg_rct_pickfarm),
@@ -11,18 +9,7 @@ const focusOnPickFarm = (): void => {
   );
 };
 
-const Trig_setupPick_Func002Func002002 = (): void => {
-  RemoveUnit(GetEnumUnit()!);
-};
-
-const Trig_setupPick_Func002C = (): boolean => {
-  if ((!(udg_pickIndex > udg_playerCount))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_setupPick_Actions = (): void => {
+const Trig_setupPick_Actions = () => {
   ClearTextMessagesBJ(GetPlayersAll()!);
   while (true) {
     if (
@@ -35,17 +22,17 @@ const Trig_setupPick_Actions = (): void => {
     ) break;
     udg_pickIndex = udg_pickIndex + 1;
   }
-  if ((Trig_setupPick_Func002C())) {
-    udg_Teams = TEAMS_LOCK;
+  if (udg_pickIndex > udg_playerCount) { // Everyone picked
+    udg_Teams = TEAMS_LOCK_IE_PLAYING;
     TriggerExecute(gg_trg_createSheep);
   } else {
     udg_atempgroup = GetUnitsInRectAll(gg_rct_pickfarm)!;
-    ForGroupBJ(udg_atempgroup, Trig_setupPick_Func002Func002002);
+    ForGroupBJ(udg_atempgroup, removeEnumUnit);
     ForForce(GetPlayersAll()!, focusOnPickFarm);
     DestroyGroup(udg_atempgroup);
     bj_lastCreatedUnit = CreateUnit(
       udg_Custom,
-      pick,
+      pickFarmType,
       GetRectCenterX(gg_rct_pickfarm),
       GetRectCenterY(gg_rct_pickfarm),
       270,
@@ -69,13 +56,11 @@ For Sheep                                    For Wolf`,
   }
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_setupPick: () => void;
 }
-InitTrig_setupPick = (): void => {
+InitTrig_setupPick = () => {
   gg_trg_setupPick = CreateTrigger();
   TriggerAddAction(gg_trg_setupPick, Trig_setupPick_Actions);
 };

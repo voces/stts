@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: Say Q Death
 //===========================================================================
-const Trig_Say_Q_Death_Func001Func001C = (): boolean => {
+const Trig_Say_Q_Death_Func001Func001C = () => {
   if (
     (!(udg_QDeathTime[S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 6)!)] <
       9999))
@@ -11,7 +11,7 @@ const Trig_Say_Q_Death_Func001Func001C = (): boolean => {
   return true;
 };
 
-const Trig_Say_Q_Death_Func001C = (): boolean => {
+const Trig_Say_Q_Death_Func001C = () => {
   if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 6)!) >= 1))) {
     return false;
   }
@@ -28,7 +28,7 @@ const Trig_Say_Q_Death_Func001C = (): boolean => {
   return true;
 };
 
-const Trig_Say_Q_Death_Actions = (): void => {
+const Trig_Say_Q_Death_Actions = () => {
   if ((Trig_Say_Q_Death_Func001C())) {
     if ((Trig_Say_Q_Death_Func001Func001C())) {
       udg_Force = GetForceOfPlayer(GetTriggerPlayer()!)!;
@@ -74,7 +74,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_Say_Q_Death: () => void;
 }
-InitTrig_Say_Q_Death = (): void => {
+InitTrig_Say_Q_Death = () => {
   gg_trg_Say_Q_Death = CreateTrigger();
   TriggerRegisterPlayerChatEvent(gg_trg_Say_Q_Death, Player(0)!, "-qd ", false);
   TriggerRegisterPlayerChatEvent(gg_trg_Say_Q_Death, Player(1)!, "-qd ", false);

@@ -1,11 +1,11 @@
 //===========================================================================
 // Trigger: giveAllGold
 //===========================================================================
-const Trig_giveAllGold_Conditions = (): boolean => {
+const Trig_giveAllGold_Conditions = () => {
   if ((!(udg_isAnon === false))) {
     return false;
   }
-  if ((!(udg_Teams === 2))) {
+  if ((!(udg_Teams === TEAMS_LOCK_IE_PLAYING))) {
     return false;
   }
   if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 5)!) > 0))) {
@@ -25,17 +25,23 @@ const Trig_giveAllGold_Conditions = (): boolean => {
   return true;
 };
 
-const Trig_giveAllGold_Func002Func008C = (): boolean => {
-  if ((udg_AFK[S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 5)!)] === 0)) {
+const Trig_giveAllGold_Func002Func008C = () => {
+  if (
+    (udg_AFK[S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 5)!)] ===
+      AFK_PLAYING)
+  ) {
     return true;
   }
-  if ((udg_AFK[S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 5)!)] === 4)) {
+  if (
+    (udg_AFK[S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 5)!)] ===
+      AFK_AFK_DURING_ROUND)
+  ) {
     return true;
   }
   return false;
 };
 
-const Trig_giveAllGold_Func002C = (): boolean => {
+const Trig_giveAllGold_Func002C = () => {
   if (
     (!(IsPlayerAlly(
       ConvertedPlayer(S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 5)!))!,
@@ -70,7 +76,7 @@ const Trig_giveAllGold_Func002C = (): boolean => {
   return true;
 };
 
-const Trig_giveAllGold_Actions = (): void => {
+const Trig_giveAllGold_Actions = () => {
   if ((Trig_giveAllGold_Func002C())) {
     udg_giveGold = false;
     udg_atempint = S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 5)!);
@@ -90,7 +96,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_giveAllGold: () => void;
 }
-InitTrig_giveAllGold = (): void => {
+InitTrig_giveAllGold = () => {
   gg_trg_giveAllGold = CreateTrigger();
   TriggerRegisterPlayerChatEvent(gg_trg_giveAllGold, Player(0)!, "-g", false);
   TriggerRegisterPlayerChatEvent(gg_trg_giveAllGold, Player(1)!, "-g", false);

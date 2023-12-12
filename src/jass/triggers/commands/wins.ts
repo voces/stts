@@ -1,20 +1,20 @@
 //===========================================================================
 // Trigger: wins
 //===========================================================================
-const Trig_wins_Func003Func001Func001C = (): boolean => {
+const Trig_wins_Func003Func001Func001C = () => {
   if ((!(GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING))) {
     return false;
   }
   if ((!(GetPlayerSlotState(GetEnumPlayer()!) !== PLAYER_SLOT_STATE_LEFT))) {
     return false;
   }
-  if ((!(udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === 0))) {
+  if ((!(udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === AFK_PLAYING))) {
     return false;
   }
   return true;
 };
 
-const Trig_wins_Func003Func001A = (): void => {
+const Trig_wins_Func003Func001A = () => {
   if ((Trig_wins_Func003Func001Func001C())) {
     udg_atempint = GetConvertedPlayerId(GetEnumPlayer()!);
     DisplayTimedTextToForce(
@@ -27,7 +27,7 @@ const Trig_wins_Func003Func001A = (): void => {
   }
 };
 
-const Trig_wins_Func003Func002Func001C = (): boolean => {
+const Trig_wins_Func003Func002Func001C = () => {
   if (
     (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexA())!) ===
       PLAYER_SLOT_STATE_PLAYING))
@@ -49,7 +49,7 @@ const Trig_wins_Func003Func002Func001C = (): boolean => {
   return true;
 };
 
-const Trig_wins_Func003Func006Func001C = (): boolean => {
+const Trig_wins_Func003Func006Func001C = () => {
   if (
     (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexA())!) ===
       PLAYER_SLOT_STATE_PLAYING))
@@ -71,14 +71,14 @@ const Trig_wins_Func003Func006Func001C = (): boolean => {
   return true;
 };
 
-const Trig_wins_Func003C = (): boolean => {
+const Trig_wins_Func003C = () => {
   if ((!(CountPlayersInForceBJ(GetPlayersAll()!) > 14))) {
     return false;
   }
   return true;
 };
 
-const Trig_wins_Actions = (): void => {
+const Trig_wins_Actions = () => {
   udg_atempplayer = GetForceOfPlayer(GetTriggerPlayer()!)!;
   DisplayTimedTextToForce(
     udg_atempplayer,
@@ -137,7 +137,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_wins: () => void;
 }
-InitTrig_wins = (): void => {
+InitTrig_wins = () => {
   gg_trg_wins = CreateTrigger();
   TriggerRegisterPlayerChatEvent(gg_trg_wins, Player(0)!, "-wins", true);
   TriggerRegisterPlayerChatEvent(gg_trg_wins, Player(1)!, "-wins", true);

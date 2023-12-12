@@ -1,10 +1,10 @@
 //===========================================================================
 // Trigger: sheepDamage
 //===========================================================================
-const Trig_sheepDamage_Actions = (): void => {
+const Trig_sheepDamage_Actions = () => {
   const target = BlzGetEventDamageTarget()!;
   const source = GetEventDamageSource()!;
-  if (GetUnitTypeId(target) === sheep) {
+  if (GetUnitTypeId(target) === sheepType) {
     if (IsUnitIllusion(source)) {
       BlzSetEventDamage(0);
     }
@@ -20,7 +20,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_sheepDamage: () => void;
 }
-InitTrig_sheepDamage = (): void => {
+InitTrig_sheepDamage = () => {
   gg_trg_sheepDamage = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(gg_trg_sheepDamage, EVENT_PLAYER_UNIT_DAMAGED);
   TriggerAddAction(gg_trg_sheepDamage, Trig_sheepDamage_Actions);

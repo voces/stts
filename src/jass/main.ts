@@ -111,63 +111,14 @@ import "./triggers/runes/ManaRune";
 import "./triggers/runes/RunesOn";
 import "./triggers/runes/OmniscienceRune";
 import "./triggers/runes/InvisRune";
-import "./triggers/switchTimers/countdg";
-import "./triggers/switchTimers/countpeach";
-import "./triggers/switchTimers/countbrown";
-import "./triggers/switchTimers/countgrey";
-import "./triggers/switchTimers/countlb";
-import "./triggers/switchTimers/countmint";
-import "./triggers/switchTimers/countteal";
-import "./triggers/switchTimers/countpeanut";
-import "./triggers/switchTimers/countpurple";
-import "./triggers/switchTimers/countturquoise";
-import "./triggers/switchTimers/countsnow";
-import "./triggers/switchTimers/countyellow";
-import "./triggers/switchTimers/countorange";
-import "./triggers/switchTimers/countemerald";
-import "./triggers/switchTimers/countviolet";
-import "./triggers/switchTimers/countred";
-import "./triggers/switchTimers/countnavy";
-import "./triggers/switchTimers/countcoal";
-import "./triggers/switchTimers/countblue";
-import "./triggers/switchTimers/countpink";
-import "./triggers/switchTimers/countgreen";
-import "./triggers/switchTimers/countwheat";
-import "./triggers/switchTimers/countlavender";
-import "./triggers/switchTimers/countmaroon";
 import "./triggers/resourceFunctions/regrowTrees";
 import "./triggers/resourceFunctions/increaseGoldWolf";
 import "./triggers/resourceFunctions/increaseGoldSheep";
-import "./triggers/hideTimers/turquoiseHideTimer";
-import "./triggers/hideTimers/maroonHideTimer";
-import "./triggers/hideTimers/violetHideTimer";
-import "./triggers/hideTimers/tealHideTimer";
-import "./triggers/hideTimers/navyHideTimer";
-import "./triggers/hideTimers/peachHideTimer";
-import "./triggers/hideTimers/redHideTimer";
-import "./triggers/hideTimers/dgHideTimer";
-import "./triggers/hideTimers/greenHideTimer";
-import "./triggers/hideTimers/orangeHideTimer";
-import "./triggers/hideTimers/lavenderHideTimer";
-import "./triggers/hideTimers/peanutHideTimer";
-import "./triggers/hideTimers/yellowHideTimer";
-import "./triggers/hideTimers/blueHideTimer";
-import "./triggers/hideTimers/mintHideTimer";
-import "./triggers/hideTimers/purpleHideTimer";
-import "./triggers/hideTimers/greyHideTimer";
-import "./triggers/hideTimers/emeraldHideTimer";
-import "./triggers/hideTimers/snowHideTimer";
-import "./triggers/hideTimers/brownHideTimer";
-import "./triggers/hideTimers/lbHideTimer";
-import "./triggers/hideTimers/coalHideTimer";
-import "./triggers/hideTimers/pinkHideTimer";
-import "./triggers/hideTimers/wheatHideTimer";
 import "./triggers/teamModes/versus";
 import "./triggers/teamModes/draftPlayer";
 import "./triggers/teamModes/captains";
 import "./triggers/teamModes/pickwolf";
 import "./triggers/teamModes/picksheep";
-import "./triggers/teamModes/random";
 import "./triggers/teamModes/fair";
 import "./triggers/teamModes/draftVersus";
 import "./triggers/teamModes/pick";
@@ -214,6 +165,8 @@ import "./triggers/shareControl/control";
 import "./triggers/shareControl/antishareruin";
 import "./triggers/shareControl/controllal";
 import "./triggers/shareControl/noAutoControl";
+import { setTimeout, Timeout } from "../util/setTimeout";
+import { removeEnumUnit } from "../util/removeEnumUnit";
 
 declare global {
   //globals from Critter:
@@ -277,8 +230,7 @@ declare global {
   let MMD_FLAG_PRACTICING: 105;
 
   // deno-lint-ignore prefer-const
-  let MMD__chars:
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-+= \\!@#$%^&*()/?>.<,;:'\"{}[]|`~";
+  let MMD__chars: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-+= \\!@#$%^&*()/?>.<,;:'\"{}[]|`~";
   // deno-lint-ignore prefer-const
   let MMD__num_chars: number;
   // deno-lint-ignore prefer-const
@@ -390,12 +342,6 @@ declare global {
   // deno-lint-ignore prefer-const
   let gsDist: Array<number>;
   //endglobals from gs
-  //globals from hostAbilities:
-  //endglobals from hostAbilities
-  //globals from restart:
-  //endglobals from restart
-  //globals from transferHelpers:
-  //endglobals from transferHelpers
   //globals from BuySellItem:
   // deno-lint-ignore prefer-const
   let BuySellItem__itemShorthand: Array<string>;
@@ -412,14 +358,13 @@ declare global {
   //globals from Smart:
   // deno-lint-ignore prefer-const
   let pub: Array<boolean>;
-  let rotated: player;
-  let Smart__lastPubSheep: number;
-  let Smart__unrotated: player;
   // deno-lint-ignore prefer-const
-  let Smart__vars: Array<player>;
-  let Smart__perfectSmartEnabled: boolean;
+  let rotated: player;
+  // deno-lint-ignore prefer-const
   let perfectSmartIndex: number;
+  // deno-lint-ignore prefer-const
   let perfectRound: boolean;
+  // deno-lint-ignore prefer-const
   let perfectRoundCanceled: boolean;
   //endglobals from Smart
   //globals from TeamResources:
@@ -710,34 +655,9 @@ declare global {
   let gg_trg_startRound: trigger;
   let gg_trg_createLists: trigger;
   let gg_trg_createTimer: trigger;
-  let gg_trg_redHideTimer: trigger;
-  let gg_trg_blueHideTimer: trigger;
-  let gg_trg_tealHideTimer: trigger;
-  let gg_trg_purpleHideTimer: trigger;
-  let gg_trg_yellowHideTimer: trigger;
-  let gg_trg_orangeHideTimer: trigger;
-  let gg_trg_greenHideTimer: trigger;
-  let gg_trg_pinkHideTimer: trigger;
-  let gg_trg_greyHideTimer: trigger;
-  let gg_trg_lbHideTimer: trigger;
-  let gg_trg_dgHideTimer: trigger;
-  let gg_trg_brownHideTimer: trigger;
-  let gg_trg_maroonHideTimer: trigger;
-  let gg_trg_navyHideTimer: trigger;
-  let gg_trg_turquoiseHideTimer: trigger;
-  let gg_trg_violetHideTimer: trigger;
-  let gg_trg_wheatHideTimer: trigger;
-  let gg_trg_peachHideTimer: trigger;
-  let gg_trg_mintHideTimer: trigger;
-  let gg_trg_lavenderHideTimer: trigger;
-  let gg_trg_coalHideTimer: trigger;
-  let gg_trg_snowHideTimer: trigger;
-  let gg_trg_emeraldHideTimer: trigger;
-  let gg_trg_peanutHideTimer: trigger;
   let gg_trg_smart: trigger;
   let gg_trg_start: trigger;
   let gg_trg_pickwolf: trigger;
-  let gg_trg_random: trigger;
   let gg_trg_picksheep: trigger;
   let gg_trg_reverse: trigger;
   let gg_trg_setupPick: trigger;
@@ -773,30 +693,6 @@ declare global {
   let gg_trg_transfer: trigger;
   let gg_trg_end: trigger;
   let gg_trg_kick: trigger;
-  let gg_trg_countred: trigger;
-  let gg_trg_countblue: trigger;
-  let gg_trg_countteal: trigger;
-  let gg_trg_countpurple: trigger;
-  let gg_trg_countyellow: trigger;
-  let gg_trg_countorange: trigger;
-  let gg_trg_countgreen: trigger;
-  let gg_trg_countpink: trigger;
-  let gg_trg_countgrey: trigger;
-  let gg_trg_countlb: trigger;
-  let gg_trg_countdg: trigger;
-  let gg_trg_countbrown: trigger;
-  let gg_trg_countmaroon: trigger;
-  let gg_trg_countnavy: trigger;
-  let gg_trg_countturquoise: trigger;
-  let gg_trg_countviolet: trigger;
-  let gg_trg_countwheat: trigger;
-  let gg_trg_countpeach: trigger;
-  let gg_trg_countmint: trigger;
-  let gg_trg_countlavender: trigger;
-  let gg_trg_countcoal: trigger;
-  let gg_trg_countsnow: trigger;
-  let gg_trg_countemerald: trigger;
-  let gg_trg_countpeanut: trigger;
   let gg_trg_sheepWin: trigger;
   let gg_trg_wolvesWin: trigger;
   let gg_trg_ScoreboardMultiboard: trigger;
@@ -860,7 +756,6 @@ declare global {
   let gg_trg_control: trigger;
   let gg_trg_controllal: trigger;
   let gg_trg_shareControl: trigger;
-  let gg_trg_antishareruin: trigger;
   let gg_trg_autocontrol: trigger;
   let gg_trg_noAutoControl: trigger;
   let gg_trg_order: trigger;
@@ -923,6 +818,8 @@ declare global {
   // deno-lint-ignore prefer-const
   let AFK_PLAYING_PICK: 1;
   // deno-lint-ignore prefer-const
+  let AFK_RETURNED_DURING_ROUND: 2;
+  // deno-lint-ignore prefer-const
   let AFK_AFK: 3;
   // deno-lint-ignore prefer-const
   let AFK_AFK_DURING_ROUND: 4;
@@ -932,7 +829,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let TEAMS_OPEN: 1;
   // deno-lint-ignore prefer-const
-  let TEAMS_LOCK: 2;
+  let TEAMS_LOCK_IE_PLAYING: 2;
   // deno-lint-ignore prefer-const
   let TEAMS_PICK: 3;
   // deno-lint-ignore prefer-const
@@ -943,15 +840,15 @@ declare global {
   // deno-lint-ignore prefer-const
   let playerTimes: Array<number>;
   // deno-lint-ignore prefer-const
-  let sheep: number;
+  let sheepType: number;
   // deno-lint-ignore prefer-const
-  let shep: number;
+  let shepType: number;
   // deno-lint-ignore prefer-const
-  let wisp: number;
+  let wispType: number;
   // deno-lint-ignore prefer-const
-  let unstuck: number;
+  let unstuckType: number;
   // deno-lint-ignore prefer-const
-  let pick: number;
+  let pickFarmType: number;
   // deno-lint-ignore prefer-const
   let permgolem: number;
   // deno-lint-ignore prefer-const
@@ -965,13 +862,13 @@ declare global {
   // deno-lint-ignore prefer-const
   let sheepInventoryAbility: number;
   // deno-lint-ignore prefer-const
-  let translocationFarm: number;
+  let translocationFarmType: number;
   // deno-lint-ignore prefer-const
-  let hostFarm: number;
+  let hostFarmType: number;
   // deno-lint-ignore prefer-const
   let giveAlliesGoldSheepAbility: number;
   // deno-lint-ignore prefer-const
-  let sentryFarm: number;
+  let sentryFarmType: number;
 
   let recordTime: number;
   let loserTime: number;
@@ -1130,8 +1027,7 @@ MMD_FLAG_WINNER = 103;
 MMD_FLAG_LEAVER = 104;
 MMD_FLAG_PRACTICING = 105;
 
-MMD__chars =
-  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-+= \\!@#$%^&*()/?>.<,;:'\"{}[]|`~";
+MMD__chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-+= \\!@#$%^&*()/?>.<,;:'\"{}[]|`~";
 MMD__num_chars = StringLength(MMD__chars);
 MMD__flags = [];
 MMD__goals = [];
@@ -1193,12 +1089,6 @@ gsAmounts = [];
 gsPlayerIndices = [];
 gsDist = [];
 //endglobals from gs
-//globals from hostAbilities:
-//endglobals from hostAbilities
-//globals from restart:
-//endglobals from restart
-//globals from transferHelpers:
-//endglobals from transferHelpers
 //globals from BuySellItem:
 BuySellItem__itemShorthand = [];
 BuySellItem__itemCost = [];
@@ -1211,9 +1101,6 @@ FarmVision__farmVision = -1;
 //globals from Smart:
 pub = [];
 rotated = Player(PLAYER_NEUTRAL_PASSIVE)!;
-Smart__lastPubSheep = -1;
-Smart__vars = [];
-Smart__perfectSmartEnabled = true;
 perfectSmartIndex = 0;
 perfectRound = false;
 perfectRoundCanceled = false;
@@ -1346,32 +1233,33 @@ udg_autoTime = false;
 // Generated
 AFK_PLAYING = 0;
 AFK_PLAYING_PICK = 1;
+AFK_RETURNED_DURING_ROUND = 2;
 AFK_AFK = 3;
 AFK_AFK_DURING_ROUND = 4;
 
 TEAMS_INIT = 0;
 TEAMS_OPEN = 1;
-TEAMS_LOCK = 2;
+TEAMS_LOCK_IE_PLAYING = 2;
 TEAMS_PICK = 3;
 TEAMS_CAPTAINS = 4;
 
 colors = [];
 playerTimes = [];
-sheep = FourCC("uC04");
-shep = FourCC("EC03");
-wisp = FourCC("e000");
-unstuck = FourCC("H007");
-pick = FourCC("h003");
+sheepType = FourCC("uC04");
+shepType = FourCC("EC03");
+wispType = FourCC("e000");
+unstuckType = FourCC("H007");
+pickFarmType = FourCC("h003");
 permgolem = FourCC("n000");
 shareControlAbility = FourCC("A022");
 locateAlliesAbility = FourCC("A00D");
 destroyAllFarms = FourCC("A00U");
 blinkAbility = FourCC("A01V");
 sheepInventoryAbility = FourCC("A01Z");
-translocationFarm = FourCC("h00C");
-hostFarm = FourCC("h00D");
+translocationFarmType = FourCC("h00C");
+hostFarmType = FourCC("h00D");
 giveAlliesGoldSheepAbility = FourCC("A024");
-sentryFarm = FourCC("eC09");
+sentryFarmType = FourCC("eC09");
 
 recordTime = 0;
 loserTime = 999;
@@ -1392,7 +1280,7 @@ someoneLeft = false;
 gSheepAbilityFlag = [];
 kaleidoscope = FourCC("I00X");
 lastReceivedFrom = [];
-goldCount = [];
+goldCount = Array.from({ length: bj_MAX_PLAYERS }, () => 0);
 
 //JASSHelper struct globals:
 s__File_AbilityCount = 10;
@@ -1541,7 +1429,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let Critter_createCritter: () => void;
 }
-Critter_createCritter = (): void => {
+Critter_createCritter = () => {
   let x = GetRandomReal(-416, -128);
   let y = GetRandomReal(-1760, -1472);
   while (true) {
@@ -1558,7 +1446,7 @@ Critter_createCritter = (): void => {
   )!;
 };
 
-const Critter_moveCritter = (): void => {
+const Critter_moveCritter = () => {
   let x = GetRandomReal(-416, -128);
   let y = GetRandomReal(-1760, -1472);
   while (true) {
@@ -1571,7 +1459,7 @@ const Critter_moveCritter = (): void => {
   }
 };
 
-const Critter___critterInit = (): void => {
+const Critter___critterInit = () => {
   const t = CreateTrigger();
   TriggerRegisterTimerEvent(t, 5, true);
   TriggerAddAction(t, Critter_moveCritter);
@@ -1737,7 +1625,7 @@ s__File_readEx = (_this: number, close: boolean): string => {
 };
 
 //Implemented from module FileIO__FileInit:
-const s__File_FileIO__FileInit___onInit = (): void => {
+const s__File_FileIO__FileInit___onInit = () => {
   // We can't use a single ability with multiple levels because
   // tooltips return the first level's value if the value hasn't
   // been set. This way we don't need to edit any object editor data.
@@ -1764,7 +1652,7 @@ const s__File_FileIO__FileInit___onInit = (): void => {
 //library FileIO ends
 //library HCL:
 
-const HCL__init = (): void => {
+const HCL__init = () => {
   let i: number;
   let j: number;
   let h: number;
@@ -1827,7 +1715,7 @@ const MMD_RaiseGuard = (_reason: string): void => {
 };
 
 ///Initializes the char-to-int conversion
-const MMD__prepC2I = (): void => {
+const MMD__prepC2I = () => {
   let i = 0;
   let id: string;
   while (true) {
@@ -1946,7 +1834,7 @@ const s__MMD__QueueNode_send = (_this: number): void => {
 };
 
 ///Returns true for a fixed size uniform random subset of players in the game
-const MMD__isEmitter = (): boolean => {
+const MMD__isEmitter = () => {
   let i = 0;
   let n = 0;
   let r: number;
@@ -2000,7 +1888,7 @@ const MMD__emit = (message: string): void => {
 };
 
 ///Performs tamper checks
-const MMD__tick = (): void => {
+const MMD__tick = () => {
   let q: number;
   let i: number;
 
@@ -2307,7 +2195,7 @@ const MMD_LogEvent3 = (
 ///////////////////////////////////////////////////////////////
 
 ///Emits initialization data
-const MMD__init2 = (): void => {
+const MMD__init2 = () => {
   let i: number;
   MMD__initialized = true;
 
@@ -2336,7 +2224,7 @@ const MMD__init2 = (): void => {
 };
 
 ///Places init2 on a timer, initializes game cache, and translates constants
-const MMD__init = (): void => {
+const MMD__init = () => {
   const t = CreateTrigger();
   TriggerRegisterTimerEvent(t, 0, false);
   TriggerAddAction(t, MMD__init2);
@@ -2372,13 +2260,13 @@ const MMD__init = (): void => {
 //library MMD ends
 //library SavingFarms:
 
-const SavingFarms__forEachSaving = (): boolean => {
+const SavingFarms__forEachSaving = () => {
   const pid = GetPlayerId(GetOwningPlayer(GetFilterUnit()!));
   SavingFarms__savings[pid] = SavingFarms__savings[pid] + SavingFarms__rate;
   return false;
 };
 
-const SavingFarms__tick = (): void => {
+const SavingFarms__tick = () => {
   let i = 0;
   let l__sheep = 0;
   let wolves = 0;
@@ -2428,7 +2316,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let SavingFarms_resetSavings: () => void;
 }
-SavingFarms_resetSavings = (): void => {
+SavingFarms_resetSavings = () => {
   let i = 0;
   while (true) {
     SavingFarms__savings[i] = 0;
@@ -2437,7 +2325,7 @@ SavingFarms_resetSavings = (): void => {
   }
 };
 
-const SavingFarms__SavingFarmsInit = (): void => {
+const SavingFarms__SavingFarmsInit = () => {
   const t = CreateTrigger();
   TriggerRegisterTimerEventPeriodic(t, 1);
   TriggerAddAction(t, SavingFarms__tick);
@@ -2472,13 +2360,12 @@ const Terrain__setTerrain = (terrainIndex: number): void => {
   i = s__terrains_spawnsStart[currentTerrain];
   while (true) {
     if (i === s__terrains_spawnsStart[currentTerrain] + bj_MAX_PLAYERS) break;
-    udg_startLocation[i - s__terrains_spawnsStart[currentTerrain] + 1] =
-      spawns[i];
+    udg_startLocation[i - s__terrains_spawnsStart[currentTerrain] + 1] = spawns[i];
     i = i + 1;
   }
 };
 
-const Terrain__toggleTerrain = (): void => {
+const Terrain__toggleTerrain = () => {
   if (GetTriggerPlayer()! !== udg_Custom || udg_gameStarted) {
     return;
   }
@@ -2494,7 +2381,7 @@ const Terrain__toggleTerrain = (): void => {
 // INITIALIZATION
 //===========================================================================
 
-const Terrain__initCommandTrigger = (): void => {
+const Terrain__initCommandTrigger = () => {
   const toggleTerrainTrigger = CreateTrigger();
   let i = 0;
   while (true) {
@@ -2521,7 +2408,7 @@ const Terrain__addShop = (r: rect, unitType: number): void => {
   Terrain__shopIndex = Terrain__shopIndex + 1;
 };
 
-const Terrain__initTerrains = (): void => {
+const Terrain__initTerrains = () => {
   let i = 0;
   let n: number;
   s__terrains_texture[0] = "war3mapImported\\classic.blp";
@@ -2629,7 +2516,7 @@ const Terrain__initTerrains = (): void => {
   }
 };
 
-const Terrain__InitTerrain = (): void => {
+const Terrain__InitTerrain = () => {
   Terrain__initCommandTrigger();
   Terrain__initTerrains();
   Terrain__setTerrain(0);
@@ -2725,7 +2612,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let defaultTime: () => void;
 }
-defaultTime = (): void => {
+defaultTime = () => {
   const i = CountPlayersInForceBJ(udg_Sheep);
   const n = CountPlayersInForceBJ(udg_Wolf);
 
@@ -2817,11 +2704,9 @@ transferGold = (
       wolfGoldGiven[GetPlayerId(sender)] = wolfGoldGiven[GetPlayerId(sender)] +
         amount;
     } else if (IsPlayerInForce(sender, udg_Sheep)) {
-      sheepGoldGiven[GetPlayerId(sender)] =
-        sheepGoldGiven[GetPlayerId(sender)] + amount;
+      sheepGoldGiven[GetPlayerId(sender)] = sheepGoldGiven[GetPlayerId(sender)] + amount;
     } else {
-      spiritGoldGiven[GetPlayerId(sender)] =
-        spiritGoldGiven[GetPlayerId(sender)] + amount;
+      spiritGoldGiven[GetPlayerId(sender)] = spiritGoldGiven[GetPlayerId(sender)] + amount;
     }
   }
 
@@ -2876,7 +2761,7 @@ transferGold = (
 // Adapted from https://softwareengineering.stackexchange.com/q/291117
 
 // Sorts gsAmounts and gsPlayerIndices as one
-const gsSort = (): void => {
+const gsSort = () => {
   let swapAmount: number;
   let swapPlayerIndex: number;
   let i = 1;
@@ -2955,7 +2840,7 @@ gsDistributeGold = (fromPlayer: player, allGold: boolean): void => {
     if (i === bj_MAX_PLAYERS) break;
     isAlly = IsPlayerAlly(fromPlayer, Player(i)!);
     isHere = GetPlayerSlotState(Player(i)!) === PLAYER_SLOT_STATE_PLAYING &&
-      udg_AFK[i + 1] === 0;
+      udg_AFK[i + 1] === AFK_PLAYING;
     isHuman = GetPlayerController(Player(i)!) === MAP_CONTROL_USER;
     isWisp = IsPlayerInForce(Player(i)!, udg_Spirit);
     if (
@@ -2994,14 +2879,14 @@ gsDistributeGold = (fromPlayer: player, allGold: boolean): void => {
   }
 };
 
-const Trig_gs_Actions = (): void => {
+const Trig_gs_Actions = () => {
   gsDistributeGold(
     GetTriggerPlayer()!,
     GetEventPlayerChatString()! === "-gsa",
   );
 };
 
-const Trig_gs_UnitActions = (): void => {
+const Trig_gs_UnitActions = () => {
   const p = GetOwningPlayer(GetTriggerUnit()!);
   if (
     udg_giveGold && GetSpellAbilityId() === FourCC("A020") &&
@@ -3012,13 +2897,13 @@ const Trig_gs_UnitActions = (): void => {
   }
 };
 
-const Trig_gs_Conditions = (): boolean => {
+const Trig_gs_Conditions = () => {
   return GetPlayerState(GetTriggerPlayer()!, PLAYER_STATE_RESOURCE_GOLD) > 0 &&
     udg_giveGold;
 };
 
 //===========================================================================
-const InitTrig_gs = (): void => {
+const InitTrig_gs = () => {
   let i = 0;
   const t = CreateTrigger();
 
@@ -3039,21 +2924,21 @@ const InitTrig_gs = (): void => {
 //library gs ends
 //library hostAbilities:
 
-const hostAbilities__anon__0 = (): void => {
+const hostAbilities__anon__0 = () => {
   ForceRemovePlayer(udg_Spirit, GetEnumPlayer()!);
 };
-const hostAbilities__start = (): void => {
+const hostAbilities__start = () => {
   ForForce(udg_Spirit, hostAbilities__anon__0);
-  udg_Teams = TEAMS_LOCK;
+  udg_Teams = TEAMS_LOCK_IE_PLAYING;
   TriggerExecute(gg_trg_createSheep);
 };
-const hostAbilities__time = (): void => {
+const hostAbilities__time = () => {
   udg_autoTime = true;
   defaultTime();
   TriggerSleepAction(0);
   IssueImmediateOrderById(GetTriggerUnit()!, 851976);
 };
-const hostAbilities__onInit = (): void => {
+const hostAbilities__onInit = () => {
   let t = CreateTrigger();
   TriggerRegisterTrainCommandEventBJ(t, FourCC("h00F"));
   TriggerAddAction(t, hostAbilities__start);
@@ -3063,31 +2948,8 @@ const hostAbilities__onInit = (): void => {
 };
 
 //library hostAbilities ends
-//library restart:
-const restart__action = (): void => {
-  TriggerExecute(gg_trg_cancel);
-  TriggerExecute(gg_trg_start);
-};
-
-const restart__condition = (): boolean => {
-  return GetTriggerPlayer()! === udg_Custom;
-};
-
-const restart__initRestart = (): void => {
-  let i = 0;
-  const t = CreateTrigger();
-  while (true) {
-    if (i === bj_MAX_PLAYERS) break;
-    TriggerRegisterPlayerChatEvent(t, Player(i)!, "-restart", true);
-    i = i + 1;
-  }
-  TriggerAddCondition(t, Condition(restart__condition));
-  TriggerAddAction(t, restart__action);
-};
-
-//library restart ends
 //library transferHelpers:
-const transferToCustom = (): void => {
+const transferToCustom = () => {
   SetUnitOwner(GetEnumUnit()!, udg_Custom, true);
   SelectUnitAddForPlayer(GetEnumUnit()!, udg_Custom);
 };
@@ -3096,7 +2958,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let transferOwnershipOfHostFarm: () => void;
 }
-transferOwnershipOfHostFarm = (): void => {
+transferOwnershipOfHostFarm = () => {
   const g = GetUnitsOfTypeIdAll(FourCC("h00D"))!;
   ForGroup(g, transferToCustom);
   DestroyGroup(g);
@@ -3105,12 +2967,12 @@ transferOwnershipOfHostFarm = (): void => {
 //library transferHelpers ends
 //library BuySellItem:
 
-const BuySellItem__isRealWolf = (): boolean => {
+const BuySellItem__isRealWolf = () => {
   return GetUnitTypeId(GetFilterUnit()!) === FourCC("EC03") &&
     IsUnitIllusionBJ(GetFilterUnit()!) === false;
 };
 
-const BuySellItem__buyAction = (): void => {
+const BuySellItem__buyAction = () => {
   let i = 0;
 
   Split(GetEventPlayerChatString()!, " ", false);
@@ -3167,7 +3029,7 @@ const BuySellItem__buyAction = (): void => {
   DestroyGroup(g);
 };
 
-const BuySellItem__sellAction = (): void => {
+const BuySellItem__sellAction = () => {
   let i = 0;
 
   Split(GetEventPlayerChatString()!, " ", false);
@@ -3217,7 +3079,7 @@ const BuySellItem__sellAction = (): void => {
   DestroyGroup(g);
 };
 
-const BuySellItem__sellAllAction = (): void => {
+const BuySellItem__sellAllAction = () => {
   const p = GetTriggerPlayer()!;
   const g = GetUnitsOfPlayerMatching(p, Condition(BuySellItem__isRealWolf))!;
   let u = FirstOfGroup(g);
@@ -3271,7 +3133,7 @@ const BuySellItem__registerItem = (
   BuySellItem__itemIndex = BuySellItem__itemIndex + 1;
 };
 
-const BuySellItem__init = (): void => {
+const BuySellItem__init = () => {
   let t = CreateTrigger();
   TriggerRegisterPlayerChatEventAll(t, "-b", false);
   TriggerAddAction(t, BuySellItem__buyAction);
@@ -3317,8 +3179,8 @@ const BuySellItem__init = (): void => {
 //library BuySellItem ends
 //library FarmVision:
 
-const onCreateFarm = (): void => {
-  if (GetUnitTypeId(GetConstructingStructure()!) !== sentryFarm) {
+const onCreateFarm = () => {
+  if (GetUnitTypeId(GetConstructingStructure()!) !== sentryFarmType) {
     BlzSetUnitRealField(
       GetConstructingStructure()!,
       UNIT_RF_SIGHT_RADIUS,
@@ -3327,7 +3189,7 @@ const onCreateFarm = (): void => {
   }
 };
 
-const setFarmVision = (): void => {
+const setFarmVision = () => {
   const str = StringCase(GetEventPlayerChatString()!, false)!;
 
   if (GetTriggerPlayer()! !== udg_Custom || udg_gameStarted) {
@@ -3375,7 +3237,7 @@ const setFarmVision = (): void => {
   }
 };
 
-const FarmVision__FarmVisionInit = (): void => {
+const FarmVision__FarmVisionInit = () => {
   const t = CreateTrigger();
   TriggerRegisterPlayerChatEventAll(t, "-farmvision", false);
   TriggerAddAction(t, setFarmVision);
@@ -3390,545 +3252,13 @@ const FarmVision__FarmVisionInit = (): void => {
 };
 
 //library FarmVision ends
-//library Smart:
-
-const Smart__isActivePlayer = (p: player): boolean => {
-  return GetPlayerSlotState(p) === PLAYER_SLOT_STATE_PLAYING &&
-    udg_AFK[GetConvertedPlayerId(p)] === 0 && !(pub[GetPlayerId(p)]);
-};
-const Smart__activePlayerCount = (): number => {
-  let count = 0;
-  let i: number;
-  i = 0;
-  while (true) {
-    if ((i >= bj_MAX_PLAYERS)) break;
-    if ((Smart__isActivePlayer(Player(i)!))) {
-      count = count + 1;
-    }
-    i = i + 1;
-  }
-  return count;
-};
-const Smart__anon__0 = (): void => {
-  ForceRemovePlayer(udg_Sheep, GetEnumPlayer()!);
-};
-const Smart__anon__1 = (): void => {
-  ForceRemovePlayer(udg_Spirit, GetEnumPlayer()!);
-};
-const Smart__anon__2 = (): void => {
-  ForceRemovePlayer(udg_Wolf, GetEnumPlayer()!);
-};
-const Smart__clearForces = (): void => {
-  ForForce(udg_Sheep, Smart__anon__0);
-  ForForce(udg_Spirit, Smart__anon__1);
-  ForForce(udg_Wolf, Smart__anon__2);
-};
-const Smart__clearPlayerVariables = (): void => {
-  let i: number;
-  i = 0;
-  while (true) {
-    if ((i >= 6)) break;
-    Smart__vars[i] = Player(PLAYER_NEUTRAL_PASSIVE)!;
-    i = i + 1;
-  }
-};
-const Smart__open = (playerVariableIndex: number): boolean => {
-  return Smart__vars[playerVariableIndex] === Player(PLAYER_NEUTRAL_PASSIVE)! ||
-    GetPlayerSlotState(Smart__vars[playerVariableIndex]) !==
-      PLAYER_SLOT_STATE_PLAYING ||
-    udg_AFK[GetConvertedPlayerId(Smart__vars[playerVariableIndex])] !==
-      AFK_PLAYING ||
-    pub[GetPlayerId(Smart__vars[playerVariableIndex])];
-};
-const Smart__viable = (p: player): boolean => {
-  let i: number;
-  if (
-    (GetPlayerSlotState(p) !== PLAYER_SLOT_STATE_PLAYING ||
-      udg_AFK[GetConvertedPlayerId(p)] !== AFK_PLAYING || pub[GetPlayerId(p)])
-  ) {
-    return false;
-  }
-  i = 0;
-  while (true) {
-    if ((i >= 6)) break;
-    if ((Smart__vars[i] === p)) {
-      return false;
-    }
-    i = i + 1;
-  }
-  return true;
-};
-const Smart__setupPlayerVariables = (reset: boolean): void => {
-  let i: number;
-  let n: number;
-  let ties: number;
-  const blocked: Array<boolean> = [];
-  if (reset) {
-    blocked[GetPlayerId(Smart__vars[3])] = true;
-    blocked[GetPlayerId(Smart__vars[4])] = true;
-    Smart__clearPlayerVariables();
-    perfectSmartIndex = 0;
-  }
-  i = 0;
-  while (true) {
-    if ((i >= 6)) break;
-    ties = 0;
-    if ((Smart__open(i))) {
-      n = 0;
-      while (true) {
-        if ((n >= bj_MAX_PLAYERS)) break;
-        if ((Smart__viable(Player(n)!) && (i > 1 || !(blocked[n])))) {
-          if ((GetRandomReal(0, 1) < (1 / (ties + 1)))) {
-            Smart__vars[i] = Player(n)!;
-          }
-          ties = ties + 1;
-        }
-        n = n + 1;
-      }
-    }
-    i = i + 1;
-  }
-};
-const Smart__perfectSmartDraft = (sheepA: number, sheepB: number): void => {
-  let i: number;
-  i = 0;
-  while (true) {
-    if ((i >= 6)) break;
-    if ((i === sheepA || i === sheepB)) {
-      ForceAddPlayer(udg_Sheep, Smart__vars[i]);
-    } else {
-      ForceAddPlayer(udg_Wolf, Smart__vars[i]);
-    }
-    i = i + 1;
-  }
-};
-const Smart__perfectSmart = (): void => {
-  Smart__setupPlayerVariables(perfectSmartIndex === 15);
-  if ((perfectSmartIndex === 0)) {
-    Smart__perfectSmartDraft(0, 1);
-  } else if ((perfectSmartIndex === 1)) {
-    Smart__perfectSmartDraft(2, 3);
-  } else if ((perfectSmartIndex === 2)) {
-    Smart__perfectSmartDraft(4, 5);
-  } else if ((perfectSmartIndex === 3)) {
-    Smart__perfectSmartDraft(0, 2);
-  } else if ((perfectSmartIndex === 4)) {
-    Smart__perfectSmartDraft(1, 4);
-  } else if ((perfectSmartIndex === 5)) {
-    Smart__perfectSmartDraft(3, 5);
-  } else if ((perfectSmartIndex === 6)) {
-    Smart__perfectSmartDraft(0, 4);
-  } else if ((perfectSmartIndex === 7)) {
-    Smart__perfectSmartDraft(1, 3);
-  } else if ((perfectSmartIndex === 8)) {
-    Smart__perfectSmartDraft(2, 5);
-  } else if ((perfectSmartIndex === 9)) {
-    Smart__perfectSmartDraft(0, 3);
-  } else if ((perfectSmartIndex === 10)) {
-    Smart__perfectSmartDraft(1, 5);
-  } else if ((perfectSmartIndex === 11)) {
-    Smart__perfectSmartDraft(2, 4);
-  } else if ((perfectSmartIndex === 12)) {
-    Smart__perfectSmartDraft(0, 5);
-  } else if ((perfectSmartIndex === 13)) {
-    Smart__perfectSmartDraft(1, 2);
-  } else if ((perfectSmartIndex === 14)) {
-    Smart__perfectSmartDraft(3, 4);
-  }
-  perfectSmartIndex = perfectSmartIndex + 1;
-  perfectRound = true;
-  perfectRoundCanceled = false;
-};
-const Smart__draftLowestSCToSpirit = (): void => {
-  let minimumSheepCount = 9999;
-  let i: number;
-  i = 0;
-  while (true) {
-    if ((i >= bj_MAX_PLAYERS)) break;
-    if (
-      (IsPlayerInForce(Player(i)!, udg_Wolf) &&
-        minimumSheepCount > udg_sheepCount[i + 1])
-    ) {
-      minimumSheepCount = udg_sheepCount[i + 1];
-    }
-    i = i + 1;
-  }
-  i = 0;
-  while (true) {
-    if ((i >= bj_MAX_PLAYERS)) break;
-    if (
-      (IsPlayerInForce(Player(i)!, udg_Wolf) &&
-        minimumSheepCount === udg_sheepCount[i + 1])
-    ) {
-      ForceRemovePlayer(udg_Wolf, Player(i)!);
-      ForceAddPlayer(udg_Spirit, Player(i)!);
-    }
-    i = i + 1;
-  }
-};
-const Smart__draftLowestPCToDraft = (): void => {
-  let minimumPartnerCount = 9999;
-  let i: number;
-  let n: number;
-  const partnerCounts: Array<number> = [];
-  i = 0;
-  while (true) {
-    if ((i >= bj_MAX_PLAYERS)) break;
-    if ((IsPlayerInForce(Player(i)!, udg_Spirit))) {
-      partnerCounts[i] = 0;
-      n = 0;
-      while (true) {
-        if ((n >= bj_MAX_PLAYERS)) break;
-        if ((IsPlayerInForce(Player(n)!, udg_Sheep))) {
-          partnerCounts[i] = partnerCounts[i] +
-            udg_accumPartner[i * bj_MAX_PLAYERS + (n + 1)];
-        }
-        n = n + 1;
-      }
-      if ((partnerCounts[i] < minimumPartnerCount)) {
-        minimumPartnerCount = partnerCounts[i];
-      }
-    }
-    i = i + 1;
-  }
-  i = 0;
-  while (true) {
-    if ((i >= bj_MAX_PLAYERS)) break;
-    if (
-      (IsPlayerInForce(Player(i)!, udg_Spirit) &&
-        partnerCounts[i] === minimumPartnerCount)
-    ) {
-      ForceRemovePlayer(udg_Spirit, Player(i)!);
-      ForceAddPlayer(udg_Draft, Player(i)!);
-    }
-    i = i + 1;
-  }
-};
-const Smart__anon__3 = (): void => {
-  DestroyTimer(GetExpiredTimer()!);
-  DisplayTimedTextToForce(
-    GetPlayersAll()!,
-    5,
-    "|r                              Swapping in " +
-      udg_colorString[GetConvertedPlayerId(Smart__unrotated)] +
-      GetPlayerName(Smart__unrotated) + "|r.",
-  );
-};
-
-declare global {
-  // deno-lint-ignore prefer-const
-  let maybeRotate: () => void;
-}
-maybeRotate = (): void => {
-  const currentSc = udg_sheepCount[GetConvertedPlayerId(rotated)];
-  let lowestSc = 9999;
-  let ties = 0;
-  let i: number;
-  let newRotated!: player;
-  if ((GetPlayerSlotState(rotated) === PLAYER_SLOT_STATE_LEFT)) {
-    rotated = Player(PLAYER_NEUTRAL_PASSIVE)!;
-  }
-  if ((rotated === Player(PLAYER_NEUTRAL_PASSIVE)!)) {
-    return;
-  }
-  i = 0;
-  while (true) {
-    if ((i >= bj_MAX_PLAYERS)) break;
-    if (
-      (udg_AFK[i + 1] === AFK_PLAYING &&
-        GetPlayerSlotState(Player(i)!) === PLAYER_SLOT_STATE_PLAYING)
-    ) {
-      if ((udg_sheepCount[i + 1] < lowestSc)) {
-        lowestSc = udg_sheepCount[i + 1];
-        newRotated = Player(i)!;
-        ties = 0;
-      } else if ((udg_sheepCount[i + 1] === lowestSc)) {
-        if ((GetRandomReal(0, 1) < 1 / (ties + 2))) {
-          newRotated = Player(i)!;
-        }
-        ties = ties + 1;
-      }
-    }
-    i = i + 1;
-  }
-  if ((lowestSc <= currentSc)) {
-    return;
-  }
-  udg_AFK[GetConvertedPlayerId(rotated)] = AFK_PLAYING;
-  udg_AFK[GetConvertedPlayerId(newRotated)] = AFK_AFK;
-  Smart__unrotated = rotated;
-  rotated = newRotated;
-  TimerStart(CreateTimer(), 0.25, false, Smart__anon__3);
-};
-const Smart__anon__4 = (): void => {
-  if ((Smart__isActivePlayer(GetEnumPlayer()!))) {
-    ForceAddPlayer(udg_Wolf, GetEnumPlayer()!);
-  }
-};
-const Smart__anon__5 = (): void => {
-  ForceRemovePlayer(udg_Spirit, GetEnumPlayer()!);
-  ForceAddPlayer(udg_Wolf, GetEnumPlayer()!);
-};
-const Smart__anon__6 = (): void => {
-  ForceRemovePlayer(udg_Draft, GetEnumPlayer()!);
-  ForceAddPlayer(udg_Wolf, GetEnumPlayer()!);
-};
-const Smart__traditionalSmart = (sheepToDraft: number): void => {
-  let p: player;
-  let playersInSpirit: number;
-  let playersInDraft: number;
-  ForForce(GetPlayersAll()!, Smart__anon__4);
-  Smart__draftLowestSCToSpirit();
-  p = ForcePickRandomPlayer(udg_Spirit)!;
-  ForceRemovePlayer(udg_Spirit, p);
-  ForceAddPlayer(udg_Sheep, p);
-  playersInSpirit = CountPlayersInForceBJ(udg_Spirit);
-  sheepToDraft = sheepToDraft - 1;
-  while (true) {
-    if ((sheepToDraft <= 0)) break;
-    if ((playersInSpirit === 0)) {
-      Smart__draftLowestSCToSpirit();
-      playersInSpirit = CountPlayersInForceBJ(udg_Spirit);
-    }
-    Smart__draftLowestPCToDraft();
-    playersInDraft = CountPlayersInForceBJ(udg_Draft);
-    playersInSpirit = playersInSpirit - playersInDraft;
-    while (true) {
-      if ((!(sheepToDraft > 0 && playersInDraft > 0))) break;
-      p = ForcePickRandomPlayer(udg_Draft)!;
-      ForceRemovePlayer(udg_Draft, p);
-      ForceAddPlayer(udg_Sheep, p);
-      sheepToDraft = sheepToDraft - 1;
-      playersInDraft = playersInDraft - 1;
-    }
-  }
-  ForForce(udg_Spirit, Smart__anon__5);
-  ForForce(udg_Draft, Smart__anon__6);
-};
-const Smart__action = (): void => {
-  let sheepToDraft: number;
-  let i: number;
-  let n: number;
-  let addToSheep = true;
-  const initialLastPubSheep = Smart__lastPubSheep;
-  if ((udg_runSmart || myArg[0] !== "-smart")) {
-    udg_lastGameString = "-smart";
-    sheepToDraft = Smart__activePlayerCount() / 2 - 1;
-  } else {
-    udg_lastGameString = GetEventPlayerChatString()!;
-    if ((udg_lastGameString === "-smart")) {
-      sheepToDraft = Smart__activePlayerCount() / 2 - 1;
-    } else {
-      sheepToDraft = S2I(myArg[1]);
-    }
-  }
-  if ((sheepToDraft <= 0)) {
-    sheepToDraft = 1;
-  }
-  Smart__clearForces();
-  if (Smart__perfectSmartEnabled) {
-    if (
-      (sheepToDraft === 2 && Smart__activePlayerCount() === 6 &&
-        rotated === Player(PLAYER_NEUTRAL_PASSIVE)!)
-    ) {
-      Smart__perfectSmart();
-    } else {
-      Smart__perfectSmartEnabled = false;
-      Smart__traditionalSmart(sheepToDraft);
-    }
-  } else {
-    Smart__traditionalSmart(sheepToDraft);
-  }
-  i = initialLastPubSheep + 1;
-  while (true) {
-    if ((i > initialLastPubSheep + bj_MAX_PLAYERS)) break;
-    if ((i >= bj_MAX_PLAYERS)) {
-      n = i - bj_MAX_PLAYERS;
-    } else {
-      n = i;
-    }
-    if (
-      (pub[n] && GetPlayerSlotState(
-            Player(n)!,
-          ) === PLAYER_SLOT_STATE_PLAYING)
-    ) {
-      if (addToSheep) {
-        ForceAddPlayer(udg_Sheep, Player(n)!);
-        Smart__lastPubSheep = n;
-      } else {
-        ForceAddPlayer(udg_Wolf, Player(n)!);
-      }
-      addToSheep = !addToSheep;
-    }
-    i = i + 1;
-  }
-  udg_Teams = TEAMS_LOCK;
-  TriggerExecute(gg_trg_createSheep);
-};
-const Smart__condition = (): boolean => {
-  if ((udg_Custom !== GetTriggerPlayer()! || udg_gameStarted)) {
-    return false;
-  }
-  Split(GetEventPlayerChatString()!, " ", false);
-  if ((myArgCount === 1)) {
-    return true;
-  }
-  if ((myArg[0] !== "-smart")) {
-    return false;
-  }
-  const i = S2I(myArg[1]);
-  return i > 0 && i < Smart__activePlayerCount();
-};
-const Smart__pubAction = (): void => {
-  let s: string;
-  if ((udg_Custom !== GetTriggerPlayer()! || udg_gameStarted)) {
-    return;
-  }
-  Split(GetEventPlayerChatString()!, " ", false);
-  if ((myArg[0] !== "-pub")) {
-    return;
-  }
-  const i = S2I(myArg[1]) - 1;
-  if ((GetPlayerSlotState(Player(i)!) !== PLAYER_SLOT_STATE_PLAYING)) {
-    return;
-  }
-  pub[i] = !(pub[i]);
-  if ((pub[i])) {
-    s = "Flagged ";
-  } else {
-    s = "Unflagged ";
-  }
-  DisplayTimedTextToForce(
-    GetPlayersAll()!,
-    5,
-    "                              " + udg_colorString[i + 1] + s +
-      GetPlayerName(Player(i)!) + " as a pub.",
-  );
-};
-const Smart__rotateAction = (): void => {
-  let i: number;
-  let maxSc = -1;
-  let ties = 0;
-  let r: number;
-  if ((udg_Custom !== GetTriggerPlayer()! || udg_gameStarted)) {
-    return;
-  }
-  if ((rotated === Player(PLAYER_NEUTRAL_PASSIVE)!)) {
-    DisplayTimedTextToForce(
-      GetPlayersAll()!,
-      5,
-      "                              Rotation enabled.",
-    );
-    i = 0;
-    while (true) {
-      if ((i >= bj_MAX_PLAYERS)) break;
-      if (
-        (GetPlayerSlotState(Player(i)!) === PLAYER_SLOT_STATE_PLAYING &&
-          udg_AFK[i + 1] === AFK_PLAYING)
-      ) {
-        if ((udg_sheepCount[i + 1] > maxSc)) {
-          maxSc = udg_sheepCount[i + 1];
-          rotated = Player(i)!;
-          ties = 0;
-        } else if ((udg_sheepCount[i + 1] === maxSc)) {
-          r = GetRandomReal(0, 1);
-          if ((r < (1 / (ties + 2)))) {
-            rotated = Player(i)!;
-          }
-          ties = ties + 1;
-        }
-      }
-      i = i + 1;
-    }
-    udg_AFK[GetConvertedPlayerId(rotated)] = AFK_AFK;
-    TriggerExecute(gg_trg_setupLeaderboard);
-    TriggerExecute(gg_trg_createLists);
-  } else {
-    DisplayTimedTextToForce(
-      GetPlayersAll()!,
-      5,
-      "                              Rotation disabled.",
-    );
-    udg_AFK[GetConvertedPlayerId(rotated)] = AFK_PLAYING;
-    rotated = Player(PLAYER_NEUTRAL_PASSIVE)!;
-    TriggerExecute(gg_trg_setupLeaderboard);
-    TriggerExecute(gg_trg_createLists);
-  }
-};
-const Smart__perfectSmartAction = (): void => {
-  let s: string;
-  if (
-    (udg_Custom !== GetTriggerPlayer()! || udg_gameStarted ||
-      (GetEventPlayerChatString()! !== "-perfect" &&
-        GetEventPlayerChatString()! !== "-perfect!"))
-  ) {
-    return;
-  }
-  Smart__perfectSmartEnabled = !Smart__perfectSmartEnabled;
-  if (Smart__perfectSmartEnabled) {
-    s = "enabled.";
-    if ((GetEventPlayerChatString()! === "-perfect!")) {
-      Smart__clearPlayerVariables();
-      perfectSmartIndex = 0;
-    }
-  } else {
-    s = "disabled.";
-  }
-  DisplayTimedTextToForce(
-    GetPlayersAll()!,
-    5,
-    "                              Perfect smart " + s,
-  );
-};
-const Smart__onInit = (): void => {
-  let i: number;
-  let t = CreateTrigger();
-  Smart__clearPlayerVariables();
-  i = 0;
-  while (true) {
-    if ((i >= bj_MAX_PLAYERS)) break;
-    TriggerRegisterPlayerChatEvent(t, Player(i)!, "-smart", false);
-    i = i + 1;
-  }
-  TriggerAddCondition(t, Condition(Smart__condition));
-  TriggerAddAction(t, Smart__action);
-  t = CreateTrigger();
-  TriggerRegisterTrainCommandEventBJ(t, FourCC("h00E"));
-  TriggerAddAction(t, Smart__action);
-  t = CreateTrigger();
-  i = 0;
-  while (true) {
-    if ((i >= bj_MAX_PLAYERS)) break;
-    TriggerRegisterPlayerChatEvent(t, Player(i)!, "-pub ", false);
-    i = i + 1;
-  }
-  TriggerAddAction(t, Smart__pubAction);
-  t = CreateTrigger();
-  i = 0;
-  while (true) {
-    if ((i >= bj_MAX_PLAYERS)) break;
-    TriggerRegisterPlayerChatEvent(t, Player(i)!, "-rotate", true);
-    i = i + 1;
-  }
-  TriggerAddAction(t, Smart__rotateAction);
-  t = CreateTrigger();
-  i = 0;
-  while (true) {
-    if ((i >= bj_MAX_PLAYERS)) break;
-    TriggerRegisterPlayerChatEvent(t, Player(i)!, "-perfect", false);
-    i = i + 1;
-  }
-  TriggerAddAction(t, Smart__perfectSmartAction);
-};
-
-//library Smart ends
 //library TeamResources:
 
 declare global {
   // deno-lint-ignore prefer-const
   let enforceTeamResourceMultiboard: () => void;
 }
-enforceTeamResourceMultiboard = (): void => {
+enforceTeamResourceMultiboard = () => {
   if (
     teamResources === TEAM_RESOURCES_HIDDEN ||
     (teamResources === TEAM_RESOURCES_TWINED &&
@@ -3940,7 +3270,7 @@ enforceTeamResourceMultiboard = (): void => {
   }
 };
 
-const Trig_teamResources_Actions = (): void => {
+const Trig_teamResources_Actions = () => {
   if (
     GetLocalPlayer() !== GetTriggerPlayer()! ||
     StringCase(GetEventPlayerChatString()!, false) !== "-teamresources"
@@ -3981,14 +3311,14 @@ const Trig_teamResources_Actions = (): void => {
   enforceTeamResourceMultiboard();
 };
 
-const Trig_teamResources_load = (): void => {
+const Trig_teamResources_load = () => {
   const s = s__File_readEx(s__File_open("revo/teamResources.txt"), true);
   teamResources = S2I(s);
   enforceTeamResourceMultiboard();
 };
 
 //===========================================================================
-const InitTrig_teamResources = (): void => {
+const InitTrig_teamResources = () => {
   let i = 0;
   const t = CreateTrigger();
 
@@ -4026,14 +3356,14 @@ const InitTrig_teamResources = (): void => {
 //*
 //***************************************************************************
 
-const InitGlobals = (): void => {
+const InitGlobals = () => {
   let i = 0;
   udg_Timer = CreateTimer();
   udg_Sheep = CreateForce()!;
   udg_Wolf = CreateForce()!;
   udg_Spirit = CreateForce()!;
   udg_time = 0;
-  udg_Teams = 0;
+  udg_Teams = TEAMS_INIT;
   udg_lastPlayer = 0;
   udg_pickIndex = 1;
   udg_Createtimer = CreateTimer();
@@ -4143,7 +3473,7 @@ const InitGlobals = (): void => {
   i = 0;
   while (true) {
     if ((i > 24)) break;
-    udg_AFK[i] = 0;
+    udg_AFK[i] = AFK_PLAYING;
     i = i + 1;
   }
 
@@ -4642,7 +3972,7 @@ formatTime = (r: number): string => {
   return s;
 };
 
-const noHandicaps = (): boolean => {
+const noHandicaps = () => {
   let i = 0;
   let playing: boolean;
   while (true) {
@@ -4662,7 +3992,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let updateTimes: () => void;
 }
-updateTimes = (): void => {
+updateTimes = () => {
   let i = 0;
   let n: number;
   let s = "";
@@ -4688,8 +4018,7 @@ updateTimes = (): void => {
       IsPlayerInForce(Player(i)!, udg_Sheep) ||
       IsPlayerInForce(Player(i)!, udg_Spirit)
     ) {
-      s__times_sheepCount[playerTimes[i]] =
-        s__times_sheepCount[playerTimes[i]] + 1;
+      s__times_sheepCount[playerTimes[i]] = s__times_sheepCount[playerTimes[i]] + 1;
       if (s === "") {
         s = udg_colorString[i + 1] + GetPlayerName(Player(i)!) + "|r";
       } else {
@@ -4715,8 +4044,8 @@ updateTimes = (): void => {
           IsPlayerInForce(Player(n)!, udg_Sheep) ||
           IsPlayerInForce(Player(n)!, udg_Spirit)
         ) {
-          s___times_pTime[s__times_pTime[playerTimes[i]] + n] =
-            s___times_pTime[s__times_pTime[playerTimes[i]] + n] + timeElapsed;
+          s___times_pTime[s__times_pTime[playerTimes[i]] + n] = s___times_pTime[s__times_pTime[playerTimes[i]] + n] +
+            timeElapsed;
         }
         n = n + 1;
       }
@@ -4773,21 +4102,35 @@ declare global {
   // deno-lint-ignore prefer-const
   let GoldText: (amount: number, u: unit) => void;
 }
+
+const goldTextBuffer = new Map<unit, [amount: number, timeout: Timeout]>();
 GoldText = (amount: number, u: unit): void => {
-  const tt = CreateTextTag()!;
-  if (GetUnitAbilityLevel(u, FourCC("Binv")) > 0) {
-    DestroyTextTag(tt);
-  } else {
-    if (IsVisibleToPlayer(GetUnitX(u), GetUnitY(u), GetLocalPlayer())) {
-      SetTextTagPermanent(tt, false);
-      SetTextTagPos(tt, GetUnitX(u), GetUnitY(u), 25);
-      SetTextTagText(tt, "+" + I2S(amount), 0.0276);
-      SetTextTagColor(tt, 217, 217, 25, 0);
-      SetTextTagFadepoint(tt, 0);
-      SetTextTagVelocity(tt, 0, 0.027734375);
-      SetTextTagLifespan(tt, 3);
-    }
+  const prev = goldTextBuffer.get(u);
+  if (prev) {
+    amount += prev[0];
+    prev[1].cancel();
   }
+
+  goldTextBuffer.set(u, [
+    amount,
+    setTimeout(0.05, () => {
+      goldTextBuffer.delete(u);
+      const tt = CreateTextTag()!;
+      if (GetUnitAbilityLevel(u, FourCC("Binv")) > 0) {
+        DestroyTextTag(tt);
+      } else {
+        if (IsVisibleToPlayer(GetUnitX(u), GetUnitY(u), GetLocalPlayer())) {
+          SetTextTagPermanent(tt, false);
+          SetTextTagPos(tt, GetUnitX(u), GetUnitY(u), 25);
+          SetTextTagText(tt, "+" + I2S(amount), 0.0276);
+          SetTextTagColor(tt, 217, 217, 25, 0);
+          SetTextTagFadepoint(tt, 0);
+          SetTextTagVelocity(tt, 0, 0.027734375);
+          SetTextTagLifespan(tt, 3);
+        }
+      }
+    }),
+  ]);
 };
 
 //Returns a random value between the max X and min X (for random point in rect)
@@ -4812,7 +4155,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let checkAutoTimeFlag: () => void;
 }
-checkAutoTimeFlag = (): void => {
+checkAutoTimeFlag = () => {
   const oldTime = udg_time;
   defaultTime();
   if (oldTime !== udg_time) {
@@ -4828,7 +4171,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let autoCancel: () => boolean;
 }
-autoCancel = (): boolean => {
+autoCancel = () => {
   let i = 0;
   let flag = false;
   if (autoCancelEnabled && udg_switchOn === false && vampOn === false) {
@@ -4838,7 +4181,7 @@ autoCancel = (): boolean => {
         if (udg_apr[i + 1] < 3) {
           flag = true;
           if (IsPlayerInForce(Player(i)!, AFKers)) {
-            udg_AFK[i + 1] = 3;
+            udg_AFK[i + 1] = AFK_AFK;
             LeaderboardRemovePlayerItemBJ(
               Player(i + 1)!,
               GetLastCreatedLeaderboard()!,
@@ -4864,15 +4207,11 @@ autoCancel = (): boolean => {
   return flag;
 };
 
-const removeEnumUnit = (): void => {
-  RemoveUnit(GetEnumUnit()!);
-};
-
 declare global {
   // deno-lint-ignore prefer-const
   let removeAllUnits: () => void;
 }
-removeAllUnits = (): void => {
+removeAllUnits = () => {
   let i = 0;
   const g = CreateGroup()!;
   while (true) {
@@ -4888,7 +4227,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let moveEnumPlayerFromSpiritToSheep: () => void;
 }
-moveEnumPlayerFromSpiritToSheep = (): void => {
+moveEnumPlayerFromSpiritToSheep = () => {
   ForceRemovePlayerSimple(GetEnumPlayer()!, udg_Spirit);
   ForceAddPlayer(udg_Sheep, GetEnumPlayer()!);
 };
@@ -4899,7 +4238,7 @@ moveEnumPlayerFromSpiritToSheep = (): void => {
 //*
 //***************************************************************************
 
-const InitCustomTriggers = (): void => {
+const InitCustomTriggers = () => {
   InitTrig_createSheep();
   InitTrig_versusCountDown();
   InitTrig_createWolves();
@@ -4908,33 +4247,8 @@ const InitCustomTriggers = (): void => {
   InitTrig_startRound();
   InitTrig_createLists();
   InitTrig_createTimer();
-  InitTrig_redHideTimer();
-  InitTrig_blueHideTimer();
-  InitTrig_tealHideTimer();
-  InitTrig_purpleHideTimer();
-  InitTrig_yellowHideTimer();
-  InitTrig_orangeHideTimer();
-  InitTrig_greenHideTimer();
-  InitTrig_pinkHideTimer();
-  InitTrig_greyHideTimer();
-  InitTrig_lbHideTimer();
-  InitTrig_dgHideTimer();
-  InitTrig_brownHideTimer();
-  InitTrig_maroonHideTimer();
-  InitTrig_navyHideTimer();
-  InitTrig_turquoiseHideTimer();
-  InitTrig_violetHideTimer();
-  InitTrig_wheatHideTimer();
-  InitTrig_peachHideTimer();
-  InitTrig_mintHideTimer();
-  InitTrig_lavenderHideTimer();
-  InitTrig_coalHideTimer();
-  InitTrig_snowHideTimer();
-  InitTrig_emeraldHideTimer();
-  InitTrig_peanutHideTimer();
   InitTrig_start();
   InitTrig_pickwolf();
-  InitTrig_random();
   InitTrig_picksheep();
   InitTrig_reverse();
   InitTrig_setupPick();
@@ -4970,30 +4284,6 @@ const InitCustomTriggers = (): void => {
   InitTrig_transfer();
   InitTrig_end();
   InitTrig_kick();
-  InitTrig_countred();
-  InitTrig_countblue();
-  InitTrig_countteal();
-  InitTrig_countpurple();
-  InitTrig_countyellow();
-  InitTrig_countorange();
-  InitTrig_countgreen();
-  InitTrig_countpink();
-  InitTrig_countgrey();
-  InitTrig_countlb();
-  InitTrig_countdg();
-  InitTrig_countbrown();
-  InitTrig_countmaroon();
-  InitTrig_countnavy();
-  InitTrig_countturquoise();
-  InitTrig_countviolet();
-  InitTrig_countwheat();
-  InitTrig_countpeach();
-  InitTrig_countmint();
-  InitTrig_countlavender();
-  InitTrig_countcoal();
-  InitTrig_countsnow();
-  InitTrig_countemerald();
-  InitTrig_countpeanut();
   InitTrig_sheepWin();
   InitTrig_wolvesWin();
   InitTrig_ScoreboardMultiboard();
@@ -5120,7 +4410,7 @@ const InitCustomTriggers = (): void => {
 };
 
 //===========================================================================
-const RunInitializationTriggers = (): void => {
+const RunInitializationTriggers = () => {
   ConditionalTriggerExecute(gg_trg_initialization);
   ConditionalTriggerExecute(gg_trg_quests);
 };
@@ -5132,7 +4422,7 @@ const RunInitializationTriggers = (): void => {
 //***************************************************************************
 
 //===========================================================================
-addScriptHook(W3TS_HOOK.MAIN_AFTER, (): void => {
+addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   jasshelper__initstructs255274984();
   Critter___critterInit();
   HCL__init();
@@ -5140,10 +4430,8 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, (): void => {
   SavingFarms__SavingFarmsInit();
   Terrain__InitTerrain();
   hostAbilities__onInit();
-  restart__initRestart();
   BuySellItem__init();
   FarmVision__FarmVisionInit();
-  Smart__onInit();
 
   InitGlobals();
   InitCustomTriggers();
@@ -5157,7 +4445,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, (): void => {
 //***************************************************************************
 
 //Struct method generated initializers/callers:
-const sa__MMD__QueueNode_onDestroy = (): boolean => {
+const sa__MMD__QueueNode_onDestroy = () => {
   const _this = f__arg__this;
   FlushStoredInteger(
     MMD__gc,
@@ -5175,7 +4463,7 @@ const sa__MMD__QueueNode_onDestroy = (): boolean => {
   return true;
 };
 
-const jasshelper__initstructs255274984 = (): void => {
+const jasshelper__initstructs255274984 = () => {
   st__MMD__QueueNode_onDestroy = CreateTrigger();
   TriggerAddCondition(
     st__MMD__QueueNode_onDestroy,

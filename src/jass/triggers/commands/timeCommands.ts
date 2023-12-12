@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: timeCommands
 //===========================================================================
-const Trig_timeCommands_Actions = (): void => {
+const Trig_timeCommands_Actions = () => {
   let i = 0;
   let n: number;
   let count = 0;
@@ -388,7 +388,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_timeCommands: () => void;
 }
-InitTrig_timeCommands = (): void => {
+InitTrig_timeCommands = () => {
   gg_trg_timeCommands = CreateTrigger();
   TriggerRegisterPlayerChatEventAll(gg_trg_timeCommands, "-times", false);
   TriggerRegisterPlayerChatEventAll(gg_trg_timeCommands, "stime", false);

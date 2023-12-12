@@ -1,14 +1,14 @@
 //===========================================================================
 // Trigger: Runes On
 //===========================================================================
-const Trig_Runes_On_Func001C = (): boolean => {
+const Trig_Runes_On_Func001C = () => {
   if ((!(udg_runeSpawn === 0))) {
     return false;
   }
   return true;
 };
 
-const Trig_Runes_On_Actions = (): void => {
+const Trig_Runes_On_Actions = () => {
   if ((Trig_Runes_On_Func001C())) {
     StartTimerBJ(udg_RuneTimer[0], false, 90);
     TriggerExecute(gg_trg_Invis_Rune);
@@ -26,7 +26,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_Runes_On: () => void;
 }
-InitTrig_Runes_On = (): void => {
+InitTrig_Runes_On = () => {
   gg_trg_Runes_On = CreateTrigger();
   TriggerRegisterTimerExpireEventBJ(gg_trg_Runes_On, udg_RuneTimer[0]);
   TriggerAddAction(gg_trg_Runes_On, Trig_Runes_On_Actions);

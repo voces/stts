@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: timePurple
 //===========================================================================
-const Trig_timePurple_Actions = (): void => {
+const Trig_timePurple_Actions = () => {
   udg_multiKillNum[4] = 0;
 };
 
@@ -11,7 +11,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_timePurple: () => void;
 }
-InitTrig_timePurple = (): void => {
+InitTrig_timePurple = () => {
   gg_trg_timePurple = CreateTrigger();
   TriggerRegisterTimerExpireEventBJ(gg_trg_timePurple, udg_multiKillTimer[4]);
   TriggerAddAction(gg_trg_timePurple, Trig_timePurple_Actions);

@@ -1,9 +1,9 @@
 //===========================================================================
 // Trigger: attackFarmStrPot
 //===========================================================================
-const Trig_attackFarmStrPot_Actions = (): void => {
+const Trig_attackFarmStrPot_Actions = () => {
   if (GetUnitAbilityLevel(GetKillingUnit()!, FourCC("B001")) > 0) {
-    if (GetUnitTypeId(GetDyingUnit()!) === FourCC("uC04")) {
+    if (GetUnitTypeId(GetDyingUnit()!) === sheepType) {
       TriggerSleepAction(0.5);
     }
     UnitRemoveAbility(GetKillingUnit()!, FourCC("A00E"));
@@ -17,7 +17,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_attackFarmStrPot: () => void;
 }
-InitTrig_attackFarmStrPot = (): void => {
+InitTrig_attackFarmStrPot = () => {
   gg_trg_attackFarmStrPot = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(
     gg_trg_attackFarmStrPot,

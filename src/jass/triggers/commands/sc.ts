@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: sc
 //===========================================================================
-const Trig_sc_printSheepCounts = (): void => {
+const Trig_sc_printSheepCounts = () => {
   let i = 0;
   let count = 0;
 
@@ -13,7 +13,7 @@ const Trig_sc_printSheepCounts = (): void => {
       if (i === bj_MAX_PLAYERS || count === 12) break;
       if (
         GetPlayerSlotState(Player(i)!) === PLAYER_SLOT_STATE_PLAYING &&
-        udg_AFK[i + 1] === 0
+        udg_AFK[i + 1] === AFK_PLAYING
       ) {
         DisplayTimedTextToPlayer(
           GetTriggerPlayer()!,
@@ -36,7 +36,7 @@ const Trig_sc_printSheepCounts = (): void => {
   }
 };
 
-const Trig_sc_setSheepCount = (): void => {
+const Trig_sc_setSheepCount = () => {
   const pId = S2I(myArg[1]);
   const newSC = S2I(myArg[2]);
 
@@ -48,7 +48,7 @@ const Trig_sc_setSheepCount = (): void => {
   );
 };
 
-const Trig_sc_Actions = (): void => {
+const Trig_sc_Actions = () => {
   const str = StringCase(GetEventPlayerChatString()!, false)!;
 
   if (str === "-sc") {
@@ -71,7 +71,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_sc: () => void;
 }
-InitTrig_sc = (): void => {
+InitTrig_sc = () => {
   let i = 0;
   gg_trg_sc = CreateTrigger();
   while (true) {

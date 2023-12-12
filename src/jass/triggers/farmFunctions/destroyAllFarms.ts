@@ -1,22 +1,17 @@
-//===========================================================================
-// Trigger: destroyAllFarms
-//===========================================================================
-export const Trig_destroyAllFarms_Func002002002 = (): boolean => {
+import { removeEnumUnit } from "../../../util/removeEnumUnit";
+
+export const Trig_destroyAllFarms_Func002002002 = () => {
   return (IsUnitType(GetFilterUnit()!, UNIT_TYPE_STRUCTURE) === true);
 };
 
-export const Trig_destroyAllFarms_Func005002 = (): void => {
-  RemoveUnit(GetEnumUnit()!);
-};
-
-const Trig_destroyAllFarms_Func007Func001C = (): boolean => {
+const Trig_destroyAllFarms_Func007Func001C = () => {
   if ((!(udg_dummyWisps > 0))) {
     return false;
   }
   return true;
 };
 
-const Trig_destroyAllFarms_Actions = (): void => {
+const Trig_destroyAllFarms_Actions = () => {
   udg_atempint = GetConvertedPlayerId(GetTriggerPlayer()!);
   udg_atempgroup = GetUnitsOfPlayerMatching(
     ConvertedPlayer(udg_atempint)!,
@@ -28,7 +23,7 @@ const Trig_destroyAllFarms_Actions = (): void => {
     PLAYER_STATE_RESOURCE_LUMBER,
     udg_farmCount[udg_atempint],
   );
-  ForGroupBJ(udg_atempgroup, Trig_destroyAllFarms_Func005002);
+  ForGroupBJ(udg_atempgroup, removeEnumUnit);
   DestroyGroup(udg_atempgroup);
   bj_forLoopAIndex = 1;
   bj_forLoopAIndexEnd = udg_lastPlayer;
@@ -52,12 +47,11 @@ const Trig_destroyAllFarms_Actions = (): void => {
 };
 
 //===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_destroyAllFarms: () => void;
 }
-InitTrig_destroyAllFarms = (): void => {
+InitTrig_destroyAllFarms = () => {
   gg_trg_destroyAllFarms = CreateTrigger();
   TriggerRegisterPlayerChatEvent(
     gg_trg_destroyAllFarms,

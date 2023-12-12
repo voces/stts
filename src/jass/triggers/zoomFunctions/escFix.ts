@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: escFix
 //===========================================================================
-const Trig_escFix_Actions = (): void => {
+const Trig_escFix_Actions = () => {
   const p = GetTriggerPlayer()!;
   const pId = GetConvertedPlayerId(p);
   SetCameraFieldForPlayer(p, CAMERA_FIELD_ANGLE_OF_ATTACK, 304, 0);
@@ -14,8 +14,8 @@ const Trig_escFix_Actions = (): void => {
     );
 
     if (
-      udg_Teams === TEAMS_LOCK && spawnType === PLAYER_COLOR_BASED &&
-      GetPlayerUnitTypeCount(p, sheep) === 0
+      udg_Teams === TEAMS_LOCK_IE_PLAYING && spawnType === PLAYER_COLOR_BASED &&
+      GetPlayerUnitTypeCount(p, sheepType) === 0
     ) {
       PanCameraToTimedForPlayer(
         p,
@@ -47,7 +47,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_escFix: () => void;
 }
-InitTrig_escFix = (): void => {
+InitTrig_escFix = () => {
   let i = 0;
   gg_trg_escFix = CreateTrigger();
   while (true) {

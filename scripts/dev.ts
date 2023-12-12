@@ -26,9 +26,7 @@ const rebuild = () => {
   }
 
   console.log(
-    `Completed in ${
-      formatDuration(performance.now() - start)
-    }. Watching for more changes...`,
+    `Completed in ${formatDuration(performance.now() - start)}. Watching for more changes...`,
   );
 };
 
@@ -58,7 +56,7 @@ for await (const event of watcher) {
     const cleaned = path.replace(`${cwd}/`, "");
     if (
       cleaned.startsWith("temp") || cleaned.startsWith("node_modules") ||
-      cleaned.startsWith("map.w3x")
+      cleaned.startsWith("map.w3x") || cleaned.startsWith(".git")
     ) {
       continue;
     }

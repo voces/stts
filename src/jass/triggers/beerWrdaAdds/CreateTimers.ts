@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: Create Timers
 //===========================================================================
-const Trig_Create_Timers_Actions = (): void => {
+const Trig_Create_Timers_Actions = () => {
   CreateTimerDialogBJ(udg_paddingTimer, "Mass Time Left");
   udg_paddingTimerWindow = GetLastCreatedTimerDialogBJ()!;
 
@@ -34,7 +34,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_Create_Timers: () => void;
 }
-InitTrig_Create_Timers = (): void => {
+InitTrig_Create_Timers = () => {
   gg_trg_Create_Timers = CreateTrigger();
   TriggerAddAction(gg_trg_Create_Timers, Trig_Create_Timers_Actions);
 };

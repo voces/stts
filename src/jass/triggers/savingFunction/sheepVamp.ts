@@ -1,12 +1,12 @@
 //===========================================================================
 // Trigger: sheepVamp
 //===========================================================================
-const Trig_sheepVamp_Conditions = (): boolean => {
-  return GetUnitTypeId(GetTriggerUnit()!) === sheep &&
+const Trig_sheepVamp_Conditions = () => {
+  return GetUnitTypeId(GetTriggerUnit()!) === sheepType &&
     IsUnitIllusionBJ(GetTriggerUnit()!) === false;
 };
 
-const Trig_sheepVamp_Actions = (): void => {
+const Trig_sheepVamp_Actions = () => {
   const g = CreateGroup()!;
   let u: unit | undefined;
   const p = GetOwningPlayer(GetTriggerUnit()!);
@@ -41,7 +41,7 @@ const Trig_sheepVamp_Actions = (): void => {
   );
   udg_unit2[GetPlayerId(p) + 1] = CreateUnit(
     p,
-    shep,
+    shepType,
     GetRectCenterX(wolfSpawn),
     GetRectCenterY(wolfSpawn),
     270,
@@ -80,7 +80,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_sheepVamp: () => void;
 }
-InitTrig_sheepVamp = (): void => {
+InitTrig_sheepVamp = () => {
   gg_trg_sheepVamp = CreateTrigger();
   DisableTrigger(gg_trg_sheepVamp);
   TriggerRegisterAnyUnitEventBJ(gg_trg_sheepVamp, EVENT_PLAYER_UNIT_DEATH);

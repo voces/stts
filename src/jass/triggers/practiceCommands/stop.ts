@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: stop
 //===========================================================================
-const Trig_isHostile = (): boolean => {
+const Trig_isHostile = () => {
   if (
     (!(GetOwningPlayer(udg_unit2[GetConvertedPlayerId(GetTriggerPlayer()!)]) ===
       Player(PLAYER_NEUTRAL_AGGRESSIVE)!))
@@ -11,7 +11,7 @@ const Trig_isHostile = (): boolean => {
   return true;
 };
 
-const Trig_stop_Actions = (): void => {
+const Trig_stop_Actions = () => {
   if ((Trig_isHostile())) {
     SetUnitOwner(
       udg_unit2[GetConvertedPlayerId(GetTriggerPlayer()!)],
@@ -32,7 +32,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_stop: () => void;
 }
-InitTrig_stop = (): void => {
+InitTrig_stop = () => {
   gg_trg_stop = CreateTrigger();
   TriggerRegisterPlayerChatEventAll(gg_trg_stop, "-s", true);
   TriggerAddAction(gg_trg_stop, Trig_stop_Actions);

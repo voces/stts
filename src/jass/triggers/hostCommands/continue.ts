@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: continue
 //===========================================================================
-const Trig_continue_Conditions = (): boolean => {
+const Trig_continue_Conditions = () => {
   if ((!(GetTriggerPlayer()! === udg_Custom))) {
     return false;
   }
@@ -11,7 +11,7 @@ const Trig_continue_Conditions = (): boolean => {
   return true;
 };
 
-const Trig_continue_Func002Func001Func001Func002C = (): boolean => {
+const Trig_continue_Func002Func001Func001Func002C = () => {
   if (
     (!(udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)] === false))
   ) {
@@ -20,8 +20,8 @@ const Trig_continue_Func002Func001Func001Func002C = (): boolean => {
   return true;
 };
 
-const Trig_continue_Func002Func001Func001C = (): boolean => {
-  if ((!(udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === 0))) {
+const Trig_continue_Func002Func001Func001C = () => {
+  if ((!(udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === AFK_PLAYING))) {
     return false;
   }
   if ((!(GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING))) {
@@ -33,7 +33,7 @@ const Trig_continue_Func002Func001Func001C = (): boolean => {
   return true;
 };
 
-const Trig_continue_Func002Func001A = (): void => {
+const Trig_continue_Func002Func001A = () => {
   if ((Trig_continue_Func002Func001Func001C())) {
     if ((Trig_continue_Func002Func001Func001Func002C())) {
       ForceAddPlayerSimple(GetEnumPlayer()!, udg_Wolf);
@@ -43,14 +43,14 @@ const Trig_continue_Func002Func001A = (): void => {
   }
 };
 
-const Trig_continue_Func002C = (): boolean => {
+const Trig_continue_Func002C = () => {
   if ((!(udg_versus === 1))) {
     return false;
   }
   return true;
 };
 
-const Trig_continue_Actions = (): void => {
+const Trig_continue_Actions = () => {
   udg_versusOff = false;
   if ((Trig_continue_Func002C())) {
     ForForce(GetPlayersAll()!, Trig_continue_Func002Func001A);
@@ -66,7 +66,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_continue: () => void;
 }
-InitTrig_continue = (): void => {
+InitTrig_continue = () => {
   gg_trg_continue = CreateTrigger();
   TriggerRegisterPlayerChatEvent(
     gg_trg_continue,

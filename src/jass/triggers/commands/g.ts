@@ -3,19 +3,14 @@
 //===========================================================================
 
 export const inflateGoldCount = (p: player): void => {
-  let i = 0;
-  let max = 0;
-  while (true) {
-    if (i === bj_MAX_PLAYERS) break;
-    if (goldCount[i] > max) {
-      max = goldCount[i];
-    }
-    i = i + 1;
+  let max = goldCount[0];
+  for (let i = 1; i < bj_MAX_PLAYERS; i++) {
+    if (goldCount[i] > max) max = goldCount[i];
   }
   goldCount[GetPlayerId(p)] = max;
 };
 
-const Trig_g_showGoldCounts = (): void => {
+const Trig_g_showGoldCounts = () => {
   let i = 0;
   let count = 0;
   const p = GetTriggerPlayer()!;
@@ -33,7 +28,7 @@ const Trig_g_showGoldCounts = (): void => {
       if (i === bj_MAX_PLAYERS || count === 12) break;
       if (
         GetPlayerSlotState(Player(i)!) === PLAYER_SLOT_STATE_PLAYING &&
-        udg_AFK[i + 1] === 0
+        udg_AFK[i + 1] === AFK_PLAYING
       ) {
         DisplayTimedTextToPlayer(
           p,
@@ -212,7 +207,7 @@ const Trig_g_actual = (sender: player): void => {
   }
 };
 
-const Trig_g_Actions = (): void => {
+const Trig_g_Actions = () => {
   const str = StringCase(GetEventPlayerChatString()!, false)!;
 
   // String is just "-g"; give gold intelligently
@@ -239,11 +234,11 @@ const Trig_g_Actions = (): void => {
   }
 };
 
-const Trig_g_Conditions = (): boolean => {
+const Trig_g_Conditions = () => {
   return udg_gameStarted;
 };
 
-const Trig_g_SpellCast = (): void => {
+const Trig_g_SpellCast = () => {
   const p = GetOwningPlayer(GetTriggerUnit()!);
   if (
     udg_giveGold && GetSpellAbilityId() === FourCC("A00V") &&
@@ -259,7 +254,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_g: () => void;
 }
-InitTrig_g = (): void => {
+InitTrig_g = () => {
   let i = 0;
   let t = CreateTrigger();
   gg_trg_g = CreateTrigger();

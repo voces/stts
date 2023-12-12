@@ -1,18 +1,18 @@
 //===========================================================================
 // Trigger: Str Pot Kill
 //===========================================================================
-const Trig_Str_Pot_Kill_Func003C = (): boolean => {
-  if ((UnitHasBuffBJ(GetKillingUnitBJ()!, FourCC("B001")) === true)) {
+const Trig_Str_Pot_Kill_Func003C = () => {
+  if ((UnitHasBuffBJ(GetKillingUnit()!, FourCC("B001")) === true)) {
     return true;
   }
-  if ((UnitHasBuffBJ(GetKillingUnitBJ()!, FourCC("B008")) === true)) {
+  if ((UnitHasBuffBJ(GetKillingUnit()!, FourCC("B008")) === true)) {
     return true;
   }
   return false;
 };
 
-const Trig_Str_Pot_Kill_Conditions = (): boolean => {
-  if ((!(GetUnitTypeId(GetDyingUnit()!) === FourCC("uC04")))) {
+const Trig_Str_Pot_Kill_Conditions = () => {
+  if ((!(GetUnitTypeId(GetDyingUnit()!) === sheepType))) {
     return false;
   }
   if ((!(IsUnitIllusionBJ(GetDyingUnit()!) === false))) {
@@ -24,7 +24,7 @@ const Trig_Str_Pot_Kill_Conditions = (): boolean => {
   return true;
 };
 
-const Trig_Str_Pot_Kill_Actions = (): void => {
+const Trig_Str_Pot_Kill_Actions = () => {
   udg_atemploc = GetUnitLoc(GetDyingUnit()!);
   CreateNUnitsAtLoc(
     1,
@@ -40,9 +40,9 @@ const Trig_Str_Pot_Kill_Actions = (): void => {
     5,
     ("                              " +
       udg_colorString[
-        GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))
+        GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
       ]) +
-      (GetPlayerName(GetOwningPlayer(GetKillingUnitBJ()!)) +
+      (GetPlayerName(GetOwningPlayer(GetKillingUnit()!)) +
         ("|r headshot " +
           (udg_colorString[
             GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit()!))
@@ -57,7 +57,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_Str_Pot_Kill: () => void;
 }
-InitTrig_Str_Pot_Kill = (): void => {
+InitTrig_Str_Pot_Kill = () => {
   gg_trg_Str_Pot_Kill = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(gg_trg_Str_Pot_Kill, EVENT_PLAYER_UNIT_DEATH);
   TriggerAddCondition(

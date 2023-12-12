@@ -1,14 +1,14 @@
 //===========================================================================
 // Trigger: SexyOff
 //===========================================================================
-const Trig_SexyOff_Conditions = (): boolean => {
+const Trig_SexyOff_Conditions = () => {
   if ((!(GetTriggerPlayer()! === udg_Custom))) {
     return false;
   }
   return true;
 };
 
-const Trig_SexyOff_Actions = (): void => {
+const Trig_SexyOff_Actions = () => {
   udg_SheepColorR[1] = 100;
   udg_SheepColorG[1] = 0;
   udg_SheepColorB[1] = 0;
@@ -95,7 +95,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_SexyOff: () => void;
 }
-InitTrig_SexyOff = (): void => {
+InitTrig_SexyOff = () => {
   gg_trg_SexyOff = CreateTrigger();
   TriggerRegisterPlayerChatEventAll(gg_trg_SexyOff, "-no sexy", true);
   TriggerAddCondition(gg_trg_SexyOff, Condition(Trig_SexyOff_Conditions));

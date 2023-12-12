@@ -1,14 +1,14 @@
 //===========================================================================
 // Trigger: Getting Cloak
 //===========================================================================
-const Trig_Getting_Cloak_Conditions = (): boolean => {
+const Trig_Getting_Cloak_Conditions = () => {
   if ((!(GetItemTypeId(GetManipulatedItem()!) === FourCC("I001")))) {
     return false;
   }
   return true;
 };
 
-const Trig_Getting_Cloak_Func002Func001C = (): boolean => {
+const Trig_Getting_Cloak_Func002Func001C = () => {
   if ((!(GetManipulatedItem()! != null))) {
     return false;
   }
@@ -21,50 +21,49 @@ const Trig_Getting_Cloak_Func002Func001C = (): boolean => {
   return true;
 };
 
-const Trig_Getting_Cloak_Func003Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(udg_IntCloakCount === 6))) {
-      return false;
-    }
-    return true;
-  };
+const Trig_Getting_Cloak_Func003Func001Func001Func001Func001Func001C = () => {
+  if ((!(udg_IntCloakCount === 6))) {
+    return false;
+  }
+  return true;
+};
 
-const Trig_Getting_Cloak_Func003Func001Func001Func001Func001C = (): boolean => {
+const Trig_Getting_Cloak_Func003Func001Func001Func001Func001C = () => {
   if ((!(udg_IntCloakCount === 5))) {
     return false;
   }
   return true;
 };
 
-const Trig_Getting_Cloak_Func003Func001Func001Func001C = (): boolean => {
+const Trig_Getting_Cloak_Func003Func001Func001Func001C = () => {
   if ((!(udg_IntCloakCount === 4))) {
     return false;
   }
   return true;
 };
 
-const Trig_Getting_Cloak_Func003Func001Func001C = (): boolean => {
+const Trig_Getting_Cloak_Func003Func001Func001C = () => {
   if ((!(udg_IntCloakCount === 3))) {
     return false;
   }
   return true;
 };
 
-const Trig_Getting_Cloak_Func003Func001C = (): boolean => {
+const Trig_Getting_Cloak_Func003Func001C = () => {
   if ((!(udg_IntCloakCount === 2))) {
     return false;
   }
   return true;
 };
 
-const Trig_Getting_Cloak_Func003C = (): boolean => {
+const Trig_Getting_Cloak_Func003C = () => {
   if ((!(udg_IntCloakCount === 1))) {
     return false;
   }
   return true;
 };
 
-const Trig_Getting_Cloak_Actions = (): void => {
+const Trig_Getting_Cloak_Actions = () => {
   udg_IntCloakCount = 0;
   udg_IntLoop = 1;
   while (true) {
@@ -112,7 +111,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_Getting_Cloak: () => void;
 }
-InitTrig_Getting_Cloak = (): void => {
+InitTrig_Getting_Cloak = () => {
   gg_trg_Getting_Cloak = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(
     gg_trg_Getting_Cloak,

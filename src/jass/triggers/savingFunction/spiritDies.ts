@@ -1,16 +1,26 @@
-//===========================================================================
-// Trigger: spiritDies
-//===========================================================================
-const Trig_spiritDies_Conditions = (): boolean => {
-  return GetUnitTypeId(GetTriggerUnit()!) === wisp;
+import { president } from "../../../modes/president";
+
+const Trig_spiritDies_Conditions = () => {
+  return GetUnitTypeId(GetTriggerUnit()!) === wispType;
 };
 
-const Trig_spiritDies_Actions = (): void => {
-  const dyingPlayer = GetOwningPlayer(GetDyingUnit()!);
+const Trig_spiritDies_Actions = () => {
+  const dyingUnit = GetDyingUnit()!;
+  const dyingPlayer = GetOwningPlayer(dyingUnit);
   const dyingPlayerId = GetConvertedPlayerId(dyingPlayer);
   const killingPlayer = GetOwningPlayer(GetKillingUnit()!);
   const killingPlayerId = GetConvertedPlayerId(killingPlayer);
-  const spawnIndex = GetRandomInt(1, 24);
+
+  if (udg_practiceOn) {
+    CreateUnit(
+      dyingPlayer,
+      wispType,
+      RandomX(wispArea),
+      RandomY(wispArea),
+      270,
+    );
+    return;
+  }
 
   ResumeTimer(udg_sheepTimer[dyingPlayerId]);
 
@@ -23,29 +33,23 @@ const Trig_spiritDies_Actions = (): void => {
     );
   }
 
-  udg_atempint = GetRandomInt(1, 24);
-  const u = CreateUnit(
-    dyingPlayer,
-    sheep,
-    GetRectCenterX(udg_startLocation[spawnIndex]),
-    GetRectCenterY(udg_startLocation[spawnIndex]),
-    270,
-  )!;
-  PanCameraToTimedForPlayer(
-    dyingPlayer,
-    GetRectCenterX(udg_startLocation[spawnIndex]),
-    GetRectCenterY(udg_startLocation[spawnIndex]),
-    0,
-  );
+  const { x, y } = (() => {
+    if (president.enabled) {
+      return { x: GetUnitX(dyingUnit), y: GetUnitY(dyingUnit) };
+    }
+
+    const spawnIndex = GetRandomInt(1, 24);
+    return {
+      x: GetRectCenterX(udg_startLocation[spawnIndex]),
+      y: GetRectCenterY(udg_startLocation[spawnIndex]),
+    };
+  })();
+  const facing = GetUnitFacing(dyingUnit);
+
+  const u = CreateUnit(dyingPlayer, sheepType, x, y, facing)!;
+  PanCameraToTimedForPlayer(dyingPlayer, x, y, 0);
   udg_unit[dyingPlayerId] = u;
   SelectUnitForPlayerSingle(u, dyingPlayer);
-  SetUnitVertexColorBJ(
-    u,
-    udg_SheepColorR[dyingPlayerId],
-    udg_SheepColorG[dyingPlayerId],
-    udg_SheepColorB[dyingPlayerId],
-    0,
-  );
 
   AdjustPlayerStateBJ(100, killingPlayer, PLAYER_STATE_RESOURCE_GOLD);
   AdjustPlayerStateBJ(20, dyingPlayer, PLAYER_STATE_RESOURCE_GOLD);
@@ -71,12 +75,11 @@ const Trig_spiritDies_Actions = (): void => {
 };
 
 //===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_spiritDies: () => void;
 }
-InitTrig_spiritDies = (): void => {
+InitTrig_spiritDies = () => {
   gg_trg_spiritDies = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(gg_trg_spiritDies, EVENT_PLAYER_UNIT_DEATH);
   TriggerAddCondition(gg_trg_spiritDies, Condition(Trig_spiritDies_Conditions));

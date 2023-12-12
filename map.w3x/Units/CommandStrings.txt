@@ -95,9 +95,9 @@ Ubertip="Orders units that pop out of the building to immediately attack move to
 Hotkey=Y
 
 [CmdSelectSkill]
-Tip=Hero Abilities
-Ubertip="Opens the abilities menu and allows you to assign unused points to the Heroes' abilities."
-Hotkey=O
+Tip=Buy Items
+Ubertip="Opens the Buy Items menu."
+Hotkey=Q
 
 [CmdStop]
 Tip=Stop

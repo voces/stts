@@ -1,21 +1,21 @@
 //===========================================================================
 // Trigger: mapShrink
 //===========================================================================
-const Trig_mapShrink_Conditions = (): boolean => {
+const Trig_mapShrink_Conditions = () => {
   if ((!(GetTriggerPlayer()! === udg_Custom))) {
     return false;
   }
   return true;
 };
 
-const Trig_mapShrink_Func001C = (): boolean => {
+const Trig_mapShrink_Func001C = () => {
   if ((!(udg_mapShrink === false))) {
     return false;
   }
   return true;
 };
 
-const Trig_mapShrink_Actions = (): void => {
+const Trig_mapShrink_Actions = () => {
   if ((Trig_mapShrink_Func001C())) {
     udg_mapShrink = true;
     udg_mapExpand = false;
@@ -40,7 +40,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_mapShrink: () => void;
 }
-InitTrig_mapShrink = (): void => {
+InitTrig_mapShrink = () => {
   gg_trg_mapShrink = CreateTrigger();
   TriggerRegisterPlayerChatEvent(gg_trg_mapShrink, Player(0)!, "-shrink", true);
   TriggerRegisterPlayerChatEvent(gg_trg_mapShrink, Player(1)!, "-shrink", true);

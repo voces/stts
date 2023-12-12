@@ -2,7 +2,7 @@
 // Trigger: useItem
 //===========================================================================
 
-const sheepLocaterPing = (): void => {
+const sheepLocaterPing = () => {
   if (IsUnitIllusion(GetEnumUnit()!)) {
     return;
   }
@@ -15,13 +15,13 @@ const sheepLocaterPing = (): void => {
   );
 };
 
-const sheepLocater = (): void => {
-  const g = GetUnitsOfTypeIdAll(sheep)!;
+const sheepLocater = () => {
+  const g = GetUnitsOfTypeIdAll(sheepType)!;
   ForGroup(g, sheepLocaterPing);
   DestroyGroup(g);
 };
 
-const Trig_useItem_Actions = (): void => {
+const Trig_useItem_Actions = () => {
   const usedItemType = GetItemTypeId(GetManipulatedItem()!);
 
   if (usedItemType === FourCC("I00G")) {
@@ -39,7 +39,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_useItem: () => void;
 }
-InitTrig_useItem = (): void => {
+InitTrig_useItem = () => {
   gg_trg_useItem = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(gg_trg_useItem, EVENT_PLAYER_UNIT_USE_ITEM);
   TriggerAddAction(gg_trg_useItem, Trig_useItem_Actions);

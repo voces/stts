@@ -1,21 +1,21 @@
 //===========================================================================
 // Trigger: mapExpand
 //===========================================================================
-const Trig_mapExpand_Conditions = (): boolean => {
+const Trig_mapExpand_Conditions = () => {
   if ((!(GetTriggerPlayer()! === udg_Custom))) {
     return false;
   }
   return true;
 };
 
-const Trig_mapExpand_Func001C = (): boolean => {
+const Trig_mapExpand_Func001C = () => {
   if ((!(udg_mapExpand === false))) {
     return false;
   }
   return true;
 };
 
-const Trig_mapExpand_Actions = (): void => {
+const Trig_mapExpand_Actions = () => {
   if ((Trig_mapExpand_Func001C())) {
     udg_mapExpand = true;
     udg_mapShrink = false;
@@ -40,7 +40,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_mapExpand: () => void;
 }
-InitTrig_mapExpand = (): void => {
+InitTrig_mapExpand = () => {
   gg_trg_mapExpand = CreateTrigger();
   TriggerRegisterPlayerChatEvent(gg_trg_mapExpand, Player(0)!, "-expand", true);
   TriggerRegisterPlayerChatEvent(gg_trg_mapExpand, Player(1)!, "-expand", true);

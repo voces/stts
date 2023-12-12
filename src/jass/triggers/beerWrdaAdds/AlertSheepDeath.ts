@@ -1,8 +1,8 @@
 //===========================================================================
 // Trigger: Alert Sheep Death
 //===========================================================================
-const Trig_Alert_Sheep_Death_Conditions = (): boolean => {
-  if ((!(GetUnitTypeId(GetDyingUnit()!) === FourCC("uC04")))) {
+const Trig_Alert_Sheep_Death_Conditions = () => {
+  if ((!(GetUnitTypeId(GetDyingUnit()!) === sheepType))) {
     return false;
   }
   if ((!(IsUnitIllusionBJ(GetDyingUnit()!) === false))) {
@@ -24,15 +24,15 @@ const Trig_Alert_Sheep_Death_Conditions = (): boolean => {
   return true;
 };
 
-const Trig_Alert_Sheep_Death_Actions = (): void => {
+const Trig_Alert_Sheep_Death_Actions = () => {
   DisplayTimedTextToForce(
     GetPlayersAll()!,
     5,
     ("                              " +
       udg_colorString[
-        GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))
+        GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
       ]) +
-      (GetPlayerName(GetOwningPlayer(GetKillingUnitBJ()!)) +
+      (GetPlayerName(GetOwningPlayer(GetKillingUnit()!)) +
         ("|r has captured " +
           (udg_colorString[
             GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit()!))
@@ -46,7 +46,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_Alert_Sheep_Death: () => void;
 }
-InitTrig_Alert_Sheep_Death = (): void => {
+InitTrig_Alert_Sheep_Death = () => {
   gg_trg_Alert_Sheep_Death = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(
     gg_trg_Alert_Sheep_Death,

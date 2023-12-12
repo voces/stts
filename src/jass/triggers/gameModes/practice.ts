@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: practice
 //===========================================================================
-const Trig_practice_Func001C = (): boolean => {
+const Trig_practice_Func001C = () => {
   if ((GetTriggerPlayer()! === udg_Custom)) {
     return true;
   }
@@ -11,21 +11,21 @@ const Trig_practice_Func001C = (): boolean => {
   return false;
 };
 
-const Trig_practice_Conditions = (): boolean => {
+const Trig_practice_Conditions = () => {
   if ((!Trig_practice_Func001C())) {
     return false;
   }
   return true;
 };
 
-const Trig_practice_Func016C = (): boolean => {
+const Trig_practice_Func016C = () => {
   if ((!(udg_viewOn === false))) {
     return false;
   }
   return true;
 };
 
-const Trig_practice_Actions = (): void => {
+const Trig_practice_Actions = () => {
   udg_lastGameString = GetEventPlayerChatString()!;
   udg_practiceOn = true;
   udg_dummyWisps = 0;
@@ -33,7 +33,7 @@ const Trig_practice_Actions = (): void => {
   udg_time = 120 * 60;
   udg_sheepGold = 1000000;
   udg_wolfGold = 1000000;
-  udg_Teams = 2;
+  udg_Teams = TEAMS_LOCK_IE_PLAYING;
   EnableTrigger(gg_trg_attack);
   EnableTrigger(gg_trg_stop);
   EnableTrigger(gg_trg_mass);
@@ -52,7 +52,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_practice: () => void;
 }
-InitTrig_practice = (): void => {
+InitTrig_practice = () => {
   gg_trg_practice = CreateTrigger();
   TriggerRegisterPlayerChatEvent(
     gg_trg_practice,

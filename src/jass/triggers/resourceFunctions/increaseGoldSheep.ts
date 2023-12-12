@@ -1,11 +1,11 @@
 //===========================================================================
 // Trigger: increaseGoldSheep
 //===========================================================================
-const Trig_increaseGoldSheep_Func002002 = (): void => {
+const Trig_increaseGoldSheep_Func002002 = () => {
   AdjustPlayerStateBJ(1, GetEnumPlayer()!, PLAYER_STATE_RESOURCE_GOLD);
 };
 
-const Trig_increaseGoldSheep_Actions = (): void => {
+const Trig_increaseGoldSheep_Actions = () => {
   ForForce(udg_Sheep, Trig_increaseGoldSheep_Func002002);
 };
 
@@ -15,7 +15,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_increaseGoldSheep: () => void;
 }
-InitTrig_increaseGoldSheep = (): void => {
+InitTrig_increaseGoldSheep = () => {
   gg_trg_increaseGoldSheep = CreateTrigger();
   DisableTrigger(gg_trg_increaseGoldSheep);
   TriggerRegisterTimerEventPeriodic(gg_trg_increaseGoldSheep, 1.3);

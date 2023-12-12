@@ -1,49 +1,49 @@
 //===========================================================================
 // Trigger: speed
 //===========================================================================
-const Trig_speed_Conditions = (): boolean => {
+const Trig_speed_Conditions = () => {
   if ((!(GetTriggerPlayer()! === udg_Custom))) {
     return false;
   }
   return true;
 };
 
-const Trig_speed_Func002Func001Func002Func002Func002C = (): boolean => {
+const Trig_speed_Func002Func001Func002Func002Func002C = () => {
   if ((!(SubStringBJ(GetEventPlayerChatString()!, 8, 8) === "5"))) {
     return false;
   }
   return true;
 };
 
-const Trig_speed_Func002Func001Func002Func002C = (): boolean => {
+const Trig_speed_Func002Func001Func002Func002C = () => {
   if ((!(SubStringBJ(GetEventPlayerChatString()!, 8, 8) === "4"))) {
     return false;
   }
   return true;
 };
 
-const Trig_speed_Func002Func001Func002C = (): boolean => {
+const Trig_speed_Func002Func001Func002C = () => {
   if ((!(SubStringBJ(GetEventPlayerChatString()!, 8, 8) === "3"))) {
     return false;
   }
   return true;
 };
 
-const Trig_speed_Func002Func001C = (): boolean => {
+const Trig_speed_Func002Func001C = () => {
   if ((!(SubStringBJ(GetEventPlayerChatString()!, 8, 8) === "2"))) {
     return false;
   }
   return true;
 };
 
-const Trig_speed_Func002C = (): boolean => {
+const Trig_speed_Func002C = () => {
   if ((!(SubStringBJ(GetEventPlayerChatString()!, 8, 8) === "1"))) {
     return false;
   }
   return true;
 };
 
-const Trig_speed_Actions = (): void => {
+const Trig_speed_Actions = () => {
   if ((Trig_speed_Func002C())) {
     SetGameSpeed(MAP_SPEED_SLOWEST);
     DisplayTimedTextToForce(
@@ -96,7 +96,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_speed: () => void;
 }
-InitTrig_speed = (): void => {
+InitTrig_speed = () => {
   gg_trg_speed = CreateTrigger();
   TriggerRegisterPlayerChatEvent(gg_trg_speed, Player(0)!, "-speed", false);
   TriggerRegisterPlayerChatEvent(gg_trg_speed, Player(1)!, "-speed", false);

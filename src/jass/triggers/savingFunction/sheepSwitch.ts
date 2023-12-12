@@ -1,250 +1,23 @@
-//===========================================================================
-// Trigger: sheepSwitch
-//===========================================================================
-const Trig_sheepSwitch_Conditions = (): boolean => {
-  if ((!(GetUnitTypeId(GetTriggerUnit()!) === FourCC("uC04")))) {
-    return false;
-  }
-  if ((!(IsUnitIllusionBJ(GetDyingUnit()!) === false))) {
-    return false;
-  }
-  return true;
-};
+import { removeEnumUnit } from "../../../util/removeEnumUnit";
 
-const Trig_sheepSwitch_Func003C = (): boolean => {
-  if (
-    (!(udg_sheepZoom[
-      GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))
-    ] > 0))
-  ) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_sheepSwitch_Func004C = (): boolean => {
-  if (
-    (!(udg_wolfZoom[GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit()!))] >
-      0))
-  ) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_sheepSwitch_Func015002 = (): void => {
-  RemoveUnit(GetEnumUnit()!);
-};
-
-const Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetKillingUnitBJ()!) === Player(23)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetKillingUnitBJ()!) === Player(22)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetKillingUnitBJ()!) === Player(21)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetKillingUnitBJ()!) === Player(20)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetKillingUnitBJ()!) === Player(19)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetKillingUnitBJ()!) === Player(18)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetKillingUnitBJ()!) === Player(17)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetKillingUnitBJ()!) === Player(16)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetKillingUnitBJ()!) === Player(15)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetKillingUnitBJ()!) === Player(14)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetKillingUnitBJ()!) === Player(13)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetKillingUnitBJ()!) === Player(12)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetKillingUnitBJ()!) === Player(11)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetKillingUnitBJ()!) === Player(10)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetKillingUnitBJ()!) === Player(9)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetKillingUnitBJ()!) === Player(8)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetKillingUnitBJ()!) === Player(7)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetKillingUnitBJ()!) === Player(6)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetKillingUnitBJ()!) === Player(5)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func031Func001Func001Func001Func001C = (): boolean => {
-  if ((!(GetOwningPlayer(GetKillingUnitBJ()!) === Player(4)!))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_sheepSwitch_Func031Func001Func001Func001C = (): boolean => {
-  if ((!(GetOwningPlayer(GetKillingUnitBJ()!) === Player(3)!))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_sheepSwitch_Func031Func001Func001C = (): boolean => {
-  if ((!(GetOwningPlayer(GetKillingUnitBJ()!) === Player(2)!))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_sheepSwitch_Func031Func001C = (): boolean => {
-  if ((!(GetOwningPlayer(GetKillingUnitBJ()!) === Player(1)!))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_sheepSwitch_Func031C = (): boolean => {
-  if ((!(GetOwningPlayer(GetKillingUnitBJ()!) === Player(0)!))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_sheepSwitch_Func035002 = (): void => {
-  RemoveUnit(GetEnumUnit()!);
-};
-
-const Trig_sheepSwitch_Func045A = (): void => {
+const adjustAlliances1 = () => {
   SetPlayerAllianceStateBJ(
     GetEnumPlayer()!,
-    GetOwningPlayer(GetKillingUnitBJ()!),
+    GetOwningPlayer(GetKillingUnit()!),
     bj_ALLIANCE_UNALLIED,
   );
   SetPlayerAllianceStateBJ(
     GetEnumPlayer()!,
-    GetOwningPlayer(GetKillingUnitBJ()!),
+    GetOwningPlayer(GetKillingUnit()!),
     bj_ALLIANCE_ALLIED_VISION,
   );
   SetPlayerAllianceStateBJ(
-    GetOwningPlayer(GetKillingUnitBJ()!),
+    GetOwningPlayer(GetKillingUnit()!),
     GetEnumPlayer()!,
     bj_ALLIANCE_UNALLIED,
   );
   SetPlayerAllianceStateBJ(
-    GetOwningPlayer(GetKillingUnitBJ()!),
+    GetOwningPlayer(GetKillingUnit()!),
     GetEnumPlayer()!,
     bj_ALLIANCE_ALLIED_VISION,
   );
@@ -260,7 +33,7 @@ const Trig_sheepSwitch_Func045A = (): void => {
   );
 };
 
-const Trig_sheepSwitch_Func046A = (): void => {
+const adjustAlliances2 = () => {
   SetPlayerAllianceStateBJ(
     GetEnumPlayer()!,
     GetOwningPlayer(GetTriggerUnit()!),
@@ -282,235 +55,35 @@ const Trig_sheepSwitch_Func046A = (): void => {
     bj_ALLIANCE_ALLIED_VISION,
   );
   SetPlayerAllianceStateBJ(
-    GetOwningPlayer(GetKillingUnitBJ()!),
+    GetOwningPlayer(GetKillingUnit()!),
     GetEnumPlayer()!,
     bj_ALLIANCE_UNALLIED,
   );
   SetPlayerAllianceStateBJ(
     GetEnumPlayer()!,
-    GetOwningPlayer(GetKillingUnitBJ()!),
+    GetOwningPlayer(GetKillingUnit()!),
     bj_ALLIANCE_UNALLIED,
   );
 };
 
-const Trig_sheepSwitch_Func051Func001A = (): void => {
-  SetPlayerAllianceStateBJ(
-    GetOwningPlayer(GetKillingUnitBJ()!),
-    GetEnumPlayer()!,
-    bj_ALLIANCE_ALLIED_ADVUNITS,
-  );
-};
-
-const Trig_sheepSwitch_Func051C = (): boolean => {
-  if (
-    (!(udg_AFK[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))] ===
-      4))
-  ) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetTriggerUnit()!) === Player(23)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetTriggerUnit()!) === Player(22)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetTriggerUnit()!) === Player(21)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetTriggerUnit()!) === Player(20)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetTriggerUnit()!) === Player(19)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetTriggerUnit()!) === Player(18)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetTriggerUnit()!) === Player(17)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetTriggerUnit()!) === Player(16)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetTriggerUnit()!) === Player(15)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetTriggerUnit()!) === Player(14)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetTriggerUnit()!) === Player(13)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetTriggerUnit()!) === Player(12)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetTriggerUnit()!) === Player(11)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetTriggerUnit()!) === Player(10)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetTriggerUnit()!) === Player(9)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetTriggerUnit()!) === Player(8)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetTriggerUnit()!) === Player(7)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetTriggerUnit()!) === Player(6)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001C =
-  (): boolean => {
-    if ((!(GetOwningPlayer(GetTriggerUnit()!) === Player(5)!))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_sheepSwitch_Func053Func001Func001Func001Func001C = (): boolean => {
-  if ((!(GetOwningPlayer(GetTriggerUnit()!) === Player(4)!))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_sheepSwitch_Func053Func001Func001Func001C = (): boolean => {
-  if ((!(GetOwningPlayer(GetTriggerUnit()!) === Player(3)!))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_sheepSwitch_Func053Func001Func001C = (): boolean => {
-  if ((!(GetOwningPlayer(GetTriggerUnit()!) === Player(2)!))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_sheepSwitch_Func053Func001C = (): boolean => {
-  if ((!(GetOwningPlayer(GetTriggerUnit()!) === Player(1)!))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_sheepSwitch_Func053C = (): boolean => {
-  if ((!(GetOwningPlayer(GetTriggerUnit()!) === Player(0)!))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_sheepSwitch_Actions = (): void => {
+const Trig_sheepSwitch_Actions = () => {
   udg_hideEsc[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()!))] = true;
-  udg_hideEsc[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))] =
-    true;
-  if ((Trig_sheepSwitch_Func003C())) {
+  udg_hideEsc[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))] = true;
+  if (
+    udg_sheepZoom[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))] >
+      0
+  ) {
     SetCameraFieldForPlayer(
-      GetOwningPlayer(GetKillingUnitBJ()!),
+      GetOwningPlayer(GetKillingUnit()!),
       CAMERA_FIELD_TARGET_DISTANCE,
-      udg_sheepZoom[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))],
+      udg_sheepZoom[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))],
       0,
     );
   }
-  if ((Trig_sheepSwitch_Func004C())) {
+  if (
+    udg_wolfZoom[GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit()!))] >
+      0
+  ) {
     SetCameraFieldForPlayer(
       GetOwningPlayer(GetDyingUnit()!),
       CAMERA_FIELD_TARGET_DISTANCE,
@@ -524,12 +97,12 @@ const Trig_sheepSwitch_Actions = (): void => {
     0,
   );
   SetPlayerStateBJ(
-    GetOwningPlayer(GetKillingUnitBJ()!),
+    GetOwningPlayer(GetKillingUnit()!),
     PLAYER_STATE_RESOURCE_LUMBER,
     0,
   );
   SetPlayerStateBJ(
-    GetOwningPlayer(GetKillingUnitBJ()!),
+    GetOwningPlayer(GetKillingUnit()!),
     PLAYER_STATE_RESOURCE_GOLD,
     udg_sheepGold,
   );
@@ -538,36 +111,35 @@ const Trig_sheepSwitch_Actions = (): void => {
     PLAYER_STATE_RESOURCE_GOLD,
     udg_wolfGold,
   );
-  udg_kills[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))] =
-    udg_kills[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))] + 1;
+  udg_kills[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))] =
+    udg_kills[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))] + 1;
   udg_farmCount[GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit()!))] = 0;
-  ForceRemovePlayerSimple(GetOwningPlayer(GetKillingUnitBJ()!), udg_Wolf);
-  ForceAddPlayerSimple(GetOwningPlayer(GetKillingUnitBJ()!), udg_Sheep);
-  udg_atempgroup = GetUnitsOfPlayerAll(GetOwningPlayer(GetKillingUnitBJ()!))!;
-  ForGroupBJ(udg_atempgroup, Trig_sheepSwitch_Func015002);
+  ForceRemovePlayerSimple(GetOwningPlayer(GetKillingUnit()!), udg_Wolf);
+  ForceAddPlayerSimple(GetOwningPlayer(GetKillingUnit()!), udg_Sheep);
+  udg_atempgroup = GetUnitsOfPlayerAll(GetOwningPlayer(GetKillingUnit()!))!;
+  ForGroupBJ(udg_atempgroup, removeEnumUnit);
   DestroyGroup(udg_atempgroup);
   bj_lastCreatedUnit = CreateUnit(
     GetOwningPlayer(GetKillingUnit()!),
-    unstuck,
+    unstuckType,
     RandomX(gg_rct_unstuckZone),
     RandomY(gg_rct_unstuckZone),
     0,
   );
   SelectUnitForPlayerSingle(
     GetLastCreatedUnit()!,
-    GetOwningPlayer(GetKillingUnitBJ()!),
+    GetOwningPlayer(GetKillingUnit()!),
   );
-  ForceUICancelBJ(GetOwningPlayer(GetKillingUnitBJ()!));
+  ForceUICancelBJ(GetOwningPlayer(GetKillingUnit()!));
   RemoveUnit(GetLastCreatedUnit()!);
   bj_lastCreatedUnit = CreateUnit(
     GetOwningPlayer(GetKillingUnit()!),
-    sheep,
+    sheepType,
     GetUnitX(GetTriggerUnit()!),
     GetUnitY(GetTriggerUnit()!),
     270,
   );
-  udg_unit[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))] =
-    GetLastCreatedUnit()!;
+  udg_unit[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))] = GetLastCreatedUnit()!;
   UnitRemoveAbilityBJ(FourCC("A00D"), GetLastCreatedUnit()!);
   UnitAddAbilityBJ(FourCC("A00U"), GetLastCreatedUnit()!);
   SetPlayerUnitAvailableBJ(
@@ -577,7 +149,7 @@ const Trig_sheepSwitch_Actions = (): void => {
   );
   SelectUnitForPlayerSingle(
     GetLastCreatedUnit()!,
-    GetOwningPlayer(GetKillingUnitBJ()!),
+    GetOwningPlayer(GetKillingUnit()!),
   );
   SetUnitInvulnerable(GetLastCreatedUnit()!, true);
   AddSpecialEffectTargetUnitBJ(
@@ -588,415 +160,46 @@ const Trig_sheepSwitch_Actions = (): void => {
   udg_switchEffect[
     GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()!))
   ] = GetLastCreatedEffectBJ()!;
-  udg_atempint = GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!));
-  if ((Trig_sheepSwitch_Func031C())) {
-    StartTimerBJ(udg_redTimer, false, udg_sheepInvul);
-    StartTimerBJ(udg_redHideTimer, false, 5);
-    SetUnitVertexColorBJ(
-      GetLastCreatedUnit()!,
-      udg_SheepColorR[udg_atempint],
-      udg_SheepColorG[udg_atempint],
-      udg_SheepColorB[udg_atempint],
-      0,
-    );
-  } else {
-    if ((Trig_sheepSwitch_Func031Func001C())) {
-      StartTimerBJ(udg_blueTimer, false, udg_sheepInvul);
-      StartTimerBJ(udg_blueHideTimer, false, 5);
-      SetUnitVertexColorBJ(
-        GetLastCreatedUnit()!,
-        udg_SheepColorR[udg_atempint],
-        udg_SheepColorG[udg_atempint],
-        udg_SheepColorB[udg_atempint],
-        0,
-      );
-    } else {
-      if ((Trig_sheepSwitch_Func031Func001Func001C())) {
-        StartTimerBJ(udg_tealTimer, false, udg_sheepInvul);
-        StartTimerBJ(udg_tealHideTimer, false, 5);
-        SetUnitVertexColorBJ(
-          GetLastCreatedUnit()!,
-          udg_SheepColorR[udg_atempint],
-          udg_SheepColorG[udg_atempint],
-          udg_SheepColorB[udg_atempint],
-          0,
-        );
-      } else {
-        if ((Trig_sheepSwitch_Func031Func001Func001Func001C())) {
-          StartTimerBJ(udg_purpleTimer, false, udg_sheepInvul);
-          StartTimerBJ(udg_purpleHideTimer, false, 5);
-          SetUnitVertexColorBJ(
-            GetLastCreatedUnit()!,
-            udg_SheepColorR[udg_atempint],
-            udg_SheepColorG[udg_atempint],
-            udg_SheepColorB[udg_atempint],
-            0,
-          );
-        } else {
-          if ((Trig_sheepSwitch_Func031Func001Func001Func001Func001C())) {
-            StartTimerBJ(udg_yellowTimer, false, udg_sheepInvul);
-            StartTimerBJ(udg_yellowHideTimer, false, 5);
-            SetUnitVertexColorBJ(
-              GetLastCreatedUnit()!,
-              udg_SheepColorR[udg_atempint],
-              udg_SheepColorG[udg_atempint],
-              udg_SheepColorB[udg_atempint],
-              0,
-            );
-          } else {
-            if (
-              (Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001C())
-            ) {
-              StartTimerBJ(udg_orangeTimer, false, udg_sheepInvul);
-              StartTimerBJ(udg_orangeHideTimer, false, 5);
-              SetUnitVertexColorBJ(
-                GetLastCreatedUnit()!,
-                udg_SheepColorR[udg_atempint],
-                udg_SheepColorG[udg_atempint],
-                udg_SheepColorB[udg_atempint],
-                0,
-              );
-            } else {
-              if (
-                (Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001C())
-              ) {
-                StartTimerBJ(udg_greenTimer, false, udg_sheepInvul);
-                StartTimerBJ(udg_greenHideTimer, false, 5);
-                SetUnitVertexColorBJ(
-                  GetLastCreatedUnit()!,
-                  udg_SheepColorR[udg_atempint],
-                  udg_SheepColorG[udg_atempint],
-                  udg_SheepColorB[udg_atempint],
-                  0,
-                );
-              } else {
-                if (
-                  (Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001C())
-                ) {
-                  StartTimerBJ(udg_pinkTimer, false, udg_sheepInvul);
-                  StartTimerBJ(udg_pinkHideTimer, false, 5);
-                  SetUnitVertexColorBJ(
-                    GetLastCreatedUnit()!,
-                    udg_SheepColorR[udg_atempint],
-                    udg_SheepColorG[udg_atempint],
-                    udg_SheepColorB[udg_atempint],
-                    0,
-                  );
-                } else {
-                  if (
-                    (Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001C())
-                  ) {
-                    StartTimerBJ(udg_greyTimer, false, udg_sheepInvul);
-                    StartTimerBJ(udg_greyHideTimer, false, 5);
-                    SetUnitVertexColorBJ(
-                      GetLastCreatedUnit()!,
-                      udg_SheepColorR[udg_atempint],
-                      udg_SheepColorG[udg_atempint],
-                      udg_SheepColorB[udg_atempint],
-                      0,
-                    );
-                  } else {
-                    if (
-                      (Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                    ) {
-                      StartTimerBJ(udg_lbTimer, false, udg_sheepInvul);
-                      StartTimerBJ(udg_lbHideTimer, false, 5);
-                      SetUnitVertexColorBJ(
-                        GetLastCreatedUnit()!,
-                        udg_SheepColorR[udg_atempint],
-                        udg_SheepColorG[udg_atempint],
-                        udg_SheepColorB[udg_atempint],
-                        0,
-                      );
-                    } else {
-                      if (
-                        (Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                      ) {
-                        StartTimerBJ(udg_dgTimer, false, udg_sheepInvul);
-                        StartTimerBJ(udg_dgHideTimer, false, 5);
-                        SetUnitVertexColorBJ(
-                          GetLastCreatedUnit()!,
-                          udg_SheepColorR[udg_atempint],
-                          udg_SheepColorG[udg_atempint],
-                          udg_SheepColorB[udg_atempint],
-                          0,
-                        );
-                      } else {
-                        if (
-                          (Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                        ) {
-                          StartTimerBJ(udg_brownTimer, false, udg_sheepInvul);
-                          StartTimerBJ(udg_brownHideTimer, false, 5);
-                          SetUnitVertexColorBJ(
-                            GetLastCreatedUnit()!,
-                            udg_SheepColorR[udg_atempint],
-                            udg_SheepColorG[udg_atempint],
-                            udg_SheepColorB[udg_atempint],
-                            0,
-                          );
-                        } else {
-                          if (
-                            (Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                          ) {
-                            StartTimerBJ(
-                              udg_maroonTimer,
-                              false,
-                              udg_sheepInvul,
-                            );
-                            StartTimerBJ(udg_maroonHideTimer, false, 5);
-                            SetUnitVertexColorBJ(
-                              GetLastCreatedUnit()!,
-                              udg_SheepColorR[udg_atempint],
-                              udg_SheepColorG[udg_atempint],
-                              udg_SheepColorB[udg_atempint],
-                              0,
-                            );
-                          } else {
-                            if (
-                              (Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                            ) {
-                              StartTimerBJ(
-                                udg_navyTimer,
-                                false,
-                                udg_sheepInvul,
-                              );
-                              StartTimerBJ(udg_navyHideTimer, false, 5);
-                              SetUnitVertexColorBJ(
-                                GetLastCreatedUnit()!,
-                                udg_SheepColorR[udg_atempint],
-                                udg_SheepColorG[udg_atempint],
-                                udg_SheepColorB[udg_atempint],
-                                0,
-                              );
-                            } else {
-                              if (
-                                (Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                              ) {
-                                StartTimerBJ(
-                                  udg_turquoiseTimer,
-                                  false,
-                                  udg_sheepInvul,
-                                );
-                                StartTimerBJ(udg_turquoiseHideTimer, false, 5);
-                                SetUnitVertexColorBJ(
-                                  GetLastCreatedUnit()!,
-                                  udg_SheepColorR[udg_atempint],
-                                  udg_SheepColorG[udg_atempint],
-                                  udg_SheepColorB[udg_atempint],
-                                  0,
-                                );
-                              } else {
-                                if (
-                                  (Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                                ) {
-                                  StartTimerBJ(
-                                    udg_violetTimer,
-                                    false,
-                                    udg_sheepInvul,
-                                  );
-                                  StartTimerBJ(udg_violetHideTimer, false, 5);
-                                  SetUnitVertexColorBJ(
-                                    GetLastCreatedUnit()!,
-                                    udg_SheepColorR[udg_atempint],
-                                    udg_SheepColorG[udg_atempint],
-                                    udg_SheepColorB[udg_atempint],
-                                    0,
-                                  );
-                                } else {
-                                  if (
-                                    (Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                                  ) {
-                                    StartTimerBJ(
-                                      udg_wheatTimer,
-                                      false,
-                                      udg_sheepInvul,
-                                    );
-                                    StartTimerBJ(udg_wheatHideTimer, false, 5);
-                                    SetUnitVertexColorBJ(
-                                      GetLastCreatedUnit()!,
-                                      udg_SheepColorR[udg_atempint],
-                                      udg_SheepColorG[udg_atempint],
-                                      udg_SheepColorB[udg_atempint],
-                                      0,
-                                    );
-                                  } else {
-                                    if (
-                                      (Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                                    ) {
-                                      StartTimerBJ(
-                                        udg_peachTimer,
-                                        false,
-                                        udg_sheepInvul,
-                                      );
-                                      StartTimerBJ(
-                                        udg_peachHideTimer,
-                                        false,
-                                        5,
-                                      );
-                                      SetUnitVertexColorBJ(
-                                        GetLastCreatedUnit()!,
-                                        udg_SheepColorR[udg_atempint],
-                                        udg_SheepColorG[udg_atempint],
-                                        udg_SheepColorB[udg_atempint],
-                                        0,
-                                      );
-                                    } else {
-                                      if (
-                                        (Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                                      ) {
-                                        StartTimerBJ(
-                                          udg_mintTimer,
-                                          false,
-                                          udg_sheepInvul,
-                                        );
-                                        StartTimerBJ(
-                                          udg_mintHideTimer,
-                                          false,
-                                          5,
-                                        );
-                                        SetUnitVertexColorBJ(
-                                          GetLastCreatedUnit()!,
-                                          udg_SheepColorR[udg_atempint],
-                                          udg_SheepColorG[udg_atempint],
-                                          udg_SheepColorB[udg_atempint],
-                                          0,
-                                        );
-                                      } else {
-                                        if (
-                                          (Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                                        ) {
-                                          StartTimerBJ(
-                                            udg_lavenderTimer,
-                                            false,
-                                            udg_sheepInvul,
-                                          );
-                                          StartTimerBJ(
-                                            udg_lavenderHideTimer,
-                                            false,
-                                            5,
-                                          );
-                                          SetUnitVertexColorBJ(
-                                            GetLastCreatedUnit()!,
-                                            udg_SheepColorR[udg_atempint],
-                                            udg_SheepColorG[udg_atempint],
-                                            udg_SheepColorB[udg_atempint],
-                                            0,
-                                          );
-                                        } else {
-                                          if (
-                                            (Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                                          ) {
-                                            StartTimerBJ(
-                                              udg_coalTimer,
-                                              false,
-                                              udg_sheepInvul,
-                                            );
-                                            StartTimerBJ(
-                                              udg_coalHideTimer,
-                                              false,
-                                              5,
-                                            );
-                                            SetUnitVertexColorBJ(
-                                              GetLastCreatedUnit()!,
-                                              udg_SheepColorR[udg_atempint],
-                                              udg_SheepColorG[udg_atempint],
-                                              udg_SheepColorB[udg_atempint],
-                                              0,
-                                            );
-                                          } else {
-                                            if (
-                                              (Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                                            ) {
-                                              StartTimerBJ(
-                                                udg_snowTimer,
-                                                false,
-                                                udg_sheepInvul,
-                                              );
-                                              StartTimerBJ(
-                                                udg_snowHideTimer,
-                                                false,
-                                                5,
-                                              );
-                                              SetUnitVertexColorBJ(
-                                                GetLastCreatedUnit()!,
-                                                udg_SheepColorR[udg_atempint],
-                                                udg_SheepColorG[udg_atempint],
-                                                udg_SheepColorB[udg_atempint],
-                                                0,
-                                              );
-                                            } else {
-                                              if (
-                                                (Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                                              ) {
-                                                StartTimerBJ(
-                                                  udg_emeraldTimer,
-                                                  false,
-                                                  udg_sheepInvul,
-                                                );
-                                                StartTimerBJ(
-                                                  udg_emeraldHideTimer,
-                                                  false,
-                                                  5,
-                                                );
-                                                SetUnitVertexColorBJ(
-                                                  GetLastCreatedUnit()!,
-                                                  udg_SheepColorR[udg_atempint],
-                                                  udg_SheepColorG[udg_atempint],
-                                                  udg_SheepColorB[udg_atempint],
-                                                  0,
-                                                );
-                                              } else {
-                                                if (
-                                                  (Trig_sheepSwitch_Func031Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                                                ) {
-                                                  StartTimerBJ(
-                                                    udg_peanutTimer,
-                                                    false,
-                                                    udg_sheepInvul,
-                                                  );
-                                                  StartTimerBJ(
-                                                    udg_peanutHideTimer,
-                                                    false,
-                                                    5,
-                                                  );
-                                                  SetUnitVertexColorBJ(
-                                                    GetLastCreatedUnit()!,
-                                                    udg_SheepColorR[
-                                                      udg_atempint
-                                                    ],
-                                                    udg_SheepColorG[
-                                                      udg_atempint
-                                                    ],
-                                                    udg_SheepColorB[
-                                                      udg_atempint
-                                                    ],
-                                                    0,
-                                                  );
-                                                }
-                                              }
-                                            }
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  udg_switch[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))] = 2;
+  udg_atempint = GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!));
+  const timers = [
+    [udg_redTimer, udg_redHideTimer],
+    [udg_blueTimer, udg_blueHideTimer],
+    [udg_tealTimer, udg_tealHideTimer],
+    [udg_purpleTimer, udg_purpleHideTimer],
+    [udg_yellowTimer, udg_yellowHideTimer],
+    [udg_orangeTimer, udg_orangeHideTimer],
+    [udg_greenTimer, udg_greenHideTimer],
+    [udg_pinkTimer, udg_pinkHideTimer],
+    [udg_greyTimer, udg_greyHideTimer],
+    [udg_lbTimer, udg_lbHideTimer],
+    [udg_dgTimer, udg_dgHideTimer],
+    [udg_brownTimer, udg_brownHideTimer],
+    [udg_maroonTimer, udg_maroonHideTimer],
+    [udg_navyTimer, udg_navyHideTimer],
+    [udg_turquoiseTimer, udg_turquoiseHideTimer],
+    [udg_violetTimer, udg_violetHideTimer],
+    [udg_wheatTimer, udg_wheatHideTimer],
+    [udg_peachTimer, udg_peachHideTimer],
+    [udg_mintTimer, udg_mintHideTimer],
+    [udg_lavenderTimer, udg_lavenderHideTimer],
+    [udg_coalTimer, udg_coalHideTimer],
+    [udg_snowTimer, udg_snowHideTimer],
+    [udg_emeraldTimer, udg_emeraldHideTimer],
+    [udg_peanutTimer, udg_peanutHideTimer],
+  ];
+  TimerStart(
+    timers[GetPlayerId(GetOwningPlayer(GetKillingUnit()!))][0],
+    udg_sheepInvul,
+    false,
+    null,
+  );
+  TimerStart(
+    timers[GetPlayerId(GetOwningPlayer(GetKillingUnit()!))][1],
+    udg_sheepInvul,
+    false,
+    null,
+  );
+  udg_switch[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))] = 2;
   PanCameraToTimedForPlayer(
     GetOwningPlayer(GetTriggerUnit()!),
     GetUnitX(GetTriggerUnit()!),
@@ -1004,11 +207,11 @@ const Trig_sheepSwitch_Actions = (): void => {
     0,
   );
   udg_atempgroup = GetUnitsOfPlayerAll(GetOwningPlayer(GetTriggerUnit()!))!;
-  ForGroupBJ(udg_atempgroup, Trig_sheepSwitch_Func035002);
+  ForGroupBJ(udg_atempgroup, removeEnumUnit);
   DestroyGroup(udg_atempgroup);
   bj_lastCreatedUnit = CreateUnit(
     GetOwningPlayer(GetTriggerUnit()!),
-    unstuck,
+    unstuckType,
     RandomX(gg_rct_unstuckZone),
     RandomY(gg_rct_unstuckZone),
     0,
@@ -1023,7 +226,7 @@ const Trig_sheepSwitch_Actions = (): void => {
   ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()!), udg_Wolf);
   SetPlayerAllianceStateBJ(
     Player(bj_PLAYER_NEUTRAL_VICTIM)!,
-    GetOwningPlayer(GetKillingUnitBJ()!),
+    GetOwningPlayer(GetKillingUnit()!),
     bj_ALLIANCE_NEUTRAL_VISION,
   );
   SetPlayerAllianceStateBJ(
@@ -1031,277 +234,67 @@ const Trig_sheepSwitch_Actions = (): void => {
     GetOwningPlayer(GetDyingUnit()!),
     bj_ALLIANCE_NEUTRAL,
   );
-  ForForce(udg_Sheep, Trig_sheepSwitch_Func045A);
-  ForForce(udg_Wolf, Trig_sheepSwitch_Func046A);
+  ForForce(udg_Sheep, adjustAlliances1);
+  ForForce(udg_Wolf, adjustAlliances2);
   udg_switch[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()!))] = 1;
-  udg_sheepLastGame[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()!))] =
-    false;
+  udg_sheepLastGame[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()!))] = false;
   udg_sheepLastGame[
-    GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))
+    GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
   ] = true;
   TriggerExecute(gg_trg_setupLeaderboard);
-  if ((Trig_sheepSwitch_Func051C())) {
-    ForForce(udg_Sheep, Trig_sheepSwitch_Func051Func001A);
+  if (
+    udg_AFK[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))] ===
+      AFK_AFK_DURING_ROUND
+  ) {
+    ForForce(udg_Sheep, () =>
+      SetPlayerAllianceStateBJ(
+        GetOwningPlayer(GetKillingUnit()!),
+        GetEnumPlayer()!,
+        bj_ALLIANCE_ALLIED_ADVUNITS,
+      ));
   }
-  if ((CountPlayersInForceBJ(udg_Sheep) === 0)) {
-    TriggerExecute(gg_trg_wolvesWin);
-  } else {
-    DoNothing();
-  }
-  if ((Trig_sheepSwitch_Func053C())) {
-    StartTimerBJ(udg_redTimer, false, udg_wolfSpawn);
-    StartTimerBJ(udg_redHideTimer, false, 5);
-  } else {
-    if ((Trig_sheepSwitch_Func053Func001C())) {
-      StartTimerBJ(udg_blueTimer, false, udg_wolfSpawn);
-      StartTimerBJ(udg_blueHideTimer, false, 5);
-    } else {
-      if ((Trig_sheepSwitch_Func053Func001Func001C())) {
-        StartTimerBJ(udg_tealTimer, false, udg_wolfSpawn);
-        StartTimerBJ(udg_tealHideTimer, false, 5);
-      } else {
-        if ((Trig_sheepSwitch_Func053Func001Func001Func001C())) {
-          StartTimerBJ(udg_purpleTimer, false, udg_wolfSpawn);
-          StartTimerBJ(udg_purpleHideTimer, false, 5);
-        } else {
-          if ((Trig_sheepSwitch_Func053Func001Func001Func001Func001C())) {
-            StartTimerBJ(udg_yellowTimer, false, udg_wolfSpawn);
-            StartTimerBJ(udg_yellowHideTimer, false, 5);
-          } else {
-            if (
-              (Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001C())
-            ) {
-              StartTimerBJ(udg_orangeTimer, false, udg_wolfSpawn);
-              StartTimerBJ(udg_orangeHideTimer, false, 5);
-            } else {
-              if (
-                (Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001C())
-              ) {
-                StartTimerBJ(udg_greenTimer, false, udg_wolfSpawn);
-                StartTimerBJ(udg_greenHideTimer, false, 5);
-              } else {
-                if (
-                  (Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001C())
-                ) {
-                  StartTimerBJ(udg_pinkTimer, false, udg_wolfSpawn);
-                  StartTimerBJ(udg_pinkHideTimer, false, 5);
-                } else {
-                  if (
-                    (Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001C())
-                  ) {
-                    StartTimerBJ(udg_greyTimer, false, udg_wolfSpawn);
-                    StartTimerBJ(udg_greyHideTimer, false, 5);
-                  } else {
-                    if (
-                      (Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                    ) {
-                      StartTimerBJ(udg_lbTimer, false, udg_wolfSpawn);
-                      StartTimerBJ(udg_lbHideTimer, false, 5);
-                    } else {
-                      if (
-                        (Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                      ) {
-                        StartTimerBJ(udg_dgTimer, false, udg_wolfSpawn);
-                        StartTimerBJ(udg_dgHideTimer, false, 5);
-                      } else {
-                        if (
-                          (Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                        ) {
-                          StartTimerBJ(udg_brownTimer, false, udg_wolfSpawn);
-                          StartTimerBJ(udg_brownHideTimer, false, 5);
-                        } else {
-                          if (
-                            (Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                          ) {
-                            StartTimerBJ(udg_maroonTimer, false, udg_wolfSpawn);
-                            StartTimerBJ(udg_maroonHideTimer, false, 5);
-                          } else {
-                            if (
-                              (Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                            ) {
-                              StartTimerBJ(udg_navyTimer, false, udg_wolfSpawn);
-                              StartTimerBJ(udg_navyHideTimer, false, 5);
-                            } else {
-                              if (
-                                (Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                              ) {
-                                StartTimerBJ(
-                                  udg_turquoiseTimer,
-                                  false,
-                                  udg_wolfSpawn,
-                                );
-                                StartTimerBJ(udg_turquoiseHideTimer, false, 5);
-                              } else {
-                                if (
-                                  (Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                                ) {
-                                  StartTimerBJ(
-                                    udg_violetTimer,
-                                    false,
-                                    udg_wolfSpawn,
-                                  );
-                                  StartTimerBJ(udg_violetHideTimer, false, 5);
-                                } else {
-                                  if (
-                                    (Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                                  ) {
-                                    StartTimerBJ(
-                                      udg_wheatTimer,
-                                      false,
-                                      udg_wolfSpawn,
-                                    );
-                                    StartTimerBJ(udg_wheatHideTimer, false, 5);
-                                  } else {
-                                    if (
-                                      (Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                                    ) {
-                                      StartTimerBJ(
-                                        udg_peachTimer,
-                                        false,
-                                        udg_wolfSpawn,
-                                      );
-                                      StartTimerBJ(
-                                        udg_peachHideTimer,
-                                        false,
-                                        5,
-                                      );
-                                    } else {
-                                      if (
-                                        (Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                                      ) {
-                                        StartTimerBJ(
-                                          udg_mintTimer,
-                                          false,
-                                          udg_wolfSpawn,
-                                        );
-                                        StartTimerBJ(
-                                          udg_mintHideTimer,
-                                          false,
-                                          5,
-                                        );
-                                      } else {
-                                        if (
-                                          (Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                                        ) {
-                                          StartTimerBJ(
-                                            udg_lavenderTimer,
-                                            false,
-                                            udg_wolfSpawn,
-                                          );
-                                          StartTimerBJ(
-                                            udg_lavenderHideTimer,
-                                            false,
-                                            5,
-                                          );
-                                        } else {
-                                          if (
-                                            (Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                                          ) {
-                                            StartTimerBJ(
-                                              udg_coalTimer,
-                                              false,
-                                              udg_wolfSpawn,
-                                            );
-                                            StartTimerBJ(
-                                              udg_coalHideTimer,
-                                              false,
-                                              5,
-                                            );
-                                          } else {
-                                            if (
-                                              (Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                                            ) {
-                                              StartTimerBJ(
-                                                udg_snowTimer,
-                                                false,
-                                                udg_wolfSpawn,
-                                              );
-                                              StartTimerBJ(
-                                                udg_snowHideTimer,
-                                                false,
-                                                5,
-                                              );
-                                            } else {
-                                              if (
-                                                (Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                                              ) {
-                                                StartTimerBJ(
-                                                  udg_emeraldTimer,
-                                                  false,
-                                                  udg_wolfSpawn,
-                                                );
-                                                StartTimerBJ(
-                                                  udg_emeraldHideTimer,
-                                                  false,
-                                                  5,
-                                                );
-                                              } else {
-                                                if (
-                                                  (Trig_sheepSwitch_Func053Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001C())
-                                                ) {
-                                                  StartTimerBJ(
-                                                    udg_peanutTimer,
-                                                    false,
-                                                    udg_wolfSpawn,
-                                                  );
-                                                  StartTimerBJ(
-                                                    udg_peanutHideTimer,
-                                                    false,
-                                                    5,
-                                                  );
-                                                }
-                                              }
-                                            }
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+  if (CountPlayersInForceBJ(udg_Sheep) === 0) TriggerExecute(gg_trg_wolvesWin);
+  TimerStart(
+    timers[GetPlayerId(GetOwningPlayer(GetTriggerUnit()!))][0],
+    udg_wolfSpawn,
+    false,
+    null,
+  );
+  TimerStart(
+    timers[GetPlayerId(GetOwningPlayer(GetTriggerUnit()!))][1],
+    5,
+    false,
+    null,
+  );
   DisplayTimedTextToForce(
     GetPlayersAll()!,
     5,
-    ("                              " +
+    `                              ${
       udg_colorString[
         GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()!))
-      ]) +
-      (GetPlayerName(GetOwningPlayer(GetTriggerUnit()!)) +
-        (" (sheep)|r switched with " +
-          ((udg_colorString[
-            GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))
-          ] + GetPlayerName(GetOwningPlayer(GetKillingUnitBJ()!))) +
-            " (wolf)|r."))),
+      ]
+    }${GetPlayerName(GetOwningPlayer(GetTriggerUnit()!))} (sheep)|r switched with ${
+      udg_colorString[
+        GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
+      ]
+    }${GetPlayerName(GetOwningPlayer(GetKillingUnit()!))} (wolf)|r.`,
   );
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_sheepSwitch: () => void;
 }
-InitTrig_sheepSwitch = (): void => {
+InitTrig_sheepSwitch = () => {
   gg_trg_sheepSwitch = CreateTrigger();
   DisableTrigger(gg_trg_sheepSwitch);
   TriggerRegisterAnyUnitEventBJ(gg_trg_sheepSwitch, EVENT_PLAYER_UNIT_DEATH);
   TriggerAddCondition(
     gg_trg_sheepSwitch,
-    Condition(Trig_sheepSwitch_Conditions),
+    Condition(() =>
+      GetUnitTypeId(GetTriggerUnit()!) === sheepType &&
+      !IsUnitIllusionBJ(GetDyingUnit()!)
+    ),
   );
   TriggerAddAction(gg_trg_sheepSwitch, Trig_sheepSwitch_Actions);
 };

@@ -1,21 +1,21 @@
 //===========================================================================
 // Trigger: view
 //===========================================================================
-const Trig_view_Conditions = (): boolean => {
+const Trig_view_Conditions = () => {
   if ((!(GetTriggerPlayer()! === udg_Custom))) {
     return false;
   }
   return true;
 };
 
-const Trig_view_Func001C = (): boolean => {
+const Trig_view_Func001C = () => {
   if ((!(udg_viewOn === true))) {
     return false;
   }
   return true;
 };
 
-const Trig_view_Actions = (): void => {
+const Trig_view_Actions = () => {
   if ((Trig_view_Func001C())) {
     bj_forLoopAIndex = 1;
     bj_forLoopAIndexEnd = 24;
@@ -50,7 +50,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_view: () => void;
 }
-InitTrig_view = (): void => {
+InitTrig_view = () => {
   gg_trg_view = CreateTrigger();
   TriggerRegisterPlayerChatEvent(gg_trg_view, Player(0)!, "-view", true);
   TriggerRegisterPlayerChatEvent(gg_trg_view, Player(1)!, "-view", true);

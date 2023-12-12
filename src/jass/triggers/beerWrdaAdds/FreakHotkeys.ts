@@ -1,35 +1,35 @@
 //===========================================================================
 // Trigger: FreakHotkeys
 //===========================================================================
-const Trig_FreakHotkeys_Func026Func002Func003A = (): void => {
+const Trig_FreakHotkeys_Func026Func002Func003A = () => {
   UnitRemoveAbilityBJ(FourCC("A01F"), GetEnumUnit()!);
   UnitRemoveAbilityBJ(FourCC("A01H"), GetEnumUnit()!);
   UnitAddAbilityBJ(FourCC("A018"), GetEnumUnit()!);
   UnitAddAbilityBJ(FourCC("A00S"), GetEnumUnit()!);
 };
 
-const Trig_FreakHotkeys_Func026Func002C = (): boolean => {
+const Trig_FreakHotkeys_Func026Func002C = () => {
   if ((!(udg_gameStarted === true))) {
     return false;
   }
   return true;
 };
 
-const Trig_FreakHotkeys_Func026Func004Func003A = (): void => {
+const Trig_FreakHotkeys_Func026Func004Func003A = () => {
   UnitRemoveAbilityBJ(FourCC("A00S"), GetEnumUnit()!);
   UnitRemoveAbilityBJ(FourCC("A018"), GetEnumUnit()!);
   UnitAddAbilityBJ(FourCC("A01H"), GetEnumUnit()!);
   UnitAddAbilityBJ(FourCC("A01F"), GetEnumUnit()!);
 };
 
-const Trig_FreakHotkeys_Func026Func004C = (): boolean => {
+const Trig_FreakHotkeys_Func026Func004C = () => {
   if ((!(udg_gameStarted === true))) {
     return false;
   }
   return true;
 };
 
-const Trig_FreakHotkeys_Func026C = (): boolean => {
+const Trig_FreakHotkeys_Func026C = () => {
   if (
     (!(udg_freakHotkeys[GetConvertedPlayerId(GetTriggerPlayer()!)] === false))
   ) {
@@ -38,7 +38,7 @@ const Trig_FreakHotkeys_Func026C = (): boolean => {
   return true;
 };
 
-const Trig_FreakHotkeys_Actions = (): void => {
+const Trig_FreakHotkeys_Actions = () => {
   udg_atempplayer = GetForceOfPlayer(GetTriggerPlayer()!)!;
   if ((Trig_FreakHotkeys_Func026C())) {
     udg_freakHotkeys[GetConvertedPlayerId(GetTriggerPlayer()!)] = true;
@@ -80,7 +80,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_FreakHotkeys: () => void;
 }
-InitTrig_FreakHotkeys = (): void => {
+InitTrig_FreakHotkeys = () => {
   gg_trg_FreakHotkeys = CreateTrigger();
   TriggerRegisterPlayerChatEvent(
     gg_trg_FreakHotkeys,

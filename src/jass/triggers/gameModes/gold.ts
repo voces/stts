@@ -1,14 +1,14 @@
 //===========================================================================
 // Trigger: gold
 //===========================================================================
-const Trig_gold_Conditions = (): boolean => {
+const Trig_gold_Conditions = () => {
   if ((!(GetTriggerPlayer()! === udg_Custom))) {
     return false;
   }
   return true;
 };
 
-const Trig_gold_Func002Func001C = (): boolean => {
+const Trig_gold_Func002Func001C = () => {
   if (
     (!(SubStringBJ(
       GetEventPlayerChatString()!,
@@ -21,7 +21,7 @@ const Trig_gold_Func002Func001C = (): boolean => {
   return true;
 };
 
-const Trig_gold_Func003Func001Func001C = (): boolean => {
+const Trig_gold_Func003Func001Func001C = () => {
   if (
     (!(S2I(SubStringBJ(GetEventPlayerChatString()!, 7, udg_atempint)!) >
       1000000))
@@ -31,7 +31,7 @@ const Trig_gold_Func003Func001Func001C = (): boolean => {
   return true;
 };
 
-const Trig_gold_Func003Func001C = (): boolean => {
+const Trig_gold_Func003Func001C = () => {
   if (
     (!(S2I(SubStringBJ(GetEventPlayerChatString()!, 7, udg_atempint)!) >= 0))
   ) {
@@ -46,7 +46,7 @@ const Trig_gold_Func003Func001C = (): boolean => {
   return true;
 };
 
-const Trig_gold_Func003Func002Func001C = (): boolean => {
+const Trig_gold_Func003Func002Func001C = () => {
   if (
     (!(S2I(
       SubStringBJ(
@@ -61,7 +61,7 @@ const Trig_gold_Func003Func002Func001C = (): boolean => {
   return true;
 };
 
-const Trig_gold_Func003Func002C = (): boolean => {
+const Trig_gold_Func003Func002C = () => {
   if (
     (!(S2I(
       SubStringBJ(
@@ -87,7 +87,7 @@ const Trig_gold_Func003Func002C = (): boolean => {
   return true;
 };
 
-const Trig_gold_Func003Func003Func001C = (): boolean => {
+const Trig_gold_Func003Func003Func001C = () => {
   if (
     (!(S2I(SubStringBJ(GetEventPlayerChatString()!, 7, udg_atempint)!) >
       1000000))
@@ -97,7 +97,7 @@ const Trig_gold_Func003Func003Func001C = (): boolean => {
   return true;
 };
 
-const Trig_gold_Func003Func003C = (): boolean => {
+const Trig_gold_Func003Func003C = () => {
   if (
     (!(S2I(SubStringBJ(GetEventPlayerChatString()!, 7, udg_atempint)!) >= 0))
   ) {
@@ -109,14 +109,14 @@ const Trig_gold_Func003Func003C = (): boolean => {
   return true;
 };
 
-const Trig_gold_Func003C = (): boolean => {
+const Trig_gold_Func003C = () => {
   if ((!(udg_atempint === 0))) {
     return false;
   }
   return true;
 };
 
-const Trig_gold_Actions = (): void => {
+const Trig_gold_Actions = () => {
   udg_atempint = 0;
   bj_forLoopAIndex = 7;
   bj_forLoopAIndexEnd = StringLength(GetEventPlayerChatString()!);
@@ -206,7 +206,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_gold: () => void;
 }
-InitTrig_gold = (): void => {
+InitTrig_gold = () => {
   gg_trg_gold = CreateTrigger();
   TriggerRegisterPlayerChatEvent(gg_trg_gold, Player(0)!, "-gold", false);
   TriggerRegisterPlayerChatEvent(gg_trg_gold, Player(1)!, "-gold", false);

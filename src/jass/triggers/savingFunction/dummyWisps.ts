@@ -1,14 +1,14 @@
 //===========================================================================
 // Trigger: dummyWisps
 //===========================================================================
-const Trig_dummyWisps_Conditions = (): boolean => {
+const Trig_dummyWisps_Conditions = () => {
   if ((!(GetUnitTypeId(GetTriggerUnit()!) === FourCC("e000")))) {
     return false;
   }
   return true;
 };
 
-const Trig_dummyWisps_Func006C = (): boolean => {
+const Trig_dummyWisps_Func006C = () => {
   if ((!(udg_saves[udg_atempint] >= udg_wispPoints))) {
     return false;
   }
@@ -18,32 +18,32 @@ const Trig_dummyWisps_Func006C = (): boolean => {
   return true;
 };
 
-const Trig_dummyWisps_Func007Func001C = (): boolean => {
+const Trig_dummyWisps_Func007Func001C = () => {
   if ((!(udg_dummyWisps > 0))) {
     return false;
   }
   return true;
 };
 
-const Trig_dummyWisps_Actions = (): void => {
-  udg_atempint = GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!));
+const Trig_dummyWisps_Actions = () => {
+  udg_atempint = GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!));
   udg_saves[udg_atempint] = udg_saves[udg_atempint] + 1;
   DisplayTextToForce(
     GetPlayersAll()!,
     (("                              " +
       udg_colorString[
-        GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()!))
-      ]) + GetPlayerName(GetOwningPlayer(GetKillingUnitBJ()!))) +
+        GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
+      ]) + GetPlayerName(GetOwningPlayer(GetKillingUnit()!))) +
       "|r killed a spirit for 100 gold!",
   );
   AdjustPlayerStateBJ(
     100,
-    GetOwningPlayer(GetKillingUnitBJ()!),
+    GetOwningPlayer(GetKillingUnit()!),
     PLAYER_STATE_RESOURCE_GOLD,
   );
   bj_lastCreatedUnit = CreateUnit(
     Player(bj_PLAYER_NEUTRAL_VICTIM)!,
-    wisp,
+    wispType,
     RandomX(wispArea),
     RandomY(wispArea),
     0,
@@ -78,7 +78,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_dummyWisps: () => void;
 }
-InitTrig_dummyWisps = (): void => {
+InitTrig_dummyWisps = () => {
   gg_trg_dummyWisps = CreateTrigger();
   DisableTrigger(gg_trg_dummyWisps);
   TriggerRegisterAnyUnitEventBJ(gg_trg_dummyWisps, EVENT_PLAYER_UNIT_DEATH);

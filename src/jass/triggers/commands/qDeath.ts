@@ -1,14 +1,14 @@
 //===========================================================================
 // Trigger: qDeath
 //===========================================================================
-const Trig_qDeath_Func002C = (): boolean => {
+const Trig_qDeath_Func002C = () => {
   if ((!(udg_qDeath === 9999))) {
     return false;
   }
   return true;
 };
 
-const Trig_qDeath_Actions = (): void => {
+const Trig_qDeath_Actions = () => {
   udg_atempplayer = GetForceOfPlayer(GetTriggerPlayer()!)!;
   if ((Trig_qDeath_Func002C())) {
     DisplayTimedTextToForce(
@@ -33,7 +33,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_qDeath: () => void;
 }
-InitTrig_qDeath = (): void => {
+InitTrig_qDeath = () => {
   gg_trg_qDeath = CreateTrigger();
   TriggerRegisterPlayerChatEvent(gg_trg_qDeath, Player(0)!, "-qd", true);
   TriggerRegisterPlayerChatEvent(gg_trg_qDeath, Player(1)!, "-qd", true);

@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: time
 //===========================================================================
-const Trig_time_Conditions = (): boolean => {
+const Trig_time_Conditions = () => {
   if ((!(GetTriggerPlayer()! === udg_Custom))) {
     return false;
   }
@@ -11,7 +11,7 @@ const Trig_time_Conditions = (): boolean => {
   return true;
 };
 
-const Trig_time_Func002Func001C = (): boolean => {
+const Trig_time_Func002Func001C = () => {
   if (
     (!(SubStringBJ(
       GetEventPlayerChatString()!,
@@ -24,7 +24,7 @@ const Trig_time_Func002Func001C = (): boolean => {
   return true;
 };
 
-const Trig_time_Func003Func001C = (): boolean => {
+const Trig_time_Func003Func001C = () => {
   if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 7, 9)!) >= 1))) {
     return false;
   }
@@ -34,7 +34,7 @@ const Trig_time_Func003Func001C = (): boolean => {
   return true;
 };
 
-const Trig_time_Func003C = (): boolean => {
+const Trig_time_Func003C = () => {
   if ((!(udg_atempint > 0))) {
     return false;
   }
@@ -75,21 +75,21 @@ const Trig_time_Func003C = (): boolean => {
   return true;
 };
 
-const Trig_time_Func005C = (): boolean => {
+const Trig_time_Func005C = () => {
   if ((!(StringLength(udg_atempstring) === 1))) {
     return false;
   }
   return true;
 };
 
-const Trig_time_Func006C = (): boolean => {
+const Trig_time_Func006C = () => {
   if ((!(udg_switchOn === true))) {
     return false;
   }
   return true;
 };
 
-const Trig_time_Actions = (): void => {
+const Trig_time_Actions = () => {
   udg_atempint = 0;
   bj_forLoopAIndex = 1;
   bj_forLoopAIndexEnd = StringLength(GetEventPlayerChatString()!);
@@ -162,7 +162,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_time: () => void;
 }
-InitTrig_time = (): void => {
+InitTrig_time = () => {
   gg_trg_time = CreateTrigger();
   TriggerRegisterPlayerChatEvent(gg_trg_time, Player(0)!, "-time", false);
   TriggerRegisterPlayerChatEvent(gg_trg_time, Player(1)!, "-time", false);

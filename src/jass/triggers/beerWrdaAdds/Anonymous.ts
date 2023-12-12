@@ -1,14 +1,14 @@
 //===========================================================================
 // Trigger: Anonymous
 //===========================================================================
-const Anonymous_Conditions = (): boolean => {
+const Anonymous_Conditions = () => {
   if ((!(GetTriggerPlayer()! === udg_Custom))) {
     return false;
   }
   return true;
 };
 
-const Anonymous_Actions = (): void => {
+const Anonymous_Actions = () => {
   let udg_tempInt: number;
   const tempPlayerColors: Array<number> = [];
   let isAvailable: boolean;
@@ -154,7 +154,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_Anonymous: () => void;
 }
-InitTrig_Anonymous = (): void => {
+InitTrig_Anonymous = () => {
   gg_trg_Anonymous = CreateTrigger();
   TriggerRegisterPlayerChatEventAll(gg_trg_Anonymous, "-anon", true);
   TriggerRegisterPlayerChatEventAll(gg_trg_Anonymous, "-anonymous", true);

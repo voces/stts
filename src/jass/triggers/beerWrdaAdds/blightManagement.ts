@@ -1,72 +1,70 @@
 //===========================================================================
 // Trigger: blightManagement
 //===========================================================================
-const Trig_blightManagement_Func001Func001Func005Func005Func005C =
-  (): boolean => {
-    if ((!(udg_blightCounter === 3))) {
-      return false;
-    }
-    return true;
-  };
+const Trig_blightManagement_Func001Func001Func005Func005Func005C = () => {
+  if ((!(udg_blightCounter === 3))) {
+    return false;
+  }
+  return true;
+};
 
-const Trig_blightManagement_Func001Func001Func005Func005C = (): boolean => {
+const Trig_blightManagement_Func001Func001Func005Func005C = () => {
   if ((!(udg_blightCounter === 2))) {
     return false;
   }
   return true;
 };
 
-const Trig_blightManagement_Func001Func001Func005C = (): boolean => {
+const Trig_blightManagement_Func001Func001Func005C = () => {
   if ((!(udg_blightCounter === 1))) {
     return false;
   }
   return true;
 };
 
-const Trig_blightManagement_Func001Func001C = (): boolean => {
+const Trig_blightManagement_Func001Func001C = () => {
   if ((!(udg_blightCounter === 0))) {
     return false;
   }
   return true;
 };
 
-const Trig_blightManagement_Func001Func003Func001Func005Func001C =
-  (): boolean => {
-    if ((!(udg_blightCounter === 3))) {
-      return false;
-    }
-    return true;
-  };
+const Trig_blightManagement_Func001Func003Func001Func005Func001C = () => {
+  if ((!(udg_blightCounter === 3))) {
+    return false;
+  }
+  return true;
+};
 
-const Trig_blightManagement_Func001Func003Func001Func005C = (): boolean => {
+const Trig_blightManagement_Func001Func003Func001Func005C = () => {
   if ((!(udg_blightCounter === 2))) {
     return false;
   }
   return true;
 };
 
-const Trig_blightManagement_Func001Func003Func001C = (): boolean => {
+const Trig_blightManagement_Func001Func003Func001C = () => {
   if ((!(udg_blightCounter === 1))) {
     return false;
   }
   return true;
 };
 
-const Trig_blightManagement_Func001Func003C = (): boolean => {
+const Trig_blightManagement_Func001Func003C = () => {
   if ((!(udg_blightCounter === 0))) {
     return false;
   }
   return true;
 };
 
-const Trig_blightManagement_Func001C = (): boolean => {
+const Trig_blightManagement_Func001C = () => {
   if ((!(udg_mapShrink === true))) {
     return false;
   }
   return true;
 };
 
-const Trig_blightManagement_Actions = (): void => {
+const Trig_blightManagement_Actions = () => {
   if ((Trig_blightManagement_Func001C())) {
     if ((Trig_blightManagement_Func001Func003C())) {
       SetBlightRectBJ(
@@ -269,7 +267,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_blightManagement: () => void;
 }
-InitTrig_blightManagement = (): void => {
+InitTrig_blightManagement = () => {
   gg_trg_blightManagement = CreateTrigger();
   TriggerRegisterTimerExpireEventBJ(
     gg_trg_blightManagement,

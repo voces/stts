@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: regrowTrees
 //===========================================================================
-const Trig_regrowTrees_Actions = (): void => {
+const Trig_regrowTrees_Actions = () => {
   TriggerSleepAction(45);
   DestructableRestoreLife(
     GetDyingDestructable()!,
@@ -16,7 +16,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_regrowTrees: () => void;
 }
-InitTrig_regrowTrees = (): void => {
+InitTrig_regrowTrees = () => {
   gg_trg_regrowTrees = CreateTrigger();
   TriggerRegisterDestDeathInRegionEvent(
     gg_trg_regrowTrees,

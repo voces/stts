@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: gall
 //===========================================================================
-const Trig_gall_Conditions = (): boolean => {
+const Trig_gall_Conditions = () => {
   if (
     (!(GetPlayerState(GetTriggerPlayer()!, PLAYER_STATE_RESOURCE_GOLD) > 0))
   ) {
@@ -10,14 +10,14 @@ const Trig_gall_Conditions = (): boolean => {
   return true;
 };
 
-const Trig_gall_Func002Func002C = (): boolean => {
+const Trig_gall_Func002Func002C = () => {
   if ((!(IsPlayerInForce(GetTriggerPlayer()!, udg_Spirit) === false))) {
     return false;
   }
   return true;
 };
 
-const Trig_gall_Func002Func003C = (): boolean => {
+const Trig_gall_Func002Func003C = () => {
   if ((IsPlayerInForce(GetTriggerPlayer()!, udg_Sheep) === true)) {
     return true;
   }
@@ -27,21 +27,21 @@ const Trig_gall_Func002Func003C = (): boolean => {
   return false;
 };
 
-const Trig_gall_Func002C = (): boolean => {
+const Trig_gall_Func002C = () => {
   if ((!Trig_gall_Func002Func003C())) {
     return false;
   }
   return true;
 };
 
-const Trig_gall_Func005Func001Func001C = (): boolean => {
+const Trig_gall_Func005Func001Func001C = () => {
   if ((!(udg_atempboolean === true))) {
     return false;
   }
   return true;
 };
 
-const Trig_gall_Func005Func001C = (): boolean => {
+const Trig_gall_Func005Func001C = () => {
   if (
     (!(CountLivingPlayerUnitsOfTypeId(FourCC("e000"), GetEnumPlayer()!) === 0))
   ) {
@@ -59,7 +59,7 @@ const Trig_gall_Func005Func001C = (): boolean => {
   return true;
 };
 
-const Trig_gall_Func005A = (): void => {
+const Trig_gall_Func005A = () => {
   if ((Trig_gall_Func005Func001C())) {
     if ((Trig_gall_Func005Func001Func001C())) {
       udg_atempboolean = false;
@@ -80,11 +80,10 @@ const Trig_gall_Func005A = (): void => {
   }
 };
 
-const Trig_gall_Actions = (): void => {
+const Trig_gall_Actions = () => {
   udg_atempboolean = true;
   if ((Trig_gall_Func002C())) {
-    udg_atempint =
-      CountPlayersInForceBJ(GetPlayersAllies(GetTriggerPlayer()!)!) -
+    udg_atempint = CountPlayersInForceBJ(GetPlayersAllies(GetTriggerPlayer()!)!) -
       CountUnitsInGroup(GetUnitsOfTypeIdAll(FourCC("e000"))!);
     if ((Trig_gall_Func002Func002C())) {
       udg_atempint = udg_atempint - 1;
@@ -95,8 +94,7 @@ const Trig_gall_Actions = (): void => {
     );
     udg_atempint = udg_atempint - 1;
   }
-  udg_atempint2 =
-    GetPlayerState(GetTriggerPlayer()!, PLAYER_STATE_RESOURCE_GOLD) /
+  udg_atempint2 = GetPlayerState(GetTriggerPlayer()!, PLAYER_STATE_RESOURCE_GOLD) /
     udg_atempint;
   udg_atempint3 = ModuloInteger(
     GetPlayerState(GetTriggerPlayer()!, PLAYER_STATE_RESOURCE_GOLD),
@@ -111,7 +109,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_gall: () => void;
 }
-InitTrig_gall = (): void => {
+InitTrig_gall = () => {
   gg_trg_gall = CreateTrigger();
   TriggerRegisterPlayerChatEvent(gg_trg_gall, Player(0)!, "-g all", true);
   TriggerRegisterPlayerChatEvent(gg_trg_gall, Player(1)!, "-g all", true);

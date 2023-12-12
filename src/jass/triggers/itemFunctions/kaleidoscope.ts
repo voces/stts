@@ -2,7 +2,7 @@
 // Trigger: kaleidoscope
 //===========================================================================
 
-const Trig_kaleidoscope_Actions = (): void => {
+const Trig_kaleidoscope_Actions = () => {
   const u = GetEventDamageSource()!;
   let i = 0;
   let baseDamage = -1;
@@ -30,7 +30,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_kaleidoscope: () => void;
 }
-InitTrig_kaleidoscope = (): void => {
+InitTrig_kaleidoscope = () => {
   const t = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_DAMAGING);
   TriggerAddAction(t, Trig_kaleidoscope_Actions);

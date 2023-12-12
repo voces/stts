@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 9.5.4
+Sheep Tag ReVoLuTiOn 23
 }
 
 STRING 40
@@ -3802,12 +3802,6 @@ F
 }
 
 STRING 3889
-// Items: I00X (kaleidoscope), Ubertip (Tooltip - Extended)
-{
-Increases the damage of illusions by 25% of base damage.
-}
-
-STRING 3890
 // Items: I00X (kaleidoscope), Description (Description)
 {
 Increases the damage of illusions by 25% of base damage.
@@ -3887,21 +3881,87 @@ Light
 
 STRING 3929
 {
-|cff00ff00Sheep Tag ReVoLuTiOn 9.5.4|r
+|cff00ff00Sheep Tag ReVoLuTiOn 23|r
 }
 
 STRING 3930
 {
-|cff00ff009.5.4|r
+|cff00ff0023|r
 }
 
 STRING 3931
 {
-|cff00ff009.5.4|r
+|cff00ff0023|r
 }
 
 STRING 3932
 {
-|cff00ff009.5.4|r
+|cff00ff0023|r
+}
+
+STRING 3933
+// Units: h00J (Dummy), Name (Name)
+{
+Dummy
+}
+
+STRING 3934
+// Abilities: A028 (President), Name (Name)
+{
+President
+}
+
+STRING 3935
+// Buffs/Effects: B00C (), Bufftip (Tooltip)
+{
+President
+}
+
+STRING 3936
+// Buffs/Effects: B00C (), Buffubertip (Tooltip - Extended)
+{
+This player is the president. They must survive to win.
+}
+
+STRING 3942
+// Items: I00X (kaleidoscope), Ubertip (Tooltip - Extended)
+{
+Increases the damage of illusions by 25% of base damage.|n|cffffcc0080 gold.|r |n|cff00aeef-buy kaleidoscope: 112 gold.|r
+}
+
+STRING 3943
+// Abilities: A029 (Translocation), Tip (Tooltip - Normal)
+{
+Translocation
+}
+
+STRING 3944
+// Abilities: A029 (Translocation), Name (Name)
+{
+Translocation
+}
+
+STRING 3946
+// Abilities: A029 (Translocation), Ubertip (Tooltip - Normal - Extended)
+{
+Instant teleports nearby sheep to the opposite side of the farm.
+}
+
+STRING 3948
+// Abilities: A02A (Second Wind), Name (Name)
+{
+Second Wind
+}
+
+STRING 3949
+// Buffs/Effects: B00J (), Bufftip (Tooltip)
+{
+Second Wind
+}
+
+STRING 3950
+// Buffs/Effects: B00J (), Buffubertip (Tooltip - Extended)
+{
+Your sheep just died. Your wolf has increased speed to find prey.
 }
 

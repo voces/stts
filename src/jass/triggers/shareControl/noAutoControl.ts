@@ -2,7 +2,7 @@
 // Trigger: noAutoControl
 //===========================================================================
 
-const Trig_noAutoControl_Actions = (): void => {
+const Trig_noAutoControl_Actions = () => {
   const enabled = !(noAutoControl[GetPlayerId(GetTriggerPlayer()!)]);
   noAutoControl[GetPlayerId(GetTriggerPlayer()!)] = enabled;
 
@@ -33,7 +33,7 @@ const Trig_noAutoControl_Actions = (): void => {
   );
 };
 
-const Trig_noAutoControl_load = (): void => {
+const Trig_noAutoControl_load = () => {
   let s = s__File_readEx(s__File_open("revo/noAutoControl.txt"), true);
   if (s == null) {
     s = "false";
@@ -41,7 +41,7 @@ const Trig_noAutoControl_load = (): void => {
   BlzSendSyncData("noAutoControl", s);
 };
 
-const Trig_noAutoControl_sync = (): void => {
+const Trig_noAutoControl_sync = () => {
   noAutoControl[GetPlayerId(GetTriggerPlayer()!)] = S2B(
     BlzGetTriggerSyncData()!,
   );
@@ -53,7 +53,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_noAutoControl: () => void;
 }
-InitTrig_noAutoControl = (): void => {
+InitTrig_noAutoControl = () => {
   const t = CreateTrigger();
   const s = CreateTrigger();
   let i = 0;

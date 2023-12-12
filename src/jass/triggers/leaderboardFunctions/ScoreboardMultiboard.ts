@@ -1,14 +1,14 @@
 //===========================================================================
 // Trigger: ScoreboardMultiboard
 //===========================================================================
-const Trig_ScoreboardMultiboard_Func020Func001Func015C = (): boolean => {
+const Trig_ScoreboardMultiboard_Func020Func001Func015C = () => {
   if ((!(udg_QDeathTime[GetConvertedPlayerId(GetEnumPlayer()!)] < 9999))) {
     return false;
   }
   return true;
 };
 
-const Trig_ScoreboardMultiboard_Func020A = (): void => {
+const Trig_ScoreboardMultiboard_Func020A = () => {
   MultiboardSetItemValueBJ(
     udg_scoreMultiboard,
     1,
@@ -125,7 +125,7 @@ const Trig_ScoreboardMultiboard_Func020A = (): void => {
   udg_atempint3 = udg_atempint3 + 1;
 };
 
-const Trig_ScoreboardMultiboard_Actions = (): void => {
+const Trig_ScoreboardMultiboard_Actions = () => {
   DestroyMultiboardBJ(udg_scoreMultiboard);
   udg_atempint = 12;
   udg_atempint2 = CountPlayersInForceBJ(GetPlayersAll()!) + 1;
@@ -185,7 +185,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_ScoreboardMultiboard: () => void;
 }
-InitTrig_ScoreboardMultiboard = (): void => {
+InitTrig_ScoreboardMultiboard = () => {
   gg_trg_ScoreboardMultiboard = CreateTrigger();
   TriggerAddAction(
     gg_trg_ScoreboardMultiboard,

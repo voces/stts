@@ -1,14 +1,14 @@
 //===========================================================================
 // Trigger: reset
 //===========================================================================
-const Trig_reset_Conditions = (): boolean => {
+const Trig_reset_Conditions = () => {
   if ((!(GetTriggerPlayer()! === udg_Custom))) {
     return false;
   }
   return true;
 };
 
-const Trig_reset_Actions = (): void => {
+const Trig_reset_Actions = () => {
   DisableTrigger(GetTriggeringTrigger()!);
   ClearTextMessagesBJ(GetPlayersAll()!);
   PauseTimerBJ(true, udg_massTimer);
@@ -24,7 +24,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_reset: () => void;
 }
-InitTrig_reset = (): void => {
+InitTrig_reset = () => {
   gg_trg_reset = CreateTrigger();
   DisableTrigger(gg_trg_reset);
   TriggerRegisterPlayerChatEvent(gg_trg_reset, Player(0)!, "-stop", true);

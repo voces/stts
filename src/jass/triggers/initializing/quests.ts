@@ -1,7 +1,6 @@
-//===========================================================================
-// Trigger: quests
-//===========================================================================
-const Trig_quests_Actions = (): void => {
+import { setTimeout } from "../../../util/setTimeout";
+
+const Trig_quests_Actions = () => {
   CreateQuestBJ(
     bj_QUESTTYPE_OPT_DISCOVERED,
     "Sheep Tag ReVoLuTiOn",
@@ -17,27 +16,31 @@ New? Type |CFF00AEEF-smart|r.`,
     "Host Commands",
     `|cffffcc00Team Modes:|r
 |cff00aeef-start |cffed1c24X|cff00aeef:|r Starts the game with |cffed1c24X|r sheep. If |cffed1c24X|r is not specific, the game will start as it appears on the leaderboard.
-|cff00aeef-random |cffed1c24X|cff00aeef:|r Starts the game with |cffed1c24X|r randomly selected sheep. If |cffed1c24X|r is not specific, an even number of players will be selected. If there is an odd number of players, there will be 1 less sheep.
 |cff00aeef-reverse |cffed1c24X|cff00aeef:|r Reverses the game leaving |cffed1c24X|r sheep. If |cffed1c24X|r is not specific, the game will reverse as appears on the leaderboard.
 |cff00aeef-pick: |rLet's the host pick the sheep and wolf players.
 |cff00aeef-fair |cffed1c24X|cff00aeef:|r Starts the game with |cffed1c24X|r sheep giving players with less games as sheep priority. If |cffed1c24X|r is not specific, will start with an even number of players.
-|cff00aeef-captains |cffed1c24X Y |cff00aeef:|r Lets players |cffed1c24X|r and |cffed1c24Y|r take turns picking players. If |cffed1c24X|r and |cffed1c24Y|r are not specified, random captains will be chosen.
+|cff00aeef-captains |cffed1c24X Y|cff00aeef:|r Lets players |cffed1c24X|r and |cffed1c24Y|r take turns picking players. If |cffed1c24X|r and |cffed1c24Y|r are not specified, random captains will be chosen.
 |cff00aeef-versus |cffed1c24X Y|cff00aeef:|r Captains mode that auto reverses.
 |cffffcc00Game Modes:|r
 |cff00aaef-time |cffed1c24X|cff00aeef:|r Set's the game timer to |cffed1c24X|r minutes.
 |cff00aeef-view:|r Displays the entire map for all players.
 |cff00aeef-vamp:|r Sheep that die turn into wolves.
 |cff00aeef-switch |cffed1c24 X Y Z W|cff00aeef:|r Killing wolf switch places with its captive. |cffed1c24X|r is time sheep are invulnerable. |cffed1c24Y|r is time before wolf spawn. |cffed1c24Z|r is number of dummy spirits. |cffed1c24W|r saves required to win. The defaults: |cffed1c24X=5, Y=10, Z=0, W=0|r
+|cff00aeef-president |cffed1c24X|cff00aeef:|r Picks a sheep to be president. If that sheep dies, the sheep lose. All other sheep have their handicap set to X, but their wisps can freely roam the map.
 |cff00aeef-gold |cffed1c24X Y|cff00aeef:|r Gives sheep |cffed1c24X|r gold and wolves |cffed1c24Y|r gold. If |cffed1c24Y|r is omitted, both teams get |cffed1c24X|r gold.
 |cff00aeef-expand:|r Gives the Sheep more room to build over time.
 |cff00aeef-shrink:|r Gives the Sheep less room to build over time.
+|cff00aeef-farmvision |cffed1c24X|cff00aeef:|r Sets the sight radius of all farms except Sentry Farm to |cffed1c24X|r.
+|cff00aeef-terrain:|r Toggles through terrains.
 |cff00aeef-practice:|r Gives everybody a Sheep and Wolf to practice their skills.
 |cffffcc00Practice Commands:|r
 |cff00aeef-a:|r Forces your wolf to attack your sheep.
 |cff00aeef-s:|r Forces your wolf to hold position.
 |cff00aeef-owner:|r When in practice mode it toggles the owner of your wolf.
-|cff00aeef-disable:|r Toggles |cffed1c24Destroy All Farms|r ability on/off.`,
-    "ReplaceableTextures\\PassiveButtons\\PASBTNStat.tga",
+|cff00aeef-disable:|r Toggles |cffed1c24Destroy All Farms|r ability on/off.
+|cff00aeef-mass |cffed1c24X|cff00aeef:|r When in practice mode it creates a timed massing test of |cffed1c24X|r seconds for all players.
+|cff00aeef-stop:|r When in practice mode it stops a timed mass contest.`,
+    "ReplaceableTextures\\PassiveButtons\\PASBTNStatUp.blp",
   );
   CreateQuestBJ(
     bj_QUESTTYPE_REQ_DISCOVERED,
@@ -51,25 +54,27 @@ New? Type |CFF00AEEF-smart|r.`,
 |cff00aeef-fafk |cffed1c24X|cff00aeef:|r Forces player |cffed1c24X|r afk. Only works before a round starts.
 |cff00aeef-reset:|r Resets the scores for leader and loser.
 |cff00aeef-transfer |cffed1c24X|cff00aeef:|r Gives control of game to player |cffed1c24X|r.
-|cff00aeef-mass |cffed1c24X|cff00aeef:|r When in practice mode it creates a timed massing test of |cffed1c24X|r seconds for all players.
-|cff00aeef-stop:|r When in practice mode it stops a timed mass contest.
+|cff00aeef-handicap |cffed1c24X Y|cff00aeef:|r Set's player X's handicap to Y.
+|cff00aeef-pub |cffed1c24X|cff00aeef:|r Toggles player |cffed1c24X|r as a pub, removing them from smart considerations.
+|cff00aeef-rotate:|r Toggles rotating a player out of round selection.
+|cff00aeef-perfect:|r Toggles eprfect smart. Use an ! to reset perfect.
 |cffffcc00Sexy Command|r
-|cff00aeef-sexy |cffed1c24 X Y Z|cff00aeef:|r Sets your sheep color to |cffed1c24X|r for percent red, |cffed1c24Y|r for percent green, and |cffed1c24Z|r for percent blue. If |cffed1c24Y|r and |cffed1c24Z|r are not specified, will set all color levels to |cffed1c24X|r. 0 being no color (black) and 100 being all color (white).
+|cff00aeef-sexy |cffed1c24X Y Z|cff00aeef:|r Sets your sheep color to |cffed1c24X|r for percent red, |cffed1c24Y|r for percent green, and |cffed1c24Z|r for percent blue. If |cffed1c24Y|r and |cffed1c24Z|r are not specified, will set all color levels to |cffed1c24X|r. 0 being no color (black) and 100 being all color (white).
 |cff00aeef-yes sexy:|r Enables the |cff00aeef-sexy|r command for all players.
 |cff00aeef-no sexy:|r Disables the |cff00aeef-sexy|r command for all players.
 |cffffcc00Captains Commands|r
 |cff00aeef-draft |cffed1c24X|cff00aeef:|r Picks a player during the picking stage of |cff00aeef-captains|r mode.
 |cff00aeef-give |cffed1c24X|cff00aeef:|r If player is a captain during the picking stage of |cff00aeef-captains|r mode, then gives captain control to player |cffed1c24X|r. If |cffed1c24X|r is not specified, gives control to random player already picked. If no one has been picked, gives control to random unpicked player.`,
-    "ReplaceableTextures\\PassiveButtons\\PASBTNStat.tga",
+    "ReplaceableTextures\\PassiveButtons\\PASBTNStatUp.blp",
   );
   CreateQuestBJ(
     bj_QUESTTYPE_REQ_DISCOVERED,
     "Player Commands",
     `|cffffcc00Player Commands:|r
-|cff00aeef-sheepcount (-sc):|r Times every player has played as sheep.
+|cff00aeef-sheepcount (-sc):|r Times every player has played as sheep. Host can optionally provide a value to set the palyer's sheep count.
 |cff00aeef-pc |cffed1c24X|cff00aeef:|r Shows ally count as sheep for player |cffed1c24X|r.
 |cff00aeef-fbc:|r Displays firstblood kills and deaths for each player.
-|cff00aeef-g |cffed1c24X|cff00aeef:|r Gives all gold to player |cffed1c24X|r.
+|cff00aeef-g |cffed1c24X|cff00aeef:|r Gives all gold to player |cffed1c24X|r. When X is not provided, an algorithm is run to share gold semi-intelligently.
 |cff00aeef-|cffed1c24X Y|cff00aeef:|r Gives |cffed1c24Y|r gold to player |cffed1c24X|r.
 |cff00aeef-g all:|r Splits your gold evenly among living allies.
 |cff00aeef-d:|r Destroys all your farms.
@@ -81,16 +86,23 @@ New? Type |CFF00AEEF-smart|r.`,
 |cff00aeef-ts:|r Total saves of all players.
 |cff00aeef-lss:|r Total number of times all players have been the last sheep standing.
 |cff00aeef-qd:|r Quickest death in the game.
+|cff00aeef-qds:|r Everyone's quickest death.
 |cff00aeef-last:|r Last round time.
+|cff00aeef-atimes:|r Everyones average time as sheep.
 |cff00aeef-times:|r Everyones total time as sheep.
 |cff00aeef-maxtimes:|r Everyones best sheep time.
 |cff00aeef-mytimes:|r Percentage of sheep time with each player.
 |cff00aeef-stime:|r Everyones total time alive as sheep.
 |cff00aeef-time:|r Shows how long the game has been running.
+|cff00aeef-tf:|r Shows everyone's total farms.
 |cff00aeef-u:|r Deselects a unit. Used when a menu palette is blank.
 |cff00aeef-afk:|r Goes "away from keyboard." AFK players share control with all allies if they are in a game and will not be included in new games. Type it again to disable AFK mode.
-|cff00aeef-zoom |cffed1c24 X Y Z|cff00aeef:|r Sets distance from units to values where |cffed1c24X|r is for sheep, |cffed1c24Y|r is for wolf, and |cffed1c24Z|r is for wisp. If |cffed1c24Y|r and |cffed1c24Z|r are not specified, will set all zoom levels to |cffed1c24X|r. If all are left blank, displays minimum, maximum, and default zoom levels.`,
-    "ReplaceableTextures\\PassiveButtons\\PASBTNStat.tga",
+|cff00aeef-zoom |cffed1c24 X Y Z|cff00aeef:|r Sets distance from units to values where |cffed1c24X|r is for sheep, |cffed1c24Y|r is for wolf, and |cffed1c24Z|r is for wisp. If |cffed1c24Y|r and |cffed1c24Z|r are not specified, will set all zoom levels to |cffed1c24X|r. If all are left blank, displays minimum, maximum, and default zoom levels.
+|cff00aeef-autocontrol:|r Toggles automatic sharing of control with allied sheep.
+|cff00aeef-noautocontrol:|r Toggles whether allies can automatically share control with you.
+|cff00aeef-teamresources:|r Adjusts how the team resources multiboard hides and shows.
+|cff00aeef-clear:|r Hides all command messages.`,
+    "ReplaceableTextures\\PassiveButtons\\PASBTNStatUp.blp",
   );
   CreateQuestBJ(
     bj_QUESTTYPE_OPT_DISCOVERED,
@@ -138,22 +150,37 @@ Chakra
 XXXandBEER
 Wrda
 
-|cffffcc00Assets|r
+|cffffcc00Assets & Tools|r
 Christmas lights: Vinz @ Hive
 Snowman: Thrikodius @ Hive
 Snowball: Walle @ Hive
-Santa: IamMclovin @ Hive`,
+Santa: IamMclovin @ Hive
+Model editor: Retera`,
     "ReplaceableTextures\\CommandButtons\\BTNPeasant.blp",
   );
+
+  // Makes a noise, but gives us room!
+  setTimeout(0.05, () => {
+    BlzFrameClick(BlzGetFrameByName("UpperButtonBarQuestsButton", 0)!);
+    BlzFrameClick(BlzGetFrameByName("QuestAcceptButton", 0)!);
+    BlzFrameSetSize(
+      BlzGetFrameByName("QuestItemListContainer", 0)!,
+      0.01,
+      0.01,
+    );
+    BlzFrameSetSize(
+      BlzGetFrameByName("QuestItemListScrollBar", 0)!,
+      0.001,
+      0.001,
+    );
+  });
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_quests: () => void;
 }
-InitTrig_quests = (): void => {
+InitTrig_quests = () => {
   gg_trg_quests = CreateTrigger();
   TriggerAddAction(gg_trg_quests, Trig_quests_Actions);
 };

@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: UpdateStats
 //===========================================================================
-const Trig_UpdateStats_forEnumPlayer = (): void => {
+const Trig_UpdateStats_forEnumPlayer = () => {
   if (GetPlayerController(GetEnumPlayer()!) !== MAP_CONTROL_USER) {
     return;
   }
@@ -14,10 +14,9 @@ const Trig_UpdateStats_forEnumPlayer = (): void => {
     I2S(udg_totalFarmsBuilt[GetConvertedPlayerId(GetEnumPlayer()!)])!,
     MMD_TYPE_INT,
   );
-  udg_averageFarmCountBeforeWolves[GetConvertedPlayerId(GetEnumPlayer()!)] =
-    I2R(
-      udg_totalFarmCountBeforeWolves[GetConvertedPlayerId(GetEnumPlayer()!)],
-    ) / I2R(udg_sheepCount[GetConvertedPlayerId(GetEnumPlayer()!)]);
+  udg_averageFarmCountBeforeWolves[GetConvertedPlayerId(GetEnumPlayer()!)] = I2R(
+    udg_totalFarmCountBeforeWolves[GetConvertedPlayerId(GetEnumPlayer()!)],
+  ) / I2R(udg_sheepCount[GetConvertedPlayerId(GetEnumPlayer()!)]);
   MMD__update_value(
     "Average Farm Count Before Wolves",
     GetEnumPlayer()!,
@@ -144,7 +143,7 @@ const Trig_UpdateStats_forEnumPlayer = (): void => {
   }
 };
 
-const Trig_UpdateStats_Actions = (): void => {
+const Trig_UpdateStats_Actions = () => {
   ForForce(GetPlayersAll()!, Trig_UpdateStats_forEnumPlayer);
   MMD__LogEvent("end", 0, "");
   TriggerSleepAction(0.3);
@@ -163,7 +162,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_UpdateStats: () => void;
 }
-InitTrig_UpdateStats = (): void => {
+InitTrig_UpdateStats = () => {
   gg_trg_UpdateStats = CreateTrigger();
   TriggerAddAction(gg_trg_UpdateStats, Trig_UpdateStats_Actions);
 };

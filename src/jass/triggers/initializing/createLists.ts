@@ -3,7 +3,7 @@
 //
 // Fix numSheep, numWolf, numSpirit and leaderboard.
 //===========================================================================
-const Trig_createLists_Func006Func002C = (): boolean => {
+const Trig_createLists_Func006Func002C = () => {
   if (
     (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexA())!) ===
       PLAYER_SLOT_STATE_PLAYING))
@@ -22,7 +22,7 @@ const Trig_createLists_Func006Func002C = (): boolean => {
   return true;
 };
 
-const Trig_createLists_Func006Func003Func001Func003C = (): boolean => {
+const Trig_createLists_Func006Func003Func001Func003C = () => {
   if ((udg_AFK[GetForLoopIndexA()] > 2)) {
     return true;
   }
@@ -47,28 +47,28 @@ const Trig_createLists_Func006Func003Func001Func003C = (): boolean => {
   return false;
 };
 
-const Trig_createLists_Func006Func003Func001C = (): boolean => {
+const Trig_createLists_Func006Func003Func001C = () => {
   if ((!Trig_createLists_Func006Func003Func001Func003C())) {
     return false;
   }
   return true;
 };
 
-const Trig_createLists_Func006Func003C = (): boolean => {
+const Trig_createLists_Func006Func003C = () => {
   if ((!(ConvertedPlayer(GetForLoopIndexA())! === udg_Custom))) {
     return false;
   }
   return true;
 };
 
-const Trig_createLists_Func007C = (): boolean => {
+const Trig_createLists_Func007C = () => {
   if ((!(udg_Custom === Player(PLAYER_NEUTRAL_AGGRESSIVE)!))) {
     return false;
   }
   return true;
 };
 
-const Trig_createLists_Func008C = (): boolean => {
+const Trig_createLists_Func008C = () => {
   if ((!(udg_transfer !== 0))) {
     return false;
   }
@@ -96,24 +96,24 @@ const Trig_createLists_Func008C = (): boolean => {
   return true;
 };
 
-const Trig_createLists_Func011Func001Func003C = (): boolean => {
-  if ((udg_AFK[GetForLoopIndexA()] === 0)) {
+const Trig_createLists_Func011Func001Func003C = () => {
+  if ((udg_AFK[GetForLoopIndexA()] === AFK_PLAYING)) {
     return true;
   }
-  if ((udg_AFK[GetForLoopIndexA()] === 4)) {
+  if ((udg_AFK[GetForLoopIndexA()] === AFK_AFK_DURING_ROUND)) {
     return true;
   }
   return false;
 };
 
-const Trig_createLists_Func011Func001Func004C = (): boolean => {
+const sheepedLastGame = () => {
   if ((!(udg_sheepLastGame[GetForLoopIndexA()] === true))) {
     return false;
   }
   return true;
 };
 
-const Trig_createLists_Func011Func001C = (): boolean => {
+const loopAPlaying = () => {
   if (
     (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexA())!) ===
       PLAYER_SLOT_STATE_PLAYING))
@@ -132,17 +132,19 @@ const Trig_createLists_Func011Func001C = (): boolean => {
   return true;
 };
 
-const Trig_createLists_Func012Func001Func001Func007C = (): boolean => {
-  if ((udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === 0)) {
+const Trig_createLists_Func012Func001Func001Func007C = () => {
+  if ((udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === AFK_PLAYING)) {
     return true;
   }
-  if ((udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === 4)) {
+  if (
+    (udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === AFK_AFK_DURING_ROUND)
+  ) {
     return true;
   }
   return false;
 };
 
-const Trig_createLists_Func012Func001Func001C = (): boolean => {
+const Trig_createLists_Func012Func001Func001C = () => {
   if (
     (!(GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING))
   ) {
@@ -162,7 +164,7 @@ const Trig_createLists_Func012Func001Func001C = (): boolean => {
   return true;
 };
 
-const Trig_createLists_Func012Func001A = (): void => {
+const Trig_createLists_Func012Func001A = () => {
   if ((Trig_createLists_Func012Func001Func001C())) {
     udg_numPick = udg_numPick + 1;
     udg_playerCount = udg_playerCount + 1;
@@ -170,17 +172,19 @@ const Trig_createLists_Func012Func001A = (): void => {
   }
 };
 
-const Trig_createLists_Func012Func002Func001Func002C = (): boolean => {
-  if ((udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === 0)) {
+const Trig_createLists_Func012Func002Func001Func002C = () => {
+  if ((udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === AFK_PLAYING)) {
     return true;
   }
-  if ((udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === 4)) {
+  if (
+    (udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === AFK_AFK_DURING_ROUND)
+  ) {
     return true;
   }
   return false;
 };
 
-const Trig_createLists_Func012Func002Func001C = (): boolean => {
+const Trig_createLists_Func012Func002Func001C = () => {
   if ((!Trig_createLists_Func012Func002Func001Func002C())) {
     return false;
   }
@@ -200,7 +204,7 @@ const Trig_createLists_Func012Func002Func001C = (): boolean => {
   return true;
 };
 
-const Trig_createLists_Func012Func002A = (): void => {
+const Trig_createLists_Func012Func002A = () => {
   if ((Trig_createLists_Func012Func002Func001C())) {
     udg_numPick = udg_numPick + 1;
     udg_playerCount = udg_playerCount + 1;
@@ -208,17 +212,17 @@ const Trig_createLists_Func012Func002A = (): void => {
   }
 };
 
-const Trig_createLists_Func012Func003Func001Func005C = (): boolean => {
-  if ((udg_AFK[GetForLoopIndexA()] === 0)) {
+const Trig_createLists_Func012Func003Func001Func005C = () => {
+  if ((udg_AFK[GetForLoopIndexA()] === AFK_PLAYING)) {
     return true;
   }
-  if ((udg_AFK[GetForLoopIndexA()] === 4)) {
+  if ((udg_AFK[GetForLoopIndexA()] === AFK_AFK_DURING_ROUND)) {
     return true;
   }
   return false;
 };
 
-const Trig_createLists_Func012Func003Func001C = (): boolean => {
+const Trig_createLists_Func012Func003Func001C = () => {
   if (
     (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexA())!) ===
       PLAYER_SLOT_STATE_PLAYING))
@@ -237,42 +241,41 @@ const Trig_createLists_Func012Func003Func001C = (): boolean => {
   return true;
 };
 
-const Trig_createLists_Func012C = (): boolean => {
+const Trig_createLists_Func012C = () => {
   if ((!(udg_round2 === false))) {
     return false;
   }
   return true;
 };
 
-const Trig_createLists_Func013Func001Func001Func001Func001Func002Func001Func001C =
-  (): boolean => {
-    if ((!(udg_multiboardRow[GetForLoopIndexB()] === GetForLoopIndexA()))) {
-      return false;
-    }
-    return true;
-  };
+const Trig_createLists_Func013Func001Func001Func001Func001Func002Func001Func001C = () => {
+  if ((!(udg_multiboardRow[GetForLoopIndexB()] === GetForLoopIndexA()))) {
+    return false;
+  }
+  return true;
+};
 
-const Trig_createLists_Func013Func001Func001Func001Func001Func002Func001C =
-  (): boolean => {
-    if (
-      (!(IsPlayerInForce(ConvertedPlayer(GetForLoopIndexB()!)!, udg_Draft) ===
-        true))
-    ) {
-      return false;
-    }
-    return true;
-  };
+const Trig_createLists_Func013Func001Func001Func001Func001Func002Func001C = () => {
+  if (
+    (!(IsPlayerInForce(ConvertedPlayer(GetForLoopIndexB()!)!, udg_Draft) ===
+      true))
+  ) {
+    return false;
+  }
+  return true;
+};
 
-const Trig_createLists_Func013Func001Func001Func001Func001Func003C =
-  (): boolean => {
-    if ((!(udg_atempboolean === false))) {
-      return false;
-    }
-    return true;
-  };
+const Trig_createLists_Func013Func001Func001Func001Func001Func003C = () => {
+  if ((!(udg_atempboolean === false))) {
+    return false;
+  }
+  return true;
+};
 
-const Trig_createLists_Func013Func001Func001Func001C = (): boolean => {
-  if ((!(udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === 1))) {
+const Trig_createLists_Func013Func001Func001Func001C = () => {
+  if (
+    (!(udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === AFK_PLAYING_PICK))
+  ) {
     return false;
   }
   if (
@@ -286,7 +289,7 @@ const Trig_createLists_Func013Func001Func001Func001C = (): boolean => {
   return true;
 };
 
-const Trig_createLists_Func013Func001Func001A = (): void => {
+const Trig_createLists_Func013Func001Func001A = () => {
   if ((Trig_createLists_Func013Func001Func001Func001C())) {
     bj_forLoopAIndex = 1;
     bj_forLoopAIndexEnd = 24;
@@ -309,8 +312,7 @@ const Trig_createLists_Func013Func001Func001A = (): void => {
         bj_forLoopBIndex = bj_forLoopBIndex + 1;
       }
       if ((Trig_createLists_Func013Func001Func001Func001Func001Func003C())) {
-        udg_multiboardRow[GetConvertedPlayerId(GetEnumPlayer()!)] =
-          GetForLoopIndexA();
+        udg_multiboardRow[GetConvertedPlayerId(GetEnumPlayer()!)] = GetForLoopIndexA();
         break;
       }
       bj_forLoopAIndex = bj_forLoopAIndex + 1;
@@ -324,19 +326,21 @@ const Trig_createLists_Func013Func001Func001A = (): void => {
           ("(" + (I2S(GetConvertedPlayerId(GetEnumPlayer()!)) + ")"))),
     );
     ForceAddPlayerSimple(GetEnumPlayer()!, udg_Draft);
-    udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] = 0;
+    udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] = AFK_PLAYING;
   }
 };
 
-const Trig_createLists_Func013Func001C = (): boolean => {
-  if ((!(udg_Teams === 4))) {
+const Trig_createLists_Func013Func001C = () => {
+  if ((!(udg_Teams === TEAMS_CAPTAINS))) {
     return false;
   }
   return true;
 };
 
-const Trig_createLists_Func013Func002Func001C = (): boolean => {
-  if ((!(udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === 1))) {
+const Trig_createLists_Func013Func002Func001C = () => {
+  if (
+    (!(udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === AFK_PLAYING_PICK))
+  ) {
     return false;
   }
   if (
@@ -350,7 +354,7 @@ const Trig_createLists_Func013Func002Func001C = (): boolean => {
   return true;
 };
 
-const Trig_createLists_Func013Func002A = (): void => {
+const Trig_createLists_Func013Func002A = () => {
   if ((Trig_createLists_Func013Func002Func001C())) {
     udg_numPick = udg_numPick + 1;
     udg_playerCount = udg_playerCount + 1;
@@ -358,35 +362,35 @@ const Trig_createLists_Func013Func002A = (): void => {
   }
 };
 
-const Trig_createLists_Func013C = (): boolean => {
-  if ((!(udg_Teams === 3))) {
+const Trig_createLists_Func013C = () => {
+  if ((!(udg_Teams === TEAMS_PICK))) {
     return false;
   }
   return true;
 };
 
-const Trig_createLists_Func014Func001Func001C = (): boolean => {
-  if ((!(udg_AFK[GetConvertedPlayerId(udg_Custom)] === 3))) {
+const Trig_createLists_Func014Func001Func001C = () => {
+  if ((!(udg_AFK[GetConvertedPlayerId(udg_Custom)] === AFK_AFK))) {
     return false;
   }
   return true;
 };
 
-const Trig_createLists_Func014Func001C = (): boolean => {
+const Trig_createLists_Func014Func001C = () => {
   if ((!(udg_Teams !== 3))) {
     return false;
   }
   return true;
 };
 
-const Trig_createLists_Func014C = (): boolean => {
-  if ((!(udg_Teams === 2))) {
+const Trig_createLists_Func014C = () => {
+  if ((!(udg_Teams === TEAMS_LOCK_IE_PLAYING))) {
     return false;
   }
   return true;
 };
 
-const Trig_createLists_Actions = (): void => {
+const Trig_createLists_Actions = () => {
   udg_numPick = 0;
   udg_playerCount = 0;
   udg_lastPlayer = 0;
@@ -421,8 +425,8 @@ const Trig_createLists_Actions = (): void => {
   bj_forLoopAIndexEnd = 24;
   while (true) {
     if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-    if ((Trig_createLists_Func011Func001C())) {
-      if ((Trig_createLists_Func011Func001Func004C())) {
+    if (loopAPlaying()) {
+      if (sheepedLastGame()) {
         udg_numSheep = udg_numSheep + 1;
       } else {
         udg_numWolf = udg_numWolf + 1;
@@ -521,7 +525,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_createLists: () => void;
 }
-InitTrig_createLists = (): void => {
+InitTrig_createLists = () => {
   gg_trg_createLists = CreateTrigger();
   TriggerAddAction(gg_trg_createLists, Trig_createLists_Actions);
 };

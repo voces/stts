@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: massTimeUp
 //===========================================================================
-const Trig_massTimeUp_Func006A = (): void => {
+const Trig_massTimeUp_Func006A = () => {
   DisplayTimedTextToForce(
     GetPlayersAll()!,
     15,
@@ -13,7 +13,7 @@ const Trig_massTimeUp_Func006A = (): void => {
   );
 };
 
-const Trig_massTimeUp_Actions = (): void => {
+const Trig_massTimeUp_Actions = () => {
   DisableTrigger(gg_trg_reset);
   PauseTimerBJ(false, udg_Timer);
   TimerDialogDisplayBJ(true, udg_TimerWindow);
@@ -33,7 +33,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_massTimeUp: () => void;
 }
-InitTrig_massTimeUp = (): void => {
+InitTrig_massTimeUp = () => {
   gg_trg_massTimeUp = CreateTrigger();
   TriggerRegisterTimerExpireEventBJ(gg_trg_massTimeUp, udg_massTimer);
   TriggerAddAction(gg_trg_massTimeUp, Trig_massTimeUp_Actions);

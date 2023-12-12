@@ -8,25 +8,20 @@
 // afk == 4, went afk during game or after being picked
 //===========================================================================
 
-const Trig_setupLeaderboard_Func002Func008001001 = (): boolean => {
-  return GetBooleanAnd(
-    GetPlayerSlotState(GetFilterPlayer()!) === PLAYER_SLOT_STATE_PLAYING,
-    GetBooleanAnd(
-      GetPlayerSlotState(GetFilterPlayer()!) !== PLAYER_SLOT_STATE_LEFT,
-      udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === 0,
-    ),
+const filterPlayerPlayingAndNotAfk = () => {
+  return (
+    GetPlayerSlotState(GetFilterPlayer()!) === PLAYER_SLOT_STATE_PLAYING &&
+    GetPlayerSlotState(GetFilterPlayer()!) !== PLAYER_SLOT_STATE_LEFT &&
+    udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === AFK_PLAYING
   );
 };
 
-const Trig_setupLeaderboard_Func002Func008Func001C = (): boolean => {
-  if ((!(udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)] === true))) {
-    return false;
-  }
-  return true;
+const enumPlayerSheepedLastGame = () => {
+  return udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)];
 };
 
-const Trig_setupLeaderboard_Func002Func008A = (): void => {
-  if ((Trig_setupLeaderboard_Func002Func008Func001C())) {
+const addEnumPlayerToLeaderboardIfSheeped = () => {
+  if (enumPlayerSheepedLastGame()) {
     LeaderboardAddItemBJ(
       GetEnumPlayer()!,
       GetLastCreatedLeaderboard()!,
@@ -36,27 +31,8 @@ const Trig_setupLeaderboard_Func002Func008A = (): void => {
   }
 };
 
-const Trig_setupLeaderboard_Func002Func013001001 = (): boolean => {
-  return GetBooleanAnd(
-    GetPlayerSlotState(GetFilterPlayer()!) === PLAYER_SLOT_STATE_PLAYING,
-    GetBooleanAnd(
-      GetPlayerSlotState(GetFilterPlayer()!) !== PLAYER_SLOT_STATE_LEFT,
-      udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === 0,
-    ),
-  );
-};
-
-const Trig_setupLeaderboard_Func002Func013Func001C = (): boolean => {
-  if (
-    (!(udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)] === false))
-  ) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_setupLeaderboard_Func002Func013A = (): void => {
-  if ((Trig_setupLeaderboard_Func002Func013Func001C())) {
+const addEnumPlayerToLeaderboardIfNotSheeped = () => {
+  if (!enumPlayerSheepedLastGame()) {
     LeaderboardAddItemBJ(
       GetEnumPlayer()!,
       GetLastCreatedLeaderboard()!,
@@ -66,7 +42,7 @@ const Trig_setupLeaderboard_Func002Func013A = (): void => {
   }
 };
 
-const Trig_setupLeaderboard_Func002Func014002 = (): void => {
+const setLeaderboardStyle = () => {
   LeaderboardSetPlayerItemStyleBJ(
     GetEnumPlayer()!,
     GetLastCreatedLeaderboard()!,
@@ -76,24 +52,15 @@ const Trig_setupLeaderboard_Func002Func014002 = (): void => {
   );
 };
 
-const Trig_setupLeaderboard_Func002Func015C = (): boolean => {
-  if ((!(udg_round2 === true))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_setupLeaderboard_Func002Func019001001 = (): boolean => {
-  return GetBooleanAnd(
-    GetPlayerSlotState(GetFilterPlayer()!) === PLAYER_SLOT_STATE_PLAYING,
-    GetBooleanAnd(
-      GetPlayerSlotState(GetFilterPlayer()!) !== PLAYER_SLOT_STATE_LEFT,
-      udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === 3,
-    ),
+const filterPlayerPlayingAndAfk = () => {
+  return (
+    GetPlayerSlotState(GetFilterPlayer()!) === PLAYER_SLOT_STATE_PLAYING &&
+    GetPlayerSlotState(GetFilterPlayer()!) !== PLAYER_SLOT_STATE_LEFT &&
+    udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === AFK_AFK
   );
 };
 
-const Trig_setupLeaderboard_Func002Func019A = (): void => {
+const addAfkEnumPlayerToLeaderboard = () => {
   LeaderboardAddItemBJ(
     GetEnumPlayer()!,
     GetLastCreatedLeaderboard()!,
@@ -109,7 +76,7 @@ const Trig_setupLeaderboard_Func002Func019A = (): void => {
   );
 };
 
-const Trig_setupLeaderboard_Func002Func020A = (): void => {
+const setEnumPlayerLeaderboardSheepCount = () => {
   LeaderboardSetPlayerItemValueBJ(
     GetEnumPlayer()!,
     GetLastCreatedLeaderboard()!,
@@ -117,14 +84,7 @@ const Trig_setupLeaderboard_Func002Func020A = (): void => {
   );
 };
 
-const Trig_setupLeaderboard_Func002Func021C = (): boolean => {
-  if ((!(udg_AFK[GetConvertedPlayerId(udg_Custom)] === 3))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_setupLeaderboard_Func002Func023Func003Func001C = (): boolean => {
+const indexAPlayerPlayingAndNotAfk = () => {
   if (
     (!(GetPlayerSlotState(udg_playerList[GetForLoopIndexA()]) ===
       PLAYER_SLOT_STATE_PLAYING))
@@ -138,14 +98,15 @@ const Trig_setupLeaderboard_Func002Func023Func003Func001C = (): boolean => {
     return false;
   }
   if (
-    (!(udg_AFK[GetConvertedPlayerId(udg_playerList[GetForLoopIndexA()])] === 0))
+    (!(udg_AFK[GetConvertedPlayerId(udg_playerList[GetForLoopIndexA()])] ===
+      AFK_PLAYING))
   ) {
     return false;
   }
   return true;
 };
 
-const Trig_setupLeaderboard_Func002Func023Func004Func001C = (): boolean => {
+const indexAPlayerPlayingAndReturnedFromAfkDuringPick = () => {
   if (
     (!(GetPlayerSlotState(udg_playerList[GetForLoopIndexA()]) ===
       PLAYER_SLOT_STATE_PLAYING))
@@ -159,61 +120,27 @@ const Trig_setupLeaderboard_Func002Func023Func004Func001C = (): boolean => {
     return false;
   }
   if (
-    (!(udg_AFK[GetConvertedPlayerId(udg_playerList[GetForLoopIndexA()])] === 1))
+    (!(udg_AFK[GetConvertedPlayerId(udg_playerList[GetForLoopIndexA()])] ===
+      AFK_PLAYING_PICK))
   ) {
     return false;
   }
   return true;
 };
 
-const Trig_setupLeaderboard_Func002Func023Func006Func002Func001Func002C =
-  (): boolean => {
-    if ((udg_AFK[GetForLoopIndexA()] === 2)) {
-      return true;
-    }
-    if ((udg_AFK[GetForLoopIndexA()] === 3)) {
-      return true;
-    }
-    return false;
-  };
-
-const Trig_setupLeaderboard_Func002Func023Func006Func002Func001C =
-  (): boolean => {
-    if (
-      (!Trig_setupLeaderboard_Func002Func023Func006Func002Func001Func002C())
-    ) {
-      return false;
-    }
+const indexAPlayerAfkOrReturnedDuringRound = () => {
+  if ((udg_AFK[GetForLoopIndexA()] === AFK_RETURNED_DURING_ROUND)) {
     return true;
-  };
-
-const Trig_setupLeaderboard_Func002Func023Func006Func004Func003C =
-  (): boolean => {
-    if ((!(udg_dummyWisps > 0))) {
-      return false;
-    }
+  }
+  if ((udg_AFK[GetForLoopIndexA()] === AFK_AFK)) {
     return true;
-  };
+  }
+  return false;
+};
 
-const Trig_setupLeaderboard_Func002Func023Func006Func004Func006Func002C =
-  (): boolean => {
-    if ((!(udg_dummyWisps > 0))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_setupLeaderboard_Func002Func023Func006Func004Func006Func003C =
-  (): boolean => {
-    if ((!(udg_AFK[udg_atempint] === 4))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_setupLeaderboard_Func002Func023Func006Func004Func006A = (): void => {
+const Trig_setupLeaderboard_Func002Func023Func006Func004Func006A = () => {
   udg_atempint = GetConvertedPlayerId(GetEnumPlayer()!);
-  if ((Trig_setupLeaderboard_Func002Func023Func006Func004Func006Func002C())) {
+  if (udg_dummyWisps > 0) {
     LeaderboardAddItemBJ(
       GetEnumPlayer()!,
       PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
@@ -228,7 +155,7 @@ const Trig_setupLeaderboard_Func002Func023Func006Func004Func006A = (): void => {
       udg_farmCount[udg_atempint],
     );
   }
-  if ((Trig_setupLeaderboard_Func002Func023Func006Func004Func006Func003C())) {
+  if (udg_AFK[udg_atempint] === AFK_AFK_DURING_ROUND) {
     LeaderboardSetPlayerItemLabelBJ(
       GetEnumPlayer()!,
       PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
@@ -237,23 +164,21 @@ const Trig_setupLeaderboard_Func002Func023Func006Func004Func006A = (): void => {
   }
 };
 
-const Trig_setupLeaderboard_Func002Func023Func006Func004Func007C =
-  (): boolean => {
-    if ((!(udg_dummyWisps > 0))) {
-      return false;
-    }
-    return true;
-  };
+const Trig_setupLeaderboard_Func002Func023Func006Func004Func007C = () => {
+  if ((!(udg_dummyWisps > 0))) {
+    return false;
+  }
+  return true;
+};
 
-const Trig_setupLeaderboard_Func002Func023Func006Func004Func010Func004C =
-  (): boolean => {
-    if ((!(udg_AFK[udg_atempint] === 4))) {
-      return false;
-    }
-    return true;
-  };
+const Trig_setupLeaderboard_Func002Func023Func006Func004Func010Func004C = () => {
+  if ((!(udg_AFK[udg_atempint] === AFK_AFK_DURING_ROUND))) {
+    return false;
+  }
+  return true;
+};
 
-const Trig_setupLeaderboard_Func002Func023Func006Func004Func010A = (): void => {
+const Trig_setupLeaderboard_Func002Func023Func006Func004Func010A = () => {
   udg_atempint = GetConvertedPlayerId(GetEnumPlayer()!);
   LeaderboardAddItemBJ(
     GetEnumPlayer()!,
@@ -277,31 +202,28 @@ const Trig_setupLeaderboard_Func002Func023Func006Func004Func010A = (): void => {
   }
 };
 
-const Trig_setupLeaderboard_Func002Func023Func006Func004Func011C =
-  (): boolean => {
-    if ((!(udg_dummyWisps > 0))) {
-      return false;
-    }
-    return true;
-  };
+const Trig_setupLeaderboard_Func002Func023Func006Func004Func011C = () => {
+  if ((!(udg_dummyWisps > 0))) {
+    return false;
+  }
+  return true;
+};
 
-const Trig_setupLeaderboard_Func002Func023Func006Func004Func014Func002C =
-  (): boolean => {
-    if ((!(udg_dummyWisps > 0))) {
-      return false;
-    }
-    return true;
-  };
+const Trig_setupLeaderboard_Func002Func023Func006Func004Func014Func002C = () => {
+  if ((!(udg_dummyWisps > 0))) {
+    return false;
+  }
+  return true;
+};
 
-const Trig_setupLeaderboard_Func002Func023Func006Func004Func014Func003C =
-  (): boolean => {
-    if ((!(udg_AFK[udg_atempint] === 4))) {
-      return false;
-    }
-    return true;
-  };
+const Trig_setupLeaderboard_Func002Func023Func006Func004Func014Func003C = () => {
+  if ((!(udg_AFK[udg_atempint] === AFK_AFK_DURING_ROUND))) {
+    return false;
+  }
+  return true;
+};
 
-const Trig_setupLeaderboard_Func002Func023Func006Func004Func014A = (): void => {
+const Trig_setupLeaderboard_Func002Func023Func006Func004Func014A = () => {
   udg_atempint = GetConvertedPlayerId(GetEnumPlayer()!);
   if ((Trig_setupLeaderboard_Func002Func023Func006Func004Func014Func002C())) {
     LeaderboardAddItemBJ(
@@ -327,52 +249,47 @@ const Trig_setupLeaderboard_Func002Func023Func006Func004Func014A = (): void => {
   }
 };
 
-const Trig_setupLeaderboard_Func002Func023Func006Func004Func015Func004Func001Func001C =
-  (): boolean => {
-    if ((!(udg_AFK[GetForLoopIndexB()] === 3))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_setupLeaderboard_Func002Func023Func006Func004Func015Func004Func001C =
-  (): boolean => {
-    if ((!(udg_AFK[GetForLoopIndexB()] === 2))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_setupLeaderboard_Func002Func023Func006Func004Func015C =
-  (): boolean => {
-    if ((!(udg_atempint2 === 1))) {
-      return false;
-    }
-    return true;
-  };
-
-const Trig_setupLeaderboard_Func002Func023Func006Func005Func001Func001C =
-  (): boolean => {
-    if ((udg_hideshow[GetConvertedPlayerId(GetEnumPlayer()!)] === true)) {
-      return true;
-    }
-    if ((udg_permanentHide[GetConvertedPlayerId(GetEnumPlayer()!)] === true)) {
-      return true;
-    }
+const Trig_setupLeaderboard_Func002Func023Func006Func004Func015Func004Func001Func001C = () => {
+  if ((!(udg_AFK[GetForLoopIndexB()] === AFK_AFK))) {
     return false;
-  };
+  }
+  return true;
+};
 
-const Trig_setupLeaderboard_Func002Func023Func006Func005Func001C =
-  (): boolean => {
-    if (
-      (!Trig_setupLeaderboard_Func002Func023Func006Func005Func001Func001C())
-    ) {
-      return false;
-    }
+const Trig_setupLeaderboard_Func002Func023Func006Func004Func015Func004Func001C = () => {
+  if ((!(udg_AFK[GetForLoopIndexB()] === 2))) {
+    return false;
+  }
+  return true;
+};
+
+const Trig_setupLeaderboard_Func002Func023Func006Func004Func015C = () => {
+  if ((!(udg_atempint2 === 1))) {
+    return false;
+  }
+  return true;
+};
+
+const Trig_setupLeaderboard_Func002Func023Func006Func005Func001Func001C = () => {
+  if ((udg_hideshow[GetConvertedPlayerId(GetEnumPlayer()!)] === true)) {
     return true;
-  };
+  }
+  if ((udg_permanentHide[GetConvertedPlayerId(GetEnumPlayer()!)] === true)) {
+    return true;
+  }
+  return false;
+};
 
-const Trig_setupLeaderboard_Func002Func023Func006Func005A = (): void => {
+const Trig_setupLeaderboard_Func002Func023Func006Func005Func001C = () => {
+  if (
+    (!Trig_setupLeaderboard_Func002Func023Func006Func005Func001Func001C())
+  ) {
+    return false;
+  }
+  return true;
+};
+
+const Trig_setupLeaderboard_Func002Func023Func006Func005A = () => {
   if ((Trig_setupLeaderboard_Func002Func023Func006Func005Func001C())) {
     LeaderboardDisplayBJ(false, PlayerGetLeaderboardBJ(GetEnumPlayer()!)!);
   } else {
@@ -380,35 +297,35 @@ const Trig_setupLeaderboard_Func002Func023Func006Func005A = (): void => {
   }
 };
 
-const Trig_setupLeaderboard_Func002Func023Func006C = (): boolean => {
-  if ((!(udg_Teams === 2))) {
+const Trig_setupLeaderboard_Func002Func023Func006C = () => {
+  if ((!(udg_Teams === TEAMS_LOCK_IE_PLAYING))) {
     return false;
   }
   return true;
 };
 
-const Trig_setupLeaderboard_Func002Func023C = (): boolean => {
-  if ((!(udg_Teams === 3))) {
+const Trig_setupLeaderboard_Func002Func023C = () => {
+  if ((!(udg_Teams === TEAMS_PICK))) {
     return false;
   }
   return true;
 };
 
-const Trig_setupLeaderboard_Func002C = (): boolean => {
+const Trig_setupLeaderboard_Func002C = () => {
   if ((!(udg_Teams < 2))) {
     return false;
   }
   return true;
 };
 
-const Trig_setupLeaderboard_Func003Func001Func001C = (): boolean => {
+const Trig_setupLeaderboard_Func003Func001Func001C = () => {
   if ((!(GetEnumPlayer()! === udg_Custom))) {
     return false;
   }
   return true;
 };
 
-const Trig_setupLeaderboard_Func003Func001A = (): void => {
+const Trig_setupLeaderboard_Func003Func001A = () => {
   if ((Trig_setupLeaderboard_Func003Func001Func001C())) {
     LeaderboardSetPlayerItemLabelBJ(
       GetEnumPlayer()!,
@@ -429,14 +346,14 @@ const Trig_setupLeaderboard_Func003Func001A = (): void => {
   );
 };
 
-const Trig_setupLeaderboard_Func003C = (): boolean => {
+const Trig_setupLeaderboard_Func003C = () => {
   if ((!(udg_isAnon === true))) {
     return false;
   }
   return true;
 };
 
-const Trig_setupLeaderboard_Actions = (): void => {
+const Trig_setupLeaderboard_Actions = () => {
   // BEFORE GAME
   if ((Trig_setupLeaderboard_Func002C())) {
     DestroyLeaderboardBJ(GetLastCreatedLeaderboard()!);
@@ -474,9 +391,9 @@ const Trig_setupLeaderboard_Actions = (): void => {
     );
     ForForce(
       GetPlayersMatching(
-        Condition(Trig_setupLeaderboard_Func002Func008001001),
+        Condition(filterPlayerPlayingAndNotAfk),
       )!,
-      Trig_setupLeaderboard_Func002Func008A,
+      addEnumPlayerToLeaderboardIfSheeped,
     );
     LeaderboardAddItemBJ(
       Player(bj_PLAYER_NEUTRAL_VICTIM)!,
@@ -509,12 +426,12 @@ const Trig_setupLeaderboard_Actions = (): void => {
     );
     ForForce(
       GetPlayersMatching(
-        Condition(Trig_setupLeaderboard_Func002Func013001001),
+        Condition(filterPlayerPlayingAndNotAfk),
       )!,
-      Trig_setupLeaderboard_Func002Func013A,
+      addEnumPlayerToLeaderboardIfNotSheeped,
     );
-    ForForce(GetPlayersAll()!, Trig_setupLeaderboard_Func002Func014002);
-    if ((Trig_setupLeaderboard_Func002Func015C())) {
+    ForForce(GetPlayersAll()!, setLeaderboardStyle);
+    if (udg_round2) {
       LeaderboardAddItemBJ(
         Player(bj_PLAYER_NEUTRAL_EXTRA)!,
         GetLastCreatedLeaderboard()!,
@@ -560,12 +477,12 @@ const Trig_setupLeaderboard_Actions = (): void => {
     );
     ForForce(
       GetPlayersMatching(
-        Condition(Trig_setupLeaderboard_Func002Func019001001),
+        Condition(filterPlayerPlayingAndAfk),
       )!,
-      Trig_setupLeaderboard_Func002Func019A,
+      addAfkEnumPlayerToLeaderboard,
     );
-    ForForce(GetPlayersAll()!, Trig_setupLeaderboard_Func002Func020A);
-    if ((Trig_setupLeaderboard_Func002Func021C())) {
+    ForForce(GetPlayersAll()!, setEnumPlayerLeaderboardSheepCount);
+    if (udg_AFK[GetConvertedPlayerId(udg_Custom)] === AFK_AFK) {
       LeaderboardSetPlayerItemLabelBJ(
         udg_Custom,
         GetLastCreatedLeaderboard()!,
@@ -591,7 +508,7 @@ const Trig_setupLeaderboard_Actions = (): void => {
       bj_forLoopAIndexEnd = udg_playerCount;
       while (true) {
         if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-        if ((Trig_setupLeaderboard_Func002Func023Func003Func001C())) {
+        if ((indexAPlayerPlayingAndNotAfk())) {
           LeaderboardAddItemBJ(
             udg_playerList[GetForLoopIndexA()],
             GetLastCreatedLeaderboard()!,
@@ -614,7 +531,7 @@ const Trig_setupLeaderboard_Actions = (): void => {
       bj_forLoopAIndexEnd = udg_playerCount;
       while (true) {
         if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-        if ((Trig_setupLeaderboard_Func002Func023Func004Func001C())) {
+        if ((indexAPlayerPlayingAndReturnedFromAfkDuringPick())) {
           LeaderboardAddItemBJ(
             udg_playerList[GetForLoopIndexA()],
             GetLastCreatedLeaderboard()!,
@@ -641,7 +558,7 @@ const Trig_setupLeaderboard_Actions = (): void => {
         bj_forLoopAIndexEnd = udg_lastPlayer;
         while (true) {
           if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-          if ((Trig_setupLeaderboard_Func002Func023Func006Func002Func001C())) {
+          if ((indexAPlayerAfkOrReturnedDuringRound())) {
             udg_atempint2 = udg_atempint2 + 1;
           }
           bj_forLoopAIndex = bj_forLoopAIndex + 1;
@@ -658,7 +575,7 @@ const Trig_setupLeaderboard_Actions = (): void => {
             GetForceOfPlayer(ConvertedPlayer(GetForLoopIndexA())!)!,
             udg_mapName,
           );
-          if ((Trig_setupLeaderboard_Func002Func023Func006Func004Func003C())) {
+          if (udg_dummyWisps > 0) {
             LeaderboardAddItemBJ(
               Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
               PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
@@ -857,7 +774,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_setupLeaderboard: () => void;
 }
-InitTrig_setupLeaderboard = (): void => {
+InitTrig_setupLeaderboard = () => {
   gg_trg_setupLeaderboard = CreateTrigger();
   TriggerAddAction(gg_trg_setupLeaderboard, Trig_setupLeaderboard_Actions);
 };

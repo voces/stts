@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: seeTime
 //===========================================================================
-const Trig_seeTime_Func003C = (): boolean => {
+const Trig_seeTime_Func003C = () => {
   if (
     (!(SubStringBJ(
       udg_gameTimeString,
@@ -14,13 +14,12 @@ const Trig_seeTime_Func003C = (): boolean => {
   return true;
 };
 
-const Trig_seeTime_Actions = (): void => {
+const Trig_seeTime_Actions = () => {
   udg_atempplayer = GetForceOfPlayer(GetTriggerPlayer()!)!;
   udg_gameTimeString = (I2S(R2I(TimerGetElapsed(udg_gameTimer) / 60)) + ":") +
     SubStringBJ(R2S(ModuloReal(TimerGetElapsed(udg_gameTimer), 60))!, 1, 2);
   if ((Trig_seeTime_Func003C())) {
-    udg_gameTimeString =
-      SubStringBJ(udg_gameTimeString, 1, StringLength(udg_gameTimeString) - 2) +
+    udg_gameTimeString = SubStringBJ(udg_gameTimeString, 1, StringLength(udg_gameTimeString) - 2) +
       ("0" +
         SubStringBJ(
           udg_gameTimeString,
@@ -49,7 +48,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_seeTime: () => void;
 }
-InitTrig_seeTime = (): void => {
+InitTrig_seeTime = () => {
   gg_trg_seeTime = CreateTrigger();
   TriggerRegisterPlayerChatEvent(gg_trg_seeTime, Player(0)!, "-time", true);
   TriggerRegisterPlayerChatEvent(gg_trg_seeTime, Player(1)!, "-time", true);

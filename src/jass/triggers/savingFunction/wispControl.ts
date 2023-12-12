@@ -1,34 +1,27 @@
-//===========================================================================
-// Trigger: wispControl
-//===========================================================================
-const Trig_wispControl_Conditions = (): boolean => {
-  if ((!(GetUnitTypeId(GetTriggerUnit()!) === FourCC("e000")))) {
-    return false;
-  }
-  return true;
-};
+import { president } from "../../../modes/president";
 
-const Trig_wispControl_Actions = (): void => {
-  SetUnitPosition(
-    GetTriggerUnit()!,
-    GetRectCenterX(wispArea),
-    GetRectCenterY(wispArea),
-  );
-};
-
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_wispControl: () => void;
 }
-InitTrig_wispControl = (): void => {
+InitTrig_wispControl = () => {
   gg_trg_wispControl = CreateTrigger();
   TriggerRegisterLeaveRectSimple(gg_trg_wispControl, gg_rct_Fence_Zone);
   TriggerRegisterLeaveRectSimple(gg_trg_wispControl, gg_rct_Glory_Hill_Fence);
   TriggerAddCondition(
     gg_trg_wispControl,
-    Condition(Trig_wispControl_Conditions),
+    Condition(() =>
+      GetUnitTypeId(GetTriggerUnit()!) === wispType &&
+      !president.enabled
+    ),
   );
-  TriggerAddAction(gg_trg_wispControl, Trig_wispControl_Actions);
+  TriggerAddAction(
+    gg_trg_wispControl,
+    () =>
+      SetUnitPosition(
+        GetTriggerUnit()!,
+        GetRectCenterX(wispArea),
+        GetRectCenterY(wispArea),
+      ),
+  );
 };

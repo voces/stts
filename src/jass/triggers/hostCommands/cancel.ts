@@ -3,19 +3,18 @@
 //===========================================================================
 // cancel
 
-const Trig_cancel_playerActions = (): void => {
+const Trig_cancel_playerActions = () => {
   udg_apr[GetConvertedPlayerId(GetEnumPlayer()!)] = 999;
 };
 
-const Trig_cancel_flipSheepLastGame = (): void => {
+const Trig_cancel_flipSheepLastGame = () => {
   udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)] =
     !(udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)]);
 };
 
-const Trig_cancel_resetSheepState = (): void => {
+const Trig_cancel_resetSheepState = () => {
   let i = 1;
-  udg_sheepCount[GetConvertedPlayerId(GetEnumPlayer()!)] =
-    udg_sheepCount[GetConvertedPlayerId(GetEnumPlayer()!)] - 1;
+  udg_sheepCount[GetConvertedPlayerId(GetEnumPlayer()!)] = udg_sheepCount[GetConvertedPlayerId(GetEnumPlayer()!)] - 1;
   while (true) {
     if (i > bj_MAX_PLAYERS) break;
     if (
@@ -29,7 +28,7 @@ const Trig_cancel_resetSheepState = (): void => {
   }
 };
 
-const Trig_cancel_Actions = (): void => {
+const Trig_cancel_Actions = () => {
   if (udg_practiceOn) {
     udg_sheepGold = 0;
     udg_wolfGold = 0;
@@ -58,7 +57,7 @@ const Trig_cancel_Actions = (): void => {
 
   if (
     udg_switchOn === false && vampOn === false && udg_practiceOn === false &&
-    udg_Teams === TEAMS_LOCK
+    udg_Teams === TEAMS_LOCK_IE_PLAYING
   ) {
     SetTimeOfDay(GetRandomReal(0, 24));
     ForForce(udg_Sheep, Trig_cancel_resetSheepState);
@@ -75,7 +74,7 @@ const Trig_cancel_Actions = (): void => {
   TriggerExecute(gg_trg_startRound);
 };
 
-const Trig_cancel_Conditions = (): boolean => {
+const Trig_cancel_Conditions = () => {
   return GetTriggerPlayer()! === udg_Custom;
 };
 
@@ -85,7 +84,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_cancel: () => void;
 }
-InitTrig_cancel = (): void => {
+InitTrig_cancel = () => {
   let i = 0;
   gg_trg_cancel = CreateTrigger();
   while (true) {

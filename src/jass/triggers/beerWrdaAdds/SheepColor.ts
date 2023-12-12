@@ -7,7 +7,7 @@
 // afk == 3 went afk before the game started
 // afk == 4, went afk during game or after being picked
 //===========================================================================
-const Trig_Sheep_Color_Func001002 = (): void => {
+const Trig_Sheep_Color_Func001002 = () => {
   SetUnitVertexColorBJ(
     GetEnumUnit()!,
     udg_SheepColorR[GetConvertedPlayerId(GetTriggerPlayer()!)],
@@ -17,7 +17,7 @@ const Trig_Sheep_Color_Func001002 = (): void => {
   );
 };
 
-const Trig_Sheep_Color_Actions = (): void => {
+const Trig_Sheep_Color_Actions = () => {
   Split(GetEventPlayerChatString()!, " ", true);
   if (myArgCount === 1) {
     if (S2R(myArg[0]) > 0) {
@@ -98,7 +98,7 @@ const Trig_Sheep_Color_Actions = (): void => {
                   "% |CFF0000FFBlue|r")))))),
   );
   ForGroupBJ(
-    GetUnitsOfPlayerAndTypeId(GetTriggerPlayer()!, FourCC("uC04"))!,
+    GetUnitsOfPlayerAndTypeId(GetTriggerPlayer()!, sheepType)!,
     Trig_Sheep_Color_Func001002,
   );
 };
@@ -109,7 +109,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_Sheep_Color: () => void;
 }
-InitTrig_Sheep_Color = (): void => {
+InitTrig_Sheep_Color = () => {
   gg_trg_Sheep_Color = CreateTrigger();
   TriggerRegisterPlayerChatEventAll(gg_trg_Sheep_Color, "-sexy", false);
   TriggerAddAction(gg_trg_Sheep_Color, Trig_Sheep_Color_Actions);

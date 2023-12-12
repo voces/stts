@@ -7,16 +7,11 @@ gg_rct_Blue_Start = nil
 gg_rct_Red_Start = nil
 gg_rct_Purple_Start = nil
 gg_rct_Yellow_Start = nil
-gg_rct_Barriade_Zone = nil
 gg_rct_grey_start = nil
 gg_rct_lb_start = nil
 gg_rct_dg_start = nil
 gg_rct_brown_start = nil
 gg_rct_pickfarm = nil
-gg_rct_north = nil
-gg_rct_west = nil
-gg_rct_south = nil
-gg_rct_east = nil
 gg_rct_Teal_Start = nil
 gg_rct_topShop1 = nil
 gg_rct_bottomShop1 = nil
@@ -155,35 +150,13 @@ SetSoundDuration(gg_snd_ReceiveGold, 589)
 SetSoundVolume(gg_snd_ReceiveGold, 127)
 end
 
-function CreateNeutralPassiveBuildings()
-local p = Player(PLAYER_NEUTRAL_PASSIVE)
-local u
-local unitID
-local t
-local life
-
-u = BlzCreateUnitWithSkin(p, FourCC("ncp3"), -256.0, -960.0, 270.000, FourCC("ncp3"))
-end
-
-function CreatePlayerBuildings()
-end
-
-function CreatePlayerUnits()
-end
-
-function CreateAllUnits()
-CreateNeutralPassiveBuildings()
-CreatePlayerBuildings()
-CreatePlayerUnits()
-end
-
 function CreateRegions()
 local we
 
-gg_rct_Fence_Zone = Rect(-640.0, -1408.0, 128.0, -512.0)
+gg_rct_Fence_Zone = Rect(-608.0, -1376.0, 96.0, -544.0)
 we = AddWeatherEffect(gg_rct_Fence_Zone, FourCC("LRaa"))
 EnableWeatherEffect(we, true)
-gg_rct_Shepard_Respawn = Rect(-480.0, -1184.0, -64.0, -768.0)
+gg_rct_Shepard_Respawn = Rect(-288.0, -992.0, -224.0, -928.0)
 gg_rct_Pink_Start = Rect(96.0, -192.0, 192.0, -96.0)
 gg_rct_Green_Start = Rect(384.0, -832.0, 448.0, -736.0)
 gg_rct_Orange_Start = Rect(352.0, -1248.0, 448.0, -1184.0)
@@ -191,26 +164,21 @@ gg_rct_Blue_Start = Rect(256.0, -1824.0, 320.0, -1728.0)
 gg_rct_Red_Start = Rect(-288.0, -1792.0, -192.0, -1696.0)
 gg_rct_Purple_Start = Rect(-800.0, -1792.0, -704.0, -1728.0)
 gg_rct_Yellow_Start = Rect(-992.0, -768.0, -896.0, -704.0)
-gg_rct_Barriade_Zone = Rect(-1248.0, -1952.0, 672.0, 64.0)
 gg_rct_grey_start = Rect(-576.0, -192.0, -512.0, -96.0)
 gg_rct_lb_start = Rect(-992.0, -320.0, -928.0, -256.0)
 gg_rct_dg_start = Rect(-992.0, -1536.0, -928.0, -1440.0)
 gg_rct_brown_start = Rect(512.0, -1600.0, 576.0, -1504.0)
 gg_rct_pickfarm = Rect(-320.0, -2656.0, -160.0, -2496.0)
-gg_rct_north = Rect(-800.0, -512.0, 384.0, -32.0)
-gg_rct_west = Rect(-1056.0, -1568.0, -640.0, -480.0)
-gg_rct_south = Rect(-832.0, -1824.0, 384.0, -1408.0)
-gg_rct_east = Rect(128.0, -1536.0, 640.0, -448.0)
 gg_rct_Teal_Start = Rect(-960.0, -1216.0, -896.0, -1120.0)
 gg_rct_topShop1 = Rect(-448.0, 3904.0, -256.0, 4160.0)
 gg_rct_bottomShop1 = Rect(-448.0, -5568.0, -256.0, -5312.0)
 gg_rct_topShop2 = Rect(-256.0, 3904.0, -128.0, 4160.0)
 gg_rct_bottomShop2 = Rect(-256.0, -5568.0, -128.0, -5312.0)
 gg_rct_unstuckZone = Rect(-3840.0, -5536.0, -3552.0, -5344.0)
-gg_rct_Rune_of_Invis = Rect(-640.0, -1088.0, -480.0, -928.0)
-gg_rct_Rune_of_Speed = Rect(-64.0, -1088.0, 96.0, -928.0)
-gg_rct_Rune_of_Mana = Rect(-352.0, -1344.0, -192.0, -1184.0)
-gg_rct_Rune_of_Omniscience = Rect(-352.0, -768.0, -192.0, -608.0)
+gg_rct_Rune_of_Invis = Rect(-576.0, -992.0, -480.0, -928.0)
+gg_rct_Rune_of_Speed = Rect(-32.0, -992.0, 64.0, -928.0)
+gg_rct_Rune_of_Mana = Rect(-288.0, -1312.0, -224.0, -1216.0)
+gg_rct_Rune_of_Omniscience = Rect(-288.0, -704.0, -224.0, -608.0)
 gg_rct_Maroon_Start = Rect(-960.0, -544.0, -864.0, -448.0)
 gg_rct_Navy_Start = Rect(352.0, -448.0, 448.0, -352.0)
 gg_rct_Turquoise_Start = Rect(-768.0, -224.0, -672.0, -128.0)
@@ -241,7 +209,7 @@ gg_rct_Blight_Left_4 = Rect(-2656.0, -2848.0, -2080.0, 800.0)
 gg_rct_Blight_Bot_4 = Rect(-2112.0, -2848.0, 1440.0, -2432.0)
 gg_rct_Revo_Camera_Bounds = Rect(-4608.0, -5504.0, 4992.0, 4096.0)
 gg_rct_Glory_Hill_Camera_Bounds = Rect(8800.0, -5504.0, 16992.0, 3200.0)
-gg_rct_Glory_Hill_Fence = Rect(12544.0, -1408.0, 13312.0, -640.0)
+gg_rct_Glory_Hill_Fence = Rect(12576.0, -1376.0, 13280.0, -672.0)
 we = AddWeatherEffect(gg_rct_Glory_Hill_Fence, FourCC("LRaa"))
 EnableWeatherEffect(we, true)
 gg_rct_gh1 = Rect(13568.0, -1344.0, 13632.0, -1280.0)
@@ -365,27 +333,27 @@ SetPlayerStartLocation(Player(1), 1)
 SetPlayerColor(Player(1), ConvertPlayerColor(1))
 SetPlayerRacePreference(Player(1), RACE_PREF_HUMAN)
 SetPlayerRaceSelectable(Player(1), false)
-SetPlayerController(Player(1), MAP_CONTROL_USER)
+SetPlayerController(Player(1), MAP_CONTROL_COMPUTER)
 SetPlayerStartLocation(Player(2), 2)
 SetPlayerColor(Player(2), ConvertPlayerColor(2))
 SetPlayerRacePreference(Player(2), RACE_PREF_HUMAN)
 SetPlayerRaceSelectable(Player(2), false)
-SetPlayerController(Player(2), MAP_CONTROL_USER)
+SetPlayerController(Player(2), MAP_CONTROL_COMPUTER)
 SetPlayerStartLocation(Player(3), 3)
 SetPlayerColor(Player(3), ConvertPlayerColor(3))
 SetPlayerRacePreference(Player(3), RACE_PREF_HUMAN)
 SetPlayerRaceSelectable(Player(3), false)
-SetPlayerController(Player(3), MAP_CONTROL_USER)
+SetPlayerController(Player(3), MAP_CONTROL_COMPUTER)
 SetPlayerStartLocation(Player(4), 4)
 SetPlayerColor(Player(4), ConvertPlayerColor(4))
 SetPlayerRacePreference(Player(4), RACE_PREF_HUMAN)
 SetPlayerRaceSelectable(Player(4), false)
-SetPlayerController(Player(4), MAP_CONTROL_USER)
+SetPlayerController(Player(4), MAP_CONTROL_COMPUTER)
 SetPlayerStartLocation(Player(5), 5)
 SetPlayerColor(Player(5), ConvertPlayerColor(5))
 SetPlayerRacePreference(Player(5), RACE_PREF_HUMAN)
 SetPlayerRaceSelectable(Player(5), false)
-SetPlayerController(Player(5), MAP_CONTROL_USER)
+SetPlayerController(Player(5), MAP_CONTROL_COMPUTER)
 SetPlayerStartLocation(Player(6), 6)
 SetPlayerColor(Player(6), ConvertPlayerColor(6))
 SetPlayerRacePreference(Player(6), RACE_PREF_HUMAN)
@@ -804,7 +772,6 @@ SetMapMusic("Music", true, 0)
 InitSounds()
 CreateRegions()
 InitUpgrades()
-CreateAllUnits()
 InitBlizzard()
 InitGlobals()
 end

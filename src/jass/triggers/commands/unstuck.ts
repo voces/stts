@@ -1,9 +1,9 @@
 //===========================================================================
 // Trigger: unstuck
 //===========================================================================
-const Trig_unstuck_Actions = (): void => {
+const Trig_unstuck_Actions = () => {
   const p = GetTriggerPlayer()!;
-  let u: unit | undefined = CreateUnit(p, unstuck, 0, 0, 270)!;
+  let u: unit | undefined = CreateUnit(p, unstuckType, 0, 0, 270)!;
   const g = GetUnitsSelectedAll(p)!;
   SelectUnitForPlayerSingle(u, p);
   ForceUICancelBJ(p);
@@ -24,7 +24,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_unstuck: () => void;
 }
-InitTrig_unstuck = (): void => {
+InitTrig_unstuck = () => {
   let i = 0;
   gg_trg_unstuck = CreateTrigger();
   while (true) {

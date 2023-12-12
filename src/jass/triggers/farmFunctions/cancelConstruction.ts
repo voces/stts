@@ -1,28 +1,28 @@
 //===========================================================================
 // Trigger: cancelConstruction
 //===========================================================================
-const Trig_cancelConstruction_Conditions = (): boolean => {
+const Trig_cancelConstruction_Conditions = () => {
   if ((!(IsUnitType(GetCancelledStructure()!, UNIT_TYPE_STRUCTURE) === true))) {
     return false;
   }
   return true;
 };
 
-const Trig_cancelConstruction_Func003C = (): boolean => {
+const Trig_cancelConstruction_Func003C = () => {
   if ((!(udg_farmCount[udg_atempint] > 0))) {
     return false;
   }
   return true;
 };
 
-const Trig_cancelConstruction_Func005Func001C = (): boolean => {
+const Trig_cancelConstruction_Func005Func001C = () => {
   if ((!(udg_dummyWisps > 0))) {
     return false;
   }
   return true;
 };
 
-const Trig_cancelConstruction_Actions = (): void => {
+const Trig_cancelConstruction_Actions = () => {
   udg_atempint = GetConvertedPlayerId(
     GetOwningPlayer(GetCancelledStructure()!),
   );
@@ -61,7 +61,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_cancelConstruction: () => void;
 }
-InitTrig_cancelConstruction = (): void => {
+InitTrig_cancelConstruction = () => {
   gg_trg_cancelConstruction = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(
     gg_trg_cancelConstruction,

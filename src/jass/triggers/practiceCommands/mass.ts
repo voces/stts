@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: mass
 //===========================================================================
-const Trig_mass_Conditions = (): boolean => {
+const Trig_mass_Conditions = () => {
   if ((!(GetTriggerPlayer()! === udg_Custom))) {
     return false;
   }
@@ -11,21 +11,21 @@ const Trig_mass_Conditions = (): boolean => {
   return true;
 };
 
-const Trig_mass_Func005Func001C = (): boolean => {
+const Trig_mass_Func005Func001C = () => {
   if ((!(ModuloInteger(R2I(udg_massTime), 60) <= 9))) {
     return false;
   }
   return true;
 };
 
-const Trig_mass_Func005C = (): boolean => {
+const Trig_mass_Func005C = () => {
   if ((!(ModuloInteger(R2I(udg_massTime), 60) === 0))) {
     return false;
   }
   return true;
 };
 
-const Trig_mass_Actions = (): void => {
+const Trig_mass_Actions = () => {
   udg_massTime = I2R(S2I(SubStringBJ(GetEventPlayerChatString()!, 7, 9)!)) * 1;
   udg_massTimeString = (I2S(R2I(udg_massTime / 60)) + ":") +
     I2S(R2I(ModuloReal(udg_massTime, 60)));
@@ -46,7 +46,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_mass: () => void;
 }
-InitTrig_mass = (): void => {
+InitTrig_mass = () => {
   gg_trg_mass = CreateTrigger();
   TriggerRegisterPlayerChatEvent(gg_trg_mass, Player(0)!, "-mass ", false);
   TriggerRegisterPlayerChatEvent(gg_trg_mass, Player(1)!, "-mass ", false);

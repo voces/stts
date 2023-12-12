@@ -8,24 +8,24 @@
 // afk == 4, went afk during game or after being picked (share control)
 //===========================================================================
 
-const Trig_setafk_Func001001001 = (): boolean => {
+const Trig_setafk_Func001001001 = () => {
   return GetBooleanAnd(
     GetPlayerSlotState(GetFilterPlayer()!) === PLAYER_SLOT_STATE_PLAYING,
     GetBooleanAnd(
       GetPlayerSlotState(GetFilterPlayer()!) !== PLAYER_SLOT_STATE_LEFT,
-      udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === 0,
+      udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === AFK_PLAYING,
     ),
   );
 };
 
-const Trig_setafk_Func001Func001Func003C = (): boolean => {
+const Trig_setafk_Func001Func001Func003C = () => {
   if ((!(udg_Teams !== 3))) {
     return false;
   }
   return true;
 };
 
-const Trig_setafk_Func001Func001C = (): boolean => {
+const Trig_setafk_Func001Func001C = () => {
   if (
     (!((I2R(udg_apr[GetConvertedPlayerId(GetEnumPlayer()!)]) /
       (TimerGetElapsed(udg_Timer) / 60)) <= 5))
@@ -35,15 +35,15 @@ const Trig_setafk_Func001Func001C = (): boolean => {
   if ((!(GetPlayerController(GetEnumPlayer()!) === MAP_CONTROL_USER))) {
     return false;
   }
-  if ((!(udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === 0))) {
+  if ((!(udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === AFK_PLAYING))) {
     return false;
   }
   return true;
 };
 
-const Trig_setafk_Func001A = (): void => {
+const Trig_setafk_Func001A = () => {
   if ((Trig_setafk_Func001Func001C())) {
-    udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] = 3;
+    udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] = AFK_AFK;
     LeaderboardRemovePlayerItemBJ(
       GetEnumPlayer()!,
       GetLastCreatedLeaderboard()!,
@@ -66,7 +66,7 @@ const Trig_setafk_Func001A = (): void => {
   }
 };
 
-const Trig_setafk_Actions = (): void => {
+const Trig_setafk_Actions = () => {
   ForForce(
     GetPlayersMatching(Condition(Trig_setafk_Func001001001))!,
     Trig_setafk_Func001A,
@@ -81,7 +81,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_setafk: () => void;
 }
-InitTrig_setafk = (): void => {
+InitTrig_setafk = () => {
   gg_trg_setafk = CreateTrigger();
   TriggerAddAction(gg_trg_setafk, Trig_setafk_Actions);
 };

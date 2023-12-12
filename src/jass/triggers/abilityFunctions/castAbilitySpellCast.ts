@@ -1,8 +1,9 @@
 //===========================================================================
 // Trigger: castAbilitySpellCast
 //===========================================================================
-const Trig_castAbility_Actions = (): void => {
-  const p = GetOwningPlayer(GetTriggerUnit()!);
+const Trig_castAbility_Actions = () => {
+  const u = GetTriggerUnit()!;
+  const p = GetOwningPlayer(u);
   if (
     GetSpellAbilityId() === FourCC("A00G") &&
     udg_permanentHide[GetConvertedPlayerId(p)] === false
@@ -17,9 +18,12 @@ const Trig_castAbility_Actions = (): void => {
     enforceTeamResourceMultiboard();
   } else if (
     GetSpellAbilityId() === FourCC("A00M") &&
-    GetUnitAbilityLevel(GetTriggerUnit()!, FourCC("B005")) > 0
+    GetUnitAbilityLevel(u, FourCC("B005")) > 0
   ) {
     UnitRemoveBuffBJ(FourCC("B005"), GetSpellAbilityUnit()!);
+  } else if (GetSpellAbilityId() === FourCC("A029")) {
+    IssueImmediateOrder(u, "stop");
+    SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) + 10);
   }
 };
 
@@ -29,7 +33,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_castAbilitySpellCast: () => void;
 }
-InitTrig_castAbilitySpellCast = (): void => {
+InitTrig_castAbilitySpellCast = () => {
   gg_trg_castAbilitySpellCast = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(
     gg_trg_castAbilitySpellCast,

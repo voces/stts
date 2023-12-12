@@ -1,14 +1,14 @@
 //===========================================================================
 // Trigger: instanceIllusion
 //===========================================================================
-const Trig_instanceIllusion_Conditions = (): boolean => {
+const Trig_instanceIllusion_Conditions = () => {
   if ((!(GetTrainedUnitType() === FourCC("n004")))) {
     return false;
   }
   return true;
 };
 
-const Trig_instanceIllusion_Actions = (): void => {
+const Trig_instanceIllusion_Actions = () => {
   ReplaceUnitBJ(
     GetTriggerUnit()!,
     FourCC("n004"),
@@ -36,7 +36,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_instanceIllusion: () => void;
 }
-InitTrig_instanceIllusion = (): void => {
+InitTrig_instanceIllusion = () => {
   gg_trg_instanceIllusion = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(
     gg_trg_instanceIllusion,

@@ -1,35 +1,35 @@
 //===========================================================================
 // Trigger: Runes Reset
 //===========================================================================
-const Trig_Runes_Reset_Func001Func002Func001Func001C = (): boolean => {
+const Trig_Runes_Reset_Func001Func002Func001Func001C = () => {
   if ((!(GetItemTypeId(GetManipulatedItem()!) === FourCC("I00K")))) {
     return false;
   }
   return true;
 };
 
-const Trig_Runes_Reset_Func001Func002Func001C = (): boolean => {
+const Trig_Runes_Reset_Func001Func002Func001C = () => {
   if ((!(GetItemTypeId(GetManipulatedItem()!) === FourCC("I00J")))) {
     return false;
   }
   return true;
 };
 
-const Trig_Runes_Reset_Func001Func002C = (): boolean => {
+const Trig_Runes_Reset_Func001Func002C = () => {
   if ((!(GetItemTypeId(GetManipulatedItem()!) === FourCC("I00P")))) {
     return false;
   }
   return true;
 };
 
-const Trig_Runes_Reset_Func001C = (): boolean => {
+const Trig_Runes_Reset_Func001C = () => {
   if ((!(GetItemTypeId(GetManipulatedItem()!) === FourCC("I00O")))) {
     return false;
   }
   return true;
 };
 
-const Trig_Runes_Reset_Actions = (): void => {
+const Trig_Runes_Reset_Actions = () => {
   if ((Trig_Runes_Reset_Func001C())) {
     StartTimerBJ(udg_RuneTimer[1], false, 240);
   } else {
@@ -53,7 +53,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_Runes_Reset: () => void;
 }
-InitTrig_Runes_Reset = (): void => {
+InitTrig_Runes_Reset = () => {
   gg_trg_Runes_Reset = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(
     gg_trg_Runes_Reset,

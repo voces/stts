@@ -1,8 +1,8 @@
 //===========================================================================
 // Trigger: Last Sheep Standing
 //===========================================================================
-const Trig_Last_Sheep_Standing_Conditions = (): boolean => {
-  if ((!(GetUnitTypeId(GetDyingUnit()!) === FourCC("uC04")))) {
+const Trig_Last_Sheep_Standing_Conditions = () => {
+  if ((!(GetUnitTypeId(GetDyingUnit()!) === sheepType))) {
     return false;
   }
   if ((!(IsUnitIllusionBJ(GetDyingUnit()!) === false))) {
@@ -17,16 +17,15 @@ const Trig_Last_Sheep_Standing_Conditions = (): boolean => {
   return true;
 };
 
-const Trig_Last_Sheep_Standing_Func001Func002C = (): boolean => {
+const Trig_Last_Sheep_Standing_Func001Func002C = () => {
   if ((!(CountPlayersInForceBJ(udg_Spirit) >= 1))) {
     return false;
   }
   return true;
 };
 
-const Trig_Last_Sheep_Standing_Func001A = (): void => {
-  udg_lssCounter[GetConvertedPlayerId(GetEnumPlayer()!)] =
-    udg_lssCounter[GetConvertedPlayerId(GetEnumPlayer()!)] + 1;
+const Trig_Last_Sheep_Standing_Func001A = () => {
+  udg_lssCounter[GetConvertedPlayerId(GetEnumPlayer()!)] = udg_lssCounter[GetConvertedPlayerId(GetEnumPlayer()!)] + 1;
   if ((Trig_Last_Sheep_Standing_Func001Func002C())) {
     DisplayTimedTextToForce(
       GetPlayersAll()!,
@@ -38,7 +37,7 @@ const Trig_Last_Sheep_Standing_Func001A = (): void => {
   }
 };
 
-const Trig_Last_Sheep_Standing_Actions = (): void => {
+const Trig_Last_Sheep_Standing_Actions = () => {
   ForForce(udg_Sheep, Trig_Last_Sheep_Standing_Func001A);
 };
 
@@ -48,7 +47,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_Last_Sheep_Standing: () => void;
 }
-InitTrig_Last_Sheep_Standing = (): void => {
+InitTrig_Last_Sheep_Standing = () => {
   gg_trg_Last_Sheep_Standing = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(
     gg_trg_Last_Sheep_Standing,

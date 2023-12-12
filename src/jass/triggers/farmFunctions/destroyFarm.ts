@@ -1,28 +1,28 @@
 //===========================================================================
 // Trigger: destroyFarm
 //===========================================================================
-const Trig_destroyFarm_Conditions = (): boolean => {
+const Trig_destroyFarm_Conditions = () => {
   if ((!(GetTrainedUnitType() === FourCC("nC13")))) {
     return false;
   }
   return true;
 };
 
-const Trig_destroyFarm_Func002C = (): boolean => {
+const Trig_destroyFarm_Func002C = () => {
   if ((!(udg_farmCount[udg_atempint] > 0))) {
     return false;
   }
   return true;
 };
 
-const Trig_destroyFarm_Func005Func001C = (): boolean => {
+const Trig_destroyFarm_Func005Func001C = () => {
   if ((!(udg_dummyWisps > 0))) {
     return false;
   }
   return true;
 };
 
-const Trig_destroyFarm_Actions = (): void => {
+const Trig_destroyFarm_Actions = () => {
   udg_atempint = GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()!));
   if ((Trig_destroyFarm_Func002C())) {
     udg_farmCount[udg_atempint] = udg_farmCount[udg_atempint] - 1;
@@ -60,7 +60,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_destroyFarm: () => void;
 }
-InitTrig_destroyFarm = (): void => {
+InitTrig_destroyFarm = () => {
   gg_trg_destroyFarm = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(
     gg_trg_destroyFarm,

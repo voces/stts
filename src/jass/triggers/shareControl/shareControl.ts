@@ -1,17 +1,17 @@
 //===========================================================================
 // Trigger: shareControl
 //===========================================================================
-const Trig_shareControl_Conditions = (): boolean => {
+const Trig_shareControl_Conditions = () => {
   if ((!(udg_shareOn === true))) {
     return false;
   }
-  if ((!(udg_Teams === 2))) {
+  if ((!(udg_Teams === TEAMS_LOCK_IE_PLAYING))) {
     return false;
   }
   return true;
 };
 
-const Trig_shareControl_Func003Func001Func001C = (): boolean => {
+const Trig_shareControl_Func003Func001Func001C = () => {
   if (
     (!(GetPlayerAlliance(
       ConvertedPlayer(GetForLoopIndexA())!,
@@ -24,7 +24,7 @@ const Trig_shareControl_Func003Func001Func001C = (): boolean => {
   return true;
 };
 
-const Trig_shareControl_Actions = (): void => {
+const Trig_shareControl_Actions = () => {
   bj_forLoopAIndex = 1;
   bj_forLoopAIndexEnd = 24;
   while (true) {
@@ -52,7 +52,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_shareControl: () => void;
 }
-InitTrig_shareControl = (): void => {
+InitTrig_shareControl = () => {
   gg_trg_shareControl = CreateTrigger();
   TriggerRegisterPlayerAllianceChange(
     gg_trg_shareControl,

@@ -1,17 +1,23 @@
 //===========================================================================
 // Trigger: giveGold
 //===========================================================================
-const Trig_giveGold_Func007C = (): boolean => {
-  if ((udg_AFK[S2I(SubStringBJ(GetEventPlayerChatString()!, 2, 3)!)] === 0)) {
+const Trig_giveGold_Func007C = () => {
+  if (
+    (udg_AFK[S2I(SubStringBJ(GetEventPlayerChatString()!, 2, 3)!)] ===
+      AFK_PLAYING)
+  ) {
     return true;
   }
-  if ((udg_AFK[S2I(SubStringBJ(GetEventPlayerChatString()!, 2, 3)!)] === 4)) {
+  if (
+    (udg_AFK[S2I(SubStringBJ(GetEventPlayerChatString()!, 2, 3)!)] ===
+      AFK_AFK_DURING_ROUND)
+  ) {
     return true;
   }
   return false;
 };
 
-const Trig_giveGold_Conditions = (): boolean => {
+const Trig_giveGold_Conditions = () => {
   if (
     (!(GetPlayerState(GetTriggerPlayer()!, PLAYER_STATE_RESOURCE_GOLD) > 0))
   ) {
@@ -20,7 +26,7 @@ const Trig_giveGold_Conditions = (): boolean => {
   if ((!(udg_isAnon === false))) {
     return false;
   }
-  if ((!(udg_Teams === 2))) {
+  if ((!(udg_Teams === TEAMS_LOCK_IE_PLAYING))) {
     return false;
   }
   if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 2, 3)!) > 0))) {
@@ -46,7 +52,7 @@ const Trig_giveGold_Conditions = (): boolean => {
   return true;
 };
 
-const Trig_giveGold_Func003Func004C = (): boolean => {
+const Trig_giveGold_Func003Func004C = () => {
   if (
     (!(GetPlayerState(GetTriggerPlayer()!, PLAYER_STATE_RESOURCE_GOLD) <
       udg_atempint2))
@@ -56,14 +62,14 @@ const Trig_giveGold_Func003Func004C = (): boolean => {
   return true;
 };
 
-const Trig_giveGold_Func003Func005C = (): boolean => {
+const Trig_giveGold_Func003Func005C = () => {
   if ((!(udg_atempint2 > 0))) {
     return false;
   }
   return true;
 };
 
-const Trig_giveGold_Func003C = (): boolean => {
+const Trig_giveGold_Func003C = () => {
   if (
     (!(IsPlayerAlly(
       ConvertedPlayer(S2I(SubStringBJ(GetEventPlayerChatString()!, 2, 3)!))!,
@@ -95,7 +101,7 @@ const Trig_giveGold_Func003C = (): boolean => {
   return true;
 };
 
-const Trig_giveGold_Actions = (): void => {
+const Trig_giveGold_Actions = () => {
   if ((Trig_giveGold_Func003C())) {
     udg_giveGold = false;
     udg_atempint = S2I(SubStringBJ(GetEventPlayerChatString()!, 2, 3)!);
@@ -124,7 +130,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_giveGold: () => void;
 }
-InitTrig_giveGold = (): void => {
+InitTrig_giveGold = () => {
   gg_trg_giveGold = CreateTrigger();
   TriggerRegisterPlayerChatEvent(gg_trg_giveGold, Player(0)!, "-", false);
   TriggerRegisterPlayerChatEvent(gg_trg_giveGold, Player(1)!, "-", false);

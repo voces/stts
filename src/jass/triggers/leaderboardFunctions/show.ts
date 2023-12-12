@@ -1,14 +1,14 @@
 //===========================================================================
 // Trigger: show
 //===========================================================================
-const Trig_show_Func001Func001C = (): boolean => {
-  if ((!(udg_Teams === 2))) {
+const Trig_show_Func001Func001C = () => {
+  if ((!(udg_Teams === TEAMS_LOCK_IE_PLAYING))) {
     return false;
   }
   return true;
 };
 
-const Trig_show_Func001C = (): boolean => {
+const Trig_show_Func001C = () => {
   if ((!(GetEventPlayerChatString()! === "-s"))) {
     return false;
   }
@@ -18,7 +18,7 @@ const Trig_show_Func001C = (): boolean => {
   return true;
 };
 
-const Trig_show_Actions = (): void => {
+const Trig_show_Actions = () => {
   if (!(Trig_show_Func001C())) {
     if ((Trig_show_Func001Func001C())) {
       LeaderboardDisplayBJ(true, PlayerGetLeaderboardBJ(GetTriggerPlayer()!)!);
@@ -33,7 +33,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_show: () => void;
 }
-InitTrig_show = (): void => {
+InitTrig_show = () => {
   gg_trg_show = CreateTrigger();
   TriggerRegisterPlayerChatEvent(gg_trg_show, Player(0)!, "-show", true);
   TriggerRegisterPlayerChatEvent(gg_trg_show, Player(1)!, "-show", true);

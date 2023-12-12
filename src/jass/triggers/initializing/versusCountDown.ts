@@ -1,14 +1,14 @@
 //===========================================================================
 // Trigger: versusCountDown
 //===========================================================================
-const Trig_versusCountDown_Func002Func001C = (): boolean => {
+const Trig_versusCountDown_Func002Func001C = () => {
   if ((!(udg_versus === 1))) {
     return false;
   }
   return true;
 };
 
-const Trig_versusCountDown_Func002Func006Func001Func002C = (): boolean => {
+const Trig_versusCountDown_Func002Func006Func001Func002C = () => {
   if (
     (!(udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)] === true))
   ) {
@@ -17,8 +17,8 @@ const Trig_versusCountDown_Func002Func006Func001Func002C = (): boolean => {
   return true;
 };
 
-const Trig_versusCountDown_Func002Func006Func001C = (): boolean => {
-  if ((!(udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === 0))) {
+const Trig_versusCountDown_Func002Func006Func001C = () => {
+  if ((!(udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === AFK_PLAYING))) {
     return false;
   }
   if (
@@ -32,7 +32,7 @@ const Trig_versusCountDown_Func002Func006Func001C = (): boolean => {
   return true;
 };
 
-const Trig_versusCountDown_Func002Func006A = (): void => {
+const Trig_versusCountDown_Func002Func006A = () => {
   if ((Trig_versusCountDown_Func002Func006Func001C())) {
     if ((Trig_versusCountDown_Func002Func006Func001Func002C())) {
       ForceAddPlayerSimple(GetEnumPlayer()!, udg_Wolf);
@@ -42,14 +42,14 @@ const Trig_versusCountDown_Func002Func006A = (): void => {
   }
 };
 
-const Trig_versusCountDown_Func002C = (): boolean => {
+const Trig_versusCountDown_Func002C = () => {
   if ((!(udg_versus === 2))) {
     return false;
   }
   return true;
 };
 
-const Trig_versusCountDown_Func004C = (): boolean => {
+const Trig_versusCountDown_Func004C = () => {
   if ((!(udg_versus > 0))) {
     return false;
   }
@@ -59,7 +59,7 @@ const Trig_versusCountDown_Func004C = (): boolean => {
   return true;
 };
 
-const Trig_versusCountDown_Actions = (): void => {
+const Trig_versusCountDown_Actions = () => {
   ClearTextMessagesBJ(GetPlayersAll()!);
   if ((Trig_versusCountDown_Func002C())) {
     udg_atempstring = (I2S(R2I(udg_gameTime[1] / 60)) + ":") +
@@ -71,8 +71,7 @@ const Trig_versusCountDown_Actions = (): void => {
         StringLength(udg_atempstring),
       ) === ".")
     ) {
-      udg_atempstring =
-        SubStringBJ(udg_atempstring, 1, StringLength(udg_atempstring) - 2) +
+      udg_atempstring = SubStringBJ(udg_atempstring, 1, StringLength(udg_atempstring) - 2) +
         ("0" +
           SubStringBJ(
             udg_atempstring,
@@ -106,7 +105,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_versusCountDown: () => void;
 }
-InitTrig_versusCountDown = (): void => {
+InitTrig_versusCountDown = () => {
   gg_trg_versusCountDown = CreateTrigger();
   TriggerAddAction(gg_trg_versusCountDown, Trig_versusCountDown_Actions);
 };

@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: transfer
 //===========================================================================
-const Trig_transfer_Func001C = (): boolean => {
+const Trig_transfer_Func001C = () => {
   if ((GetTriggerPlayer()! === udg_Custom)) {
     return true;
   }
@@ -11,7 +11,7 @@ const Trig_transfer_Func001C = (): boolean => {
   return false;
 };
 
-const Trig_transfer_Conditions = (): boolean => {
+const Trig_transfer_Conditions = () => {
   if ((!Trig_transfer_Func001C())) {
     return false;
   }
@@ -24,14 +24,14 @@ const Trig_transfer_Conditions = (): boolean => {
   return true;
 };
 
-const Trig_transfer_Func003Func004C = (): boolean => {
-  if ((!(udg_Teams === 3))) {
+const Trig_transfer_Func003Func004C = () => {
+  if ((!(udg_Teams === TEAMS_PICK))) {
     return false;
   }
   return true;
 };
 
-const Trig_transfer_Func003C = (): boolean => {
+const Trig_transfer_Func003C = () => {
   if (
     (!(GetPlayerSlotState(ConvertedPlayer(udg_transfer)!) ===
       PLAYER_SLOT_STATE_PLAYING))
@@ -56,7 +56,7 @@ const Trig_transfer_Func003C = (): boolean => {
   return true;
 };
 
-const Trig_transfer_Actions = (): void => {
+const Trig_transfer_Actions = () => {
   udg_transfer = S2I(SubStringBJ(GetEventPlayerChatString()!, 11, 12)!);
   if ((Trig_transfer_Func003C())) {
     udg_anactualtempplayer = udg_Custom;
@@ -103,7 +103,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_transfer: () => void;
 }
-InitTrig_transfer = (): void => {
+InitTrig_transfer = () => {
   gg_trg_transfer = CreateTrigger();
   TriggerRegisterPlayerChatEvent(
     gg_trg_transfer,

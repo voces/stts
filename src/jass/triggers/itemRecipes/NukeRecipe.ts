@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: Nuke Recipe
 //===========================================================================
-const Trig_Nuke_Recipe_Conditions = (): boolean => {
+const Trig_Nuke_Recipe_Conditions = () => {
   if ((!(GetItemTypeId(GetManipulatedItem()!) === FourCC("I002")))) {
     return false;
   }
@@ -11,7 +11,7 @@ const Trig_Nuke_Recipe_Conditions = (): boolean => {
   return true;
 };
 
-const Trig_Nuke_Recipe_Func004Func001C = (): boolean => {
+const Trig_Nuke_Recipe_Func004Func001C = () => {
   if (
     (!(GetItemTypeId(
       UnitItemInSlotBJ(GetTriggerUnit()!, GetForLoopIndexA())!,
@@ -22,14 +22,14 @@ const Trig_Nuke_Recipe_Func004Func001C = (): boolean => {
   return true;
 };
 
-const Trig_Nuke_Recipe_Func005C = (): boolean => {
+const Trig_Nuke_Recipe_Func005C = () => {
   if ((!(udg_atempint >= 3))) {
     return false;
   }
   return true;
 };
 
-const Trig_Nuke_Recipe_Actions = (): void => {
+const Trig_Nuke_Recipe_Actions = () => {
   udg_atempint = 0;
   bj_forLoopAIndex = 1;
   bj_forLoopAIndexEnd = 6;
@@ -61,7 +61,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_Nuke_Recipe: () => void;
 }
-InitTrig_Nuke_Recipe = (): void => {
+InitTrig_Nuke_Recipe = () => {
   gg_trg_Nuke_Recipe = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(
     gg_trg_Nuke_Recipe,

@@ -2,7 +2,7 @@
 // Trigger: autocontrol
 //===========================================================================
 
-const Trig_autocontrol_Actions = (): void => {
+const Trig_autocontrol_Actions = () => {
   const enabled = !(udg_autocontrol[GetPlayerId(GetTriggerPlayer()!)]);
   udg_autocontrol[GetPlayerId(GetTriggerPlayer()!)] = enabled;
 
@@ -33,7 +33,7 @@ const Trig_autocontrol_Actions = (): void => {
   );
 };
 
-const Trig_autocontrol_load = (): void => {
+const Trig_autocontrol_load = () => {
   let s = s__File_readEx(s__File_open("revo/autocontrol.txt"), true);
   if (s == null) {
     s = "false";
@@ -41,7 +41,7 @@ const Trig_autocontrol_load = (): void => {
   BlzSendSyncData("autocontrol", s);
 };
 
-const Trig_autocontrol_sync = (): void => {
+const Trig_autocontrol_sync = () => {
   udg_autocontrol[GetPlayerId(GetTriggerPlayer()!)] = S2B(
     BlzGetTriggerSyncData()!,
   );
@@ -53,7 +53,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_autocontrol: () => void;
 }
-InitTrig_autocontrol = (): void => {
+InitTrig_autocontrol = () => {
   const t = CreateTrigger();
   const s = CreateTrigger();
   let i = 0;

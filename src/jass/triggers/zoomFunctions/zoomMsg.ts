@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: zoomMsg
 //===========================================================================
-const Trig_zoomMsg_Actions = (): void => {
+const Trig_zoomMsg_Actions = () => {
   udg_atempplayer = GetForceOfPlayer(GetTriggerPlayer()!)!;
   DisplayTimedTextToForce(
     udg_atempplayer,
@@ -27,7 +27,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_zoomMsg: () => void;
 }
-InitTrig_zoomMsg = (): void => {
+InitTrig_zoomMsg = () => {
   gg_trg_zoomMsg = CreateTrigger();
   TriggerRegisterPlayerChatEvent(gg_trg_zoomMsg, Player(0)!, "-z", true);
   TriggerRegisterPlayerChatEvent(gg_trg_zoomMsg, Player(1)!, "-z", true);

@@ -1,31 +1,17 @@
 //===========================================================================
 // Trigger: createWolves
 //===========================================================================
-const Trig_createWolves_Func004Func001C = (): boolean => {
+const Trig_createWolves_Func004Func001C = () => {
   if ((!(udg_practiceOn === false))) {
     return false;
   }
-  if ((!(udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === 0))) {
+  if ((!(udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === AFK_PLAYING))) {
     return false;
   }
   return true;
 };
 
-const Trig_createWolves_Func004Func003C = (): boolean => {
-  if ((!(udg_freakHotkeys[GetConvertedPlayerId(GetEnumPlayer()!)] === true))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_createWolves_Func004Func004C = (): boolean => {
-  if ((!(udg_practiceOn === false))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_createWolves_Func004A = (): void => {
+const Trig_createWolves_Func004A = () => {
   if ((Trig_createWolves_Func004Func001C())) {
     PanCameraToTimedForPlayer(
       GetEnumPlayer()!,
@@ -36,21 +22,18 @@ const Trig_createWolves_Func004A = (): void => {
   }
   bj_lastCreatedUnit = CreateUnit(
     GetEnumPlayer()!,
-    shep,
+    shepType,
     GetRectCenterX(wolfSpawn),
     GetRectCenterY(wolfSpawn),
     270,
   );
-  if ((Trig_createWolves_Func004Func003C())) {
+  if (udg_freakHotkeys[GetConvertedPlayerId(GetEnumPlayer()!)]) {
     UnitRemoveAbilityBJ(FourCC("A00S"), GetLastCreatedUnit()!);
     UnitRemoveAbilityBJ(FourCC("A018"), GetLastCreatedUnit()!);
     UnitAddAbilityBJ(FourCC("A01H"), GetLastCreatedUnit()!);
     UnitAddAbilityBJ(FourCC("A01F"), GetLastCreatedUnit()!);
   }
-  if ((Trig_createWolves_Func004Func004C())) {
-    SelectUnitForPlayerSingle(GetLastCreatedUnit()!, GetEnumPlayer()!);
-    ForceUICancelBJ(GetEnumPlayer()!);
-  } else {
+  if (udg_practiceOn) {
     UnitRemoveAbilityBJ(FourCC("A00V"), GetLastCreatedUnit()!);
     SetUnitOwner(
       GetLastCreatedUnit()!,
@@ -58,26 +41,22 @@ const Trig_createWolves_Func004A = (): void => {
       false,
     );
     IssueImmediateOrderBJ(GetLastCreatedUnit()!, "holdposition");
+  } else {
+    SelectUnitForPlayerSingle(GetLastCreatedUnit()!, GetEnumPlayer()!);
+    ForceUICancelBJ(GetEnumPlayer()!);
   }
   SuspendHeroXPBJ(false, GetLastCreatedUnit()!);
   udg_unit2[GetConvertedPlayerId(GetEnumPlayer()!)] = GetLastCreatedUnit()!;
 };
 
-const Trig_createWolves_Func005A = (): void => {
+const Trig_createWolves_Func005A = () => {
   udg_totalFarmCountBeforeWolves[GetConvertedPlayerId(GetEnumPlayer()!)] =
     udg_totalFarmCountBeforeWolves[GetConvertedPlayerId(GetEnumPlayer()!)] +
     udg_farmCount[GetConvertedPlayerId(GetEnumPlayer()!)];
 };
 
-const Trig_createWolves_Func010Func003Func001C = (): boolean => {
-  if ((!(udg_firstRound[GetConvertedPlayerId(GetEnumPlayer()!)] === true))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_createWolves_Func010Func003A = (): void => {
-  if ((Trig_createWolves_Func010Func003Func001C())) {
+const Trig_createWolves_Func010Func003A = () => {
+  if (udg_firstRound[GetConvertedPlayerId(GetEnumPlayer()!)]) {
     StartTimerBJ(
       udg_sheepTimer[GetConvertedPlayerId(GetEnumPlayer()!)],
       false,
@@ -92,7 +71,7 @@ const Trig_createWolves_Func010Func003A = (): void => {
   }
 };
 
-const Trig_createWolves_Func010C = (): boolean => {
+const Trig_createWolves_Func010C = () => {
   if ((!(udg_switchOn === false))) {
     return false;
   }
@@ -102,7 +81,7 @@ const Trig_createWolves_Func010C = (): boolean => {
   return true;
 };
 
-const Trig_createWolves_Func011Func001Func003A = (): void => {
+const Trig_createWolves_Func011Func001Func003A = () => {
   SetPlayerAllianceStateBJ(
     Player(bj_PLAYER_NEUTRAL_VICTIM)!,
     GetEnumPlayer()!,
@@ -110,7 +89,7 @@ const Trig_createWolves_Func011Func001Func003A = (): void => {
   );
 };
 
-const Trig_createWolves_Func011Func001Func004A = (): void => {
+const Trig_createWolves_Func011Func001Func004A = () => {
   SetPlayerAllianceStateBJ(
     Player(bj_PLAYER_NEUTRAL_VICTIM)!,
     GetEnumPlayer()!,
@@ -118,21 +97,21 @@ const Trig_createWolves_Func011Func001Func004A = (): void => {
   );
 };
 
-const Trig_createWolves_Func011C = (): boolean => {
+const Trig_createWolves_Func011C = () => {
   if ((!(udg_dummyWisps > 0))) {
     return false;
   }
   return true;
 };
 
-const Trig_createWolves_Func012C = (): boolean => {
+const Trig_createWolves_Func012C = () => {
   if ((!GetBooleanOr(udg_mapShrink === true, udg_mapExpand === true))) {
     return false;
   }
   return true;
 };
 
-const Trig_createWolves_Actions = (): void => {
+const Trig_createWolves_Actions = () => {
   if (autoCancel()) {
     return;
   }
@@ -159,7 +138,7 @@ const Trig_createWolves_Actions = (): void => {
       EnableTrigger(gg_trg_dummyWisps);
       bj_lastCreatedUnit = CreateUnit(
         Player(bj_PLAYER_NEUTRAL_VICTIM)!,
-        wisp,
+        wispType,
         RandomX(wispArea),
         RandomY(wispArea),
         270,
@@ -183,7 +162,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_createWolves: () => void;
 }
-InitTrig_createWolves = (): void => {
+InitTrig_createWolves = () => {
   gg_trg_createWolves = CreateTrigger();
   TriggerRegisterTimerExpireEventBJ(gg_trg_createWolves, udg_wolfTimer);
   TriggerAddAction(gg_trg_createWolves, Trig_createWolves_Actions);

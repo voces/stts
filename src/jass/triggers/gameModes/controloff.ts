@@ -1,21 +1,21 @@
 //===========================================================================
 // Trigger: controloff
 //===========================================================================
-const Trig_controloff_Conditions = (): boolean => {
+const Trig_controloff_Conditions = () => {
   if ((!(GetTriggerPlayer()! === udg_Custom))) {
     return false;
   }
   return true;
 };
 
-const Trig_controloff_Func002C = (): boolean => {
+const Trig_controloff_Func002C = () => {
   if ((!(udg_shareOn === true))) {
     return false;
   }
   return true;
 };
 
-const Trig_controloff_Actions = (): void => {
+const Trig_controloff_Actions = () => {
   if ((Trig_controloff_Func002C())) {
     udg_shareOn = false;
     DisplayTimedTextToForce(
@@ -39,7 +39,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_controloff: () => void;
 }
-InitTrig_controloff = (): void => {
+InitTrig_controloff = () => {
   gg_trg_controloff = CreateTrigger();
   TriggerRegisterPlayerChatEvent(
     gg_trg_controloff,

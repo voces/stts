@@ -1,8 +1,6 @@
-//===========================================================================
-// Trigger: initMassTest
-//===========================================================================
+import { removeEnumUnit } from "../../../util/removeEnumUnit";
 
-const Trig_initMassTest_Func005002002 = (): boolean => {
+const Trig_initMassTest_Func005002002 = () => {
   return GetBooleanOr(
     IsUnitType(GetFilterUnit()!, UNIT_TYPE_STRUCTURE) === true,
     GetBooleanOr(
@@ -12,15 +10,11 @@ const Trig_initMassTest_Func005002002 = (): boolean => {
   );
 };
 
-const Trig_initMassTest_Func006002 = (): void => {
-  RemoveUnit(GetEnumUnit()!);
-};
-
-const Trig_initMassTest_Func008002 = (): void => {
+const Trig_initMassTest_Func008002 = () => {
   RemoveItem(GetEnumItem()!);
 };
 
-const Trig_initMassTest_Func010A = (): void => {
+const Trig_initMassTest_Func010A = () => {
   udg_farmCount[GetConvertedPlayerId(GetEnumPlayer()!)] = 0;
   SetPlayerStateBJ(GetEnumPlayer()!, PLAYER_STATE_RESOURCE_LUMBER, 0);
   udg_atemploc = GetRectCenter(wolfSpawn)!;
@@ -55,7 +49,7 @@ const Trig_initMassTest_Func010A = (): void => {
   );
 };
 
-const Trig_initMassTest_Actions = (): void => {
+const Trig_initMassTest_Actions = () => {
   DisableTrigger(gg_trg_mass);
   DisableTrigger(gg_trg_redo);
   ClearTextMessagesBJ(GetPlayersAll()!);
@@ -64,7 +58,7 @@ const Trig_initMassTest_Actions = (): void => {
     GetPlayableMapRect()!,
     Condition(Trig_initMassTest_Func005002002),
   )!;
-  ForGroupBJ(udg_atempgroup, Trig_initMassTest_Func006002);
+  ForGroupBJ(udg_atempgroup, removeEnumUnit);
   DestroyGroup(udg_atempgroup);
   EnumItemsInRectBJ(GetPlayableMapRect()!, Trig_initMassTest_Func008002);
   PauseAllUnitsBJ(true);
@@ -119,13 +113,11 @@ const Trig_initMassTest_Actions = (): void => {
   EnableTrigger(gg_trg_redo);
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_initMassTest: () => void;
 }
-InitTrig_initMassTest = (): void => {
+InitTrig_initMassTest = () => {
   gg_trg_initMassTest = CreateTrigger();
   TriggerAddAction(gg_trg_initMassTest, Trig_initMassTest_Actions);
 };

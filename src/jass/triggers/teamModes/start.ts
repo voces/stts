@@ -1,348 +1,92 @@
-//===========================================================================
-// Trigger: start
-//
-// Gotta make it so if the number is larger than the amount of players on wolf team, then steal a member from the sheep side.
-//===========================================================================
-const Trig_start_Func010Func003C = (): boolean => {
-  if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 8, 9)!) > 0))) {
-    return false;
-  }
-  if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 8, 9)!) < 24))) {
-    return false;
-  }
-  return true;
-};
+import { MapPlayer, Trigger } from "w3ts";
+import { registerAnyPlayerChatEvent } from "../../../util/registerAnyPlayerChatEvent";
+import { clearForces } from "../../../util/clearForces";
+import { forEachNonAfkPlayingPlayer } from "../../../util/forEachPlayingPlayer";
+import { reduceForce } from "../../../util/reduceForce";
+import { isPlaying } from "../../../util/isPlaying";
 
-const Trig_start_Func010C = (): boolean => {
-  if ((GetEventPlayerChatString()! === "-start")) {
-    return true;
-  }
-  if ((GetEventPlayerChatString()! === "-restart")) {
-    return true;
-  }
-  if ((Trig_start_Func010Func003C())) {
-    return true;
-  }
-  return false;
-};
+const getMinsReducer =
+  <T>(fn: (v: T) => number) => (accum: [min: number, pool: T[]], v: T): [min: number, pool: T[]] => {
+    const t = fn(v);
+    if (t < accum[0]) return [t, [v]];
+    if (t === accum[0]) return (accum[1].push(v), accum);
+    return accum;
+  };
 
-const Trig_start_Conditions = (): boolean => {
-  if ((!(GetTriggerPlayer()! === udg_Custom))) {
-    return false;
-  }
-  if ((!Trig_start_Func010C())) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_start_Func003A = (): void => {
-  ForceRemovePlayerSimple(GetEnumPlayer()!, udg_Sheep);
-};
-
-const Trig_start_Func004A = (): void => {
-  ForceRemovePlayerSimple(GetEnumPlayer()!, udg_Wolf);
-};
-
-const Trig_start_Func005A = (): void => {
-  ForceRemovePlayerSimple(GetEnumPlayer()!, udg_Spirit);
-};
-
-const Trig_start_Func006Func001C = (): boolean => {
-  if ((GetEventPlayerChatString()! === "-start")) {
-    return true;
-  }
-  if ((GetEventPlayerChatString()! === "-restart")) {
-    return true;
-  }
-  return false;
-};
-
-const Trig_start_Func006Func003001001 = (): boolean => {
-  return GetBooleanAnd(
-    GetPlayerSlotState(GetFilterPlayer()!) === PLAYER_SLOT_STATE_PLAYING,
-    GetBooleanAnd(
-      GetPlayerSlotState(GetFilterPlayer()!) !== PLAYER_SLOT_STATE_LEFT,
-      udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === 0,
-    ),
-  );
-};
-
-const Trig_start_Func006Func003Func001C = (): boolean => {
-  if ((!(udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)] === true))) {
-    return false;
-  }
-  if ((!(GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING))) {
-    return false;
-  }
-  if ((!(GetPlayerSlotState(GetEnumPlayer()!) !== PLAYER_SLOT_STATE_LEFT))) {
-    return false;
-  }
-  if ((!(udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === 0))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_start_Func006Func003A = (): void => {
-  if ((Trig_start_Func006Func003Func001C())) {
-    udg_atempint = udg_atempint + 1;
-  }
-};
-
-const Trig_start_Func006Func004Func001Func001Func001Func001C = (): boolean => {
-  if ((!(udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)] === true))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_start_Func006Func004Func001Func001Func001C = (): boolean => {
-  if ((!(GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING))) {
-    return false;
-  }
-  if ((!(udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === 0))) {
-    return false;
-  }
-  if ((!(GetPlayerSlotState(GetEnumPlayer()!) !== PLAYER_SLOT_STATE_LEFT))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_start_Func006Func004Func001Func001A = (): void => {
-  if ((Trig_start_Func006Func004Func001Func001Func001C())) {
-    if ((Trig_start_Func006Func004Func001Func001Func001Func001C())) {
-      ForceAddPlayerSimple(GetEnumPlayer()!, udg_Sheep);
-    } else {
-      ForceAddPlayerSimple(GetEnumPlayer()!, udg_Spirit);
-    }
-  }
-};
-
-const Trig_start_Func006Func004Func001Func002Func001A = (): void => {
-  ForceAddPlayerSimple(GetEnumPlayer()!, udg_Sheep);
-  ForceRemovePlayerSimple(GetEnumPlayer()!, udg_Spirit);
-};
-
-const Trig_start_Func006Func004Func001Func003A = (): void => {
-  ForceAddPlayerSimple(GetEnumPlayer()!, udg_Wolf);
-  ForceRemovePlayerSimple(GetEnumPlayer()!, udg_Spirit);
-};
-
-const Trig_start_Func006Func004Func001Func004Func001Func001C = (): boolean => {
-  if ((!(udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)] === true))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_start_Func006Func004Func001Func004Func001C = (): boolean => {
-  if ((!(GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING))) {
-    return false;
-  }
-  if ((!(udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === 0))) {
-    return false;
-  }
-  if ((!(GetPlayerSlotState(GetEnumPlayer()!) !== PLAYER_SLOT_STATE_LEFT))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_start_Func006Func004Func001Func004A = (): void => {
-  if ((Trig_start_Func006Func004Func001Func004Func001C())) {
-    if ((Trig_start_Func006Func004Func001Func004Func001Func001C())) {
-      ForceAddPlayerSimple(GetEnumPlayer()!, udg_Spirit);
-    } else {
-      ForceAddPlayerSimple(GetEnumPlayer()!, udg_Wolf);
-    }
-  }
-};
-
-const Trig_start_Func006Func004Func001Func005Func001A = (): void => {
-  ForceAddPlayerSimple(GetEnumPlayer()!, udg_Sheep);
-  ForceRemovePlayerSimple(GetEnumPlayer()!, udg_Spirit);
-};
-
-const Trig_start_Func006Func004Func001Func006A = (): void => {
-  ForceAddPlayerSimple(GetEnumPlayer()!, udg_Wolf);
-  ForceRemovePlayerSimple(GetEnumPlayer()!, udg_Spirit);
-};
-
-const Trig_start_Func006Func004Func001C = (): boolean => {
-  if (
-    (!(S2I(SubStringBJ(GetEventPlayerChatString()!, 8, 9)!) < udg_atempint))
-  ) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_start_Func006Func004Func002Func001Func001C = (): boolean => {
-  if ((!(udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)] === true))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_start_Func006Func004Func002Func001C = (): boolean => {
-  if ((!(GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING))) {
-    return false;
-  }
-  if ((!(udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === 0))) {
-    return false;
-  }
-  if ((!(GetPlayerSlotState(GetEnumPlayer()!) !== PLAYER_SLOT_STATE_LEFT))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_start_Func006Func004Func002A = (): void => {
-  if ((Trig_start_Func006Func004Func002Func001C())) {
-    if ((Trig_start_Func006Func004Func002Func001Func001C())) {
-      ForceAddPlayerSimple(GetEnumPlayer()!, udg_Sheep);
-    } else {
-      ForceAddPlayerSimple(GetEnumPlayer()!, udg_Wolf);
-    }
-  }
-};
-
-const Trig_start_Func006Func004C = (): boolean => {
-  if (
-    (!(S2I(SubStringBJ(GetEventPlayerChatString()!, 8, 9)!) === udg_atempint))
-  ) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_start_Func006Func005Func001Func004C = (): boolean => {
-  if (
-    (!(udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)] === false))
-  ) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_start_Func006Func005Func001C = (): boolean => {
-  if ((!(GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING))) {
-    return false;
-  }
-  if ((!(GetPlayerSlotState(GetEnumPlayer()!) !== PLAYER_SLOT_STATE_LEFT))) {
-    return false;
-  }
-  if ((!(udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === 0))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_start_Func006Func005A = (): void => {
-  if ((Trig_start_Func006Func005Func001C())) {
-    if ((Trig_start_Func006Func005Func001Func004C())) {
-      ForceAddPlayerSimple(GetEnumPlayer()!, udg_Wolf);
-    } else {
-      ForceAddPlayerSimple(GetEnumPlayer()!, udg_Sheep);
-    }
-  }
-};
-
-const Trig_start_Func006C = (): boolean => {
-  if ((!Trig_start_Func006Func001C())) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_start_Actions = (): void => {
+const Trig_start_Actions = () => {
   TriggerSleepAction(0.01);
+
   udg_lastGameString = GetEventPlayerChatString()!;
-  ForForce(udg_Sheep, Trig_start_Func003A);
-  ForForce(udg_Wolf, Trig_start_Func004A);
-  ForForce(udg_Spirit, Trig_start_Func005A);
-  if ((Trig_start_Func006C())) {
-    ForForce(GetPlayersAll()!, Trig_start_Func006Func005A);
-  } else {
-    udg_atempint = 0;
-    ForForce(
-      GetPlayersMatching(Condition(Trig_start_Func006Func003001001))!,
-      Trig_start_Func006Func003A,
+
+  clearForces();
+  forEachNonAfkPlayingPlayer((p) => ForceAddPlayer(udg_sheepLastGame[p.id + 1] ? udg_Sheep : udg_Wolf, p.handle));
+
+  if (udg_lastGameString !== "-start" && udg_lastGameString !== "-restart") {
+    let currentSheep = reduceForce(
+      GetPlayersAll()!,
+      0,
+      (sum, p) => isPlaying(p) && udg_sheepLastGame[p.id + 1] ? sum + 1 : sum,
     );
-    if ((Trig_start_Func006Func004C())) {
-      ForForce(GetPlayersAll()!, Trig_start_Func006Func004Func002A);
-    } else {
-      if ((Trig_start_Func006Func004Func001C())) {
-        ForForce(GetPlayersAll()!, Trig_start_Func006Func004Func001Func004A);
-        bj_forLoopAIndex = 1;
-        bj_forLoopAIndexEnd = S2I(
-          SubStringBJ(GetEventPlayerChatString()!, 8, 9)!,
-        );
-        while (true) {
-          if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-          ForForce(
-            GetForceOfPlayer(ForcePickRandomPlayer(udg_Spirit)!)!,
-            Trig_start_Func006Func004Func001Func005Func001A,
-          );
-          bj_forLoopAIndex = bj_forLoopAIndex + 1;
-        }
-        ForForce(udg_Spirit, Trig_start_Func006Func004Func001Func006A);
-      } else {
-        ForForce(GetPlayersAll()!, Trig_start_Func006Func004Func001Func001A);
-        bj_forLoopAIndex = 1;
-        bj_forLoopAIndexEnd =
-          S2I(SubStringBJ(GetEventPlayerChatString()!, 8, 9)!) -
-          CountPlayersInForceBJ(udg_Sheep);
-        while (true) {
-          if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-          ForForce(
-            GetForceOfPlayer(ForcePickRandomPlayer(udg_Spirit)!)!,
-            Trig_start_Func006Func004Func001Func002Func001A,
-          );
-          bj_forLoopAIndex = bj_forLoopAIndex + 1;
-        }
-        ForForce(udg_Spirit, Trig_start_Func006Func004Func001Func003A);
+
+    const desiredSheep = parseInt(udg_lastGameString.split(" ")[1]);
+
+    if (desiredSheep !== currentSheep) {
+      while (desiredSheep < currentSheep) {
+        const pool = reduceForce<[min: number, pool: MapPlayer[]]>(
+          udg_Sheep,
+          [Infinity, []],
+          getMinsReducer((p) => -udg_sheepCount[p.id + 1] + (pub[p.id] ? 100 : 0)),
+        )[1];
+
+        const p = pool[GetRandomInt(0, pool.length - 1)].handle;
+        ForceRemovePlayer(udg_Sheep, p);
+        ForceAddPlayer(udg_Wolf, p);
+        currentSheep--;
+      }
+
+      while (desiredSheep > currentSheep) {
+        const pool = reduceForce<[min: number, pool: MapPlayer[]]>(
+          udg_Wolf,
+          [Infinity, []],
+          getMinsReducer((p) => udg_sheepCount[p.id + 1] + (pub[p.id] ? 100 : 0)),
+        )[1];
+
+        const p = pool[GetRandomInt(0, pool.length - 1)].handle;
+        ForceRemovePlayer(udg_Wolf, p);
+        ForceAddPlayer(udg_Sheep, p);
+        currentSheep++;
       }
     }
   }
-  udg_Teams = 2;
+
+  udg_Teams = TEAMS_LOCK_IE_PLAYING;
   TriggerExecute(gg_trg_createSheep);
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_start: () => void;
 }
-InitTrig_start = (): void => {
+InitTrig_start = () => {
   gg_trg_start = CreateTrigger();
-  TriggerRegisterPlayerChatEvent(gg_trg_start, Player(0)!, "-start", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_start, Player(1)!, "-start", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_start, Player(2)!, "-start", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_start, Player(3)!, "-start", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_start, Player(4)!, "-start", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_start, Player(5)!, "-start", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_start, Player(6)!, "-start", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_start, Player(7)!, "-start", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_start, Player(8)!, "-start", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_start, Player(9)!, "-start", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_start, Player(10)!, "-start", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_start, Player(11)!, "-start", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_start, Player(12)!, "-start", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_start, Player(13)!, "-start", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_start, Player(14)!, "-start", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_start, Player(15)!, "-start", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_start, Player(16)!, "-start", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_start, Player(17)!, "-start", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_start, Player(18)!, "-start", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_start, Player(19)!, "-start", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_start, Player(20)!, "-start", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_start, Player(21)!, "-start", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_start, Player(22)!, "-start", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_start, Player(23)!, "-start", false);
-  TriggerAddCondition(gg_trg_start, Condition(Trig_start_Conditions));
+  registerAnyPlayerChatEvent(gg_trg_start, "-start", false);
+  TriggerAddCondition(
+    gg_trg_start,
+    Condition(() => {
+      if (GetTriggerPlayer()! !== udg_Custom) return false;
+      const s = GetEventPlayerChatString() ?? "";
+      if (s === "-start" || s === "-restart") return true;
+      const count = parseInt(s.split(" ")[1]);
+      return count > 0 && count < 24;
+    }),
+  );
   TriggerAddAction(gg_trg_start, Trig_start_Actions);
+
+  const t = Trigger.create();
+  registerAnyPlayerChatEvent(t, "-restart", false);
+  t.addCondition(() => GetTriggerPlayer() === udg_Custom);
+  t.addAction(() => {
+    TriggerExecute(gg_trg_cancel);
+    TriggerExecute(gg_trg_start);
+  });
 };

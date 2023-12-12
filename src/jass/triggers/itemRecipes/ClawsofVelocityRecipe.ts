@@ -1,7 +1,7 @@
 //===========================================================================
 // Trigger: Claws of Velocity Recipe
 //===========================================================================
-const Trig_Claws_of_Velocity_Recipe_Func001Func001C = (): boolean => {
+const Trig_Claws_of_Velocity_Recipe_Func001Func001C = () => {
   if ((GetItemTypeId(GetManipulatedItem()!) === FourCC("I00T"))) {
     return true;
   }
@@ -14,7 +14,7 @@ const Trig_Claws_of_Velocity_Recipe_Func001Func001C = (): boolean => {
   return false;
 };
 
-const Trig_Claws_of_Velocity_Recipe_Func001Func002C = (): boolean => {
+const Trig_Claws_of_Velocity_Recipe_Func001Func002C = () => {
   if ((!(UnitHasItemOfTypeBJ(GetTriggerUnit()!, FourCC("I00T")) === true))) {
     return false;
   }
@@ -27,7 +27,7 @@ const Trig_Claws_of_Velocity_Recipe_Func001Func002C = (): boolean => {
   return true;
 };
 
-const Trig_Claws_of_Velocity_Recipe_Func001C = (): boolean => {
+const Trig_Claws_of_Velocity_Recipe_Func001C = () => {
   if ((!Trig_Claws_of_Velocity_Recipe_Func001Func001C())) {
     return false;
   }
@@ -37,7 +37,7 @@ const Trig_Claws_of_Velocity_Recipe_Func001C = (): boolean => {
   return true;
 };
 
-const Trig_Claws_of_Velocity_Recipe_Actions = (): void => {
+const Trig_Claws_of_Velocity_Recipe_Actions = () => {
   if ((Trig_Claws_of_Velocity_Recipe_Func001C())) {
     RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit()!, FourCC("I00T"))!);
     RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit()!, FourCC("I004"))!);
@@ -59,7 +59,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_Claws_of_Velocity_Recipe: () => void;
 }
-InitTrig_Claws_of_Velocity_Recipe = (): void => {
+InitTrig_Claws_of_Velocity_Recipe = () => {
   gg_trg_Claws_of_Velocity_Recipe = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(
     gg_trg_Claws_of_Velocity_Recipe,

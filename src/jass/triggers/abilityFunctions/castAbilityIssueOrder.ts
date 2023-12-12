@@ -1,52 +1,49 @@
-//===========================================================================
-// Trigger: castAbilityIssueOrder
-//===========================================================================
-// castAbilityIssueOrder
+import { removeEnumUnit } from "../../../util/removeEnumUnit";
+import { Trig_destroyAllFarms_Func002002002 } from "../farmFunctions/destroyAllFarms";
 
-import {
-  Trig_destroyAllFarms_Func002002002,
-  Trig_destroyAllFarms_Func005002,
-} from "../farmFunctions/destroyAllFarms";
-
-const Trig_castAbility2_Actions = (): void => {
+const Trig_castAbility2_Actions = () => {
   let i = 1;
   let x: number;
   let y: number;
   let u: unit;
   let p: player;
-  if (IsUnitIllusionBJ(GetTriggerUnit()!) || udg_Teams !== TEAMS_LOCK) {
-    return;
-  }
+  if (
+    IsUnitIllusionBJ(GetTriggerUnit()!) || udg_Teams !== TEAMS_LOCK_IE_PLAYING
+  ) return;
   if (
     OrderId2StringBJ(GetIssuedOrderId()) === "defend" ||
     OrderId2StringBJ(GetIssuedOrderId()) === "undefend"
   ) {
-    if (udg_switchOn === true || udg_practiceOn === true) {
-      udg_atempint = GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()!));
-      if (udg_disable[udg_atempint] === false) {
+    if (
+      udg_switchOn === true ||
+      udg_practiceOn === true && GetUnitTypeId(GetTriggerUnit()!) === sheepType
+    ) {
+      if (!UnitAlive(GetTriggerUnit()!)) return;
+      i = GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()!));
+      if (udg_disable[i] === false) {
         udg_atempgroup = GetUnitsOfPlayerMatching(
-          ConvertedPlayer(udg_atempint)!,
+          ConvertedPlayer(i)!,
           Condition(Trig_destroyAllFarms_Func002002002),
         )!;
-        udg_farmCount[udg_atempint] = 0;
+        udg_farmCount[i] = 0;
         SetPlayerStateBJ(
-          ConvertedPlayer(udg_atempint)!,
+          ConvertedPlayer(i)!,
           PLAYER_STATE_RESOURCE_LUMBER,
-          udg_farmCount[udg_atempint],
+          udg_farmCount[i],
         );
-        ForGroupBJ(udg_atempgroup, Trig_destroyAllFarms_Func005002);
+        ForGroupBJ(udg_atempgroup, removeEnumUnit);
         DestroyGroup(udg_atempgroup);
         if (udg_dummyWisps > 0) {
           LeaderboardSetPlayerItemValueBJ(
-            ConvertedPlayer(udg_atempint)!,
+            ConvertedPlayer(i)!,
             GetLastCreatedLeaderboard()!,
-            udg_saves[udg_atempint],
+            udg_saves[i],
           );
         } else {
           LeaderboardSetPlayerItemValueBJ(
-            ConvertedPlayer(udg_atempint)!,
+            ConvertedPlayer(i)!,
             GetLastCreatedLeaderboard()!,
-            udg_farmCount[udg_atempint],
+            udg_farmCount[i],
           );
         }
       }
@@ -54,7 +51,7 @@ const Trig_castAbility2_Actions = (): void => {
       while (true) {
         if (i === 25) break;
         if (
-          GetUnitTypeId(udg_unit[i]) === FourCC("uC04") &&
+          GetUnitTypeId(udg_unit[i]) === sheepType &&
           udg_unit[i] !== GetTriggerUnit()!
         ) {
           PingMinimapForForce(
@@ -71,27 +68,27 @@ const Trig_castAbility2_Actions = (): void => {
     OrderId2StringBJ(GetIssuedOrderId()) === "immolation" ||
     OrderId2StringBJ(GetIssuedOrderId()) === "unimmolation"
   ) {
-    udg_atempint = GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()!));
+    i = GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()!));
     RemoveUnit(GetBuilding(GetOwningPlayer(GetTriggerUnit()!))!);
-    if (udg_farmCount[udg_atempint] > 0) {
-      udg_farmCount[udg_atempint] = udg_farmCount[udg_atempint] - 1;
+    if (udg_farmCount[i] > 0) {
+      udg_farmCount[i] = udg_farmCount[i] - 1;
     }
     SetPlayerStateBJ(
-      ConvertedPlayer(udg_atempint)!,
+      ConvertedPlayer(i)!,
       PLAYER_STATE_RESOURCE_LUMBER,
-      udg_farmCount[udg_atempint],
+      udg_farmCount[i],
     );
     if (udg_wispPoints > 0) {
       LeaderboardSetPlayerItemValueBJ(
-        ConvertedPlayer(udg_atempint)!,
+        ConvertedPlayer(i)!,
         GetLastCreatedLeaderboard()!,
-        udg_saves[udg_atempint],
+        udg_saves[i],
       );
     } else {
       LeaderboardSetPlayerItemValueBJ(
-        ConvertedPlayer(udg_atempint)!,
+        ConvertedPlayer(i)!,
         GetLastCreatedLeaderboard()!,
-        udg_farmCount[udg_atempint],
+        udg_farmCount[i],
       );
     }
   } else if (OrderId2StringBJ(GetIssuedOrderId()) === "custom_n000") {
@@ -125,12 +122,11 @@ const Trig_castAbility2_Actions = (): void => {
 };
 
 //===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_castAbilityIssueOrder: () => void;
 }
-InitTrig_castAbilityIssueOrder = (): void => {
+InitTrig_castAbilityIssueOrder = () => {
   gg_trg_castAbilityIssueOrder = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(
     gg_trg_castAbilityIssueOrder,

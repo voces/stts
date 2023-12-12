@@ -1,15 +1,10 @@
-//===========================================================================
-// Trigger: owner
-//===========================================================================
-const Trig_IllusionCheck = (): boolean => {
+import { removeEnumUnit } from "../../../util/removeEnumUnit";
+
+const Trig_IllusionCheck = () => {
   return (IsUnitIllusionBJ(GetFilterUnit()!) === true);
 };
 
-const Trig_RemoveUnit = (): void => {
-  RemoveUnit(GetEnumUnit()!);
-};
-
-const Trig_owner_Func001C = (): boolean => {
+const Trig_owner_Func001C = () => {
   if (
     (!GetBooleanOr(
       GetOwningPlayer(udg_unit2[GetConvertedPlayerId(GetTriggerPlayer()!)]) ===
@@ -23,7 +18,7 @@ const Trig_owner_Func001C = (): boolean => {
   return true;
 };
 
-const Trig_owner_Actions = (): void => {
+const Trig_owner_Actions = () => {
   if ((Trig_owner_Func001C())) {
     SetUnitOwner(
       udg_unit2[GetConvertedPlayerId(GetTriggerPlayer()!)],
@@ -55,17 +50,15 @@ const Trig_owner_Actions = (): void => {
     GetTriggerPlayer()!,
     Condition(Trig_IllusionCheck),
   )!;
-  ForGroupBJ(udg_atempgroup, Trig_RemoveUnit);
+  ForGroupBJ(udg_atempgroup, removeEnumUnit);
   DestroyGroup(udg_atempgroup);
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_owner: () => void;
 }
-InitTrig_owner = (): void => {
+InitTrig_owner = () => {
   gg_trg_owner = CreateTrigger();
   TriggerRegisterPlayerChatEventAll(gg_trg_owner, "-owner", true);
   TriggerAddAction(gg_trg_owner, Trig_owner_Actions);

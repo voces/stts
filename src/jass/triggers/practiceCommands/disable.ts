@@ -2,7 +2,7 @@
 // Trigger: disable
 //===========================================================================
 
-const Trig_disable_Actions = (): void => {
+const Trig_disable_Actions = () => {
   const pid = GetConvertedPlayerId(GetTriggerPlayer()!);
   if (udg_disable[pid]) {
     udg_disable[pid] = false;
@@ -33,7 +33,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_disable: () => void;
 }
-InitTrig_disable = (): void => {
+InitTrig_disable = () => {
   gg_trg_disable = CreateTrigger();
   TriggerRegisterPlayerChatEventAll(gg_trg_disable, "-disable", true);
   TriggerAddAction(gg_trg_disable, Trig_disable_Actions);

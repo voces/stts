@@ -173,7 +173,7 @@ const setZooms = (
   }
 };
 
-const loadZooms = (): void => {
+const loadZooms = () => {
   let val1 = 0;
   let val2 = 0;
   let val3 = 0;
@@ -202,7 +202,7 @@ const loadZooms = (): void => {
   setZooms(GetLocalPlayer(), val1, val2, val3);
 };
 
-const Trig_zoom_Actions = (): void => {
+const Trig_zoom_Actions = () => {
   let val1 = 0;
   let val2 = 0;
   let val3 = 0;
@@ -227,7 +227,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_zoom: () => void;
 }
-InitTrig_zoom = (): void => {
+InitTrig_zoom = () => {
   gg_trg_zoom = CreateTrigger();
   TriggerRegisterPlayerChatEventAll(gg_trg_zoom, "-zoom ", false);
   TriggerRegisterPlayerChatEventAll(gg_trg_zoom, "-z ", false);

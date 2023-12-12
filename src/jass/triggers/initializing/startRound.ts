@@ -3,7 +3,7 @@
 //===========================================================================
 // startRound
 
-const reviveEnumDestructable = (): void => {
+const reviveEnumDestructable = () => {
   DestructableRestoreLife(
     GetEnumDestructable()!,
     GetDestructableMaxLife(GetEnumDestructable()!),
@@ -11,7 +11,7 @@ const reviveEnumDestructable = (): void => {
   );
 };
 
-const removeEnumItem = (): void => {
+const removeEnumItem = () => {
   RemoveItem(GetEnumItem()!);
 };
 
@@ -29,23 +29,21 @@ const resetEnumRoundStats = (i: number): void => {
   }
 };
 
-const destroyEnumPlayerView = (): void => {
+const destroyEnumPlayerView = () => {
   const i = GetConvertedPlayerId(GetEnumPlayer()!);
   DestroyFogModifier(udg_view[i]);
   udg_view[i] = null as unknown as fogmodifier;
 };
 
-const removeDraft = (): void => {
+const removeDraft = () => {
   ForceRemovePlayerSimple(GetEnumPlayer()!, udg_Draft);
 };
 
-const Update_Versus_Wins = (): void => {
-  udg_vwins[GetConvertedPlayerId(GetEnumPlayer()!)] =
-    udg_vwins[GetConvertedPlayerId(GetEnumPlayer()!)] + 1;
+const Update_Versus_Wins = () => {
+  udg_vwins[GetConvertedPlayerId(GetEnumPlayer()!)] = udg_vwins[GetConvertedPlayerId(GetEnumPlayer()!)] + 1;
 };
 
-const startRoundToggledTriggers = (): void => {
-  EnableTrigger(gg_trg_random);
+const startRoundToggledTriggers = () => {
   EnableTrigger(gg_trg_gold);
   EnableTrigger(gg_trg_createSheep);
   EnableTrigger(gg_trg_pick);
@@ -71,7 +69,7 @@ const startRoundToggledTriggers = (): void => {
   EnableTrigger(gg_trg_Anonymous);
 };
 
-const pauseTimers = (): void => {
+const pauseTimers = () => {
   PauseTimer(udg_Timer);
   PauseTimer(udg_wolfTimer);
   PauseTimer(udg_massTimer);
@@ -84,7 +82,7 @@ const pauseTimers = (): void => {
   PauseTimer(createSheepTimer);
 };
 
-const clearBlight = (): void => {
+const clearBlight = () => {
   SetBlightRectBJ(
     false,
     Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
@@ -167,7 +165,7 @@ const clearBlight = (): void => {
   );
 };
 
-const resetRoundStats = (): void => {
+const resetRoundStats = () => {
   udg_numPick = 0;
   udg_numWolf = 0;
   udg_numSheep = 0;
@@ -194,7 +192,7 @@ const resetRoundStats = (): void => {
   goldRaces = 0;
 };
 
-const Trig_startRound_Actions = (): void => {
+const Trig_startRound_Actions = () => {
   let i: number;
   let n: number;
   let s: string;
@@ -252,10 +250,10 @@ const Trig_startRound_Actions = (): void => {
       udg_positionOn = false;
     }
 
-    if (udg_AFK[i] === 4) {
-      udg_AFK[i] = 3;
-    } else if (udg_AFK[i] === 2 || udg_AFK[i] === 1) {
-      udg_AFK[i] = 0;
+    if (udg_AFK[i] === AFK_AFK_DURING_ROUND) {
+      udg_AFK[i] = AFK_AFK;
+    } else if (udg_AFK[i] === 2 || udg_AFK[i] === AFK_PLAYING_PICK) {
+      udg_AFK[i] = AFK_PLAYING;
     }
 
     if (udg_viewOn === false && udg_view[i] == null) {
@@ -319,7 +317,7 @@ const Trig_startRound_Actions = (): void => {
     udg_someVersusBoolean === false
   ) {
     udg_versus = 2;
-    udg_Teams = TEAMS_LOCK;
+    udg_Teams = TEAMS_LOCK_IE_PLAYING;
     ForceClear(udg_Sheep);
     ForceClear(udg_Wolf);
     ForceClear(udg_Spirit);
@@ -396,7 +394,7 @@ New? Type |CFF00AEEF-smart|r.`,
   if (udg_versus === 0) {
     u = CreateUnit(
       udg_Custom,
-      hostFarm,
+      hostFarmType,
       GetRectCenterX(wolfSpawn),
       GetRectCenterY(wolfSpawn),
       270,
@@ -412,7 +410,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_startRound: () => void;
 }
-InitTrig_startRound = (): void => {
+InitTrig_startRound = () => {
   gg_trg_startRound = CreateTrigger();
   TriggerAddAction(gg_trg_startRound, Trig_startRound_Actions);
 };
