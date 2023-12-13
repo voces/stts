@@ -3,9 +3,10 @@
 //===========================================================================
 // createSheep
 
-import { MapPlayer, Unit } from "w3ts";
+import { Unit } from "w3ts";
 import { president } from "../../../modes/president";
 import { withDummy } from "../../../util/withDummy";
+import { MapPlayerEx } from "../../../handles/MapPlayerEx";
 
 const removeEnumFromSheep = () => {
   ForceRemovePlayerSimple(GetEnumPlayer()!, udg_Sheep);
@@ -209,7 +210,7 @@ const Trig_createSheep_sheepActionsB = () => {
       },
       GetUnitX(u),
       GetUnitY(u),
-      MapPlayer.fromEnum(),
+      MapPlayerEx.fromEnum(),
     );
   }
 
@@ -540,16 +541,16 @@ const Trig_createSheep_Actions = () => {
   LeaderboardDisplay(PlayerGetLeaderboard(GetLocalPlayer())!, true);
 
   if (president.enabled) {
-    president.president = MapPlayer.fromHandle(
+    president.president = MapPlayerEx.fromHandle(
       ForcePickRandomPlayer(udg_Sheep),
     )!;
 
     ForForce(udg_Sheep, () => {
-      const p = MapPlayer.fromEnum()!;
+      const p = MapPlayerEx.fromEnum()!;
       p.handicap = p === president.president ? 1 : president.handicap;
     });
 
-    ForForce(udg_Wolf, () => MapPlayer.fromEnum()!.handicap = 1);
+    ForForce(udg_Wolf, () => MapPlayerEx.fromEnum()!.handicap = 1);
   }
 
   if (udg_practiceOn) {

@@ -51,11 +51,9 @@ import "./triggers/leaderboardFunctions/show";
 import "./triggers/leaderboardFunctions/hide";
 import "./triggers/roundsEnds/wolvesWin";
 import "./triggers/roundsEnds/sheepWin";
-import "./triggers/gameModes/time";
 import "./triggers/gameModes/autoCancel";
 import "./triggers/gameModes/practice";
 import "./triggers/gameModes/controloff";
-import "./triggers/gameModes/view";
 import "./triggers/gameModes/vamp";
 import "./triggers/gameModes/gold";
 import "./triggers/gameModes/mapExpand";
@@ -119,12 +117,8 @@ import "./triggers/teamModes/draftPlayer";
 import "./triggers/teamModes/captains";
 import "./triggers/teamModes/pickwolf";
 import "./triggers/teamModes/picksheep";
-import "./triggers/teamModes/fair";
 import "./triggers/teamModes/draftVersus";
-import "./triggers/teamModes/pick";
-import "./triggers/teamModes/start";
 import "./triggers/teamModes/setupPick";
-import "./triggers/teamModes/reverse";
 import "./triggers/initializing/initialization";
 import "./triggers/initializing/quests";
 import "./triggers/initializing/createLists";
@@ -167,6 +161,7 @@ import "./triggers/shareControl/controllal";
 import "./triggers/shareControl/noAutoControl";
 import { setTimeout, Timeout } from "../util/setTimeout";
 import { removeEnumUnit } from "../util/removeEnumUnit";
+import { updateLeaderboardSettingsDisplay } from "settings/time";
 
 declare global {
   //globals from Critter:
@@ -274,9 +269,6 @@ declare global {
   //globals from SavingFarms:
   // deno-lint-ignore prefer-const
   let SavingFarms__g: group;
-  let SavingFarms__rate: number;
-  // deno-lint-ignore prefer-const
-  let SavingFarms__savings: Array<number>;
   //endglobals from SavingFarms
   //globals from Terrain:
   // deno-lint-ignore prefer-const
@@ -409,7 +401,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let udg_unit: Array<unit>;
   // deno-lint-ignore prefer-const
-  let udg_view: Array<fogmodifier>;
+  let udg_view: Array<fogmodifier | undefined>;
   // deno-lint-ignore prefer-const
   let udg_playerList: Array<player>;
   let udg_numSheep: number;
@@ -1054,8 +1046,6 @@ MMD__q_tail = 0;
 //endglobals from MMD
 //globals from SavingFarms:
 SavingFarms__g = CreateGroup()!;
-// SavingFarms__rate: number;
-SavingFarms__savings = [];
 //endglobals from SavingFarms
 //globals from Terrain:
 REVO_CLASSIC = 0;
@@ -1228,7 +1218,7 @@ udg_averageFarmCountBeforeWolves = [];
 udg_roundTimes = [];
 udg_sheepSurvived = [];
 udg_autocontrol = [];
-udg_autoTime = false;
+udg_autoTime = true;
 
 // Generated
 AFK_PLAYING = 0;
@@ -2258,80 +2248,6 @@ const MMD__init = () => {
 };
 
 //library MMD ends
-//library SavingFarms:
-
-const SavingFarms__forEachSaving = () => {
-  const pid = GetPlayerId(GetOwningPlayer(GetFilterUnit()!));
-  SavingFarms__savings[pid] = SavingFarms__savings[pid] + SavingFarms__rate;
-  return false;
-};
-
-const SavingFarms__tick = () => {
-  let i = 0;
-  let l__sheep = 0;
-  let wolves = 0;
-
-  while (true) {
-    if (
-      IsPlayerInForce(Player(i)!, udg_Sheep) ||
-      IsPlayerInForce(Player(i)!, udg_Spirit)
-    ) {
-      l__sheep = l__sheep + 1;
-    } else if (IsPlayerInForce(Player(i)!, udg_Wolf)) {
-      wolves = wolves + 1;
-    }
-    i = i + 1;
-    if (i === bj_MAX_PLAYERS) break;
-  }
-
-  if (wolves === 0) {
-    wolves = 1;
-  }
-
-  SavingFarms__rate = wolves / l__sheep / 10;
-
-  GroupEnumUnitsOfType(
-    SavingFarms__g,
-    UnitId2String(FourCC("h005"))!,
-    Condition(SavingFarms__forEachSaving),
-  );
-
-  i = 0;
-  while (true) {
-    if (SavingFarms__savings[i] >= 1) {
-      AdjustPlayerStateSimpleBJ(
-        Player(i)!,
-        PLAYER_STATE_GOLD_GATHERED,
-        R2I(SavingFarms__savings[i]),
-      );
-      SavingFarms__savings[i] = SavingFarms__savings[i] -
-        I2R(R2I(SavingFarms__savings[i]));
-    }
-    i = i + 1;
-    if (i === bj_MAX_PLAYERS) break;
-  }
-};
-
-declare global {
-  // deno-lint-ignore prefer-const
-  let SavingFarms_resetSavings: () => void;
-}
-SavingFarms_resetSavings = () => {
-  let i = 0;
-  while (true) {
-    SavingFarms__savings[i] = 0;
-    i = i + 1;
-    if (i === bj_MAX_PLAYERS) break;
-  }
-};
-
-const SavingFarms__SavingFarmsInit = () => {
-  const t = CreateTrigger();
-  TriggerRegisterTimerEventPeriodic(t, 1);
-  TriggerAddAction(t, SavingFarms__tick);
-};
-
-//library SavingFarms ends
 //library Terrain:
 
 //===========================================================================
@@ -2616,55 +2532,22 @@ defaultTime = () => {
   const i = CountPlayersInForceBJ(udg_Sheep);
   const n = CountPlayersInForceBJ(udg_Wolf);
 
-  if (udg_autoTime === false) {
-    return;
-  }
+  if (!udg_autoTime) return;
 
-  if (i === 1 && n === 3) {
-    udg_time = 180;
-  } else if (i === 2 && n === 4) {
-    udg_time = 360;
-  } else if (i === 3 && n === 4) {
-    udg_time = 720;
-  } else if (i === 3 && n === 5) {
-    udg_time = 480;
-  } else if (i === 4 && n === 6) {
-    udg_time = 600;
-  } else if (i === 5 && n === 5) {
-    udg_time = 900;
-  } else if (i === 5 && n === 6) {
-    udg_time = 720;
-  } else if (i === 6 && n === 6) {
-    udg_time = 1200;
-  } else if (i + n >= 12) {
-    udg_time = 1200;
-  } else if (i + n >= 10) {
-    udg_time = 900;
-  } else if (i + n >= 8) {
-    udg_time = 480;
-  } else {
-    udg_time = 360;
-  }
+  if (i === 1 && n === 3) udg_time = 180;
+  else if (i === 2 && n === 4) udg_time = 360;
+  else if (i === 3 && n === 4) udg_time = 720;
+  else if (i === 3 && n === 5) udg_time = 480;
+  else if (i === 4 && n === 6) udg_time = 600;
+  else if (i === 5 && n === 5) udg_time = 900;
+  else if (i === 5 && n === 6) udg_time = 720;
+  else if (i === 6 && n === 6) udg_time = 1200;
+  else if (i + n >= 12) udg_time = 1200;
+  else if (i + n >= 10) udg_time = 900;
+  else if (i + n >= 8) udg_time = 480;
+  else udg_time = 360;
 
-  if (udg_switchOn) {
-    LeaderboardSetPlayerItemLabelBJ(
-      Player(PLAYER_NEUTRAL_PASSIVE)!,
-      GetLastCreatedLeaderboard()!,
-      "|CFFED1C24Next: " + I2S(R2I(udg_time / 60)) + ":00 switch",
-    );
-  } else if (vampOn) {
-    LeaderboardSetPlayerItemLabelBJ(
-      Player(PLAYER_NEUTRAL_PASSIVE)!,
-      GetLastCreatedLeaderboard()!,
-      "|CFFED1C24Next: " + I2S(R2I(udg_time / 60)) + ":00 vamp",
-    );
-  } else {
-    LeaderboardSetPlayerItemLabelBJ(
-      Player(PLAYER_NEUTRAL_PASSIVE)!,
-      GetLastCreatedLeaderboard()!,
-      "|CFFED1C24Next: " + I2S(R2I(udg_time / 60)) + ":00",
-    );
-  }
+  updateLeaderboardSettingsDisplay();
 };
 
 declare global {
@@ -3869,8 +3752,6 @@ const InitGlobals = () => {
     udg_autocontrol[i] = false;
     i = i + 1;
   }
-
-  udg_autoTime = true;
 };
 
 //***************************************************************************
@@ -3909,12 +3790,13 @@ declare global {
   let simpleformatTime: (r: number) => string;
 }
 simpleformatTime = (r: number): string => {
+  const o = r;
   let s = "";
   if (r >= 36000) {
     s = I2S(R2I(r / 3600))!;
     r = ModuloReal(r, 3600);
   } else if (r >= 3600) {
-    s = "0" + I2S(R2I(r / 3600));
+    s = (s.length > 0 ? "0" : "") + I2S(R2I(r / 3600));
     r = ModuloReal(r, 3600);
   }
   if (s !== "") {
@@ -3924,16 +3806,16 @@ simpleformatTime = (r: number): string => {
     s = s + I2S(R2I(r / 60));
     r = ModuloReal(r, 60);
   } else if (r >= 60) {
-    s = s + "0" + I2S(R2I(r / 60));
+    s = s + (s.length > 0 ? "0" : "") + I2S(R2I(r / 60));
     r = ModuloReal(r, 60);
   } else {
-    s = s + "00";
+    s = s + (s.length === 0 ? "0" : "00");
   }
   s = s + ":";
   if (r >= 10) {
     s = s + I2S(R2I(r));
   } else {
-    s = s + "0" + I2S(R2I(r));
+    s = s + (s.length > 0 ? "0" : "") + I2S(R2I(r));
   }
   return s;
 };
@@ -4151,21 +4033,6 @@ RandomY = (theRect: rect): number => {
   return GetRandomReal(GetRectMinY(theRect), GetRectMaxY(theRect));
 };
 
-declare global {
-  // deno-lint-ignore prefer-const
-  let checkAutoTimeFlag: () => void;
-}
-checkAutoTimeFlag = () => {
-  const oldTime = udg_time;
-  defaultTime();
-  if (oldTime !== udg_time) {
-    udg_autoTime = false;
-    udg_time = oldTime;
-  } else {
-    udg_autoTime = true;
-  }
-};
-
 //cancels the game if there are AFK sheep
 declare global {
   // deno-lint-ignore prefer-const
@@ -4247,13 +4114,8 @@ const InitCustomTriggers = () => {
   InitTrig_startRound();
   InitTrig_createLists();
   InitTrig_createTimer();
-  InitTrig_start();
   InitTrig_pickwolf();
   InitTrig_picksheep();
-  InitTrig_reverse();
-  InitTrig_setupPick();
-  InitTrig_pick();
-  InitTrig_fair();
   InitTrig_captains();
   InitTrig_versus();
   InitTrig_draftPlayer();
@@ -4264,8 +4126,6 @@ const InitCustomTriggers = () => {
   InitTrig_mapExpand();
   InitTrig_switch();
   InitTrig_vamp();
-  InitTrig_view();
-  InitTrig_time();
   InitTrig_autoCancel();
   InitTrig_gold();
   InitTrig_initMassTest();
@@ -4427,7 +4287,6 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   Critter___critterInit();
   HCL__init();
   MMD__init();
-  SavingFarms__SavingFarmsInit();
   Terrain__InitTerrain();
   hostAbilities__onInit();
   BuySellItem__init();

@@ -1,21 +1,24 @@
-import { MapPlayer, Unit } from "w3ts";
+import { Unit } from "w3ts";
 import { GroupEx } from "../handles/GroupEx";
+import { MapPlayerEx } from "../handles/MapPlayerEx";
 
 export const withGroup = <T>(
   fn: (group: GroupEx) => T,
   filter?: (unit: Unit) => boolean,
-  player?: MapPlayer | player,
+  player?: MapPlayerEx | player,
 ) => {
   const group = GroupEx.create()!;
   const temp = GroupEx.create()!;
 
   if (filter || player) {
-    const normalizedPlayer = player ? player instanceof MapPlayer ? player : MapPlayer.fromHandle(player) : undefined;
+    const normalizedPlayer = player
+      ? player instanceof MapPlayerEx ? player : MapPlayerEx.fromHandle(player)
+      : undefined;
     const start = normalizedPlayer ? normalizedPlayer.id : 0;
     const end = normalizedPlayer ? normalizedPlayer.id + 1 : bj_MAX_PLAYERS;
     const finalFilter = filter ? () => filter(Unit.fromFilter()!) : () => true;
     for (let i = start; i < end; i++) {
-      temp.enumUnitsOfPlayer(MapPlayer.fromIndex(i)!, finalFilter);
+      temp.enumUnitsOfPlayer(MapPlayerEx.fromIndex(i)!, finalFilter);
       temp.addGroupFast(group);
     }
   }
@@ -47,7 +50,7 @@ export const withUnitsInRange = <T>(
   });
 
 export const withPlayerUnits = <T>(
-  player: MapPlayer | player,
+  player: MapPlayerEx | player,
   fn: (units: GroupEx) => T,
   filter?: (unit: Unit) => boolean,
 ) => withGroup(fn, filter, player);

@@ -1,9 +1,6 @@
-//===========================================================================
-// Trigger: switch
+import { updateLeaderboardSettingsDisplay } from "settings/time";
+import { president } from "modes/president";
 
-import { president } from "../../../modes/president";
-
-//===========================================================================
 const Trig_switch_Conditions = () => {
   if ((!(GetTriggerPlayer()! === udg_Custom))) {
     return false;
@@ -115,21 +112,7 @@ const Trig_switch_Actions = () => {
     udg_switchOn = false;
     udg_dummyWisps = 0;
     udg_wispPoints = 0;
-    if ((Trig_switch_Func003Func015C())) {
-      LeaderboardSetPlayerItemLabelBJ(
-        Player(PLAYER_NEUTRAL_PASSIVE)!,
-        GetLastCreatedLeaderboard()!,
-        "|CFFED1C24Next: " +
-          (I2S(R2I(udg_time / 60)) + ((":" + udg_atempstring) + " pos")),
-      );
-    } else {
-      LeaderboardSetPlayerItemLabelBJ(
-        Player(PLAYER_NEUTRAL_PASSIVE)!,
-        GetLastCreatedLeaderboard()!,
-        "|CFFED1C24Next: " +
-          (I2S(R2I(udg_time / 60)) + (":" + udg_atempstring)),
-      );
-    }
+    updateLeaderboardSettingsDisplay();
   } else {
     DisableTrigger(gg_trg_sheepDies);
     DisableTrigger(gg_trg_spiritDies);
@@ -177,26 +160,10 @@ const Trig_switch_Actions = () => {
         udg_wispPoints = 0;
       }
     }
-    if ((Trig_switch_Func003Func011C())) {
-      LeaderboardSetPlayerItemLabelBJ(
-        Player(PLAYER_NEUTRAL_PASSIVE)!,
-        GetLastCreatedLeaderboard()!,
-        "|CFFED1C24Next: " +
-          (I2S(R2I(udg_time / 60)) + ((":" + udg_atempstring) + " switch/pos")),
-      );
-    } else {
-      LeaderboardSetPlayerItemLabelBJ(
-        Player(PLAYER_NEUTRAL_PASSIVE)!,
-        GetLastCreatedLeaderboard()!,
-        "|CFFED1C24Next: " +
-          (I2S(R2I(udg_time / 60)) + ((":" + udg_atempstring) + " switch")),
-      );
-    }
+    updateLeaderboardSettingsDisplay();
   }
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_switch: () => void;

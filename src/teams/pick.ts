@@ -1,24 +1,29 @@
-import { clearForces } from "../../../util/clearForces";
-import { registerAnyPlayerChatEvent } from "../../../util/registerAnyPlayerChatEvent";
+import { addScriptHook, W3TS_HOOK } from "w3ts";
+import { clearForces } from "../util/clearForces";
+import { registerAnyPlayerChatEvent } from "../util/registerAnyPlayerChatEvent";
 
 const Trig_pick_Actions = () => {
   DisableTrigger(gg_trg_smart);
   DisableTrigger(gg_trg_fair);
   DisableTrigger(gg_trg_reverse);
-  DisableTrigger(GetTriggeringTrigger()!);
+  DisableTrigger(gg_trg_pick);
   DisableTrigger(gg_trg_start);
   DisableTrigger(gg_trg_captains);
   DisableTrigger(gg_trg_versus);
   DisableTrigger(gg_trg_end);
+
   udg_lastGameString = GetEventPlayerChatString()!;
   TriggerExecute(gg_trg_createLists);
   udg_Teams = TEAMS_PICK;
   udg_pickIndex = 1;
   clearForces();
   ForForce(GetPlayersAll()!, () => SetPlayerAllianceStateBJ(udg_Custom, GetEnumPlayer()!, bj_ALLIANCE_ALLIED_VISION));
+
   TriggerExecute(gg_trg_setupLeaderboard);
+
   StartTimerBJ(udg_Createtimer, false, 60);
   TimerDialogDisplayBJ(true, udg_createTimerWindow);
+
   EnableTrigger(gg_trg_picksheep);
   EnableTrigger(gg_trg_pickwolf);
 
@@ -43,11 +48,7 @@ const Trig_pick_Actions = () => {
   TriggerExecute(gg_trg_setupPick);
 };
 
-declare global {
-  // deno-lint-ignore prefer-const
-  let InitTrig_pick: () => void;
-}
-InitTrig_pick = () => {
+addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   gg_trg_pick = CreateTrigger();
   registerAnyPlayerChatEvent(gg_trg_pick, "-pick", false);
   TriggerAddCondition(
@@ -55,4 +56,4 @@ InitTrig_pick = () => {
     Condition(() => GetTriggerPlayer()! === udg_Custom),
   );
   TriggerAddAction(gg_trg_pick, Trig_pick_Actions);
-};
+});

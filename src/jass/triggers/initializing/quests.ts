@@ -25,7 +25,7 @@ New? Type |CFF00AEEF-smart|r.`,
 |cff00aaef-time |cffed1c24X|cff00aeef:|r Set's the game timer to |cffed1c24X|r minutes.
 |cff00aeef-view:|r Displays the entire map for all players.
 |cff00aeef-vamp:|r Sheep that die turn into wolves.
-|cff00aeef-switch |cffed1c24 X Y Z W|cff00aeef:|r Killing wolf switch places with its captive. |cffed1c24X|r is time sheep are invulnerable. |cffed1c24Y|r is time before wolf spawn. |cffed1c24Z|r is number of dummy spirits. |cffed1c24W|r saves required to win. The defaults: |cffed1c24X=5, Y=10, Z=0, W=0|r
+|cff00aeef-switch |cffed1c24X Y Z W|cff00aeef:|r Killing wolf switch places with its captive. |cffed1c24X|r is time sheep are invulnerable. |cffed1c24Y|r is time before wolf spawn. |cffed1c24Z|r is number of dummy spirits. |cffed1c24W|r saves required to win. The defaults: |cffed1c24X=5, Y=10, Z=0, W=0|r
 |cff00aeef-president |cffed1c24X|cff00aeef:|r Picks a sheep to be president. If that sheep dies, the sheep lose. All other sheep have their handicap set to X, but their wisps can freely roam the map.
 |cff00aeef-gold |cffed1c24X Y|cff00aeef:|r Gives sheep |cffed1c24X|r gold and wolves |cffed1c24Y|r gold. If |cffed1c24Y|r is omitted, both teams get |cffed1c24X|r gold.
 |cff00aeef-expand:|r Gives the Sheep more room to build over time.

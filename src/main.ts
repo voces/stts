@@ -1,4 +1,10 @@
-import "./jass/main";
-import "./misc/hideTimers";
-import "./modes/president";
-import "./modes/switch/switchTimers";
+import "jass/main";
+import "misc/hideTimers";
+import "modes/president";
+import "modes/switch/switchTimers";
+import "settings/view";
+import "teams/fair";
+import "teams/pick";
+import "teams/reverse";
+import "teams/start";
+import "util/errorHooks";

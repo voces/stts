@@ -1,7 +1,8 @@
-import { addScriptHook, MapPlayer, Trigger, Unit, W3TS_HOOK } from "w3ts";
+import { addScriptHook, Trigger, Unit, W3TS_HOOK } from "w3ts";
 import { withDummy } from "../../util/withDummy";
 import { withUnitsInRange } from "../../util/withGroup";
 import { setTimeout } from "../../util/setTimeout";
+import { MapPlayerEx } from "../../handles/MapPlayerEx";
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   const t = Trigger.create();
@@ -86,7 +87,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
         },
         GetUnitX(wolf),
         GetUnitY(wolf),
-        MapPlayer.fromIndex(pid),
+        MapPlayerEx.fromIndex(pid),
       );
 
       const maybeRemoveBloodlust = () => {

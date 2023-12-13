@@ -1,4 +1,5 @@
-import { MapPlayer, Trigger } from "w3ts";
+import { Trigger } from "w3ts";
+import { MapPlayerEx } from "../handles/MapPlayerEx";
 
 export const registerAnyPlayerChatEvent = (
   trigger: Trigger | trigger,
@@ -8,7 +9,7 @@ export const registerAnyPlayerChatEvent = (
   const t = trigger instanceof Trigger ? trigger : Trigger.fromHandle(trigger)!;
   for (let i = 0; i < bj_MAX_PLAYERS; i++) {
     t.registerPlayerChatEvent(
-      MapPlayer.fromIndex(i)!,
+      MapPlayerEx.fromIndex(i)!,
       chatMessageToDetect,
       exactMatchOnly,
     );

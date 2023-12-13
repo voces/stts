@@ -1,8 +1,9 @@
-import { MapPlayer } from "w3ts";
 import { isPlaying } from "./isPlaying";
+import { MapPlayerEx } from "../handles/MapPlayerEx";
 
-export const forEachNonAfkPlayingPlayer = (fn: (player: MapPlayer) => void) =>
+/** Includes pubs, but not AFKs */
+export const forEachPlayingPlayer = (fn: (player: MapPlayerEx) => void) =>
   ForForce(GetPlayersAll()!, () => {
-    const p = MapPlayer.fromEnum()!;
+    const p = MapPlayerEx.fromEnum()!;
     if (isPlaying(p)) fn(p);
   });

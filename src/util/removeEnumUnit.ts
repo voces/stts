@@ -1,3 +1,1 @@
-export const removeEnumUnit = () => {
-  RemoveUnit(GetEnumUnit()!);
-};
+export const removeEnumUnit = () => RemoveUnit(GetEnumUnit()!);

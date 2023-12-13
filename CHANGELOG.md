@@ -13,7 +13,7 @@
   - Can now return players with -fafk
 - Added wisp to -practice (so Bulldog22 can practice)
 - Nudged wolf and rune spawn points to be more symmetric
-- -start X and -restart X draft based off SC
+- -start X, -restart X, and -reverse X adjust sheep based off SC
 - Removed -random
 - Perfect smart automatically disables if it results in unbalanced SC
 - Modified Sheep model to accept team color instead of setting vertex colors

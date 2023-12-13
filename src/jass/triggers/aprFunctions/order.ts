@@ -3,7 +3,7 @@
 //===========================================================================
 const Trig_order_Actions = () => {
   udg_atempint = GetConvertedPlayerId(GetOwningPlayer(GetOrderedUnit()!));
-  udg_apr[udg_atempint] = udg_apr[udg_atempint] + 1;
+  udg_apr[udg_atempint] = (udg_apr[udg_atempint] ?? 0) + 1;
 };
 
 //===========================================================================

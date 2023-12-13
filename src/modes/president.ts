@@ -1,9 +1,10 @@
-import { addScriptHook, MapPlayer, Trigger, W3TS_HOOK } from "w3ts";
+import { addScriptHook, Trigger, W3TS_HOOK } from "w3ts";
 import { registerAnyPlayerChatEvent } from "../util/registerAnyPlayerChatEvent";
+import { MapPlayerEx } from "../handles/MapPlayerEx";
 
 export const president = {
   enabled: false,
-  president: MapPlayer.fromIndex(PLAYER_NEUTRAL_PASSIVE)!,
+  president: MapPlayerEx.fromIndex(PLAYER_NEUTRAL_PASSIVE)!,
   handicap: 1,
 };
 

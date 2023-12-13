@@ -1,0 +1,51 @@
+diff --git a/node_modules/w3ts/handles/handle.d.ts b/node_modules/w3ts/handles/handle.d.ts
+index 97491cd..df07999 100644
+--- a/node_modules/w3ts/handles/handle.d.ts
++++ b/node_modules/w3ts/handles/handle.d.ts
+@@ -1,7 +1,7 @@
+ /// <reference types="war3-types-strict/1.33.0" />
+ /** @noSelfInFile */
+ export declare class Handle<T extends handle> {
+-    readonly handle: T;
++    handle: T;
+     private static initHandle;
+     protected constructor(handle?: T);
+     /**
+diff --git a/node_modules/w3ts/handles/player.d.ts b/node_modules/w3ts/handles/player.d.ts
+index afbceb7..d3cceef 100644
+--- a/node_modules/w3ts/handles/player.d.ts
++++ b/node_modules/w3ts/handles/player.d.ts
+@@ -8,7 +8,7 @@ export declare class MapPlayer extends Handle<player> {
+     /**
+      * @deprecated use `MapPlayer.create` instead.
+      */
+-    private constructor();
++    protected constructor(index: number);
+     private static create;
+     set color(color: playercolor);
+     get color(): playercolor;
+diff --git a/node_modules/w3ts/handles/player.lua b/node_modules/w3ts/handles/player.lua
+index febb3c7..ff2a60f 100644
+--- a/node_modules/w3ts/handles/player.lua
++++ b/node_modules/w3ts/handles/player.lua
+@@ -308,4 +308,20 @@ function MapPlayer.fromLocal(self)
+     end
+     return self:fromHandle(pl)
+ end
++local WeakMap = ____lualib.WeakMap
++local __TS__New = ____lualib.__TS__New
++local map = __TS__New(WeakMap)
++function MapPlayer.getObject(self, player)
++    local obj = map:get(player)
++    if obj ~= nil then
++        return obj
++    end
++    local next = __TS__New(
++        ____exports.MapPlayer,
++        GetPlayerId(player)
++    )
++    next.handle = player
++    map:set(player, next)
++    return next
++end
+ return ____exports

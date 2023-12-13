@@ -1,4 +1,5 @@
-import { MapPlayer, Trigger } from "w3ts";
+import { Trigger } from "w3ts";
+import { MapPlayerEx } from "../handles/MapPlayerEx";
 
 export const registerAnyPlayerMouseEvent = (
   trigger: Trigger,
@@ -6,7 +7,7 @@ export const registerAnyPlayerMouseEvent = (
 ) => {
   for (let i = 0; i < bj_MAX_PLAYERS; i++) {
     trigger.registerPlayerMouseEvent(
-      MapPlayer.fromIndex(i)!,
+      MapPlayerEx.fromIndex(i)!,
       whichMouseEvent,
     );
   }

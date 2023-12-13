@@ -1,6 +1,4 @@
-//library Smart:
-
-import { addScriptHook, Trigger, W3TS_HOOK } from "w3ts";
+import { addScriptHook, W3TS_HOOK } from "w3ts";
 import { registerAnyPlayerChatEvent } from "../util/registerAnyPlayerChatEvent";
 import { clearForces } from "../util/clearForces";
 
@@ -13,16 +11,12 @@ const isActivePlayer = (p: player) =>
 
 const getActivePlayerCount = (): number => {
   let count = 0;
-  for (let i = 0; i < bj_MAX_PLAYERS; i++) {
-    if (isActivePlayer(Player(i)!)) count++;
-  }
+  for (let i = 0; i < bj_MAX_PLAYERS; i++) if (isActivePlayer(Player(i)!)) count++;
   return count;
 };
 
 const clearPlayerVariables = () => {
-  for (let i = 0; i < 6; i++) {
-    perfectPlayerVariables[i] = Player(PLAYER_NEUTRAL_PASSIVE)!;
-  }
+  for (let i = 0; i < 6; i++) perfectPlayerVariables[i] = Player(PLAYER_NEUTRAL_PASSIVE)!;
 };
 
 const isPlayerVariableOpen = (pvid: number) =>
@@ -52,12 +46,8 @@ const setupPlayerVariables = (reset: boolean): void => {
     ties = 0;
     if (!isPlayerVariableOpen(i)) continue;
     for (let n = 0; n < bj_MAX_PLAYERS; n++) {
-      if (!isUnassignedActivePlayer(Player(n)!) || (i <= 1 && blocked[n])) {
-        continue;
-      }
-      if (GetRandomReal(0, 1) < (1 / (ties + 1))) {
-        perfectPlayerVariables[i] = Player(n)!;
-      }
+      if (!isUnassignedActivePlayer(Player(n)!) || (i <= 1 && blocked[n])) continue;
+      if (GetRandomReal(0, 1) < (1 / (ties + 1))) perfectPlayerVariables[i] = Player(n)!;
       ties = ties + 1;
     }
   }
@@ -129,29 +119,17 @@ const perfectSmart = (): void => {
 
 const draftLowestSCToSpirit = () => {
   let minimumSheepCount = 9999;
-  let i: number;
-  i = 0;
-  while (true) {
-    if ((i >= bj_MAX_PLAYERS)) break;
-    if (
-      (IsPlayerInForce(Player(i)!, udg_Wolf) &&
-        minimumSheepCount > udg_sheepCount[i + 1])
-    ) {
+  for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+    if (IsPlayerInForce(Player(i)!, udg_Wolf) && minimumSheepCount > udg_sheepCount[i + 1]) {
       minimumSheepCount = udg_sheepCount[i + 1];
     }
-    i = i + 1;
   }
-  i = 0;
-  while (true) {
-    if ((i >= bj_MAX_PLAYERS)) break;
-    if (
-      (IsPlayerInForce(Player(i)!, udg_Wolf) &&
-        minimumSheepCount === udg_sheepCount[i + 1])
-    ) {
+
+  for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+    if (IsPlayerInForce(Player(i)!, udg_Wolf) && minimumSheepCount === udg_sheepCount[i + 1]) {
       ForceRemovePlayer(udg_Wolf, Player(i)!);
       ForceAddPlayer(udg_Spirit, Player(i)!);
     }
-    i = i + 1;
   }
 };
 

@@ -1,7 +1,4 @@
-//===========================================================================
-// Trigger: startRound
-//===========================================================================
-// startRound
+import { resetBankedGold } from "functions/farms/savingFarms";
 
 const reviveEnumDestructable = () => {
   DestructableRestoreLife(
@@ -31,8 +28,8 @@ const resetEnumRoundStats = (i: number): void => {
 
 const destroyEnumPlayerView = () => {
   const i = GetConvertedPlayerId(GetEnumPlayer()!);
-  DestroyFogModifier(udg_view[i]);
-  udg_view[i] = null as unknown as fogmodifier;
+  if (udg_view[i]) DestroyFogModifier(udg_view[i]!);
+  udg_view[i] = undefined;
 };
 
 const removeDraft = () => {
@@ -256,13 +253,8 @@ const Trig_startRound_Actions = () => {
       udg_AFK[i] = AFK_PLAYING;
     }
 
-    if (udg_viewOn === false && udg_view[i] == null) {
-      udg_view[i] = CreateFogModifierRectBJ(
-        true,
-        ConvertedPlayer(i)!,
-        FOG_OF_WAR_VISIBLE,
-        GetPlayableMapRect()!,
-      )!;
+    if (udg_viewOn === false && !udg_view[i]) {
+      udg_view[i] = CreateFogModifierRectBJ(true, ConvertedPlayer(i)!, FOG_OF_WAR_VISIBLE, GetPlayableMapRect()!);
     }
 
     i = i + 1;
@@ -295,7 +287,7 @@ const Trig_startRound_Actions = () => {
     i = i + 1;
   }
 
-  SavingFarms_resetSavings();
+  resetBankedGold();
 
   TriggerExecute(gg_trg_setupLeaderboard);
 
