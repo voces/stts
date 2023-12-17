@@ -1,4 +1,4 @@
-import { maybeRotate } from "../../../teams/smart";
+import { maybeRotate } from "teams/smart";
 
 const Trig_wolvesWin_Func001A = () => {
   udg_sheepSurvived[GetConvertedPlayerId(GetEnumPlayer()!)] =

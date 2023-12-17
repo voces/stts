@@ -1,7 +1,7 @@
 import { addScriptHook, W3TS_HOOK } from "w3ts";
 
 const Trig_setupPick_Actions = () => {
-  ClearTextMessagesBJ(GetPlayersAll()!);
+  ClearTextMessages();
   while (true) {
     if (
       GetPlayerSlotState(udg_playerList[udg_pickIndex]) === PLAYER_SLOT_STATE_PLAYING ||

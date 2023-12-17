@@ -1,4 +1,5 @@
-import { president } from "../../../modes/president";
+import { terrain } from "settings/terrain";
+import { president } from "modes/president";
 
 const Trig_spiritDies_Conditions = () => {
   return GetUnitTypeId(GetTriggerUnit()!) === wispType;
@@ -15,8 +16,8 @@ const Trig_spiritDies_Actions = () => {
     CreateUnit(
       dyingPlayer,
       wispType,
-      RandomX(wispArea),
-      RandomY(wispArea),
+      RandomX(terrain.wisp),
+      RandomY(terrain.wisp),
       270,
     );
     return;

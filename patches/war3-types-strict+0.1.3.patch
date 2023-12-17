@@ -1,8 +1,20 @@
 diff --git a/node_modules/war3-types-strict/1.33.0/common.j.d.ts b/node_modules/war3-types-strict/1.33.0/common.j.d.ts
-index 223f999..c60c958 100644
+index 223f999..ec5d8b2 100644
 --- a/node_modules/war3-types-strict/1.33.0/common.j.d.ts
 +++ b/node_modules/war3-types-strict/1.33.0/common.j.d.ts
-@@ -2398,7 +2398,7 @@ declare function EndThematicMusic();
+@@ -2238,9 +2238,9 @@ declare function CreateFogModifierRadiusLoc(forWhichPlayer: player, whichState:
+ 
+ declare function CreateFogModifierRect(forWhichPlayer: player, whichState: fogstate, where: rect, useSharedVision: boolean, afterUnits: boolean): fogmodifier | undefined;
+ 
+-declare function CreateForce(): force | undefined;
++declare function CreateForce(): force;
+ 
+-declare function CreateGroup(): group | undefined;
++declare function CreateGroup(): group;
+ 
+ declare function CreateImage(file: string, sizeX: number, sizeY: number, sizeZ: number, posX: number, posY: number, posZ: number, originX: number, originY: number, originZ: number, imageType: number): image | undefined;
+ 
+@@ -2398,7 +2398,7 @@ declare function EndThematicMusic(): void;
  
  declare function EnumDestructablesInRect(r: rect, filter: boolexpr | undefined, actionFunc: () => void): void;
  

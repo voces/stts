@@ -1,6 +1,5 @@
-//===========================================================================
-// Trigger: controllal
-//===========================================================================
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+
 const Trig_controllal_Func002C = () => {
   if ((GetSpellAbilityId() === FourCC("A022"))) {
     return true;
@@ -35,17 +34,17 @@ const Trig_controllal_Func004C = () => {
 };
 
 const Trig_controllal_Func008Func001Func001C = () => {
-  if ((!(GetEnumPlayer()! !== udg_anactualtempplayer))) {
+  if ((!(GetEnumPlayer() !== udg_anactualtempplayer))) {
     return false;
   }
   return true;
 };
 
 const Trig_controllal_Func008Func001Func002C = () => {
-  if ((!(GetEnumPlayer()! !== udg_anactualtempplayer))) {
+  if ((!(GetEnumPlayer() !== udg_anactualtempplayer))) {
     return false;
   }
-  if ((!(GetEnumPlayer()! !== udg_anactualtempplayer))) {
+  if ((!(GetEnumPlayer() !== udg_anactualtempplayer))) {
     return false;
   }
   return true;
@@ -123,42 +122,14 @@ const Trig_controllal_Actions = () => {
   DestroyForce(udg_atempplayer);
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_controllal: () => void;
 }
 InitTrig_controllal = () => {
-  gg_trg_controllal = CreateTrigger();
-  TriggerRegisterPlayerChatEvent(gg_trg_controllal, Player(0)!, "-call", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_controllal, Player(1)!, "-call", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_controllal, Player(2)!, "-call", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_controllal, Player(3)!, "-call", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_controllal, Player(4)!, "-call", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_controllal, Player(5)!, "-call", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_controllal, Player(6)!, "-call", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_controllal, Player(7)!, "-call", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_controllal, Player(8)!, "-call", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_controllal, Player(9)!, "-call", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_controllal, Player(10)!, "-call", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_controllal, Player(11)!, "-call", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_controllal, Player(12)!, "-call", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_controllal, Player(13)!, "-call", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_controllal, Player(14)!, "-call", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_controllal, Player(15)!, "-call", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_controllal, Player(16)!, "-call", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_controllal, Player(17)!, "-call", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_controllal, Player(18)!, "-call", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_controllal, Player(19)!, "-call", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_controllal, Player(20)!, "-call", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_controllal, Player(21)!, "-call", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_controllal, Player(22)!, "-call", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_controllal, Player(23)!, "-call", true);
-  TriggerRegisterAnyUnitEventBJ(
-    gg_trg_controllal,
-    EVENT_PLAYER_UNIT_SPELL_CAST,
-  );
-  TriggerAddCondition(gg_trg_controllal, Condition(Trig_controllal_Conditions));
-  TriggerAddAction(gg_trg_controllal, Trig_controllal_Actions);
+  gg_trg_controllall = CreateTrigger();
+  registerAnyPlayerChatEvent(gg_trg_controllall, "-call");
+  TriggerRegisterAnyUnitEventBJ(gg_trg_controllall, EVENT_PLAYER_UNIT_SPELL_CAST);
+  TriggerAddCondition(gg_trg_controllall, Condition(Trig_controllal_Conditions));
+  TriggerAddAction(gg_trg_controllall, Trig_controllal_Actions);
 };

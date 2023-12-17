@@ -16,6 +16,7 @@
 - -start X, -restart X, and -reverse X adjust sheep based off SC
 - Removed -random
 - Perfect smart automatically disables if it results in unbalanced SC
+- Smart prevents repeated sheep rounds in 1vX
 - Modified Sheep model to accept team color instead of setting vertex colors
 
 ## Balance changes
@@ -32,6 +33,7 @@
 - Players returning for -afk have their SC set to the highest SC, excluding pubs
 - Pubs correctly cycle
 - Updated Quests with missing commands
+- Disabled creep camps showing up on minimap
 
 ## Source changes
 

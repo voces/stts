@@ -81,12 +81,13 @@ const Trig_MultiKillCheck_Func006C = () => {
 };
 
 const Trig_MultiKillCheck_Actions = () => {
-  StartTimerBJ(
+  TimerStart(
     udg_multiKillTimer[
       GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
     ],
-    false,
     12.01,
+    false,
+    null,
   );
   if ((Trig_MultiKillCheck_Func006C())) {
     udg_multiKillNum[

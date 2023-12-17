@@ -1,5 +1,5 @@
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
-import { addScriptHook, W3TS_HOOK } from "w3ts";
+import { addScriptHook, Trigger, W3TS_HOOK } from "w3ts";
 
 const checkAutoTimeFlag = () => {
   const oldTime = udg_time;
@@ -42,7 +42,19 @@ const Trig_time_Actions = () => {
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   gg_trg_time = CreateTrigger();
-  registerAnyPlayerChatEvent(gg_trg_time, "-time", false);
+  registerAnyPlayerChatEvent(gg_trg_time, "-time ", false);
   TriggerAddCondition(gg_trg_time, Condition(() => GetTriggerPlayer() === udg_Custom));
   TriggerAddAction(gg_trg_time, Trig_time_Actions);
+
+  {
+    const t = Trigger.create();
+    t.registerAnyUnitEvent(EVENT_PLAYER_UNIT_TRAIN_START);
+    t.addCondition(() => GetTrainedUnitType() === FourCC("h00G"));
+    t.addAction(() => {
+      udg_autoTime = true;
+      defaultTime();
+      TriggerSleepAction(0);
+      IssueImmediateOrderById(GetTriggerUnit()!, 851976);
+    });
+  }
 });

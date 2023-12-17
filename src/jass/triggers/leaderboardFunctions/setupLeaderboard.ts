@@ -1,3 +1,5 @@
+import { updateLeaderboardSettingsDisplay } from "settings/time";
+
 //===========================================================================
 // Trigger: setupLeaderboard
 //
@@ -319,7 +321,7 @@ const Trig_setupLeaderboard_Func002C = () => {
 };
 
 const Trig_setupLeaderboard_Func003Func001Func001C = () => {
-  if ((!(GetEnumPlayer()! === udg_Custom))) {
+  if ((!(GetEnumPlayer() === udg_Custom))) {
     return false;
   }
   return true;
@@ -454,12 +456,8 @@ const Trig_setupLeaderboard_Actions = () => {
         0,
       );
     }
-    LeaderboardAddItemBJ(
-      Player(PLAYER_NEUTRAL_PASSIVE)!,
-      GetLastCreatedLeaderboard()!,
-      "|CFFED1C24Next: " + (I2S(R2I(udg_time / 60)) + ":00"),
-      0,
-    );
+    LeaderboardAddItemBJ(Player(PLAYER_NEUTRAL_PASSIVE)!, GetLastCreatedLeaderboard()!, "", 0);
+    updateLeaderboardSettingsDisplay();
     LeaderboardSetPlayerItemStyleBJ(
       Player(PLAYER_NEUTRAL_PASSIVE)!,
       GetLastCreatedLeaderboard()!,
@@ -768,8 +766,6 @@ const Trig_setupLeaderboard_Actions = () => {
   }
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_setupLeaderboard: () => void;

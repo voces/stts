@@ -10,7 +10,7 @@ const Trig_Runes_On_Func001C = () => {
 
 const Trig_Runes_On_Actions = () => {
   if ((Trig_Runes_On_Func001C())) {
-    StartTimerBJ(udg_RuneTimer[0], false, 90);
+    TimerStart(udg_RuneTimer[0], 90, false, null);
     TriggerExecute(gg_trg_Invis_Rune);
     TriggerExecute(gg_trg_Speed_Rune);
     udg_runeSpawn = 1;

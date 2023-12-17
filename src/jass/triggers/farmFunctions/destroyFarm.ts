@@ -62,13 +62,7 @@ declare global {
 }
 InitTrig_destroyFarm = () => {
   gg_trg_destroyFarm = CreateTrigger();
-  TriggerRegisterAnyUnitEventBJ(
-    gg_trg_destroyFarm,
-    EVENT_PLAYER_UNIT_TRAIN_START,
-  );
-  TriggerAddCondition(
-    gg_trg_destroyFarm,
-    Condition(Trig_destroyFarm_Conditions),
-  );
+  TriggerRegisterAnyUnitEventBJ(gg_trg_destroyFarm, EVENT_PLAYER_UNIT_TRAIN_START);
+  TriggerAddCondition(gg_trg_destroyFarm, Condition(Trig_destroyFarm_Conditions));
   TriggerAddAction(gg_trg_destroyFarm, Trig_destroyFarm_Actions);
 };

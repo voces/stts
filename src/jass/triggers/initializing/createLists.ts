@@ -55,7 +55,7 @@ const Trig_createLists_Func006Func003Func001C = () => {
 };
 
 const Trig_createLists_Func006Func003C = () => {
-  if ((!(ConvertedPlayer(GetForLoopIndexA())! === udg_Custom))) {
+  if ((!(ConvertedPlayer(GetForLoopIndexA()) === udg_Custom))) {
     return false;
   }
   return true;

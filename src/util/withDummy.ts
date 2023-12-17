@@ -1,6 +1,6 @@
 import { Unit } from "w3ts";
 import { setTimeout } from "./setTimeout";
-import { MapPlayerEx } from "../handles/MapPlayerEx";
+import { MapPlayerEx } from "handles/MapPlayerEx";
 
 export const withDummy = <T>(
   fn: (dummy: Unit) => T,

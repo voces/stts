@@ -1,6 +1,6 @@
 import { Timer } from "w3ts";
-import { withUnitsInRange } from "../../../util/withGroup";
-import { setTimeout } from "../../../util/setTimeout";
+import { withUnitsInRange } from "util/withGroup";
+import { setTimeout } from "util/setTimeout";
 
 let translocateTicker: Timer;
 const translocates: unit[] = [];

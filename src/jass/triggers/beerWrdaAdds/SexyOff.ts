@@ -2,7 +2,7 @@
 // Trigger: SexyOff
 //===========================================================================
 const Trig_SexyOff_Conditions = () => {
-  if ((!(GetTriggerPlayer()! === udg_Custom))) {
+  if ((!(GetTriggerPlayer() === udg_Custom))) {
     return false;
   }
   return true;

@@ -1,146 +1,38 @@
-//===========================================================================
-// Trigger: UpdateStats
-//===========================================================================
+import { MapPlayerEx } from "handles/MapPlayerEx";
+
 const Trig_UpdateStats_forEnumPlayer = () => {
-  if (GetPlayerController(GetEnumPlayer()!) !== MAP_CONTROL_USER) {
-    return;
-  }
+  const p = MapPlayerEx.fromEnum()!;
+  if (p.controller !== MAP_CONTROL_USER) return;
 
-  MMD_FlagPlayer(GetEnumPlayer()!, MMD_FLAG_DRAWER);
-  MMD__update_value(
-    "Farms Built",
-    GetEnumPlayer()!,
-    MMD__ops[MMD_OP_SET],
-    I2S(udg_totalFarmsBuilt[GetConvertedPlayerId(GetEnumPlayer()!)])!,
-    MMD_TYPE_INT,
-  );
-  udg_averageFarmCountBeforeWolves[GetConvertedPlayerId(GetEnumPlayer()!)] = I2R(
-    udg_totalFarmCountBeforeWolves[GetConvertedPlayerId(GetEnumPlayer()!)],
-  ) / I2R(udg_sheepCount[GetConvertedPlayerId(GetEnumPlayer()!)]);
-  MMD__update_value(
-    "Average Farm Count Before Wolves",
-    GetEnumPlayer()!,
-    MMD__ops[MMD_OP_SET],
-    R2S(
-      (udg_averageFarmCountBeforeWolves[
-        GetConvertedPlayerId(GetEnumPlayer()!)
-      ]) * 1,
-    )!,
-    MMD_TYPE_REAL,
-  );
-  MMD__update_value(
-    "Saves",
-    GetEnumPlayer()!,
-    MMD__ops[MMD_OP_SET],
-    I2S(udg_totalSaves[GetConvertedPlayerId(GetEnumPlayer()!)])!,
-    MMD_TYPE_INT,
-  );
-  MMD__update_value(
-    "Kills",
-    GetEnumPlayer()!,
-    MMD__ops[MMD_OP_SET],
-    I2S(udg_totalKills[GetConvertedPlayerId(GetEnumPlayer()!)])!,
-    MMD_TYPE_INT,
-  );
-  MMD__update_value(
-    "Wins",
-    GetEnumPlayer()!,
-    MMD__ops[MMD_OP_SET],
-    I2S(udg_wins[GetConvertedPlayerId(GetEnumPlayer()!)])!,
-    MMD_TYPE_INT,
-  );
-  MMD__update_value(
-    "Versus Wins",
-    GetEnumPlayer()!,
-    MMD__ops[MMD_OP_SET],
-    I2S(udg_vwins[GetConvertedPlayerId(GetEnumPlayer()!)])!,
-    MMD_TYPE_INT,
-  );
-  MMD__update_value(
-    "Last Sheep Standing",
-    GetEnumPlayer()!,
-    MMD__ops[MMD_OP_SET],
-    I2S(udg_lssCounter[GetConvertedPlayerId(GetEnumPlayer()!)])!,
-    MMD_TYPE_INT,
-  );
-  MMD__update_value(
-    "First Blood Deaths",
-    GetEnumPlayer()!,
-    MMD__ops[MMD_OP_SET],
-    I2S(udg_firstbloodDeathCounter[GetConvertedPlayerId(GetEnumPlayer()!)])!,
-    MMD_TYPE_INT,
-  );
-  MMD__update_value(
-    "First Blood Kills",
-    GetEnumPlayer()!,
-    MMD__ops[MMD_OP_SET],
-    I2S(udg_firstbloodKillCounter[GetConvertedPlayerId(GetEnumPlayer()!)])!,
-    MMD_TYPE_INT,
-  );
-  MMD__update_value(
-    "Wolf Gold Given",
-    GetEnumPlayer()!,
-    MMD__ops[MMD_OP_SET],
-    I2S(wolfGoldGiven[GetPlayerId(GetEnumPlayer()!)])!,
-    MMD_TYPE_INT,
-  );
-  MMD__update_value(
-    "Sheep Gold Given",
-    GetEnumPlayer()!,
-    MMD__ops[MMD_OP_SET],
-    I2S(sheepGoldGiven[GetPlayerId(GetEnumPlayer()!)])!,
-    MMD_TYPE_INT,
-  );
-  MMD__update_value(
-    "Spirit Gold Given",
-    GetEnumPlayer()!,
-    MMD__ops[MMD_OP_SET],
-    I2S(spiritGoldGiven[GetPlayerId(GetEnumPlayer()!)])!,
-    MMD_TYPE_INT,
-  );
-  MMD__update_value(
-    "Sheep Times",
-    GetEnumPlayer()!,
-    MMD__ops[MMD_OP_SET],
-    R2S(
-      (TimerGetElapsed(
-        udg_sheepTimer[GetConvertedPlayerId(GetEnumPlayer()!)],
-      )) * 1,
-    )!,
-    MMD_TYPE_REAL,
-  );
-  MMD__update_value(
-    "Times",
-    GetEnumPlayer()!,
-    MMD__ops[MMD_OP_SET],
-    R2S(
-      (s___times_pTime[
-        s__times_pTime[playerTimes[GetPlayerId(GetEnumPlayer()!)]] +
-        GetPlayerId(GetEnumPlayer()!)
-      ]) * 1,
-    )!,
-    MMD_TYPE_REAL,
-  );
-  MMD_UpdateValueString(
-    "Round Times",
-    GetEnumPlayer()!,
-    udg_roundTimes[GetConvertedPlayerId(GetEnumPlayer()!)],
-  );
-  MMD_UpdateValueString(
-    "Sheep Survived",
-    GetEnumPlayer()!,
-    udg_sheepSurvived[GetConvertedPlayerId(GetEnumPlayer()!)],
-  );
+  MMD_FlagPlayer(p.handle, MMD_FLAG_DRAWER);
 
-  if (udg_QDeathTime[GetConvertedPlayerId(GetEnumPlayer()!)] < 9999) {
-    MMD__update_value(
-      "Quickest Death",
-      GetEnumPlayer()!,
-      MMD__ops[MMD_OP_SET],
-      R2S((udg_QDeathTime[GetConvertedPlayerId(GetEnumPlayer()!)]) * 1)!,
-      MMD_TYPE_REAL,
-    );
-  }
+  const setValue = (
+    name: string,
+    value: string | number,
+    type: typeof MMD_TYPE_INT | typeof MMD_TYPE_REAL = MMD_TYPE_INT,
+  ) => {
+    const v = typeof value === "string" ? value : type === MMD_TYPE_INT ? I2S(value)! : R2S(value)!;
+    MMD__update_value(name, p.handle, MMD__ops[MMD_OP_SET], v, type);
+  };
+
+  setValue("Farms Built", udg_totalFarmsBuilt[p.cid]);
+  udg_averageFarmCountBeforeWolves[p.cid] = I2R(udg_totalFarmCountBeforeWolves[p.cid]) / I2R(udg_sheepCount[p.cid]);
+  setValue("Average Farm Count Before Wolves", udg_averageFarmCountBeforeWolves[p.cid], MMD_TYPE_REAL);
+  setValue("Saves", udg_totalSaves[p.cid]);
+  setValue("Kills", udg_totalKills[p.cid]);
+  setValue("Wins", udg_wins[p.cid]);
+  setValue("Versus Wins", udg_vwins[p.cid]);
+  setValue("Last Sheep Standing", udg_lssCounter[p.cid]);
+  setValue("First Blood Deaths", udg_firstbloodDeathCounter[p.cid]);
+  setValue("First Blood Kills", udg_firstbloodKillCounter[p.cid]);
+  setValue("Wolf Gold Given", wolfGoldGiven[p.id]);
+  setValue("Sheep Gold Given", sheepGoldGiven[p.id]);
+  setValue("Spirit Gold Given", spiritGoldGiven[p.id]);
+  setValue("Sheep Times", TimerGetElapsed(udg_sheepTimer[p.cid]), MMD_TYPE_REAL);
+  setValue("Times", s___times_pTime[s__times_pTime[playerTimes[p.id]] + p.id], MMD_TYPE_REAL);
+  MMD_UpdateValueString("Round Times", p.handle, udg_roundTimes[p.cid]);
+  MMD_UpdateValueString("Sheep Survived", p.handle, udg_sheepSurvived[p.cid]);
+  if (udg_QDeathTime[p.cid] < 9999) setValue("Quickest Death", udg_QDeathTime[p.cid], MMD_TYPE_REAL);
 };
 
 const Trig_UpdateStats_Actions = () => {
@@ -156,8 +48,6 @@ Upload your replays to |cff00aeefhttps://wc3stats.com/|r`,
   );
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_UpdateStats: () => void;

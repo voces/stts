@@ -1,6 +1,6 @@
 import { Unit } from "w3ts";
-import { GroupEx } from "../handles/GroupEx";
-import { MapPlayerEx } from "../handles/MapPlayerEx";
+import { GroupEx } from "handles/GroupEx";
+import { MapPlayerEx } from "handles/MapPlayerEx";
 
 export const withGroup = <T>(
   fn: (group: GroupEx) => T,

@@ -1,8 +1,34 @@
 import { addScriptHook, W3TS_HOOK } from "w3ts";
-import { clearForces } from "../util/clearForces";
-import { registerAnyPlayerChatEvent } from "../util/registerAnyPlayerChatEvent";
+import { clearForces } from "util/clearForces";
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+import { displayTimedTextToAll } from "util/displayTimedTextToAll";
+import { MapPlayerEx } from "handles/MapPlayerEx";
+
+const canPlay = (pid: number) =>
+  pid > 0 && pid < 25 && GetPlayerSlotState(Player(pid - 1)!) === PLAYER_SLOT_STATE_PLAYING &&
+  udg_AFK[pid] == AFK_PLAYING;
 
 const Trig_pick_Actions = () => {
+  udg_lastGameString = GetEventPlayerChatString()!.toLowerCase();
+  let parts: number[] = [];
+  if (udg_lastGameString !== "-pick") {
+    parts = udg_lastGameString.split(" ").slice(1).map((v) => S2I(v));
+    for (const pid of parts) {
+      if (!canPlay(pid)) {
+        const p = MapPlayerEx.fromIndex(pid - 1);
+        const pName = p ? p.coloredName : `Player ${pid}`;
+        if (canPlay(pid - 2)) {
+          displayTimedTextToAll(
+            `${pName} cannot be picked. Did you mean ${MapPlayerEx.fromIndex(pid - 2)!.coloredName}?`,
+          );
+        } else if (canPlay(pid + 1)) {
+          displayTimedTextToAll(`${pName} cannot be picked. Did you mean ${MapPlayerEx.fromIndex(pid)!.coloredName}?`);
+        } else displayTimedTextToAll(`${pName} cannot be picked.`);
+        return;
+      }
+    }
+  }
+
   DisableTrigger(gg_trg_smart);
   DisableTrigger(gg_trg_fair);
   DisableTrigger(gg_trg_reverse);
@@ -12,7 +38,6 @@ const Trig_pick_Actions = () => {
   DisableTrigger(gg_trg_versus);
   DisableTrigger(gg_trg_end);
 
-  udg_lastGameString = GetEventPlayerChatString()!;
   TriggerExecute(gg_trg_createLists);
   udg_Teams = TEAMS_PICK;
   udg_pickIndex = 1;
@@ -21,7 +46,7 @@ const Trig_pick_Actions = () => {
 
   TriggerExecute(gg_trg_setupLeaderboard);
 
-  StartTimerBJ(udg_Createtimer, false, 60);
+  TimerStart(udg_Createtimer, 60, false, null);
   TimerDialogDisplayBJ(true, udg_createTimerWindow);
 
   EnableTrigger(gg_trg_picksheep);
@@ -29,7 +54,8 @@ const Trig_pick_Actions = () => {
 
   //Quick Pick
   if (udg_lastGameString !== "-pick") {
-    const parts = udg_lastGameString.split(" ").slice(1).map((v) => parseInt(v));
+    const parts = udg_lastGameString.split(" ").slice(1).map((v) => S2I(v));
+
     for (const pid of parts) {
       if (
         pid > 0 && pid < 25 && GetPlayerSlotState(Player(pid - 1)!) === PLAYER_SLOT_STATE_PLAYING &&
@@ -51,9 +77,6 @@ const Trig_pick_Actions = () => {
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   gg_trg_pick = CreateTrigger();
   registerAnyPlayerChatEvent(gg_trg_pick, "-pick", false);
-  TriggerAddCondition(
-    gg_trg_pick,
-    Condition(() => GetTriggerPlayer()! === udg_Custom),
-  );
+  TriggerAddCondition(gg_trg_pick, Condition(() => GetTriggerPlayer() === udg_Custom));
   TriggerAddAction(gg_trg_pick, Trig_pick_Actions);
 });

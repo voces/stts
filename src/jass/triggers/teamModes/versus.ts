@@ -1,6 +1,5 @@
-//===========================================================================
-// Trigger: versus
-//===========================================================================
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+
 const Trig_versus_Func004Func002C = () => {
   if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 9, 10)!) > 0))) {
     return false;
@@ -18,7 +17,7 @@ const Trig_versus_Func004Func002C = () => {
 };
 
 const Trig_versus_Func004C = () => {
-  if ((GetEventPlayerChatString()! === "-versus")) {
+  if ((GetEventPlayerChatString() === "-versus")) {
     return true;
   }
   if ((Trig_versus_Func004Func002C())) {
@@ -112,7 +111,7 @@ const Trig_versus_Func006Func004Func026Func006A = () => {
 };
 
 const Trig_versus_Func006Func004Func026C = () => {
-  if ((!(GetEventPlayerChatString()! === "-captains"))) {
+  if ((!(GetEventPlayerChatString() === "-captains"))) {
     return false;
   }
   return true;
@@ -128,10 +127,10 @@ const Trig_versus_Func006Func004Func037Func001C = () => {
   if ((!(GetPlayerSlotState(GetEnumPlayer()!) !== PLAYER_SLOT_STATE_LEFT))) {
     return false;
   }
-  if ((!(GetEnumPlayer()! !== udg_captains[1]))) {
+  if ((!(GetEnumPlayer() !== udg_captains[1]))) {
     return false;
   }
-  if ((!(GetEnumPlayer()! !== udg_captains[3]))) {
+  if ((!(GetEnumPlayer() !== udg_captains[3]))) {
     return false;
   }
   return true;
@@ -266,10 +265,10 @@ const Trig_versus_Func006Func043Func001C = () => {
   if ((!(GetPlayerSlotState(GetEnumPlayer()!) !== PLAYER_SLOT_STATE_LEFT))) {
     return false;
   }
-  if ((!(GetEnumPlayer()! !== udg_captains[1]))) {
+  if ((!(GetEnumPlayer() !== udg_captains[1]))) {
     return false;
   }
-  if ((!(GetEnumPlayer()! !== udg_captains[3]))) {
+  if ((!(GetEnumPlayer() !== udg_captains[3]))) {
     return false;
   }
   return true;
@@ -291,7 +290,7 @@ const Trig_versus_Func006Func043A = () => {
 };
 
 const Trig_versus_Func006C = () => {
-  if ((!(GetEventPlayerChatString()! === "-versus"))) {
+  if ((!(GetEventPlayerChatString() === "-versus"))) {
     return false;
   }
   return true;
@@ -323,7 +322,7 @@ const Trig_versus_Actions = () => {
     ForForce(udg_Wolf, Trig_versus_Func006Func024002);
     ForForce(udg_Spirit, Trig_versus_Func006Func025002);
     ForForce(GetPlayersAll()!, Trig_versus_Func006Func026002);
-    StartTimerBJ(udg_Createtimer, false, 300);
+    TimerStart(udg_Createtimer, 300, false, null);
     TimerDialogDisplayBJ(true, udg_createTimerWindow);
     ForForce(GetPlayersAll()!, Trig_versus_Func006Func029A);
     ForForce(
@@ -441,7 +440,7 @@ const Trig_versus_Actions = () => {
       ForForce(udg_Wolf, Trig_versus_Func006Func004Func021002);
       ForForce(udg_Spirit, Trig_versus_Func006Func004Func022002);
       ForForce(GetPlayersAll()!, Trig_versus_Func006Func004Func023002);
-      StartTimerBJ(udg_Createtimer, false, 300);
+      TimerStart(udg_Createtimer, 300, false, null);
       TimerDialogDisplayBJ(true, udg_createTimerWindow);
       if ((Trig_versus_Func006Func004Func026C())) {
         ForForce(GetPlayersAll()!, Trig_versus_Func006Func004Func026Func003A);
@@ -548,38 +547,13 @@ const Trig_versus_Actions = () => {
   }
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_versus: () => void;
 }
 InitTrig_versus = () => {
   gg_trg_versus = CreateTrigger();
-  TriggerRegisterPlayerChatEvent(gg_trg_versus, Player(0)!, "-versus", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_versus, Player(1)!, "-versus", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_versus, Player(2)!, "-versus", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_versus, Player(3)!, "-versus", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_versus, Player(4)!, "-versus", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_versus, Player(5)!, "-versus", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_versus, Player(6)!, "-versus", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_versus, Player(7)!, "-versus", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_versus, Player(8)!, "-versus", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_versus, Player(9)!, "-versus", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_versus, Player(10)!, "-versus", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_versus, Player(11)!, "-versus", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_versus, Player(12)!, "-versus", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_versus, Player(13)!, "-versus", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_versus, Player(14)!, "-versus", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_versus, Player(15)!, "-versus", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_versus, Player(16)!, "-versus", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_versus, Player(17)!, "-versus", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_versus, Player(18)!, "-versus", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_versus, Player(19)!, "-versus", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_versus, Player(20)!, "-versus", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_versus, Player(21)!, "-versus", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_versus, Player(22)!, "-versus", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_versus, Player(23)!, "-versus", false);
+  registerAnyPlayerChatEvent(gg_trg_versus, "-versus", false);
   TriggerAddCondition(gg_trg_versus, Condition(Trig_versus_Conditions));
   TriggerAddAction(gg_trg_versus, Trig_versus_Actions);
 };

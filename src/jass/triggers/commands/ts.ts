@@ -1,6 +1,5 @@
-//===========================================================================
-// Trigger: ts
-//===========================================================================
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+
 const Trig_ts_Func003Func001Func001C = () => {
   if ((!(GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING))) {
     return false;
@@ -131,37 +130,12 @@ const Trig_ts_Actions = () => {
   DestroyForce(udg_atempplayer);
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_ts: () => void;
 }
 InitTrig_ts = () => {
   gg_trg_ts = CreateTrigger();
-  TriggerRegisterPlayerChatEvent(gg_trg_ts, Player(0)!, "-ts", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_ts, Player(1)!, "-ts", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_ts, Player(2)!, "-ts", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_ts, Player(3)!, "-ts", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_ts, Player(4)!, "-ts", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_ts, Player(5)!, "-ts", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_ts, Player(6)!, "-ts", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_ts, Player(7)!, "-ts", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_ts, Player(8)!, "-ts", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_ts, Player(9)!, "-ts", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_ts, Player(10)!, "-ts", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_ts, Player(11)!, "-ts", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_ts, Player(12)!, "-ts", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_ts, Player(13)!, "-ts", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_ts, Player(14)!, "-ts", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_ts, Player(15)!, "-ts", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_ts, Player(16)!, "-ts", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_ts, Player(17)!, "-ts", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_ts, Player(18)!, "-ts", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_ts, Player(19)!, "-ts", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_ts, Player(20)!, "-ts", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_ts, Player(21)!, "-ts", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_ts, Player(22)!, "-ts", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_ts, Player(23)!, "-ts", true);
+  registerAnyPlayerChatEvent(gg_trg_ts, "-ts");
   TriggerAddAction(gg_trg_ts, Trig_ts_Actions);
 };

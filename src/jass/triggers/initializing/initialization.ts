@@ -166,7 +166,9 @@ const initW3mmd = () => {
 
 const Trig_initialization_Actions = () => {
   let i: number;
-  StartTimerBJ(udg_gameTimer, false, 1000000000);
+  SetCreepCampFilterState(false);
+  EnableMinimapFilterButtons(true, false);
+  TimerStart(udg_gameTimer, 1000000000, false, null);
   udg_giveOn = true;
   udg_versus = 0;
   udg_versusOff = false;
@@ -203,15 +205,7 @@ const Trig_initialization_Actions = () => {
   udg_colorString[24] = "|CFFA46F33";
 
   i = CountPlayersInForceBJ(GetPlayersAll()!);
-  if (i >= 12) {
-    udg_time = 1200;
-  } else if (i >= 10) {
-    udg_time = 900;
-  } else if (i >= 8) {
-    udg_time = 480;
-  } else {
-    udg_time = 360;
-  }
+  defaultTime();
 
   udg_SheepColorR[1] = 100;
   udg_SheepColorG[1] = 0;

@@ -1,6 +1,4 @@
-//===========================================================================
-// Trigger: g
-//===========================================================================
+import { sleep } from "w3ts";
 
 export const inflateGoldCount = (p: player): void => {
   let max = goldCount[0];
@@ -10,7 +8,7 @@ export const inflateGoldCount = (p: player): void => {
   goldCount[GetPlayerId(p)] = max;
 };
 
-const Trig_g_showGoldCounts = () => {
+const Trig_g_showGoldCounts = async () => {
   let i = 0;
   let count = 0;
   const p = GetTriggerPlayer()!;
@@ -43,10 +41,8 @@ const Trig_g_showGoldCounts = () => {
       i = i + 1;
     }
     if (count === 12) {
-      TriggerSleepAction(9);
-      if (GetLocalPlayer() === p) {
-        ClearTextMessages();
-      }
+      await sleep(9);
+      if (GetLocalPlayer() === p) ClearTextMessages();
     }
   }
 };
@@ -83,7 +79,7 @@ const Trig_g_leastGoldCount = (forSheep: boolean, last: player): player => {
   while (true) {
     if (i === bj_MAX_PLAYERS) break;
     if (
-      GetTriggerPlayer()! !== Player(i)! &&
+      GetTriggerPlayer() !== Player(i)! &&
       GetPlayerSlotState(Player(i)!) === PLAYER_SLOT_STATE_PLAYING &&
       ((forSheep && (IsPlayerInForce(Player(i)!, udg_Sheep))) ||
         (!forSheep && (IsPlayerInForce(Player(i)!, udg_Wolf))))
@@ -177,10 +173,7 @@ const Trig_g_actual = (sender: player): void => {
   }
 
   // Ensure a train is established
-  if (
-    ((IsPlayerInForce(sender, udg_Sheep)) ||
-      IsPlayerInForce(sender, udg_Spirit)) && lastSheepReceiver !== receiver
-  ) {
+  if ((IsPlayerInForce(sender, udg_Sheep) || IsPlayerInForce(sender, udg_Spirit)) && lastSheepReceiver !== receiver) {
     lastSheepReceiver = receiver;
     changedReceiver = true;
   } else if (
@@ -202,9 +195,7 @@ const Trig_g_actual = (sender: player): void => {
   if (
     receiver === GetLocalPlayer() &&
     (changedReceiver || (gold >= 112 && amount > 3))
-  ) {
-    StartSound(gg_snd_ReceiveGold);
-  }
+  ) StartSound(gg_snd_ReceiveGold);
 };
 
 const Trig_g_Actions = () => {
@@ -249,7 +240,6 @@ const Trig_g_SpellCast = () => {
   }
 };
 
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_g: () => void;

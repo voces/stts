@@ -5,7 +5,6 @@ import "./triggers/savingFunction/sheepSwitch";
 import "./triggers/savingFunction/miscSmartSave";
 import "./triggers/savingFunction/dummyWisps";
 import "./triggers/savingFunction/sheepDamage";
-import "./triggers/savingFunction/wispControl";
 import "./triggers/savingFunction/spiritDies";
 import "./triggers/farmFunctions/instanceIllusion";
 import "./triggers/farmFunctions/destroyFarm";
@@ -52,13 +51,7 @@ import "./triggers/leaderboardFunctions/hide";
 import "./triggers/roundsEnds/wolvesWin";
 import "./triggers/roundsEnds/sheepWin";
 import "./triggers/gameModes/autoCancel";
-import "./triggers/gameModes/practice";
 import "./triggers/gameModes/controloff";
-import "./triggers/gameModes/vamp";
-import "./triggers/gameModes/gold";
-import "./triggers/gameModes/mapExpand";
-import "./triggers/gameModes/mapShrink";
-import "./triggers/gameModes/switch";
 import "./triggers/abilityFunctions/castAbilityIssueOrder";
 import "./triggers/abilityFunctions/castAbilitySpellCast";
 import "./triggers/hostCommands/cancel";
@@ -94,22 +87,13 @@ import "./triggers/multiKills/timeMint";
 import "./triggers/multiKills/timeTurquoise";
 import "./triggers/playerLeaves/playerLeft";
 import "./triggers/practiceCommands/redo";
-import "./triggers/practiceCommands/owner";
 import "./triggers/practiceCommands/reset";
-import "./triggers/practiceCommands/attack";
 import "./triggers/practiceCommands/speed";
 import "./triggers/practiceCommands/massTimeUp";
 import "./triggers/practiceCommands/initMassTest";
-import "./triggers/practiceCommands/disable";
 import "./triggers/practiceCommands/mass";
-import "./triggers/practiceCommands/stop";
 import "./triggers/runes/RunesReset";
-import "./triggers/runes/SpeedRune";
-import "./triggers/runes/ManaRune";
 import "./triggers/runes/RunesOn";
-import "./triggers/runes/OmniscienceRune";
-import "./triggers/runes/InvisRune";
-import "./triggers/resourceFunctions/regrowTrees";
 import "./triggers/resourceFunctions/increaseGoldWolf";
 import "./triggers/resourceFunctions/increaseGoldSheep";
 import "./triggers/teamModes/versus";
@@ -157,11 +141,12 @@ import "./triggers/shareControl/autocontrol";
 import "./triggers/shareControl/shareControl";
 import "./triggers/shareControl/control";
 import "./triggers/shareControl/antishareruin";
-import "./triggers/shareControl/controllal";
+import "./triggers/shareControl/controllall";
 import "./triggers/shareControl/noAutoControl";
-import { setTimeout, Timeout } from "../util/setTimeout";
-import { removeEnumUnit } from "../util/removeEnumUnit";
+import { setTimeout, Timeout } from "util/setTimeout";
+import { removeEnumUnit } from "util/removeEnumUnit";
 import { updateLeaderboardSettingsDisplay } from "settings/time";
+import { terrain } from "settings/terrain";
 
 declare global {
   //globals from Critter:
@@ -270,46 +255,6 @@ declare global {
   // deno-lint-ignore prefer-const
   let SavingFarms__g: group;
   //endglobals from SavingFarms
-  //globals from Terrain:
-  // deno-lint-ignore prefer-const
-  let REVO_CLASSIC: 0;
-  // deno-lint-ignore prefer-const
-  let PLAYER_COLOR_BASED: 0;
-  // deno-lint-ignore prefer-const
-  let TEAM_BASED: 1;
-  let currentTerrain: number;
-  let wispArea: rect;
-  let wolfSpawn: rect;
-  let invisRune: rect;
-  let speedRune: rect;
-  let manaRune: rect;
-  let omniscienceRune: rect;
-  // deno-lint-ignore prefer-const
-  let spawns: Array<rect>;
-  // deno-lint-ignore prefer-const
-  let shopLocations: Array<rect>;
-  // deno-lint-ignore prefer-const
-  let shopTypes: Array<number>;
-  let shopStart: number;
-  let shopEnd: number;
-  let spawnType: number;
-  let Terrain__spawnIndex: number;
-  let Terrain__shopIndex: number;
-  // deno-lint-ignore prefer-const
-  let Terrain__terrainCount: 2;
-  // deno-lint-ignore prefer-const
-  let Terrain__SHOP_A: number;
-  // deno-lint-ignore prefer-const
-  let Terrain__SHOP_A_ROTATED: number;
-  // deno-lint-ignore prefer-const
-  let Terrain__SHOP_B: number;
-  // deno-lint-ignore prefer-const
-  let Terrain__SHOP_B_ROTATED: number;
-  // deno-lint-ignore prefer-const
-  let Terrain__SHOP_C: number;
-  // deno-lint-ignore prefer-const
-  let Terrain__SHOP_C_ROTATED: number;
-  //endglobals from Terrain
   //globals from Util:
   // deno-lint-ignore prefer-const
   let TRANSFER_DISPLAY_SOURCE: 1;
@@ -343,10 +288,6 @@ declare global {
   let BuySellItem__itemCode: Array<number>;
   let BuySellItem__itemIndex: number;
   //endglobals from BuySellItem
-  //globals from FarmVision:
-  let FarmVision__farmVision: number;
-  let FarmVision__createFarm: trigger;
-  //endglobals from FarmVision
   //globals from Smart:
   // deno-lint-ignore prefer-const
   let pub: Array<boolean>;
@@ -643,7 +584,6 @@ declare global {
   let gg_trg_versusCountDown: trigger;
   let gg_trg_createWolves: trigger;
   let gg_trg_initialization: trigger;
-  let gg_trg_quests: trigger;
   let gg_trg_startRound: trigger;
   let gg_trg_createLists: trigger;
   let gg_trg_createTimer: trigger;
@@ -674,7 +614,6 @@ declare global {
   let gg_trg_stop: trigger;
   let gg_trg_owner: trigger;
   let gg_trg_speed: trigger;
-  let gg_trg_disable: trigger;
   let gg_trg_mass: trigger;
   let gg_trg_reset: trigger;
   let gg_trg_redo: trigger;
@@ -746,7 +685,7 @@ declare global {
   let gg_trg_handicap: trigger;
   let gg_trg_clear: trigger;
   let gg_trg_control: trigger;
-  let gg_trg_controllal: trigger;
+  let gg_trg_controllall: trigger;
   let gg_trg_shareControl: trigger;
   let gg_trg_autocontrol: trigger;
   let gg_trg_noAutoControl: trigger;
@@ -927,30 +866,6 @@ declare global {
   let s__MMD__QueueNode_key: Array<string>;
   // deno-lint-ignore prefer-const
   let s__MMD__QueueNode_next: Array<number>;
-  // deno-lint-ignore prefer-const
-  let s__terrains_texture: Array<string>;
-  // deno-lint-ignore prefer-const
-  let s__terrains_cameraBounds: Array<rect>;
-  // deno-lint-ignore prefer-const
-  let s__terrains_spawnType: Array<number>;
-  // deno-lint-ignore prefer-const
-  let s__terrains_wispArea: Array<rect>;
-  // deno-lint-ignore prefer-const
-  let s__terrains_wolfSpawn: Array<rect>;
-  // deno-lint-ignore prefer-const
-  let s__terrains_invisRune: Array<rect>;
-  // deno-lint-ignore prefer-const
-  let s__terrains_speedRune: Array<rect>;
-  // deno-lint-ignore prefer-const
-  let s__terrains_omniscienceRune: Array<rect>;
-  // deno-lint-ignore prefer-const
-  let s__terrains_manaRune: Array<rect>;
-  // deno-lint-ignore prefer-const
-  let s__terrains_spawnsStart: Array<number>;
-  // deno-lint-ignore prefer-const
-  let s__terrains_shopStart: Array<number>;
-  // deno-lint-ignore prefer-const
-  let s__terrains_shopEnd: Array<number>;
   let si__colorsStruct_F: number;
   let si__colorsStruct_I: number;
   // deno-lint-ignore prefer-const
@@ -1047,32 +962,14 @@ MMD__q_tail = 0;
 //globals from SavingFarms:
 SavingFarms__g = CreateGroup()!;
 //endglobals from SavingFarms
-//globals from Terrain:
-REVO_CLASSIC = 0;
-PLAYER_COLOR_BASED = 0;
-TEAM_BASED = 1;
-currentTerrain = 0;
-spawns = [];
-shopLocations = [];
-shopTypes = [];
-Terrain__spawnIndex = 0;
-Terrain__shopIndex = 0;
-Terrain__terrainCount = 2;
-Terrain__SHOP_A = FourCC("nC12");
-Terrain__SHOP_A_ROTATED = FourCC("n006");
-Terrain__SHOP_B = FourCC("n001");
-Terrain__SHOP_B_ROTATED = FourCC("n007");
-Terrain__SHOP_C = FourCC("n005");
-Terrain__SHOP_C_ROTATED = FourCC("n008");
-//endglobals from Terrain
 //globals from Util:
 TRANSFER_DISPLAY_SOURCE = 1;
 TRANSFER_DISPLAY_INVOLVED = 2;
 TRANSFER_DISPLAY_TEAM = 3;
 
-wolfGoldGiven = [];
-sheepGoldGiven = [];
-spiritGoldGiven = [];
+wolfGoldGiven = Array.from({ length: bj_MAX_PLAYERS }, () => 0);
+sheepGoldGiven = Array.from({ length: bj_MAX_PLAYERS }, () => 0);
+spiritGoldGiven = Array.from({ length: bj_MAX_PLAYERS }, () => 0);
 //endglobals from Util
 //globals from gs:
 gsAmounts = [];
@@ -1085,9 +982,6 @@ BuySellItem__itemCost = [];
 BuySellItem__itemCode = [];
 BuySellItem__itemIndex = 0;
 //endglobals from BuySellItem
-//globals from FarmVision:
-FarmVision__farmVision = -1;
-//endglobals from FarmVision
 //globals from Smart:
 pub = [];
 rotated = Player(PLAYER_NEUTRAL_PASSIVE)!;
@@ -1103,7 +997,14 @@ teamResources = TEAM_RESOURCES_DEFAULT;
 //endglobals from TeamResources
 // User-defined
 udg_time = 0;
-udg_Teams = 0;
+
+TEAMS_INIT = 0;
+TEAMS_OPEN = 1;
+TEAMS_LOCK_IE_PLAYING = 2;
+TEAMS_PICK = 3;
+TEAMS_CAPTAINS = 4;
+
+udg_Teams = TEAMS_INIT;
 udg_startLocation = [];
 udg_lastPlayer = 0;
 udg_pickIndex = 0;
@@ -1227,12 +1128,6 @@ AFK_RETURNED_DURING_ROUND = 2;
 AFK_AFK = 3;
 AFK_AFK_DURING_ROUND = 4;
 
-TEAMS_INIT = 0;
-TEAMS_OPEN = 1;
-TEAMS_LOCK_IE_PLAYING = 2;
-TEAMS_PICK = 3;
-TEAMS_CAPTAINS = 4;
-
 colors = [];
 playerTimes = [];
 sheepType = FourCC("uC04");
@@ -1288,18 +1183,6 @@ s__MMD__QueueNode_msg = [];
 s__MMD__QueueNode_checksum = [];
 s__MMD__QueueNode_key = [];
 s__MMD__QueueNode_next = [];
-s__terrains_texture = [];
-s__terrains_cameraBounds = [];
-s__terrains_spawnType = [];
-s__terrains_wispArea = [];
-s__terrains_wolfSpawn = [];
-s__terrains_invisRune = [];
-s__terrains_speedRune = [];
-s__terrains_omniscienceRune = [];
-s__terrains_manaRune = [];
-s__terrains_spawnsStart = [];
-s__terrains_shopStart = [];
-s__terrains_shopEnd = [];
 si__colorsStruct_F = 0;
 si__colorsStruct_I = 0;
 si__colorsStruct_V = [];
@@ -2001,9 +1884,7 @@ MMD__update_value = (
   if (p == null || id < 0 || id >= 24) {
     BJDebugMsg("MMD Set Error: Invalid player. Must be P1 to P24.");
   } else if (val_type !== GetStoredInteger(MMD__gc, "types", name)) {
-    BJDebugMsg(
-      "MMD Set Error: Updated value of undefined variable or used value of incorrect type.",
-    );
+    BJDebugMsg("MMD Set Error: Updated value of undefined variable or used value of incorrect type.");
   } else if (StringLength(op) === 0) {
     BJDebugMsg("MMD Set Error: Unrecognized operation type.");
   } else if (StringLength(name) > 50) {
@@ -2051,9 +1932,7 @@ declare global {
 }
 MMD__LogEvent = (name: string, num_args: number, data: string): void => {
   if (GetStoredInteger(MMD__gc, "events", name) !== num_args + 1) {
-    BJDebugMsg(
-      "MMD LogEvent Error: Event not defined or defined with different # of args.",
-    );
+    BJDebugMsg("MMD LogEvent Error: Event not defined or defined with different # of args.");
   } else {
     MMD__emit("Event " + MMD__pack(name) + data);
   }
@@ -2248,197 +2127,6 @@ const MMD__init = () => {
 };
 
 //library MMD ends
-//library Terrain:
-
-//===========================================================================
-// PRIVATE
-//===========================================================================
-
-const Terrain__setTerrain = (terrainIndex: number): void => {
-  let i = 0;
-
-  currentTerrain = terrainIndex;
-
-  BlzChangeMinimapTerrainTex(s__terrains_texture[currentTerrain]);
-  SetCameraBoundsToRect(s__terrains_cameraBounds[currentTerrain]);
-  wispArea = s__terrains_wispArea[currentTerrain];
-  wolfSpawn = s__terrains_wolfSpawn[currentTerrain];
-  invisRune = s__terrains_invisRune[currentTerrain];
-  speedRune = s__terrains_speedRune[currentTerrain];
-  manaRune = s__terrains_manaRune[currentTerrain];
-  omniscienceRune = s__terrains_omniscienceRune[currentTerrain];
-  shopStart = s__terrains_shopStart[currentTerrain];
-  shopEnd = s__terrains_shopEnd[currentTerrain];
-  spawnType = s__terrains_spawnType[currentTerrain];
-
-  PanCameraToTimed(GetRectCenterX(wolfSpawn), GetRectCenterY(wolfSpawn), 0);
-
-  i = s__terrains_spawnsStart[currentTerrain];
-  while (true) {
-    if (i === s__terrains_spawnsStart[currentTerrain] + bj_MAX_PLAYERS) break;
-    udg_startLocation[i - s__terrains_spawnsStart[currentTerrain] + 1] = spawns[i];
-    i = i + 1;
-  }
-};
-
-const Terrain__toggleTerrain = () => {
-  if (GetTriggerPlayer()! !== udg_Custom || udg_gameStarted) {
-    return;
-  }
-
-  currentTerrain = currentTerrain + 1;
-  if (currentTerrain === Terrain__terrainCount) {
-    currentTerrain = 0;
-  }
-  Terrain__setTerrain(currentTerrain);
-};
-
-//===========================================================================
-// INITIALIZATION
-//===========================================================================
-
-const Terrain__initCommandTrigger = () => {
-  const toggleTerrainTrigger = CreateTrigger();
-  let i = 0;
-  while (true) {
-    if (i === bj_MAX_PLAYERS) break;
-    TriggerRegisterPlayerChatEvent(
-      toggleTerrainTrigger,
-      Player(i)!,
-      "-terrain",
-      true,
-    );
-    i = i + 1;
-  }
-  TriggerAddAction(toggleTerrainTrigger, Terrain__toggleTerrain);
-};
-
-const Terrain__addSpawn = (r: rect): void => {
-  spawns[Terrain__spawnIndex] = r;
-  Terrain__spawnIndex = Terrain__spawnIndex + 1;
-};
-
-const Terrain__addShop = (r: rect, unitType: number): void => {
-  shopLocations[Terrain__shopIndex] = r;
-  shopTypes[Terrain__shopIndex] = unitType;
-  Terrain__shopIndex = Terrain__shopIndex + 1;
-};
-
-const Terrain__initTerrains = () => {
-  let i = 0;
-  let n: number;
-  s__terrains_texture[0] = "war3mapImported\\classic.blp";
-  s__terrains_cameraBounds[0] = gg_rct_Revo_Camera_Bounds;
-  s__terrains_spawnType[0] = PLAYER_COLOR_BASED;
-  s__terrains_wispArea[0] = gg_rct_Fence_Zone;
-  s__terrains_wolfSpawn[0] = gg_rct_Shepard_Respawn;
-  s__terrains_invisRune[0] = gg_rct_Rune_of_Invis;
-  s__terrains_speedRune[0] = gg_rct_Rune_of_Speed;
-  s__terrains_omniscienceRune[0] = gg_rct_Rune_of_Omniscience;
-  s__terrains_manaRune[0] = gg_rct_Rune_of_Mana;
-  s__terrains_spawnsStart[0] = Terrain__spawnIndex;
-  Terrain__addSpawn(gg_rct_Red_Start);
-  Terrain__addSpawn(gg_rct_Blue_Start);
-  Terrain__addSpawn(gg_rct_Teal_Start);
-  Terrain__addSpawn(gg_rct_Purple_Start);
-  Terrain__addSpawn(gg_rct_Yellow_Start);
-  Terrain__addSpawn(gg_rct_Orange_Start);
-  Terrain__addSpawn(gg_rct_Green_Start);
-  Terrain__addSpawn(gg_rct_Pink_Start);
-  Terrain__addSpawn(gg_rct_grey_start);
-  Terrain__addSpawn(gg_rct_lb_start);
-  Terrain__addSpawn(gg_rct_dg_start);
-  Terrain__addSpawn(gg_rct_brown_start);
-  Terrain__addSpawn(gg_rct_Maroon_Start);
-  Terrain__addSpawn(gg_rct_Navy_Start);
-  Terrain__addSpawn(gg_rct_Turquoise_Start);
-  Terrain__addSpawn(gg_rct_Violet_Start);
-  Terrain__addSpawn(gg_rct_Wheat_Start);
-  Terrain__addSpawn(gg_rct_Peach_Start);
-  Terrain__addSpawn(gg_rct_Mint_Start);
-  Terrain__addSpawn(gg_rct_Lavender_Start);
-  Terrain__addSpawn(gg_rct_Coal_Start);
-  Terrain__addSpawn(gg_rct_Snow_Start);
-  Terrain__addSpawn(gg_rct_Emerald_Start);
-  Terrain__addSpawn(gg_rct_Peanut_Start);
-  s__terrains_shopStart[0] = Terrain__shopIndex;
-  Terrain__addShop(gg_rct_topShop1, Terrain__SHOP_A);
-  Terrain__addShop(gg_rct_bottomShop1, Terrain__SHOP_A);
-  Terrain__addShop(gg_rct_topShop2, Terrain__SHOP_B);
-  Terrain__addShop(gg_rct_bottomShop2, Terrain__SHOP_B);
-  Terrain__addShop(gg_rct_topShop3, Terrain__SHOP_C);
-  Terrain__addShop(gg_rct_bottomShop3, Terrain__SHOP_C);
-  s__terrains_shopEnd[0] = Terrain__shopIndex;
-
-  s__terrains_texture[1] = "war3mapImported\\gloryhills.blp";
-  s__terrains_cameraBounds[1] = gg_rct_Glory_Hill_Camera_Bounds;
-  s__terrains_spawnType[1] = TEAM_BASED;
-  s__terrains_wispArea[1] = gg_rct_Glory_Hill_Fence;
-  s__terrains_wolfSpawn[1] = gg_rct_Glory_Hill_Fence;
-  s__terrains_invisRune[1] = gg_rct_Glory_Hill_Invis;
-  s__terrains_speedRune[1] = gg_rct_Glory_Hill_Speed;
-  s__terrains_omniscienceRune[1] = gg_rct_Glory_Hill_Omniscience;
-  s__terrains_manaRune[1] = gg_rct_Glory_Hill_Mana;
-  s__terrains_spawnsStart[1] = Terrain__spawnIndex;
-  Terrain__addSpawn(gg_rct_gh1);
-  Terrain__addSpawn(gg_rct_gh2);
-  Terrain__addSpawn(gg_rct_gh3);
-  Terrain__addSpawn(gg_rct_gh4);
-  Terrain__addSpawn(gg_rct_gh5);
-  Terrain__addSpawn(gg_rct_gh6);
-  Terrain__addSpawn(gg_rct_gh7);
-  Terrain__addSpawn(gg_rct_gh8);
-  Terrain__addSpawn(gg_rct_gh9);
-  Terrain__addSpawn(gg_rct_gh10);
-  Terrain__addSpawn(gg_rct_gh11);
-  Terrain__addSpawn(gg_rct_gh12);
-  Terrain__addSpawn(gg_rct_gh13);
-  Terrain__addSpawn(gg_rct_gh14);
-  Terrain__addSpawn(gg_rct_gh15);
-  Terrain__addSpawn(gg_rct_gh16);
-  Terrain__addSpawn(gg_rct_gh17);
-  Terrain__addSpawn(gg_rct_gh18);
-  Terrain__addSpawn(gg_rct_gh19);
-  Terrain__addSpawn(gg_rct_gh20);
-  Terrain__addSpawn(gg_rct_gh21);
-  Terrain__addSpawn(gg_rct_gh22);
-  Terrain__addSpawn(gg_rct_gh23);
-  Terrain__addSpawn(gg_rct_gh24);
-  s__terrains_shopStart[1] = Terrain__shopIndex;
-  Terrain__addShop(gg_rct_Glory_Hill_ShopA1, Terrain__SHOP_A_ROTATED);
-  Terrain__addShop(gg_rct_Glory_Hill_ShopA2, Terrain__SHOP_A_ROTATED);
-  Terrain__addShop(gg_rct_Glory_Hill_ShopB1, Terrain__SHOP_B_ROTATED);
-  Terrain__addShop(gg_rct_Glory_Hill_ShopB2, Terrain__SHOP_B_ROTATED);
-  Terrain__addShop(gg_rct_Glory_Hill_ShopC1, Terrain__SHOP_C_ROTATED);
-  Terrain__addShop(gg_rct_Glory_Hill_ShopC2, Terrain__SHOP_C_ROTATED);
-  s__terrains_shopEnd[1] = Terrain__shopIndex;
-
-  while (true) {
-    if (i === bj_MAX_PLAYERS) break;
-    if (GetPlayerSlotState(Player(i)!) === PLAYER_SLOT_STATE_PLAYING) {
-      n = 0;
-      while (true) {
-        if (n === Terrain__shopIndex) break;
-        CreateFogModifierRectBJ(
-          true,
-          Player(i)!,
-          FOG_OF_WAR_VISIBLE,
-          shopLocations[n],
-        );
-        n = n + 1;
-      }
-    }
-    i = i + 1;
-  }
-};
-
-const Terrain__InitTerrain = () => {
-  Terrain__initCommandTrigger();
-  Terrain__initTerrains();
-  Terrain__setTerrain(0);
-};
-
-//library Terrain ends
 //library Util:
 
 //Chat event for everyone
@@ -2529,10 +2217,10 @@ declare global {
   let defaultTime: () => void;
 }
 defaultTime = () => {
+  if (!udg_autoTime) return;
+
   const i = CountPlayersInForceBJ(udg_Sheep);
   const n = CountPlayersInForceBJ(udg_Wolf);
-
-  if (!udg_autoTime) return;
 
   if (i === 1 && n === 3) udg_time = 180;
   else if (i === 2 && n === 4) udg_time = 360;
@@ -2620,7 +2308,7 @@ transferGold = (
     while (true) {
       if (i >= bj_MAX_PLAYERS) break;
       if (
-        Player(i)! !== sender && Player(i)! !== receiver &&
+        Player(i) !== sender && Player(i) !== receiver &&
         IsPlayerAlly(sender, Player(i)!)
       ) {
         DisplayTextToPlayer(
@@ -2765,7 +2453,7 @@ gsDistributeGold = (fromPlayer: player, allGold: boolean): void => {
 const Trig_gs_Actions = () => {
   gsDistributeGold(
     GetTriggerPlayer()!,
-    GetEventPlayerChatString()! === "-gsa",
+    GetEventPlayerChatString() === "-gsa",
   );
 };
 
@@ -2805,32 +2493,6 @@ const InitTrig_gs = () => {
 };
 
 //library gs ends
-//library hostAbilities:
-
-const hostAbilities__anon__0 = () => {
-  ForceRemovePlayer(udg_Spirit, GetEnumPlayer()!);
-};
-const hostAbilities__start = () => {
-  ForForce(udg_Spirit, hostAbilities__anon__0);
-  udg_Teams = TEAMS_LOCK_IE_PLAYING;
-  TriggerExecute(gg_trg_createSheep);
-};
-const hostAbilities__time = () => {
-  udg_autoTime = true;
-  defaultTime();
-  TriggerSleepAction(0);
-  IssueImmediateOrderById(GetTriggerUnit()!, 851976);
-};
-const hostAbilities__onInit = () => {
-  let t = CreateTrigger();
-  TriggerRegisterTrainCommandEventBJ(t, FourCC("h00F"));
-  TriggerAddAction(t, hostAbilities__start);
-  t = CreateTrigger();
-  TriggerRegisterTrainCommandEventBJ(t, FourCC("h00G"));
-  TriggerAddAction(t, hostAbilities__time);
-};
-
-//library hostAbilities ends
 //library transferHelpers:
 const transferToCustom = () => {
   SetUnitOwner(GetEnumUnit()!, udg_Custom, true);
@@ -3060,81 +2722,6 @@ const BuySellItem__init = () => {
 };
 
 //library BuySellItem ends
-//library FarmVision:
-
-const onCreateFarm = () => {
-  if (GetUnitTypeId(GetConstructingStructure()!) !== sentryFarmType) {
-    BlzSetUnitRealField(
-      GetConstructingStructure()!,
-      UNIT_RF_SIGHT_RADIUS,
-      FarmVision__farmVision,
-    );
-  }
-};
-
-const setFarmVision = () => {
-  const str = StringCase(GetEventPlayerChatString()!, false)!;
-
-  if (GetTriggerPlayer()! !== udg_Custom || udg_gameStarted) {
-    return;
-  }
-
-  if (str === "-farmvision") {
-    if (FarmVision__farmVision >= 0) {
-      FarmVision__farmVision = -1;
-      DisableTrigger(FarmVision__createFarm);
-      DisplayTimedTextToPlayer(
-        GetTriggerPlayer()!,
-        0,
-        0,
-        15,
-        "                              |CFF00AEEFFarm vision restored|r",
-      );
-    } else {
-      FarmVision__farmVision = 64;
-      EnableTrigger(FarmVision__createFarm);
-      DisplayTimedTextToPlayer(
-        GetTriggerPlayer()!,
-        0,
-        0,
-        15,
-        "                              |CFF00AEEFFarm vision set to |CFFED1C2464|r",
-      );
-    }
-    return;
-  }
-
-  Split(str, " ", false);
-
-  if (myArgCount === 2 && myArg[0] === "-farmvision") {
-    FarmVision__farmVision = S2R(myArg[1]);
-    EnableTrigger(FarmVision__createFarm);
-    DisplayTimedTextToPlayer(
-      GetTriggerPlayer()!,
-      0,
-      0,
-      15,
-      "                              |CFF00AEEFFarm vision set to |CFFED1C24" +
-        I2S(R2I(FarmVision__farmVision)) + "|r",
-    );
-  }
-};
-
-const FarmVision__FarmVisionInit = () => {
-  const t = CreateTrigger();
-  TriggerRegisterPlayerChatEventAll(t, "-farmvision", false);
-  TriggerAddAction(t, setFarmVision);
-
-  FarmVision__createFarm = CreateTrigger();
-  TriggerRegisterAnyUnitEventBJ(
-    FarmVision__createFarm,
-    EVENT_PLAYER_UNIT_CONSTRUCT_START,
-  );
-  TriggerAddAction(FarmVision__createFarm, onCreateFarm);
-  DisableTrigger(FarmVision__createFarm);
-};
-
-//library FarmVision ends
 //library TeamResources:
 
 declare global {
@@ -3245,8 +2832,6 @@ const InitGlobals = () => {
   udg_Sheep = CreateForce()!;
   udg_Wolf = CreateForce()!;
   udg_Spirit = CreateForce()!;
-  udg_time = 0;
-  udg_Teams = TEAMS_INIT;
   udg_lastPlayer = 0;
   udg_pickIndex = 1;
   udg_Createtimer = CreateTimer();
@@ -3880,7 +3465,7 @@ updateTimes = () => {
   let s = "";
   let timeElapsed = TimerGetElapsed(udg_Timer);
   const emitRound = !someoneLeft && udg_sheepGold === 0 && udg_wolfGold === 0 &&
-    noHandicaps() && currentTerrain === REVO_CLASSIC;
+    noHandicaps() && terrain.name === "Revolution";
   let l__sheep = "";
   let addedSheep = false;
   let wolves = "";
@@ -4110,7 +3695,6 @@ const InitCustomTriggers = () => {
   InitTrig_versusCountDown();
   InitTrig_createWolves();
   InitTrig_initialization();
-  InitTrig_quests();
   InitTrig_startRound();
   InitTrig_createLists();
   InitTrig_createTimer();
@@ -4120,20 +3704,10 @@ const InitCustomTriggers = () => {
   InitTrig_versus();
   InitTrig_draftPlayer();
   InitTrig_draftVersus();
-  InitTrig_practice();
   InitTrig_controloff();
-  InitTrig_mapShrink();
-  InitTrig_mapExpand();
-  InitTrig_switch();
-  InitTrig_vamp();
   InitTrig_autoCancel();
-  InitTrig_gold();
   InitTrig_initMassTest();
-  InitTrig_attack();
-  InitTrig_stop();
-  InitTrig_owner();
   InitTrig_speed();
-  InitTrig_disable();
   InitTrig_mass();
   InitTrig_reset();
   InitTrig_redo();
@@ -4153,7 +3727,6 @@ const InitCustomTriggers = () => {
   InitTrig_setupLeaderboard();
   InitTrig_teamResources();
   InitTrig_miscSmartSave();
-  InitTrig_wispControl();
   InitTrig_sheepSwitch();
   InitTrig_sheepVamp();
   InitTrig_dummyWisps();
@@ -4178,7 +3751,6 @@ const InitCustomTriggers = () => {
   InitTrig_kaleidoscope();
   InitTrig_increaseGoldSheep();
   InitTrig_increaseGoldWolf();
-  InitTrig_regrowTrees();
   InitTrig_escFix();
   InitTrig_zoom();
   InitTrig_zoomMsg();
@@ -4261,10 +3833,6 @@ const InitCustomTriggers = () => {
   InitTrig_Claws_of_Velocity_Recipe();
   InitTrig_Claws_90_Recipe();
   InitTrig_Nuke_Recipe();
-  InitTrig_Invis_Rune();
-  InitTrig_Speed_Rune();
-  InitTrig_Mana_Rune();
-  InitTrig_Omniscience_Rune();
   InitTrig_Runes_Reset();
   InitTrig_Runes_On();
 };
@@ -4272,7 +3840,6 @@ const InitCustomTriggers = () => {
 //===========================================================================
 const RunInitializationTriggers = () => {
   ConditionalTriggerExecute(gg_trg_initialization);
-  ConditionalTriggerExecute(gg_trg_quests);
 };
 
 //***************************************************************************
@@ -4287,10 +3854,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   Critter___critterInit();
   HCL__init();
   MMD__init();
-  Terrain__InitTerrain();
-  hostAbilities__onInit();
   BuySellItem__init();
-  FarmVision__FarmVisionInit();
 
   InitGlobals();
   InitCustomTriggers();

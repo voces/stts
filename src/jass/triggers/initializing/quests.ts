@@ -1,6 +1,7 @@
-import { setTimeout } from "../../../util/setTimeout";
+import { addScriptHook, W3TS_HOOK } from "w3ts";
+import { setTimeout } from "util/setTimeout";
 
-const Trig_quests_Actions = () => {
+addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   CreateQuestBJ(
     bj_QUESTTYPE_OPT_DISCOVERED,
     "Sheep Tag ReVoLuTiOn",
@@ -11,6 +12,7 @@ See |cff00aeefGame Info|r (|cffed1c24F9|r) for commands, Hall of Fame, and more 
 New? Type |CFF00AEEF-smart|r.`,
     "ReplaceableTextures\\CommandButtons\\BTNSheep.blp",
   );
+
   CreateQuestBJ(
     bj_QUESTTYPE_REQ_DISCOVERED,
     "Host Commands",
@@ -42,6 +44,7 @@ New? Type |CFF00AEEF-smart|r.`,
 |cff00aeef-stop:|r When in practice mode it stops a timed mass contest.`,
     "ReplaceableTextures\\PassiveButtons\\PASBTNStatUp.blp",
   );
+
   CreateQuestBJ(
     bj_QUESTTYPE_REQ_DISCOVERED,
     "Other Host Commands",
@@ -53,11 +56,12 @@ New? Type |CFF00AEEF-smart|r.`,
 |cff00aeef-control:|r Toggles sharing control on/off.
 |cff00aeef-fafk |cffed1c24X|cff00aeef:|r Forces player |cffed1c24X|r afk. Only works before a round starts.
 |cff00aeef-reset:|r Resets the scores for leader and loser.
-|cff00aeef-transfer |cffed1c24X|cff00aeef:|r Gives control of game to player |cffed1c24X|r.
 |cff00aeef-handicap |cffed1c24X Y|cff00aeef:|r Set's player X's handicap to Y.
 |cff00aeef-pub |cffed1c24X|cff00aeef:|r Toggles player |cffed1c24X|r as a pub, removing them from smart considerations.
 |cff00aeef-rotate:|r Toggles rotating a player out of round selection.
 |cff00aeef-perfect:|r Toggles eprfect smart. Use an ! to reset perfect.
+|cff00aeef-transfer |cffed1c24X|cff00aeef:|r Gives control of game to player |cffed1c24X|r.
+|cff00aeef-kick |cffed1c24X|cff00aeef:|r Kicks player |cffed1c24X|r from the game.
 |cffffcc00Sexy Command|r
 |cff00aeef-sexy |cffed1c24X Y Z|cff00aeef:|r Sets your sheep color to |cffed1c24X|r for percent red, |cffed1c24Y|r for percent green, and |cffed1c24Z|r for percent blue. If |cffed1c24Y|r and |cffed1c24Z|r are not specified, will set all color levels to |cffed1c24X|r. 0 being no color (black) and 100 being all color (white).
 |cff00aeef-yes sexy:|r Enables the |cff00aeef-sexy|r command for all players.
@@ -67,11 +71,12 @@ New? Type |CFF00AEEF-smart|r.`,
 |cff00aeef-give |cffed1c24X|cff00aeef:|r If player is a captain during the picking stage of |cff00aeef-captains|r mode, then gives captain control to player |cffed1c24X|r. If |cffed1c24X|r is not specified, gives control to random player already picked. If no one has been picked, gives control to random unpicked player.`,
     "ReplaceableTextures\\PassiveButtons\\PASBTNStatUp.blp",
   );
+
   CreateQuestBJ(
     bj_QUESTTYPE_REQ_DISCOVERED,
     "Player Commands",
     `|cffffcc00Player Commands:|r
-|cff00aeef-sheepcount (-sc):|r Times every player has played as sheep. Host can optionally provide a value to set the palyer's sheep count.
+|cff00aeef-sc:|r Times every player has played as sheep. Host can optionally provide a value to set the palyer's sheep count.
 |cff00aeef-pc |cffed1c24X|cff00aeef:|r Shows ally count as sheep for player |cffed1c24X|r.
 |cff00aeef-fbc:|r Displays firstblood kills and deaths for each player.
 |cff00aeef-g |cffed1c24X|cff00aeef:|r Gives all gold to player |cffed1c24X|r. When X is not provided, an algorithm is run to share gold semi-intelligently.
@@ -104,6 +109,7 @@ New? Type |CFF00AEEF-smart|r.`,
 |cff00aeef-clear:|r Hides all command messages.`,
     "ReplaceableTextures\\PassiveButtons\\PASBTNStatUp.blp",
   );
+
   CreateQuestBJ(
     bj_QUESTTYPE_OPT_DISCOVERED,
     "Hall Of Fame",
@@ -141,6 +147,7 @@ Be3r[behh]
 dazzzzeee`,
     "ReplaceableTextures\\CommandButtons\\BTNRaider.blp",
   );
+
   CreateQuestBJ(
     bj_QUESTTYPE_OPT_DISCOVERED,
     "Credits",
@@ -174,13 +181,4 @@ Model editor: Retera`,
       0.001,
     );
   });
-};
-
-declare global {
-  // deno-lint-ignore prefer-const
-  let InitTrig_quests: () => void;
-}
-InitTrig_quests = () => {
-  gg_trg_quests = CreateTrigger();
-  TriggerAddAction(gg_trg_quests, Trig_quests_Actions);
-};
+});

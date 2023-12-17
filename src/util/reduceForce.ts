@@ -1,5 +1,5 @@
-import { MapPlayerEx } from "../handles/MapPlayerEx";
-import { ForceEx } from "../handles/ForceEx";
+import { MapPlayerEx } from "handles/MapPlayerEx";
+import { ForceEx } from "handles/ForceEx";
 
 export const reduceForce = <T>(
   force: force | MapPlayerEx[],

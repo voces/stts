@@ -2,9 +2,7 @@
 // Trigger: clear
 //===========================================================================
 const Trig_clear_Actions = () => {
-  if (GetLocalPlayer() === GetTriggerPlayer()!) {
-    ClearTextMessages();
-  }
+  if (GetLocalPlayer() === GetTriggerPlayer()!) ClearTextMessages();
 };
 
 //===========================================================================

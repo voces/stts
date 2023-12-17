@@ -1,6 +1,5 @@
-//===========================================================================
-// Trigger: sheepVamp
-//===========================================================================
+import { terrain } from "settings/terrain";
+
 const Trig_sheepVamp_Conditions = () => {
   return GetUnitTypeId(GetTriggerUnit()!) === sheepType &&
     IsUnitIllusionBJ(GetTriggerUnit()!) === false;
@@ -35,15 +34,15 @@ const Trig_sheepVamp_Actions = () => {
   }
   PanCameraToTimedForPlayer(
     p,
-    GetRectCenterX(wolfSpawn),
-    GetRectCenterY(wolfSpawn),
+    GetRectCenterX(terrain.wolf),
+    GetRectCenterY(terrain.wolf),
     0,
   );
   udg_unit2[GetPlayerId(p) + 1] = CreateUnit(
     p,
     shepType,
-    GetRectCenterX(wolfSpawn),
-    GetRectCenterY(wolfSpawn),
+    GetRectCenterX(terrain.wolf),
+    GetRectCenterY(terrain.wolf),
     270,
   )!;
   while (true) {
@@ -74,8 +73,6 @@ const Trig_sheepVamp_Actions = () => {
   );
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_sheepVamp: () => void;

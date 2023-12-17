@@ -1,4 +1,4 @@
-import { removeEnumUnit } from "../../../util/removeEnumUnit";
+import { removeEnumUnit } from "util/removeEnumUnit";
 
 const adjustAlliances1 = () => {
   SetPlayerAllianceStateBJ(

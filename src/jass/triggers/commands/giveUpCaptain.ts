@@ -1,6 +1,5 @@
-//===========================================================================
-// Trigger: giveUpCaptain
-//===========================================================================
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+
 const Trig_giveUpCaptain_Func005Func002C = () => {
   if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 7, 8)!) < 25))) {
     return false;
@@ -12,7 +11,7 @@ const Trig_giveUpCaptain_Func005Func002C = () => {
 };
 
 const Trig_giveUpCaptain_Func005C = () => {
-  if ((GetEventPlayerChatString()! === "-give")) {
+  if ((GetEventPlayerChatString() === "-give")) {
     return true;
   }
   if ((Trig_giveUpCaptain_Func005Func002C())) {
@@ -36,7 +35,7 @@ const Trig_giveUpCaptain_Func002Func001Func001Func001Func002001001001 = () => {
     udg_sheepLastGame[GetConvertedPlayerId(GetFilterPlayer()!)] === false,
     GetBooleanAnd(
       IsPlayerInForce(GetFilterPlayer()!, udg_Draft) === false,
-      GetFilterPlayer()! !== udg_captains[3],
+      GetFilterPlayer() !== udg_captains[3],
     ),
   );
 };
@@ -57,7 +56,7 @@ const Trig_giveUpCaptain_Func002Func001Func001Func001C = () => {
 };
 
 const Trig_giveUpCaptain_Func002Func001Func001C = () => {
-  if ((!(GetTriggerPlayer()! === udg_captains[3]))) {
+  if ((!(GetTriggerPlayer() === udg_captains[3]))) {
     return false;
   }
   return true;
@@ -68,7 +67,7 @@ const Trig_giveUpCaptain_Func002Func001Func002Func002001001001 = () => {
     udg_sheepLastGame[GetConvertedPlayerId(GetFilterPlayer()!)] === true,
     GetBooleanAnd(
       IsPlayerInForce(GetFilterPlayer()!, udg_Draft) === false,
-      GetFilterPlayer()! !== udg_captains[1],
+      GetFilterPlayer() !== udg_captains[1],
     ),
   );
 };
@@ -87,14 +86,14 @@ const Trig_giveUpCaptain_Func002Func001Func002C = () => {
 };
 
 const Trig_giveUpCaptain_Func002Func001C = () => {
-  if ((!(GetTriggerPlayer()! === udg_captains[1]))) {
+  if ((!(GetTriggerPlayer() === udg_captains[1]))) {
     return false;
   }
   return true;
 };
 
 const Trig_giveUpCaptain_Func002C = () => {
-  if ((!(GetEventPlayerChatString()! === "-give"))) {
+  if ((!(GetEventPlayerChatString() === "-give"))) {
     return false;
   }
   return true;
@@ -112,7 +111,7 @@ const Trig_giveUpCaptain_Func003Func001Func001Func012001001001 = () => {
     udg_sheepLastGame[GetConvertedPlayerId(GetFilterPlayer()!)] === false,
     GetBooleanAnd(
       IsPlayerInForce(GetFilterPlayer()!, udg_Draft) === false,
-      GetFilterPlayer()! !== udg_captains[3],
+      GetFilterPlayer() !== udg_captains[3],
     ),
   );
 };
@@ -136,7 +135,7 @@ const Trig_giveUpCaptain_Func003Func001Func001C = () => {
 };
 
 const Trig_giveUpCaptain_Func003Func001C = () => {
-  if ((!(GetTriggerPlayer()! === udg_captains[3]))) {
+  if ((!(GetTriggerPlayer() === udg_captains[3]))) {
     return false;
   }
   return true;
@@ -154,7 +153,7 @@ const Trig_giveUpCaptain_Func003Func002Func012001001001 = () => {
     udg_sheepLastGame[GetConvertedPlayerId(GetFilterPlayer()!)] === true,
     GetBooleanAnd(
       IsPlayerInForce(GetFilterPlayer()!, udg_Draft) === false,
-      GetFilterPlayer()! !== udg_captains[1],
+      GetFilterPlayer() !== udg_captains[1],
     ),
   );
 };
@@ -178,7 +177,7 @@ const Trig_giveUpCaptain_Func003Func002C = () => {
 };
 
 const Trig_giveUpCaptain_Func003C = () => {
-  if ((!(GetTriggerPlayer()! === udg_captains[1]))) {
+  if ((!(GetTriggerPlayer() === udg_captains[1]))) {
     return false;
   }
   return true;
@@ -275,158 +274,13 @@ const Trig_giveUpCaptain_Actions = () => {
   udg_giveOn = true;
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_giveUpCaptain: () => void;
 }
 InitTrig_giveUpCaptain = () => {
   gg_trg_giveUpCaptain = CreateTrigger();
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_giveUpCaptain,
-    Player(0)!,
-    "-give",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_giveUpCaptain,
-    Player(1)!,
-    "-give",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_giveUpCaptain,
-    Player(2)!,
-    "-give",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_giveUpCaptain,
-    Player(3)!,
-    "-give",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_giveUpCaptain,
-    Player(4)!,
-    "-give",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_giveUpCaptain,
-    Player(5)!,
-    "-give",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_giveUpCaptain,
-    Player(6)!,
-    "-give",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_giveUpCaptain,
-    Player(7)!,
-    "-give",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_giveUpCaptain,
-    Player(8)!,
-    "-give",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_giveUpCaptain,
-    Player(9)!,
-    "-give",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_giveUpCaptain,
-    Player(10)!,
-    "-give",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_giveUpCaptain,
-    Player(11)!,
-    "-give",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_giveUpCaptain,
-    Player(12)!,
-    "-give",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_giveUpCaptain,
-    Player(13)!,
-    "-give",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_giveUpCaptain,
-    Player(14)!,
-    "-give",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_giveUpCaptain,
-    Player(15)!,
-    "-give",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_giveUpCaptain,
-    Player(16)!,
-    "-give",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_giveUpCaptain,
-    Player(17)!,
-    "-give",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_giveUpCaptain,
-    Player(18)!,
-    "-give",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_giveUpCaptain,
-    Player(19)!,
-    "-give",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_giveUpCaptain,
-    Player(20)!,
-    "-give",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_giveUpCaptain,
-    Player(21)!,
-    "-give",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_giveUpCaptain,
-    Player(22)!,
-    "-give",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_giveUpCaptain,
-    Player(23)!,
-    "-give",
-    false,
-  );
+  registerAnyPlayerChatEvent(gg_trg_giveUpCaptain, "-give", false);
   TriggerAddCondition(
     gg_trg_giveUpCaptain,
     Condition(Trig_giveUpCaptain_Conditions),

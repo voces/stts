@@ -1,6 +1,5 @@
-//===========================================================================
-// Trigger: lss
-//===========================================================================
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+
 const Trig_lss_Func003Func001Func001C = () => {
   if ((!(GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING))) {
     return false;
@@ -131,37 +130,12 @@ const Trig_lss_Actions = () => {
   DestroyForce(udg_atempplayer);
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_lss: () => void;
 }
 InitTrig_lss = () => {
   gg_trg_lss = CreateTrigger();
-  TriggerRegisterPlayerChatEvent(gg_trg_lss, Player(0)!, "-lss", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_lss, Player(1)!, "-lss", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_lss, Player(2)!, "-lss", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_lss, Player(3)!, "-lss", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_lss, Player(4)!, "-lss", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_lss, Player(5)!, "-lss", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_lss, Player(6)!, "-lss", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_lss, Player(7)!, "-lss", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_lss, Player(8)!, "-lss", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_lss, Player(9)!, "-lss", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_lss, Player(10)!, "-lss", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_lss, Player(11)!, "-lss", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_lss, Player(12)!, "-lss", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_lss, Player(13)!, "-lss", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_lss, Player(14)!, "-lss", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_lss, Player(15)!, "-lss", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_lss, Player(16)!, "-lss", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_lss, Player(17)!, "-lss", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_lss, Player(18)!, "-lss", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_lss, Player(19)!, "-lss", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_lss, Player(20)!, "-lss", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_lss, Player(21)!, "-lss", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_lss, Player(22)!, "-lss", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_lss, Player(23)!, "-lss", true);
+  registerAnyPlayerChatEvent(gg_trg_lss, "-lss");
   TriggerAddAction(gg_trg_lss, Trig_lss_Actions);
 };

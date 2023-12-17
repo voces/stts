@@ -6,9 +6,7 @@ const Trig_autocontrol_Actions = () => {
   const enabled = !(udg_autocontrol[GetPlayerId(GetTriggerPlayer()!)]);
   udg_autocontrol[GetPlayerId(GetTriggerPlayer()!)] = enabled;
 
-  if (GetLocalPlayer() !== GetTriggerPlayer()!) {
-    return;
-  }
+  if (GetLocalPlayer() !== GetTriggerPlayer()!) return;
 
   if (enabled) {
     DisplayTimedTextToPlayer(
@@ -28,23 +26,17 @@ const Trig_autocontrol_Actions = () => {
     );
   }
 
-  s__File_close(
-    s__File_write(s__File_open("revo/autocontrol.txt"), B2S(enabled)),
-  );
+  s__File_close(s__File_write(s__File_open("revo/autocontrol.txt"), B2S(enabled)));
 };
 
 const Trig_autocontrol_load = () => {
   let s = s__File_readEx(s__File_open("revo/autocontrol.txt"), true);
-  if (s == null) {
-    s = "false";
-  }
+  if (s == null) s = "false";
   BlzSendSyncData("autocontrol", s);
 };
 
 const Trig_autocontrol_sync = () => {
-  udg_autocontrol[GetPlayerId(GetTriggerPlayer()!)] = S2B(
-    BlzGetTriggerSyncData()!,
-  );
+  udg_autocontrol[GetPlayerId(GetTriggerPlayer()!)] = S2B(BlzGetTriggerSyncData()!);
 };
 
 //===========================================================================

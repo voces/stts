@@ -1,8 +1,5 @@
-//===========================================================================
-// Trigger: destroyAllButSavings
-//===========================================================================
-
-import { removeEnumUnit } from "../../../util/removeEnumUnit";
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+import { removeEnumUnit } from "util/removeEnumUnit";
 
 const Trig_destroyAllButSavings_Func002002002 = () => {
   return GetBooleanAnd(
@@ -56,157 +53,13 @@ const Trig_destroyAllButSavings_Actions = () => {
   }
 };
 
-//===========================================================================
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_destroyAllButSavings: () => void;
 }
 InitTrig_destroyAllButSavings = () => {
   gg_trg_destroyAllButSavings = CreateTrigger();
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_destroyAllButSavings,
-    Player(0)!,
-    "-ds",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_destroyAllButSavings,
-    Player(1)!,
-    "-ds",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_destroyAllButSavings,
-    Player(2)!,
-    "-ds",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_destroyAllButSavings,
-    Player(3)!,
-    "-ds",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_destroyAllButSavings,
-    Player(4)!,
-    "-ds",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_destroyAllButSavings,
-    Player(5)!,
-    "-ds",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_destroyAllButSavings,
-    Player(6)!,
-    "-ds",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_destroyAllButSavings,
-    Player(7)!,
-    "-ds",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_destroyAllButSavings,
-    Player(8)!,
-    "-ds",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_destroyAllButSavings,
-    Player(9)!,
-    "-ds",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_destroyAllButSavings,
-    Player(10)!,
-    "-ds",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_destroyAllButSavings,
-    Player(11)!,
-    "-ds",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_destroyAllButSavings,
-    Player(12)!,
-    "-ds",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_destroyAllButSavings,
-    Player(13)!,
-    "-ds",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_destroyAllButSavings,
-    Player(14)!,
-    "-ds",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_destroyAllButSavings,
-    Player(15)!,
-    "-ds",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_destroyAllButSavings,
-    Player(16)!,
-    "-ds",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_destroyAllButSavings,
-    Player(17)!,
-    "-ds",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_destroyAllButSavings,
-    Player(18)!,
-    "-ds",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_destroyAllButSavings,
-    Player(19)!,
-    "-ds",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_destroyAllButSavings,
-    Player(20)!,
-    "-ds",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_destroyAllButSavings,
-    Player(21)!,
-    "-ds",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_destroyAllButSavings,
-    Player(22)!,
-    "-ds",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_destroyAllButSavings,
-    Player(23)!,
-    "-ds",
-    true,
-  );
+  registerAnyPlayerChatEvent(gg_trg_destroyAllButSavings, "-ds");
   TriggerAddAction(
     gg_trg_destroyAllButSavings,
     Trig_destroyAllButSavings_Actions,

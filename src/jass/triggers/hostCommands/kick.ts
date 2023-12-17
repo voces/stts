@@ -8,7 +8,7 @@ const Trig_kick_Actions = () => {
 };
 
 const Trig_kick_Conditions = () => {
-  return !udg_gameStarted && GetTriggerPlayer()! === udg_Custom;
+  return !udg_gameStarted && GetTriggerPlayer() === udg_Custom;
 };
 
 //===========================================================================

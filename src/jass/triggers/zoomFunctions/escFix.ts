@@ -1,6 +1,5 @@
-//===========================================================================
-// Trigger: escFix
-//===========================================================================
+import { terrain } from "settings/terrain";
+
 const Trig_escFix_Actions = () => {
   const p = GetTriggerPlayer()!;
   const pId = GetConvertedPlayerId(p);
@@ -14,7 +13,7 @@ const Trig_escFix_Actions = () => {
     );
 
     if (
-      udg_Teams === TEAMS_LOCK_IE_PLAYING && spawnType === PLAYER_COLOR_BASED &&
+      udg_Teams === TEAMS_LOCK_IE_PLAYING && terrain.spawnType === "playerColor" &&
       GetPlayerUnitTypeCount(p, sheepType) === 0
     ) {
       PanCameraToTimedForPlayer(
@@ -41,8 +40,6 @@ const Trig_escFix_Actions = () => {
   }
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_escFix: () => void;

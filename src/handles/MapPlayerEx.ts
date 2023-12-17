@@ -1,6 +1,6 @@
 import { MapPlayer } from "w3ts";
 
-const map = new WeakMap<player, MapPlayerEx>();
+const map = new Map<player, MapPlayerEx>();
 
 export class MapPlayerEx extends MapPlayer {
   bankedGold = 0;
@@ -17,6 +17,14 @@ export class MapPlayerEx extends MapPlayer {
     udg_sheepCount[this.cid] = newSheepCount;
   }
 
+  get sheepLastGame() {
+    return udg_sheepLastGame[this.cid];
+  }
+
+  set sheepLastGame(value: boolean) {
+    udg_sheepLastGame[this.cid] = value;
+  }
+
   get gold() {
     return GetPlayerState(this.handle, PLAYER_STATE_RESOURCE_GOLD);
   }
@@ -25,6 +33,14 @@ export class MapPlayerEx extends MapPlayer {
     const prev = GetPlayerState(this.handle, PLAYER_STATE_RESOURCE_GOLD);
     if (prev < value) SetPlayerState(this.handle, PLAYER_STATE_GOLD_GATHERED, value);
     SetPlayerState(this.handle, PLAYER_STATE_RESOURCE_GOLD, value);
+  }
+
+  displayTimedText(message: string, duration = 5) {
+    DisplayTimedTextToPlayer(this.handle, 0, 0, duration, message);
+  }
+
+  get coloredName() {
+    return `${udg_colorString[this.cid]}${this.name}|r`;
   }
 
   public static fromEnum() {

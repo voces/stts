@@ -1,6 +1,5 @@
-//===========================================================================
-// Trigger: captains
-//===========================================================================
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+
 const Trig_captains_Func004Func002C = () => {
   if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 11, 12)!) > 0))) {
     return false;
@@ -18,7 +17,7 @@ const Trig_captains_Func004Func002C = () => {
 };
 
 const Trig_captains_Func004C = () => {
-  if ((GetEventPlayerChatString()! === "-captains")) {
+  if ((GetEventPlayerChatString() === "-captains")) {
     return true;
   }
   if ((Trig_captains_Func004Func002C())) {
@@ -112,7 +111,7 @@ const Trig_captains_Func006Func001Func020Func006A = () => {
 };
 
 const Trig_captains_Func006Func001Func020C = () => {
-  if ((!(GetEventPlayerChatString()! === "-captains"))) {
+  if ((!(GetEventPlayerChatString() === "-captains"))) {
     return false;
   }
   return true;
@@ -128,10 +127,10 @@ const Trig_captains_Func006Func001Func031Func001C = () => {
   if ((!(GetPlayerSlotState(GetEnumPlayer()!) !== PLAYER_SLOT_STATE_LEFT))) {
     return false;
   }
-  if ((!(GetEnumPlayer()! !== udg_captains[1]))) {
+  if ((!(GetEnumPlayer() !== udg_captains[1]))) {
     return false;
   }
-  if ((!(GetEnumPlayer()! !== udg_captains[3]))) {
+  if ((!(GetEnumPlayer() !== udg_captains[3]))) {
     return false;
   }
   return true;
@@ -282,10 +281,10 @@ const Trig_captains_Func006Func037Func001C = () => {
   if ((!(GetPlayerSlotState(GetEnumPlayer()!) !== PLAYER_SLOT_STATE_LEFT))) {
     return false;
   }
-  if ((!(GetEnumPlayer()! !== udg_captains[1]))) {
+  if ((!(GetEnumPlayer() !== udg_captains[1]))) {
     return false;
   }
-  if ((!(GetEnumPlayer()! !== udg_captains[3]))) {
+  if ((!(GetEnumPlayer() !== udg_captains[3]))) {
     return false;
   }
   return true;
@@ -307,7 +306,7 @@ const Trig_captains_Func006Func037A = () => {
 };
 
 const Trig_captains_Func006C = () => {
-  if ((!(GetEventPlayerChatString()! === "-captains"))) {
+  if ((!(GetEventPlayerChatString() === "-captains"))) {
     return false;
   }
   return true;
@@ -333,7 +332,7 @@ const Trig_captains_Actions = () => {
     ForForce(udg_Wolf, Trig_captains_Func006Func018002);
     ForForce(udg_Spirit, Trig_captains_Func006Func019002);
     ForForce(GetPlayersAll()!, Trig_captains_Func006Func020002);
-    StartTimerBJ(udg_Createtimer, false, 300);
+    TimerStart(udg_Createtimer, 300, false, null);
     TimerDialogDisplayBJ(true, udg_createTimerWindow);
     ForForce(GetPlayersAll()!, Trig_captains_Func006Func023A);
     ForForce(
@@ -445,7 +444,7 @@ const Trig_captains_Actions = () => {
       ForForce(udg_Wolf, Trig_captains_Func006Func001Func015002);
       ForForce(udg_Spirit, Trig_captains_Func006Func001Func016002);
       ForForce(GetPlayersAll()!, Trig_captains_Func006Func001Func017002);
-      StartTimerBJ(udg_Createtimer, false, 300);
+      TimerStart(udg_Createtimer, 300, false, null);
       TimerDialogDisplayBJ(true, udg_createTimerWindow);
       if ((Trig_captains_Func006Func001Func020C())) {
         ForForce(GetPlayersAll()!, Trig_captains_Func006Func001Func020Func003A);
@@ -552,158 +551,13 @@ const Trig_captains_Actions = () => {
   }
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_captains: () => void;
 }
 InitTrig_captains = () => {
   gg_trg_captains = CreateTrigger();
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_captains,
-    Player(0)!,
-    "-captains",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_captains,
-    Player(1)!,
-    "-captains",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_captains,
-    Player(2)!,
-    "-captains",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_captains,
-    Player(3)!,
-    "-captains",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_captains,
-    Player(4)!,
-    "-captains",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_captains,
-    Player(5)!,
-    "-captains",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_captains,
-    Player(6)!,
-    "-captains",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_captains,
-    Player(7)!,
-    "-captains",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_captains,
-    Player(8)!,
-    "-captains",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_captains,
-    Player(9)!,
-    "-captains",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_captains,
-    Player(10)!,
-    "-captains",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_captains,
-    Player(11)!,
-    "-captains",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_captains,
-    Player(12)!,
-    "-captains",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_captains,
-    Player(13)!,
-    "-captains",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_captains,
-    Player(14)!,
-    "-captains",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_captains,
-    Player(15)!,
-    "-captains",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_captains,
-    Player(16)!,
-    "-captains",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_captains,
-    Player(17)!,
-    "-captains",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_captains,
-    Player(18)!,
-    "-captains",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_captains,
-    Player(19)!,
-    "-captains",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_captains,
-    Player(20)!,
-    "-captains",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_captains,
-    Player(21)!,
-    "-captains",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_captains,
-    Player(22)!,
-    "-captains",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_captains,
-    Player(23)!,
-    "-captains",
-    false,
-  );
+  registerAnyPlayerChatEvent(gg_trg_captains, "-captains", false);
   TriggerAddCondition(gg_trg_captains, Condition(Trig_captains_Conditions));
   TriggerAddAction(gg_trg_captains, Trig_captains_Actions);
 };

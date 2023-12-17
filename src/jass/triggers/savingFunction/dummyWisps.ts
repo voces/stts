@@ -1,5 +1,8 @@
 //===========================================================================
 // Trigger: dummyWisps
+
+import { terrain } from "settings/terrain";
+
 //===========================================================================
 const Trig_dummyWisps_Conditions = () => {
   if ((!(GetUnitTypeId(GetTriggerUnit()!) === FourCC("e000")))) {
@@ -41,13 +44,7 @@ const Trig_dummyWisps_Actions = () => {
     GetOwningPlayer(GetKillingUnit()!),
     PLAYER_STATE_RESOURCE_GOLD,
   );
-  bj_lastCreatedUnit = CreateUnit(
-    Player(bj_PLAYER_NEUTRAL_VICTIM)!,
-    wispType,
-    RandomX(wispArea),
-    RandomY(wispArea),
-    0,
-  );
+  CreateUnit(Player(bj_PLAYER_NEUTRAL_VICTIM)!, wispType, RandomX(terrain.wisp), RandomY(terrain.wisp), 0);
   if ((Trig_dummyWisps_Func006C())) {
     TriggerExecute(gg_trg_cancel);
   }

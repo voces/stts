@@ -31,16 +31,16 @@ const Trig_Runes_Reset_Func001C = () => {
 
 const Trig_Runes_Reset_Actions = () => {
   if ((Trig_Runes_Reset_Func001C())) {
-    StartTimerBJ(udg_RuneTimer[1], false, 240);
+    TimerStart(udg_RuneTimer[1], 240, false, null);
   } else {
     if ((Trig_Runes_Reset_Func001Func002C())) {
-      StartTimerBJ(udg_RuneTimer[2], false, 240);
+      TimerStart(udg_RuneTimer[2], 240, false, null);
     } else {
       if ((Trig_Runes_Reset_Func001Func002Func001C())) {
-        StartTimerBJ(udg_RuneTimer[3], false, 240);
+        TimerStart(udg_RuneTimer[3], 240, false, null);
       } else {
         if ((Trig_Runes_Reset_Func001Func002Func001Func001C())) {
-          StartTimerBJ(udg_RuneTimer[4], false, 240);
+          TimerStart(udg_RuneTimer[4], 240, false, null);
         }
       }
     }

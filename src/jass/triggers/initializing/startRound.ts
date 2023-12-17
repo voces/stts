@@ -1,4 +1,6 @@
 import { resetBankedGold } from "functions/farms/savingFarms";
+import { terrain } from "settings/terrain";
+import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 
 const reviveEnumDestructable = () => {
   DestructableRestoreLife(
@@ -190,74 +192,47 @@ const resetRoundStats = () => {
 };
 
 const Trig_startRound_Actions = () => {
-  let i: number;
-  let n: number;
-  let s: string;
   let p: player;
   let u: unit;
 
   perfectRound = false;
   pauseTimers();
-  ClearTextMessagesBJ(GetPlayersAll()!);
+  if (udg_Teams !== TEAMS_INIT) ClearTextMessages();
   DestroyMultiboardBJ(GetLastCreatedMultiboard()!);
   EnumDestructablesInRectAll(GetPlayableMapRect()!, reviveEnumDestructable);
   clearBlight();
   resetRoundStats();
   ForForce(udg_Draft, removeDraft);
 
-  if (TimerGetElapsed(udg_Timer) >= 60 && udg_gameStarted) {
-    TriggerExecute(gg_trg_setafk);
-  }
+  if (TimerGetElapsed(udg_Timer) >= 60 && udg_gameStarted) TriggerExecute(gg_trg_setafk);
 
   // Unstuck
   ForceUICancel();
 
   removeAllUnits();
 
-  i = 1;
-  while (true) {
-    if (i > bj_MAX_PLAYERS) break;
-    DestroyLeaderboardBJ(PlayerGetLeaderboardBJ(ConvertedPlayer(i)!)!);
-    udg_switch[i] = 0;
+  for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+    DestroyLeaderboardBJ(PlayerGetLeaderboardBJ(Player(i)!)!);
+    udg_switch[i + 1] = 0;
 
-    n = 1;
-    while (true) {
-      if (n > bj_MAX_PLAYERS) break;
-
-      if (udg_sheepLastGame[i] === udg_sheepLastGame[n]) {
-        SetPlayerAllianceStateBJ(
-          ConvertedPlayer(i)!,
-          ConvertedPlayer(n)!,
-          bj_ALLIANCE_ALLIED_VISION,
-        );
-      } else {
-        SetPlayerAllianceStateBJ(
-          ConvertedPlayer(i)!,
-          ConvertedPlayer(n)!,
-          bj_ALLIANCE_UNALLIED,
-        );
-      }
-
-      n = n + 1;
+    for (let n = 0; n < bj_MAX_PLAYERS; n++) {
+      SetPlayerAllianceStateBJ(
+        Player(i)!,
+        Player(n)!,
+        udg_sheepLastGame[i + 1] === udg_sheepLastGame[n + 1] ? bj_ALLIANCE_ALLIED_VISION : bj_ALLIANCE_UNALLIED,
+      );
     }
 
-    if (udg_positionOn) {
-      udg_startLocation[i] = udg_startLocation[i + 24];
-    } else {
-      udg_positionOn = false;
+    if (udg_positionOn) udg_startLocation[i + 1] = udg_startLocation[i + 25];
+
+    if (udg_AFK[i + 1] === AFK_AFK_DURING_ROUND) udg_AFK[i + 1] = AFK_AFK;
+    else if (udg_AFK[i + 1] === AFK_RETURNED_DURING_ROUND || udg_AFK[i + 1] === AFK_PLAYING_PICK) {
+      udg_AFK[i + 1] = AFK_PLAYING;
     }
 
-    if (udg_AFK[i] === AFK_AFK_DURING_ROUND) {
-      udg_AFK[i] = AFK_AFK;
-    } else if (udg_AFK[i] === 2 || udg_AFK[i] === AFK_PLAYING_PICK) {
-      udg_AFK[i] = AFK_PLAYING;
+    if (udg_viewOn === false && !udg_view[i + 1]) {
+      udg_view[i + 1] = CreateFogModifierRectBJ(true, Player(i)!, FOG_OF_WAR_VISIBLE, GetPlayableMapRect()!);
     }
-
-    if (udg_viewOn === false && !udg_view[i]) {
-      udg_view[i] = CreateFogModifierRectBJ(true, ConvertedPlayer(i)!, FOG_OF_WAR_VISIBLE, GetPlayableMapRect()!);
-    }
-
-    i = i + 1;
   }
 
   TriggerExecute(gg_trg_createLists);
@@ -275,16 +250,13 @@ const Trig_startRound_Actions = () => {
 
   EnumItemsInRect(GetEntireMapRect()!, null, removeEnumItem);
 
-  i = 1;
-  while (true) {
-    if (i > bj_MAX_PLAYERS) break;
-    p = ConvertedPlayer(i)!;
+  for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+    p = Player(i)!;
     DestroyLeaderboardBJ(PlayerGetLeaderboardBJ(p)!);
-    PauseTimer(udg_sheepTimer[i]);
+    PauseTimer(udg_sheepTimer[i + 1]);
     SetPlayerStateBJ(p, PLAYER_STATE_RESOURCE_GOLD, 0);
     SetPlayerStateBJ(p, PLAYER_STATE_RESOURCE_LUMBER, 0);
-    resetEnumRoundStats(i);
-    i = i + 1;
+    resetEnumRoundStats(i + 1);
   }
 
   resetBankedGold();
@@ -292,7 +264,7 @@ const Trig_startRound_Actions = () => {
   TriggerExecute(gg_trg_setupLeaderboard);
 
   EnableTrigger(gg_trg_createTimer);
-  StartTimerBJ(udg_wolfTimer, false, 18.01);
+  TimerStart(udg_wolfTimer, 18.01, false, null);
   PauseTimer(udg_wolfTimer);
 
   TimerDialogDisplayBJ(false, udg_createTimerWindow);
@@ -304,78 +276,45 @@ const Trig_startRound_Actions = () => {
   ForForce(udg_Spirit, moveEnumPlayerFromSpiritToSheep);
   ForForce(GetPlayersAll()!, destroyEnumPlayerView);
 
-  if (
-    udg_versus === 1 && udg_versusOff === false &&
-    udg_someVersusBoolean === false
-  ) {
+  if (udg_versus === 1 && udg_versusOff === false && udg_someVersusBoolean === false) {
     udg_versus = 2;
     udg_Teams = TEAMS_LOCK_IE_PLAYING;
     ForceClear(udg_Sheep);
     ForceClear(udg_Wolf);
     ForceClear(udg_Spirit);
     TriggerExecute(gg_trg_versusCountDown);
-  } else if (
-    udg_versus === 2 && udg_versusOff === false &&
-    udg_someVersusBoolean === false
-  ) {
+  } else if (udg_versus === 2 && udg_versusOff === false && udg_someVersusBoolean === false) {
     udg_time = 0;
     udg_versus = 0;
 
-    s = formatTime(udg_gameTime[1]);
-    DisplayTimedTextToForce(
-      GetPlayersAll()!,
-      60,
-      "                              |cff00aeefTeam 1 lasted " + s,
-    );
-
-    s = formatTime(udg_gameTime[2]);
-    DisplayTimedTextToForce(
-      GetPlayersAll()!,
-      60,
-      "                              |cffed1c24Team 2 lasted " + s,
-    );
+    displayTimedTextToAll("                              |cff00aeefTeam 1 lasted " + formatTime(udg_gameTime[1]), 60);
+    displayTimedTextToAll("                              |cffed1c24Team 2 lasted " + formatTime(udg_gameTime[2]), 60);
 
     if (udg_gameTime[1] > udg_gameTime[2]) {
-      DisplayTimedTextToForce(
-        GetPlayersAll()!,
-        60,
-        "                              |cff00aeefTeam 1 wins!",
-      );
+      displayTimedTextToAll("                              |cff00aeefTeam 1 wins!", 60);
       ForForce(udg_Wolf, Update_Versus_Wins);
     } else if (udg_gameTime[2] > udg_gameTime[1]) {
-      DisplayTimedTextToForce(
-        GetPlayersAll()!,
-        60,
-        "                              |cffed1c24Team 2 wins!",
-      );
+      displayTimedTextToAll("                              |cffed1c24Team 2 wins!", 60);
       ForForce(udg_Sheep, Update_Versus_Wins);
-    } else {
-      DisplayTimedTextToForce(
-        GetPlayersAll()!,
-        60,
-        "                              |cffed1c24Tie game!",
-      );
-    }
+    } else displayTimedTextToAll("                              |cffed1c24Tie game!", 60);
 
-    DisplayTimedTextToForce(
-      GetPlayersAll()!,
-      60,
+    displayTimedTextToAll(
       `Join our Discord |CFF00AEEFhttps://dsc.gg/sheeptag|r for more Sheep Tag!
 
 See |cff00aeefGame Info|r (|cffed1c24F9|r) for commands, Hall of Fame, and more information.
 
 New? Type |CFF00AEEF-smart|r.`,
+      60,
     );
     startRoundToggledTriggers();
   } else {
-    DisplayTimedTextToForce(
-      GetPlayersAll()!,
-      60,
+    displayTimedTextToAll(
       `Join our Discord |CFF00AEEFhttps://dsc.gg/sheeptag|r for more Sheep Tag!
 
 See |cff00aeefGame Info|r (|cffed1c24F9|r) for commands, Hall of Fame, and more information.
 
 New? Type |CFF00AEEF-smart|r.`,
+      60,
     );
     EnableTrigger(gg_trg_position);
     startRoundToggledTriggers();
@@ -384,20 +323,12 @@ New? Type |CFF00AEEF-smart|r.`,
   TriggerSleepAction(0);
 
   if (udg_versus === 0) {
-    u = CreateUnit(
-      udg_Custom,
-      hostFarmType,
-      GetRectCenterX(wolfSpawn),
-      GetRectCenterY(wolfSpawn),
-      270,
-    )!;
+    u = CreateUnit(udg_Custom, hostFarmType, GetRectCenterX(terrain.wolf), GetRectCenterY(terrain.wolf), 270)!;
     SelectUnitForPlayerSingle(u, udg_Custom);
     ForceUICancelBJ(udg_Custom);
   }
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_startRound: () => void;

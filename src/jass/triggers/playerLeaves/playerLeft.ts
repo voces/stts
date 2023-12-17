@@ -1,4 +1,4 @@
-import { removeEnumUnit } from "../../../util/removeEnumUnit";
+import { removeEnumUnit } from "util/removeEnumUnit";
 
 const Trig_playerLeft_Func004C = () => {
   if ((!(udg_practiceOn === true))) {
@@ -116,10 +116,10 @@ const Trig_playerLeft_Func010Func001Func001Func003C = () => {
 };
 
 const Trig_playerLeft_Func010Func001Func001Func004C = () => {
-  if ((GetTriggerPlayer()! === udg_captains[1])) {
+  if ((GetTriggerPlayer() === udg_captains[1])) {
     return true;
   }
-  if ((GetTriggerPlayer()! === udg_captains[3])) {
+  if ((GetTriggerPlayer() === udg_captains[3])) {
     return true;
   }
   return false;
@@ -212,7 +212,7 @@ const Trig_playerLeft_Func010C = () => {
 };
 
 const Trig_playerLeft_Func011C = () => {
-  if ((!(GetTriggerPlayer()! === udg_Custom))) {
+  if ((!(GetTriggerPlayer() === udg_Custom))) {
     return false;
   }
   return true;
@@ -385,53 +385,9 @@ declare global {
 }
 InitTrig_playerLeft = () => {
   gg_trg_playerLeft = CreateTrigger();
-  TriggerRegisterPlayerEventLeave(gg_trg_playerLeft, Player(0)!);
-  TriggerRegisterPlayerEventLeave(gg_trg_playerLeft, Player(1)!);
-  TriggerRegisterPlayerEventLeave(gg_trg_playerLeft, Player(2)!);
-  TriggerRegisterPlayerEventLeave(gg_trg_playerLeft, Player(3)!);
-  TriggerRegisterPlayerEventLeave(gg_trg_playerLeft, Player(4)!);
-  TriggerRegisterPlayerEventLeave(gg_trg_playerLeft, Player(5)!);
-  TriggerRegisterPlayerEventLeave(gg_trg_playerLeft, Player(6)!);
-  TriggerRegisterPlayerEventLeave(gg_trg_playerLeft, Player(7)!);
-  TriggerRegisterPlayerEventLeave(gg_trg_playerLeft, Player(8)!);
-  TriggerRegisterPlayerEventLeave(gg_trg_playerLeft, Player(9)!);
-  TriggerRegisterPlayerEventLeave(gg_trg_playerLeft, Player(10)!);
-  TriggerRegisterPlayerEventLeave(gg_trg_playerLeft, Player(11)!);
-  TriggerRegisterPlayerEventLeave(gg_trg_playerLeft, Player(12)!);
-  TriggerRegisterPlayerEventLeave(gg_trg_playerLeft, Player(13)!);
-  TriggerRegisterPlayerEventLeave(gg_trg_playerLeft, Player(14)!);
-  TriggerRegisterPlayerEventLeave(gg_trg_playerLeft, Player(15)!);
-  TriggerRegisterPlayerEventLeave(gg_trg_playerLeft, Player(16)!);
-  TriggerRegisterPlayerEventLeave(gg_trg_playerLeft, Player(17)!);
-  TriggerRegisterPlayerEventLeave(gg_trg_playerLeft, Player(18)!);
-  TriggerRegisterPlayerEventLeave(gg_trg_playerLeft, Player(19)!);
-  TriggerRegisterPlayerEventLeave(gg_trg_playerLeft, Player(20)!);
-  TriggerRegisterPlayerEventLeave(gg_trg_playerLeft, Player(21)!);
-  TriggerRegisterPlayerEventLeave(gg_trg_playerLeft, Player(22)!);
-  TriggerRegisterPlayerEventLeave(gg_trg_playerLeft, Player(23)!);
-  TriggerRegisterPlayerEventDefeat(gg_trg_playerLeft, Player(0)!);
-  TriggerRegisterPlayerEventDefeat(gg_trg_playerLeft, Player(1)!);
-  TriggerRegisterPlayerEventDefeat(gg_trg_playerLeft, Player(2)!);
-  TriggerRegisterPlayerEventDefeat(gg_trg_playerLeft, Player(3)!);
-  TriggerRegisterPlayerEventDefeat(gg_trg_playerLeft, Player(4)!);
-  TriggerRegisterPlayerEventDefeat(gg_trg_playerLeft, Player(5)!);
-  TriggerRegisterPlayerEventDefeat(gg_trg_playerLeft, Player(6)!);
-  TriggerRegisterPlayerEventDefeat(gg_trg_playerLeft, Player(7)!);
-  TriggerRegisterPlayerEventDefeat(gg_trg_playerLeft, Player(8)!);
-  TriggerRegisterPlayerEventDefeat(gg_trg_playerLeft, Player(9)!);
-  TriggerRegisterPlayerEventDefeat(gg_trg_playerLeft, Player(10)!);
-  TriggerRegisterPlayerEventDefeat(gg_trg_playerLeft, Player(11)!);
-  TriggerRegisterPlayerEventDefeat(gg_trg_playerLeft, Player(12)!);
-  TriggerRegisterPlayerEventDefeat(gg_trg_playerLeft, Player(13)!);
-  TriggerRegisterPlayerEventDefeat(gg_trg_playerLeft, Player(14)!);
-  TriggerRegisterPlayerEventDefeat(gg_trg_playerLeft, Player(15)!);
-  TriggerRegisterPlayerEventDefeat(gg_trg_playerLeft, Player(16)!);
-  TriggerRegisterPlayerEventDefeat(gg_trg_playerLeft, Player(17)!);
-  TriggerRegisterPlayerEventDefeat(gg_trg_playerLeft, Player(18)!);
-  TriggerRegisterPlayerEventDefeat(gg_trg_playerLeft, Player(19)!);
-  TriggerRegisterPlayerEventDefeat(gg_trg_playerLeft, Player(20)!);
-  TriggerRegisterPlayerEventDefeat(gg_trg_playerLeft, Player(21)!);
-  TriggerRegisterPlayerEventDefeat(gg_trg_playerLeft, Player(22)!);
-  TriggerRegisterPlayerEventDefeat(gg_trg_playerLeft, Player(23)!);
+  for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+    TriggerRegisterPlayerEventLeave(gg_trg_playerLeft, Player(i)!);
+    TriggerRegisterPlayerEventDefeat(gg_trg_playerLeft, Player(i)!);
+  }
   TriggerAddAction(gg_trg_playerLeft, Trig_playerLeft_Actions);
 };

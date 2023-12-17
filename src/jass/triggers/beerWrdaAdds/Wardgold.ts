@@ -3,7 +3,7 @@
 //===========================================================================
 
 import { Trigger, Unit } from "w3ts";
-import { withUnitsInRange } from "../../../util/withGroup";
+import { withUnitsInRange } from "util/withGroup";
 
 declare global {
   // deno-lint-ignore prefer-const

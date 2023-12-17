@@ -1,11 +1,10 @@
-//===========================================================================
-// Trigger: draftPlayer
-//===========================================================================
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+
 const Trig_draftPlayer_Conditions = () => {
   if ((!(udg_draftOn === true))) {
     return false;
   }
-  if ((!(GetTriggerPlayer()! === udg_captains[udg_captainTurn]))) {
+  if ((!(GetTriggerPlayer() === udg_captains[udg_captainTurn]))) {
     return false;
   }
   if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 8, 9)!) > 0))) {
@@ -48,7 +47,7 @@ const Trig_draftPlayer_Func006Func005Func001Func002Func001C = () => {
   ) {
     return false;
   }
-  if ((!(GetEnumPlayer()! !== ConvertedPlayer(udg_atempint)!))) {
+  if ((!(GetEnumPlayer() !== ConvertedPlayer(udg_atempint)!))) {
     return false;
   }
   return true;
@@ -98,7 +97,7 @@ const Trig_draftPlayer_Func006Func005Func002Func002Func001C = () => {
   ) {
     return false;
   }
-  if ((!(GetEnumPlayer()! !== ConvertedPlayer(udg_atempint)!))) {
+  if ((!(GetEnumPlayer() !== ConvertedPlayer(udg_atempint)!))) {
     return false;
   }
   return true;
@@ -306,8 +305,6 @@ const Trig_draftPlayer_Actions = () => {
   }
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_draftPlayer: () => void;
@@ -315,153 +312,7 @@ declare global {
 InitTrig_draftPlayer = () => {
   gg_trg_draftPlayer = CreateTrigger();
   DisableTrigger(gg_trg_draftPlayer);
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftPlayer,
-    Player(0)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftPlayer,
-    Player(1)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftPlayer,
-    Player(2)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftPlayer,
-    Player(3)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftPlayer,
-    Player(4)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftPlayer,
-    Player(5)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftPlayer,
-    Player(6)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftPlayer,
-    Player(7)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftPlayer,
-    Player(8)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftPlayer,
-    Player(9)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftPlayer,
-    Player(10)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftPlayer,
-    Player(11)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftPlayer,
-    Player(12)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftPlayer,
-    Player(13)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftPlayer,
-    Player(14)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftPlayer,
-    Player(15)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftPlayer,
-    Player(16)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftPlayer,
-    Player(17)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftPlayer,
-    Player(18)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftPlayer,
-    Player(19)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftPlayer,
-    Player(20)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftPlayer,
-    Player(21)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftPlayer,
-    Player(22)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftPlayer,
-    Player(23)!,
-    "-draft",
-    false,
-  );
-  TriggerAddCondition(
-    gg_trg_draftPlayer,
-    Condition(Trig_draftPlayer_Conditions),
-  );
+  registerAnyPlayerChatEvent(gg_trg_draftPlayer, "-draft", false);
+  TriggerAddCondition(gg_trg_draftPlayer, Condition(Trig_draftPlayer_Conditions));
   TriggerAddAction(gg_trg_draftPlayer, Trig_draftPlayer_Actions);
 };

@@ -1,6 +1,5 @@
-//===========================================================================
-// Trigger: vwins
-//===========================================================================
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+
 const Trig_vwins_Func003Func001Func001C = () => {
   if ((!(GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING))) {
     return false;
@@ -131,37 +130,12 @@ const Trig_vwins_Actions = () => {
   DestroyForce(udg_atempplayer);
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_vwins: () => void;
 }
 InitTrig_vwins = () => {
   gg_trg_vwins = CreateTrigger();
-  TriggerRegisterPlayerChatEvent(gg_trg_vwins, Player(0)!, "-vwins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_vwins, Player(1)!, "-vwins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_vwins, Player(2)!, "-vwins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_vwins, Player(3)!, "-vwins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_vwins, Player(4)!, "-vwins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_vwins, Player(5)!, "-vwins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_vwins, Player(6)!, "-vwins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_vwins, Player(7)!, "-vwins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_vwins, Player(8)!, "-vwins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_vwins, Player(9)!, "-vwins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_vwins, Player(10)!, "-vwins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_vwins, Player(11)!, "-vwins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_vwins, Player(12)!, "-vwins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_vwins, Player(13)!, "-vwins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_vwins, Player(14)!, "-vwins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_vwins, Player(15)!, "-vwins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_vwins, Player(16)!, "-vwins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_vwins, Player(17)!, "-vwins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_vwins, Player(18)!, "-vwins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_vwins, Player(19)!, "-vwins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_vwins, Player(20)!, "-vwins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_vwins, Player(21)!, "-vwins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_vwins, Player(22)!, "-vwins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_vwins, Player(23)!, "-vwins", true);
+  registerAnyPlayerChatEvent(gg_trg_vwins, "-vwins");
   TriggerAddAction(gg_trg_vwins, Trig_vwins_Actions);
 };

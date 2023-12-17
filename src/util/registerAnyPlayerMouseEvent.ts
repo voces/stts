@@ -1,5 +1,5 @@
 import { Trigger } from "w3ts";
-import { MapPlayerEx } from "../handles/MapPlayerEx";
+import { MapPlayerEx } from "handles/MapPlayerEx";
 
 export const registerAnyPlayerMouseEvent = (
   trigger: Trigger,

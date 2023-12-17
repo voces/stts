@@ -1,7 +1,8 @@
-import { registerAnyPlayerChatEvent } from "../../../util/registerAnyPlayerChatEvent";
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+import { sleep } from "w3ts";
 
 const Trig_Force_Afk_Func001C = () => {
-  if ((!(GetTriggerPlayer()! === udg_Custom))) {
+  if ((!(GetTriggerPlayer() === udg_Custom))) {
     return false;
   }
   if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 7, 8)!) >= 1))) {
@@ -100,7 +101,7 @@ const Trig_Force_Afk_Func003Func007Func002Func001Func010Func001Func001Func003Fun
   ) {
     return false;
   }
-  if ((!(GetEnumPlayer()! !== ConvertedPlayer(GetForLoopIndexB())!))) {
+  if ((!(GetEnumPlayer() !== ConvertedPlayer(GetForLoopIndexB())!))) {
     return false;
   }
   if (
@@ -200,7 +201,7 @@ const Trig_Force_Afk_Func003Func007Func002Func001Func010Func001Func001Func005Fun
   ) {
     return false;
   }
-  if ((!(GetEnumPlayer()! !== ConvertedPlayer(GetForLoopIndexB())!))) {
+  if ((!(GetEnumPlayer() !== ConvertedPlayer(GetForLoopIndexB())!))) {
     return false;
   }
   if (
@@ -309,7 +310,7 @@ const Trig_Force_Afk_Func003Func007Func002Func001Func010Func001Func002C = () => 
 };
 
 const Trig_Force_Afk_Func003Func007Func002Func001Func010Func001C = () => {
-  if ((!(GetTriggerPlayer()! === udg_captains[3]))) {
+  if ((!(GetTriggerPlayer() === udg_captains[3]))) {
     return false;
   }
   return true;
@@ -361,7 +362,7 @@ const Trig_Force_Afk_Func003Func007Func002Func001Func010Func002Func003Func003Fun
   ) {
     return false;
   }
-  if ((!(GetEnumPlayer()! !== ConvertedPlayer(GetForLoopIndexB())!))) {
+  if ((!(GetEnumPlayer() !== ConvertedPlayer(GetForLoopIndexB())!))) {
     return false;
   }
   if (
@@ -467,7 +468,7 @@ const Trig_Force_Afk_Func003Func007Func002Func001Func010Func002Func005Func002Fun
   ) {
     return false;
   }
-  if ((!(GetEnumPlayer()! !== ConvertedPlayer(GetForLoopIndexB())!))) {
+  if ((!(GetEnumPlayer() !== ConvertedPlayer(GetForLoopIndexB())!))) {
     return false;
   }
   if (
@@ -576,7 +577,7 @@ const Trig_Force_Afk_Func003Func007Func002Func001Func010Func002C = () => {
 };
 
 const Trig_Force_Afk_Func003Func007Func002Func001Func010C = () => {
-  if ((!(ConvertedPlayer(udg_atempint)! === udg_captains[1]))) {
+  if ((!(ConvertedPlayer(udg_atempint) === udg_captains[1]))) {
     return false;
   }
   return true;
@@ -676,7 +677,7 @@ const captainsAndNoOneLeftToDraft = () => {
   return true;
 };
 
-const Trig_Force_Afk_Actions = () => {
+const Trig_Force_Afk_Actions = async () => {
   udg_atempint = S2I(SubStringBJ(GetEventPlayerChatString()!, 7, 8)!);
   if (udg_AFK[udg_atempint] < 3) {
     if (udg_gameStarted) {
@@ -853,7 +854,7 @@ const Trig_Force_Afk_Actions = () => {
     enforceTeamResourceMultiboard();
     MultiboardMinimizeBJ(true, udg_captainsMultiboard);
     DestroyMultiboardBJ(udg_captainsMultiboard);
-    TriggerSleepAction(0.01);
+    await sleep(0.01);
     DisableTrigger(gg_trg_giveUpCaptain);
     DisableTrigger(gg_trg_draftPlayer);
     TriggerExecute(gg_trg_createSheep);

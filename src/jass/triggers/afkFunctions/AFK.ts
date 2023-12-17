@@ -8,7 +8,10 @@
 // afk == 0, here
 //===========================================================================
 
+import { terrain } from "settings/terrain";
 import { inflateGoldCount } from "../commands/g";
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+import { sleep } from "w3ts";
 
 const captainsAndAfk = () => {
   if ((!(udg_Teams === TEAMS_CAPTAINS))) {
@@ -51,7 +54,7 @@ const captainsAndAfkOrPickingAndNotPicked2 = () => {
 };
 
 const Trig_AFK_Func005Func001Func002Func006Func001C = () => {
-  if ((!(GetEnumPlayer()! !== GetTriggerPlayer()!))) {
+  if ((!(GetEnumPlayer() !== GetTriggerPlayer()!))) {
     return false;
   }
   return true;
@@ -108,7 +111,7 @@ const playingAndNotAFKOrPub = () => {
 };
 
 const Trig_AFK_Func005Func010Func001C = () => {
-  if ((!(GetEnumPlayer()! !== GetTriggerPlayer()!))) {
+  if ((!(GetEnumPlayer() !== GetTriggerPlayer()!))) {
     return false;
   }
   if (
@@ -188,7 +191,7 @@ const Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func003Func003Fu
   ) {
     return false;
   }
-  if ((!(GetEnumPlayer()! !== ConvertedPlayer(GetForLoopIndexB())!))) {
+  if ((!(GetEnumPlayer() !== ConvertedPlayer(GetForLoopIndexB())!))) {
     return false;
   }
   if (
@@ -288,7 +291,7 @@ const Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func005Func002Fu
   ) {
     return false;
   }
-  if ((!(GetEnumPlayer()! !== ConvertedPlayer(GetForLoopIndexB())!))) {
+  if ((!(GetEnumPlayer() !== ConvertedPlayer(GetForLoopIndexB())!))) {
     return false;
   }
   if (
@@ -397,7 +400,7 @@ const Trig_AFK_Func005Func013Func001Func001Func010Func001Func002C = () => {
 };
 
 const Trig_AFK_Func005Func013Func001Func001Func010Func001C = () => {
-  if ((!(GetTriggerPlayer()! === udg_captains[3]))) {
+  if ((!(GetTriggerPlayer() === udg_captains[3]))) {
     return false;
   }
   return true;
@@ -449,7 +452,7 @@ const Trig_AFK_Func005Func013Func001Func001Func010Func002Func003Func003Func002Fu
   ) {
     return false;
   }
-  if ((!(GetEnumPlayer()! !== ConvertedPlayer(GetForLoopIndexB())!))) {
+  if ((!(GetEnumPlayer() !== ConvertedPlayer(GetForLoopIndexB())!))) {
     return false;
   }
   if (
@@ -555,7 +558,7 @@ const Trig_AFK_Func005Func013Func001Func001Func010Func002Func005Func002Func002Fu
   ) {
     return false;
   }
-  if ((!(GetEnumPlayer()! !== ConvertedPlayer(GetForLoopIndexB())!))) {
+  if ((!(GetEnumPlayer() !== ConvertedPlayer(GetForLoopIndexB())!))) {
     return false;
   }
   if (
@@ -664,7 +667,7 @@ const Trig_AFK_Func005Func013Func001Func001Func010Func002C = () => {
 };
 
 const Trig_AFK_Func005Func013Func001Func001Func010C = () => {
-  if ((!(GetTriggerPlayer()! === udg_captains[1]))) {
+  if ((!(GetTriggerPlayer() === udg_captains[1]))) {
     return false;
   }
   return true;
@@ -762,7 +765,7 @@ const captainsAndDraftEmpty = () => {
   return true;
 };
 
-const Trig_AFK_Actions = () => {
+const Trig_AFK_Actions = async () => {
   if (rotated === GetTriggerPlayer()!) return;
   udg_atempint = GetConvertedPlayerId(GetTriggerPlayer()!);
   if (udg_AFK[udg_atempint] < AFK_AFK) { // Not AFK
@@ -1019,13 +1022,7 @@ const Trig_AFK_Actions = () => {
         );
         DestroyForce(udg_atempplayer);
       }
-    } else {
-      PanCameraToForPlayer(
-        GetTriggerPlayer()!,
-        GetRectCenterX(wolfSpawn),
-        GetRectCenterY(wolfSpawn),
-      );
-    }
+    } else PanCameraToForPlayer(GetTriggerPlayer()!, GetRectCenterX(terrain.wolf), GetRectCenterY(terrain.wolf));
     // If players sheepCount is lowest than the greatest players SheepCount, set them.
     udg_atempplayer = GetForceOfPlayer(
       ForcePickRandomPlayer(
@@ -1052,7 +1049,7 @@ const Trig_AFK_Actions = () => {
     enforceTeamResourceMultiboard();
     MultiboardMinimizeBJ(true, udg_captainsMultiboard);
     DestroyMultiboardBJ(udg_captainsMultiboard);
-    TriggerSleepAction(0.01);
+    await sleep(0.01);
     DisableTrigger(gg_trg_giveUpCaptain);
     DisableTrigger(gg_trg_draftPlayer);
     TriggerExecute(gg_trg_createSheep);
@@ -1065,29 +1062,6 @@ declare global {
 }
 InitTrig_AFK = () => {
   gg_trg_AFK = CreateTrigger();
-  TriggerRegisterPlayerChatEvent(gg_trg_AFK, Player(0)!, "-afk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_AFK, Player(1)!, "-afk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_AFK, Player(2)!, "-afk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_AFK, Player(3)!, "-afk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_AFK, Player(4)!, "-afk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_AFK, Player(5)!, "-afk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_AFK, Player(6)!, "-afk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_AFK, Player(7)!, "-afk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_AFK, Player(8)!, "-afk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_AFK, Player(9)!, "-afk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_AFK, Player(10)!, "-afk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_AFK, Player(11)!, "-afk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_AFK, Player(12)!, "-afk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_AFK, Player(13)!, "-afk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_AFK, Player(14)!, "-afk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_AFK, Player(15)!, "-afk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_AFK, Player(16)!, "-afk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_AFK, Player(17)!, "-afk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_AFK, Player(18)!, "-afk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_AFK, Player(19)!, "-afk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_AFK, Player(20)!, "-afk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_AFK, Player(21)!, "-afk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_AFK, Player(22)!, "-afk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_AFK, Player(23)!, "-afk", true);
+  registerAnyPlayerChatEvent(gg_trg_AFK, "-afk");
   TriggerAddAction(gg_trg_AFK, Trig_AFK_Actions);
 };

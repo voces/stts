@@ -1,6 +1,6 @@
-//===========================================================================
-// Trigger: firstbloodCount
-//===========================================================================
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+import { sleep } from "w3ts";
+
 const Trig_firstbloodCount_Func003Func001Func001C = () => {
   if ((!(GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING))) {
     return false;
@@ -80,7 +80,7 @@ const Trig_firstbloodCount_Func003C = () => {
   return true;
 };
 
-const Trig_firstbloodCount_Actions = () => {
+const Trig_firstbloodCount_Actions = async () => {
   udg_atempplayer = GetForceOfPlayer(GetTriggerPlayer()!)!;
   DisplayTimedTextToForce(
     udg_atempplayer,
@@ -107,7 +107,7 @@ const Trig_firstbloodCount_Actions = () => {
       }
       bj_forLoopAIndex = bj_forLoopAIndex + 1;
     }
-    TriggerSleepAction(9);
+    await sleep(9);
     ClearTextMessagesBJ(udg_atempplayer);
     DisplayTimedTextToForce(
       udg_atempplayer,
@@ -139,301 +139,12 @@ const Trig_firstbloodCount_Actions = () => {
   DestroyForce(udg_atempplayer);
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_firstbloodCount: () => void;
 }
 InitTrig_firstbloodCount = () => {
   gg_trg_firstbloodCount = CreateTrigger();
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(0)!,
-    "-firstbloodcounter",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(1)!,
-    "-firstbloodcounter",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(2)!,
-    "-firstbloodcounter",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(3)!,
-    "-firstbloodcounter",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(4)!,
-    "-firstbloodcounter",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(5)!,
-    "-firstbloodcounter",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(6)!,
-    "-firstbloodcounter",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(7)!,
-    "-firstbloodcounter",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(8)!,
-    "-firstbloodcounter",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(9)!,
-    "-firstbloodcounter",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(10)!,
-    "-firstbloodcounter",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(11)!,
-    "-firstbloodcounter",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(12)!,
-    "-firstbloodcounter",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(13)!,
-    "-firstbloodcounter",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(14)!,
-    "-firstbloodcounter",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(15)!,
-    "-firstbloodcounter",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(16)!,
-    "-firstbloodcounter",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(17)!,
-    "-firstbloodcounter",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(18)!,
-    "-firstbloodcounter",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(19)!,
-    "-firstbloodcounter",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(20)!,
-    "-firstbloodcounter",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(21)!,
-    "-firstbloodcounter",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(22)!,
-    "-firstbloodcounter",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(23)!,
-    "-firstbloodcounter",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(0)!,
-    "-fbc",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(1)!,
-    "-fbc",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(2)!,
-    "-fbc",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(3)!,
-    "-fbc",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(4)!,
-    "-fbc",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(5)!,
-    "-fbc",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(6)!,
-    "-fbc",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(7)!,
-    "-fbc",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(8)!,
-    "-fbc",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(9)!,
-    "-fbc",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(10)!,
-    "-fbc",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(11)!,
-    "-fbc",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(12)!,
-    "-fbc",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(13)!,
-    "-fbc",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(14)!,
-    "-fbc",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(15)!,
-    "-fbc",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(16)!,
-    "-fbc",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(17)!,
-    "-fbc",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(18)!,
-    "-fbc",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(19)!,
-    "-fbc",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(20)!,
-    "-fbc",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(21)!,
-    "-fbc",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(22)!,
-    "-fbc",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_firstbloodCount,
-    Player(23)!,
-    "-fbc",
-    true,
-  );
+  registerAnyPlayerChatEvent(gg_trg_firstbloodCount, "-fbc");
   TriggerAddAction(gg_trg_firstbloodCount, Trig_firstbloodCount_Actions);
 };

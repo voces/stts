@@ -308,7 +308,7 @@ const Trig_timeCommands_Actions = () => {
       }
       i = i + 1;
     }
-  } else if (myArg[0] === "-reset" && GetTriggerPlayer()! === udg_Custom) {
+  } else if (myArg[0] === "-reset" && GetTriggerPlayer() === udg_Custom) {
     recordHolders = "";
     loserHolders = "";
     recordTime = 0;

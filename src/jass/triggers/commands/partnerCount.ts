@@ -1,36 +1,26 @@
-//===========================================================================
-// Trigger: partnerCount
-//===========================================================================
+import { MapPlayerEx } from "handles/MapPlayerEx";
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
 const Trig_partnerCount_Actions = () => {
-  let i = 0;
-  let count = 0;
-  let pid: number;
-  Split(GetEventPlayerChatString()!, " ", false);
+  const s = GetEventPlayerChatString()!.toLowerCase();
+  const parts = s.split(" ");
+  const pid = s.length === 1 ? GetPlayerId(GetTriggerPlayer()!) : S2I(parts[1] ?? "") - 1;
 
-  if (myArg[0] !== "-pc") {
-    return;
-  }
-
-  if (myArgCount === 2) {
-    pid = S2I(myArg[1]) - 1;
-  } else {
-    pid = GetPlayerId(GetTriggerPlayer()!);
-  }
+  if (pid < 0 || pid > 23) return;
 
   DisplayTimedTextToPlayer(
     GetTriggerPlayer()!,
     0,
     0,
-    15,
-    "                              " + udg_colorString[pid + 1] +
-      GetPlayerName(Player(pid)!) + "|r|CFFFFCC00's Partner Count|r",
+    10,
+    `                              ${MapPlayerEx.fromIndex(pid)!.coloredName}|r|CFFFFCC00's Partner Count|r`,
   );
-  while (true) {
-    if (i === bj_MAX_PLAYERS) break;
+
+  let i = 0;
+  let count = 0;
+  while (i < bj_MAX_PLAYERS) {
     count = 0;
-    while (true) {
-      if (i === bj_MAX_PLAYERS || count === 12) break;
+    while (i < bj_MAX_PLAYERS && count < 12) {
       if (
         GetPlayerSlotState(Player(i)!) === PLAYER_SLOT_STATE_PLAYING &&
         udg_AFK[i + 1] === AFK_PLAYING && i !== pid
@@ -39,42 +29,29 @@ const Trig_partnerCount_Actions = () => {
           GetTriggerPlayer()!,
           0,
           0,
-          15,
+          10,
           "                              " + udg_colorString[i + 1] +
             GetPlayerName(Player(i)!) + " : " +
             I2S(udg_accumPartner[pid * 24 + i + 1]),
         );
-        count = count + 1;
+        count++;
       }
-      i = i + 1;
+      i++;
     }
+
     if (count === 12) {
       TriggerSleepAction(9);
-      if (GetLocalPlayer() === GetTriggerPlayer()!) {
-        ClearTextMessages();
-      }
+      if (GetLocalPlayer() === GetTriggerPlayer()!) ClearTextMessages();
     }
   }
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_partnerCount: () => void;
 }
 InitTrig_partnerCount = () => {
-  let i = 0;
   gg_trg_partnerCount = CreateTrigger();
-  while (true) {
-    if (i === bj_MAX_PLAYERS) break;
-    TriggerRegisterPlayerChatEvent(
-      gg_trg_partnerCount,
-      Player(i)!,
-      "-pc",
-      false,
-    );
-    i = i + 1;
-  }
+  registerAnyPlayerChatEvent(gg_trg_partnerCount, "-pc", false);
   TriggerAddAction(gg_trg_partnerCount, Trig_partnerCount_Actions);
 };

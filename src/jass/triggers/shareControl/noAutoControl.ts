@@ -6,9 +6,7 @@ const Trig_noAutoControl_Actions = () => {
   const enabled = !(noAutoControl[GetPlayerId(GetTriggerPlayer()!)]);
   noAutoControl[GetPlayerId(GetTriggerPlayer()!)] = enabled;
 
-  if (GetLocalPlayer() !== GetTriggerPlayer()!) {
-    return;
-  }
+  if (GetLocalPlayer() !== GetTriggerPlayer()!) return;
 
   if (enabled) {
     DisplayTimedTextToPlayer(
@@ -35,16 +33,12 @@ const Trig_noAutoControl_Actions = () => {
 
 const Trig_noAutoControl_load = () => {
   let s = s__File_readEx(s__File_open("revo/noAutoControl.txt"), true);
-  if (s == null) {
-    s = "false";
-  }
+  if (s == null) s = "false";
   BlzSendSyncData("noAutoControl", s);
 };
 
 const Trig_noAutoControl_sync = () => {
-  noAutoControl[GetPlayerId(GetTriggerPlayer()!)] = S2B(
-    BlzGetTriggerSyncData()!,
-  );
+  noAutoControl[GetPlayerId(GetTriggerPlayer()!)] = S2B(BlzGetTriggerSyncData()!);
 };
 
 //===========================================================================

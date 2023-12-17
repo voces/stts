@@ -23,7 +23,7 @@ const Trig_Create_Timers_Actions = () => {
 
   CreateTimerDialogBJ(udg_Createtimer, "Pick Game Mode:");
   udg_createTimerWindow = GetLastCreatedTimerDialogBJ()!;
-  StartTimerBJ(udg_Createtimer, false, 90);
+  TimerStart(udg_Createtimer, 90, false, null);
 
   TimerDialogDisplayBJ(false, udg_paddingTimerWindow);
 };

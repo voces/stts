@@ -1,8 +1,9 @@
 import { addScriptHook, Trigger, Unit, W3TS_HOOK } from "w3ts";
-import { withDummy } from "../../util/withDummy";
-import { withUnitsInRange } from "../../util/withGroup";
-import { setTimeout } from "../../util/setTimeout";
-import { MapPlayerEx } from "../../handles/MapPlayerEx";
+import { withDummy } from "util/withDummy";
+import { withUnitsInRange } from "util/withGroup";
+import { setTimeout } from "util/setTimeout";
+import { MapPlayerEx } from "handles/MapPlayerEx";
+import { terrain } from "settings/terrain";
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   const t = Trigger.create();
@@ -33,9 +34,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     udg_emeraldTimer,
     udg_peanutTimer,
   ];
-  for (let i = 0; i < timers.length; i++) {
-    t.registerTimerExpireEvent(timers[i]);
-  }
+  for (let i = 0; i < timers.length; i++) t.registerTimerExpireEvent(timers[i]);
 
   t.addAction(() => {
     const pid = timers.indexOf(GetExpiredTimer()!);
@@ -57,8 +56,8 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     const wolf = CreateUnit(
       Player(pid)!,
       shepType,
-      GetRectCenterX(wolfSpawn),
-      GetRectCenterY(wolfSpawn),
+      GetRectCenterX(terrain.wolf),
+      GetRectCenterY(terrain.wolf),
       270,
     )!;
     PanCameraToTimedForPlayer(
@@ -71,8 +70,8 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     udg_unit[pid + 1] = wolf;
     SelectUnitForPlayerSingle(wolf, Player(pid)!);
     const aSheepIsNear = withUnitsInRange(
-      GetRectCenterX(wolfSpawn),
-      GetRectCenterY(wolfSpawn),
+      GetRectCenterX(terrain.wolf),
+      GetRectCenterY(terrain.wolf),
       1000,
       (g) => g.size > 0,
       (u) => u.typeId === sheepType,

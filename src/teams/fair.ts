@@ -12,7 +12,7 @@ const Trig_fair_Actions = () => {
 
   const desiredSheep = udg_lastGameString === "-fair"
     ? Math.floor(pool.length / 2)
-    : parseInt(udg_lastGameString.split(" ")[1]);
+    : S2I(udg_lastGameString.split(" ")[1]);
 
   if (desiredSheep >= pool.length) return;
 

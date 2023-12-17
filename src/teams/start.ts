@@ -1,10 +1,10 @@
 import { addScriptHook, Trigger, W3TS_HOOK } from "w3ts";
-import { registerAnyPlayerChatEvent } from "../util/registerAnyPlayerChatEvent";
-import { clearForces } from "../util/clearForces";
-import { forEachPlayingPlayer } from "../util/forEachPlayingPlayer";
-import { reduceForce } from "../util/reduceForce";
-import { isPlaying } from "../util/isPlaying";
-import { MapPlayerEx } from "../handles/MapPlayerEx";
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+import { clearForces } from "util/clearForces";
+import { forEachPlayingPlayer } from "util/forEachPlayingPlayer";
+import { reduceForce } from "util/reduceForce";
+import { isPlaying } from "util/isPlaying";
+import { MapPlayerEx } from "handles/MapPlayerEx";
 
 const getMinsReducer =
   <T>(fn: (v: T) => number) => (accum: [min: number, pool: T[]], v: T): [min: number, pool: T[]] => {
@@ -53,13 +53,14 @@ export const adjustSheepTeamSize = (desiredSheep: number) => {
 const Trig_start_Actions = () => {
   TriggerSleepAction(0.01);
 
-  udg_lastGameString = GetEventPlayerChatString()!.toLowerCase();
+  udg_lastGameString = (GetEventPlayerChatString() ?? "-start").toLowerCase();
 
   clearForces();
   forEachPlayingPlayer((p) => ForceAddPlayer(udg_sheepLastGame[p.id + 1] ? udg_Sheep : udg_Wolf, p.handle));
 
   if (udg_lastGameString !== "-start" && udg_lastGameString !== "-restart") {
-    adjustSheepTeamSize(parseInt(udg_lastGameString.split(" ")[1]));
+    const parts = udg_lastGameString.split(" ");
+    if (parts.length > 1) adjustSheepTeamSize(S2I(parts[1]));
   }
 
   udg_Teams = TEAMS_LOCK_IE_PLAYING;
@@ -72,10 +73,10 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   TriggerAddCondition(
     gg_trg_start,
     Condition(() => {
-      if (GetTriggerPlayer()! !== udg_Custom) return false;
+      if (GetTriggerPlayer() !== udg_Custom) return false;
       const s = GetEventPlayerChatString() ?? "";
       if (s === "-start" || s === "-restart") return true;
-      const count = parseInt(s.split(" ")[1]);
+      const count = S2I(s.split(" ")[1]);
       return count > 0 && count < 24;
     }),
   );
@@ -88,4 +89,11 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     TriggerExecute(gg_trg_cancel);
     TriggerExecute(gg_trg_start);
   });
+
+  {
+    const t = Trigger.create();
+    t.registerAnyUnitEvent(EVENT_PLAYER_UNIT_TRAIN_START);
+    t.addCondition(() => GetTrainedUnitType() === FourCC("h00F"));
+    t.addAction(Trig_start_Actions);
+  }
 });

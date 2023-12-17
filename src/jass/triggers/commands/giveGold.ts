@@ -1,6 +1,5 @@
-//===========================================================================
-// Trigger: giveGold
-//===========================================================================
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+
 const Trig_giveGold_Func007C = () => {
   if (
     (udg_AFK[S2I(SubStringBJ(GetEventPlayerChatString()!, 2, 3)!)] ===
@@ -124,38 +123,13 @@ const Trig_giveGold_Actions = () => {
   }
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_giveGold: () => void;
 }
 InitTrig_giveGold = () => {
   gg_trg_giveGold = CreateTrigger();
-  TriggerRegisterPlayerChatEvent(gg_trg_giveGold, Player(0)!, "-", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_giveGold, Player(1)!, "-", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_giveGold, Player(2)!, "-", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_giveGold, Player(3)!, "-", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_giveGold, Player(4)!, "-", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_giveGold, Player(5)!, "-", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_giveGold, Player(6)!, "-", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_giveGold, Player(7)!, "-", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_giveGold, Player(8)!, "-", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_giveGold, Player(9)!, "-", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_giveGold, Player(10)!, "-", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_giveGold, Player(11)!, "-", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_giveGold, Player(12)!, "-", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_giveGold, Player(13)!, "-", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_giveGold, Player(14)!, "-", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_giveGold, Player(15)!, "-", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_giveGold, Player(16)!, "-", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_giveGold, Player(17)!, "-", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_giveGold, Player(18)!, "-", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_giveGold, Player(19)!, "-", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_giveGold, Player(20)!, "-", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_giveGold, Player(21)!, "-", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_giveGold, Player(22)!, "-", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_giveGold, Player(23)!, "-", false);
+  registerAnyPlayerChatEvent(gg_trg_giveGold, "-", false);
   TriggerAddCondition(gg_trg_giveGold, Condition(Trig_giveGold_Conditions));
   TriggerAddAction(gg_trg_giveGold, Trig_giveGold_Actions);
 };

@@ -1,6 +1,5 @@
-//===========================================================================
-// Trigger: control
-//===========================================================================
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+
 const Trig_control_Conditions = () => {
   if ((!(udg_isAnon === false))) {
     return false;
@@ -113,38 +112,13 @@ const Trig_control_Actions = () => {
   DestroyForce(udg_atempplayer);
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_control: () => void;
 }
 InitTrig_control = () => {
   gg_trg_control = CreateTrigger();
-  TriggerRegisterPlayerChatEvent(gg_trg_control, Player(0)!, "-c ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_control, Player(1)!, "-c ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_control, Player(2)!, "-c ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_control, Player(3)!, "-c ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_control, Player(4)!, "-c ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_control, Player(5)!, "-c ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_control, Player(6)!, "-c ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_control, Player(7)!, "-c ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_control, Player(8)!, "-c ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_control, Player(9)!, "-c ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_control, Player(10)!, "-c ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_control, Player(11)!, "-c ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_control, Player(12)!, "-c ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_control, Player(13)!, "-c ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_control, Player(14)!, "-c ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_control, Player(15)!, "-c ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_control, Player(16)!, "-c ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_control, Player(17)!, "-c ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_control, Player(18)!, "-c ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_control, Player(19)!, "-c ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_control, Player(20)!, "-c ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_control, Player(21)!, "-c ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_control, Player(22)!, "-c ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_control, Player(23)!, "-c ", false);
+  registerAnyPlayerChatEvent(gg_trg_control, "-c ", false);
   TriggerAddCondition(gg_trg_control, Condition(Trig_control_Conditions));
   TriggerAddAction(gg_trg_control, Trig_control_Actions);
 };

@@ -1,6 +1,5 @@
-//===========================================================================
-// Trigger: Say Q Death
-//===========================================================================
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+
 const Trig_Say_Q_Death_Func001Func001C = () => {
   if (
     (!(udg_QDeathTime[S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 6)!)] <
@@ -68,107 +67,12 @@ const Trig_Say_Q_Death_Actions = () => {
   }
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_Say_Q_Death: () => void;
 }
 InitTrig_Say_Q_Death = () => {
   gg_trg_Say_Q_Death = CreateTrigger();
-  TriggerRegisterPlayerChatEvent(gg_trg_Say_Q_Death, Player(0)!, "-qd ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_Say_Q_Death, Player(1)!, "-qd ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_Say_Q_Death, Player(2)!, "-qd ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_Say_Q_Death, Player(3)!, "-qd ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_Say_Q_Death, Player(4)!, "-qd ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_Say_Q_Death, Player(5)!, "-qd ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_Say_Q_Death, Player(6)!, "-qd ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_Say_Q_Death, Player(7)!, "-qd ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_Say_Q_Death, Player(8)!, "-qd ", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_Say_Q_Death, Player(9)!, "-qd ", false);
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_Say_Q_Death,
-    Player(10)!,
-    "-qd ",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_Say_Q_Death,
-    Player(11)!,
-    "-qd ",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_Say_Q_Death,
-    Player(12)!,
-    "-qd ",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_Say_Q_Death,
-    Player(13)!,
-    "-qd ",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_Say_Q_Death,
-    Player(14)!,
-    "-qd ",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_Say_Q_Death,
-    Player(15)!,
-    "-qd ",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_Say_Q_Death,
-    Player(16)!,
-    "-qd ",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_Say_Q_Death,
-    Player(17)!,
-    "-qd ",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_Say_Q_Death,
-    Player(18)!,
-    "-qd ",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_Say_Q_Death,
-    Player(19)!,
-    "-qd ",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_Say_Q_Death,
-    Player(20)!,
-    "-qd ",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_Say_Q_Death,
-    Player(21)!,
-    "-qd ",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_Say_Q_Death,
-    Player(22)!,
-    "-qd ",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_Say_Q_Death,
-    Player(23)!,
-    "-qd ",
-    false,
-  );
+  registerAnyPlayerChatEvent(gg_trg_Say_Q_Death, "-qd ", false);
   TriggerAddAction(gg_trg_Say_Q_Death, Trig_Say_Q_Death_Actions);
 };

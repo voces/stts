@@ -1,11 +1,10 @@
-//===========================================================================
-// Trigger: draftVersus
-//===========================================================================
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+
 const Trig_draftVersus_Conditions = () => {
   if ((!(udg_draftOn === true))) {
     return false;
   }
-  if ((!(GetTriggerPlayer()! === udg_captains[udg_captainTurn]))) {
+  if ((!(GetTriggerPlayer() === udg_captains[udg_captainTurn]))) {
     return false;
   }
   if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 8, 9)!) > 0))) {
@@ -48,7 +47,7 @@ const Trig_draftVersus_Func030Func005Func001Func002Func001C = () => {
   ) {
     return false;
   }
-  if ((!(GetEnumPlayer()! !== ConvertedPlayer(udg_atempint)!))) {
+  if ((!(GetEnumPlayer() !== ConvertedPlayer(udg_atempint)!))) {
     return false;
   }
   return true;
@@ -98,7 +97,7 @@ const Trig_draftVersus_Func030Func005Func002Func002Func001C = () => {
   ) {
     return false;
   }
-  if ((!(GetEnumPlayer()! !== ConvertedPlayer(udg_atempint)!))) {
+  if ((!(GetEnumPlayer() !== ConvertedPlayer(udg_atempint)!))) {
     return false;
   }
   return true;
@@ -354,8 +353,6 @@ const Trig_draftVersus_Actions = () => {
   }
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_draftVersus: () => void;
@@ -363,153 +360,7 @@ declare global {
 InitTrig_draftVersus = () => {
   gg_trg_draftVersus = CreateTrigger();
   DisableTrigger(gg_trg_draftVersus);
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftVersus,
-    Player(0)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftVersus,
-    Player(1)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftVersus,
-    Player(2)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftVersus,
-    Player(3)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftVersus,
-    Player(4)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftVersus,
-    Player(5)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftVersus,
-    Player(6)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftVersus,
-    Player(7)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftVersus,
-    Player(8)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftVersus,
-    Player(9)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftVersus,
-    Player(10)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftVersus,
-    Player(11)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftVersus,
-    Player(12)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftVersus,
-    Player(13)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftVersus,
-    Player(14)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftVersus,
-    Player(15)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftVersus,
-    Player(16)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftVersus,
-    Player(17)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftVersus,
-    Player(18)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftVersus,
-    Player(19)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftVersus,
-    Player(20)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftVersus,
-    Player(21)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftVersus,
-    Player(22)!,
-    "-draft",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_draftVersus,
-    Player(23)!,
-    "-draft",
-    false,
-  );
-  TriggerAddCondition(
-    gg_trg_draftVersus,
-    Condition(Trig_draftVersus_Conditions),
-  );
+  registerAnyPlayerChatEvent(gg_trg_draftVersus, "-draft", false);
+  TriggerAddCondition(gg_trg_draftVersus, Condition(Trig_draftVersus_Conditions));
   TriggerAddAction(gg_trg_draftVersus, Trig_draftVersus_Actions);
 };

@@ -1,4 +1,5 @@
-import { removeEnumUnit } from "../../../util/removeEnumUnit";
+import { terrain } from "settings/terrain";
+import { removeEnumUnit } from "util/removeEnumUnit";
 
 const Trig_initMassTest_Func005002002 = () => {
   return GetBooleanOr(
@@ -17,7 +18,7 @@ const Trig_initMassTest_Func008002 = () => {
 const Trig_initMassTest_Func010A = () => {
   udg_farmCount[GetConvertedPlayerId(GetEnumPlayer()!)] = 0;
   SetPlayerStateBJ(GetEnumPlayer()!, PLAYER_STATE_RESOURCE_LUMBER, 0);
-  udg_atemploc = GetRectCenter(wolfSpawn)!;
+  udg_atemploc = GetRectCenter(terrain.wolf)!;
   SetUnitPositionLocFacingBJ(
     udg_unit2[GetConvertedPlayerId(GetEnumPlayer()!)],
     udg_atemploc,
@@ -52,7 +53,7 @@ const Trig_initMassTest_Func010A = () => {
 const Trig_initMassTest_Actions = () => {
   DisableTrigger(gg_trg_mass);
   DisableTrigger(gg_trg_redo);
-  ClearTextMessagesBJ(GetPlayersAll()!);
+  ClearTextMessages();
   MMD__LogEvent("massingTest", 1, " " + MMD__pack((R2S(udg_massTime))!));
   udg_atempgroup = GetUnitsInRectMatching(
     GetPlayableMapRect()!,
@@ -105,7 +106,7 @@ const Trig_initMassTest_Actions = () => {
     "                              |cffffcc00Type|r |cffed1c24-stop|r |cffffcc00to go back to practicing or |cffed1c24-redo|r |cffffcc00to try again.|r",
   );
   PauseAllUnitsBJ(false);
-  StartTimerBJ(udg_massTimer, false, udg_massTime);
+  TimerStart(udg_massTimer, udg_massTime, false, null);
   TimerDialogDisplayBJ(true, udg_massTimerWindow);
   PauseTimerBJ(true, udg_Timer);
   TimerDialogDisplayBJ(false, udg_TimerWindow);

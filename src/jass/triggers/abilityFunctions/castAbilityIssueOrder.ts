@@ -1,7 +1,8 @@
-import { removeEnumUnit } from "../../../util/removeEnumUnit";
+import { removeEnumUnit } from "util/removeEnumUnit";
 import { Trig_destroyAllFarms_Func002002002 } from "../farmFunctions/destroyAllFarms";
+import { sleep } from "w3ts";
 
-const Trig_castAbility2_Actions = () => {
+const Trig_castAbility2_Actions = async () => {
   let i = 1;
   let x: number;
   let y: number;
@@ -108,7 +109,7 @@ const Trig_castAbility2_Actions = () => {
   } else if (OrderId2StringBJ(GetIssuedOrderId()) === "manashieldon") {
     i = GetRandomInt(0, 10000);
     gSheepAbilityFlag[GetPlayerId(GetOwningPlayer(GetTriggerUnit()!))] = i;
-    TriggerSleepAction(0.25);
+    await sleep(0.25);
     if (
       gSheepAbilityFlag[GetPlayerId(GetOwningPlayer(GetTriggerUnit()!))] === i
     ) {

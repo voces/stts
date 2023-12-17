@@ -1,10 +1,8 @@
-import { president } from "../../../modes/president";
+import { terrain } from "settings/terrain";
+import { president } from "modes/president";
+import { addScriptHook, W3TS_HOOK } from "w3ts";
 
-declare global {
-  // deno-lint-ignore prefer-const
-  let InitTrig_wispControl: () => void;
-}
-InitTrig_wispControl = () => {
+addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   gg_trg_wispControl = CreateTrigger();
   TriggerRegisterLeaveRectSimple(gg_trg_wispControl, gg_rct_Fence_Zone);
   TriggerRegisterLeaveRectSimple(gg_trg_wispControl, gg_rct_Glory_Hill_Fence);
@@ -17,11 +15,6 @@ InitTrig_wispControl = () => {
   );
   TriggerAddAction(
     gg_trg_wispControl,
-    () =>
-      SetUnitPosition(
-        GetTriggerUnit()!,
-        GetRectCenterX(wispArea),
-        GetRectCenterY(wispArea),
-      ),
+    () => SetUnitPosition(GetTriggerUnit()!, GetRectCenterX(terrain.wisp), GetRectCenterY(terrain.wisp)),
   );
-};
+});

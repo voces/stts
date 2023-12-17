@@ -1,4 +1,4 @@
-import { MapPlayerEx } from "../handles/MapPlayerEx";
+import { MapPlayerEx } from "handles/MapPlayerEx";
 
 /** `allowAfk` defaults to `false` */
 export const isPlaying = (player: player | MapPlayerEx, allowAfk = false) => {

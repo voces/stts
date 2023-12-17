@@ -4,18 +4,15 @@ import { MapPlayerEx } from "./MapPlayerEx";
 const map = new WeakMap<force, ForceEx>();
 
 export class ForceEx extends Force {
-  public static create(): ForceEx | undefined {
+  public static create(): ForceEx {
     const handle = CreateForce();
 
-    if (handle) {
-      const obj = this.getObject(handle) as ForceEx;
+    const obj = this.getObject(handle) as ForceEx;
 
-      const values: Record<string, unknown> = {};
-      values.handle = handle;
+    const values: Record<string, unknown> = {};
+    values.handle = handle;
 
-      return Object.assign(obj, values);
-    }
-    return undefined;
+    return Object.assign(obj, values);
   }
 
   public enumPlayers(filter: boolexpr | ((player: MapPlayerEx) => boolean)) {

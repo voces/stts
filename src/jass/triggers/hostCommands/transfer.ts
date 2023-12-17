@@ -1,11 +1,10 @@
-//===========================================================================
-// Trigger: transfer
-//===========================================================================
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+
 const Trig_transfer_Func001C = () => {
-  if ((GetTriggerPlayer()! === udg_Custom)) {
+  if ((GetTriggerPlayer() === udg_Custom)) {
     return true;
   }
-  if ((GetTriggerPlayer()! === udg_originalCustom)) {
+  if ((GetTriggerPlayer() === udg_originalCustom)) {
     return true;
   }
   return false;
@@ -97,158 +96,13 @@ const Trig_transfer_Actions = () => {
   }
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_transfer: () => void;
 }
 InitTrig_transfer = () => {
   gg_trg_transfer = CreateTrigger();
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_transfer,
-    Player(0)!,
-    "-transfer",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_transfer,
-    Player(1)!,
-    "-transfer",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_transfer,
-    Player(2)!,
-    "-transfer",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_transfer,
-    Player(3)!,
-    "-transfer",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_transfer,
-    Player(4)!,
-    "-transfer",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_transfer,
-    Player(5)!,
-    "-transfer",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_transfer,
-    Player(6)!,
-    "-transfer",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_transfer,
-    Player(7)!,
-    "-transfer",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_transfer,
-    Player(8)!,
-    "-transfer",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_transfer,
-    Player(9)!,
-    "-transfer",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_transfer,
-    Player(10)!,
-    "-transfer",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_transfer,
-    Player(11)!,
-    "-transfer",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_transfer,
-    Player(12)!,
-    "-transfer",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_transfer,
-    Player(13)!,
-    "-transfer",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_transfer,
-    Player(14)!,
-    "-transfer",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_transfer,
-    Player(15)!,
-    "-transfer",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_transfer,
-    Player(16)!,
-    "-transfer",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_transfer,
-    Player(17)!,
-    "-transfer",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_transfer,
-    Player(18)!,
-    "-transfer",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_transfer,
-    Player(19)!,
-    "-transfer",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_transfer,
-    Player(20)!,
-    "-transfer",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_transfer,
-    Player(21)!,
-    "-transfer",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_transfer,
-    Player(22)!,
-    "-transfer",
-    false,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_transfer,
-    Player(23)!,
-    "-transfer",
-    false,
-  );
+  registerAnyPlayerChatEvent(gg_trg_transfer, "-transfer", false);
   TriggerAddCondition(gg_trg_transfer, Condition(Trig_transfer_Conditions));
   TriggerAddAction(gg_trg_transfer, Trig_transfer_Actions);
 };

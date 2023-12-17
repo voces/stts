@@ -87,7 +87,7 @@ const Trig_blightManagement_Actions = () => {
         Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
         gg_rct_Blight_Top_1,
       );
-      StartTimerBJ(udg_mapSizeChangeTimer, false, udg_blightAlterationTime);
+      TimerStart(udg_mapSizeChangeTimer, udg_blightAlterationTime, false, null);
     } else {
       if ((Trig_blightManagement_Func001Func003Func001C())) {
         SetBlightRectBJ(
@@ -110,7 +110,7 @@ const Trig_blightManagement_Actions = () => {
           Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
           gg_rct_Blight_Top_2,
         );
-        StartTimerBJ(udg_mapSizeChangeTimer, false, udg_blightAlterationTime);
+        TimerStart(udg_mapSizeChangeTimer, udg_blightAlterationTime, false, null);
       } else {
         if ((Trig_blightManagement_Func001Func003Func001Func005C())) {
           SetBlightRectBJ(
@@ -133,7 +133,7 @@ const Trig_blightManagement_Actions = () => {
             Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
             gg_rct_Blight_Top_3,
           );
-          StartTimerBJ(udg_mapSizeChangeTimer, false, udg_blightAlterationTime);
+          TimerStart(udg_mapSizeChangeTimer, udg_blightAlterationTime, false, null);
         } else {
           if ((Trig_blightManagement_Func001Func003Func001Func005Func001C())) {
             SetBlightRectBJ(
@@ -183,7 +183,7 @@ const Trig_blightManagement_Actions = () => {
         Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
         gg_rct_Blight_Top_4,
       );
-      StartTimerBJ(udg_mapSizeChangeTimer, false, udg_blightAlterationTime);
+      TimerStart(udg_mapSizeChangeTimer, udg_blightAlterationTime, false, null);
     } else {
       if ((Trig_blightManagement_Func001Func001Func005C())) {
         SetBlightRectBJ(
@@ -206,7 +206,7 @@ const Trig_blightManagement_Actions = () => {
           Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
           gg_rct_Blight_Top_3,
         );
-        StartTimerBJ(udg_mapSizeChangeTimer, false, udg_blightAlterationTime);
+        TimerStart(udg_mapSizeChangeTimer, udg_blightAlterationTime, false, null);
       } else {
         if ((Trig_blightManagement_Func001Func001Func005Func005C())) {
           SetBlightRectBJ(
@@ -229,7 +229,7 @@ const Trig_blightManagement_Actions = () => {
             Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
             gg_rct_Blight_Top_2,
           );
-          StartTimerBJ(udg_mapSizeChangeTimer, false, udg_blightAlterationTime);
+          TimerStart(udg_mapSizeChangeTimer, udg_blightAlterationTime, false, null);
         } else {
           if ((Trig_blightManagement_Func001Func001Func005Func005Func005C())) {
             SetBlightRectBJ(

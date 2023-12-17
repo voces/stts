@@ -2,7 +2,7 @@
 // Trigger: Anonymous
 //===========================================================================
 const Anonymous_Conditions = () => {
-  if ((!(GetTriggerPlayer()! === udg_Custom))) {
+  if ((!(GetTriggerPlayer() === udg_Custom))) {
     return false;
   }
   return true;

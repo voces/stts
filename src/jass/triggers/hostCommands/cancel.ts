@@ -1,16 +1,4 @@
-//===========================================================================
-// Trigger: cancel
-//===========================================================================
-// cancel
-
-const Trig_cancel_playerActions = () => {
-  udg_apr[GetConvertedPlayerId(GetEnumPlayer()!)] = 999;
-};
-
-const Trig_cancel_flipSheepLastGame = () => {
-  udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)] =
-    !(udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)]);
-};
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
 const Trig_cancel_resetSheepState = () => {
   let i = 1;
@@ -44,12 +32,17 @@ const Trig_cancel_Actions = () => {
     }
   }
 
-  ForForce(GetPlayersAll()!, Trig_cancel_playerActions);
+  ForForce(GetPlayersAll()!, () => udg_apr[GetConvertedPlayerId(GetEnumPlayer()!)] = 999);
 
   if (udg_versus > 0) {
     udg_versusOff = true;
     if (udg_gameStarted && udg_versus === 2) {
-      ForForce(GetPlayersAll()!, Trig_cancel_flipSheepLastGame);
+      ForForce(
+        GetPlayersAll()!,
+        () =>
+          udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)] =
+            !(udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)]),
+      );
     }
     udg_versusTime = udg_time;
     udg_time = 0;
@@ -74,24 +67,13 @@ const Trig_cancel_Actions = () => {
   TriggerExecute(gg_trg_startRound);
 };
 
-const Trig_cancel_Conditions = () => {
-  return GetTriggerPlayer()! === udg_Custom;
-};
-
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_cancel: () => void;
 }
 InitTrig_cancel = () => {
-  let i = 0;
   gg_trg_cancel = CreateTrigger();
-  while (true) {
-    if (i === bj_MAX_PLAYERS) break;
-    TriggerRegisterPlayerChatEvent(gg_trg_cancel, Player(i)!, "-cancel", true);
-    i = i + 1;
-  }
-  TriggerAddCondition(gg_trg_cancel, Condition(Trig_cancel_Conditions));
+  registerAnyPlayerChatEvent(gg_trg_cancel, "-cancel");
+  TriggerAddCondition(gg_trg_cancel, Condition(() => GetTriggerPlayer() === udg_Custom));
   TriggerAddAction(gg_trg_cancel, Trig_cancel_Actions);
 };

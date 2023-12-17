@@ -1,6 +1,9 @@
 import { addScriptHook, W3TS_HOOK } from "w3ts";
-import { registerAnyPlayerChatEvent } from "../util/registerAnyPlayerChatEvent";
-import { clearForces } from "../util/clearForces";
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+import { clearForces } from "util/clearForces";
+import { MapPlayerEx } from "handles/MapPlayerEx";
+import { ForceEx } from "handles/ForceEx";
+import { forEachPlayingPlayer } from "util/forEachPlayingPlayer";
 
 const perfectPlayerVariables: player[] = [];
 let pubStart = 0;
@@ -95,8 +98,6 @@ const aSheepHasTwoHigherScThanAWolf = () => {
       if (sc < minWolfSc) minWolfSc = sc;
     }
   }
-
-  BJDebugMsg(`maxSheepSc ${maxSheepSc} minWolfSc ${minWolfSc}`);
 
   return maxSheepSc - minWolfSc >= 2;
 };
@@ -266,20 +267,36 @@ const Smart__traditionalSmart = (sheepToDraft: number): void => {
   });
 };
 
+const smart1vX = () => {
+  let pool: MapPlayerEx[] = [];
+  let minSc = Infinity;
+  forEachPlayingPlayer((p) => {
+    if (p.sheepLastGame) return ForceEx.wolves.addPlayer(p);
+    if (p.sheepCount < minSc) {
+      pool.forEach((p) => ForceEx.wolves.addPlayer(p));
+      minSc = p.sheepCount;
+      pool = [p];
+    } else if (p.sheepCount === minSc) pool.push(p);
+    else ForceEx.wolves.addPlayer(p);
+  });
+  if (pool.length === 0) ForceEx.wolves.for((p) => (ForceEx.wolves.removePlayer(p), pool.push(p)));
+  const pid = Math.floor(Math.random() * pool.length);
+  ForceEx.sheep.addPlayer(pool.splice(pid, 1)[0]);
+  pool.forEach((p) => ForceEx.wolves.addPlayer(p));
+};
+
 const smart = () => {
-  const parts = GetEventPlayerChatString()!.split(" ");
+  udg_lastGameString = GetEventPlayerChatString() ?? "-smart";
+  const parts = udg_lastGameString.toLowerCase().split(" ");
 
   let sheepToDraft: number;
   if (udg_runSmart || parts[0] !== "-smart") {
-    udg_lastGameString = "-smart";
-    sheepToDraft = getActivePlayerCount() / 2 - 1;
+    sheepToDraft = Math.floor(getActivePlayerCount() / 2 - 1);
   } else {
-    udg_lastGameString = GetEventPlayerChatString()!;
-    if (udg_lastGameString === "-smart") {
-      sheepToDraft = getActivePlayerCount() / 2 - 1;
-    } else sheepToDraft = parseInt(parts[1]);
+    if (udg_lastGameString === "-smart") sheepToDraft = Math.floor(getActivePlayerCount() / 2 - 1);
+    else sheepToDraft = S2I(parts[1]);
   }
-  if ((sheepToDraft <= 0)) sheepToDraft = 1;
+  if (sheepToDraft <= 0) sheepToDraft = 1;
   clearForces();
   if (perfectSmartEnabled) {
     if (
@@ -288,9 +305,11 @@ const smart = () => {
     ) perfectSmart();
     else {
       perfectSmartEnabled = false;
-      Smart__traditionalSmart(sheepToDraft);
+      if (sheepToDraft === 1) smart1vX();
+      else Smart__traditionalSmart(sheepToDraft);
     }
-  } else Smart__traditionalSmart(sheepToDraft);
+  } else if (sheepToDraft === 1) smart1vX();
+  else Smart__traditionalSmart(sheepToDraft);
 
   const end = pubStart + bj_MAX_PLAYERS;
   let addToSheep = true;
@@ -376,7 +395,7 @@ let perfectSmartEnabled = true;
 
 const togglePerfect = () => {
   perfectSmartEnabled = !perfectSmartEnabled;
-  if (perfectSmartEnabled && GetEventPlayerChatString()! === "-perfect!") {
+  if (perfectSmartEnabled && GetEventPlayerChatString() === "-perfect!") {
     clearPlayerVariables();
     perfectSmartIndex = 0;
   }
@@ -398,13 +417,14 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
       if (udg_Custom !== GetTriggerPlayer() || udg_gameStarted) return false;
       const parts = GetEventPlayerChatString()!.split(" ");
       if (parts.length === 1) return true;
-      return parseInt(parts[1]) < getActivePlayerCount();
+      return S2I(parts[1]) < getActivePlayerCount();
     }),
   );
   TriggerAddAction(t, smart);
 
   t = CreateTrigger();
-  TriggerRegisterTrainCommandEventBJ(t, FourCC("h00E"));
+  TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_TRAIN_START);
+  TriggerAddCondition(t, Condition(() => GetTrainedUnitType() === FourCC("h00E")));
   TriggerAddAction(t, smart);
 
   t = CreateTrigger();

@@ -1,32 +1,6 @@
-import { president } from "../../../modes/president";
-import { withPlayerUnits, withUnitsOfType } from "../../../util/withGroup";
-
-//===========================================================================
-// Trigger: sheepDies
-//===========================================================================
-
-// let index = 0;
-// export const pos = (): [number, number] => {
-//   index++;
-//   if (index % 4 === 0) {
-//     // Left
-//     return [GetRectMinX(wispArea) - 0.0001, GetRectCenterY(wispArea)];
-//     // return [GetRectMinX(wispArea) - 0.00001, GetRectCenterY(wispArea)];
-//   }
-//   if (index % 4 === 1) {
-//     // Right
-//     return [GetRectMaxX(wispArea) + 31.999999, GetRectCenterY(wispArea)];
-//     // return [GetRectMaxX(wispArea) + 31.9999999, GetRectCenterY(wispArea)];
-//   }
-//   if (index % 4 === 2) {
-//     // Bottom
-//     return [GetRectCenterX(wispArea) - 64, GetRectMinY(wispArea) - 0.0001];
-//     // return [GetRectCenterX(wispArea) - 64, GetRectMinY(wispArea) - 0.00001];
-//   }
-//   // Top
-//   return [GetRectCenterX(wispArea) + 32, GetRectMaxY(wispArea) + 31.999999];
-//   // return [GetRectCenterX(wispArea) + 32, GetRectMaxY(wispArea) + 31.999999];
-// };
+import { terrain } from "settings/terrain";
+import { president } from "modes/president";
+import { withPlayerUnits, withUnitsOfType } from "util/withGroup";
 
 const Trig_sheepDies_Actions = () => {
   const dyingPlayer = GetOwningPlayer(GetTriggerUnit()!);
@@ -42,12 +16,7 @@ const Trig_sheepDies_Actions = () => {
   if (
     udg_wispZoom[dyingPlayerId] > 0
   ) {
-    SetCameraFieldForPlayer(
-      dyingPlayer,
-      CAMERA_FIELD_TARGET_DISTANCE,
-      udg_wispZoom[dyingPlayerId],
-      0,
-    );
+    SetCameraFieldForPlayer(dyingPlayer, CAMERA_FIELD_TARGET_DISTANCE, udg_wispZoom[dyingPlayerId], 0);
   }
 
   ForceUICancelBJ(dyingPlayer);
@@ -94,13 +63,7 @@ const Trig_sheepDies_Actions = () => {
       SelectUnitForPlayerSingle(u, dyingPlayer);
     }
   } else {
-    const u = CreateUnit(
-      dyingPlayer,
-      wispType,
-      RandomX(wispArea),
-      RandomY(wispArea),
-      270,
-    )!;
+    const u = CreateUnit(dyingPlayer, wispType, RandomX(terrain.wisp), RandomY(terrain.wisp), 270)!;
     PanCameraToTimedForPlayer(dyingPlayer, GetUnitX(u)!, GetUnitY(u)!, 0);
     SelectUnitForPlayerSingle(u, dyingPlayer);
   }
@@ -137,8 +100,6 @@ const Trig_sheepDies_Actions = () => {
   TimerStart(timers[GetPlayerId(dyingPlayer)], 5, false, null);
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_sheepDies: () => void;

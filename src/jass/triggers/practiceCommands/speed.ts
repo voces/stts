@@ -1,8 +1,7 @@
-//===========================================================================
-// Trigger: speed
-//===========================================================================
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+
 const Trig_speed_Conditions = () => {
-  if ((!(GetTriggerPlayer()! === udg_Custom))) {
+  if ((!(GetTriggerPlayer() === udg_Custom))) {
     return false;
   }
   return true;
@@ -90,38 +89,13 @@ const Trig_speed_Actions = () => {
   }
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_speed: () => void;
 }
 InitTrig_speed = () => {
   gg_trg_speed = CreateTrigger();
-  TriggerRegisterPlayerChatEvent(gg_trg_speed, Player(0)!, "-speed", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_speed, Player(1)!, "-speed", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_speed, Player(2)!, "-speed", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_speed, Player(3)!, "-speed", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_speed, Player(4)!, "-speed", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_speed, Player(5)!, "-speed", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_speed, Player(6)!, "-speed", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_speed, Player(7)!, "-speed", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_speed, Player(8)!, "-speed", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_speed, Player(9)!, "-speed", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_speed, Player(10)!, "-speed", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_speed, Player(11)!, "-speed", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_speed, Player(12)!, "-speed", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_speed, Player(13)!, "-speed", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_speed, Player(14)!, "-speed", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_speed, Player(15)!, "-speed", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_speed, Player(16)!, "-speed", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_speed, Player(17)!, "-speed", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_speed, Player(18)!, "-speed", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_speed, Player(19)!, "-speed", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_speed, Player(20)!, "-speed", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_speed, Player(21)!, "-speed", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_speed, Player(22)!, "-speed", false);
-  TriggerRegisterPlayerChatEvent(gg_trg_speed, Player(23)!, "-speed", false);
+  registerAnyPlayerChatEvent(gg_trg_speed, "-speed", false);
   TriggerAddCondition(gg_trg_speed, Condition(Trig_speed_Conditions));
   TriggerAddAction(gg_trg_speed, Trig_speed_Actions);
 };

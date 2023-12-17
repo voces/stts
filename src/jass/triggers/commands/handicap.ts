@@ -37,7 +37,7 @@ const Trig_handicap_Actions = () => {
   Split(GetEventPlayerChatString()!, " ", true);
   if (myArgCount === 1) {
     setOwnHandicap();
-  } else if (GetTriggerPlayer()! === udg_Custom) {
+  } else if (GetTriggerPlayer() === udg_Custom) {
     setOtherHandicap();
   }
 };

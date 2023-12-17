@@ -29,9 +29,7 @@ const Trig_sc_printSheepCounts = () => {
     }
     if (count === 12) {
       TriggerSleepAction(9);
-      if (GetLocalPlayer() === GetTriggerPlayer()!) {
-        ClearTextMessages();
-      }
+      if (GetLocalPlayer() === GetTriggerPlayer()!) ClearTextMessages();
     }
   }
 };

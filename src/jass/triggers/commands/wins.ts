@@ -1,6 +1,5 @@
-//===========================================================================
-// Trigger: wins
-//===========================================================================
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+
 const Trig_wins_Func003Func001Func001C = () => {
   if ((!(GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING))) {
     return false;
@@ -131,37 +130,12 @@ const Trig_wins_Actions = () => {
   DestroyForce(udg_atempplayer);
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_wins: () => void;
 }
 InitTrig_wins = () => {
   gg_trg_wins = CreateTrigger();
-  TriggerRegisterPlayerChatEvent(gg_trg_wins, Player(0)!, "-wins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_wins, Player(1)!, "-wins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_wins, Player(2)!, "-wins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_wins, Player(3)!, "-wins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_wins, Player(4)!, "-wins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_wins, Player(5)!, "-wins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_wins, Player(6)!, "-wins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_wins, Player(7)!, "-wins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_wins, Player(8)!, "-wins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_wins, Player(9)!, "-wins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_wins, Player(10)!, "-wins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_wins, Player(11)!, "-wins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_wins, Player(12)!, "-wins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_wins, Player(13)!, "-wins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_wins, Player(14)!, "-wins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_wins, Player(15)!, "-wins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_wins, Player(16)!, "-wins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_wins, Player(17)!, "-wins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_wins, Player(18)!, "-wins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_wins, Player(19)!, "-wins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_wins, Player(20)!, "-wins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_wins, Player(21)!, "-wins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_wins, Player(22)!, "-wins", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_wins, Player(23)!, "-wins", true);
+  registerAnyPlayerChatEvent(gg_trg_wins, "-wins");
   TriggerAddAction(gg_trg_wins, Trig_wins_Actions);
 };

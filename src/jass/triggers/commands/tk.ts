@@ -1,6 +1,5 @@
-//===========================================================================
-// Trigger: tk
-//===========================================================================
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+
 const Trig_tk_Func003Func001Func001C = () => {
   if ((!(GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING))) {
     return false;
@@ -131,37 +130,12 @@ const Trig_tk_Actions = () => {
   DestroyForce(udg_atempplayer);
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_tk: () => void;
 }
 InitTrig_tk = () => {
   gg_trg_tk = CreateTrigger();
-  TriggerRegisterPlayerChatEvent(gg_trg_tk, Player(0)!, "-tk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_tk, Player(1)!, "-tk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_tk, Player(2)!, "-tk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_tk, Player(3)!, "-tk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_tk, Player(4)!, "-tk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_tk, Player(5)!, "-tk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_tk, Player(6)!, "-tk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_tk, Player(7)!, "-tk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_tk, Player(8)!, "-tk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_tk, Player(9)!, "-tk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_tk, Player(10)!, "-tk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_tk, Player(11)!, "-tk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_tk, Player(12)!, "-tk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_tk, Player(13)!, "-tk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_tk, Player(14)!, "-tk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_tk, Player(15)!, "-tk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_tk, Player(16)!, "-tk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_tk, Player(17)!, "-tk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_tk, Player(18)!, "-tk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_tk, Player(19)!, "-tk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_tk, Player(20)!, "-tk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_tk, Player(21)!, "-tk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_tk, Player(22)!, "-tk", true);
-  TriggerRegisterPlayerChatEvent(gg_trg_tk, Player(23)!, "-tk", true);
+  registerAnyPlayerChatEvent(gg_trg_tk, "-tk");
   TriggerAddAction(gg_trg_tk, Trig_tk_Actions);
 };

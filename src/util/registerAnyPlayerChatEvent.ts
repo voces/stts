@@ -1,5 +1,5 @@
 import { Trigger } from "w3ts";
-import { MapPlayerEx } from "../handles/MapPlayerEx";
+import { MapPlayerEx } from "handles/MapPlayerEx";
 
 export const registerAnyPlayerChatEvent = (
   trigger: Trigger | trigger,
@@ -15,6 +15,6 @@ export const registerAnyPlayerChatEvent = (
     );
   }
   if (!exactMatchOnly) {
-    t.addCondition(() => GetEventPlayerChatString()!.startsWith(chatMessageToDetect));
+    t.addCondition(() => GetEventPlayerChatString()!.toLowerCase().startsWith(chatMessageToDetect));
   }
 };

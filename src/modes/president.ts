@@ -1,6 +1,6 @@
 import { addScriptHook, Trigger, W3TS_HOOK } from "w3ts";
-import { registerAnyPlayerChatEvent } from "../util/registerAnyPlayerChatEvent";
-import { MapPlayerEx } from "../handles/MapPlayerEx";
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+import { MapPlayerEx } from "handles/MapPlayerEx";
 
 export const president = {
   enabled: false,
@@ -30,9 +30,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
         handicap = handicap > 23 ? handicap / 100 : handicap;
         president.handicap = handicap >= 0.23 ? handicap : 1;
       } else president.handicap = 0.75;
-    } else {
-      for (let i = 0; i < bj_MAX_PLAYERS; i++) SetPlayerHandicap(Player(i)!, 1);
-    }
+    } else for (let i = 0; i < bj_MAX_PLAYERS; i++) SetPlayerHandicap(Player(i)!, 1);
 
     DisplayTimedTextToForce(
       GetPlayersAll()!,

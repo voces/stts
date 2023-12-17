@@ -1,8 +1,7 @@
-//===========================================================================
-// Trigger: continue
-//===========================================================================
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+
 const Trig_continue_Conditions = () => {
-  if ((!(GetTriggerPlayer()! === udg_Custom))) {
+  if ((!(GetTriggerPlayer() === udg_Custom))) {
     return false;
   }
   if ((!(udg_versus > 0))) {
@@ -60,158 +59,13 @@ const Trig_continue_Actions = () => {
   TriggerExecute(gg_trg_versusCountDown);
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_continue: () => void;
 }
 InitTrig_continue = () => {
   gg_trg_continue = CreateTrigger();
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_continue,
-    Player(0)!,
-    "-continue",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_continue,
-    Player(1)!,
-    "-continue",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_continue,
-    Player(2)!,
-    "-continue",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_continue,
-    Player(3)!,
-    "-continue",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_continue,
-    Player(4)!,
-    "-continue",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_continue,
-    Player(5)!,
-    "-continue",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_continue,
-    Player(6)!,
-    "-continue",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_continue,
-    Player(7)!,
-    "-continue",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_continue,
-    Player(8)!,
-    "-continue",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_continue,
-    Player(9)!,
-    "-continue",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_continue,
-    Player(10)!,
-    "-continue",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_continue,
-    Player(11)!,
-    "-continue",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_continue,
-    Player(12)!,
-    "-continue",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_continue,
-    Player(13)!,
-    "-continue",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_continue,
-    Player(14)!,
-    "-continue",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_continue,
-    Player(15)!,
-    "-continue",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_continue,
-    Player(16)!,
-    "-continue",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_continue,
-    Player(17)!,
-    "-continue",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_continue,
-    Player(18)!,
-    "-continue",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_continue,
-    Player(19)!,
-    "-continue",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_continue,
-    Player(20)!,
-    "-continue",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_continue,
-    Player(21)!,
-    "-continue",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_continue,
-    Player(22)!,
-    "-continue",
-    true,
-  );
-  TriggerRegisterPlayerChatEvent(
-    gg_trg_continue,
-    Player(23)!,
-    "-continue",
-    true,
-  );
+  registerAnyPlayerChatEvent(gg_trg_continue, "-continue");
   TriggerAddCondition(gg_trg_continue, Condition(Trig_continue_Conditions));
   TriggerAddAction(gg_trg_continue, Trig_continue_Actions);
 };
