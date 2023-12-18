@@ -1,3 +1,10 @@
+# 23a
+
+## Bug fixes
+
+- Fixed the map
+- Fixed gold income on sheep death
+
 # 23
 
 ## Feature changes
@@ -10,12 +17,11 @@
   - Translocation Farm generates 1 mana per second
 - Gold bounty text is now collated
 - Wolves have increased movement speed at spawn during switch; effect disappears when near a sheep
-  - Can now return players with -fafk
-- Added wisp to -practice (so Bulldog22 can practice)
+- Can now return players with -fafk
+- Added wisp to -practice (so Bulldog can practice)
 - Nudged wolf and rune spawn points to be more symmetric
 - -start X, -restart X, and -reverse X adjust sheep based off SC
 - Removed -random
-- Perfect smart automatically disables if it results in unbalanced SC
 - Smart prevents repeated sheep rounds in 1vX
 - Modified Sheep model to accept team color instead of setting vertex colors
 
@@ -29,11 +35,11 @@
 
 - Fixed hotkeys in grid mode
 - Added extended text for Kaleidoscope
-- Perfect smart will avoid unbalanced SC
+- Perfect smart automatically disables if it results in unbalanced SC
 - Players returning for -afk have their SC set to the highest SC, excluding pubs
 - Pubs correctly cycle
 - Updated Quests with missing commands
-- Disabled creep camps showing up on minimap
+- Disabled creep camps (Snowman) showing up on minimap
 
 ## Source changes
 

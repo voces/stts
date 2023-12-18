@@ -30,6 +30,7 @@ export class MapPlayerEx extends MapPlayer {
   }
 
   set gold(value: number) {
+    value = Math.floor(value);
     const prev = GetPlayerState(this.handle, PLAYER_STATE_RESOURCE_GOLD);
     if (prev < value) SetPlayerState(this.handle, PLAYER_STATE_GOLD_GATHERED, value);
     SetPlayerState(this.handle, PLAYER_STATE_RESOURCE_GOLD, value);

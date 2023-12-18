@@ -28,14 +28,14 @@ const Trig_sheepDies_Actions = () => {
   const sheepCount = CountPlayersInForceBJ(udg_Sheep) +
     CountPlayersInForceBJ(udg_Spirit);
   // double division because this baked logic was broken; in 2v4, all wolves get 6 gold
-  const teamIncome = 100 / wolfCount / wolfCount;
+  const teamIncome = Math.floor(100 / wolfCount / wolfCount);
   const killerIncome = teamIncome + 10 * sheepCount;
 
   withUnitsOfType(shepType, (g) =>
     g.forEach((u) => {
       const p = u.owner.handle;
       const income = p === killingPlayer ? killerIncome : teamIncome;
-      AdjustPlayerStateBJ(income, p!, PLAYER_STATE_RESOURCE_GOLD);
+      if (!u.isIllusion()) AdjustPlayerStateBJ(income, p!, PLAYER_STATE_RESOURCE_GOLD);
       GoldText(income, u.handle);
     }));
 

@@ -30,8 +30,10 @@ const Trig_playerLeft_Func005C = () => {
 
 const Trig_playerLeft_Func008Func001Func001A = () => {
   AdjustPlayerStateBJ(
-    GetPlayerState(ConvertedPlayer(udg_atempint)!, PLAYER_STATE_RESOURCE_GOLD) /
-      (CountPlayersInForceBJ(udg_Wolf) - 1),
+    Math.floor(
+      GetPlayerState(ConvertedPlayer(udg_atempint)!, PLAYER_STATE_RESOURCE_GOLD) /
+        (CountPlayersInForceBJ(udg_Wolf) - 1),
+    ),
     GetEnumPlayer()!,
     PLAYER_STATE_RESOURCE_GOLD,
   );
@@ -46,9 +48,11 @@ const Trig_playerLeft_Func008Func001Func002001001 = () => {
 
 const Trig_playerLeft_Func008Func001Func002A = () => {
   AdjustPlayerStateBJ(
-    GetPlayerState(ConvertedPlayer(udg_atempint)!, PLAYER_STATE_RESOURCE_GOLD) /
-      ((CountPlayersInForceBJ(udg_Sheep) + CountPlayersInForceBJ(udg_Spirit)) -
-        1),
+    Math.floor(
+      GetPlayerState(ConvertedPlayer(udg_atempint)!, PLAYER_STATE_RESOURCE_GOLD) /
+        ((CountPlayersInForceBJ(udg_Sheep) + CountPlayersInForceBJ(udg_Spirit)) -
+          1),
+    ),
     GetEnumPlayer()!,
     PLAYER_STATE_RESOURCE_GOLD,
   );

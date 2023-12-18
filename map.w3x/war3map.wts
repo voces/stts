@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 23
+Sheep Tag ReVoLuTiOn 23a
 }
 
 STRING 40
@@ -3867,26 +3867,6 @@ STRING 3920
 Light
 }
 
-STRING 3929
-{
-|cff00ff00Sheep Tag ReVoLuTiOn 23|r
-}
-
-STRING 3930
-{
-|cff00ff0023|r
-}
-
-STRING 3931
-{
-|cff00ff0023|r
-}
-
-STRING 3932
-{
-|cff00ff0023|r
-}
-
 STRING 3933
 // Units: h00J (Dummy), Name (Name)
 {
@@ -3963,5 +3943,25 @@ STRING 3952
 // Abilities: A01Z (Inventory), EditorSuffix (Editor Suffix)
 {
 (Sheep)
+}
+
+STRING 3953
+{
+|cff00ff00Sheep Tag ReVoLuTiOn 23a|r
+}
+
+STRING 3954
+{
+|cff00ff0023a|r
+}
+
+STRING 3955
+{
+|cff00ff0023a|r
+}
+
+STRING 3956
+{
+|cff00ff0023a|r
 }
 
