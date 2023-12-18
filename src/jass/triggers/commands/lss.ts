@@ -112,7 +112,7 @@ const Trig_lss_Actions = () => {
     bj_forLoopAIndexEnd = 24;
     while (true) {
       if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-      if ((Trig_lss_Func003Func006Func001C())) {
+      if (Trig_lss_Func003Func006Func001C()) {
         DisplayTimedTextToForce(
           udg_atempplayer,
           15,

@@ -1,5 +1,3 @@
-import { sleep } from "w3ts";
-
 export const inflateGoldCount = (p: player): void => {
   let max = goldCount[0];
   for (let i = 1; i < bj_MAX_PLAYERS; i++) {
@@ -8,7 +6,7 @@ export const inflateGoldCount = (p: player): void => {
   goldCount[GetPlayerId(p)] = max;
 };
 
-const Trig_g_showGoldCounts = async () => {
+const Trig_g_showGoldCounts = () => {
   let i = 0;
   let count = 0;
   const p = GetTriggerPlayer()!;
@@ -41,7 +39,7 @@ const Trig_g_showGoldCounts = async () => {
       i = i + 1;
     }
     if (count === 12) {
-      await sleep(9);
+      TriggerSleepAction(9);
       if (GetLocalPlayer() === p) ClearTextMessages();
     }
   }

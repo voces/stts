@@ -1,43 +1,57 @@
+import { defineEvent, defineNumberValue, defineStringValue, setPlayerFlag } from "w3ts-w3mmd";
+
 import { MapPlayerEx } from "handles/MapPlayerEx";
+
+export const logRound = defineEvent("round", "{0} vs {1}: lasted {2}", "sheep", "wolves", "time");
+export const logMassingTest = defineEvent("massingTest", "{0}", "time");
+const logEnd = defineEvent("end", "The game was ended");
+
+const logTimes = defineNumberValue("Times", "high", "leaderboard", "real");
+const logFarmsBuilt = defineNumberValue("Farms Built", "high", "track", "int");
+const logAverageFarmCountBeforeWolves = defineNumberValue("Average Farm Count Before Wolves", "high", "track", "real");
+const logSaves = defineNumberValue("Saves", "high", "track", "int");
+const logKills = defineNumberValue("Kills", "high", "track", "int");
+const logWins = defineNumberValue("Wins", "high", "track", "int");
+const logVersusWins = defineNumberValue("Versus Wins", "high", "track", "int");
+const logLastSheepStanding = defineNumberValue("Last Sheep Standing", "high", "track", "int");
+const logFirstBloodDeaths = defineNumberValue("First Blood Deaths", "high", "track", "int");
+const logFirstBloodKills = defineNumberValue("First Blood Kills", "high", "track", "int");
+const logWolfGoldGiven = defineNumberValue("Wolf Gold Given", "high", "track", "int");
+const logSheepGoldGiven = defineNumberValue("Sheep Gold Given", "high", "track", "int");
+const logSpiritGoldGiven = defineNumberValue("Spirit Gold Given", "high", "track", "int");
+const logQuickestDeath = defineNumberValue("Quickest Death", "high", "track", "real");
+const logSheepTimes = defineNumberValue("Sheep Times", "high", "track", "real");
+const logRoundTimes = defineStringValue("Round Times", "none");
+const logSheepSurvived = defineStringValue("Sheep Survived", "none");
 
 const Trig_UpdateStats_forEnumPlayer = () => {
   const p = MapPlayerEx.fromEnum()!;
   if (p.controller !== MAP_CONTROL_USER) return;
 
-  MMD_FlagPlayer(p.handle, MMD_FLAG_DRAWER);
-
-  const setValue = (
-    name: string,
-    value: string | number,
-    type: typeof MMD_TYPE_INT | typeof MMD_TYPE_REAL = MMD_TYPE_INT,
-  ) => {
-    const v = typeof value === "string" ? value : type === MMD_TYPE_INT ? I2S(value)! : R2S(value)!;
-    MMD__update_value(name, p.handle, MMD__ops[MMD_OP_SET], v, type);
-  };
-
-  setValue("Farms Built", udg_totalFarmsBuilt[p.cid]);
+  setPlayerFlag(p.handle, "drawer");
+  logFarmsBuilt(p.handle, udg_totalFarmsBuilt[p.cid]);
   udg_averageFarmCountBeforeWolves[p.cid] = I2R(udg_totalFarmCountBeforeWolves[p.cid]) / I2R(udg_sheepCount[p.cid]);
-  setValue("Average Farm Count Before Wolves", udg_averageFarmCountBeforeWolves[p.cid], MMD_TYPE_REAL);
-  setValue("Saves", udg_totalSaves[p.cid]);
-  setValue("Kills", udg_totalKills[p.cid]);
-  setValue("Wins", udg_wins[p.cid]);
-  setValue("Versus Wins", udg_vwins[p.cid]);
-  setValue("Last Sheep Standing", udg_lssCounter[p.cid]);
-  setValue("First Blood Deaths", udg_firstbloodDeathCounter[p.cid]);
-  setValue("First Blood Kills", udg_firstbloodKillCounter[p.cid]);
-  setValue("Wolf Gold Given", wolfGoldGiven[p.id]);
-  setValue("Sheep Gold Given", sheepGoldGiven[p.id]);
-  setValue("Spirit Gold Given", spiritGoldGiven[p.id]);
-  setValue("Sheep Times", TimerGetElapsed(udg_sheepTimer[p.cid]), MMD_TYPE_REAL);
-  setValue("Times", s___times_pTime[s__times_pTime[playerTimes[p.id]] + p.id], MMD_TYPE_REAL);
-  MMD_UpdateValueString("Round Times", p.handle, udg_roundTimes[p.cid]);
-  MMD_UpdateValueString("Sheep Survived", p.handle, udg_sheepSurvived[p.cid]);
-  if (udg_QDeathTime[p.cid] < 9999) setValue("Quickest Death", udg_QDeathTime[p.cid], MMD_TYPE_REAL);
+  logAverageFarmCountBeforeWolves(p.handle, udg_averageFarmCountBeforeWolves[p.cid]);
+  logSaves(p.handle, udg_totalSaves[p.cid]);
+  logKills(p.handle, udg_totalKills[p.cid]);
+  logWins(p.handle, udg_wins[p.cid]);
+  logVersusWins(p.handle, udg_vwins[p.cid]);
+  logLastSheepStanding(p.handle, udg_lssCounter[p.cid]);
+  logFirstBloodDeaths(p.handle, udg_firstbloodDeathCounter[p.cid]);
+  logFirstBloodKills(p.handle, udg_firstbloodKillCounter[p.cid]);
+  logWolfGoldGiven(p.handle, wolfGoldGiven[p.id]);
+  logSheepGoldGiven(p.handle, sheepGoldGiven[p.id]);
+  logSpiritGoldGiven(p.handle, spiritGoldGiven[p.id]);
+  logSheepTimes(p.handle, TimerGetElapsed(udg_sheepTimer[p.cid]));
+  logTimes(p.handle, s___times_pTime[s__times_pTime[playerTimes[p.id]] + p.id]);
+  logRoundTimes(p.handle, udg_roundTimes[p.cid]);
+  logSheepSurvived(p.handle, udg_sheepSurvived[p.cid]);
+  if (udg_QDeathTime[p.cid] < 9999) logQuickestDeath(p.handle, udg_QDeathTime[p.cid]);
 };
 
 const Trig_UpdateStats_Actions = () => {
   ForForce(GetPlayersAll()!, Trig_UpdateStats_forEnumPlayer);
-  MMD__LogEvent("end", 0, "");
+  logEnd();
   TriggerSleepAction(0.3);
   DisplayTimedTextToForce(
     GetPlayersAll()!,

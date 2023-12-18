@@ -1,24 +1,26 @@
-const oldTriggerAddAction = TriggerAddAction;
-// @ts-expect-error Replacing with logging variant
-TriggerAddAction = (whichTrigger: trigger, action: () => void): triggeraction => {
-  return oldTriggerAddAction(whichTrigger, () => {
-    try {
-      action();
-    } catch (err) {
-      print(err);
-      throw err;
-    }
-  });
+const addErrorLogging = (native: keyof typeof globalThis) => {
+  const old = globalThis[native as unknown as keyof typeof globalThis] as unknown as (...args: unknown[]) => void;
+  // @ts-expect-error Replacing with logging variant
+  globalThis[native] = (...args: unknown[]) =>
+    old(...args.map((a) =>
+      typeof a === "function"
+        ? (...args2: unknown[]) => {
+          try {
+            return a(...args2);
+          } catch (err) {
+            BJDebugMsg(`${err}`);
+            throw err;
+          }
+        }
+        : a
+    ));
 };
 
-const oldCondition = Condition;
-// @ts-expect-error Replacing with logging variant
-Condition = (func: () => void) =>
-  oldCondition(() => {
-    try {
-      return func();
-    } catch (err) {
-      print(err);
-      throw err;
-    }
-  });
+addErrorLogging("TriggerAddAction");
+addErrorLogging("Condition");
+addErrorLogging("TimerStart");
+addErrorLogging("ForForce");
+addErrorLogging("ForGroup");
+addErrorLogging("EnumDestructablesInRect");
+addErrorLogging("EnumItemsInRect");
+addErrorLogging("Filter");

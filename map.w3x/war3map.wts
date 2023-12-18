@@ -1134,12 +1134,6 @@ STRING 2188
 scythe
 }
 
-STRING 2193
-// Abilities: A00Y (True Sight Sentry), Name (Name)
-{
-True Sight Sentry
-}
-
 STRING 2245
 // Abilities: A00P (Buy Strength), Name (Name)
 {
@@ -1438,12 +1432,6 @@ STRING 2487
 // Items: I00P (Rune of Speed), Name (Name)
 {
 Rune of Speed
-}
-
-STRING 2488
-// Abilities: A01B (True Sight Sheep), Name (Name)
-{
-True Sight Sheep
 }
 
 STRING 2498
@@ -2758,7 +2746,7 @@ Increases attack speed by 25% and movement speed by 3% for this unit for 45 seco
 }
 
 STRING 3531
-// Abilities: A01Z (Inventory), EditorSuffix (Editor Suffix)
+// Abilities: A01B (True Sight), EditorSuffix (Editor Suffix)
 {
 (Sheep)
 }
@@ -3963,5 +3951,17 @@ STRING 3950
 // Buffs/Effects: B00J (), Buffubertip (Tooltip - Extended)
 {
 Your sheep just died. Your wolf has increased speed to find prey.
+}
+
+STRING 3951
+// Abilities: A00Y (True Sight), EditorSuffix (Editor Suffix)
+{
+(Sentry)
+}
+
+STRING 3952
+// Abilities: A01Z (Inventory), EditorSuffix (Editor Suffix)
+{
+(Sheep)
 }
 

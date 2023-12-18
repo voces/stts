@@ -1,6 +1,5 @@
-//===========================================================================
-// Trigger: sc
-//===========================================================================
+export {};
+
 const Trig_sc_printSheepCounts = () => {
   let i = 0;
   let count = 0;
@@ -56,15 +55,9 @@ const Trig_sc_Actions = () => {
 
   Split(str, " ", false);
 
-  if (
-    myArg[0] === "-sc" && myArgCount === 3 && udg_Custom === GetTriggerPlayer()!
-  ) {
-    Trig_sc_setSheepCount();
-  }
+  if (myArg[0] === "-sc" && myArgCount === 3 && udg_Custom === GetTriggerPlayer()!) Trig_sc_setSheepCount();
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_sc: () => void;

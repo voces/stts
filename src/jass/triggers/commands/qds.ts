@@ -1,6 +1,5 @@
-//===========================================================================
-// Trigger: qds
-//===========================================================================
+export {};
+
 const Trig_qds_Actions_time = (playerId: number): string => {
   if (udg_QDeathTime[playerId + 1] > 9000) {
     return "N/A";
@@ -41,8 +40,6 @@ const Trig_qds_Actions = () => {
   }
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_qds: () => void;

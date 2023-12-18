@@ -11,7 +11,6 @@
 import { terrain } from "settings/terrain";
 import { inflateGoldCount } from "../commands/g";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
-import { sleep } from "w3ts";
 
 const captainsAndAfk = () => {
   if ((!(udg_Teams === TEAMS_CAPTAINS))) {
@@ -765,7 +764,7 @@ const captainsAndDraftEmpty = () => {
   return true;
 };
 
-const Trig_AFK_Actions = async () => {
+const Trig_AFK_Actions = () => {
   if (rotated === GetTriggerPlayer()!) return;
   udg_atempint = GetConvertedPlayerId(GetTriggerPlayer()!);
   if (udg_AFK[udg_atempint] < AFK_AFK) { // Not AFK
@@ -1049,7 +1048,7 @@ const Trig_AFK_Actions = async () => {
     enforceTeamResourceMultiboard();
     MultiboardMinimizeBJ(true, udg_captainsMultiboard);
     DestroyMultiboardBJ(udg_captainsMultiboard);
-    await sleep(0.01);
+    TriggerSleepAction(0.01);
     DisableTrigger(gg_trg_giveUpCaptain);
     DisableTrigger(gg_trg_draftPlayer);
     TriggerExecute(gg_trg_createSheep);

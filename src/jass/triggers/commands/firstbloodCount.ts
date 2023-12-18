@@ -1,5 +1,4 @@
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
-import { sleep } from "w3ts";
 
 const Trig_firstbloodCount_Func003Func001Func001C = () => {
   if ((!(GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING))) {
@@ -80,7 +79,7 @@ const Trig_firstbloodCount_Func003C = () => {
   return true;
 };
 
-const Trig_firstbloodCount_Actions = async () => {
+const Trig_firstbloodCount_Actions = () => {
   udg_atempplayer = GetForceOfPlayer(GetTriggerPlayer()!)!;
   DisplayTimedTextToForce(
     udg_atempplayer,
@@ -107,7 +106,7 @@ const Trig_firstbloodCount_Actions = async () => {
       }
       bj_forLoopAIndex = bj_forLoopAIndex + 1;
     }
-    await sleep(9);
+    TriggerSleepAction(9);
     ClearTextMessagesBJ(udg_atempplayer);
     DisplayTimedTextToForce(
       udg_atempplayer,

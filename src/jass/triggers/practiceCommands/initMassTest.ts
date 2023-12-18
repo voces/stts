@@ -1,5 +1,6 @@
 import { terrain } from "settings/terrain";
 import { removeEnumUnit } from "util/removeEnumUnit";
+import { logMassingTest } from "../hostCommands/UpdateStats";
 
 const Trig_initMassTest_Func005002002 = () => {
   return GetBooleanOr(
@@ -54,7 +55,7 @@ const Trig_initMassTest_Actions = () => {
   DisableTrigger(gg_trg_mass);
   DisableTrigger(gg_trg_redo);
   ClearTextMessages();
-  MMD__LogEvent("massingTest", 1, " " + MMD__pack((R2S(udg_massTime))!));
+  logMassingTest(R2S(udg_massTime)!);
   udg_atempgroup = GetUnitsInRectMatching(
     GetPlayableMapRect()!,
     Condition(Trig_initMassTest_Func005002002),

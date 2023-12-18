@@ -68,102 +68,6 @@ const Trig_initialization_forAllPlayersTwo = () => {
   }
 };
 
-const initW3mmd = () => {
-  DestroyTimer(GetExpiredTimer()!);
-
-  MMD_DefineValue("Times", MMD_TYPE_REAL, MMD_GOAL_NONE, MMD_SUGGEST_TRACK);
-  MMD_DefineValue(
-    "Farms Built",
-    MMD_TYPE_INT,
-    MMD_GOAL_NONE,
-    MMD_SUGGEST_TRACK,
-  );
-  MMD_DefineValue(
-    "Average Farm Count Before Wolves",
-    MMD_TYPE_REAL,
-    MMD_GOAL_NONE,
-    MMD_SUGGEST_TRACK,
-  );
-  MMD_DefineValue("Saves", MMD_TYPE_INT, MMD_GOAL_NONE, MMD_SUGGEST_TRACK);
-  MMD_DefineValue("Kills", MMD_TYPE_INT, MMD_GOAL_NONE, MMD_SUGGEST_TRACK);
-  MMD_DefineValue("Wins", MMD_TYPE_INT, MMD_GOAL_NONE, MMD_SUGGEST_TRACK);
-  MMD_DefineValue(
-    "Versus Wins",
-    MMD_TYPE_INT,
-    MMD_GOAL_NONE,
-    MMD_SUGGEST_TRACK,
-  );
-  MMD_DefineValue(
-    "Last Sheep Standing",
-    MMD_TYPE_INT,
-    MMD_GOAL_NONE,
-    MMD_SUGGEST_TRACK,
-  );
-  MMD_DefineValue(
-    "First Blood Deaths",
-    MMD_TYPE_INT,
-    MMD_GOAL_NONE,
-    MMD_SUGGEST_TRACK,
-  );
-  MMD_DefineValue(
-    "First Blood Kills",
-    MMD_TYPE_INT,
-    MMD_GOAL_NONE,
-    MMD_SUGGEST_TRACK,
-  );
-  MMD_DefineValue(
-    "Sheep Times",
-    MMD_TYPE_REAL,
-    MMD_GOAL_NONE,
-    MMD_SUGGEST_TRACK,
-  );
-  MMD_DefineValue(
-    "Round Times",
-    MMD_TYPE_STRING,
-    MMD_GOAL_NONE,
-    MMD_SUGGEST_TRACK,
-  );
-  MMD_DefineValue(
-    "Sheep Survived",
-    MMD_TYPE_STRING,
-    MMD_GOAL_NONE,
-    MMD_SUGGEST_TRACK,
-  );
-  MMD_DefineValue(
-    "Quickest Death",
-    MMD_TYPE_REAL,
-    MMD_GOAL_NONE,
-    MMD_SUGGEST_TRACK,
-  );
-  MMD_DefineValue(
-    "Wolf Gold Given",
-    MMD_TYPE_INT,
-    MMD_GOAL_NONE,
-    MMD_SUGGEST_TRACK,
-  );
-  MMD_DefineValue(
-    "Sheep Gold Given",
-    MMD_TYPE_INT,
-    MMD_GOAL_NONE,
-    MMD_SUGGEST_TRACK,
-  );
-  MMD_DefineValue(
-    "Spirit Gold Given",
-    MMD_TYPE_INT,
-    MMD_GOAL_NONE,
-    MMD_SUGGEST_TRACK,
-  );
-  MMD__DefineEvent("massingTest", 1, "{0}", MMD__pack("time") + " ");
-  MMD_DefineEvent3(
-    "round",
-    "{0} vs {1}: lasted {2}",
-    "sheep",
-    "wolves",
-    "time",
-  );
-  MMD__DefineEvent("end", 0, "The game was ended", "");
-};
-
 const Trig_initialization_Actions = () => {
   let i: number;
   SetCreepCampFilterState(false);
@@ -356,8 +260,6 @@ const Trig_initialization_Actions = () => {
 
   TriggerSleepAction(0.01);
   ForForce(GetPlayersAll()!, Trig_initialization_forAllPlayersTwo);
-
-  TimerStart(CreateTimer(), 0.25, false, initW3mmd);
 
   for (let i = 1; i <= 24; i++) colors[i] = s__colorsStruct__allocate();
   s__colorsStruct_color1[colors[1]] = 255;
