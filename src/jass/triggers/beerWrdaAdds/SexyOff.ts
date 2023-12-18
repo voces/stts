@@ -1,6 +1,5 @@
-//===========================================================================
-// Trigger: SexyOff
-//===========================================================================
+import { displayTimedTextToAll } from "util/displayTimedTextToAll";
+
 const Trig_SexyOff_Conditions = () => {
   if ((!(GetTriggerPlayer() === udg_Custom))) {
     return false;
@@ -82,15 +81,9 @@ const Trig_SexyOff_Actions = () => {
   udg_SheepColorG[24] = 26.67;
   udg_SheepColorB[24] = 20.04;
   DisableTrigger(gg_trg_Sheep_Color);
-  DisplayTimedTextToForce(
-    GetPlayersAll()!,
-    5,
-    "                              |CFFFFCC00Sexy Disabled|r",
-  );
+  displayTimedTextToAll("                              |CFFFFCC00Sexy Disabled|r", 5);
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_SexyOff: () => void;

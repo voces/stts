@@ -1,6 +1,6 @@
-//===========================================================================
-// Trigger: Last Sheep Standing
-//===========================================================================
+import { MapPlayerEx } from "handles/MapPlayerEx";
+import { displayTimedTextToAll } from "util/displayTimedTextToAll";
+
 const Trig_Last_Sheep_Standing_Conditions = () => {
   if ((!(GetUnitTypeId(GetDyingUnit()!) === sheepType))) {
     return false;
@@ -27,13 +27,8 @@ const Trig_Last_Sheep_Standing_Func001Func002C = () => {
 const Trig_Last_Sheep_Standing_Func001A = () => {
   udg_lssCounter[GetConvertedPlayerId(GetEnumPlayer()!)] = udg_lssCounter[GetConvertedPlayerId(GetEnumPlayer()!)] + 1;
   if ((Trig_Last_Sheep_Standing_Func001Func002C())) {
-    DisplayTimedTextToForce(
-      GetPlayersAll()!,
-      5,
-      ("                              " +
-        udg_colorString[GetConvertedPlayerId(GetEnumPlayer()!)]) +
-        ("It really is " + (GetPlayerName(GetEnumPlayer()!) + "!")),
-    );
+    const p = MapPlayerEx.fromEnum();
+    displayTimedTextToAll(`                              ${p?.hex}It really is ${p?.name}!`, 5);
   }
 };
 
@@ -41,8 +36,6 @@ const Trig_Last_Sheep_Standing_Actions = () => {
   ForForce(udg_Sheep, Trig_Last_Sheep_Standing_Func001A);
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_Last_Sheep_Standing: () => void;

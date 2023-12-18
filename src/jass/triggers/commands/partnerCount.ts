@@ -8,13 +8,8 @@ const Trig_partnerCount_Actions = () => {
 
   if (pid < 0 || pid > 23) return;
 
-  DisplayTimedTextToPlayer(
-    GetTriggerPlayer()!,
-    0,
-    0,
-    10,
-    `                              ${MapPlayerEx.fromIndex(pid)!.coloredName}|r|CFFFFCC00's Partner Count|r`,
-  );
+  const p = MapPlayerEx.fromIndex(pid)!;
+  p.displayTimedText(`                              ${MapPlayerEx.fromIndex(pid)}|CFFFFCC00's Partner Count|r`, 10);
 
   let i = 0;
   let count = 0;
@@ -25,14 +20,10 @@ const Trig_partnerCount_Actions = () => {
         GetPlayerSlotState(Player(i)!) === PLAYER_SLOT_STATE_PLAYING &&
         udg_AFK[i + 1] === AFK_PLAYING && i !== pid
       ) {
-        DisplayTimedTextToPlayer(
-          GetTriggerPlayer()!,
-          0,
-          0,
+        const p2 = MapPlayerEx.fromIndex(i)!;
+        p.displayTimedText(
+          `                              ${p2.hex}${p2.name} : ${I2S(udg_accumPartner[pid * 24 + i + 1])}`,
           10,
-          "                              " + udg_colorString[i + 1] +
-            GetPlayerName(Player(i)!) + " : " +
-            I2S(udg_accumPartner[pid * 24 + i + 1]),
         );
         count++;
       }

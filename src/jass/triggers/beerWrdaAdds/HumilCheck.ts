@@ -1,6 +1,6 @@
-//===========================================================================
-// Trigger: Humil Check
-//===========================================================================
+import { UnitEx } from "handles/UnitEx";
+import { displayTimedTextToAll } from "util/displayTimedTextToAll";
+
 const Trig_Humil_Check_Conditions = () => {
   if ((!(GetUnitTypeId(GetDyingUnit()!) === sheepType))) {
     return false;
@@ -19,22 +19,13 @@ const Trig_Humil_Check_Conditions = () => {
 };
 
 const Trig_Humil_Check_Actions = () => {
-  DisplayTimedTextToForce(
-    GetPlayersAll()!,
+  displayTimedTextToAll(
+    `                              ${UnitEx.fromDying()?.owner} got humiliated by ${UnitEx.fromKilling()?.owner}`,
     5,
-    ("                              " +
-      udg_colorString[GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit()!))]) +
-      (GetPlayerName(GetOwningPlayer(GetDyingUnit()!)) +
-        ("|r  got humiliated by " +
-          (udg_colorString[
-            GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
-          ] + GetPlayerName(GetOwningPlayer(GetKillingUnit()!))))),
   );
   PlaySoundBJ(gg_snd_humiliation);
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_Humil_Check: () => void;

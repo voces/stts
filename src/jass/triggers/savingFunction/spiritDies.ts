@@ -13,31 +13,18 @@ const Trig_spiritDies_Actions = () => {
   const killingPlayerId = GetConvertedPlayerId(killingPlayer);
 
   if (udg_practiceOn) {
-    CreateUnit(
-      dyingPlayer,
-      wispType,
-      RandomX(terrain.wisp),
-      RandomY(terrain.wisp),
-      270,
-    );
+    CreateUnit(dyingPlayer, wispType, RandomX(terrain.wisp), RandomY(terrain.wisp), 270);
     return;
   }
 
   ResumeTimer(udg_sheepTimer[dyingPlayerId]);
 
   if (udg_sheepZoom[dyingPlayerId] > 0) {
-    SetCameraFieldForPlayer(
-      dyingPlayer,
-      CAMERA_FIELD_TARGET_DISTANCE,
-      udg_sheepZoom[dyingPlayerId],
-      0,
-    );
+    SetCameraFieldForPlayer(dyingPlayer, CAMERA_FIELD_TARGET_DISTANCE, udg_sheepZoom[dyingPlayerId], 0);
   }
 
   const { x, y } = (() => {
-    if (president.enabled) {
-      return { x: GetUnitX(dyingUnit), y: GetUnitY(dyingUnit) };
-    }
+    if (president.enabled) return { x: GetUnitX(dyingUnit), y: GetUnitY(dyingUnit) };
 
     const spawnIndex = GetRandomInt(1, 24);
     return {

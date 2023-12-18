@@ -148,6 +148,8 @@ import { removeEnumUnit } from "util/removeEnumUnit";
 import { updateLeaderboardSettingsDisplay } from "settings/time";
 import { terrain } from "settings/terrain";
 import { logRound } from "./triggers/hostCommands/UpdateStats";
+import { displayTimedTextToAll } from "util/displayTimedTextToAll";
+import { MapPlayerEx } from "handles/MapPlayerEx";
 
 declare global {
   //globals from Critter:
@@ -936,13 +938,13 @@ udg_antiStackEffect = [];
 udg_lssCounter = [];
 udg_wins = [];
 udg_qDeath = 0;
-udg_QDeathTime = [];
+udg_QDeathTime = Array.from({ length: bj_MAX_PLAYERS }, () => 0);
 udg_PlayerName = [];
 udg_IntLoop = 0;
 udg_IntCloakCount = 0;
 udg_unit2 = [];
-udg_totalSaves = [];
-udg_totalKills = [];
+udg_totalSaves = Array.from({ length: bj_MAX_PLAYERS }, () => 0);
+udg_totalKills = Array.from({ length: bj_MAX_PLAYERS }, () => 0);
 udg_SheepColorR = [];
 udg_SheepColorG = [];
 udg_SheepColorB = [];
@@ -2380,15 +2382,6 @@ const InitGlobals = () => {
     i = i + 1;
   }
 
-  udg_qDeath = 9999;
-  udg_qDeathString = "";
-  i = 0;
-  while (true) {
-    if ((i > 1)) break;
-    udg_QDeathTime[i] = 0;
-    i = i + 1;
-  }
-
   udg_Force = CreateForce()!;
   i = 0;
   while (true) {
@@ -2399,19 +2392,6 @@ const InitGlobals = () => {
 
   udg_IntLoop = 0;
   udg_IntCloakCount = 0;
-  i = 0;
-  while (true) {
-    if ((i > 1)) break;
-    udg_totalSaves[i] = 0;
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 1)) break;
-    udg_totalKills[i] = 0;
-    i = i + 1;
-  }
 
   i = 0;
   while (true) {
@@ -2911,12 +2891,7 @@ autoCancel = () => {
               Player(i + 1)!,
               GetLastCreatedLeaderboard()!,
             );
-            DisplayTimedTextToForce(
-              GetPlayersAll()!,
-              5,
-              (("							  " + udg_colorString[i + 1]) +
-                GetPlayerName(Player(i + 1)!)) + " |rhas been set to AFK.",
-            );
+            displayTimedTextToAll(`							  ${MapPlayerEx.fromIndex(i - 1)} has been set to AFK.`, 5);
           }
           ForceAddPlayer(AFKers, Player(i)!);
         } else {
@@ -3123,6 +3098,7 @@ const RunInitializationTriggers = () => {
 
 //===========================================================================
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
+  s__File_FileIO__FileInit___onInit();
   Critter___critterInit();
   HCL__init();
   BuySellItem__init();

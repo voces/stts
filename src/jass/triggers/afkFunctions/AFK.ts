@@ -11,6 +11,8 @@
 import { terrain } from "settings/terrain";
 import { inflateGoldCount } from "../commands/g";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+import { displayTimedTextToAll } from "util/displayTimedTextToAll";
+import { MapPlayerEx } from "handles/MapPlayerEx";
 
 const captainsAndAfk = () => {
   if ((!(udg_Teams === TEAMS_CAPTAINS))) {
@@ -902,11 +904,9 @@ const Trig_AFK_Actions = () => {
       }
     }
     if (udg_AFK[udg_atempint] > 2) {
-      DisplayTimedTextToForce(
-        GetPlayersAll()!,
+      displayTimedTextToAll(
+        `                              ${MapPlayerEx.fromIndex(udg_atempint - 1)} has gone AFK.`,
         5,
-        (("                              " + udg_colorString[udg_atempint]) +
-          GetPlayerName(GetTriggerPlayer()!)) + " |rhas gone AFK.",
       );
     }
   } else {
@@ -992,11 +992,9 @@ const Trig_AFK_Actions = () => {
       udg_zoom[GetConvertedPlayerId(GetTriggerPlayer()!)],
       0,
     );
-    DisplayTimedTextToForce(
-      GetPlayersAll()!,
+    displayTimedTextToAll(
+      `                              ${MapPlayerEx.fromIndex(udg_atempint - 1)} is back.`,
       5,
-      (("                              " + udg_colorString[udg_atempint]) +
-        GetPlayerName(GetTriggerPlayer()!)) + " |ris back.",
     );
     if (udg_Teams === TEAMS_PICK) {
       PanCameraToForPlayer(

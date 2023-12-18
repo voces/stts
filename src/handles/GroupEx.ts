@@ -1,4 +1,5 @@
-import { Group, Rectangle, Unit } from "w3ts";
+import { Group, Rectangle } from "w3ts";
+import { UnitEx } from "./UnitEx";
 
 export class GroupEx extends Group {
   public static create(): GroupEx {
@@ -11,22 +12,22 @@ export class GroupEx extends Group {
     return Object.assign(obj, values);
   }
 
-  public forEach(fn: (unit: Unit) => void) {
-    this.for(() => fn(Unit.fromEnum()!));
+  public forEach(fn: (unit: UnitEx) => void) {
+    this.for(() => fn(UnitEx.fromEnum()!));
     return this;
   }
 
-  public map<T>(fn: (unit: Unit) => T) {
+  public map<T>(fn: (unit: UnitEx) => T) {
     const ret: T[] = [];
-    this.for(() => ret.push(fn(Unit.fromEnum()!)));
+    this.for(() => ret.push(fn(UnitEx.fromEnum()!)));
     return ret;
   }
 
-  public enumUnitsInRect(r: Rectangle | rect, filter?: boolexpr | ((unit: Unit) => boolean)) {
+  public enumUnitsInRect(r: Rectangle | rect, filter?: boolexpr | ((unit: UnitEx) => boolean)) {
     GroupEnumUnitsInRect(
       this.handle,
       r instanceof Rectangle ? r.handle : r,
-      typeof filter === "function" ? Filter(() => filter(Unit.fromFilter()!)) : filter,
+      typeof filter === "function" ? Filter(() => filter(UnitEx.fromFilter()!)) : filter,
     );
     return this;
   }

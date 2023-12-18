@@ -19,10 +19,10 @@ const Trig_pick_Actions = () => {
         const pName = p ? p.coloredName : `Player ${pid}`;
         if (canPlay(pid - 2)) {
           displayTimedTextToAll(
-            `${pName} cannot be picked. Did you mean ${MapPlayerEx.fromIndex(pid - 2)!.coloredName}?`,
+            `${pName} cannot be picked. Did you mean ${MapPlayerEx.fromIndex(pid - 2)}?`,
           );
         } else if (canPlay(pid + 1)) {
-          displayTimedTextToAll(`${pName} cannot be picked. Did you mean ${MapPlayerEx.fromIndex(pid)!.coloredName}?`);
+          displayTimedTextToAll(`${pName} cannot be picked. Did you mean ${MapPlayerEx.fromIndex(pid)}?`);
         } else displayTimedTextToAll(`${pName} cannot be picked.`);
         return;
       }

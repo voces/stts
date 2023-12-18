@@ -132,9 +132,7 @@ const Trig_firstbloodCount_Actions = () => {
       }
       bj_forLoopAIndex = bj_forLoopAIndex + 1;
     }
-  } else {
-    ForForce(GetPlayersAll()!, Trig_firstbloodCount_Func003Func001A);
-  }
+  } else ForForce(GetPlayersAll()!, Trig_firstbloodCount_Func003Func001A);
   DestroyForce(udg_atempplayer);
 };
 

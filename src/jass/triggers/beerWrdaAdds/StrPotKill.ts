@@ -1,6 +1,6 @@
-//===========================================================================
-// Trigger: Str Pot Kill
-//===========================================================================
+import { UnitEx } from "handles/UnitEx";
+import { displayTimedTextToAll } from "util/displayTimedTextToAll";
+
 const Trig_Str_Pot_Kill_Func003C = () => {
   if ((UnitHasBuffBJ(GetKillingUnit()!, FourCC("B001")) === true)) {
     return true;
@@ -35,18 +35,9 @@ const Trig_Str_Pot_Kill_Actions = () => {
   );
   RemoveLocation(udg_atemploc);
   ExplodeUnitBJ(GetLastCreatedUnit()!);
-  DisplayTimedTextToForce(
-    GetPlayersAll()!,
+  displayTimedTextToAll(
+    `                              ${UnitEx.fromKilling()?.owner} headshot ${UnitEx.fromDying()?.owner}`,
     5,
-    ("                              " +
-      udg_colorString[
-        GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
-      ]) +
-      (GetPlayerName(GetOwningPlayer(GetKillingUnit()!)) +
-        ("|r headshot " +
-          (udg_colorString[
-            GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit()!))
-          ] + GetPlayerName(GetOwningPlayer(GetDyingUnit()!))))),
   );
   PlaySoundBJ(gg_snd_headshot);
 };

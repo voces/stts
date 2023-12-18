@@ -13,9 +13,7 @@ const Trig_sheepDies_Actions = () => {
 
   PauseTimer(udg_sheepTimer[dyingPlayerId]);
 
-  if (
-    udg_wispZoom[dyingPlayerId] > 0
-  ) {
+  if (udg_wispZoom[dyingPlayerId] > 0) {
     SetCameraFieldForPlayer(dyingPlayer, CAMERA_FIELD_TARGET_DISTANCE, udg_wispZoom[dyingPlayerId], 0);
   }
 
@@ -47,9 +45,7 @@ const Trig_sheepDies_Actions = () => {
   ForceAddPlayerSimple(dyingPlayer, udg_Spirit);
 
   if (CountPlayersInForceBJ(udg_Sheep) === 0) TriggerExecute(gg_trg_wolvesWin);
-  else if (
-    president.enabled
-  ) {
+  else if (president.enabled) {
     if (president.president.handle === dyingPlayer) {
       ForForce(udg_Sheep, () => {
         const p = GetEnumPlayer()!;

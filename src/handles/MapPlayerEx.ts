@@ -39,8 +39,36 @@ export class MapPlayerEx extends MapPlayer {
     DisplayTimedTextToPlayer(this.handle, 0, 0, duration, message);
   }
 
+  get isHost() {
+    return this.handle === udg_Custom;
+  }
+
+  get hex() {
+    return udg_colorString[this.cid] ?? "";
+  }
+
   get coloredName() {
-    return `${udg_colorString[this.cid]}${this.name}|r`;
+    return `${udg_colorString[this.cid] ?? ""}${this.name}|r`;
+  }
+
+  get isHere() {
+    return this.slotState === PLAYER_SLOT_STATE_PLAYING;
+  }
+
+  get isActive() {
+    return this.isHere && this.afk === AFK_PLAYING;
+  }
+
+  get isActiveHuman() {
+    return this.isActive && this.controller === MAP_CONTROL_USER;
+  }
+
+  get afk() {
+    return udg_AFK[this.cid];
+  }
+
+  toString() {
+    return this.coloredName;
   }
 
   public static fromEnum() {

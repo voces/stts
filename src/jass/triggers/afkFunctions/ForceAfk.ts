@@ -1,3 +1,5 @@
+import { MapPlayerEx } from "handles/MapPlayerEx";
+import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
 const Trig_Force_Afk_Func001C = () => {
@@ -811,12 +813,9 @@ const Trig_Force_Afk_Actions = () => {
           }
         }
       }
-      DisplayTimedTextToForce(
-        GetPlayersAll()!,
+      displayTimedTextToAll(
+        `                              ${MapPlayerEx.fromIndex(udg_atempint - 1)} has been set to AFK.`,
         5,
-        (("                              " + udg_colorString[udg_atempint]) +
-          GetPlayerName(ConvertedPlayer(udg_atempint)!)) +
-          " |rhas been set AFK.",
       );
     }
   } else {
@@ -834,12 +833,9 @@ const Trig_Force_Afk_Actions = () => {
     }
     if (udg_Teams === TEAMS_OPEN) {
       udg_AFK[udg_atempint] = AFK_PLAYING;
-      DisplayTimedTextToForce(
-        GetPlayersAll()!,
+      displayTimedTextToAll(
+        `                              ${MapPlayerEx.fromIndex(udg_atempint - 1)} has been unset from AFK.`,
         5,
-        "                              " + udg_colorString[udg_atempint] +
-          GetPlayerName(ConvertedPlayer(udg_atempint)!) +
-          " |rhas been unset from AFK.",
       );
     }
   }

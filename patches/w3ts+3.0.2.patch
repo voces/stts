@@ -1,16 +1,18 @@
 diff --git a/node_modules/w3ts/handles/handle.d.ts b/node_modules/w3ts/handles/handle.d.ts
-index 97491cd..df07999 100644
+index 97491cd..8e105a3 100644
 --- a/node_modules/w3ts/handles/handle.d.ts
 +++ b/node_modules/w3ts/handles/handle.d.ts
-@@ -1,7 +1,7 @@
+@@ -1,8 +1,8 @@
  /// <reference types="war3-types-strict/1.33.0" />
  /** @noSelfInFile */
  export declare class Handle<T extends handle> {
 -    readonly handle: T;
+-    private static initHandle;
 +    handle: T;
-     private static initHandle;
++    static initHandle: handle | undefined;
      protected constructor(handle?: T);
      /**
+      * Get the unique ID of the handle. The ID is recycled once you destroy the object.
 diff --git a/node_modules/w3ts/handles/player.d.ts b/node_modules/w3ts/handles/player.d.ts
 index afbceb7..d3cceef 100644
 --- a/node_modules/w3ts/handles/player.d.ts
@@ -49,3 +51,21 @@ index febb3c7..ff2a60f 100644
 +    return next
 +end
  return ____exports
+diff --git a/node_modules/w3ts/hooks/index.lua b/node_modules/w3ts/hooks/index.lua
+index b395d8c..44e3a84 100644
+--- a/node_modules/w3ts/hooks/index.lua
++++ b/node_modules/w3ts/hooks/index.lua
+@@ -13,7 +13,12 @@ ____exports.executeHooksMainBefore = function() return __TS__ArrayForEach(
+ ) end
+ ____exports.executeHooksMainAfter = function() return __TS__ArrayForEach(
+     hooksMainAfter,
+-    function(____, func) return func() end
++    function(____, func)
++        local status, err = pcall(func)
++        if err then
++            BJDebugMsg(err)
++        end
++    end
+ ) end
+ function ____exports.hookedMain()
+     ____exports.executeHooksMainBefore()

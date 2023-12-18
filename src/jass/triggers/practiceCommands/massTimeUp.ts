@@ -1,34 +1,25 @@
-//===========================================================================
-// Trigger: massTimeUp
-//===========================================================================
-const Trig_massTimeUp_Func006A = () => {
-  DisplayTimedTextToForce(
-    GetPlayersAll()!,
-    15,
-    ("                              " +
-      udg_colorString[GetConvertedPlayerId(GetEnumPlayer()!)]) +
-      (GetPlayerName(GetEnumPlayer()!) +
-        ("|r massed " +
-          (I2S(GetPlayerStructureCount(GetEnumPlayer()!, true)) + " farms"))),
-  );
-};
+import { MapPlayerEx } from "handles/MapPlayerEx";
+import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 
 const Trig_massTimeUp_Actions = () => {
   DisableTrigger(gg_trg_reset);
   PauseTimerBJ(false, udg_Timer);
   TimerDialogDisplayBJ(true, udg_TimerWindow);
   TimerDialogDisplayBJ(false, udg_massTimerWindow);
-  DisplayTimedTextToForce(
-    GetPlayersAll()!,
-    15,
+  displayTimedTextToAll(
     "                              |CFFFFCC00Time! Scores |r",
+    15,
   );
-  ForForce(GetPlayersAll()!, Trig_massTimeUp_Func006A);
+  ForForce(GetPlayersAll()!, () =>
+    displayTimedTextToAll(
+      `                              ${MapPlayerEx.fromEnum()} massed ${
+        I2S(GetPlayerStructureCount(GetEnumPlayer()!, true))
+      } farms`,
+      15,
+    ));
   EnableTrigger(gg_trg_mass);
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_massTimeUp: () => void;

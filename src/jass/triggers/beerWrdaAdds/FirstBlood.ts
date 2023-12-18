@@ -1,6 +1,6 @@
-//===========================================================================
-// Trigger: First Blood
-//===========================================================================
+import { UnitEx } from "handles/UnitEx";
+import { displayTimedTextToAll } from "util/displayTimedTextToAll";
+
 const Trig_First_Blood_Conditions = () => {
   if ((!(GetUnitTypeId(GetDyingUnit()!) === sheepType))) {
     return false;
@@ -43,18 +43,9 @@ const Trig_First_Blood_Actions = () => {
   ] = udg_firstbloodKillCounter[
     GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
   ] + 1;
-  DisplayTimedTextToForce(
-    GetPlayersAll()!,
+  displayTimedTextToAll(
+    `                              ${UnitEx.fromKilling()?.owner} scored firstblood on ${UnitEx.fromDying()?.owner}`,
     5,
-    ("                              " +
-      udg_colorString[
-        GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
-      ]) +
-      (GetPlayerName(GetOwningPlayer(GetKillingUnit()!)) +
-        ("|r scored firstblood on " +
-          (udg_colorString[
-            GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit()!))
-          ] + GetPlayerName(GetOwningPlayer(GetDyingUnit()!))))),
   );
   if ((Trig_First_Blood_Func005C())) {
     udg_QDeathTime[GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit()!))] = TimerGetElapsed(udg_Timer);
@@ -68,8 +59,6 @@ const Trig_First_Blood_Actions = () => {
   PlaySoundBJ(gg_snd_firstblood);
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_First_Blood: () => void;

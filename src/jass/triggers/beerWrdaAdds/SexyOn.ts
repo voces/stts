@@ -1,6 +1,5 @@
-//===========================================================================
-// Trigger: SexyOn
-//===========================================================================
+import { displayTimedTextToAll } from "util/displayTimedTextToAll";
+
 const Trig_SexyOn_Conditions = () => {
   if ((!(GetTriggerPlayer() === udg_Custom))) {
     return false;
@@ -10,11 +9,7 @@ const Trig_SexyOn_Conditions = () => {
 
 const Trig_SexyOn_Actions = () => {
   EnableTrigger(gg_trg_Sheep_Color);
-  DisplayTimedTextToForce(
-    GetPlayersAll()!,
-    5,
-    "                              |CFFFFCC00Sexy Enabled|r",
-  );
+  displayTimedTextToAll("                              |CFFFFCC00Sexy Enabled|r", 5);
 };
 
 //===========================================================================

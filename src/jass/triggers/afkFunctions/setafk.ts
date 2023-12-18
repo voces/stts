@@ -8,6 +8,9 @@
 // afk == 4, went afk during game or after being picked (share control)
 //===========================================================================
 
+import { MapPlayerEx } from "handles/MapPlayerEx";
+import { displayTimedTextToAll } from "util/displayTimedTextToAll";
+
 const Trig_setafk_Func001001001 = () => {
   return GetBooleanAnd(
     GetPlayerSlotState(GetFilterPlayer()!) === PLAYER_SLOT_STATE_PLAYING,
@@ -56,13 +59,7 @@ const Trig_setafk_Func001A = () => {
         0,
       );
     }
-    DisplayTimedTextToForce(
-      GetPlayersAll()!,
-      5,
-      (("                              " +
-        udg_colorString[GetConvertedPlayerId(GetEnumPlayer()!)]) +
-        GetPlayerName(GetEnumPlayer()!)) + " |rhas been set to AFK.",
-    );
+    displayTimedTextToAll(`                              ${MapPlayerEx.fromEnum()} has been set to AFK.`, 5);
   }
 };
 

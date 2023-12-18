@@ -5,7 +5,7 @@ const Trig_position_Actions = () => {
   const pos = S2I(GetEventPlayerChatString()!.split(" ")[1]);
   if (pos > 0 && pos < 25) {
     const p = MapPlayerEx.fromEvent()!;
-    udg_startLocation[p.cid] = udg_masterStartLocation[pos];
+    udg_startLocation[p.cid] = udg_masterStartLocation[pos - 1];
     p.displayTimedText(
       udg_masterColorString[pos] +
         "                              Set spawn position to: " +
