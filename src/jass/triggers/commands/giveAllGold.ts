@@ -1,92 +1,22 @@
+import { MapPlayerEx } from "handles/MapPlayerEx";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
-const Trig_giveAllGold_Conditions = () => {
-  if ((!(udg_isAnon === false))) {
-    return false;
-  }
-  if ((!(udg_Teams === TEAMS_LOCK_IE_PLAYING))) {
-    return false;
-  }
-  if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 5)!) > 0))) {
-    return false;
-  }
-  if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 5)!) < 25))) {
-    return false;
-  }
-  if ((!(udg_giveGold === true))) {
-    return false;
-  }
-  if (
-    (!(GetPlayerState(GetTriggerPlayer()!, PLAYER_STATE_RESOURCE_GOLD) > 0))
-  ) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_giveAllGold_Func002Func008C = () => {
-  if (
-    (udg_AFK[S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 5)!)] ===
-      AFK_PLAYING)
-  ) {
-    return true;
-  }
-  if (
-    (udg_AFK[S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 5)!)] ===
-      AFK_AFK_DURING_ROUND)
-  ) {
-    return true;
-  }
-  return false;
-};
-
-const Trig_giveAllGold_Func002C = () => {
-  if (
-    (!(IsPlayerAlly(
-      ConvertedPlayer(S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 5)!))!,
-      GetTriggerPlayer()!,
-    ) === true))
-  ) {
-    return false;
-  }
-  if (
-    (!(GetPlayerSlotState(
-      ConvertedPlayer(S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 5)!))!,
-    ) === PLAYER_SLOT_STATE_PLAYING))
-  ) {
-    return false;
-  }
-  if (
-    (!(GetPlayerSlotState(
-      ConvertedPlayer(S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 5)!))!,
-    ) !== PLAYER_SLOT_STATE_LEFT))
-  ) {
-    return false;
-  }
-  if ((!Trig_giveAllGold_Func002Func008C())) {
-    return false;
-  }
-  if (
-    (!(GetConvertedPlayerId(GetTriggerPlayer()!) !==
-      S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 5)!)))
-  ) {
-    return false;
-  }
-  return true;
-};
-
 const Trig_giveAllGold_Actions = () => {
-  if ((Trig_giveAllGold_Func002C())) {
-    udg_giveGold = false;
-    udg_atempint = S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 5)!);
-    transferGold(
-      GetTriggerPlayer()!,
-      ConvertedPlayer(udg_atempint)!,
-      GetPlayerState(GetTriggerPlayer()!, PLAYER_STATE_RESOURCE_GOLD),
-      TRANSFER_DISPLAY_INVOLVED,
-    );
-    udg_giveGold = true;
-  }
+  const parts = GetEventPlayerChatString()!.split(" ");
+  const numParts = parts.slice(1).map((p) => S2I(p));
+
+  if (parts[0] !== "-g" || numParts.length === 0 || (numParts[0] < 1 && numParts[0] > bj_MAX_PLAYERS)) return;
+  const target = MapPlayerEx.fromIndex(numParts[0] - 1);
+  if (!target || !target.isActive) return;
+
+  const source = MapPlayerEx.fromEvent()!;
+  if (!target.isPlayerAlly(source)) return;
+
+  const amount = numParts.length > 1 ? Math.min(source.gold, numParts[1]) : source.gold;
+
+  udg_giveGold = false;
+  transferGold(source.handle, target.handle, amount, TRANSFER_DISPLAY_INVOLVED);
+  udg_giveGold = true;
 };
 
 declare global {
@@ -98,7 +28,10 @@ InitTrig_giveAllGold = () => {
   registerAnyPlayerChatEvent(gg_trg_giveAllGold, "-g", false);
   TriggerAddCondition(
     gg_trg_giveAllGold,
-    Condition(Trig_giveAllGold_Conditions),
+    Condition(() =>
+      !udg_isAnon && udg_Teams === TEAMS_LOCK_IE_PLAYING && udg_giveGold &&
+      GetPlayerState(GetTriggerPlayer()!, PLAYER_STATE_RESOURCE_GOLD) > 0
+    ),
   );
   TriggerAddAction(gg_trg_giveAllGold, Trig_giveAllGold_Actions);
 };

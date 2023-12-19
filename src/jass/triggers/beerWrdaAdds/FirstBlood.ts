@@ -14,17 +14,10 @@ const Trig_First_Blood_Conditions = () => {
   return true;
 };
 
-const Trig_First_Blood_Func005Func002C = () => {
-  if ((!(TimerGetElapsed(udg_Timer) <= udg_qDeath))) {
-    return false;
-  }
-  return true;
-};
-
 const Trig_First_Blood_Func005C = () => {
   if (
-    (!(TimerGetElapsed(udg_Timer) <
-      udg_QDeathTime[GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit()!))]))
+    !(TimerGetElapsed(udg_Timer) <
+      udg_QDeathTime[GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit()!))])
   ) {
     return false;
   }
@@ -35,21 +28,15 @@ const Trig_First_Blood_Actions = () => {
   udg_firstBlood = true;
   udg_firstbloodDeathCounter[
     GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit()!))
-  ] = udg_firstbloodDeathCounter[
-    GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit()!))
-  ] + 1;
-  udg_firstbloodKillCounter[
-    GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
-  ] = udg_firstbloodKillCounter[
-    GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
-  ] + 1;
+  ]++;
+  udg_firstbloodKillCounter[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))]++;
   displayTimedTextToAll(
     `                              ${UnitEx.fromKilling()?.owner} scored firstblood on ${UnitEx.fromDying()?.owner}`,
     5,
   );
   if ((Trig_First_Blood_Func005C())) {
     udg_QDeathTime[GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit()!))] = TimerGetElapsed(udg_Timer);
-    if ((Trig_First_Blood_Func005Func002C())) {
+    if (TimerGetElapsed(udg_Timer) <= udg_qDeath) {
       udg_qDeath = TimerGetElapsed(udg_Timer);
       udg_qDeathString = udg_colorString[
         GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit()!))

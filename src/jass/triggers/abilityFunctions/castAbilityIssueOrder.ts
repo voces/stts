@@ -1,5 +1,7 @@
 import { removeEnumUnit } from "util/removeEnumUnit";
 import { Trig_destroyAllFarms_Func002002002 } from "../farmFunctions/destroyAllFarms";
+import { gsDistributeGold } from "functions/gs";
+import { giveAllGold } from "../commands/g";
 
 const Trig_castAbility2_Actions = () => {
   let i = 1;
@@ -109,15 +111,13 @@ const Trig_castAbility2_Actions = () => {
     i = GetRandomInt(0, 10000);
     gSheepAbilityFlag[GetPlayerId(GetOwningPlayer(GetTriggerUnit()!))] = i;
     TriggerSleepAction(0.25);
-    if (
-      gSheepAbilityFlag[GetPlayerId(GetOwningPlayer(GetTriggerUnit()!))] === i
-    ) {
+    if (gSheepAbilityFlag[GetPlayerId(GetOwningPlayer(GetTriggerUnit()!))] === i) {
       gSheepAbilityFlag[GetPlayerId(GetOwningPlayer(GetTriggerUnit()!))] = -1;
       gsDistributeGold(GetOwningPlayer(GetTriggerUnit()!), false);
     }
   } else if (OrderId2StringBJ(GetIssuedOrderId()) === "manashieldoff") {
     gSheepAbilityFlag[GetPlayerId(GetOwningPlayer(GetTriggerUnit()!))] = -1;
-    gsDistributeGold(GetOwningPlayer(GetTriggerUnit()!), true);
+    giveAllGold(GetOwningPlayer(GetTriggerUnit()!));
   }
 };
 

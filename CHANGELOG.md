@@ -1,3 +1,33 @@
+# TODO
+
+- Start shouldn't reroll president
+- Delay spawn of host farm by 0.25 seconds or something?
+
+# 23b
+
+## Feature changes
+
+- President changes
+  - President will no longer be a pub
+  - President now has default gold priority for sheep
+  - When wisp uses "g" when president mode enabled, uses -g instead of -gsa
+  - Rounds are no longer ever emitted (for elo) if president mode enabled
+  - -president now changes to default % when toggling when % is not default %
+- Gold giving changes
+  - When sheep double tabs "g", now uses -g instead of -gsa
+  - Selecting an allied sheep or wolf gives them temporary priority for "g" for the selecting player. If gold is
+    transferred, they are given extended priority.
+  - -g X Y gives Y gold to player X (previously had to go -X Y)
+
+## Bug fixes
+
+- Fixed -zoom
+- Fixed spawns
+- Fixed sheep "g" (VERIFY)
+- Fixed -qd
+- Fixed trees not regrowing after 45 seconds
+- Fixed incorrect -gold message
+
 # 23a
 
 ## Bug fixes

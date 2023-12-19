@@ -1,5 +1,6 @@
 import "util/errorHooks";
 
+import "functions/remoteShop";
 import "jass/main";
 import "misc/hideTimers";
 import "misc/regrowTrees";

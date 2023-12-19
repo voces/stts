@@ -1,3 +1,10 @@
+import { president } from "modes/president";
+import { setTimeout, Timeout } from "util/setTimeout";
+
+const selectedPriority = Array.from<undefined, [player: player, timeout: Timeout] | undefined>({
+  length: bj_MAX_PLAYERS,
+}, () => undefined);
+
 export const inflateGoldCount = (p: player): void => {
   let max = goldCount[0];
   for (let i = 1; i < bj_MAX_PLAYERS; i++) {
@@ -45,22 +52,14 @@ const Trig_g_showGoldCounts = () => {
   }
 };
 
-const Trig_g_receiver = (sender: player): void => {
-  const p = ConvertedPlayer(S2I(myArg[1]));
+const markReceiver = (sender: player, target: string): void => {
+  const p = Player(S2I(target));
 
-  if (p == null) {
-    return;
-  }
+  if (p == null) return;
 
-  if (
-    ((IsPlayerInForce(sender, udg_Sheep)) ||
-      IsPlayerInForce(GetTriggerPlayer()!, udg_Spirit)) &&
-    (IsPlayerInForce(p, udg_Sheep))
-  ) {
+  if ((IsPlayerInForce(sender, udg_Sheep) || IsPlayerInForce(sender, udg_Spirit)) && IsPlayerInForce(p, udg_Sheep)) {
     lastSheepReceiver = p;
-  } else if (
-    (IsPlayerInForce(sender, udg_Wolf)) && (IsPlayerInForce(p, udg_Wolf))
-  ) {
+  } else if (IsPlayerInForce(sender, udg_Wolf) && IsPlayerInForce(p, udg_Wolf)) {
     lastWolfReceiver = p;
   }
 };
@@ -110,9 +109,7 @@ const Trig_g_leastGoldCount = (forSheep: boolean, last: player): player => {
   }
 
   if (p == null) {
-    if (backup == null) {
-      return null as unknown as player;
-    }
+    if (backup == null) return null as unknown as player;
     p = backup;
   }
 
@@ -122,8 +119,8 @@ const Trig_g_leastGoldCount = (forSheep: boolean, last: player): player => {
   return p;
 };
 
-const Trig_g_actual = (sender: player): void => {
-  let receiver!: player;
+export const giveAllGold = (sender: player): void => {
+  let receiver: player | null = selectedPriority[GetPlayerId(sender)]?.[0] ?? null;
   const amount = GetPlayerState(sender, PLAYER_STATE_RESOURCE_GOLD);
   let changedReceiver = false;
   let transferDisplay:
@@ -131,100 +128,63 @@ const Trig_g_actual = (sender: player): void => {
     | typeof TRANSFER_DISPLAY_TEAM = TRANSFER_DISPLAY_SOURCE;
 
   // Don't transfer 0 gold
-  if (amount === 0 || !udg_giveGold) {
-    return;
-  }
+  if (amount === 0 || !udg_giveGold) return;
 
   // Priority is last receiver or a random person with least gc
-  if (
-    (IsPlayerInForce(sender, udg_Sheep)) || IsPlayerInForce(sender, udg_Spirit)
-  ) {
-    receiver = lastSheepReceiver;
-    if (
-      receiver == null || receiver === sender ||
-      GetPlayerSlotState(receiver) === PLAYER_SLOT_STATE_LEFT
-    ) {
-      receiver = Trig_g_leastGoldCount(
-        true,
-        lastReceivedFrom[GetPlayerId(sender)],
-      );
-    }
-  } else if ((IsPlayerInForce(sender, udg_Wolf))) {
-    receiver = lastWolfReceiver;
-    if (
-      receiver == null || receiver === sender ||
-      GetPlayerSlotState(receiver) === PLAYER_SLOT_STATE_LEFT
-    ) {
-      receiver = Trig_g_leastGoldCount(
-        false,
-        lastReceivedFrom[GetPlayerId(sender)],
-      );
+  if (!receiver) {
+    if (IsPlayerInForce(sender, udg_Sheep) || IsPlayerInForce(sender, udg_Spirit)) {
+      receiver = lastSheepReceiver;
+      if (receiver == null || receiver === sender || GetPlayerSlotState(receiver) === PLAYER_SLOT_STATE_LEFT) {
+        receiver = president.enabled
+          ? president.president.handle
+          : Trig_g_leastGoldCount(true, lastReceivedFrom[GetPlayerId(sender)]);
+      }
+    } else if (IsPlayerInForce(sender, udg_Wolf)) {
+      receiver = lastWolfReceiver;
+      if (receiver == null || receiver === sender || GetPlayerSlotState(receiver) === PLAYER_SLOT_STATE_LEFT) {
+        receiver = Trig_g_leastGoldCount(false, lastReceivedFrom[GetPlayerId(sender)]);
+      }
     }
   }
 
   // Don't transfer to self
-  if (
-    receiver === sender || receiver == null ||
-    GetPlayerSlotState(receiver) === PLAYER_SLOT_STATE_LEFT
-  ) {
-    return;
-  }
+  if (receiver === sender || receiver == null || GetPlayerSlotState(receiver) === PLAYER_SLOT_STATE_LEFT) return;
 
   // Ensure a train is established
   if ((IsPlayerInForce(sender, udg_Sheep) || IsPlayerInForce(sender, udg_Spirit)) && lastSheepReceiver !== receiver) {
     lastSheepReceiver = receiver;
     changedReceiver = true;
-  } else if (
-    (IsPlayerInForce(sender, udg_Wolf)) && lastWolfReceiver !== receiver
-  ) {
+  } else if (IsPlayerInForce(sender, udg_Wolf) && lastWolfReceiver !== receiver) {
     lastWolfReceiver = receiver;
     changedReceiver = true;
   }
 
   lastReceivedFrom[GetPlayerId(receiver)] = sender;
 
-  if (amount > 3 || changedReceiver) {
-    transferDisplay = TRANSFER_DISPLAY_TEAM;
-  }
+  if (amount > 3 || changedReceiver) transferDisplay = TRANSFER_DISPLAY_TEAM;
 
   const gold = GetPlayerState(receiver, PLAYER_STATE_RESOURCE_GOLD) + amount;
   transferGold(sender, receiver, amount, transferDisplay);
 
-  if (
-    receiver === GetLocalPlayer() &&
-    (changedReceiver || (gold >= 112 && amount > 3))
-  ) StartSound(gg_snd_ReceiveGold);
+  if (receiver === GetLocalPlayer() && (changedReceiver || (gold >= 112 && amount > 3))) StartSound(gg_snd_ReceiveGold);
 };
 
 const Trig_g_Actions = () => {
   const str = StringCase(GetEventPlayerChatString()!, false)!;
 
   // String is just "-g"; give gold intelligently
-  if (str === "-g" || str === "-g ") {
-    Trig_g_actual(GetTriggerPlayer()!);
-    return;
-  }
+  if (str === "-g" || str === "-g ") return giveAllGold(GetTriggerPlayer()!);
 
-  Split(str, " ", false);
+  const parts = str.split(" ");
 
   // They typed -g X; mark who received the gold
-  if (myArgCount === 2 && myArg[0] === "-g") {
-    Trig_g_receiver(GetTriggerPlayer()!);
-    return;
-  }
+  if (parts[0] === "-g" && parts.length > 1) return markReceiver(GetTriggerPlayer()!, parts[1]);
 
   // Note early returns above; mark when someone speaks
-  if (myArg[0] === "g") {
-    if ((IsPlayerInForce(GetTriggerPlayer()!, udg_Sheep))) {
-      lastSheepReceiver = GetTriggerPlayer()!;
-    } else if ((IsPlayerInForce(GetTriggerPlayer()!, udg_Wolf))) {
-      lastWolfReceiver = GetTriggerPlayer()!;
-    }
+  if (str.startsWith("g")) {
+    if (IsPlayerInForce(GetTriggerPlayer()!, udg_Sheep)) lastSheepReceiver = GetTriggerPlayer()!;
+    else if (IsPlayerInForce(GetTriggerPlayer()!, udg_Wolf)) lastWolfReceiver = GetTriggerPlayer()!;
   }
-};
-
-const Trig_g_Conditions = () => {
-  return udg_gameStarted;
 };
 
 const Trig_g_SpellCast = () => {
@@ -233,9 +193,7 @@ const Trig_g_SpellCast = () => {
     udg_giveGold && GetSpellAbilityId() === FourCC("A00V") &&
     GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) > 0 &&
     IsPlayerInForce(p, udg_Wolf)
-  ) {
-    Trig_g_actual(p);
-  }
+  ) giveAllGold(p);
 };
 
 declare global {
@@ -243,15 +201,10 @@ declare global {
   let InitTrig_g: () => void;
 }
 InitTrig_g = () => {
-  let i = 0;
   let t = CreateTrigger();
   gg_trg_g = CreateTrigger();
-  while (true) {
-    if (i === bj_MAX_PLAYERS) break;
-    TriggerRegisterPlayerChatEvent(gg_trg_g, Player(i)!, "", false);
-    i = i + 1;
-  }
-  TriggerAddCondition(gg_trg_g, Condition(Trig_g_Conditions));
+  TriggerRegisterPlayerChatEventAll(gg_trg_g, "", false);
+  TriggerAddCondition(gg_trg_g, Condition(() => udg_gameStarted));
   TriggerAddAction(gg_trg_g, Trig_g_Actions);
 
   TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_SPELL_CAST);
@@ -260,4 +213,28 @@ InitTrig_g = () => {
   t = CreateTrigger();
   TriggerRegisterPlayerChatEventAll(t, "-gc", true);
   TriggerAddAction(t, Trig_g_showGoldCounts);
+
+  t = CreateTrigger();
+  for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+    TriggerRegisterPlayerUnitEvent(
+      t,
+      Player(i)!,
+      EVENT_PLAYER_UNIT_SELECTED,
+      Filter(() => {
+        const u = GetFilterUnit();
+        const p = GetTriggerPlayer();
+        if (!u || !p || !IsUnitAlly(u, p) || GetOwningPlayer(u) === p) return;
+        const utid = GetUnitTypeId(u);
+        return utid === sheepType || utid === shepType;
+      }),
+    );
+  }
+  TriggerAddAction(t, () => {
+    const pid = GetPlayerId(GetTriggerPlayer()!);
+    selectedPriority[pid]?.[1].cancel();
+    selectedPriority[pid] = [
+      GetOwningPlayer(GetTriggerUnit()!),
+      setTimeout(3, () => selectedPriority[pid] = undefined),
+    ];
+  });
 };

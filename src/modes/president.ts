@@ -16,7 +16,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
 
     const parts = GetEventPlayerChatString()!.split(" ");
 
-    if (parts.length === 1) president.enabled = !president.enabled;
+    if (parts.length === 1 && president.handicap !== 0.75) president.enabled = !president.enabled;
     else president.enabled = true;
 
     if (president.enabled) {

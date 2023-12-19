@@ -57,11 +57,10 @@ const setZooms = (
   }
 
   if (udg_sheepLastGame[pId]) {
-    if (udg_AFK[pId] > 0) SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, udg_wispZoom[pId], 0);
-    else if (IsPlayerInForce(p, udg_Spirit)) {
+    if (udg_AFK[pId] > 0 || IsPlayerInForce(p, udg_Spirit)) {
       SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, udg_wispZoom[pId], 0);
     } else SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, udg_sheepZoom[pId], 0);
-  } else if (udg_sheepLastGame[pId] === false) {
+  } else {
     if (udg_AFK[pId] > 0) SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, udg_wispZoom[pId], 0);
     else SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, udg_wolfZoom[pId], 0);
   }

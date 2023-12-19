@@ -36,7 +36,7 @@ const setTerrain = (terrainIndex: number): void => {
   BlzChangeMinimapTerrainTex(terrain.minimap);
   SetCameraBoundsToRect(terrain.cameraBounds);
   PanCameraToTimed(GetRectCenterX(terrain.wolf), GetRectCenterY(terrain.wolf), 0);
-  for (let i = 0; i < terrain.spawns.length; i++) udg_startLocation[i] = terrain.spawns[i];
+  for (let i = 0; i < terrain.spawns.length; i++) udg_startLocation[i + 1] = terrain.spawns[i];
 };
 
 const initTrigger = () => {

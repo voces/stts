@@ -150,6 +150,7 @@ import { terrain } from "settings/terrain";
 import { logRound } from "./triggers/hostCommands/UpdateStats";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { MapPlayerEx } from "handles/MapPlayerEx";
+import { president } from "modes/president";
 
 declare global {
   //globals from Critter:
@@ -200,15 +201,6 @@ declare global {
   // deno-lint-ignore prefer-const
   let gsDist: Array<number>;
   //endglobals from gs
-  //globals from BuySellItem:
-  // deno-lint-ignore prefer-const
-  let BuySellItem__itemShorthand: Array<string>;
-  // deno-lint-ignore prefer-const
-  let BuySellItem__itemCost: Array<number>;
-  // deno-lint-ignore prefer-const
-  let BuySellItem__itemCode: Array<number>;
-  let BuySellItem__itemIndex: number;
-  //endglobals from BuySellItem
   //globals from Smart:
   // deno-lint-ignore prefer-const
   let pub: Array<boolean>;
@@ -388,6 +380,7 @@ declare global {
   let udg_lssCounter: Array<number>;
   // deno-lint-ignore prefer-const
   let udg_wins: Array<number>;
+  // deno-lint-ignore prefer-const
   let udg_qDeath: number;
   let udg_qDeathString: string;
   // deno-lint-ignore prefer-const
@@ -753,8 +746,8 @@ declare global {
   let gSheepAbilityFlag: Array<number>;
   // deno-lint-ignore prefer-const
   let kaleidoscope: number;
-  let lastSheepReceiver: player;
-  let lastWolfReceiver: player;
+  let lastSheepReceiver: player | null;
+  let lastWolfReceiver: player | null;
   // deno-lint-ignore prefer-const
   let lastReceivedFrom: Array<player>;
   // deno-lint-ignore prefer-const
@@ -836,12 +829,6 @@ gsAmounts = [];
 gsPlayerIndices = [];
 gsDist = [];
 //endglobals from gs
-//globals from BuySellItem:
-BuySellItem__itemShorthand = [];
-BuySellItem__itemCost = [];
-BuySellItem__itemCode = [];
-BuySellItem__itemIndex = 0;
-//endglobals from BuySellItem
 //globals from Smart:
 pub = [];
 rotated = Player(PLAYER_NEUTRAL_PASSIVE)!;
@@ -937,7 +924,7 @@ udg_RuneTimer = [];
 udg_antiStackEffect = [];
 udg_lssCounter = [];
 udg_wins = [];
-udg_qDeath = 0;
+udg_qDeath = Infinity;
 udg_QDeathTime = Array.from({ length: bj_MAX_PLAYERS }, () => 0);
 udg_PlayerName = [];
 udg_IntLoop = 0;
@@ -1533,17 +1520,13 @@ transferGold = (
 ): void => {
   let i: number;
 
-  if (IsPlayerAlly(sender, receiver) === false) {
-    return;
-  }
+  if (IsPlayerAlly(sender, receiver) === false) return;
 
   if (amount > GetPlayerState(sender, PLAYER_STATE_RESOURCE_GOLD)) {
     amount = GetPlayerState(sender, PLAYER_STATE_RESOURCE_GOLD);
   }
 
-  if (amount === 0) {
-    return;
-  }
+  if (amount === 0) return;
 
   AdjustPlayerStateBJ(-amount, sender, PLAYER_STATE_RESOURCE_GOLD);
   AdjustPlayerStateBJ(amount, receiver, PLAYER_STATE_RESOURCE_GOLD);
@@ -1605,172 +1588,6 @@ transferGold = (
 };
 
 //library Util ends
-//library gs:
-
-// Adapted from https://softwareengineering.stackexchange.com/q/291117
-
-// Sorts gsAmounts and gsPlayerIndices as one
-const gsSort = () => {
-  let swapAmount: number;
-  let swapPlayerIndex: number;
-  let i = 1;
-  let n: number;
-
-  while (true) {
-    if (i >= gsLength) break;
-    swapAmount = gsAmounts[i];
-    swapPlayerIndex = gsPlayerIndices[i];
-    n = i - 1;
-    while (true) {
-      if (n < 0 || gsAmounts[n] <= swapAmount) break;
-      gsAmounts[n + 1] = gsAmounts[n];
-      gsPlayerIndices[n + 1] = gsPlayerIndices[n];
-      n = n - 1;
-    }
-    gsAmounts[n + 1] = swapAmount;
-    gsPlayerIndices[n + 1] = swapPlayerIndex;
-    i = i + 1;
-  }
-};
-
-// Fills gsDist; expects gsAmounts, and gsLength to be set
-const gsDistribute = (initial: number): void => {
-  let total = initial;
-  let i = 0;
-  let idx = 0;
-
-  // Sorts gsAmounts increasing, bringing gsPlayerIndices with it
-  gsSort();
-
-  // First pass find total and count
-  while (true) {
-    if (i === gsLength) break;
-    idx = i;
-    total = total + gsAmounts[i];
-    if (i >= gsLength - 1 || total / (idx + 1) <= gsAmounts[idx + 1]) {
-      break;
-    }
-    i = i + 1;
-  }
-
-  const count = idx + 1;
-  const avg = total / count;
-  const remainder = ModuloInteger(total, count);
-
-  // Figure out gsDist gsAmounts
-  i = 0;
-  while (true) {
-    if (i === count) break;
-
-    if (i < remainder) {
-      gsDist[i] = avg - gsAmounts[i] + 1;
-    } else {
-      gsDist[i] = avg - gsAmounts[i];
-    }
-
-    i = i + 1;
-  }
-};
-
-declare global {
-  // deno-lint-ignore prefer-const
-  let gsDistributeGold: (fromPlayer: player, allGold: boolean) => void;
-}
-gsDistributeGold = (fromPlayer: player, allGold: boolean): void => {
-  const pId = GetPlayerId(fromPlayer);
-  let i = 0;
-  let isAlly: boolean;
-  let isHere: boolean;
-  let isHuman: boolean;
-  let isWisp: boolean;
-  const includeSelf = !allGold;
-  gsLength = 0;
-  while (true) {
-    if (i === bj_MAX_PLAYERS) break;
-    isAlly = IsPlayerAlly(fromPlayer, Player(i)!);
-    isHere = GetPlayerSlotState(Player(i)!) === PLAYER_SLOT_STATE_PLAYING &&
-      udg_AFK[i + 1] === AFK_PLAYING;
-    isHuman = GetPlayerController(Player(i)!) === MAP_CONTROL_USER;
-    isWisp = IsPlayerInForce(Player(i)!, udg_Spirit);
-    if (
-      isAlly && isHere && isHuman && (!isWisp || (i === pId && includeSelf)) &&
-      (includeSelf || i !== pId)
-    ) {
-      gsPlayerIndices[gsLength] = i;
-      if (i === pId) {
-        gsAmounts[gsLength] = 0;
-      } else {
-        gsAmounts[gsLength] = GetPlayerState(
-          Player(i)!,
-          PLAYER_STATE_RESOURCE_GOLD,
-        );
-      }
-      gsDist[gsLength] = 0;
-      gsLength = gsLength + 1;
-    }
-    i = i + 1;
-  }
-
-  gsDistribute(GetPlayerState(fromPlayer, PLAYER_STATE_RESOURCE_GOLD));
-
-  i = 0;
-  while (true) {
-    if (i === gsLength) break;
-    if (gsPlayerIndices[i] !== pId && gsDist[i] > 0) {
-      transferGold(
-        fromPlayer,
-        Player(gsPlayerIndices[i])!,
-        gsDist[i],
-        TRANSFER_DISPLAY_INVOLVED,
-      );
-    }
-    i = i + 1;
-  }
-};
-
-const Trig_gs_Actions = () => {
-  gsDistributeGold(
-    GetTriggerPlayer()!,
-    GetEventPlayerChatString() === "-gsa",
-  );
-};
-
-const Trig_gs_UnitActions = () => {
-  const p = GetOwningPlayer(GetTriggerUnit()!);
-  if (
-    udg_giveGold && GetSpellAbilityId() === FourCC("A020") &&
-    GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) > 0 &&
-    !(IsPlayerInForce(p, udg_Wolf))
-  ) {
-    gsDistributeGold(p, true);
-  }
-};
-
-const Trig_gs_Conditions = () => {
-  return GetPlayerState(GetTriggerPlayer()!, PLAYER_STATE_RESOURCE_GOLD) > 0 &&
-    udg_giveGold;
-};
-
-//===========================================================================
-const InitTrig_gs = () => {
-  let i = 0;
-  const t = CreateTrigger();
-
-  gg_trg_gs = CreateTrigger();
-  while (true) {
-    if (i === bj_MAX_PLAYERS) break;
-    TriggerRegisterPlayerChatEvent(gg_trg_gs, Player(i)!, "-gs", true);
-    TriggerRegisterPlayerChatEvent(gg_trg_gs, Player(i)!, "-gsa", true);
-    i = i + 1;
-  }
-  TriggerAddCondition(gg_trg_gs, Condition(Trig_gs_Conditions));
-  TriggerAddAction(gg_trg_gs, Trig_gs_Actions);
-
-  TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_SPELL_CAST);
-  TriggerAddAction(t, Trig_gs_UnitActions);
-};
-
-//library gs ends
 //library transferHelpers:
 const transferToCustom = () => {
   SetUnitOwner(GetEnumUnit()!, udg_Custom, true);
@@ -1788,218 +1605,6 @@ transferOwnershipOfHostFarm = () => {
 };
 
 //library transferHelpers ends
-//library BuySellItem:
-
-const BuySellItem__isRealWolf = () => {
-  return GetUnitTypeId(GetFilterUnit()!) === FourCC("EC03") &&
-    IsUnitIllusionBJ(GetFilterUnit()!) === false;
-};
-
-const BuySellItem__buyAction = () => {
-  let i = 0;
-
-  Split(GetEventPlayerChatString()!, " ", false);
-  if (
-    (myArg[0] !== "-buy" && myArg[0] !== "-b") || myArgCount === 1 ||
-    StringLength(myArg[1]) <= 0
-  ) {
-    return;
-  }
-
-  const g = GetUnitsOfPlayerMatching(
-    GetTriggerPlayer()!,
-    Condition(BuySellItem__isRealWolf),
-  )!;
-  const u = FirstOfGroup(g);
-  if (u == null) {
-    DestroyGroup(g);
-    return;
-  }
-
-  while (true) {
-    if (i === BuySellItem__itemIndex) break;
-
-    if (
-      SubString(BuySellItem__itemShorthand[i], 0, StringLength(myArg[1])) ===
-        myArg[1]
-    ) {
-      if (
-        GetPlayerState(GetTriggerPlayer()!, PLAYER_STATE_RESOURCE_GOLD) >=
-          BuySellItem__itemCost[i]
-      ) {
-        UnitAddItemByIdSwapped(BuySellItem__itemCode[i], u);
-        AdjustPlayerStateSimpleBJ(
-          GetTriggerPlayer()!,
-          PLAYER_STATE_RESOURCE_GOLD,
-          -BuySellItem__itemCost[i],
-        );
-      } else {
-        DisplayTimedTextToPlayer(
-          GetTriggerPlayer()!,
-          0,
-          0,
-          15,
-          "                              |CFF00AEEFThat item set is " +
-            I2S(BuySellItem__itemCost[i]) + " gold.",
-        );
-      }
-      break;
-    }
-
-    i = i + 1;
-  }
-
-  DestroyGroup(g);
-};
-
-const BuySellItem__sellAction = () => {
-  let i = 0;
-
-  Split(GetEventPlayerChatString()!, " ", false);
-  if (
-    (myArg[0] !== "-sell" && myArg[0] !== "-s") || myArgCount === 1 ||
-    StringLength(myArg[1]) <= 0
-  ) {
-    return;
-  }
-
-  const g = GetUnitsOfPlayerMatching(
-    GetTriggerPlayer()!,
-    Condition(BuySellItem__isRealWolf),
-  )!;
-  const u = FirstOfGroup(g);
-
-  if (u == null) {
-    DestroyGroup(g);
-    return;
-  }
-
-  const slot = S2I(myArg[1]) - 1;
-  const itm = UnitItemInSlot(u, slot);
-
-  if (itm == null) {
-    DestroyGroup(g);
-    return;
-  }
-
-  const itemId = GetItemTypeId(itm);
-  while (true) {
-    if (i === BuySellItem__itemIndex) break;
-
-    if (itemId === BuySellItem__itemCode[i]) {
-      AdjustPlayerStateSimpleBJ(
-        GetTriggerPlayer()!,
-        PLAYER_STATE_RESOURCE_GOLD,
-        R2I(I2R(BuySellItem__itemCost[i]) / 4.2),
-      );
-      RemoveItem(itm);
-      break;
-    }
-
-    i = i + 1;
-  }
-
-  DestroyGroup(g);
-};
-
-const BuySellItem__sellAllAction = () => {
-  const p = GetTriggerPlayer()!;
-  const g = GetUnitsOfPlayerMatching(p, Condition(BuySellItem__isRealWolf))!;
-  let u = FirstOfGroup(g);
-  let i: number;
-  let n: number;
-  let itm: item | undefined;
-  let itemId: number;
-
-  while (true) {
-    if (u == null) break;
-
-    i = 0;
-    while (true) {
-      itm = UnitItemInSlot(u, i);
-      if (itm != null) {
-        itemId = GetItemTypeId(itm);
-        n = 0;
-        while (true) {
-          if (itemId === BuySellItem__itemCode[n]) {
-            AdjustPlayerStateSimpleBJ(
-              p,
-              PLAYER_STATE_RESOURCE_GOLD,
-              R2I(I2R(BuySellItem__itemCost[n]) / 4.2),
-            );
-            RemoveItem(itm);
-            break;
-          }
-
-          n = n + 1;
-          if (n === BuySellItem__itemIndex) break;
-        }
-      }
-
-      i = i + 1;
-      if (i === 6) break;
-    }
-
-    GroupRemoveUnit(g, u);
-    u = FirstOfGroup(g);
-  }
-};
-
-const BuySellItem__registerItem = (
-  shorthand: string,
-  cost: number,
-  passedCode: number,
-): void => {
-  BuySellItem__itemShorthand[BuySellItem__itemIndex] = shorthand;
-  BuySellItem__itemCost[BuySellItem__itemIndex] = cost;
-  BuySellItem__itemCode[BuySellItem__itemIndex] = passedCode;
-  BuySellItem__itemIndex = BuySellItem__itemIndex + 1;
-};
-
-const BuySellItem__init = () => {
-  let t = CreateTrigger();
-  TriggerRegisterPlayerChatEventAll(t, "-b", false);
-  TriggerAddAction(t, BuySellItem__buyAction);
-
-  t = CreateTrigger();
-  TriggerRegisterPlayerChatEventAll(t, "-s", false);
-  TriggerAddAction(t, BuySellItem__sellAction);
-
-  t = CreateTrigger();
-  TriggerRegisterPlayerChatEventAll(t, "-sellall", true);
-  TriggerAddAction(t, BuySellItem__sellAllAction);
-
-  BuySellItem__registerItem("1c", 200, FourCC("I005"));
-  BuySellItem__registerItem("boots", 112, FourCC("I009"));
-  BuySellItem__registerItem("bril", 98, FourCC("I003"));
-  BuySellItem__registerItem("beam", 112, FourCC("I000"));
-  BuySellItem__registerItem("bomber", 75, FourCC("I002"));
-  BuySellItem__registerItem("c8", 21, FourCC("I00B"));
-  BuySellItem__registerItem("c16", 53, FourCC("I008"));
-  BuySellItem__registerItem("c55", 200, FourCC("I005"));
-  BuySellItem__registerItem("club", 56, FourCC("I00Z"));
-  BuySellItem__registerItem("cloak", 200, FourCC("I001"));
-  BuySellItem__registerItem("crystal", 28, FourCC("I006"));
-  BuySellItem__registerItem("drums", 175, FourCC("I00U"));
-  BuySellItem__registerItem("endur", 112, FourCC("I00H"));
-  // call registerItem("forb", 200, 'I00W')
-  BuySellItem__registerItem("gloves", 112, FourCC("I004"));
-  BuySellItem__registerItem("gem", 70, FourCC("I00E"));
-  BuySellItem__registerItem("golem", 140, FourCC("I00A"));
-  BuySellItem__registerItem("kaleidoscope", 112, FourCC("I00X"));
-  BuySellItem__registerItem("mana", 49, FourCC("I00D"));
-  BuySellItem__registerItem("neck", 112, FourCC("I00I"));
-  BuySellItem__registerItem("r110", 112, FourCC("I00M"));
-  BuySellItem__registerItem("sheep", 56, FourCC("I00G"));
-  BuySellItem__registerItem("suppression", 175, FourCC("I00V"));
-  BuySellItem__registerItem("scythe", 112, FourCC("scyt"));
-  BuySellItem__registerItem("sobi", 56, FourCC("I00N"));
-  BuySellItem__registerItem("speed", 42, FourCC("I00F"));
-  BuySellItem__registerItem("str", 42, FourCC("I007"));
-  BuySellItem__registerItem("velocity", 112, FourCC("I00T"));
-};
-
-//library BuySellItem ends
 //library TeamResources:
 
 declare global {
@@ -2720,7 +2325,7 @@ updateTimes = () => {
   let s = "";
   let timeElapsed = TimerGetElapsed(udg_Timer);
   const emitRound = !someoneLeft && udg_sheepGold === 0 && udg_wolfGold === 0 &&
-    noHandicaps() && terrain.name === "Revolution";
+    noHandicaps() && terrain.name === "Revolution" && president.enabled === false;
   let l__sheep = "";
   let addedSheep = false;
   let wolves = "";
@@ -3017,7 +2622,6 @@ const InitCustomTriggers = () => {
   InitTrig_giveAllGold();
   InitTrig_giveGold();
   InitTrig_gall();
-  InitTrig_gs();
   InitTrig_g();
   InitTrig_lss();
   InitTrig_seeTime();
@@ -3101,7 +2705,6 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   s__File_FileIO__FileInit___onInit();
   Critter___critterInit();
   HCL__init();
-  BuySellItem__init();
 
   InitGlobals();
   InitCustomTriggers();

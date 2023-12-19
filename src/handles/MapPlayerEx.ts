@@ -68,6 +68,10 @@ export class MapPlayerEx extends MapPlayer {
     return udg_AFK[this.cid];
   }
 
+  get isPub() {
+    return pub[this.id];
+  }
+
   toString() {
     return this.coloredName;
   }

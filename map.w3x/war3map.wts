@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 23a
+Sheep Tag ReVoLuTiOn 23b
 }
 
 STRING 40
@@ -3579,12 +3579,6 @@ STRING 3793
 (sheep)
 }
 
-STRING 3794
-// Abilities: A024 (Give Allies Gold), Ubertip (Tooltip - Normal - Extended)
-{
-Upon first usage, gives your allies some of your gold (-gs). If used a second time within a second, gives all of your gold (-gsa).
-}
-
 STRING 3795
 // Abilities: A024 (Give Allies Gold), Untip (Tooltip - Turn Off)
 {
@@ -3945,23 +3939,29 @@ STRING 3952
 (Sheep)
 }
 
-STRING 3953
+STRING 3957
+// Abilities: A024 (Give Allies Gold), Ubertip (Tooltip - Normal - Extended)
 {
-|cff00ff00Sheep Tag ReVoLuTiOn 23a|r
+Upon first usage, gives your allies some of your gold (-gs). If used a second time within a second, gives all of your gold (-g).
 }
 
-STRING 3954
+STRING 3958
 {
-|cff00ff0023a|r
+|cff00ff00Sheep Tag ReVoLuTiOn 23b|r
 }
 
-STRING 3955
+STRING 3959
 {
-|cff00ff0023a|r
+|cff00ff0023b|r
 }
 
-STRING 3956
+STRING 3960
 {
-|cff00ff0023a|r
+|cff00ff0023b|r
+}
+
+STRING 3961
+{
+|cff00ff0023b|r
 }
 

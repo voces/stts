@@ -378,6 +378,9 @@ const Trig_createSheep_Actions = () => {
 
   if (president.enabled) {
     president.president = MapPlayerEx.fromHandle(ForcePickRandomPlayer(udg_Sheep))!;
+    for (let i = 0; i < 10 && president.president.isPub; i++) {
+      president.president = MapPlayerEx.fromHandle(ForcePickRandomPlayer(udg_Sheep))!;
+    }
 
     ForForce(udg_Sheep, () => {
       const p = MapPlayerEx.fromEnum()!;

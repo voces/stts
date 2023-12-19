@@ -29,8 +29,8 @@ export class UnitEx extends Unit {
     const obj = map.get(handle);
     if (obj) return obj;
     Handle.initHandle = handle;
-    // @ts-expect-error
-    const next = new UnitEx(); // TODO: wire this up?
+    // @ts-expect-error We set initHandle; should be good!
+    const next = new UnitEx();
     map.set(handle, next);
     return next;
   }
