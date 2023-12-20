@@ -1,43 +1,18 @@
-import { terrain } from "settings/terrain";
+import { spawns } from "../initializing/createSheep";
 
 const Trig_escFix_Actions = () => {
   const p = GetTriggerPlayer()!;
   const pId = GetConvertedPlayerId(p);
   SetCameraFieldForPlayer(p, CAMERA_FIELD_ANGLE_OF_ATTACK, 304, 0);
   if (IsPlayerInForce(p, udg_Sheep)) {
-    SetCameraFieldForPlayer(
-      p,
-      CAMERA_FIELD_TARGET_DISTANCE,
-      udg_sheepZoom[pId],
-      0,
-    );
-
+    SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, udg_sheepZoom[pId], 0);
     if (
-      udg_Teams === TEAMS_LOCK_IE_PLAYING && terrain.spawnType === "playerColor" &&
+      udg_Teams === TEAMS_LOCK_IE_PLAYING &&
       GetPlayerUnitTypeCount(p, sheepType) === 0
-    ) {
-      PanCameraToTimedForPlayer(
-        p,
-        GetRectCenterX(udg_startLocation[pId]),
-        GetRectCenterY(udg_startLocation[pId]),
-        0,
-      );
-    }
+    ) PanCameraToTimedForPlayer(p, spawns.get(Player(pId - 1)!)!.x, spawns.get(Player(pId - 1)!)!.y, 0);
   } else if (IsPlayerInForce(p, udg_Wolf)) {
-    SetCameraFieldForPlayer(
-      p,
-      CAMERA_FIELD_TARGET_DISTANCE,
-      udg_wolfZoom[pId],
-      0,
-    );
-  } else {
-    SetCameraFieldForPlayer(
-      p,
-      CAMERA_FIELD_TARGET_DISTANCE,
-      udg_wispZoom[pId],
-      0,
-    );
-  }
+    SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, udg_wolfZoom[pId], 0);
+  } else SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, udg_wispZoom[pId], 0);
 };
 
 declare global {

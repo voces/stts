@@ -4,7 +4,10 @@ const Trig_draftPlayer_Conditions = () => {
   if ((!(udg_draftOn === true))) {
     return false;
   }
-  if ((!(GetTriggerPlayer() === udg_captains[udg_captainTurn]))) {
+  if (
+    (!(GetTriggerPlayer() === udg_captains[udg_captainTurn] ||
+      GetPlayerController(udg_captains[udg_captainTurn]) === MAP_CONTROL_COMPUTER))
+  ) {
     return false;
   }
   if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 8, 9)!) > 0))) {

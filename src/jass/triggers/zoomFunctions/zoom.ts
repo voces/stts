@@ -56,14 +56,11 @@ const setZooms = (
     udg_wispZoom[pId] = Math.max(Math.min(val3, 3350), 1350);
   }
 
-  if (udg_sheepLastGame[pId]) {
-    if (udg_AFK[pId] > 0 || IsPlayerInForce(p, udg_Spirit)) {
-      SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, udg_wispZoom[pId], 0);
-    } else SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, udg_sheepZoom[pId], 0);
-  } else {
-    if (udg_AFK[pId] > 0) SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, udg_wispZoom[pId], 0);
-    else SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, udg_wolfZoom[pId], 0);
-  }
+  if (udg_AFK[pId] > 0) SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, udg_wispZoom[pId], 0);
+  else if (udg_sheepLastGame[pId]) {
+    if (IsPlayerInForce(p, udg_Spirit)) SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, udg_wispZoom[pId], 0);
+    else SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, udg_sheepZoom[pId], 0);
+  } else SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, udg_wolfZoom[pId], 0);
 };
 
 const loadZooms = () => {

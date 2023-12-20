@@ -267,9 +267,13 @@ const Trig_captains_Actions = () => {
     removeAllUnits();
   } else {
     const parts = s.split(" ");
-    const p1 = MapPlayerEx.fromIndex(S2I(parts[1] ?? "") - 1);
-    const p2 = MapPlayerEx.fromIndex(S2I(parts[2] ?? "") - 1);
-    if (!p1?.isActiveHuman || !p2?.isActiveHuman) return;
+    if (parts.length !== 3) return;
+    const pid1 = S2I(parts[1]);
+    const pid2 = S2I(parts[2]);
+    if (pid1 < 1 || pid1 > bj_MAX_PLAYERS || pid2 < 1 || pid2 > bj_MAX_PLAYERS) return;
+    const p1 = MapPlayerEx.fromIndex(pid1 - 1);
+    const p2 = MapPlayerEx.fromIndex(pid2 - 1);
+    if (!p1?.isActive || !p2?.isActive) return;
 
     DestroyLeaderboardBJ(GetLastCreatedLeaderboard()!);
     DisableTrigger(gg_trg_fair);

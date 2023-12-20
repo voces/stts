@@ -12,11 +12,11 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   const t = Trigger.create();
   registerAnyPlayerChatEvent(t, "-president", false);
   t.addAction(() => {
-    if (udg_gameStarted) return;
+    if (udg_gameStarted || GetTriggerPlayer() !== udg_Custom) return;
 
     const parts = GetEventPlayerChatString()!.split(" ");
 
-    if (parts.length === 1 && president.handicap !== 0.75) president.enabled = !president.enabled;
+    if (parts.length === 1 && president.handicap === 0.75) president.enabled = !president.enabled;
     else president.enabled = true;
 
     if (president.enabled) {

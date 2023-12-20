@@ -64,6 +64,18 @@ export class MapPlayerEx extends MapPlayer {
     return this.isActive && this.controller === MAP_CONTROL_USER;
   }
 
+  get isSheep() {
+    return IsPlayerInForce(this.handle, udg_Sheep);
+  }
+
+  get isWolf() {
+    return IsPlayerInForce(this.handle, udg_Wolf);
+  }
+
+  get isWisp() {
+    return IsPlayerInForce(this.handle, udg_Spirit);
+  }
+
   get afk() {
     return udg_AFK[this.cid];
   }

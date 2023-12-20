@@ -225,7 +225,7 @@ const Trig_initialization_Actions = () => {
   bj_forLoopAIndexEnd = 24;
   while (true) {
     if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-    udg_QDeathTime[GetForLoopIndexA()] = 9999;
+    udg_QDeathTime[GetForLoopIndexA()] = Infinity;
     udg_camLock[GetForLoopIndexA()] = true;
     udg_firstRound[GetForLoopIndexA()] = true;
     udg_PlayerName[GetForLoopIndexA()] = GetPlayerName(

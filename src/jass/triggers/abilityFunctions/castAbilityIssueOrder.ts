@@ -2,6 +2,11 @@ import { removeEnumUnit } from "util/removeEnumUnit";
 import { Trig_destroyAllFarms_Func002002002 } from "../farmFunctions/destroyAllFarms";
 import { gsDistributeGold } from "functions/gs";
 import { giveAllGold } from "../commands/g";
+import { terrain } from "settings/terrain";
+import { spawns } from "../initializing/createSheep";
+import { FogModifier } from "w3ts";
+import { MapPlayerEx } from "handles/MapPlayerEx";
+import { setTimeout } from "util/setTimeout";
 
 const Trig_castAbility2_Actions = () => {
   let i = 1;
@@ -9,12 +14,13 @@ const Trig_castAbility2_Actions = () => {
   let y: number;
   let u: unit;
   let p: player;
+  const orderString = OrderId2StringBJ(GetIssuedOrderId());
   if (
     IsUnitIllusionBJ(GetTriggerUnit()!) || udg_Teams !== TEAMS_LOCK_IE_PLAYING
   ) return;
   if (
-    OrderId2StringBJ(GetIssuedOrderId()) === "defend" ||
-    OrderId2StringBJ(GetIssuedOrderId()) === "undefend"
+    orderString === "defend" ||
+    orderString === "undefend"
   ) {
     if (
       udg_switchOn === true ||
@@ -67,8 +73,8 @@ const Trig_castAbility2_Actions = () => {
       }
     }
   } else if (
-    OrderId2StringBJ(GetIssuedOrderId()) === "immolation" ||
-    OrderId2StringBJ(GetIssuedOrderId()) === "unimmolation"
+    orderString === "immolation" ||
+    orderString === "unimmolation"
   ) {
     i = GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()!));
     RemoveUnit(GetBuilding(GetOwningPlayer(GetTriggerUnit()!))!);
@@ -93,7 +99,7 @@ const Trig_castAbility2_Actions = () => {
         udg_farmCount[i],
       );
     }
-  } else if (OrderId2StringBJ(GetIssuedOrderId()) === "custom_n000") {
+  } else if (orderString === "custom_n000") {
     x = GetUnitX(GetTriggerUnit()!);
     y = GetUnitY(GetTriggerUnit()!);
     p = GetOwningPlayer(GetTriggerUnit()!);
@@ -107,7 +113,7 @@ const Trig_castAbility2_Actions = () => {
       PLAYER_STATE_RESOURCE_GOLD,
       GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) - 120,
     );
-  } else if (OrderId2StringBJ(GetIssuedOrderId()) === "manashieldon") {
+  } else if (orderString === "manashieldon") {
     i = GetRandomInt(0, 10000);
     gSheepAbilityFlag[GetPlayerId(GetOwningPlayer(GetTriggerUnit()!))] = i;
     TriggerSleepAction(0.25);
@@ -115,9 +121,36 @@ const Trig_castAbility2_Actions = () => {
       gSheepAbilityFlag[GetPlayerId(GetOwningPlayer(GetTriggerUnit()!))] = -1;
       gsDistributeGold(GetOwningPlayer(GetTriggerUnit()!), false);
     }
-  } else if (OrderId2StringBJ(GetIssuedOrderId()) === "manashieldoff") {
+  } else if (orderString === "manashieldoff") {
     gSheepAbilityFlag[GetPlayerId(GetOwningPlayer(GetTriggerUnit()!))] = -1;
     giveAllGold(GetOwningPlayer(GetTriggerUnit()!));
+  } else if (
+    (orderString === "smart" || orderString === "move" || orderString === "patrol") &&
+    GetUnitTypeId(GetTriggerUnit()!) === FourCC("h00K")
+  ) {
+    let x = Math.max(Math.min(GetOrderPointX(), GetRectMaxX(terrain.spawnBounds)), GetRectMinX(terrain.spawnBounds));
+    let y = Math.max(Math.min(GetOrderPointY(), GetRectMaxY(terrain.spawnBounds)), GetRectMinY(terrain.spawnBounds));
+    const xMin = GetRectMinX(terrain.wisp) - 96;
+    const xCenter = GetRectCenterX(terrain.wisp);
+    const xMax = GetRectMaxX(terrain.wisp) + 128;
+    const yMin = GetRectMinY(terrain.wisp) - 96;
+    const yCenter = GetRectCenterY(terrain.wisp);
+    const yMax = GetRectMaxY(terrain.wisp) + 128;
+    if (x < xMax && x > xMin && y < yMax && y > yMin) {
+      const xDist = Math.min(Math.abs(x - xMax), Math.abs(x - xMin));
+      const yDist = Math.min(Math.abs(y - yMax), Math.abs(y - yMin));
+      if (xDist < yDist) x = x < xCenter ? xMin : xMax;
+      else y = y < yCenter ? yMin : yMax;
+    }
+    u = GetTriggerUnit()!;
+    SetUnitPosition(u, x, y);
+    x = GetUnitX(u);
+    y = GetUnitY(u);
+    spawns.set(GetOwningPlayer(u), { x, y });
+    PanCameraToTimedForPlayer(GetOwningPlayer(u), x, y, 0);
+    const modifier = FogModifier.create(MapPlayerEx.fromEvent()!, FOG_OF_WAR_VISIBLE, x, y, 128, true, true)!;
+    modifier.start();
+    setTimeout(1, () => modifier.destroy());
   }
 };
 
@@ -128,9 +161,7 @@ declare global {
 }
 InitTrig_castAbilityIssueOrder = () => {
   gg_trg_castAbilityIssueOrder = CreateTrigger();
-  TriggerRegisterAnyUnitEventBJ(
-    gg_trg_castAbilityIssueOrder,
-    EVENT_PLAYER_UNIT_ISSUED_ORDER,
-  );
+  TriggerRegisterAnyUnitEventBJ(gg_trg_castAbilityIssueOrder, EVENT_PLAYER_UNIT_ISSUED_ORDER);
+  TriggerRegisterAnyUnitEventBJ(gg_trg_castAbilityIssueOrder, EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER);
   TriggerAddAction(gg_trg_castAbilityIssueOrder, Trig_castAbility2_Actions);
 };

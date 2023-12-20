@@ -14,7 +14,6 @@ export const updateLeaderboardSettingsDisplay = () => {
   let s = "|CFFED1C24Next: " + simpleformatTime(udg_time);
   if (udg_switchOn) s += " switch";
   if (vampOn) s += " vamp";
-  if (udg_positionOn) s += " pos";
 
   LeaderboardSetPlayerItemLabelBJ(Player(PLAYER_NEUTRAL_PASSIVE)!, GetLastCreatedLeaderboard()!, s);
 };

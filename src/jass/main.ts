@@ -290,7 +290,6 @@ declare global {
   let udg_giveGold: boolean;
   let udg_wolfSpawn: number;
   let udg_sheepInvul: number;
-  let udg_positionOn: boolean;
   // deno-lint-ignore prefer-const
   let udg_positionArray: Array<number>;
   // deno-lint-ignore prefer-const
@@ -362,6 +361,7 @@ declare global {
   let udg_cloakAbility: Array<number>;
   let udg_someVersusBoolean: boolean;
   let udg_versusTime: number;
+  // deno-lint-ignore prefer-const
   let udg_firstBlood: boolean;
   // deno-lint-ignore prefer-const
   let udg_humiliationCheck: Array<boolean>;
@@ -878,7 +878,6 @@ udg_atempint2 = 0;
 udg_giveGold = false;
 udg_wolfSpawn = 0;
 udg_sheepInvul = 0;
-udg_positionOn = false;
 udg_positionArray = [];
 udg_sheepCount = [];
 udg_dummyWisps = 0;
@@ -1798,7 +1797,6 @@ const InitGlobals = () => {
   udg_giveGold = true;
   udg_wolfSpawn = 10;
   udg_sheepInvul = 5;
-  udg_positionOn = false;
   i = 0;
   while (true) {
     if ((i > 24)) break;
@@ -1944,7 +1942,6 @@ const InitGlobals = () => {
 
   udg_someVersusBoolean = false;
   udg_versusTime = 0;
-  udg_firstBlood = false;
   i = 0;
   while (true) {
     if ((i > 24)) break;
@@ -2514,13 +2511,13 @@ autoCancel = () => {
 
 declare global {
   // deno-lint-ignore prefer-const
-  let removeAllUnits: () => void;
+  let removeAllUnits: (includingNeutrals?: boolean) => void;
 }
-removeAllUnits = () => {
+removeAllUnits = (includingNeutrals = true) => {
   let i = 0;
   const g = CreateGroup()!;
   while (true) {
-    if (i === bj_MAX_PLAYER_SLOTS) break;
+    if (i === (includingNeutrals ? bj_MAX_PLAYER_SLOTS : bj_MAX_PLAYERS)) break;
     GroupEnumUnitsOfPlayer(g, Player(i)!, null);
     ForGroup(g, removeEnumUnit);
     i = i + 1;

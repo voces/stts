@@ -17,6 +17,7 @@ type Terrain = {
     mana: rect;
   };
   spawns: rect[];
+  spawnBounds: rect;
   shops: [location: rect, type: number][];
 };
 
@@ -91,6 +92,7 @@ const initTerrains = () => {
       gg_rct_Emerald_Start,
       gg_rct_Peanut_Start,
     ],
+    spawnBounds: GetEntireMapRect()!,
     shops: [
       [gg_rct_topShop1, SHOP_A],
       [gg_rct_bottomShop1, SHOP_A],
@@ -140,6 +142,7 @@ const initTerrains = () => {
       gg_rct_gh23,
       gg_rct_gh24,
     ],
+    spawnBounds: GetEntireMapRect()!,
     shops: [
       [gg_rct_Glory_Hill_ShopA1, SHOP_A_ROTATED],
       [gg_rct_Glory_Hill_ShopA2, SHOP_A_ROTATED],
@@ -150,9 +153,22 @@ const initTerrains = () => {
     ],
   });
 
-  forEachPlayer((p) =>
-    terrains.forEach((t) => t.shops.forEach((s) => CreateFogModifierRectBJ(true, p.handle, FOG_OF_WAR_VISIBLE, s[0])))
-  );
+  terrains.forEach((t) => {
+    forEachPlayer((p) => t.shops.forEach((s) => CreateFogModifierRectBJ(true, p.handle, FOG_OF_WAR_VISIBLE, s[0])));
+    let xMin = Infinity;
+    let yMin = Infinity;
+    let xMax = -Infinity;
+    let yMax = -Infinity;
+    for (let i = 0; i < t.spawns.length; i++) {
+      const x = GetRectCenterX(t.spawns[i]);
+      const y = GetRectCenterY(t.spawns[i]);
+      if (x < xMin) xMin = x;
+      if (x > xMax) xMax = x;
+      if (y < yMin) yMin = y;
+      if (y > yMax) yMax = y;
+    }
+    t.spawnBounds = Rect(xMin, yMin, xMax, yMax);
+  });
 };
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {

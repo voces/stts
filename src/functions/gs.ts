@@ -122,7 +122,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   );
   TriggerAddAction(gg_trg_gs, () => gsDistributeGold(GetTriggerPlayer()!, GetEventPlayerChatString() === "-gsa"));
 
-  let t = CreateTrigger();
+  const t = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_SPELL_CAST);
   TriggerAddAction(t, Trig_gs_UnitActions);
 });

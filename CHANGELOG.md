@@ -3,6 +3,25 @@
 - Start shouldn't reroll president
 - Delay spawn of host farm by 0.25 seconds or something?
 
+# 23c
+
+## Feature changes
+
+- Position changes
+  - Added -randomspawn
+  - Added -freespawn
+  - -position does not allow stacking spawns
+- Kaleidoscope can be consumed to swap places with your illusion
+- Captains will always be president in -versus (not -captains)
+- -z without arguments now prints your zooms
+
+## Bug fixes
+
+- Fixed -president being toggleable by anyone
+- Fixed -president not disabling
+- Fixed -pc
+- Fixed -qd
+
 # 23b
 
 ## Feature changes
@@ -11,7 +30,7 @@
   - President will no longer be a pub
   - President now has default gold priority for sheep
   - When wisp uses "g" when president mode enabled, uses -g instead of -gsa
-  - Rounds are no longer ever emitted (for elo) if president mode enabled
+  - Rounds will no longer ever be emitted (for elo) if president mode enabled
   - -president now changes to default % when toggling when % is not default %
 - Gold giving changes
   - When sheep double tabs "g", now uses -g instead of -gsa
@@ -23,7 +42,7 @@
 
 - Fixed -zoom
 - Fixed spawns
-- Fixed sheep "g" (VERIFY)
+- Fixed sheep "g"
 - Fixed -qd
 - Fixed trees not regrowing after 45 seconds
 - Fixed incorrect -gold message

@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 23b
+Sheep Tag ReVoLuTiOn 23c
 }
 
 STRING 40
@@ -3783,12 +3783,6 @@ STRING 3888
 F
 }
 
-STRING 3889
-// Items: I00X (kaleidoscope), Description (Description)
-{
-Increases the damage of illusions by 25% of base damage.
-}
-
 STRING 3895
 // Items: I006 (crystal), Ubertip (Tooltip - Extended)
 {
@@ -3885,12 +3879,6 @@ STRING 3936
 This player is the president. They must survive to win.
 }
 
-STRING 3942
-// Items: I00X (kaleidoscope), Ubertip (Tooltip - Extended)
-{
-Increases the damage of illusions by 25% of base damage.|n|cffffcc0080 gold.|r |n|cff00aeef-buy kaleidoscope: 112 gold.|r
-}
-
 STRING 3943
 // Abilities: A029 (Translocation), Tip (Tooltip - Normal)
 {
@@ -3945,23 +3933,57 @@ STRING 3957
 Upon first usage, gives your allies some of your gold (-gs). If used a second time within a second, gives all of your gold (-g).
 }
 
-STRING 3958
+STRING 3967
+// Units: h00K (Start position), Name (Name)
 {
-|cff00ff00Sheep Tag ReVoLuTiOn 23b|r
+Start position
 }
 
-STRING 3959
+STRING 3968
+// Abilities: A02B (Kaleidoscope), Tip (Tooltip - Normal)
 {
-|cff00ff0023b|r
+Kaleidoscope
 }
 
-STRING 3960
+STRING 3969
+// Abilities: A02B (Kaleidoscope), Name (Name)
 {
-|cff00ff0023b|r
+Kaleidoscope
 }
 
-STRING 3961
+STRING 3971
+// Abilities: A02D (Kaleidoscope), Tip (Tooltip - Normal)
 {
-|cff00ff0023b|r
+Kaleidoscope
+}
+
+STRING 3972
+// Abilities: A02D (Kaleidoscope), Name (Name)
+{
+Kaleidoscope
+}
+
+STRING 3974
+// Abilities: A02B (Kaleidoscope), EditorSuffix (Editor Suffix)
+{
+(placeholder)
+}
+
+STRING 3976
+// Abilities: A02D (Kaleidoscope), EditorSuffix (Editor Suffix)
+{
+(placeholder)
+}
+
+STRING 3977
+// Items: I00X (kaleidoscope), Ubertip (Tooltip - Extended)
+{
+Increases the damage of illusions by 25% of base damage.|nCan be consumed to swap places with your illusion.|n|cffffcc0080 gold.|r |n|cff00aeef-buy kaleidoscope: 112 gold.|r
+}
+
+STRING 3978
+// Items: I00X (kaleidoscope), Description (Description)
+{
+Increases the damage of illusions by 25% of base damage. Can be consumed to swap places with your illusion.
 }
 

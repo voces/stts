@@ -5,7 +5,6 @@ import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 const Trig_handicap_Actions = () => {
   const triggerPlayer = MapPlayerEx.fromEvent()!;
   const parts = GetEventPlayerChatString()?.split(" ") ?? [];
-  BJDebugMsg(`${parts.length}`);
   const adjustedPlayer = parts.length === 3 && triggerPlayer.isHost
     ? MapPlayerEx.fromIndex(S2I(parts[1]) - 1)
     : triggerPlayer;

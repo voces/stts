@@ -10,10 +10,6 @@ const reviveEnumDestructable = () => {
   );
 };
 
-const removeEnumItem = () => {
-  RemoveItem(GetEnumItem()!);
-};
-
 const resetEnumRoundStats = (i: number): void => {
   udg_apr[i] = 0;
   udg_switch[i] = 0;
@@ -21,11 +17,8 @@ const resetEnumRoundStats = (i: number): void => {
   udg_farmCount[i] = 0;
   udg_saves[i] = 0;
 
-  if (udg_AFKOn[i] === 1) {
-    udg_AFKOn[i] = 2;
-  } else if (udg_AFKOn[i] === 2) {
-    udg_AFKOn[i] = 0;
-  }
+  if (udg_AFKOn[i] === 1) udg_AFKOn[i] = 2;
+  else if (udg_AFKOn[i] === 2) udg_AFKOn[i] = 0;
 };
 
 const destroyEnumPlayerView = () => {
@@ -82,86 +75,22 @@ const pauseTimers = () => {
 };
 
 const clearBlight = () => {
-  SetBlightRectBJ(
-    false,
-    Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
-    gg_rct_Blight_Bot_1,
-  );
-  SetBlightRectBJ(
-    false,
-    Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
-    gg_rct_Blight_Left_1,
-  );
-  SetBlightRectBJ(
-    false,
-    Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
-    gg_rct_Blight_Right_1,
-  );
-  SetBlightRectBJ(
-    false,
-    Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
-    gg_rct_Blight_Top_1,
-  );
-  SetBlightRectBJ(
-    false,
-    Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
-    gg_rct_Blight_Bot_2,
-  );
-  SetBlightRectBJ(
-    false,
-    Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
-    gg_rct_Blight_Left_2,
-  );
-  SetBlightRectBJ(
-    false,
-    Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
-    gg_rct_Blight_Right_2,
-  );
-  SetBlightRectBJ(
-    false,
-    Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
-    gg_rct_Blight_Top_2,
-  );
-  SetBlightRectBJ(
-    false,
-    Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
-    gg_rct_Blight_Bot_3,
-  );
-  SetBlightRectBJ(
-    false,
-    Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
-    gg_rct_Blight_Left_3,
-  );
-  SetBlightRectBJ(
-    false,
-    Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
-    gg_rct_Blight_Right_3,
-  );
-  SetBlightRectBJ(
-    false,
-    Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
-    gg_rct_Blight_Top_3,
-  );
-  SetBlightRectBJ(
-    false,
-    Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
-    gg_rct_Blight_Bot_4,
-  );
-  SetBlightRectBJ(
-    false,
-    Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
-    gg_rct_Blight_Left_4,
-  );
-  SetBlightRectBJ(
-    false,
-    Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
-    gg_rct_Blight_Right_4,
-  );
-  SetBlightRectBJ(
-    false,
-    Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
-    gg_rct_Blight_Top_4,
-  );
+  SetBlightRectBJ(false, Player(PLAYER_NEUTRAL_AGGRESSIVE)!, gg_rct_Blight_Bot_1);
+  SetBlightRectBJ(false, Player(PLAYER_NEUTRAL_AGGRESSIVE)!, gg_rct_Blight_Left_1);
+  SetBlightRectBJ(false, Player(PLAYER_NEUTRAL_AGGRESSIVE)!, gg_rct_Blight_Right_1);
+  SetBlightRectBJ(false, Player(PLAYER_NEUTRAL_AGGRESSIVE)!, gg_rct_Blight_Top_1);
+  SetBlightRectBJ(false, Player(PLAYER_NEUTRAL_AGGRESSIVE)!, gg_rct_Blight_Bot_2);
+  SetBlightRectBJ(false, Player(PLAYER_NEUTRAL_AGGRESSIVE)!, gg_rct_Blight_Left_2);
+  SetBlightRectBJ(false, Player(PLAYER_NEUTRAL_AGGRESSIVE)!, gg_rct_Blight_Right_2);
+  SetBlightRectBJ(false, Player(PLAYER_NEUTRAL_AGGRESSIVE)!, gg_rct_Blight_Top_2);
+  SetBlightRectBJ(false, Player(PLAYER_NEUTRAL_AGGRESSIVE)!, gg_rct_Blight_Bot_3);
+  SetBlightRectBJ(false, Player(PLAYER_NEUTRAL_AGGRESSIVE)!, gg_rct_Blight_Left_3);
+  SetBlightRectBJ(false, Player(PLAYER_NEUTRAL_AGGRESSIVE)!, gg_rct_Blight_Right_3);
+  SetBlightRectBJ(false, Player(PLAYER_NEUTRAL_AGGRESSIVE)!, gg_rct_Blight_Top_3);
+  SetBlightRectBJ(false, Player(PLAYER_NEUTRAL_AGGRESSIVE)!, gg_rct_Blight_Bot_4);
+  SetBlightRectBJ(false, Player(PLAYER_NEUTRAL_AGGRESSIVE)!, gg_rct_Blight_Left_4);
+  SetBlightRectBJ(false, Player(PLAYER_NEUTRAL_AGGRESSIVE)!, gg_rct_Blight_Right_4);
+  SetBlightRectBJ(false, Player(PLAYER_NEUTRAL_AGGRESSIVE)!, gg_rct_Blight_Top_4);
 };
 
 const resetRoundStats = () => {
@@ -223,8 +152,6 @@ const Trig_startRound_Actions = () => {
       );
     }
 
-    if (udg_positionOn) udg_startLocation[i + 1] = udg_startLocation[i + 25];
-
     if (udg_AFK[i + 1] === AFK_AFK_DURING_ROUND) udg_AFK[i + 1] = AFK_AFK;
     else if (udg_AFK[i + 1] === AFK_RETURNED_DURING_ROUND || udg_AFK[i + 1] === AFK_PLAYING_PICK) {
       udg_AFK[i + 1] = AFK_PLAYING;
@@ -248,7 +175,12 @@ const Trig_startRound_Actions = () => {
   DisableTrigger(gg_trg_owner);
   DisableTrigger(gg_trg_speed);
 
-  EnumItemsInRect(GetEntireMapRect()!, null, removeEnumItem);
+  EnumItemsInRect(GetEntireMapRect()!, Filter(() => true), () => RemoveItem(GetEnumItem()!));
+  EnumDestructablesInRect(
+    GetEntireMapRect()!,
+    Filter(() => true),
+    () => DestructableRestoreLife(GetEnumDestructable()!, GetDestructableMaxLife(GetEnumDestructable()!), true),
+  );
 
   for (let i = 0; i < bj_MAX_PLAYERS; i++) {
     p = Player(i)!;

@@ -2,9 +2,8 @@ import { MapPlayerEx } from "handles/MapPlayerEx";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
 const Trig_partnerCount_Actions = () => {
-  const s = GetEventPlayerChatString()!.toLowerCase();
-  const parts = s.split(" ");
-  const pid = s.length === 1 ? GetPlayerId(GetTriggerPlayer()!) : S2I(parts[1] ?? "") - 1;
+  const parts = GetEventPlayerChatString()!.toLowerCase().split(" ");
+  const pid = parts.length === 1 ? GetPlayerId(GetTriggerPlayer()!) : S2I(parts[1] ?? "") - 1;
 
   if (pid < 0 || pid > 23) return;
 
