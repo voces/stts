@@ -5,9 +5,7 @@ import { MapPlayerEx } from "handles/MapPlayerEx";
 import { terrain } from "settings/terrain";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { clearForces } from "util/clearForces";
-import { spawnSetting } from "settings/spawns";
-
-export const spawns = new Map<player, { x: number; y: number }>();
+import { spawns, spawnSetting } from "settings/spawns";
 
 const setTeamOneSheep = () => {
   if (GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING) {
@@ -156,7 +154,7 @@ const Trig_createSheep_sheepActionsB = () => {
 
   const spawn = spawns.get(GetEnumPlayer()!)!;
 
-  if (udg_AFK[enumPlayerId] === AFK_PLAYING) PanCameraToTimedForPlayer(GetEnumPlayer()!, spawn.x, spawn.y, 0);
+  PanCameraToTimedForPlayer(GetEnumPlayer()!, spawn.x, spawn.y, 0);
   const u = CreateUnit(GetEnumPlayer()!, sheepType, spawn.x, spawn.y, 270)!;
   if (
     president.enabled &&

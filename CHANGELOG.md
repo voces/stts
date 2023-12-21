@@ -3,6 +3,18 @@
 - Start shouldn't reroll president
 - Delay spawn of host farm by 0.25 seconds or something?
 
+# 23d
+
+## Bug fixes
+
+- Kaleidoscope fixes
+  - Properly removes item after use
+  - Image is correctly disabled and renabled
+  - Only targets living images
+  - Wolf no longer wanders off when casting
+  - Wolf is disabled during the last 0.5 seconds of casting
+- Fixed an exception that occurs when Player 24 saves
+
 # 23c
 
 ## Feature changes

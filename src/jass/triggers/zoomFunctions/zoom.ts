@@ -1,13 +1,3 @@
-//===========================================================================
-// Trigger: zoom
-//
-// afk == 0 here
-// afk == 1 came back during pick, was not picked
-// afk == 2 back, watching game
-// afk == 3 went afk before the game started
-// afk == 4, went afk during game or after being picked
-//===========================================================================
-
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
 const saveZooms = (p: player): void => {
@@ -105,8 +95,6 @@ const Trig_zoom_Actions = () => {
   saveZooms(GetTriggerPlayer()!);
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_zoom: () => void;

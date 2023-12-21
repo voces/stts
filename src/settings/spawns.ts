@@ -5,6 +5,8 @@ import { addScriptHook, W3TS_HOOK } from "w3ts";
 
 export const spawnSetting = { mode: "static" as "static" | "free" | "random" };
 
+export const spawns = new Map<player, { x: number; y: number }>();
+
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   let t = TriggerEx.create();
   t.registerAnyPlayerChatEvent("-freespawn", false); // allow -freespawns

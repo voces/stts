@@ -2,6 +2,7 @@ import { GroupEx } from "handles/GroupEx";
 import { forEachPlayer } from "util/forEachPlayer";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { addScriptHook, W3TS_HOOK } from "w3ts";
+import { spawns } from "./spawns";
 
 type Terrain = {
   name: "Revolution" | "Glory Hills";
@@ -37,7 +38,11 @@ const setTerrain = (terrainIndex: number): void => {
   BlzChangeMinimapTerrainTex(terrain.minimap);
   SetCameraBoundsToRect(terrain.cameraBounds);
   PanCameraToTimed(GetRectCenterX(terrain.wolf), GetRectCenterY(terrain.wolf), 0);
-  for (let i = 0; i < terrain.spawns.length; i++) udg_startLocation[i + 1] = terrain.spawns[i];
+  for (let i = 0; i < terrain.spawns.length; i++) {
+    udg_startLocation[i + 1] = terrain.spawns[i];
+    const p = Player(i);
+    if (p) spawns.set(p, { x: GetRectCenterX(terrain.spawns[i]), y: GetRectCenterY(terrain.spawns[i]) });
+  }
 };
 
 const initTrigger = () => {

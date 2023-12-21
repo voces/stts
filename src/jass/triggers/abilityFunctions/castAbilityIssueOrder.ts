@@ -3,7 +3,7 @@ import { Trig_destroyAllFarms_Func002002002 } from "../farmFunctions/destroyAllF
 import { gsDistributeGold } from "functions/gs";
 import { giveAllGold } from "../commands/g";
 import { terrain } from "settings/terrain";
-import { spawns } from "../initializing/createSheep";
+import { spawns } from "settings/spawns";
 import { FogModifier } from "w3ts";
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { setTimeout } from "util/setTimeout";

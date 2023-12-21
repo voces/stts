@@ -1,4 +1,4 @@
-import { spawns } from "../initializing/createSheep";
+import { spawns } from "settings/spawns";
 
 const Trig_escFix_Actions = () => {
   const p = GetTriggerPlayer()!;
