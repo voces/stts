@@ -1,4 +1,5 @@
 import { president } from "modes/president";
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { setTimeout, Timeout } from "util/setTimeout";
 
 const selectedPriority = Array.from<undefined, [player: player, timeout: Timeout] | undefined>({
@@ -203,7 +204,7 @@ declare global {
 InitTrig_g = () => {
   let t = CreateTrigger();
   gg_trg_g = CreateTrigger();
-  TriggerRegisterPlayerChatEventAll(gg_trg_g, "", false);
+  registerAnyPlayerChatEvent(gg_trg_g, "");
   TriggerAddCondition(gg_trg_g, Condition(() => udg_gameStarted));
   TriggerAddAction(gg_trg_g, Trig_g_Actions);
 
@@ -211,7 +212,7 @@ InitTrig_g = () => {
   TriggerAddAction(t, Trig_g_SpellCast);
 
   t = CreateTrigger();
-  TriggerRegisterPlayerChatEventAll(t, "-gc", true);
+  registerAnyPlayerChatEvent(t, "-gc");
   TriggerAddAction(t, Trig_g_showGoldCounts);
 
   t = CreateTrigger();

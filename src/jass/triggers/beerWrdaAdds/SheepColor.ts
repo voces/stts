@@ -1,12 +1,5 @@
-//===========================================================================
-// Trigger: Sheep Color
-//
-// afk == 0 here
-// afk == 1 came back during pick, was not picked
-// afk == 2 back, watching game
-// afk == 3 went afk before the game started
-// afk == 4, went afk during game or after being picked
-//===========================================================================
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+
 const Trig_Sheep_Color_Func001002 = () => {
   SetUnitVertexColorBJ(
     GetEnumUnit()!,
@@ -103,14 +96,12 @@ const Trig_Sheep_Color_Actions = () => {
   );
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_Sheep_Color: () => void;
 }
 InitTrig_Sheep_Color = () => {
   gg_trg_Sheep_Color = CreateTrigger();
-  TriggerRegisterPlayerChatEventAll(gg_trg_Sheep_Color, "-sexy", false);
+  registerAnyPlayerChatEvent(gg_trg_Sheep_Color, "-sexy", false);
   TriggerAddAction(gg_trg_Sheep_Color, Trig_Sheep_Color_Actions);
 };

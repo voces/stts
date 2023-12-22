@@ -1,6 +1,5 @@
-//===========================================================================
-// Trigger: Anonymous
-//===========================================================================
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+
 const Anonymous_Conditions = () => {
   if ((!(GetTriggerPlayer() === udg_Custom))) {
     return false;
@@ -148,16 +147,14 @@ const Anonymous_Actions = () => {
   TriggerExecute(gg_trg_setupLeaderboard);
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_Anonymous: () => void;
 }
 InitTrig_Anonymous = () => {
   gg_trg_Anonymous = CreateTrigger();
-  TriggerRegisterPlayerChatEventAll(gg_trg_Anonymous, "-anon", true);
-  TriggerRegisterPlayerChatEventAll(gg_trg_Anonymous, "-anonymous", true);
+  registerAnyPlayerChatEvent(gg_trg_Anonymous, "-anon");
+  registerAnyPlayerChatEvent(gg_trg_Anonymous, "-anonymous");
   TriggerAddCondition(gg_trg_Anonymous, Condition(Anonymous_Conditions));
   TriggerAddAction(gg_trg_Anonymous, Anonymous_Actions);
 };

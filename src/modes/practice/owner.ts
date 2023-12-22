@@ -1,10 +1,11 @@
 import { MapPlayerEx } from "handles/MapPlayerEx";
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { removeEnumUnit } from "util/removeEnumUnit";
 import { addScriptHook, W3TS_HOOK } from "w3ts";
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   gg_trg_owner = CreateTrigger();
-  TriggerRegisterPlayerChatEventAll(gg_trg_owner, "-owner", true);
+  registerAnyPlayerChatEvent(gg_trg_owner, "-owner");
   TriggerAddAction(gg_trg_owner, () => {
     const p = MapPlayerEx.fromEvent()!;
     const u2 = udg_unit2[p.cid];

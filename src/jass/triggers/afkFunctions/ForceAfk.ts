@@ -1,4 +1,5 @@
 import { MapPlayerEx } from "handles/MapPlayerEx";
+import { enforceTeamResourceMultiboard } from "userSettings/teamResources";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 

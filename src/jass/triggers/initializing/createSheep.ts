@@ -6,6 +6,7 @@ import { terrain } from "settings/terrain";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { clearForces } from "util/clearForces";
 import { spawns, spawnSetting } from "settings/spawns";
+import { createCritter } from "misc/critter";
 
 const setTeamOneSheep = () => {
   if (GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING) {
@@ -347,7 +348,7 @@ const Trig_createSheep_Actions = () => {
   }
 
   if (terrain.name === "Revolution") {
-    Critter_createCritter();
+    createCritter();
     CreateUnit(
       Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
       FourCC("o001"),

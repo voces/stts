@@ -2,6 +2,15 @@
 
 - Start shouldn't reroll president
 - Delay spawn of host farm by 0.25 seconds or something?
+- Remove start location healthbar
+- Add z to spawn location
+- -qd might still be busted? Maybe add events that emit death times each death (dying, killing, time in round)
+
+# 23e
+
+## Bug fixes
+
+- Fixed -reset
 
 # 23d
 

@@ -1,4 +1,5 @@
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { addScriptHook, W3TS_HOOK } from "w3ts";
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
@@ -13,7 +14,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   DisableTrigger(createFarmTrigger);
 
   const t = CreateTrigger();
-  TriggerRegisterPlayerChatEventAll(t, "-farmvision", false);
+  registerAnyPlayerChatEvent(t, "-farmvision", false);
   TriggerAddCondition(t, Condition(() => GetTriggerPlayer() === udg_Custom && !udg_gameStarted));
   TriggerAddAction(t, () => {
     const s = GetEventPlayerChatString()!.toLowerCase();

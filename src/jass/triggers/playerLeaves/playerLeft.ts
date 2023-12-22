@@ -1,3 +1,4 @@
+import { enforceTeamResourceMultiboard } from "userSettings/teamResources";
 import { removeEnumUnit } from "util/removeEnumUnit";
 
 const Trig_playerLeft_Func004C = () => {
@@ -382,7 +383,6 @@ const Trig_playerLeft_Actions = () => {
   TriggerExecute(gg_trg_setupLeaderboard);
 };
 
-//===========================================================================
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_playerLeft: () => void;

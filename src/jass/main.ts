@@ -153,26 +153,6 @@ import { MapPlayerEx } from "handles/MapPlayerEx";
 import { president } from "modes/president";
 
 declare global {
-  //globals from Critter:
-  let Critter___critter: unit;
-  // deno-lint-ignore prefer-const
-  let Critter___xRect: Array<number>;
-  // deno-lint-ignore prefer-const
-  let Critter___yRect: Array<number>;
-  //endglobals from Critter
-  //globals from FileIO:
-  // Enable this if you want to allow the system to read files generated in patch 1.30 or below.
-  // NOTE: For this to work properly you must edit the 'Amls' ability and change the levels to 2
-  // as well as typing something in "Level 2 - Text - Tooltip - Normal" text field.
-  //
-  // Enabling this will also cause the system to treat files written with .write("") as empty files.
-  //
-  // This setting is really only intended for those who were already using the system in their map
-  // prior to patch 1.31 and want to keep old files created with this system to still work.
-  //endglobals from FileIO
-  //globals from HCL:
-  let HCL__command: string;
-  //endglobals from HCL
   //globals from SavingFarms:
   // deno-lint-ignore prefer-const
   let SavingFarms__g: group;
@@ -547,7 +527,6 @@ declare global {
   let gg_trg_show: trigger;
   let gg_trg_hideEsc: trigger;
   let gg_trg_setupLeaderboard: trigger;
-  let gg_trg_teamResources: trigger;
   let gg_trg_miscSmartSave: trigger;
   let gg_trg_wispControl: trigger;
   let gg_trg_sheepSwitch: trigger;
@@ -755,19 +734,6 @@ declare global {
   let goldRaces: number;
 
   //JASSHelper struct globals:
-  // deno-lint-ignore prefer-const
-  let s__File_AbilityCount: 10;
-  // deno-lint-ignore prefer-const
-  let s__File_PreloadLimit: 200;
-  let s__File_Counter: number;
-  // deno-lint-ignore prefer-const
-  let s__File_List: Array<number>;
-  // deno-lint-ignore prefer-const
-  let s__File_AbilityList: Array<number>;
-  // deno-lint-ignore prefer-const
-  let s__File_filename: Array<string>;
-  // deno-lint-ignore prefer-const
-  let s__File_buffer: Array<string>;
   let si__colorsStruct_F: number;
   let si__colorsStruct_I: number;
   // deno-lint-ignore prefer-const
@@ -795,23 +761,6 @@ declare global {
   let f__arg__this: number;
 }
 
-//globals from Critter:
-Critter___xRect = [];
-Critter___yRect = [];
-//endglobals from Critter
-//globals from FileIO:
-// Enable this if you want to allow the system to read files generated in patch 1.30 or below.
-// NOTE: For this to work properly you must edit the 'Amls' ability and change the levels to 2
-// as well as typing something in "Level 2 - Text - Tooltip - Normal" text field.
-//
-// Enabling this will also cause the system to treat files written with .write("") as empty files.
-//
-// This setting is really only intended for those who were already using the system in their map
-// prior to patch 1.31 and want to keep old files created with this system to still work.
-//endglobals from FileIO
-//globals from HCL:
-HCL__command = "";
-//endglobals from HCL
 //globals from SavingFarms:
 SavingFarms__g = CreateGroup()!;
 //endglobals from SavingFarms
@@ -975,7 +924,7 @@ AFK_AFK = 3;
 AFK_AFK_DURING_ROUND = 4;
 
 colors = [];
-playerTimes = [];
+playerTimes = Array.from({ length: bj_MAX_PLAYERS }, () => 0);
 sheepType = FourCC("uC04");
 shepType = FourCC("EC03");
 wispType = FourCC("e000");
@@ -1014,13 +963,6 @@ lastReceivedFrom = [];
 goldCount = Array.from({ length: bj_MAX_PLAYERS }, () => 0);
 
 //JASSHelper struct globals:
-s__File_AbilityCount = 10;
-s__File_PreloadLimit = 200;
-s__File_Counter = 0;
-s__File_List = [];
-s__File_AbilityList = [];
-s__File_filename = [];
-s__File_buffer = [];
 si__colorsStruct_F = 0;
 si__colorsStruct_I = 0;
 si__colorsStruct_V = [];
@@ -1074,346 +1016,7 @@ s__colorsStruct__allocate = (): number => {
   return _this;
 };
 
-//library Critter:
-
-const isLeft = (
-  x0: number,
-  y0: number,
-  x1: number,
-  y1: number,
-  x: number,
-  y: number,
-): number => {
-  return (x1 - x0) * (y - y0) - (x - x0) * (y1 - y0);
-};
-
-const isPointInRectangle = (x: number, y: number): boolean => {
-  let wn = 0;
-  let i = 0;
-  let x1: number;
-  let y1: number;
-  let x2: number;
-  let y2: number;
-
-  while (true) {
-    if (i === 4) break;
-    x1 = Critter___xRect[i];
-    y1 = Critter___yRect[i];
-    x2 = Critter___xRect[ModuloInteger(i + 1, 4)];
-    y2 = Critter___yRect[ModuloInteger(i + 1, 4)];
-
-    if (y1 <= y) {
-      if (y2 > y && isLeft(x1, y1, x2, y2, x, y) > 0) {
-        wn = wn + 1;
-      }
-    } else {
-      if (y2 <= y && isLeft(x1, y1, x2, y2, x, y) < 0) {
-        wn = wn - 1;
-      }
-    }
-
-    i = i + 1;
-  }
-
-  return wn !== 0;
-};
-
-declare global {
-  // deno-lint-ignore prefer-const
-  let Critter_createCritter: () => void;
-}
-Critter_createCritter = () => {
-  let x = GetRandomReal(-416, -128);
-  let y = GetRandomReal(-1760, -1472);
-  while (true) {
-    if (isPointInRectangle(x, y)) break;
-    x = GetRandomReal(-416, -128);
-    y = GetRandomReal(-1760, -1472);
-  }
-  Critter___critter = CreateUnit(
-    Player(PLAYER_NEUTRAL_PASSIVE)!,
-    FourCC("n009"),
-    x,
-    y,
-    GetRandomReal(0, 360),
-  )!;
-};
-
-const Critter_moveCritter = () => {
-  let x = GetRandomReal(-416, -128);
-  let y = GetRandomReal(-1760, -1472);
-  while (true) {
-    if (isPointInRectangle(x, y)) break;
-    x = GetRandomReal(-416, -128);
-    y = GetRandomReal(-1760, -1472);
-  }
-  if (Critter___critter != null && UnitAlive(Critter___critter)) {
-    IssuePointOrder(Critter___critter, "move", x, y);
-  }
-};
-
-const Critter___critterInit = () => {
-  const t = CreateTrigger();
-  TriggerRegisterTimerEvent(t, 5, true);
-  TriggerAddAction(t, Critter_moveCritter);
-  Critter___xRect[0] = -416;
-  Critter___xRect[1] = -256;
-  Critter___xRect[2] = -128;
-  Critter___xRect[3] = -320;
-  Critter___yRect[0] = -1664;
-  Critter___yRect[1] = -1472;
-  Critter___yRect[2] = -1568;
-  Critter___yRect[3] = -1760;
-};
-
-//library Critter ends
-//library FileIO:
-
-declare global {
-  // deno-lint-ignore prefer-const
-  let s__File_open: (filename: string) => number;
-}
-s__File_open = (filename: string): number => {
-  let _this = s__File_List[0];
-
-  if ((_this == null)) {
-    _this = s__File_Counter + 1;
-    s__File_Counter = _this;
-  } else {
-    s__File_List[0] = s__File_List[_this];
-  }
-
-  s__File_filename[_this] = filename;
-  s__File_buffer[_this] = null as unknown as string;
-
-  return _this;
-};
-
-// This is used to detect invalid characters which aren't supported in preload files.
-
-declare global {
-  // deno-lint-ignore prefer-const
-  let s__File_write: (_this: number, contents: string) => number;
-}
-s__File_write = (_this: number, contents: string): number => {
-  let i = 0;
-  let c = 0;
-  let len = StringLength(contents);
-  let lev = 0;
-  const prefix = "-";
-  let chunk: string;
-
-  s__File_buffer[_this] = null as unknown as string;
-
-  // Check if the string is empty. If null, the contents will be cleared.
-  if ((contents === "")) {
-    len = len + 1;
-  }
-
-  // Begin to generate the file
-  PreloadGenClear();
-  PreloadGenStart();
-  while (true) {
-    if (i >= len) break;
-
-    lev = 0;
-
-    chunk = SubString(contents, i, i + s__File_PreloadLimit)!;
-    Preload(
-      '" )\ncall BlzSetAbilityTooltip(' + I2S(s__File_AbilityList[c]) + ', "' +
-        prefix + chunk + '", ' + I2S(lev) + ")\n//",
-    );
-    i = i + s__File_PreloadLimit;
-    c = c + 1;
-  }
-  Preload('" )\nendfunction\nfunction a takes nothing returns nothing\n //');
-  PreloadGenEnd(s__File_filename[_this]);
-
-  return _this;
-};
-
-const s__File_readPreload = (_this: number): string => {
-  let i = 0;
-  let lev = 0;
-  const original: Array<string> = [];
-  let chunk = "";
-  let output = "";
-
-  while (true) {
-    if (i === s__File_AbilityCount) break;
-    original[i] = BlzGetAbilityTooltip(s__File_AbilityList[i], 0)!;
-    i = i + 1;
-  }
-  // Execute the preload file
-  Preloader(s__File_filename[_this]);
-  // Read the output
-  i = 0;
-  while (true) {
-    if (i === s__File_AbilityCount) break;
-    lev = 0;
-    // Read from ability index 1 instead of 0 if
-    // backwards compatability is enabled
-
-    // Make sure the tooltip has changed
-    chunk = BlzGetAbilityTooltip(s__File_AbilityList[i], lev)!;
-    if ((chunk === original[i])) {
-      if ((i === 0 && output === "")) {
-        return null as unknown as string;
-      }
-      return output;
-    }
-    // Check if the file is an empty string or null
-    if ((i === 0)) {
-      if ((SubString(chunk, 0, 1) !== "-")) {
-        return null as unknown as string;
-      }
-      chunk = SubString(chunk, 1, StringLength(chunk))!;
-    }
-    // Remove the prefix
-    if ((i > 0)) {
-      chunk = SubString(chunk, 1, StringLength(chunk))!;
-    }
-    // Restore the tooltip and append the chunk
-    BlzSetAbilityTooltip(s__File_AbilityList[i], original[i], lev);
-    output = output + chunk;
-    i = i + 1;
-  }
-  return output;
-};
-
-declare global {
-  // deno-lint-ignore prefer-const
-  let s__File_close: (_this: number) => void;
-}
-s__File_close = (_this: number): void => {
-  if ((s__File_buffer[_this] != null)) {
-    s__File_write(_this, s__File_readPreload(_this) + s__File_buffer[_this]);
-    s__File_buffer[_this] = null as unknown as string;
-  }
-  s__File_List[_this] = s__File_List[0];
-  s__File_List[0] = _this;
-};
-
-declare global {
-  // deno-lint-ignore prefer-const
-  let s__File_readEx: (_this: number, close: boolean) => string;
-}
-s__File_readEx = (_this: number, close: boolean): string => {
-  let output = s__File_readPreload(_this);
-  const buf = s__File_buffer[_this];
-
-  if (close) {
-    s__File_close(_this);
-  }
-
-  if ((output == null)) {
-    return buf;
-  }
-
-  if ((buf != null)) {
-    output = output + buf;
-  }
-
-  return output;
-};
-
-//Implemented from module FileIO__FileInit:
-const s__File_FileIO__FileInit___onInit = () => {
-  // We can't use a single ability with multiple levels because
-  // tooltips return the first level's value if the value hasn't
-  // been set. This way we don't need to edit any object editor data.
-  s__File_AbilityList[0] = FourCC("Amls");
-  s__File_AbilityList[1] = FourCC("Aroc");
-  s__File_AbilityList[2] = FourCC("Amic");
-  s__File_AbilityList[3] = FourCC("Amil");
-  s__File_AbilityList[4] = FourCC("Aclf");
-  s__File_AbilityList[5] = FourCC("Acmg");
-  s__File_AbilityList[6] = FourCC("Adef");
-  s__File_AbilityList[7] = FourCC("Adis");
-  s__File_AbilityList[8] = FourCC("Afbt");
-  s__File_AbilityList[9] = FourCC("Afbk");
-
-  // Backwards compatability check
-
-  // Read check
-  // s__File_readEx(
-  //   s__File_write(s__File_open("FileTester.pld"), "FileIO_"),
-  //   true,
-  // );
-};
-
-//library FileIO ends
-//library HCL:
-
-const HCL__init = () => {
-  let i: number;
-  let j: number;
-  let h: number;
-  let v: number;
-  const chars = "abcdefghijklmnopqrstuvwxyz0123456789 -=,.";
-  const map: Array<number> = [];
-  const blocked: Array<boolean> = [];
-
-  //precompute mapping [have to avoid invalid and normal handicaps]
-  blocked[0] = true;
-  blocked[50] = true;
-  blocked[60] = true;
-  blocked[70] = true;
-  blocked[80] = true;
-  blocked[90] = true;
-  blocked[100] = true;
-  i = 0;
-  j = 0;
-  while (true) {
-    if (blocked[j]) {
-      j = j + 1;
-    }
-    if (j >= 256) break;
-    map[j] = i;
-    i = i + 1;
-    j = j + 1;
-  }
-
-  //Extract command string from player handicaps
-  i = 0;
-  while (true) {
-    if (i >= 24) break;
-    h = R2I(100 * GetPlayerHandicap(Player(i)!) + 0.5);
-    if (!blocked[h]) {
-      h = map[h];
-      v = h / 12;
-      h = h - v * 12;
-      SetPlayerHandicap(Player(i)!, 0.5 + h / 10);
-      HCL__command = HCL__command + SubString(chars, v, v + 1);
-    }
-    i = i + 1;
-  }
-};
-
-//library HCL ends
 //library Util:
-
-//Chat event for everyone
-declare global {
-  // deno-lint-ignore prefer-const
-  let TriggerRegisterPlayerChatEventAll: (
-    t: trigger,
-    s: string,
-    b: boolean,
-  ) => void;
-}
-TriggerRegisterPlayerChatEventAll = (
-  t: trigger,
-  s: string,
-  b: boolean,
-): void => {
-  let i = 0;
-  while (true) {
-    if (i === 24) break;
-    TriggerRegisterPlayerChatEvent(t, Player(i)!, s, b);
-    i = i + 1;
-  }
-};
 
 //Splits a string into arguments around string c. If bb true, first argument is ignored.
 declare global {
@@ -1604,94 +1207,6 @@ transferOwnershipOfHostFarm = () => {
 };
 
 //library transferHelpers ends
-//library TeamResources:
-
-declare global {
-  // deno-lint-ignore prefer-const
-  let enforceTeamResourceMultiboard: () => void;
-}
-enforceTeamResourceMultiboard = () => {
-  if (
-    teamResources === TEAM_RESOURCES_HIDDEN ||
-    (teamResources === TEAM_RESOURCES_TWINED &&
-      !(IsLeaderboardDisplayed(PlayerGetLeaderboard(GetLocalPlayer())!)))
-  ) {
-    MultiboardSuppressDisplay(true);
-  } else {
-    MultiboardSuppressDisplay(false);
-  }
-};
-
-const Trig_teamResources_Actions = () => {
-  if (
-    GetLocalPlayer() !== GetTriggerPlayer()! ||
-    StringCase(GetEventPlayerChatString()!, false) !== "-teamresources"
-  ) {
-    return;
-  }
-
-  teamResources = ModuloInteger(teamResources + 1, 3);
-  s__File_close(
-    s__File_write(s__File_open("revo/teamResources.txt"), I2S(teamResources)!),
-  );
-  if (teamResources === TEAM_RESOURCES_DEFAULT) {
-    DisplayTimedTextToPlayer(
-      GetTriggerPlayer()!,
-      0,
-      0,
-      15,
-      "                              |CFF00AEEFShared resources shown",
-    );
-  } else if (teamResources === TEAM_RESOURCES_TWINED) {
-    DisplayTimedTextToPlayer(
-      GetTriggerPlayer()!,
-      0,
-      0,
-      15,
-      "                              |CFF00AEEFShared resources twinned",
-    );
-  } else {
-    DisplayTimedTextToPlayer(
-      GetTriggerPlayer()!,
-      0,
-      0,
-      15,
-      "                              |CFF00AEEFShared resources hidden",
-    );
-  }
-
-  enforceTeamResourceMultiboard();
-};
-
-const Trig_teamResources_load = () => {
-  const s = s__File_readEx(s__File_open("revo/teamResources.txt"), true);
-  teamResources = S2I(s);
-  enforceTeamResourceMultiboard();
-};
-
-//===========================================================================
-const InitTrig_teamResources = () => {
-  let i = 0;
-  const t = CreateTrigger();
-
-  gg_trg_teamResources = CreateTrigger();
-  while (true) {
-    if (i === bj_MAX_PLAYERS) break;
-    TriggerRegisterPlayerChatEvent(
-      gg_trg_teamResources,
-      Player(i)!,
-      "-teamresources",
-      false,
-    );
-    i = i + 1;
-  }
-  TriggerAddAction(gg_trg_teamResources, Trig_teamResources_Actions);
-
-  TriggerRegisterTimerEventSingle(t, 0.01);
-  TriggerAddAction(t, Trig_teamResources_load);
-};
-
-//library TeamResources ends
 //===========================================================================
 //
 // Sheep Tag ReVoLuTiOn 9.5.5
@@ -2575,7 +2090,6 @@ const InitCustomTriggers = () => {
   InitTrig_show();
   InitTrig_hideEsc();
   InitTrig_setupLeaderboard();
-  InitTrig_teamResources();
   InitTrig_miscSmartSave();
   InitTrig_sheepSwitch();
   InitTrig_sheepVamp();
@@ -2699,10 +2213,6 @@ const RunInitializationTriggers = () => {
 
 //===========================================================================
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
-  s__File_FileIO__FileInit___onInit();
-  Critter___critterInit();
-  HCL__init();
-
   InitGlobals();
   InitCustomTriggers();
   RunInitializationTriggers();

@@ -1,6 +1,5 @@
-//===========================================================================
-// Trigger: createTimer
-//===========================================================================
+import { enforceTeamResourceMultiboard } from "userSettings/teamResources";
+
 const Trig_createTimer_Func001Func001A = () => {
   ForceRemovePlayerSimple(GetEnumPlayer()!, udg_Draft);
 };
@@ -25,8 +24,6 @@ const Trig_createTimer_Actions = () => {
   }
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_createTimer: () => void;

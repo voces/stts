@@ -1,11 +1,12 @@
-export {};
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_autoCancel: () => void;
 }
 InitTrig_autoCancel = () => {
   gg_trg_autoCancel = CreateTrigger();
-  TriggerRegisterPlayerChatEventAll(gg_trg_autoCancel, "-autocancel", false);
+  registerAnyPlayerChatEvent(gg_trg_autoCancel, "-autocancel");
 
   TriggerAddCondition(
     gg_trg_autoCancel,

@@ -1,3 +1,4 @@
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { addScriptHook, W3TS_HOOK } from "w3ts";
 
 const BuySellItem__itemShorthand: string[] = [];
@@ -156,15 +157,15 @@ const registerItem = (
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   let t = CreateTrigger();
-  TriggerRegisterPlayerChatEventAll(t, "-b", false);
+  registerAnyPlayerChatEvent(t, "-b", false);
   TriggerAddAction(t, BuySellItem__buyAction);
 
   t = CreateTrigger();
-  TriggerRegisterPlayerChatEventAll(t, "-s", false);
+  registerAnyPlayerChatEvent(t, "-s", false);
   TriggerAddAction(t, BuySellItem__sellAction);
 
   t = CreateTrigger();
-  TriggerRegisterPlayerChatEventAll(t, "-sellall", true);
+  registerAnyPlayerChatEvent(t, "-sellall");
   TriggerAddAction(t, BuySellItem__sellAllAction);
 
   registerItem("1c", 200, FourCC("I005"));

@@ -1,3 +1,4 @@
+import { enforceTeamResourceMultiboard } from "userSettings/teamResources";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
 const Trig_draftVersus_Conditions = () => {

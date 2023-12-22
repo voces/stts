@@ -1,6 +1,5 @@
-//===========================================================================
-// Trigger: castAbilitySpellCast
-//===========================================================================
+import { enforceTeamResourceMultiboard } from "userSettings/teamResources";
+
 const Trig_castAbility_Actions = () => {
   const u = GetTriggerUnit()!;
   const p = GetOwningPlayer(u);
@@ -27,8 +26,6 @@ const Trig_castAbility_Actions = () => {
   }
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_castAbilitySpellCast: () => void;

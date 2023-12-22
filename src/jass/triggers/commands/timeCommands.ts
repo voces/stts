@@ -1,5 +1,8 @@
 //===========================================================================
 // Trigger: timeCommands
+
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+
 //===========================================================================
 const Trig_timeCommands_Actions = () => {
   let i = 0;
@@ -323,7 +326,7 @@ const Trig_timeCommands_Actions = () => {
     while (true) {
       if (i === 24) break;
       s__times_pTimeMax[playerTimes[i]] = 0;
-      s___times_pTime[s__times_pTime[playerTimes[i]] + i] = 0;
+      s___times_pTime[s__times_pTime[playerTimes[i]] ?? 0 + i] = 0;
       s__times_sheepCount[playerTimes[i]] = 0;
       i = i + 1;
     }
@@ -382,28 +385,22 @@ const Trig_timeCommands_Actions = () => {
   }
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_timeCommands: () => void;
 }
 InitTrig_timeCommands = () => {
   gg_trg_timeCommands = CreateTrigger();
-  TriggerRegisterPlayerChatEventAll(gg_trg_timeCommands, "-times", false);
-  TriggerRegisterPlayerChatEventAll(gg_trg_timeCommands, "stime", false);
-  TriggerRegisterPlayerChatEventAll(gg_trg_timeCommands, "rtime", false);
-  TriggerRegisterPlayerChatEventAll(gg_trg_timeCommands, "-ss", false);
-  TriggerRegisterPlayerChatEventAll(
-    gg_trg_timeCommands,
-    "-sheepSurvived",
-    false,
-  );
-  TriggerRegisterPlayerChatEventAll(gg_trg_timeCommands, "-mytimes", false);
-  TriggerRegisterPlayerChatEventAll(gg_trg_timeCommands, "-maxtimes", false);
-  TriggerRegisterPlayerChatEventAll(gg_trg_timeCommands, "-leader", false);
-  TriggerRegisterPlayerChatEventAll(gg_trg_timeCommands, "-loser", false);
-  TriggerRegisterPlayerChatEventAll(gg_trg_timeCommands, "-reset", false);
-  TriggerRegisterPlayerChatEventAll(gg_trg_timeCommands, "-atime", false);
+  registerAnyPlayerChatEvent(gg_trg_timeCommands, "-times", false); // accepts an argument
+  registerAnyPlayerChatEvent(gg_trg_timeCommands, "-stime");
+  registerAnyPlayerChatEvent(gg_trg_timeCommands, "-rtime", false); // -rtimes
+  registerAnyPlayerChatEvent(gg_trg_timeCommands, "-ss");
+  registerAnyPlayerChatEvent(gg_trg_timeCommands, "-sheepSurvived");
+  registerAnyPlayerChatEvent(gg_trg_timeCommands, "-mytimes");
+  registerAnyPlayerChatEvent(gg_trg_timeCommands, "-maxtimes");
+  registerAnyPlayerChatEvent(gg_trg_timeCommands, "-leader");
+  registerAnyPlayerChatEvent(gg_trg_timeCommands, "-loser");
+  registerAnyPlayerChatEvent(gg_trg_timeCommands, "-reset");
+  registerAnyPlayerChatEvent(gg_trg_timeCommands, "-atime", false); // -atimes
   TriggerAddAction(gg_trg_timeCommands, Trig_timeCommands_Actions);
 };

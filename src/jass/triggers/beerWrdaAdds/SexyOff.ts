@@ -1,4 +1,5 @@
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
 const Trig_SexyOff_Conditions = () => {
   if ((!(GetTriggerPlayer() === udg_Custom))) {
@@ -90,7 +91,7 @@ declare global {
 }
 InitTrig_SexyOff = () => {
   gg_trg_SexyOff = CreateTrigger();
-  TriggerRegisterPlayerChatEventAll(gg_trg_SexyOff, "-no sexy", true);
+  registerAnyPlayerChatEvent(gg_trg_SexyOff, "-no sexy");
   TriggerAddCondition(gg_trg_SexyOff, Condition(Trig_SexyOff_Conditions));
   TriggerAddAction(gg_trg_SexyOff, Trig_SexyOff_Actions);
 };

@@ -13,6 +13,7 @@ import { inflateGoldCount } from "../commands/g";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { MapPlayerEx } from "handles/MapPlayerEx";
+import { enforceTeamResourceMultiboard } from "userSettings/teamResources";
 
 const captainsAndAfk = () => {
   if ((!(udg_Teams === TEAMS_CAPTAINS))) {

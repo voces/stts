@@ -1,7 +1,4 @@
-//===========================================================================
-// Trigger: hideEsc
-//===========================================================================
-// hideEsc
+import { enforceTeamResourceMultiboard } from "userSettings/teamResources";
 
 const Trig_hideEsc_filterNonControlledUnits = () => {
   const p = GetOwningPlayer(GetFilterUnit()!);
@@ -53,8 +50,6 @@ const Trig_hideEsc_Actions = () => {
   enforceTeamResourceMultiboard();
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_hideEsc: () => void;

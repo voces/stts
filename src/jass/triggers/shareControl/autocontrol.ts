@@ -1,6 +1,5 @@
-//===========================================================================
-// Trigger: autocontrol
-//===========================================================================
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+import { File } from "w3ts";
 
 const Trig_autocontrol_Actions = () => {
   const enabled = !(udg_autocontrol[GetPlayerId(GetTriggerPlayer()!)]);
@@ -26,11 +25,11 @@ const Trig_autocontrol_Actions = () => {
     );
   }
 
-  s__File_close(s__File_write(s__File_open("revo/autocontrol.txt"), B2S(enabled)));
+  File.write("revo/autocontrol.txt", B2S(enabled));
 };
 
 const Trig_autocontrol_load = () => {
-  let s = s__File_readEx(s__File_open("revo/autocontrol.txt"), true);
+  let s = File.read("revo/autocontrol.txt");
   if (s == null) s = "false";
   BlzSendSyncData("autocontrol", s);
 };
@@ -39,8 +38,6 @@ const Trig_autocontrol_sync = () => {
   udg_autocontrol[GetPlayerId(GetTriggerPlayer()!)] = S2B(BlzGetTriggerSyncData()!);
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_autocontrol: () => void;
@@ -51,7 +48,7 @@ InitTrig_autocontrol = () => {
   let i = 0;
 
   gg_trg_autocontrol = CreateTrigger();
-  TriggerRegisterPlayerChatEventAll(gg_trg_autocontrol, "-autocontrol", true);
+  registerAnyPlayerChatEvent(gg_trg_autocontrol, "-autocontrol");
   TriggerAddAction(gg_trg_autocontrol, Trig_autocontrol_Actions);
 
   TriggerRegisterTimerEventSingle(t, 0.01);

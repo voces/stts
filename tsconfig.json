@@ -8,6 +8,8 @@
       "war3-types-strict/1.33.0"
     ],
     "baseUrl": "./src",
-    "lib": ["es2019"]
+    "lib": ["es2019"],
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
   }
 }

@@ -1,16 +1,10 @@
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+import { File } from "w3ts";
 
 const saveZooms = (p: player): void => {
   if (p !== GetLocalPlayer()) return;
-
-  s__File_close(
-    s__File_write(
-      s__File_open("revo/zooms.txt"),
-      R2S(udg_sheepZoom[GetConvertedPlayerId(GetTriggerPlayer()!)]) + " " +
-        R2S(udg_wolfZoom[GetConvertedPlayerId(GetTriggerPlayer()!)]) + " " +
-        R2S(udg_wispZoom[GetConvertedPlayerId(GetTriggerPlayer()!)]),
-    ),
-  );
+  const cid = GetConvertedPlayerId(GetTriggerPlayer()!);
+  File.write("revo/zooms.txt", `${R2S(udg_sheepZoom[cid])} ${R2S(udg_wolfZoom[cid])} ${R2S(udg_wispZoom[cid])}`);
 };
 
 const smolNumbers = (val: number): number => {
@@ -58,7 +52,7 @@ const loadZooms = () => {
   let val2 = 0;
   let val3 = 0;
 
-  const s = s__File_readEx(s__File_open("revo/zooms.txt"), true);
+  const s = File.read("revo/zooms.txt");
 
   if (!s || s.length === 0) {
     val1 = 1650;
