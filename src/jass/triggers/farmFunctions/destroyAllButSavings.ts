@@ -8,13 +8,6 @@ const Trig_destroyAllButSavings_Func002002002 = () => {
   );
 };
 
-const Trig_destroyAllButSavings_Func007Func001C = () => {
-  if ((!(udg_dummyWisps > 0))) {
-    return false;
-  }
-  return true;
-};
-
 const Trig_destroyAllButSavings_Actions = () => {
   udg_atempint = GetConvertedPlayerId(GetTriggerPlayer()!);
   udg_atempgroup = GetUnitsOfPlayerMatching(
@@ -36,13 +29,7 @@ const Trig_destroyAllButSavings_Actions = () => {
   bj_forLoopAIndexEnd = udg_lastPlayer;
   while (true) {
     if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-    if ((Trig_destroyAllButSavings_Func007Func001C())) {
-      LeaderboardSetPlayerItemValueBJ(
-        ConvertedPlayer(udg_atempint)!,
-        PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-        udg_saves[udg_atempint],
-      );
-    } else {
+    if (!udg_switchOn) {
       LeaderboardSetPlayerItemValueBJ(
         ConvertedPlayer(udg_atempint)!,
         PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,

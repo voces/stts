@@ -1,4 +1,7 @@
+import { displaySwitchWinner } from "modes/switch/winnerMsg";
 import { maybeRotate } from "teams/smart";
+import { displayTimedTextToAll } from "util/displayTimedTextToAll";
+import { setTimeout } from "util/setTimeout";
 
 const updateLastSurvivorStats = () => {
   udg_sheepSurvived[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()!))] =
@@ -24,9 +27,11 @@ const Trig_sheepWin_Actions = () => {
     ForForce(udg_Spirit, updateSheepStats);
     maybeRotate();
   }
+  if (udg_switchOn) displaySwitchWinner();
   if (udg_Teams === TEAMS_LOCK_IE_PLAYING) {
     if (udg_versus === 1) udg_gameTime[1] = udg_time;
     else if (udg_versus === 2) udg_gameTime[2] = udg_time;
+    else setTimeout(0.05, () => displayTimedTextToAll(`\n                              ${fullTimeString}.`));
     updateTimes();
     TriggerExecute(gg_trg_startRound);
   }

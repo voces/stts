@@ -32,21 +32,16 @@ const gsSort = () => {
 // Fills gsDist; expects gsAmounts, and gsLength to be set
 const gsDistribute = (initial: number): void => {
   let total = initial;
-  let i = 0;
   let idx = 0;
 
   // Sorts gsAmounts increasing, bringing gsPlayerIndices with it
   gsSort();
 
   // First pass find total and count
-  while (true) {
-    if (i === gsLength) break;
+  for (let i = 0; i < gsLength; i++) {
     idx = i;
     total = total + gsAmounts[i];
-    if (i >= gsLength - 1 || total / (idx + 1) <= gsAmounts[idx + 1]) {
-      break;
-    }
-    i = i + 1;
+    if (i >= gsLength - 1 || total / (idx + 1) <= gsAmounts[idx + 1]) break;
   }
 
   const count = idx + 1;
@@ -54,14 +49,9 @@ const gsDistribute = (initial: number): void => {
   const remainder = ModuloInteger(total, count);
 
   // Figure out gsDist gsAmounts
-  i = 0;
-  while (true) {
-    if (i === count) break;
-
+  for (let i = 0; i < count; i++) {
     if (i < remainder) gsDist[i] = avg - gsAmounts[i] + 1;
     else gsDist[i] = avg - gsAmounts[i];
-
-    i = i + 1;
   }
 };
 
@@ -87,6 +77,8 @@ export const gsDistributeGold = (fromPlayer: player, allGold: boolean): void => 
       gsLength = gsLength + 1;
     }
   }
+
+  if (gsLength === 0) return;
 
   gsDistribute(GetPlayerState(fromPlayer, PLAYER_STATE_RESOURCE_GOLD));
 

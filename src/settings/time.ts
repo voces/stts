@@ -5,9 +5,13 @@ const checkAutoTimeFlag = () => {
   const oldTime = udg_time;
   defaultTime();
   if (oldTime !== udg_time) {
+    BJDebugMsg("udg_autoTime = false");
     udg_autoTime = false;
     udg_time = oldTime;
-  } else udg_autoTime = true;
+  } else {
+    BJDebugMsg("udg_autoTime = true");
+    udg_autoTime = true;
+  }
 };
 
 export const updateLeaderboardSettingsDisplay = () => {

@@ -19,7 +19,7 @@ const Trig_spiritDies_Actions = () => {
 
   ResumeTimer(udg_sheepTimer[dyingPlayerId]);
 
-  if (udg_sheepZoom[dyingPlayerId] > 0) {
+  if ((udg_sheepZoom[dyingPlayerId] ?? 0) > 0) {
     SetCameraFieldForPlayer(dyingPlayer, CAMERA_FIELD_TARGET_DISTANCE, udg_sheepZoom[dyingPlayerId], 0);
   }
 

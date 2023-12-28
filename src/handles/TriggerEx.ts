@@ -12,6 +12,8 @@ export class TriggerEx extends Trigger {
         return this.startsWith.some((s2) => s.startsWith(s2));
       });
     }
+
+    return this;
   }
 
   static create(): TriggerEx {

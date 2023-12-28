@@ -1,3 +1,4 @@
+import { startRuneTimer } from "functions/runes";
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { terrain } from "settings/terrain";
 import { forEachPlayer } from "util/forEachPlayer";
@@ -45,8 +46,7 @@ const Trig_createWolves_Actions = () => {
   PauseTimerBJ(false, udg_Timer);
   TimerDialogDisplayBJ(true, udg_TimerWindow);
   if (!udg_practiceOn && !udg_switchOn && !vampOn) {
-    udg_runeSpawn = 0;
-    TimerStart(udg_RuneTimer[0], 90, false, null);
+    startRuneTimer();
     ForForce(udg_Sheep, () => {
       const cid = MapPlayerEx.fromEnum()!.cid;
       if (udg_firstRound[cid]) {

@@ -1,6 +1,8 @@
 import { Timer } from "w3ts";
 import { withUnitsInRange } from "util/withGroup";
 import { setTimeout } from "util/setTimeout";
+import { UNIT_TYPE_ID_GOLEM } from "constants";
+import { MapPlayerEx } from "handles/MapPlayerEx";
 
 let translocateTicker: Timer;
 const translocates: unit[] = [];
@@ -58,12 +60,15 @@ const translocateTick = () => {
     if (!UnitAlive(u)) translocates.splice(i, 1);
     const mana = GetUnitState(u, UNIT_STATE_MANA);
     if (mana < 10) continue;
+    const p = MapPlayerEx.fromOwner(u);
     const picked = withUnitsInRange(
       GetUnitX(u),
       GetUnitY(u),
       152,
       (g) => GroupPickRandomUnit(g.handle),
-      (u2) => u2.typeId === sheepType,
+      (u2) =>
+        (u2.typeId === sheepType || u2.typeId === shepType || u2.typeId === UNIT_TYPE_ID_GOLEM) &&
+        u2.isAlly(p),
     );
     if (picked) translocate(picked, u);
   }
@@ -82,22 +87,9 @@ const Trig_createFarm_Actions = () => {
     return;
   }
 
-  udg_farmCount[playerId] = udg_farmCount[playerId] + 1;
-  udg_totalFarmsBuilt[playerId] = udg_totalFarmsBuilt[playerId] + 1;
-  SetUnitManaBJ(
-    udg_unit[playerId],
-    I2R(
-      GetPlayerState(
-        GetOwningPlayer(u),
-        PLAYER_STATE_RESOURCE_GOLD,
-      ),
-    ),
-  );
-  SetPlayerStateBJ(
-    ConvertedPlayer(playerId)!,
-    PLAYER_STATE_RESOURCE_LUMBER,
-    udg_farmCount[playerId],
-  );
+  udg_farmCount[playerId]++;
+  udg_totalFarmsBuilt[playerId]++;
+  SetPlayerStateBJ(ConvertedPlayer(playerId)!, PLAYER_STATE_RESOURCE_LUMBER, udg_farmCount[playerId]);
 
   if (GetUnitTypeId(u) === translocationFarmType) {
     translocate(udg_unit[GetPlayerId(GetOwningPlayer(u)) + 1], u);
@@ -110,13 +102,7 @@ const Trig_createFarm_Actions = () => {
   while (true) {
     if (i > bj_MAX_PLAYERS) break;
 
-    if (udg_dummyWisps > 0) {
-      LeaderboardSetPlayerItemValueBJ(
-        ConvertedPlayer(playerId)!,
-        PlayerGetLeaderboardBJ(ConvertedPlayer(i)!)!,
-        udg_saves[playerId],
-      );
-    } else {
+    if (!udg_switchOn) {
       LeaderboardSetPlayerItemValueBJ(
         ConvertedPlayer(playerId)!,
         PlayerGetLeaderboardBJ(ConvertedPlayer(i)!)!,

@@ -8,6 +8,9 @@ import { forEachPlayingPlayer } from "util/forEachPlayingPlayer";
 const perfectPlayerVariables: player[] = [];
 let pubStart = 0;
 
+let lastActivePlayerCount = 0;
+let lastSheepToDraft = 0;
+
 const isActivePlayer = (p: player) =>
   GetPlayerSlotState(p) === PLAYER_SLOT_STATE_PLAYING &&
   udg_AFK[GetConvertedPlayerId(p)] === AFK_PLAYING && !(pub[GetPlayerId(p)]);
@@ -119,7 +122,7 @@ const perfectSmart = (): void => {
 };
 
 const draftLowestSCToSpirit = () => {
-  let minimumSheepCount = 9999;
+  let minimumSheepCount = Infinity;
   for (let i = 0; i < bj_MAX_PLAYERS; i++) {
     if (IsPlayerInForce(Player(i)!, udg_Wolf) && minimumSheepCount > udg_sheepCount[i + 1]) {
       minimumSheepCount = udg_sheepCount[i + 1];
@@ -135,7 +138,7 @@ const draftLowestSCToSpirit = () => {
 };
 
 const draftLowestPCToDraft = () => {
-  let minimumPartnerCount = 9999;
+  let minimumPartnerCount = Infinity;
   let i: number;
   let n: number;
   const partnerCounts: Array<number> = [];
@@ -175,7 +178,7 @@ const draftLowestPCToDraft = () => {
 
 export const maybeRotate = () => {
   const currentSc = udg_sheepCount[GetConvertedPlayerId(rotated)];
-  let lowestSc = 9999;
+  let lowestSc = Infinity;
   let ties = 0;
   let i: number;
   let newRotated!: player;
@@ -290,13 +293,21 @@ const smart = () => {
   const parts = udg_lastGameString.toLowerCase().split(" ");
 
   let sheepToDraft: number;
+  const activePlayerCount = getActivePlayerCount();
   if (udg_runSmart || parts[0] !== "-smart") {
-    sheepToDraft = Math.floor(getActivePlayerCount() / 2 - 1);
+    sheepToDraft = lastActivePlayerCount === activePlayerCount
+      ? lastSheepToDraft
+      : Math.floor(activePlayerCount / 2 - 1);
   } else {
-    if (udg_lastGameString === "-smart") sheepToDraft = Math.floor(getActivePlayerCount() / 2 - 1);
-    else sheepToDraft = S2I(parts[1]);
+    if (udg_lastGameString === "-smart") {
+      sheepToDraft = lastActivePlayerCount === activePlayerCount
+        ? lastSheepToDraft
+        : Math.floor(activePlayerCount / 2 - 1);
+    } else sheepToDraft = S2I(parts[1]);
   }
   if (sheepToDraft <= 0) sheepToDraft = 1;
+  lastSheepToDraft = sheepToDraft;
+  lastActivePlayerCount = activePlayerCount;
   clearForces();
   if (perfectSmartEnabled) {
     if (

@@ -2,6 +2,7 @@ import { MapPlayerEx } from "handles/MapPlayerEx";
 import { enforceTeamResourceMultiboard } from "userSettings/teamResources";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+import { sleep } from "w3ts";
 
 const Trig_Force_Afk_Func001C = () => {
   if ((!(GetTriggerPlayer() === udg_Custom))) {
@@ -679,7 +680,7 @@ const captainsAndNoOneLeftToDraft = () => {
   return true;
 };
 
-const Trig_Force_Afk_Actions = () => {
+const Trig_Force_Afk_Actions = async () => {
   udg_atempint = S2I(SubStringBJ(GetEventPlayerChatString()!, 7, 8)!);
   if (udg_AFK[udg_atempint] < 3) {
     if (udg_gameStarted) {
@@ -850,7 +851,7 @@ const Trig_Force_Afk_Actions = () => {
     enforceTeamResourceMultiboard();
     MultiboardMinimizeBJ(true, udg_captainsMultiboard);
     DestroyMultiboardBJ(udg_captainsMultiboard);
-    TriggerSleepAction(0.01);
+    await sleep(0.01);
     DisableTrigger(gg_trg_giveUpCaptain);
     DisableTrigger(gg_trg_draftPlayer);
     TriggerExecute(gg_trg_createSheep);

@@ -4,11 +4,12 @@ import { gsDistributeGold } from "functions/gs";
 import { giveAllGold } from "../commands/g";
 import { terrain } from "settings/terrain";
 import { spawns } from "settings/spawns";
-import { FogModifier } from "w3ts";
+import { FogModifier, sleep } from "w3ts";
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { setTimeout } from "util/setTimeout";
+import { UNIT_TYPE_ID_START_POSITION } from "constants";
 
-const Trig_castAbility2_Actions = () => {
+const Trig_castAbility2_Actions = async () => {
   let i = 1;
   let x: number;
   let y: number;
@@ -41,18 +42,8 @@ const Trig_castAbility2_Actions = () => {
         );
         ForGroupBJ(udg_atempgroup, removeEnumUnit);
         DestroyGroup(udg_atempgroup);
-        if (udg_dummyWisps > 0) {
-          LeaderboardSetPlayerItemValueBJ(
-            ConvertedPlayer(i)!,
-            GetLastCreatedLeaderboard()!,
-            udg_saves[i],
-          );
-        } else {
-          LeaderboardSetPlayerItemValueBJ(
-            ConvertedPlayer(i)!,
-            GetLastCreatedLeaderboard()!,
-            udg_farmCount[i],
-          );
+        if (!udg_switchOn) {
+          LeaderboardSetPlayerItemValueBJ(ConvertedPlayer(i)!, GetLastCreatedLeaderboard()!, udg_farmCount[i]);
         }
       }
     } else {
@@ -86,18 +77,8 @@ const Trig_castAbility2_Actions = () => {
       PLAYER_STATE_RESOURCE_LUMBER,
       udg_farmCount[i],
     );
-    if (udg_wispPoints > 0) {
-      LeaderboardSetPlayerItemValueBJ(
-        ConvertedPlayer(i)!,
-        GetLastCreatedLeaderboard()!,
-        udg_saves[i],
-      );
-    } else {
-      LeaderboardSetPlayerItemValueBJ(
-        ConvertedPlayer(i)!,
-        GetLastCreatedLeaderboard()!,
-        udg_farmCount[i],
-      );
+    if (!udg_switchOn) {
+      LeaderboardSetPlayerItemValueBJ(ConvertedPlayer(i)!, GetLastCreatedLeaderboard()!, udg_farmCount[i]);
     }
   } else if (orderString === "custom_n000") {
     x = GetUnitX(GetTriggerUnit()!);
@@ -116,17 +97,18 @@ const Trig_castAbility2_Actions = () => {
   } else if (orderString === "manashieldon") {
     i = GetRandomInt(0, 10000);
     gSheepAbilityFlag[GetPlayerId(GetOwningPlayer(GetTriggerUnit()!))] = i;
-    TriggerSleepAction(0.25);
-    if (gSheepAbilityFlag[GetPlayerId(GetOwningPlayer(GetTriggerUnit()!))] === i) {
-      gSheepAbilityFlag[GetPlayerId(GetOwningPlayer(GetTriggerUnit()!))] = -1;
-      gsDistributeGold(GetOwningPlayer(GetTriggerUnit()!), false);
+    const u = GetTriggerUnit()!;
+    await sleep(0.25);
+    if (gSheepAbilityFlag[GetPlayerId(GetOwningPlayer(u))] === i) {
+      gSheepAbilityFlag[GetPlayerId(GetOwningPlayer(u))] = -1;
+      gsDistributeGold(GetOwningPlayer(u), false);
     }
   } else if (orderString === "manashieldoff") {
     gSheepAbilityFlag[GetPlayerId(GetOwningPlayer(GetTriggerUnit()!))] = -1;
     giveAllGold(GetOwningPlayer(GetTriggerUnit()!));
   } else if (
     (orderString === "smart" || orderString === "move" || orderString === "patrol") &&
-    GetUnitTypeId(GetTriggerUnit()!) === FourCC("h00K")
+    GetUnitTypeId(GetTriggerUnit()!) === UNIT_TYPE_ID_START_POSITION
   ) {
     let x = Math.max(Math.min(GetOrderPointX(), GetRectMaxX(terrain.spawnBounds)), GetRectMinX(terrain.spawnBounds));
     let y = Math.max(Math.min(GetOrderPointY(), GetRectMaxY(terrain.spawnBounds)), GetRectMinY(terrain.spawnBounds));

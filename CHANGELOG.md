@@ -2,15 +2,48 @@
 
 - Start shouldn't reroll president
 - Delay spawn of host farm by 0.25 seconds or something?
-- Remove start location healthbar
-- Add z to spawn location
 - -qd might still be busted? Maybe add events that emit death times each death (dying, killing, time in round)
+- Frost farm killing ward crashes?
 
 # 23e
 
+## Feature changes
+
+- Added Scepter of Mastery
+- Removed zoom constraints. Reforged introduced scroll wheel zooming and I'm not going to fight it.
+- Kaleidoscope changes
+  - Starts with 3 stacks
+  - Each stack increases damage multiplier by 9% (effective 25% -> 27%)
+- Drecreased default wolf respawn time in switch from 10 seconds to 3 seconds
+- Switch changes
+  - Now displays time as sheep if there isn't a target number of wisps
+  - Can specify a winning time. E.g., "-switch 2:30" or "-switch 3 1 5 2:30"
+  - Decreased default wolf respawn time from 10 seconds to 3 seconds
+- Smart remembers and uses that last number of specified sheep if not specified
+- Now show "last" automatically
+- Games messsages no longer cleared when the round starts for wolves after the first round
+- Esc hides/shows leaderboard when Start position unit is selected
+- Remove Start position unit healthbar
+- Added -handicap all X
+- Removed sheep mana
+- Updated Hide/Show icon
+- Added -buy ball alias for -buy crystal; comes after boots (so -b b gets boots)
+
+## Balance changes
+
+- Increased movement speed cap from 450 (boots + speed = 453, + endur = 458)
+- Decreased cost of Suppression Field from 135 (175) to 100 (140)
+- Decreased cost of Gem of True Seeing from 65 (91) to 40 (56)
+
 ## Bug fixes
 
+- Fixed missing runes
 - Fixed -reset
+- Fixed -g X not prioritizing X for allies when they use "g"
+- Fixed -b bril erroring
+- Fixed -pc X
+- Refactored -qd logic a bit to hopefully fix
+- Added missing commands to Quests
 
 # 23d
 

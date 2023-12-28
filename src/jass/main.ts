@@ -92,8 +92,6 @@ import "./triggers/practiceCommands/speed";
 import "./triggers/practiceCommands/massTimeUp";
 import "./triggers/practiceCommands/initMassTest";
 import "./triggers/practiceCommands/mass";
-import "./triggers/runes/RunesReset";
-import "./triggers/runes/RunesOn";
 import "./triggers/resourceFunctions/increaseGoldWolf";
 import "./triggers/resourceFunctions/increaseGoldSheep";
 import "./triggers/teamModes/versus";
@@ -154,8 +152,6 @@ import { president } from "modes/president";
 
 declare global {
   //globals from SavingFarms:
-  // deno-lint-ignore prefer-const
-  let SavingFarms__g: group;
   //endglobals from SavingFarms
   //globals from Util:
   // deno-lint-ignore prefer-const
@@ -193,15 +189,6 @@ declare global {
   // deno-lint-ignore prefer-const
   let perfectRoundCanceled: boolean;
   //endglobals from Smart
-  //globals from TeamResources:
-  // deno-lint-ignore prefer-const
-  let TEAM_RESOURCES_DEFAULT: 0;
-  // deno-lint-ignore prefer-const
-  let TEAM_RESOURCES_TWINED: 1;
-  // deno-lint-ignore prefer-const
-  let TEAM_RESOURCES_HIDDEN: 2;
-  let teamResources: number;
-  //endglobals from TeamResources
   // User-defined
   let udg_Timer: timer;
   let udg_TimerWindow: timerdialog;
@@ -352,8 +339,6 @@ declare global {
   // deno-lint-ignore prefer-const
   let udg_switchEffect: Array<effect>;
   // deno-lint-ignore prefer-const
-  let udg_RuneTimer: Array<timer>;
-  // deno-lint-ignore prefer-const
   let udg_antiStackEffect: Array<effect>;
   let udg_wolfTimerWindow: timerdialog;
   // deno-lint-ignore prefer-const
@@ -384,7 +369,6 @@ declare global {
   let udg_SheepColorB: Array<number>;
   // deno-lint-ignore prefer-const
   let udg_freakHotkeys: Array<boolean>;
-  let udg_runeSpawn: number;
   let udg_atempplayer: force;
   let udg_atempplayer2: force;
   let udg_atemploc: location;
@@ -636,8 +620,6 @@ declare global {
   let gg_trg_Speed_Rune: trigger;
   let gg_trg_Mana_Rune: trigger;
   let gg_trg_Omniscience_Rune: trigger;
-  let gg_trg_Runes_Reset: trigger;
-  let gg_trg_Runes_On: trigger;
   let gg_trg_cancelConstruction: trigger;
   // deno-lint-ignore prefer-const
   let AFK_PLAYING: 0;
@@ -761,9 +743,6 @@ declare global {
   let f__arg__this: number;
 }
 
-//globals from SavingFarms:
-SavingFarms__g = CreateGroup()!;
-//endglobals from SavingFarms
 //globals from Util:
 TRANSFER_DISPLAY_SOURCE = 1;
 TRANSFER_DISPLAY_INVOLVED = 2;
@@ -785,12 +764,6 @@ perfectSmartIndex = 0;
 perfectRound = false;
 perfectRoundCanceled = false;
 //endglobals from Smart
-//globals from TeamResources:
-TEAM_RESOURCES_DEFAULT = 0;
-TEAM_RESOURCES_TWINED = 1;
-TEAM_RESOURCES_HIDDEN = 2;
-teamResources = TEAM_RESOURCES_DEFAULT;
-//endglobals from TeamResources
 // User-defined
 udg_time = 0;
 
@@ -868,12 +841,11 @@ udg_humiliationCheck = [];
 udg_firstbloodKillCounter = [];
 udg_firstbloodDeathCounter = [];
 udg_switchEffect = [];
-udg_RuneTimer = [];
 udg_antiStackEffect = [];
 udg_lssCounter = [];
 udg_wins = [];
 udg_qDeath = Infinity;
-udg_QDeathTime = Array.from({ length: bj_MAX_PLAYERS + 1 }, () => 0);
+udg_QDeathTime = Array.from({ length: bj_MAX_PLAYERS + 1 }, () => Infinity);
 udg_PlayerName = [];
 udg_IntLoop = 0;
 udg_IntCloakCount = 0;
@@ -884,7 +856,6 @@ udg_SheepColorR = [];
 udg_SheepColorG = [];
 udg_SheepColorB = [];
 udg_freakHotkeys = [];
-udg_runeSpawn = 0;
 udg_practiceOn = false;
 udg_massTime = 0;
 udg_sheepTimer = [];
@@ -941,8 +912,8 @@ hostFarmType = FourCC("h00D");
 giveAlliesGoldSheepAbility = FourCC("A024");
 sentryFarmType = FourCC("eC09");
 
-recordTime = 0;
-loserTime = 999;
+recordTime = -Infinity;
+loserTime = Infinity;
 recordHolders = "";
 loserHolders = "";
 fullTimeString = "";
@@ -1480,13 +1451,6 @@ const InitGlobals = () => {
 
   i = 0;
   while (true) {
-    if ((i > 9)) break;
-    udg_RuneTimer[i] = CreateTimer();
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
     if ((i > 24)) break;
     udg_lssCounter[i] = 0;
     i = i + 1;
@@ -1538,7 +1502,6 @@ const InitGlobals = () => {
     i = i + 1;
   }
 
-  udg_runeSpawn = 0;
   udg_atempplayer = CreateForce()!;
   udg_atempplayer2 = CreateForce()!;
   udg_practiceOn = false;
@@ -1903,15 +1866,15 @@ updateTimes = () => {
   fullTimeString = s + " with " + formatTime(timeElapsed);
 
   if (timeElapsed > recordTime) {
+    if (recordTime !== -Infinity) fullTimeString = fullTimeString + " (leader)";
     recordTime = timeElapsed;
     recordHolders = s;
-    fullTimeString = fullTimeString + " (leader)";
   }
 
   if (timeElapsed < loserTime) {
+    if (loserTime !== Infinity) fullTimeString = fullTimeString + " (loser)";
     loserTime = timeElapsed;
     loserHolders = s;
-    fullTimeString = fullTimeString + " (loser)";
   }
 
   if (emitRound) logRound(l__sheep, wolves, R2S(timeElapsed)!);
@@ -1952,20 +1915,16 @@ GoldText = (amount: number, u: unit): void => {
     amount,
     setTimeout(0.05, () => {
       goldTextBuffer.delete(u);
+      if (GetUnitAbilityLevel(u, FourCC("Binv")) > 0) return;
       const tt = CreateTextTag()!;
-      if (GetUnitAbilityLevel(u, FourCC("Binv")) > 0) {
-        DestroyTextTag(tt);
-      } else {
-        if (IsVisibleToPlayer(GetUnitX(u), GetUnitY(u), GetLocalPlayer())) {
-          SetTextTagPermanent(tt, false);
-          SetTextTagPos(tt, GetUnitX(u), GetUnitY(u), 25);
-          SetTextTagText(tt, "+" + I2S(amount), 0.0276);
-          SetTextTagColor(tt, 217, 217, 25, 0);
-          SetTextTagFadepoint(tt, 0);
-          SetTextTagVelocity(tt, 0, 0.027734375);
-          SetTextTagLifespan(tt, 3);
-        }
-      }
+      if (IsVisibleToPlayer(GetUnitX(u), GetUnitY(u), GetLocalPlayer())) return;
+      SetTextTagPermanent(tt, false);
+      SetTextTagPos(tt, GetUnitX(u), GetUnitY(u), 25);
+      SetTextTagText(tt, "+" + I2S(amount), 0.0276);
+      SetTextTagColor(tt, 217, 217, 25, 0);
+      SetTextTagFadepoint(tt, 0);
+      SetTextTagVelocity(tt, 0, 0.027734375);
+      SetTextTagLifespan(tt, 3);
     }),
   ]);
 };
@@ -2196,8 +2155,6 @@ const InitCustomTriggers = () => {
   InitTrig_Claws_of_Velocity_Recipe();
   InitTrig_Claws_90_Recipe();
   InitTrig_Nuke_Recipe();
-  InitTrig_Runes_Reset();
-  InitTrig_Runes_On();
 };
 
 //===========================================================================

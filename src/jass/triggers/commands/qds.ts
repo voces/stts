@@ -1,11 +1,8 @@
-export {};
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
 const Trig_qds_Actions_time = (playerId: number): string => {
-  if (udg_QDeathTime[playerId + 1] > 9000) {
-    return "N/A";
-  } else {
-    return formatTime(udg_QDeathTime[playerId + 1]);
-  }
+  if (Number.isFinite(udg_QDeathTime[playerId + 1])) return formatTime(udg_QDeathTime[playerId + 1]);
+  return "N/A";
 };
 
 const Trig_qds_Actions = () => {
@@ -45,12 +42,7 @@ declare global {
   let InitTrig_qds: () => void;
 }
 InitTrig_qds = () => {
-  let i = 0;
   gg_trg_qds = CreateTrigger();
-  while (true) {
-    if (i === bj_MAX_PLAYERS) break;
-    TriggerRegisterPlayerChatEvent(gg_trg_qds, Player(i)!, "-qds", true);
-    i = i + 1;
-  }
+  registerAnyPlayerChatEvent(gg_trg_qds, "-qds");
   TriggerAddAction(gg_trg_qds, Trig_qds_Actions);
 };

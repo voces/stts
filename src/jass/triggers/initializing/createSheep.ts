@@ -7,6 +7,11 @@ import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { clearForces } from "util/clearForces";
 import { spawns, spawnSetting } from "settings/spawns";
 import { createCritter } from "misc/critter";
+import { UNIT_TYPE_ID_START_POSITION } from "constants";
+import { switchSheepTimers } from "modes/switch/switch";
+import { startUpdatingLeaderboard } from "modes/switch/updateLeaderboard";
+
+let firstRound = true;
 
 const setTeamOneSheep = () => {
   if (GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING) {
@@ -79,7 +84,7 @@ const Trig_createSheep_sheepActionsA = () => {
   }
   PanCameraToTimedForPlayer(GetEnumPlayer()!, spawn.x, spawn.y, 0);
 
-  const u = CreateUnit(GetEnumPlayer()!, FourCC("h00K"), spawn.x, spawn.y, 270)!;
+  const u = CreateUnit(GetEnumPlayer()!, UNIT_TYPE_ID_START_POSITION, spawn.x, spawn.y, 270)!;
   SelectUnitForPlayerSingle(u, GetEnumPlayer()!);
   if (spawnSetting.mode !== "free") UnitRemoveAbility(u, FourCC("Amov"));
   if (IsPlayerInForce(GetLocalPlayer(), udg_Wolf)) SetUnitVertexColor(u, 255, 255, 255, 0);
@@ -90,9 +95,7 @@ const Trig_createSheep_wolfActionsA = () => {
   let i = 1;
   let p: player;
 
-  if (udg_switchOn === false && vampOn === false && udg_practiceOn === false) {
-    udg_sheepLastGame[enumPlayerId] = false;
-  }
+  if (!udg_switchOn && !vampOn && !udg_practiceOn) udg_sheepLastGame[enumPlayerId] = false;
 
   while (true) {
     if (i > bj_MAX_PLAYERS) break;
@@ -153,7 +156,7 @@ const Trig_createSheep_sheepActionsB = () => {
 
   udg_sheepLastGame[enumPlayerId] = true;
 
-  const spawn = spawns.get(GetEnumPlayer()!)!;
+  const spawn = spawns.get(GetEnumPlayer()!) ?? { x: 0, y: 0 };
 
   PanCameraToTimedForPlayer(GetEnumPlayer()!, spawn.x, spawn.y, 0);
   const u = CreateUnit(GetEnumPlayer()!, sheepType, spawn.x, spawn.y, 270)!;
@@ -183,11 +186,14 @@ const Trig_createSheep_sheepActionsB = () => {
       UnitRemoveAbility(u, locateAlliesAbility);
       UnitAddAbility(u, blinkAbility);
       UnitAddAbility(u, sheepInventoryAbility);
-      UnitAddItemByIdSwapped(FourCC("I00Q"), u);
+      UnitAddItemById(u, FourCC("I00Q"));
       if (!udg_disable[enumPlayerId]) UnitAddAbility(u, destroyAllFarms);
 
       CreateUnit(GetEnumPlayer()!, wispType, RandomX(terrain.wisp), RandomY(terrain.wisp), 270);
-    } else UnitAddAbility(u, destroyAllFarms);
+    } else {
+      UnitAddAbility(u, destroyAllFarms);
+      switchSheepTimers[GetPlayerId(GetEnumPlayer()!)].start(udg_time, false, () => {});
+    }
   } else if (udg_shareOn === false) UnitRemoveAbility(u, shareControlAbility);
 
   if (udg_sheepZoom[enumPlayerId] > 0) {
@@ -204,6 +210,11 @@ const Trig_createSheep_wolfActionsB = () => {
 
   if (!udg_practiceOn && udg_wolfZoom[enumPlayerId] > 0) {
     SetCameraFieldForPlayer(GetEnumPlayer()!, CAMERA_FIELD_TARGET_DISTANCE, udg_wolfZoom[enumPlayerId], 0);
+  }
+
+  if (udg_switchOn) {
+    switchSheepTimers[GetPlayerId(GetEnumPlayer()!)].start(udg_time, false, () => {});
+    switchSheepTimers[GetPlayerId(GetEnumPlayer()!)].pause();
   }
 };
 
@@ -244,9 +255,9 @@ const Trig_createSheep_Actions_part4 = () => {
     return;
   }
 
-  if (!udg_practiceOn) ClearTextMessages();
+  if (!udg_practiceOn) ClearTextMessagesBJ(udg_Sheep);
 
-  if (udg_switchOn === false && vampOn === false && udg_practiceOn === false) defaultTime();
+  if (!udg_switchOn && !vampOn && !udg_practiceOn) defaultTime();
 
   createSheepSpawnIndex = 0;
   ForForce(udg_Sheep, Trig_createSheep_sheepActionsB);
@@ -292,6 +303,8 @@ const Trig_createSheep_Actions_part4 = () => {
     if (CountPlayersInForceBJ(udg_Wolf) === 0) TriggerExecute(gg_trg_sheepWin);
     if (CountPlayersInForceBJ(udg_Sheep) === 0) TriggerExecute(gg_trg_wolvesWin);
   }
+
+  if (udg_switchOn && udg_wispPoints === 0) startUpdatingLeaderboard();
 };
 
 const Trig_createSheep_Actions_part3 = () => {
@@ -349,18 +362,21 @@ const Trig_createSheep_Actions = () => {
 
   if (terrain.name === "Revolution") {
     createCritter();
-    CreateUnit(
-      Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
-      FourCC("o001"),
-      GetRectCenterX(gg_rct_snowman),
-      GetRectCenterY(gg_rct_snowman),
-      270,
-    );
+    // CreateUnit(
+    //   Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
+    //   FourCC("o001"),
+    //   GetRectCenterX(gg_rct_snowman),
+    //   GetRectCenterY(gg_rct_snowman),
+    //   270,
+    // );
   }
 
   if (udg_Teams === TEAMS_OPEN || udg_Teams === TEAMS_PICK) udg_Teams = TEAMS_INIT;
 
-  ClearTextMessages();
+  if (firstRound) {
+    firstRound = false;
+    ClearTextMessages();
+  } else ClearTextMessagesBJ(udg_Sheep);
 
   if (udg_round2 === false && udg_Teams === TEAMS_INIT) {
     clearForces();
@@ -406,12 +422,12 @@ const Trig_createSheep_Actions = () => {
   } else {
     DisplayTimedTextToForce(
       udg_Sheep,
-      5,
+      4,
       "                              |cff00aeefYou are |cffed1c24Sheep|cff00aeef this round.",
     );
     DisplayTimedTextToForce(
       udg_Wolf,
-      5,
+      4,
       "                              |cff00aeefYou are |cffed1c24Wolf|cff00aeef this round.",
     );
 

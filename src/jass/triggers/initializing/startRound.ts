@@ -1,4 +1,6 @@
 import { resetBankedGold } from "functions/farms/savingFarms";
+import { stopRuneTimers } from "functions/runes";
+import { switchSheepTimers } from "modes/switch/switch";
 import { terrain } from "settings/terrain";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 
@@ -66,11 +68,7 @@ const pauseTimers = () => {
   PauseTimer(udg_wolfTimer);
   PauseTimer(udg_massTimer);
   PauseTimer(udg_mapSizeChangeTimer);
-  PauseTimer(udg_RuneTimer[0]);
-  PauseTimer(udg_RuneTimer[1]);
-  PauseTimer(udg_RuneTimer[2]);
-  PauseTimer(udg_RuneTimer[3]);
-  PauseTimer(udg_RuneTimer[4]);
+  stopRuneTimers();
   PauseTimer(createSheepTimer);
 };
 
@@ -126,10 +124,10 @@ const Trig_startRound_Actions = () => {
 
   perfectRound = false;
   pauseTimers();
-  if (udg_Teams !== TEAMS_INIT) ClearTextMessages();
   DestroyMultiboardBJ(GetLastCreatedMultiboard()!);
   EnumDestructablesInRectAll(GetPlayableMapRect()!, reviveEnumDestructable);
   clearBlight();
+  const init = udg_Teams === TEAMS_INIT;
   resetRoundStats();
   ForForce(udg_Draft, removeDraft);
 
@@ -141,6 +139,7 @@ const Trig_startRound_Actions = () => {
   removeAllUnits();
 
   for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+    switchSheepTimers[i].start(0.01, false, () => {}); // clear elapsed
     DestroyLeaderboardBJ(PlayerGetLeaderboardBJ(Player(i)!)!);
     udg_switch[i + 1] = 0;
 
@@ -230,24 +229,18 @@ const Trig_startRound_Actions = () => {
       ForForce(udg_Sheep, Update_Versus_Wins);
     } else displayTimedTextToAll("                              |cffed1c24Tie game!", 60);
 
-    displayTimedTextToAll(
-      `Join our Discord |CFF00AEEFhttps://dsc.gg/sheeptag|r for more Sheep Tag!
-
-See |cff00aeefGame Info|r (|cffed1c24F9|r) for commands, Hall of Fame, and more information.
-
-New? Type |CFF00AEEF-smart|r.`,
-      60,
-    );
     startRoundToggledTriggers();
   } else {
-    displayTimedTextToAll(
-      `Join our Discord |CFF00AEEFhttps://dsc.gg/sheeptag|r for more Sheep Tag!
+    if (init) {
+      displayTimedTextToAll(
+        `Join our Discord |CFF00AEEFhttps://dsc.gg/sheeptag|r for more Sheep Tag!
 
 See |cff00aeefGame Info|r (|cffed1c24F9|r) for commands, Hall of Fame, and more information.
 
 New? Type |CFF00AEEF-smart|r.`,
-      60,
-    );
+        60,
+      );
+    }
     EnableTrigger(gg_trg_position);
     startRoundToggledTriggers();
   }

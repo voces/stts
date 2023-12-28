@@ -2,6 +2,8 @@ import { addScriptHook, W3TS_HOOK } from "w3ts";
 import { ForceEx } from "handles/ForceEx";
 import { MapPlayerEx } from "handles/MapPlayerEx";
 
+const g = CreateGroup();
+
 const SavingFarms__tick = () => {
   const sheeps = ForceEx.sheep.size() + ForceEx.wisps.size();
   const wolves = Math.max(ForceEx.wolves.size(), 1);
@@ -9,7 +11,7 @@ const SavingFarms__tick = () => {
   const rate = wolves / sheeps / 10;
 
   GroupEnumUnitsOfType(
-    SavingFarms__g,
+    g,
     UnitId2String(FourCC("h005"))!,
     Condition(() => {
       MapPlayerEx.fromFilterUnit()!.bankedGold += rate;

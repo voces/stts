@@ -1,6 +1,7 @@
 import { president } from "modes/president";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { setTimeout, Timeout } from "util/setTimeout";
+import { sleep } from "w3ts";
 
 const selectedPriority = Array.from<undefined, [player: player, timeout: Timeout] | undefined>({
   length: bj_MAX_PLAYERS,
@@ -14,7 +15,7 @@ export const inflateGoldCount = (p: player): void => {
   goldCount[GetPlayerId(p)] = max;
 };
 
-const Trig_g_showGoldCounts = () => {
+const Trig_g_showGoldCounts = async () => {
   let i = 0;
   let count = 0;
   const p = GetTriggerPlayer()!;
@@ -47,14 +48,14 @@ const Trig_g_showGoldCounts = () => {
       i = i + 1;
     }
     if (count === 12) {
-      TriggerSleepAction(9);
+      await sleep(9);
       if (GetLocalPlayer() === p) ClearTextMessages();
     }
   }
 };
 
 const markReceiver = (sender: player, target: string): void => {
-  const p = Player(S2I(target));
+  const p = Player(S2I(target) - 1);
 
   if (p == null) return;
 
@@ -131,7 +132,7 @@ export const giveAllGold = (sender: player): void => {
   // Don't transfer 0 gold
   if (amount === 0 || !udg_giveGold) return;
 
-  // Priority is last receiver or a random person with least gc
+  // Priority is last receiver, president, or a random person with least gc
   if (!receiver) {
     if (IsPlayerInForce(sender, udg_Sheep) || IsPlayerInForce(sender, udg_Spirit)) {
       receiver = lastSheepReceiver;

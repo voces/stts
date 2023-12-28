@@ -1,3 +1,4 @@
+import { displaySwitchWinner } from "modes/switch/winnerMsg";
 import { enforceTeamResourceMultiboard } from "userSettings/teamResources";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
@@ -49,10 +50,7 @@ const Trig_cancel_Actions = () => {
     udg_time = 0;
   }
 
-  if (
-    udg_switchOn === false && vampOn === false && udg_practiceOn === false &&
-    udg_Teams === TEAMS_LOCK_IE_PLAYING
-  ) {
+  if (!udg_switchOn && !vampOn && !udg_practiceOn && udg_Teams === TEAMS_LOCK_IE_PLAYING) {
     SetTimeOfDay(GetRandomReal(0, 24));
     ForForce(udg_Sheep, Trig_cancel_resetSheepState);
     ForForce(udg_Spirit, Trig_cancel_resetSheepState);
@@ -64,6 +62,8 @@ const Trig_cancel_Actions = () => {
     MultiboardMinimizeBJ(true, udg_captainsMultiboard);
     DestroyMultiboardBJ(udg_captainsMultiboard);
   }
+
+  if (udg_switchOn) displaySwitchWinner();
 
   TriggerExecute(gg_trg_startRound);
 };

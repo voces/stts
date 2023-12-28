@@ -314,8 +314,8 @@ const Trig_timeCommands_Actions = () => {
   } else if (myArg[0] === "-reset" && GetTriggerPlayer() === udg_Custom) {
     recordHolders = "";
     loserHolders = "";
-    recordTime = 0;
-    loserTime = 999;
+    recordTime = -Infinity;
+    loserTime = Infinity;
     DisplayTimedTextToPlayer(
       GetTriggerPlayer()!,
       0,

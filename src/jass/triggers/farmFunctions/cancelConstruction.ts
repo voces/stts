@@ -1,34 +1,8 @@
-//===========================================================================
-// Trigger: cancelConstruction
-//===========================================================================
-const Trig_cancelConstruction_Conditions = () => {
-  if ((!(IsUnitType(GetCancelledStructure()!, UNIT_TYPE_STRUCTURE) === true))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_cancelConstruction_Func003C = () => {
-  if ((!(udg_farmCount[udg_atempint] > 0))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_cancelConstruction_Func005Func001C = () => {
-  if ((!(udg_dummyWisps > 0))) {
-    return false;
-  }
-  return true;
-};
-
 const Trig_cancelConstruction_Actions = () => {
   udg_atempint = GetConvertedPlayerId(
     GetOwningPlayer(GetCancelledStructure()!),
   );
-  if ((Trig_cancelConstruction_Func003C())) {
-    udg_farmCount[udg_atempint] = udg_farmCount[udg_atempint] - 1;
-  }
+  if (udg_farmCount[udg_atempint] > 0) udg_farmCount[udg_atempint]--;
   SetPlayerStateBJ(
     ConvertedPlayer(udg_atempint)!,
     PLAYER_STATE_RESOURCE_LUMBER,
@@ -38,13 +12,7 @@ const Trig_cancelConstruction_Actions = () => {
   bj_forLoopAIndexEnd = udg_lastPlayer;
   while (true) {
     if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-    if ((Trig_cancelConstruction_Func005Func001C())) {
-      LeaderboardSetPlayerItemValueBJ(
-        ConvertedPlayer(udg_atempint)!,
-        PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-        udg_saves[udg_atempint],
-      );
-    } else {
+    if (!udg_switchOn) {
       LeaderboardSetPlayerItemValueBJ(
         ConvertedPlayer(udg_atempint)!,
         PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
@@ -55,7 +23,6 @@ const Trig_cancelConstruction_Actions = () => {
   }
 };
 
-//===========================================================================
 export {};
 declare global {
   // deno-lint-ignore prefer-const
@@ -63,13 +30,10 @@ declare global {
 }
 InitTrig_cancelConstruction = () => {
   gg_trg_cancelConstruction = CreateTrigger();
-  TriggerRegisterAnyUnitEventBJ(
-    gg_trg_cancelConstruction,
-    EVENT_PLAYER_UNIT_CONSTRUCT_CANCEL,
-  );
+  TriggerRegisterAnyUnitEventBJ(gg_trg_cancelConstruction, EVENT_PLAYER_UNIT_CONSTRUCT_CANCEL);
   TriggerAddCondition(
     gg_trg_cancelConstruction,
-    Condition(Trig_cancelConstruction_Conditions),
+    Condition(() => IsUnitType(GetCancelledStructure()!, UNIT_TYPE_STRUCTURE)),
   );
   TriggerAddAction(gg_trg_cancelConstruction, Trig_cancelConstruction_Actions);
 };

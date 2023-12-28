@@ -1,3 +1,5 @@
+import { sleep } from "w3ts";
+
 export {};
 
 const Stomp_Conditions = () => {
@@ -27,7 +29,7 @@ const Stomp_cond1 = () => {
   udg_antiStackEffect[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()!))] = GetLastCreatedEffectBJ()!;
 };
 
-const Stomp_Actions = () => {
+const Stomp_Actions = async () => {
   const atempgroup = GetUnitsInRangeOfLocMatching(
     300,
     GetUnitLoc(GetTriggerUnit()!),
@@ -42,7 +44,7 @@ const Stomp_Actions = () => {
     atempeffect[i] = udg_antiStackEffect[i + 1];
     i = i + 1;
   }
-  TriggerSleepAction(4);
+  await sleep(4);
   i = 0;
   while (true) {
     if (i >= 24) break;

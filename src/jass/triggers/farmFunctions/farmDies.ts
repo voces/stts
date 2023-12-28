@@ -1,9 +1,3 @@
-//===========================================================================
-// Trigger: farmDies
-//
-// GetUnitPointValue(GetDyingUnit()!)
-//===========================================================================
-
 const Trig_farmDies_Actions = () => {
   const dyingPlayer = GetOwningPlayer(GetDyingUnit()!);
   const pid = GetConvertedPlayerId(dyingPlayer);
@@ -33,7 +27,7 @@ const Trig_farmDies_Actions = () => {
   if (udg_farmCount[pid] > 0) udg_farmCount[pid]--;
   SetPlayerState(dyingPlayer, PLAYER_STATE_RESOURCE_LUMBER, udg_farmCount[pid]);
 
-  if (udg_dummyWisps > 0) {
+  if (!udg_switchOn) {
     LeaderboardSetPlayerItemValueBJ(
       dyingPlayer,
       PlayerGetLeaderboardBJ(dyingPlayer)!,
@@ -42,7 +36,6 @@ const Trig_farmDies_Actions = () => {
   }
 };
 
-//===========================================================================
 export {};
 declare global {
   // deno-lint-ignore prefer-const

@@ -6,21 +6,18 @@ const Trig_kaleidoscope_Actions = () => {
   const u = GetEventDamageSource()!;
   let i = 0;
   let baseDamage = -1;
-  let multiplier = 1;
+  let charges = 0;
   if (IsUnitIllusion(u)) {
     while (true) {
       if (i === 6) break;
-      if (GetItemTypeId(UnitItemInSlot(u, i)!) === kaleidoscope) {
-        if (baseDamage === -1) {
-          baseDamage = GetEventDamage();
-        }
-        multiplier = multiplier + 1;
+      const itm = UnitItemInSlot(u, i);
+      if (itm && GetItemTypeId(itm) === kaleidoscope) {
+        if (baseDamage === -1) baseDamage = GetEventDamage();
+        charges += GetItemCharges(itm);
       }
       i = i + 1;
     }
-    if (multiplier > 1) {
-      BlzSetEventDamage(baseDamage * multiplier);
-    }
+    if (charges > 0) BlzSetEventDamage(baseDamage * (1 + charges * 0.36));
   }
 };
 

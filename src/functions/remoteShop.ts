@@ -1,199 +1,153 @@
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { addScriptHook, W3TS_HOOK } from "w3ts";
 
-const BuySellItem__itemShorthand: string[] = [];
-const BuySellItem__itemCost: number[] = [];
-const BuySellItem__itemCode: number[] = [];
-let BuySellItem__itemIndex = 0;
+type Item = {
+  name: string;
+  cost: number;
+  id: number;
+};
 
-const BuySellItem__isRealWolf = () => {
-  return GetUnitTypeId(GetFilterUnit()!) === FourCC("EC03") &&
-    IsUnitIllusionBJ(GetFilterUnit()!) === false;
+const items: Item[] = [];
+
+const getSelectedInventoryUnit = () => {
+  const g = CreateGroup()!;
+  const p = GetTriggerPlayer()!;
+  GroupEnumUnitsSelected(
+    g,
+    p,
+    Filter(() => {
+      const u = GetFilterUnit()!;
+      return !IsUnitIllusion(u) && (UnitInventorySize(u) - UnitInventoryCount(u) > 0) && IsUnitAlly(u, p);
+    }),
+  )!;
+  const u = FirstOfGroup(g);
+  DestroyGroup(g);
+  return u;
 };
 
 const BuySellItem__buyAction = () => {
-  let i = 0;
+  const parts = GetEventPlayerChatString()!.toLowerCase().split(" ");
 
-  Split(GetEventPlayerChatString()!, " ", false);
-  if (
-    (myArg[0] !== "-buy" && myArg[0] !== "-b") || myArgCount === 1 ||
-    StringLength(myArg[1]) <= 0
-  ) {
-    return;
-  }
-
-  const g = GetUnitsOfPlayerMatching(
-    GetTriggerPlayer()!,
-    Condition(BuySellItem__isRealWolf),
-  )!;
-  const u = FirstOfGroup(g);
-  if (u == null) return DestroyGroup(g);
-
-  while (true) {
-    if (i === BuySellItem__itemIndex) break;
-
-    if (SubString(BuySellItem__itemShorthand[i], 0, StringLength(myArg[1])) === myArg[1]) {
-      if (GetPlayerState(GetTriggerPlayer()!, PLAYER_STATE_RESOURCE_GOLD) >= BuySellItem__itemCost[i]) {
-        UnitAddItemByIdSwapped(BuySellItem__itemCode[i], u);
-        AdjustPlayerStateSimpleBJ(
-          GetTriggerPlayer()!,
-          PLAYER_STATE_RESOURCE_GOLD,
-          -BuySellItem__itemCost[i],
-        );
+  if ((parts[0] !== "-buy" && parts[0] !== "-b") || parts.length !== 2 || parts[1].length === 0) return;
+  const u = getSelectedInventoryUnit();
+  if (!u) return;
+  for (let i = 0; i < items.length; i++) {
+    if (items[i].name.startsWith(parts[1])) {
+      if (GetPlayerState(GetTriggerPlayer()!, PLAYER_STATE_RESOURCE_GOLD) >= items[i].cost) {
+        UnitAddItemById(u, items[i].id);
+        AdjustPlayerStateSimpleBJ(GetTriggerPlayer()!, PLAYER_STATE_RESOURCE_GOLD, -items[i].cost);
       } else {
         DisplayTimedTextToPlayer(
           GetTriggerPlayer()!,
           0,
           0,
           15,
-          "                              |CFF00AEEFThat item set is " +
-            I2S(BuySellItem__itemCost[i]) + " gold.",
+          "                              |CFF00AEEFThat item set is " + I2S(items[i].cost) + " gold.",
         );
       }
       break;
     }
-
-    i = i + 1;
   }
-
-  DestroyGroup(g);
 };
 
 const BuySellItem__sellAction = () => {
-  let i = 0;
+  const parts = GetEventPlayerChatString()!.toLowerCase().split(" ");
 
-  Split(GetEventPlayerChatString()!, " ", false);
-  if (
-    (myArg[0] !== "-sell" && myArg[0] !== "-s") || myArgCount === 1 ||
-    StringLength(myArg[1]) <= 0
-  ) return;
+  if ((parts[0] !== "-sell" && parts[0] !== "-s") || parts.length !== 2 || parts[1].length === 0) return;
 
-  const g = GetUnitsOfPlayerMatching(
-    GetTriggerPlayer()!,
-    Condition(BuySellItem__isRealWolf),
-  )!;
-  const u = FirstOfGroup(g);
+  const u = getSelectedInventoryUnit();
+  if (!u) return;
 
-  if (u == null) return DestroyGroup(g);
-
-  const slot = S2I(myArg[1]) - 1;
+  const slot = S2I(parts[1]) - 1;
   const itm = UnitItemInSlot(u, slot);
-
-  if (itm == null) return DestroyGroup(g);
+  if (!itm) return;
 
   const itemId = GetItemTypeId(itm);
-  while (true) {
-    if (i === BuySellItem__itemIndex) break;
-
-    if (itemId === BuySellItem__itemCode[i]) {
-      AdjustPlayerStateSimpleBJ(
-        GetTriggerPlayer()!,
-        PLAYER_STATE_RESOURCE_GOLD,
-        R2I(I2R(BuySellItem__itemCost[i]) / 4.2),
-      );
+  for (let i = 0; i < items.length; i++) {
+    if (itemId === items[i].id) {
+      AdjustPlayerStateSimpleBJ(GetTriggerPlayer()!, PLAYER_STATE_RESOURCE_GOLD, R2I(I2R(items[i].cost) / 4.2));
       RemoveItem(itm);
       break;
     }
-
-    i = i + 1;
   }
-
-  DestroyGroup(g);
 };
 
 const BuySellItem__sellAllAction = () => {
   const p = GetTriggerPlayer()!;
-  const g = GetUnitsOfPlayerMatching(p, Condition(BuySellItem__isRealWolf))!;
+  const g = CreateGroup()!;
+  GroupEnumUnitsSelected(
+    g,
+    p,
+    Filter(() => !IsUnitIllusion(GetFilterUnit()!) && UnitInventoryCount(GetFilterUnit()!) > 0),
+  )!;
   let u = FirstOfGroup(g);
-  let i: number;
-  let n: number;
-  let itm: item | undefined;
-  let itemId: number;
 
-  while (true) {
-    if (u == null) break;
+  while (u) {
+    for (let i = 0; i < bj_MAX_INVENTORY; i++) {
+      const itm = UnitItemInSlot(u, i);
+      if (!itm) continue;
+      const itemId = GetItemTypeId(itm);
 
-    i = 0;
-    while (true) {
-      itm = UnitItemInSlot(u, i);
-      if (itm != null) {
-        itemId = GetItemTypeId(itm);
-        n = 0;
-        while (true) {
-          if (itemId === BuySellItem__itemCode[n]) {
-            AdjustPlayerStateSimpleBJ(
-              p,
-              PLAYER_STATE_RESOURCE_GOLD,
-              R2I(I2R(BuySellItem__itemCost[n]) / 4.2),
-            );
-            RemoveItem(itm);
-            break;
-          }
-
-          n = n + 1;
-          if (n === BuySellItem__itemIndex) break;
+      for (let n = 0; n < items.length; n++) {
+        if (itemId === items[n].id) {
+          AdjustPlayerStateSimpleBJ(p, PLAYER_STATE_RESOURCE_GOLD, R2I(I2R(items[n].cost) / 4.2));
+          RemoveItem(itm);
+          break;
         }
       }
-
-      i = i + 1;
-      if (i === 6) break;
     }
 
     GroupRemoveUnit(g, u);
     u = FirstOfGroup(g);
   }
-};
 
-const registerItem = (
-  shorthand: string,
-  cost: number,
-  passedCode: number,
-): void => {
-  BuySellItem__itemShorthand[BuySellItem__itemIndex] = shorthand;
-  BuySellItem__itemCost[BuySellItem__itemIndex] = cost;
-  BuySellItem__itemCode[BuySellItem__itemIndex] = passedCode;
-  BuySellItem__itemIndex = BuySellItem__itemIndex + 1;
+  DestroyGroup(g);
 };
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   let t = CreateTrigger();
-  registerAnyPlayerChatEvent(t, "-b", false);
+  registerAnyPlayerChatEvent(t, "-b ", false);
+  registerAnyPlayerChatEvent(t, "-buy ", false);
   TriggerAddAction(t, BuySellItem__buyAction);
 
   t = CreateTrigger();
-  registerAnyPlayerChatEvent(t, "-s", false);
+  registerAnyPlayerChatEvent(t, "-s ", false);
+  registerAnyPlayerChatEvent(t, "-sell ", false);
   TriggerAddAction(t, BuySellItem__sellAction);
 
   t = CreateTrigger();
   registerAnyPlayerChatEvent(t, "-sellall");
   TriggerAddAction(t, BuySellItem__sellAllAction);
 
-  registerItem("1c", 200, FourCC("I005"));
-  registerItem("boots", 112, FourCC("I009"));
-  registerItem("bril", 98, FourCC("I003"));
-  registerItem("beam", 112, FourCC("I000"));
-  registerItem("bomber", 75, FourCC("I002"));
-  registerItem("c8", 21, FourCC("I00B"));
-  registerItem("c16", 53, FourCC("I008"));
-  registerItem("c55", 200, FourCC("I005"));
-  registerItem("club", 56, FourCC("I00Z"));
-  registerItem("cloak", 200, FourCC("I001"));
-  registerItem("crystal", 28, FourCC("I006"));
-  registerItem("drums", 175, FourCC("I00U"));
-  registerItem("endur", 112, FourCC("I00H"));
-  // call registerItem("forb", 200, 'I00W')
-  registerItem("gloves", 112, FourCC("I004"));
-  registerItem("gem", 70, FourCC("I00E"));
-  registerItem("golem", 140, FourCC("I00A"));
-  registerItem("kaleidoscope", 112, FourCC("I00X"));
-  registerItem("mana", 49, FourCC("I00D"));
-  registerItem("neck", 112, FourCC("I00I"));
-  registerItem("r110", 112, FourCC("I00M"));
-  registerItem("sheep", 56, FourCC("I00G"));
-  registerItem("suppression", 175, FourCC("I00V"));
-  registerItem("scythe", 112, FourCC("scyt"));
-  registerItem("sobi", 56, FourCC("I00N"));
-  registerItem("speed", 42, FourCC("I00F"));
-  registerItem("str", 42, FourCC("I007"));
-  registerItem("velocity", 112, FourCC("I00T"));
+  items.push(
+    { name: "1c", cost: 200, id: FourCC("I005") },
+    { name: "boots", cost: 112, id: FourCC("I009") },
+    { name: "ball", cost: 28, id: FourCC("I006") }, // alias for crystal
+    { name: "bril", cost: 98, id: FourCC("I003") },
+    { name: "beam", cost: 112, id: FourCC("I000") },
+    { name: "bomber", cost: 75, id: FourCC("I002") },
+    { name: "c8", cost: 21, id: FourCC("I00B") },
+    { name: "c16", cost: 53, id: FourCC("I008") },
+    { name: "c55", cost: 200, id: FourCC("I005") },
+    { name: "club", cost: 56, id: FourCC("I00Z") },
+    { name: "cloak", cost: 200, id: FourCC("I001") },
+    { name: "crystal", cost: 28, id: FourCC("I006") }, // alias for ball
+    { name: "drums", cost: 175, id: FourCC("I00U") },
+    { name: "endur", cost: 112, id: FourCC("I00H") },
+    { name: "gloves", cost: 112, id: FourCC("I004") },
+    { name: "gem", cost: 56, id: FourCC("I00E") },
+    { name: "golem", cost: 140, id: FourCC("I00A") },
+    { name: "kaleidoscope", cost: 112, id: FourCC("I00X") },
+    { name: "mana", cost: 49, id: FourCC("I00D") },
+    { name: "mastery", cost: 140, id: FourCC("I00Y") },
+    { name: "neck", cost: 112, id: FourCC("I00I") },
+    { name: "r110", cost: 112, id: FourCC("I00M") },
+    { name: "sheep", cost: 56, id: FourCC("I00G") },
+    { name: "suppression", cost: 140, id: FourCC("I00V") },
+    { name: "scythe", cost: 112, id: FourCC("scyt") },
+    { name: "sobi", cost: 56, id: FourCC("I00N") },
+    { name: "speed", cost: 42, id: FourCC("I00F") },
+    { name: "str", cost: 42, id: FourCC("I007") },
+    { name: "velocity", cost: 112, id: FourCC("I00T") },
+  );
 });

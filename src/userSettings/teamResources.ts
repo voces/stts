@@ -1,6 +1,12 @@
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { addScriptHook, File, W3TS_HOOK } from "w3ts";
 
+const TEAM_RESOURCES_DEFAULT = 0;
+const TEAM_RESOURCES_TWINED = 1;
+const TEAM_RESOURCES_HIDDEN = 2;
+
+let teamResources: number = TEAM_RESOURCES_DEFAULT;
+
 export const enforceTeamResourceMultiboard = () => {
   if (
     teamResources === TEAM_RESOURCES_HIDDEN ||

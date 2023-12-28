@@ -1,4 +1,4 @@
-import { MapPlayer } from "w3ts";
+import { MapPlayer, Unit } from "w3ts";
 
 const map = new Map<player, MapPlayerEx>();
 
@@ -102,6 +102,11 @@ export class MapPlayerEx extends MapPlayer {
 
   public static fromIndex(index: number) {
     return this.fromHandle(Player(index));
+  }
+
+  public static fromOwner(unit: Unit | unit) {
+    const u = unit instanceof Unit ? unit.handle : unit;
+    return this.fromHandle(GetOwningPlayer(u)!);
   }
 
   public static fromFilterUnit() {

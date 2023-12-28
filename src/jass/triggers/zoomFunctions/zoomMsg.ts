@@ -13,18 +13,9 @@ const Trig_zoomMsg_Actions = () => {
     return `${I2S(val)}${val === current ? "|r (current)" : ""}`;
   };
 
-  p.displayTimedText(
-    `Max |CFF00AEEFsheep|r zoom is |CFFED1C242400|r, yours is |CFFED1C24${format(udg_sheepZoom)}|r.`,
-    10,
-  );
-  p.displayTimedText(
-    `Max |CFF00AEEFwolf|r zoom is |CFFED1C242700|r, yours is |CFFED1C24${format(udg_wolfZoom)}|r.`,
-    10,
-  );
-  p.displayTimedText(
-    `Max |CFF00AEEFwisp|r zoom is |CFFED1C243350|r, yours is |CFFED1C24${format(udg_wispZoom)}|r.`,
-    10,
-  );
+  p.displayTimedText(`Your |CFF00AEEFsheep|r zoom is |CFFED1C24${format(udg_sheepZoom)}|r.`, 10);
+  p.displayTimedText(`Your |CFF00AEEFwolf|r zoom is |CFFED1C24${format(udg_wolfZoom)}|r.`, 10);
+  p.displayTimedText(`Your |CFF00AEEFwisp|r zoom is |CFFED1C24${format(udg_wispZoom)}|r.`, 10);
 
   if (!atCurrent) p.displayTimedText(`Your current zoom is |CFFED1C24${I2S(R2I(current))}|r.`, 10);
 };

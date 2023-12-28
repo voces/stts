@@ -60,7 +60,7 @@ const Trig_versusCountDown_Func004C = () => {
 };
 
 const Trig_versusCountDown_Actions = () => {
-  ClearTextMessages();
+  ClearTextMessagesBJ(udg_Sheep);
   if ((Trig_versusCountDown_Func002C())) {
     udg_atempstring = (I2S(R2I(udg_gameTime[1] / 60)) + ":") +
       SubStringBJ(R2S(ModuloReal(udg_gameTime[1], 60))!, 1, 2);

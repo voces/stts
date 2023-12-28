@@ -1,41 +1,18 @@
 import { maybeRotate } from "teams/smart";
+import { displayTimedTextToAll } from "util/displayTimedTextToAll";
+import { setTimeout } from "util/setTimeout";
 
 const Trig_wolvesWin_Func001A = () => {
   udg_sheepSurvived[GetConvertedPlayerId(GetEnumPlayer()!)] =
     udg_sheepSurvived[GetConvertedPlayerId(GetEnumPlayer()!)] + ("0 | ");
 };
 
-const Trig_wolvesWin_Func002Func001Func001C = () => {
-  if ((!(udg_versus === 2))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_wolvesWin_Func002Func001C = () => {
-  if ((!(udg_versus === 1))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_wolvesWin_Func002C = () => {
-  if ((!(udg_Teams === TEAMS_LOCK_IE_PLAYING))) {
-    return false;
-  }
-  return true;
-};
-
 const Trig_wolvesWin_Actions = () => {
   ForForce(udg_Spirit, Trig_wolvesWin_Func001A);
-  if ((Trig_wolvesWin_Func002C())) {
-    if ((Trig_wolvesWin_Func002Func001C())) {
-      udg_gameTime[1] = TimerGetElapsed(udg_Timer);
-    } else {
-      if ((Trig_wolvesWin_Func002Func001Func001C())) {
-        udg_gameTime[2] = TimerGetElapsed(udg_Timer);
-      }
-    }
+  if (udg_Teams === TEAMS_LOCK_IE_PLAYING) {
+    if (udg_versus === 1) udg_gameTime[1] = TimerGetElapsed(udg_Timer);
+    else if (udg_versus === 2) udg_gameTime[2] = TimerGetElapsed(udg_Timer);
+    else setTimeout(0.05, () => displayTimedTextToAll(`\n                              ${fullTimeString}.`));
     updateTimes();
     maybeRotate();
     TriggerExecute(gg_trg_startRound);

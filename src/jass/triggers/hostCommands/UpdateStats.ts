@@ -46,7 +46,7 @@ const Trig_UpdateStats_forEnumPlayer = () => {
   logTimes(p.handle, s___times_pTime[s__times_pTime[playerTimes[p.id]] + p.id]);
   logRoundTimes(p.handle, udg_roundTimes[p.cid]);
   logSheepSurvived(p.handle, udg_sheepSurvived[p.cid]);
-  if (udg_QDeathTime[p.cid] < 9999) logQuickestDeath(p.handle, udg_QDeathTime[p.cid]);
+  if (Number.isFinite(udg_QDeathTime[p.cid])) logQuickestDeath(p.handle, udg_QDeathTime[p.cid]);
 };
 
 const Trig_UpdateStats_Actions = () => {

@@ -1,3 +1,4 @@
+import { switchSheepTimers } from "modes/switch/switch";
 import { updateLeaderboardSettingsDisplay } from "settings/time";
 
 //===========================================================================
@@ -140,15 +141,24 @@ const indexAPlayerAfkOrReturnedDuringRound = () => {
   return false;
 };
 
-const Trig_setupLeaderboard_Func002Func023Func006Func004Func006A = () => {
+const playingSheepRows = () => {
   udg_atempint = GetConvertedPlayerId(GetEnumPlayer()!);
-  if (udg_dummyWisps > 0) {
+  if (udg_wispPoints > 0) {
     LeaderboardAddItemBJ(
       GetEnumPlayer()!,
       PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
       udg_colorString[udg_atempint] + GetPlayerName(GetEnumPlayer()!),
       udg_saves[udg_atempint],
     );
+  } else if (udg_switchOn) {
+    switchSheepTimers[udg_atempint - 1].pause();
+    LeaderboardAddItemBJ(
+      GetEnumPlayer()!,
+      PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
+      udg_colorString[udg_atempint] + GetPlayerName(GetEnumPlayer()!),
+      Math.round(switchSheepTimers[udg_atempint - 1].elapsed),
+    );
+    switchSheepTimers[udg_atempint - 1].resume();
   } else {
     LeaderboardAddItemBJ(
       GetEnumPlayer()!,
@@ -166,13 +176,6 @@ const Trig_setupLeaderboard_Func002Func023Func006Func004Func006A = () => {
   }
 };
 
-const Trig_setupLeaderboard_Func002Func023Func006Func004Func007C = () => {
-  if ((!(udg_dummyWisps > 0))) {
-    return false;
-  }
-  return true;
-};
-
 const Trig_setupLeaderboard_Func002Func023Func006Func004Func010Func004C = () => {
   if ((!(udg_AFK[udg_atempint] === AFK_AFK_DURING_ROUND))) {
     return false;
@@ -180,14 +183,30 @@ const Trig_setupLeaderboard_Func002Func023Func006Func004Func010Func004C = () => 
   return true;
 };
 
-const Trig_setupLeaderboard_Func002Func023Func006Func004Func010A = () => {
+const playingSpiritRows = () => {
   udg_atempint = GetConvertedPlayerId(GetEnumPlayer()!);
-  LeaderboardAddItemBJ(
-    GetEnumPlayer()!,
-    PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-    udg_colorString[udg_atempint] + GetPlayerName(GetEnumPlayer()!),
-    0,
-  );
+  if (udg_wispPoints > 0) {
+    LeaderboardAddItemBJ(
+      GetEnumPlayer()!,
+      PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
+      udg_colorString[udg_atempint] + GetPlayerName(GetEnumPlayer()!),
+      udg_saves[udg_atempint],
+    );
+  } else if (udg_switchOn) {
+    LeaderboardAddItemBJ(
+      GetEnumPlayer()!,
+      PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
+      udg_colorString[udg_atempint] + GetPlayerName(GetEnumPlayer()!),
+      Math.round(switchSheepTimers[udg_atempint - 1].elapsed),
+    );
+  } else {
+    LeaderboardAddItemBJ(
+      GetEnumPlayer()!,
+      PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
+      udg_colorString[udg_atempint] + GetPlayerName(GetEnumPlayer()!),
+      0,
+    );
+  }
   LeaderboardSetPlayerItemStyleBJ(
     GetEnumPlayer()!,
     PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
@@ -204,20 +223,6 @@ const Trig_setupLeaderboard_Func002Func023Func006Func004Func010A = () => {
   }
 };
 
-const Trig_setupLeaderboard_Func002Func023Func006Func004Func011C = () => {
-  if ((!(udg_dummyWisps > 0))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_setupLeaderboard_Func002Func023Func006Func004Func014Func002C = () => {
-  if ((!(udg_dummyWisps > 0))) {
-    return false;
-  }
-  return true;
-};
-
 const Trig_setupLeaderboard_Func002Func023Func006Func004Func014Func003C = () => {
   if ((!(udg_AFK[udg_atempint] === AFK_AFK_DURING_ROUND))) {
     return false;
@@ -225,14 +230,21 @@ const Trig_setupLeaderboard_Func002Func023Func006Func004Func014Func003C = () => 
   return true;
 };
 
-const Trig_setupLeaderboard_Func002Func023Func006Func004Func014A = () => {
+const playingWolfRows = () => {
   udg_atempint = GetConvertedPlayerId(GetEnumPlayer()!);
-  if ((Trig_setupLeaderboard_Func002Func023Func006Func004Func014Func002C())) {
+  if (udg_wispPoints > 0) {
     LeaderboardAddItemBJ(
       GetEnumPlayer()!,
       PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
       udg_colorString[udg_atempint] + GetPlayerName(GetEnumPlayer()!),
       udg_saves[udg_atempint],
+    );
+  } else if (udg_switchOn) {
+    LeaderboardAddItemBJ(
+      GetEnumPlayer()!,
+      PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
+      udg_colorString[udg_atempint] + GetPlayerName(GetEnumPlayer()!),
+      Math.round(switchSheepTimers[udg_atempint - 1].elapsed),
     );
   } else {
     LeaderboardAddItemBJ(
@@ -299,27 +311,6 @@ const Trig_setupLeaderboard_Func002Func023Func006Func005A = () => {
   }
 };
 
-const Trig_setupLeaderboard_Func002Func023Func006C = () => {
-  if ((!(udg_Teams === TEAMS_LOCK_IE_PLAYING))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_setupLeaderboard_Func002Func023C = () => {
-  if ((!(udg_Teams === TEAMS_PICK))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_setupLeaderboard_Func002C = () => {
-  if ((!(udg_Teams < 2))) {
-    return false;
-  }
-  return true;
-};
-
 const Trig_setupLeaderboard_Func003Func001Func001C = () => {
   if ((!(GetEnumPlayer() === udg_Custom))) {
     return false;
@@ -356,8 +347,7 @@ const Trig_setupLeaderboard_Func003C = () => {
 };
 
 const Trig_setupLeaderboard_Actions = () => {
-  // BEFORE GAME
-  if ((Trig_setupLeaderboard_Func002C())) {
+  if (udg_Teams < TEAMS_LOCK_IE_PLAYING) { // BEFORE GAME
     DestroyLeaderboardBJ(GetLastCreatedLeaderboard()!);
     CreateLeaderboardBJ(GetPlayersAll()!, udg_mapName);
     LeaderboardDisplayBJ(true, GetLastCreatedLeaderboard()!);
@@ -437,7 +427,7 @@ const Trig_setupLeaderboard_Actions = () => {
       LeaderboardAddItemBJ(
         Player(bj_PLAYER_NEUTRAL_EXTRA)!,
         GetLastCreatedLeaderboard()!,
-        "|CFF00AEEFLast: " + (udg_timeString + (" " + udg_lastGameString)),
+        "|CFF00AEEFLast: " + udg_timeString + " " + udg_lastGameString,
         0,
       );
       LeaderboardSetPlayerItemStyleBJ(
@@ -497,269 +487,270 @@ const Trig_setupLeaderboard_Actions = () => {
             GetPlayerName(udg_Custom)),
       );
     }
-  } else {
-    // DURING PICK
-    if ((Trig_setupLeaderboard_Func002Func023C())) {
-      DestroyLeaderboardBJ(GetLastCreatedLeaderboard()!);
-      CreateLeaderboardBJ(GetPlayersAll()!, "Pick Teams");
-      bj_forLoopAIndex = 1;
-      bj_forLoopAIndexEnd = udg_playerCount;
-      while (true) {
-        if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-        if ((indexAPlayerPlayingAndNotAfk())) {
-          LeaderboardAddItemBJ(
-            udg_playerList[GetForLoopIndexA()],
-            GetLastCreatedLeaderboard()!,
-            udg_colorString[
-              GetConvertedPlayerId(udg_playerList[GetForLoopIndexA()])
-            ] + GetPlayerName(udg_playerList[GetForLoopIndexA()]),
-            0,
-          );
-          LeaderboardSetPlayerItemStyleBJ(
-            udg_playerList[GetForLoopIndexA()],
-            GetLastCreatedLeaderboard()!,
-            true,
-            false,
-            false,
-          );
-        }
-        bj_forLoopAIndex = bj_forLoopAIndex + 1;
+  } else if (udg_Teams === TEAMS_PICK) { // DURING PICK
+    DestroyLeaderboardBJ(GetLastCreatedLeaderboard()!);
+    CreateLeaderboardBJ(GetPlayersAll()!, "Pick Teams");
+    bj_forLoopAIndex = 1;
+    bj_forLoopAIndexEnd = udg_playerCount;
+    while (true) {
+      if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
+      if ((indexAPlayerPlayingAndNotAfk())) {
+        LeaderboardAddItemBJ(
+          udg_playerList[GetForLoopIndexA()],
+          GetLastCreatedLeaderboard()!,
+          udg_colorString[
+            GetConvertedPlayerId(udg_playerList[GetForLoopIndexA()])
+          ] + GetPlayerName(udg_playerList[GetForLoopIndexA()]),
+          0,
+        );
+        LeaderboardSetPlayerItemStyleBJ(
+          udg_playerList[GetForLoopIndexA()],
+          GetLastCreatedLeaderboard()!,
+          true,
+          false,
+          false,
+        );
       }
-      bj_forLoopAIndex = 1;
-      bj_forLoopAIndexEnd = udg_playerCount;
-      while (true) {
-        if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-        if ((indexAPlayerPlayingAndReturnedFromAfkDuringPick())) {
-          LeaderboardAddItemBJ(
-            udg_playerList[GetForLoopIndexA()],
-            GetLastCreatedLeaderboard()!,
-            udg_colorString[
-              GetConvertedPlayerId(udg_playerList[GetForLoopIndexA()])
-            ] + GetPlayerName(udg_playerList[GetForLoopIndexA()]),
-            0,
-          );
-          LeaderboardSetPlayerItemStyleBJ(
-            udg_playerList[GetForLoopIndexA()],
-            GetLastCreatedLeaderboard()!,
-            true,
-            false,
-            false,
-          );
-        }
-        bj_forLoopAIndex = bj_forLoopAIndex + 1;
+      bj_forLoopAIndex = bj_forLoopAIndex + 1;
+    }
+    bj_forLoopAIndex = 1;
+    bj_forLoopAIndexEnd = udg_playerCount;
+    while (true) {
+      if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
+      if ((indexAPlayerPlayingAndReturnedFromAfkDuringPick())) {
+        LeaderboardAddItemBJ(
+          udg_playerList[GetForLoopIndexA()],
+          GetLastCreatedLeaderboard()!,
+          udg_colorString[
+            GetConvertedPlayerId(udg_playerList[GetForLoopIndexA()])
+          ] + GetPlayerName(udg_playerList[GetForLoopIndexA()]),
+          0,
+        );
+        LeaderboardSetPlayerItemStyleBJ(
+          udg_playerList[GetForLoopIndexA()],
+          GetLastCreatedLeaderboard()!,
+          true,
+          false,
+          false,
+        );
       }
-    } else {
-      // IN GAME
-      if ((Trig_setupLeaderboard_Func002Func023Func006C())) {
-        udg_atempint2 = 0;
-        bj_forLoopAIndex = 1;
-        bj_forLoopAIndexEnd = udg_lastPlayer;
+      bj_forLoopAIndex = bj_forLoopAIndex + 1;
+    }
+  } else if (udg_Teams === TEAMS_LOCK_IE_PLAYING) { // IN GAME
+    udg_atempint2 = 0;
+    bj_forLoopAIndex = 1;
+    bj_forLoopAIndexEnd = udg_lastPlayer;
+    while (true) {
+      if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
+      if ((indexAPlayerAfkOrReturnedDuringRound())) {
+        udg_atempint2 = udg_atempint2 + 1;
+      }
+      bj_forLoopAIndex = bj_forLoopAIndex + 1;
+    }
+    DestroyLeaderboardBJ(GetLastCreatedLeaderboard()!);
+    bj_forLoopAIndex = 1;
+    bj_forLoopAIndexEnd = udg_lastPlayer;
+    while (true) {
+      if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
+      DestroyLeaderboardBJ(PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!);
+      CreateLeaderboardBJ(
+        GetForceOfPlayer(ConvertedPlayer(GetForLoopIndexA())!)!,
+        udg_mapName,
+      );
+      if (udg_wispPoints > 0) {
+        LeaderboardAddItemBJ(
+          Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
+          PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
+          "Sheep: " +
+            I2S(CountPlayersInForceBJ(udg_Sheep)) +
+            "                    (Saves)",
+          0,
+        );
+      } else if (udg_switchOn) {
+        LeaderboardAddItemBJ(
+          Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
+          PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
+          "Sheep: " +
+            I2S(CountPlayersInForceBJ(udg_Sheep)) +
+            "                    (Time)",
+          0,
+        );
+      } else {
+        LeaderboardAddItemBJ(
+          Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
+          PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
+          "Sheep: " +
+            I2S(CountPlayersInForceBJ(udg_Sheep)) +
+            "                    (Farms)",
+          0,
+        );
+      }
+      LeaderboardSetPlayerItemLabelColorBJ(
+        Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
+        PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
+        100,
+        100,
+        100,
+        0,
+      );
+      LeaderboardSetPlayerItemStyleBJ(
+        Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
+        PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
+        true,
+        false,
+        false,
+      );
+      ForForce(udg_Sheep, playingSheepRows);
+      if (udg_wispPoints > 0) {
+        LeaderboardAddItemBJ(
+          Player(bj_PLAYER_NEUTRAL_VICTIM)!,
+          PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
+          "Spirit: " + I2S(udg_dummyWisps),
+          0,
+        );
+      } else {
+        LeaderboardAddItemBJ(
+          Player(bj_PLAYER_NEUTRAL_VICTIM)!,
+          PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
+          "Spirit: " + I2S(CountPlayersInForceBJ(udg_Spirit)),
+          0,
+        );
+      }
+      LeaderboardSetPlayerItemLabelColorBJ(
+        Player(bj_PLAYER_NEUTRAL_VICTIM)!,
+        PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
+        100,
+        100,
+        100,
+        0,
+      );
+      LeaderboardSetPlayerItemStyleBJ(
+        Player(bj_PLAYER_NEUTRAL_VICTIM)!,
+        PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
+        true,
+        false,
+        false,
+      );
+      ForForce(udg_Spirit, playingSpiritRows);
+      if (udg_wispPoints > 0) {
+        LeaderboardAddItemBJ(
+          Player(PLAYER_NEUTRAL_PASSIVE)!,
+          PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
+          "Wolves: " +
+            I2S(CountPlayersInForceBJ(udg_Wolf)) +
+            "                    (Saves)",
+          0,
+        );
+      } else if (udg_switchOn) {
+        LeaderboardAddItemBJ(
+          Player(PLAYER_NEUTRAL_PASSIVE)!,
+          PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
+          "Wolves: " +
+            I2S(CountPlayersInForceBJ(udg_Wolf)) +
+            "                    (Time)",
+          0,
+        );
+      } else {
+        LeaderboardAddItemBJ(
+          Player(PLAYER_NEUTRAL_PASSIVE)!,
+          PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
+          "Wolves: " +
+            I2S(CountPlayersInForceBJ(udg_Wolf)) +
+            "                    (Kills)",
+          0,
+        );
+      }
+      LeaderboardSetPlayerItemLabelColorBJ(
+        Player(PLAYER_NEUTRAL_PASSIVE)!,
+        PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
+        100,
+        100,
+        100,
+        0,
+      );
+      LeaderboardSetPlayerItemStyleBJ(
+        Player(PLAYER_NEUTRAL_PASSIVE)!,
+        PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
+        true,
+        false,
+        false,
+      );
+      ForForce(udg_Wolf, playingWolfRows);
+      if ((Trig_setupLeaderboard_Func002Func023Func006Func004Func015C())) {
+        LeaderboardAddItemBJ(
+          Player(bj_PLAYER_NEUTRAL_EXTRA)!,
+          PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
+          "AFK Players: " + I2S(udg_atempint2),
+          0,
+        );
+        LeaderboardSetPlayerItemLabelColorBJ(
+          Player(bj_PLAYER_NEUTRAL_EXTRA)!,
+          PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
+          100,
+          100,
+          100,
+          0,
+        );
+        LeaderboardSetPlayerItemStyleBJ(
+          Player(bj_PLAYER_NEUTRAL_EXTRA)!,
+          PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
+          true,
+          false,
+          false,
+        );
+        bj_forLoopBIndex = 1;
+        bj_forLoopBIndexEnd = udg_lastPlayer;
         while (true) {
-          if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-          if ((indexAPlayerAfkOrReturnedDuringRound())) {
-            udg_atempint2 = udg_atempint2 + 1;
-          }
-          bj_forLoopAIndex = bj_forLoopAIndex + 1;
-        }
-        DestroyLeaderboardBJ(GetLastCreatedLeaderboard()!);
-        bj_forLoopAIndex = 1;
-        bj_forLoopAIndexEnd = udg_lastPlayer;
-        while (true) {
-          if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-          DestroyLeaderboardBJ(
-            PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-          );
-          CreateLeaderboardBJ(
-            GetForceOfPlayer(ConvertedPlayer(GetForLoopIndexA())!)!,
-            udg_mapName,
-          );
-          if (udg_dummyWisps > 0) {
+          if (bj_forLoopBIndex > bj_forLoopBIndexEnd) break;
+          if (
+            (Trig_setupLeaderboard_Func002Func023Func006Func004Func015Func004Func001C())
+          ) {
             LeaderboardAddItemBJ(
-              Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
-              PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-              "Sheep: " +
-                (I2S(CountPlayersInForceBJ(udg_Sheep)) +
-                  "                    (Saves)"),
-              0,
-            );
-          } else {
-            LeaderboardAddItemBJ(
-              Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
-              PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-              "Sheep: " +
-                (I2S(CountPlayersInForceBJ(udg_Sheep)) +
-                  "                    (Farms)"),
-              0,
-            );
-          }
-          LeaderboardSetPlayerItemLabelColorBJ(
-            Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
-            PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-            100,
-            100,
-            100,
-            0,
-          );
-          LeaderboardSetPlayerItemStyleBJ(
-            Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
-            PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-            true,
-            false,
-            false,
-          );
-          ForForce(
-            udg_Sheep,
-            Trig_setupLeaderboard_Func002Func023Func006Func004Func006A,
-          );
-          if ((Trig_setupLeaderboard_Func002Func023Func006Func004Func007C())) {
-            LeaderboardAddItemBJ(
-              Player(bj_PLAYER_NEUTRAL_VICTIM)!,
-              PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-              "Spirit: " + I2S(udg_dummyWisps),
-              0,
-            );
-          } else {
-            LeaderboardAddItemBJ(
-              Player(bj_PLAYER_NEUTRAL_VICTIM)!,
-              PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-              "Spirit: " + I2S(CountPlayersInForceBJ(udg_Spirit)),
-              0,
-            );
-          }
-          LeaderboardSetPlayerItemLabelColorBJ(
-            Player(bj_PLAYER_NEUTRAL_VICTIM)!,
-            PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-            100,
-            100,
-            100,
-            0,
-          );
-          LeaderboardSetPlayerItemStyleBJ(
-            Player(bj_PLAYER_NEUTRAL_VICTIM)!,
-            PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-            true,
-            false,
-            false,
-          );
-          ForForce(
-            udg_Spirit,
-            Trig_setupLeaderboard_Func002Func023Func006Func004Func010A,
-          );
-          if ((Trig_setupLeaderboard_Func002Func023Func006Func004Func011C())) {
-            LeaderboardAddItemBJ(
-              Player(PLAYER_NEUTRAL_PASSIVE)!,
-              PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-              "Wolves: " +
-                (I2S(CountPlayersInForceBJ(udg_Wolf)) +
-                  "                    (Saves)"),
-              0,
-            );
-          } else {
-            LeaderboardAddItemBJ(
-              Player(PLAYER_NEUTRAL_PASSIVE)!,
-              PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-              "Wolves: " +
-                (I2S(CountPlayersInForceBJ(udg_Wolf)) +
-                  "                    (Kills)"),
-              0,
-            );
-          }
-          LeaderboardSetPlayerItemLabelColorBJ(
-            Player(PLAYER_NEUTRAL_PASSIVE)!,
-            PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-            100,
-            100,
-            100,
-            0,
-          );
-          LeaderboardSetPlayerItemStyleBJ(
-            Player(PLAYER_NEUTRAL_PASSIVE)!,
-            PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-            true,
-            false,
-            false,
-          );
-          ForForce(
-            udg_Wolf,
-            Trig_setupLeaderboard_Func002Func023Func006Func004Func014A,
-          );
-          if ((Trig_setupLeaderboard_Func002Func023Func006Func004Func015C())) {
-            LeaderboardAddItemBJ(
-              Player(bj_PLAYER_NEUTRAL_EXTRA)!,
-              PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-              "AFK Players: " + I2S(udg_atempint2),
-              0,
-            );
-            LeaderboardSetPlayerItemLabelColorBJ(
-              Player(bj_PLAYER_NEUTRAL_EXTRA)!,
-              PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-              100,
-              100,
-              100,
+              ConvertedPlayer(GetForLoopIndexB())!,
+              PlayerGetLeaderboardBJ(
+                ConvertedPlayer(GetForLoopIndexA())!,
+              )!,
+              GetPlayerName(ConvertedPlayer(GetForLoopIndexB())!) +
+                " (back)",
               0,
             );
             LeaderboardSetPlayerItemStyleBJ(
-              Player(bj_PLAYER_NEUTRAL_EXTRA)!,
-              PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
+              ConvertedPlayer(GetForLoopIndexB())!,
+              GetLastCreatedLeaderboard()!,
               true,
               false,
               false,
             );
-            bj_forLoopBIndex = 1;
-            bj_forLoopBIndexEnd = udg_lastPlayer;
-            while (true) {
-              if (bj_forLoopBIndex > bj_forLoopBIndexEnd) break;
-              if (
-                (Trig_setupLeaderboard_Func002Func023Func006Func004Func015Func004Func001C())
-              ) {
-                LeaderboardAddItemBJ(
-                  ConvertedPlayer(GetForLoopIndexB())!,
-                  PlayerGetLeaderboardBJ(
-                    ConvertedPlayer(GetForLoopIndexA())!,
-                  )!,
-                  GetPlayerName(ConvertedPlayer(GetForLoopIndexB())!) +
-                    " (back)",
-                  0,
-                );
-                LeaderboardSetPlayerItemStyleBJ(
-                  ConvertedPlayer(GetForLoopIndexB())!,
-                  GetLastCreatedLeaderboard()!,
-                  true,
-                  false,
-                  false,
-                );
-              } else {
-                if (
-                  (Trig_setupLeaderboard_Func002Func023Func006Func004Func015Func004Func001Func001C())
-                ) {
-                  LeaderboardAddItemBJ(
-                    ConvertedPlayer(GetForLoopIndexB())!,
-                    PlayerGetLeaderboardBJ(
-                      ConvertedPlayer(GetForLoopIndexA())!,
-                    )!,
-                    GetPlayerName(ConvertedPlayer(GetForLoopIndexB())!)!,
-                    0,
-                  );
-                  LeaderboardSetPlayerItemStyleBJ(
-                    ConvertedPlayer(GetForLoopIndexB())!,
-                    GetLastCreatedLeaderboard()!,
-                    true,
-                    false,
-                    false,
-                  );
-                }
-              }
-              bj_forLoopBIndex = bj_forLoopBIndex + 1;
+          } else {
+            if (
+              (Trig_setupLeaderboard_Func002Func023Func006Func004Func015Func004Func001Func001C())
+            ) {
+              LeaderboardAddItemBJ(
+                ConvertedPlayer(GetForLoopIndexB())!,
+                PlayerGetLeaderboardBJ(
+                  ConvertedPlayer(GetForLoopIndexA())!,
+                )!,
+                GetPlayerName(ConvertedPlayer(GetForLoopIndexB())!)!,
+                0,
+              );
+              LeaderboardSetPlayerItemStyleBJ(
+                ConvertedPlayer(GetForLoopIndexB())!,
+                GetLastCreatedLeaderboard()!,
+                true,
+                false,
+                false,
+              );
             }
           }
-          bj_forLoopAIndex = bj_forLoopAIndex + 1;
+          bj_forLoopBIndex = bj_forLoopBIndex + 1;
         }
-        ForForce(
-          GetPlayersAll()!,
-          Trig_setupLeaderboard_Func002Func023Func006Func005A,
-        );
       }
+      bj_forLoopAIndex = bj_forLoopAIndex + 1;
     }
+    ForForce(
+      GetPlayersAll()!,
+      Trig_setupLeaderboard_Func002Func023Func006Func005A,
+    );
   }
   if ((Trig_setupLeaderboard_Func003C())) {
     ForForce(GetPlayersAll()!, Trig_setupLeaderboard_Func003Func001A);

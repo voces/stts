@@ -27,13 +27,15 @@ New? Type |CFF00AEEF-smart|r.`,
 |cff00aaef-time |cffed1c24X|cff00aeef:|r Set's the game timer to |cffed1c24X|r minutes.
 |cff00aeef-view:|r Displays the entire map for all players.
 |cff00aeef-vamp:|r Sheep that die turn into wolves.
-|cff00aeef-switch |cffed1c24X Y Z W|cff00aeef:|r Killing wolf switch places with its captive. |cffed1c24X|r is time sheep are invulnerable. |cffed1c24Y|r is time before wolf spawn. |cffed1c24Z|r is number of dummy spirits. |cffed1c24W|r saves required to win. The defaults: |cffed1c24X=5, Y=10, Z=0, W=0|r
+|cff00aeef-switch |cffed1c24X Y Z W V:VV|cff00aeef:|r Killing wolf switch places with its captive. |cffed1c24X|r is time sheep are invulnerable. |cffed1c24Y|r is time before wolf spawn. |cffed1c24Z|r is number of dummy spirits. |cffed1c24W|r saves or |cffed1c24V:VV|r surival time required to win. The defaults: |cffed1c24X=5, Y=10, Z=0, W=0|r
 |cff00aeef-president |cffed1c24X|cff00aeef:|r Picks a sheep to be president. If that sheep dies, the sheep lose. All other sheep have their handicap set to X, but their wisps can freely roam the map.
 |cff00aeef-gold |cffed1c24X Y|cff00aeef:|r Gives sheep |cffed1c24X|r gold and wolves |cffed1c24Y|r gold. If |cffed1c24Y|r is omitted, both teams get |cffed1c24X|r gold.
 |cff00aeef-expand:|r Gives the Sheep more room to build over time.
 |cff00aeef-shrink:|r Gives the Sheep less room to build over time.
 |cff00aeef-farmvision |cffed1c24X|cff00aeef:|r Sets the sight radius of all farms except Sentry Farm to |cffed1c24X|r.
 |cff00aeef-terrain:|r Toggles through terrains.
+|cff00aeef-freespawn:|r Allows sheep to freely pick their start position.
+|cff00aeef-randomspawn:|r Randomizes sheep spawn positions each round about the pen.
 |cff00aeef-practice:|r Gives everybody a Sheep and Wolf to practice their skills.
 |cffffcc00Practice Commands:|r
 |cff00aeef-a:|r Forces your wolf to attack your sheep.
@@ -41,7 +43,8 @@ New? Type |CFF00AEEF-smart|r.`,
 |cff00aeef-owner:|r When in practice mode it toggles the owner of your wolf.
 |cff00aeef-disable:|r Toggles |cffed1c24Destroy All Farms|r ability on/off.
 |cff00aeef-mass |cffed1c24X|cff00aeef:|r When in practice mode it creates a timed massing test of |cffed1c24X|r seconds for all players.
-|cff00aeef-stop:|r When in practice mode it stops a timed mass contest.`,
+|cff00aeef-stop:|r When in practice mode it stops a timed mass contest.
+|cff00aeef-position |cffed1c24X|cff00aeef:|r Sets your start position to that of slot |cffed1c24X|r.`,
     "ReplaceableTextures\\PassiveButtons\\PASBTNStatUp.blp",
   );
 
@@ -56,7 +59,7 @@ New? Type |CFF00AEEF-smart|r.`,
 |cff00aeef-control:|r Toggles sharing control on/off.
 |cff00aeef-fafk |cffed1c24X|cff00aeef:|r Forces player |cffed1c24X|r afk. Only works before a round starts.
 |cff00aeef-reset:|r Resets the scores for leader and loser.
-|cff00aeef-handicap |cffed1c24X Y|cff00aeef:|r Set's player X's handicap to Y.
+|cff00aeef-handicap |cffed1c24X Y|cff00aeef:|r Set's player X's handicap to Y. Can type "all" for X to set all handicaps.
 |cff00aeef-pub |cffed1c24X|cff00aeef:|r Toggles player |cffed1c24X|r as a pub, removing them from smart considerations.
 |cff00aeef-rotate:|r Toggles rotating a player out of round selection.
 |cff00aeef-perfect:|r Toggles eprfect smart. Use an ! to reset perfect.
@@ -162,6 +165,7 @@ Christmas lights: Vinz @ Hive
 Snowman: Thrikodius @ Hive
 Snowball: Walle @ Hive
 Santa: IamMclovin @ Hive
+HideShow icon: darkdeathknight @ Hive
 Model editor: Retera`,
     "ReplaceableTextures\\CommandButtons\\BTNPeasant.blp",
   );

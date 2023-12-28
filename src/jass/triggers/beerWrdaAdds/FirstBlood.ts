@@ -15,7 +15,7 @@ const Trig_First_Blood_Actions = () => {
   const prevTime = udg_QDeathTime[cid];
   if (time < prevTime) {
     udg_QDeathTime[cid] = time;
-    if (time <= udg_qDeath) {
+    if (time < udg_qDeath) {
       udg_qDeath = time;
       udg_qDeathString = udg_colorString[cid] + GetPlayerName(p);
     }

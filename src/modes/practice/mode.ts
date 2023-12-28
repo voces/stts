@@ -18,7 +18,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     }),
   );
   TriggerAddAction(gg_trg_practice, () => {
-    udg_lastGameString = GetEventPlayerChatString()!.toLowerCase();
+    udg_lastGameString = GetEventPlayerChatString()?.toLowerCase() ?? "";
     udg_practiceOn = true;
     udg_dummyWisps = 0;
     udg_wispPoints = 0;

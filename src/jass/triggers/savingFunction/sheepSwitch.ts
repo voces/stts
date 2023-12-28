@@ -1,3 +1,4 @@
+import { switchSheepTimers } from "modes/switch/switch";
 import { removeEnumUnit } from "util/removeEnumUnit";
 
 const adjustAlliances1 = () => {
@@ -126,10 +127,7 @@ const Trig_sheepSwitch_Actions = () => {
     RandomY(gg_rct_unstuckZone),
     0,
   );
-  SelectUnitForPlayerSingle(
-    GetLastCreatedUnit()!,
-    GetOwningPlayer(GetKillingUnit()!),
-  );
+  SelectUnitForPlayerSingle(GetLastCreatedUnit()!, GetOwningPlayer(GetKillingUnit()!));
   ForceUICancelBJ(GetOwningPlayer(GetKillingUnit()!));
   RemoveUnit(GetLastCreatedUnit()!);
   bj_lastCreatedUnit = CreateUnit(
@@ -137,29 +135,22 @@ const Trig_sheepSwitch_Actions = () => {
     sheepType,
     GetUnitX(GetTriggerUnit()!),
     GetUnitY(GetTriggerUnit()!),
-    270,
+    GetUnitFacing(GetTriggerUnit()!),
   );
+  switchSheepTimers[GetPlayerId(GetOwningPlayer(GetKillingUnit()!))].resume();
+  switchSheepTimers[GetPlayerId(GetOwningPlayer(GetTriggerUnit()!))].pause();
   udg_unit[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))] = GetLastCreatedUnit()!;
   UnitRemoveAbilityBJ(FourCC("A00D"), GetLastCreatedUnit()!);
   UnitAddAbilityBJ(FourCC("A00U"), GetLastCreatedUnit()!);
-  SetPlayerUnitAvailableBJ(
-    FourCC("n002"),
-    true,
-    GetOwningPlayer(GetLastCreatedUnit()!),
-  );
-  SelectUnitForPlayerSingle(
-    GetLastCreatedUnit()!,
-    GetOwningPlayer(GetKillingUnit()!),
-  );
+  SetPlayerUnitAvailableBJ(FourCC("n002"), true, GetOwningPlayer(GetLastCreatedUnit()!));
+  SelectUnitForPlayerSingle(GetLastCreatedUnit()!, GetOwningPlayer(GetKillingUnit()!));
   SetUnitInvulnerable(GetLastCreatedUnit()!, true);
   AddSpecialEffectTargetUnitBJ(
     "origin",
     GetLastCreatedUnit()!,
     "Abilities\\Spells\\Human\\DivineShield\\DivineShieldTarget.mdl",
   );
-  udg_switchEffect[
-    GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()!))
-  ] = GetLastCreatedEffectBJ()!;
+  udg_switchEffect[GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()!))] = GetLastCreatedEffectBJ()!;
   udg_atempint = GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!));
   const timers = [
     [udg_redTimer, udg_redHideTimer],

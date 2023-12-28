@@ -7,8 +7,9 @@ const Trig_partnerCount_Actions = () => {
 
   if (pid < 0 || pid > 23) return;
 
-  const p = MapPlayerEx.fromIndex(pid)!;
-  p.displayTimedText(`                              ${MapPlayerEx.fromIndex(pid)}|CFFFFCC00's Partner Count|r`, 10);
+  const self = MapPlayerEx.fromEvent()!;
+
+  self.displayTimedText(`                              ${MapPlayerEx.fromIndex(pid)}|CFFFFCC00's Partner Count|r`, 10);
 
   let i = 0;
   let count = 0;
@@ -20,7 +21,7 @@ const Trig_partnerCount_Actions = () => {
         udg_AFK[i + 1] === AFK_PLAYING && i !== pid
       ) {
         const p2 = MapPlayerEx.fromIndex(i)!;
-        p.displayTimedText(
+        self.displayTimedText(
           `                              ${p2.hex}${p2.name} : ${I2S(udg_accumPartner[pid * 24 + i + 1])}`,
           10,
         );

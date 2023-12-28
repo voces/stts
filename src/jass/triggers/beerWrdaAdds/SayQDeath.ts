@@ -2,8 +2,7 @@ import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
 const Trig_Say_Q_Death_Func001Func001C = () => {
   if (
-    (!(udg_QDeathTime[S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 6)!)] <
-      9999))
+    (!(Number.isFinite(udg_QDeathTime[S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 6)!)])))
   ) {
     return false;
   }

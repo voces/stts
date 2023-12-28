@@ -1,12 +1,5 @@
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
-const Trig_redo_Conditions = () => {
-  if ((!(GetTriggerPlayer() === udg_Custom))) {
-    return false;
-  }
-  return true;
-};
-
 const Trig_redo_Actions = () => {
   TriggerExecute(gg_trg_reset);
   TriggerExecute(gg_trg_initMassTest);
@@ -20,6 +13,6 @@ InitTrig_redo = () => {
   gg_trg_redo = CreateTrigger();
   DisableTrigger(gg_trg_redo);
   registerAnyPlayerChatEvent(gg_trg_redo, "-redo");
-  TriggerAddCondition(gg_trg_redo, Condition(Trig_redo_Conditions));
+  TriggerAddCondition(gg_trg_redo, Condition(() => GetTriggerPlayer() === udg_Custom));
   TriggerAddAction(gg_trg_redo, Trig_redo_Actions);
 };

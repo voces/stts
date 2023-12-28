@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 23d
+Sheep Tag ReVoLuTiOn 23e
 }
 
 STRING 40
@@ -1206,18 +1206,6 @@ STRING 2339
 bril
 }
 
-STRING 2345
-// Abilities: A011 (Rune of Invisibility), Ubertip (Tooltip - Normal - Extended)
-{
-Makes you invisible for 30 seconds. If a sheep is close enough, they can see you. 210 Second cooldown.
-}
-
-STRING 2346
-// Abilities: A011 (Rune of Invisibility), Unubertip (Tooltip - Turn Off - Extended)
-{
-Makes you invisible for 30 seconds. If a sheep is close enough, they can see you. 210 Second cooldown.
-}
-
 STRING 2348
 // Buffs/Effects: B00F (Endurance Aura), EditorName (Name (Editor Only))
 {
@@ -1660,12 +1648,6 @@ STRING 2713
 // Items: I00D (mana), Ubertip (Tooltip - Extended)
 {
 Fully restores mana. |n|cffffcc0035 gold.|r |n|cff00aeef-buy mana: 49 gold.|r
-}
-
-STRING 2714
-// Items: I00E (gem), Ubertip (Tooltip - Extended)
-{
-Detects invisible farms and sheep.|n|cffffcc0065 gold.|r |n|cff00aeef-buy gem: 91 gold.|r
 }
 
 STRING 2718
@@ -3657,12 +3639,6 @@ STRING 3848
 G
 }
 
-STRING 3857
-// Items: I00V (suppression), Ubertip (Tooltip - Extended)
-{
-Creates a suppression field that causes Upgraded Farms to take extra damage.|n|cffff0000Does not stack.|r|n|cffffcc00135 gold.|r |n|cff00aeef-buy suppression: 175 gold.|r
-}
-
 STRING 3866
 // Units: n005 (Shop3), Name (Name)
 {
@@ -3814,7 +3790,7 @@ Allows the wolf to turn a tree into a club, increasing damage to farms but slowi
 }
 
 STRING 3900
-// Abilities: A00G (HideShow), Hotkey (Hotkey - Normal)
+// Items: I00Y (mastery), Hotkey (Hotkey)
 {
 Z
 }
@@ -3829,30 +3805,6 @@ STRING 3915
 // Units: n009 (Critter), Name (Name)
 {
 Critter
-}
-
-STRING 3917
-// Doodads: D000 (Light 0), Name (Name)
-{
-Light 0
-}
-
-STRING 3918
-// Doodads: D001 (Light 1), Name (Name)
-{
-Light 1
-}
-
-STRING 3919
-// Doodads: D002 (Light 2), Name (Name)
-{
-Light 2
-}
-
-STRING 3920
-// Units: n00A (Light), Name (Name)
-{
-Light
 }
 
 STRING 3933
@@ -3933,16 +3885,6 @@ STRING 3957
 Upon first usage, gives your allies some of your gold (-gs). If used a second time within a second, gives all of your gold (-g).
 }
 
-STRING 3958
-{
-|cff00ff00Sheep Tag ReVoLuTiOn 23d|r
-}
-
-STRING 3959
-{
-|cff00ff0023d|r
-}
-
 STRING 3967
 // Units: h00K (Start position), Name (Name)
 {
@@ -3985,15 +3927,61 @@ STRING 3976
 (placeholder)
 }
 
-STRING 3977
-// Items: I00X (kaleidoscope), Ubertip (Tooltip - Extended)
+STRING 3979
 {
-Increases the damage of illusions by 25% of base damage.|nCan be consumed to swap places with your illusion.|n|cffffcc0080 gold.|r |n|cff00aeef-buy kaleidoscope: 112 gold.|r
+|cff00ff00Sheep Tag ReVoLuTiOn 23e|r
 }
 
-STRING 3978
+STRING 3980
+{
+|cff00ff0023e|r
+}
+
+STRING 3982
 // Items: I00X (kaleidoscope), Description (Description)
 {
-Increases the damage of illusions by 25% of base damage. Can be consumed to swap places with your illusion.
+Increases the damage of illusions by 10% of base damage per charge. Can be consumed to swap places with your illusion.
+}
+
+STRING 3984
+// Items: I00X (kaleidoscope), Ubertip (Tooltip - Extended)
+{
+Increases the damage multiple of illusions by 9% per charge.|nCan be consumed to swap places with your illusion.|nContains <I00X,uses> charges.|n|cffffcc0080 gold.|r |n|cff00aeef-buy kaleidoscope: 112 gold.|r
+}
+
+STRING 3985
+// Items: I00V (suppression), Ubertip (Tooltip - Extended)
+{
+Creates a suppression field that causes Upgraded Farms to take extra damage.|n|cffff0000Does not stack.|r|n|cffffcc00100 gold.|r|n|cff00aeef-buy suppression: 140 gold.|r
+}
+
+STRING 3986
+// Items: I00E (gem), Ubertip (Tooltip - Extended)
+{
+Detects invisible farms and sheep.|n|cffffcc0040 gold.|r |n|cff00aeef-buy gem: 56 gold.|r
+}
+
+STRING 3987
+// Items: I00Y (mastery), Name (Name)
+{
+mastery
+}
+
+STRING 3988
+// Items: I00Y (mastery), Description (Description)
+{
+Takes control of structures.
+}
+
+STRING 3990
+// Abilities: A00G (HideShow), Hotkey (Hotkey - Normal)
+{
+Z
+}
+
+STRING 3992
+// Items: I00Y (mastery), Ubertip (Tooltip - Extended)
+{
+Transfers control of the targeted structure to the player who uses the Scepter.|n|cffffcc00100 gold.|r |n|cff00aeef-buy mastery: 140 gold.|r
 }
 

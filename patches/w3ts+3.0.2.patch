@@ -51,6 +51,19 @@ index febb3c7..ff2a60f 100644
 +    return next
 +end
  return ____exports
+diff --git a/node_modules/w3ts/handles/timer.d.ts b/node_modules/w3ts/handles/timer.d.ts
+index d9a9a20..ac71594 100644
+--- a/node_modules/w3ts/handles/timer.d.ts
++++ b/node_modules/w3ts/handles/timer.d.ts
+@@ -15,7 +15,7 @@ export declare class Timer extends Handle<timer> {
+     destroy(): this;
+     pause(): this;
+     resume(): this;
+-    start(timeout: number, periodic: boolean, handlerFunc: () => void): this;
++    start(timeout: number, periodic: boolean, handlerFunc?: (() => void) | null): this;
+     /**
+      * @bug Might crash the game if called when there is no expired timer.
+      */
 diff --git a/node_modules/w3ts/hooks/index.lua b/node_modules/w3ts/hooks/index.lua
 index b395d8c..44e3a84 100644
 --- a/node_modules/w3ts/hooks/index.lua
@@ -69,3 +82,36 @@ index b395d8c..44e3a84 100644
  ) end
  function ____exports.hookedMain()
      ____exports.executeHooksMainBefore()
+diff --git a/node_modules/w3ts/system/file.lua b/node_modules/w3ts/system/file.lua
+index b05ed7b..064f8ea 100644
+--- a/node_modules/w3ts/system/file.lua
++++ b/node_modules/w3ts/system/file.lua
+@@ -40,19 +40,22 @@ function File.unescape(self, contents)
+ end
+ function File.read(self, filename)
+     local originalIcon = BlzGetAbilityIcon(self.dummyAbility)
++    local originalTooltip = BlzGetAbilityTooltip(self.dummyAbility, 0)
+     if originalIcon == nil then
+         return nil
+     end
+     Preloader(filename)
+     local preloadText = BlzGetAbilityIcon(self.dummyAbility)
+-    if preloadText == nil then
+-        return nil
++    if preloadText == nil or preloadText == originalIcon then
++        preloadText = BlzGetAbilityTooltip(self.dummyAbility, 0)
++        if preloadText == nil or preloadText == originalTooltip then
++            return nil
++        end
++        preloadText = string.sub(preloadText, 2)
+     end
+     BlzSetAbilityIcon(self.dummyAbility, originalIcon)
+-    if preloadText ~= originalIcon then
+-        return ____exports.File:unescape(preloadText)
+-    end
+-    return nil
++    BlzSetAbilityTooltip(self.dummyAbility, originalTooltip, 0)
++    return ____exports.File:unescape(preloadText)
+ end
+ function File.writeRaw(self, filename, contents, allowReading)
+     if allowReading == nil then

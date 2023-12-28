@@ -56,7 +56,6 @@ const moveCritter = () => {
 };
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
-  BJDebugMsg("still run?");
   const t = CreateTrigger();
   TriggerRegisterTimerEvent(t, 5, true);
   TriggerAddAction(t, moveCritter);

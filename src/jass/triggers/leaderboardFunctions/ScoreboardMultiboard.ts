@@ -2,7 +2,7 @@
 // Trigger: ScoreboardMultiboard
 //===========================================================================
 const Trig_ScoreboardMultiboard_Func020Func001Func015C = () => {
-  if ((!(udg_QDeathTime[GetConvertedPlayerId(GetEnumPlayer()!)] < 9999))) {
+  if ((!(Number.isFinite(udg_QDeathTime[GetConvertedPlayerId(GetEnumPlayer()!)])))) {
     return false;
   }
   return true;

@@ -1,4 +1,5 @@
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+import { setTimeout } from "util/setTimeout";
 import { File } from "w3ts";
 
 const saveZooms = (p: player): void => {
@@ -26,18 +27,15 @@ const setZooms = (
   val3: number,
 ): void => {
   const pId = GetConvertedPlayerId(p);
-  if (values === 1) {
-    udg_sheepZoom[pId] = Math.max(Math.min(val1, 2400), 1350);
-    udg_wolfZoom[pId] = Math.max(Math.min(val1, 2700), 1350);
-    udg_wispZoom[pId] = Math.max(Math.min(val1, 3350), 1350);
-  } else if (values === 2) {
-    udg_sheepZoom[pId] = Math.max(Math.min(val1, 2400), 1350);
-    udg_wolfZoom[pId] = Math.max(Math.min(val2, 2700), 1350);
-    udg_wispZoom[pId] = Math.max(Math.min(val1, 3350), 1350);
+  if (values === 1) udg_sheepZoom[pId] = udg_wolfZoom[pId] = udg_wispZoom[pId] = val1;
+  else if (values === 2) {
+    udg_sheepZoom[pId] = val1;
+    udg_wolfZoom[pId] = val2;
+    udg_wispZoom[pId] = Math.max(val1, val2);
   } else if (values === 3) {
-    udg_sheepZoom[pId] = Math.max(Math.min(val1, 2400), 1350);
-    udg_wolfZoom[pId] = Math.max(Math.min(val2, 2700), 1350);
-    udg_wispZoom[pId] = Math.max(Math.min(val3, 3350), 1350);
+    udg_sheepZoom[pId] = val1;
+    udg_wolfZoom[pId] = val2;
+    udg_wispZoom[pId] = val3;
   }
 
   if (udg_AFK[pId] > 0) SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, udg_wispZoom[pId], 0);
@@ -60,15 +58,16 @@ const loadZooms = () => {
     val3 = 1650;
   } else {
     [val1, val2, val3] = s.split(" ").map((v) => S2R(v));
-    DisplayTextToPlayer(
-      GetLocalPlayer(),
-      0,
-      0,
-      `Loaded zooms. Sheep: |CFFED1C24${val1.toFixed(0)}|r, Wolf: |CFFED1C24${val2.toFixed(0)}|r, Spirit: |CFFED1C24${
-        val3.toFixed(0)
-      }|r.`,
-    );
-    DisplayTextToPlayer(GetLocalPlayer(), 0, 0, " ");
+    setTimeout(0.1, () =>
+      DisplayTextToPlayer(
+        GetLocalPlayer(),
+        0,
+        0,
+        `\nLoaded zooms. Sheep: |CFFED1C24${val1.toFixed(0)}|r, Wolf: |CFFED1C24${
+          val2.toFixed(0)
+        }|r, Spirit: |CFFED1C24${val3.toFixed(0)}|r.`,
+      ));
+    DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "");
   }
 
   setZooms(GetLocalPlayer(), 3, val1, val2, val3);
