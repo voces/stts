@@ -13,9 +13,6 @@ declare global {
 }
 InitTrig_timeTurquoise = () => {
   gg_trg_timeTurquoise = CreateTrigger();
-  TriggerRegisterTimerExpireEventBJ(
-    gg_trg_timeTurquoise,
-    udg_multiKillTimer[15],
-  );
+  TriggerRegisterTimerExpireEventBJ(gg_trg_timeTurquoise, udg_multiKillTimer[15]);
   TriggerAddAction(gg_trg_timeTurquoise, Trig_timeTurquoise_Actions);
 };

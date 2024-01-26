@@ -42,16 +42,7 @@ declare global {
 }
 InitTrig_Last_Sheep_Standing = () => {
   gg_trg_Last_Sheep_Standing = CreateTrigger();
-  TriggerRegisterAnyUnitEventBJ(
-    gg_trg_Last_Sheep_Standing,
-    EVENT_PLAYER_UNIT_DEATH,
-  );
-  TriggerAddCondition(
-    gg_trg_Last_Sheep_Standing,
-    Condition(Trig_Last_Sheep_Standing_Conditions),
-  );
-  TriggerAddAction(
-    gg_trg_Last_Sheep_Standing,
-    Trig_Last_Sheep_Standing_Actions,
-  );
+  TriggerRegisterAnyUnitEventBJ(gg_trg_Last_Sheep_Standing, EVENT_PLAYER_UNIT_DEATH);
+  TriggerAddCondition(gg_trg_Last_Sheep_Standing, Condition(Trig_Last_Sheep_Standing_Conditions));
+  TriggerAddAction(gg_trg_Last_Sheep_Standing, Trig_Last_Sheep_Standing_Actions);
 };

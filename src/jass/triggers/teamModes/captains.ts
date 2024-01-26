@@ -1,27 +1,27 @@
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
-const Trig_captains_Func004Func002C = () => {
-  if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 11, 12)!) > 0))) {
+const Trig_captains_Func004Func002C = (s: string) => {
+  if ((!(S2I(SubStringBJ(s, 11, 12)!) > 0))) {
     return false;
   }
-  if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 11, 12)!) < 25))) {
+  if ((!(S2I(SubStringBJ(s, 11, 12)!) < 25))) {
     return false;
   }
-  if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 13, 15)!) > 0))) {
+  if ((!(S2I(SubStringBJ(s, 13, 15)!) > 0))) {
     return false;
   }
-  if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 13, 15)!) < 25))) {
+  if ((!(S2I(SubStringBJ(s, 13, 15)!) < 25))) {
     return false;
   }
   return true;
 };
 
-const Trig_captains_Func004C = () => {
-  if ((GetEventPlayerChatString() === "-captains")) {
+const Trig_captains_Func004C = (s: string) => {
+  if ((s === "-captains")) {
     return true;
   }
-  if ((Trig_captains_Func004Func002C())) {
+  if ((Trig_captains_Func004Func002C(s))) {
     return true;
   }
   return false;
@@ -46,7 +46,7 @@ const Trig_captains_Conditions = () => {
   ) {
     return false;
   }
-  if ((!Trig_captains_Func004C())) {
+  if ((!Trig_captains_Func004C(GetEventPlayerChatString() ?? ""))) {
     return false;
   }
   if (
@@ -200,10 +200,10 @@ const Trig_captains_Actions = () => {
     DisableTrigger(gg_trg_start);
     DisableTrigger(gg_trg_smart);
     DisableTrigger(gg_trg_versus);
-    DisableTrigger(GetTriggeringTrigger()!);
+    DisableTrigger(gg_trg_captains);
     DisableTrigger(gg_trg_pick);
     DisableTrigger(gg_trg_end);
-    udg_lastGameString = GetEventPlayerChatString()!;
+    udg_lastGameString = s;
     TriggerExecute(gg_trg_createLists);
     udg_Teams = TEAMS_CAPTAINS;
     udg_pickIndex = 1;
@@ -277,13 +277,13 @@ const Trig_captains_Actions = () => {
 
     DestroyLeaderboardBJ(GetLastCreatedLeaderboard()!);
     DisableTrigger(gg_trg_fair);
-    DisableTrigger(GetTriggeringTrigger()!);
+    DisableTrigger(gg_trg_captains);
     DisableTrigger(gg_trg_pick);
     DisableTrigger(gg_trg_smart);
     DisableTrigger(gg_trg_reverse);
     DisableTrigger(gg_trg_start);
     DisableTrigger(gg_trg_end);
-    udg_lastGameString = GetEventPlayerChatString()!;
+    udg_lastGameString = s;
     TriggerExecute(gg_trg_createLists);
     udg_Teams = TEAMS_CAPTAINS;
     udg_pickIndex = 1;

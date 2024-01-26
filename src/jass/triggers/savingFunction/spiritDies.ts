@@ -62,7 +62,6 @@ const Trig_spiritDies_Actions = () => {
   udg_humiliationCheck[dyingPlayerId] = false;
 };
 
-//===========================================================================
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_spiritDies: () => void;

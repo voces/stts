@@ -32,9 +32,6 @@ declare global {
 }
 InitTrig_castAbilitySpellCast = () => {
   gg_trg_castAbilitySpellCast = CreateTrigger();
-  TriggerRegisterAnyUnitEventBJ(
-    gg_trg_castAbilitySpellCast,
-    EVENT_PLAYER_UNIT_SPELL_CAST,
-  );
+  TriggerRegisterAnyUnitEventBJ(gg_trg_castAbilitySpellCast, EVENT_PLAYER_UNIT_SPELL_CAST);
   TriggerAddAction(gg_trg_castAbilitySpellCast, Trig_castAbility_Actions);
 };

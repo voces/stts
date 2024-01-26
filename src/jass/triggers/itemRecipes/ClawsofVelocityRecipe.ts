@@ -1,6 +1,5 @@
-//===========================================================================
-// Trigger: Claws of Velocity Recipe
-//===========================================================================
+export {};
+
 const Trig_Claws_of_Velocity_Recipe_Func001Func001C = () => {
   if ((GetItemTypeId(GetManipulatedItem()!) === FourCC("I00T"))) {
     return true;
@@ -43,30 +42,22 @@ const Trig_Claws_of_Velocity_Recipe_Actions = () => {
     RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit()!, FourCC("I004"))!);
     RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit()!, FourCC("I005"))!);
     UnitAddItemByIdSwapped(FourCC("I00S"), GetTriggerUnit()!);
-    AddSpecialEffectTargetUnitBJ(
-      "overhead",
-      GetTriggerUnit()!,
+    const e = AddSpecialEffectTarget(
       "Abilities\\Spells\\Human\\HolyBolt\\HolyBoltSpecialArt.mdl",
+      GetTriggerUnit()!,
+      "overhead",
     );
     TriggerSleepAction(0.01);
-    DestroyEffectBJ(GetLastCreatedEffectBJ()!);
+    if (e) DestroyEffect(e);
   }
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_Claws_of_Velocity_Recipe: () => void;
 }
 InitTrig_Claws_of_Velocity_Recipe = () => {
   gg_trg_Claws_of_Velocity_Recipe = CreateTrigger();
-  TriggerRegisterAnyUnitEventBJ(
-    gg_trg_Claws_of_Velocity_Recipe,
-    EVENT_PLAYER_UNIT_PICKUP_ITEM,
-  );
-  TriggerAddAction(
-    gg_trg_Claws_of_Velocity_Recipe,
-    Trig_Claws_of_Velocity_Recipe_Actions,
-  );
+  TriggerRegisterAnyUnitEventBJ(gg_trg_Claws_of_Velocity_Recipe, EVENT_PLAYER_UNIT_PICKUP_ITEM);
+  TriggerAddAction(gg_trg_Claws_of_Velocity_Recipe, Trig_Claws_of_Velocity_Recipe_Actions);
 };

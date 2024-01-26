@@ -396,11 +396,11 @@ const Trig_createLists_Actions = () => {
   udg_lastPlayer = 0;
   udg_Custom = Player(0)!;
   udg_originalCustom = Player(0)!;
+  udg_playerList = [];
   bj_forLoopAIndex = 1;
   bj_forLoopAIndexEnd = 24;
   while (true) {
     if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-    udg_playerList[GetForLoopIndexA()] = udg_noplayer;
     if ((Trig_createLists_Func006Func002C())) {
       udg_lastPlayer = GetForLoopIndexA();
     }

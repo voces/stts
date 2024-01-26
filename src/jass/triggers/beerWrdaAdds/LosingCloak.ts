@@ -113,13 +113,7 @@ declare global {
 }
 InitTrig_Losing_Cloak = () => {
   gg_trg_Losing_Cloak = CreateTrigger();
-  TriggerRegisterAnyUnitEventBJ(
-    gg_trg_Losing_Cloak,
-    EVENT_PLAYER_UNIT_DROP_ITEM,
-  );
-  TriggerAddCondition(
-    gg_trg_Losing_Cloak,
-    Condition(Trig_Losing_Cloak_Conditions),
-  );
+  TriggerRegisterAnyUnitEventBJ(gg_trg_Losing_Cloak, EVENT_PLAYER_UNIT_DROP_ITEM);
+  TriggerAddCondition(gg_trg_Losing_Cloak, Condition(Trig_Losing_Cloak_Conditions));
   TriggerAddAction(gg_trg_Losing_Cloak, Trig_Losing_Cloak_Actions);
 };

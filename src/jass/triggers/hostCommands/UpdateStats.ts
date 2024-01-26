@@ -1,6 +1,7 @@
 import { defineEvent, defineNumberValue, defineStringValue, setPlayerFlag } from "w3ts-w3mmd";
-
 import { MapPlayerEx } from "handles/MapPlayerEx";
+
+import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 
 export const logRound = defineEvent("round", "{0} vs {1}: lasted {2}", "sheep", "wolves", "time");
 export const logMassingTest = defineEvent("massingTest", "{0}", "time");
@@ -30,7 +31,7 @@ const Trig_UpdateStats_forEnumPlayer = () => {
 
   setPlayerFlag(p.handle, "drawer");
   logFarmsBuilt(p.handle, udg_totalFarmsBuilt[p.cid]);
-  udg_averageFarmCountBeforeWolves[p.cid] = I2R(udg_totalFarmCountBeforeWolves[p.cid]) / I2R(udg_sheepCount[p.cid]);
+  udg_averageFarmCountBeforeWolves[p.cid] = udg_totalFarmCountBeforeWolves[p.cid] / udg_sheepCount[p.cid];
   logAverageFarmCountBeforeWolves(p.handle, udg_averageFarmCountBeforeWolves[p.cid]);
   logSaves(p.handle, udg_totalSaves[p.cid]);
   logKills(p.handle, udg_totalKills[p.cid]);
@@ -53,12 +54,11 @@ const Trig_UpdateStats_Actions = () => {
   ForForce(GetPlayersAll()!, Trig_UpdateStats_forEnumPlayer);
   logEnd();
   TriggerSleepAction(0.3);
-  DisplayTimedTextToForce(
-    GetPlayersAll()!,
-    30,
+  displayTimedTextToAll(
     `                              |cff00aeefW3MMD|r stats have been saved to the replay!
-
-Upload your replays to |cff00aeefhttps://wc3stats.com/|r`,
+    
+    Upload your replays to |cff00aeefhttps://wc3stats.com/|r`,
+    30,
   );
 };
 

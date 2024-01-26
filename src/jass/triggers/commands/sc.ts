@@ -1,10 +1,11 @@
-export {};
+import { MapPlayerEx } from "handles/MapPlayerEx";
 
 const Trig_sc_printSheepCounts = () => {
+  const p = MapPlayerEx.fromEvent()!;
   let i = 0;
   let count = 0;
 
-  DisplayTimedTextToPlayer(GetTriggerPlayer()!, 0, 0, 15, " ");
+  p.displayTimedText(" ", 15);
   while (true) {
     if (i === bj_MAX_PLAYERS) break;
     count = 0;
@@ -14,13 +15,10 @@ const Trig_sc_printSheepCounts = () => {
         GetPlayerSlotState(Player(i)!) === PLAYER_SLOT_STATE_PLAYING &&
         udg_AFK[i + 1] === AFK_PLAYING
       ) {
-        DisplayTimedTextToPlayer(
-          GetTriggerPlayer()!,
-          0,
-          0,
-          15,
+        p.displayTimedText(
           "                              " + udg_colorString[i + 1] +
             GetPlayerName(Player(i)!) + " : " + I2S(udg_sheepCount[i + 1]),
+          15,
         );
         count = count + 1;
       }
@@ -28,7 +26,7 @@ const Trig_sc_printSheepCounts = () => {
     }
     if (count === 12) {
       TriggerSleepAction(9);
-      if (GetLocalPlayer() === GetTriggerPlayer()!) ClearTextMessages();
+      if (p.isLocal()) ClearTextMessages();
     }
   }
 };

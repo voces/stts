@@ -297,6 +297,7 @@ const Trig_versus_Func006C = () => {
 };
 
 const Trig_versus_Actions = () => {
+  const s = GetEventPlayerChatString()!;
   TriggerSleepAction(0.01);
   if ((Trig_versus_Func006C())) {
     udg_versus = 1;
@@ -310,11 +311,11 @@ const Trig_versus_Actions = () => {
     DisableTrigger(gg_trg_smart);
     DisableTrigger(gg_trg_reverse);
     DisableTrigger(gg_trg_start);
-    DisableTrigger(GetTriggeringTrigger()!);
+    DisableTrigger(gg_trg_versus);
     DisableTrigger(gg_trg_captains);
     DisableTrigger(gg_trg_pick);
     DisableTrigger(gg_trg_end);
-    udg_lastGameString = GetEventPlayerChatString()!;
+    udg_lastGameString = s;
     TriggerExecute(gg_trg_createLists);
     udg_Teams = TEAMS_CAPTAINS;
     udg_pickIndex = 1;
@@ -426,13 +427,13 @@ const Trig_versus_Actions = () => {
       udg_gameTime[2] = 0;
       DisableTrigger(gg_trg_captains);
       DisableTrigger(gg_trg_fair);
-      DisableTrigger(GetTriggeringTrigger()!);
+      DisableTrigger(gg_trg_versus);
       DisableTrigger(gg_trg_pick);
       DisableTrigger(gg_trg_smart);
       DisableTrigger(gg_trg_reverse);
       DisableTrigger(gg_trg_start);
       DisableTrigger(gg_trg_end);
-      udg_lastGameString = GetEventPlayerChatString()!;
+      udg_lastGameString = s;
       TriggerExecute(gg_trg_createLists);
       udg_Teams = TEAMS_CAPTAINS;
       udg_pickIndex = 1;
@@ -455,10 +456,10 @@ const Trig_versus_Actions = () => {
         ForForce(udg_Spirit, Trig_versus_Func006Func004Func026Func006A);
       } else {
         udg_captains[1] = ConvertedPlayer(
-          S2I(SubStringBJ(GetEventPlayerChatString()!, 9, 10)!),
+          S2I(SubStringBJ(s, 9, 10)!),
         )!;
         udg_captains[3] = ConvertedPlayer(
-          S2I(SubStringBJ(GetEventPlayerChatString()!, 11, 13)!),
+          S2I(SubStringBJ(s, 11, 13)!),
         )!;
       }
       CreateMultiboardBJ(

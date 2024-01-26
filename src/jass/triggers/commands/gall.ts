@@ -9,37 +9,6 @@ const Trig_gall_Conditions = () => {
   return true;
 };
 
-const Trig_gall_Func002Func002C = () => {
-  if ((!(IsPlayerInForce(GetTriggerPlayer()!, udg_Spirit) === false))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_gall_Func002Func003C = () => {
-  if ((IsPlayerInForce(GetTriggerPlayer()!, udg_Sheep) === true)) {
-    return true;
-  }
-  if ((IsPlayerInForce(GetTriggerPlayer()!, udg_Spirit) === true)) {
-    return true;
-  }
-  return false;
-};
-
-const Trig_gall_Func002C = () => {
-  if ((!Trig_gall_Func002Func003C())) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_gall_Func005Func001Func001C = () => {
-  if ((!(udg_atempboolean === true))) {
-    return false;
-  }
-  return true;
-};
-
 const Trig_gall_Func005Func001C = () => {
   if (
     (!(CountLivingPlayerUnitsOfTypeId(FourCC("e000"), GetEnumPlayer()!) === 0))
@@ -60,7 +29,7 @@ const Trig_gall_Func005Func001C = () => {
 
 const Trig_gall_Func005A = () => {
   if ((Trig_gall_Func005Func001C())) {
-    if ((Trig_gall_Func005Func001Func001C())) {
+    if (udg_atempboolean) {
       udg_atempboolean = false;
       transferGold(
         GetTriggerPlayer()!,
@@ -81,24 +50,15 @@ const Trig_gall_Func005A = () => {
 
 const Trig_gall_Actions = () => {
   udg_atempboolean = true;
-  if ((Trig_gall_Func002C())) {
+  if (IsPlayerInForce(GetTriggerPlayer()!, udg_Sheep) || IsPlayerInForce(GetTriggerPlayer()!, udg_Spirit)) {
     udg_atempint = CountPlayersInForceBJ(GetPlayersAllies(GetTriggerPlayer()!)!) -
       CountUnitsInGroup(GetUnitsOfTypeIdAll(FourCC("e000"))!);
-    if ((Trig_gall_Func002Func002C())) {
-      udg_atempint = udg_atempint - 1;
-    }
+    if (IsPlayerInForce(GetTriggerPlayer()!, udg_Spirit)) udg_atempint--;
   } else {
-    udg_atempint = CountPlayersInForceBJ(
-      GetPlayersAllies(GetTriggerPlayer()!)!,
-    );
-    udg_atempint = udg_atempint - 1;
+    udg_atempint = CountPlayersInForceBJ(GetPlayersAllies(GetTriggerPlayer()!)!) - 1;
   }
-  udg_atempint2 = GetPlayerState(GetTriggerPlayer()!, PLAYER_STATE_RESOURCE_GOLD) /
-    udg_atempint;
-  udg_atempint3 = ModuloInteger(
-    GetPlayerState(GetTriggerPlayer()!, PLAYER_STATE_RESOURCE_GOLD),
-    udg_atempint,
-  );
+  udg_atempint2 = Math.floor(GetPlayerState(GetTriggerPlayer()!, PLAYER_STATE_RESOURCE_GOLD) / udg_atempint);
+  udg_atempint3 = ModuloInteger(GetPlayerState(GetTriggerPlayer()!, PLAYER_STATE_RESOURCE_GOLD), udg_atempint);
   ForForce(GetPlayersAllies(GetTriggerPlayer()!)!, Trig_gall_Func005A);
 };
 

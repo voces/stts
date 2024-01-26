@@ -250,7 +250,6 @@ declare global {
   let udg_switchOn: boolean;
   let udg_gameTimer: timer;
   let udg_gameTimeString: string;
-  let udg_noplayer: player;
   let udg_lastGameString: string;
   let udg_viewOn: boolean;
   let udg_atempint2: number;

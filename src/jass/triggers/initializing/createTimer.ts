@@ -4,24 +4,17 @@ const Trig_createTimer_Func001Func001A = () => {
   ForceRemovePlayerSimple(GetEnumPlayer()!, udg_Draft);
 };
 
-const Trig_createTimer_Func001C = () => {
-  if ((!(udg_Teams === TEAMS_CAPTAINS))) {
-    return false;
-  }
-  return true;
-};
-
 const Trig_createTimer_Actions = () => {
-  if ((Trig_createTimer_Func001C())) {
-    ForForce(udg_Draft, Trig_createTimer_Func001Func001A);
-    MultiboardDisplayBJ(false, udg_captainsMultiboard);
-    MultiboardMinimizeBJ(true, udg_captainsMultiboard);
-    DestroyMultiboardBJ(udg_captainsMultiboard);
-    enforceTeamResourceMultiboard();
-    TriggerSleepAction(0.01);
-    DisableTrigger(GetTriggeringTrigger()!);
-    DisableTrigger(gg_trg_giveUpCaptain);
-  }
+  if (udg_Teams !== TEAMS_CAPTAINS) return;
+
+  ForForce(udg_Draft, Trig_createTimer_Func001Func001A);
+  MultiboardDisplayBJ(false, udg_captainsMultiboard);
+  MultiboardMinimizeBJ(true, udg_captainsMultiboard);
+  DestroyMultiboardBJ(udg_captainsMultiboard);
+  enforceTeamResourceMultiboard();
+  TriggerSleepAction(0.01);
+  DisableTrigger(gg_trg_createTimer);
+  DisableTrigger(gg_trg_giveUpCaptain);
 };
 
 declare global {

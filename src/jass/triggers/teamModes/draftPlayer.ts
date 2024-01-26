@@ -288,7 +288,7 @@ const Trig_draftPlayer_Actions = () => {
       MultiboardMinimizeBJ(true, udg_captainsMultiboard);
       DestroyMultiboardBJ(udg_captainsMultiboard);
       TriggerSleepAction(0.01);
-      DisableTrigger(GetTriggeringTrigger()!);
+      DisableTrigger(gg_trg_draftPlayer);
       DisableTrigger(gg_trg_giveUpCaptain);
       TriggerExecute(gg_trg_createSheep);
     } else {

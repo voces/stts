@@ -1,36 +1,24 @@
-//===========================================================================
-// Trigger: timeCommands
-
+import { MapPlayerEx } from "handles/MapPlayerEx";
+import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
-//===========================================================================
 const Trig_timeCommands_Actions = () => {
+  const self = MapPlayerEx.fromEvent()!;
   let i = 0;
   let n: number;
   let count = 0;
   Split(GetEventPlayerChatString()!, " ", false);
   if (myArg[0] === "-times" && myArgCount === 1) {
-    DisplayTimedTextToPlayer(
-      GetTriggerPlayer()!,
-      0,
-      0,
-      15,
-      "                              |CFFFFCC00Total Sheep Round Time|r",
-    );
+    self.displayTimedText("                              |CFFFFCC00Total Sheep Round Time|r", 15);
     while (true) {
       if (i === 24) break;
       if (wasHere[i]) {
-        if (count === 12) {
-          TriggerSleepAction(4);
-        }
-        DisplayTimedTextToPlayer(
-          GetTriggerPlayer()!,
-          0,
-          0,
-          15,
+        if (count === 12) TriggerSleepAction(4);
+        self.displayTimedText(
           "                              " + udg_colorString[i + 1] +
             GetPlayerName(Player(i)!) + ": " +
             formatTime(s___times_pTime[s__times_pTime[playerTimes[i]] + i]),
+          15,
         );
         count = count + 1;
       }
@@ -40,40 +28,31 @@ const Trig_timeCommands_Actions = () => {
     while (true) {
       if (i === 24) break;
       if (wasHere[i] && i !== S2I(myArg[1]) - 1) {
-        if (count === 12) {
-          TriggerSleepAction(4);
-        }
+        if (count === 12) TriggerSleepAction(4);
         if (
           s___times_pTime[
             s__times_pTime[playerTimes[S2I(myArg[1]) - 1]] + S2I(myArg[1]) - 1
           ] === 0
         ) {
-          DisplayTimedTextToPlayer(
-            GetTriggerPlayer()!,
-            0,
-            0,
-            15,
+          self.displayTimedText(
             "                              " + udg_colorString[i + 1] +
               GetPlayerName(Player(i)!) + ": " +
               formatTime(
                 s___times_pTime[
                   s__times_pTime[playerTimes[S2I(myArg[1]) - 1]] + i
                 ],
-              ) + "; %0.000",
+              ) + "; 0.000%",
+            15,
           );
         } else {
-          DisplayTimedTextToPlayer(
-            GetTriggerPlayer()!,
-            0,
-            0,
-            15,
+          self.displayTimedText(
             "                              " + udg_colorString[i + 1] +
               GetPlayerName(Player(i)!) + ": " +
               formatTime(
                 s___times_pTime[
                   s__times_pTime[playerTimes[S2I(myArg[1]) - 1]] + i
                 ],
-              ) + "; %" +
+              ) + "; " +
               R2S(
                 s___times_pTime[
                   s__times_pTime[playerTimes[S2I(myArg[1]) - 1]] + i
@@ -82,60 +61,43 @@ const Trig_timeCommands_Actions = () => {
                     s__times_pTime[playerTimes[S2I(myArg[1]) - 1]] +
                     S2I(myArg[1]) - 1
                   ] * 100,
-              ),
+              ) + "%",
+            15,
           );
         }
         count = count + 1;
       }
       i = i + 1;
     }
-    DisplayTimedTextToPlayer(
-      GetTriggerPlayer()!,
-      0,
-      0,
-      15,
+    self.displayTimedText(
       "                              " + "Total: " +
         formatTime(
           s___times_pTime[
             s__times_pTime[playerTimes[S2I(myArg[1]) - 1]] + S2I(myArg[1]) - 1
           ],
         ),
+      15,
     );
   } else if (myArg[0] === "-atime" || myArg[0] === "-atimes") {
-    DisplayTimedTextToPlayer(
-      GetTriggerPlayer()!,
-      0,
-      0,
-      15,
-      "                              |CFFFFCC00Average Sheep Round Time|r",
-    );
+    self.displayTimedText("                              |CFFFFCC00Average Sheep Round Time|r", 15);
     while (true) {
       if (i === 24) break;
       if (wasHere[i]) {
-        if (count === 12) {
-          TriggerSleepAction(4);
-        }
+        if (count === 12) TriggerSleepAction(4);
         n = s__times_sheepCount[playerTimes[i]];
         if (n === 0) {
-          DisplayTimedTextToPlayer(
-            GetTriggerPlayer()!,
-            0,
-            0,
+          self.displayTimedText(
+            "                              " + udg_colorString[i + 1] + GetPlayerName(Player(i)!) + ": N/A",
             15,
-            "                              " + udg_colorString[i + 1] +
-              GetPlayerName(Player(i)!) + ": N/A",
           );
         } else {
-          DisplayTimedTextToPlayer(
-            GetTriggerPlayer()!,
-            0,
-            0,
-            15,
+          self.displayTimedText(
             "                              " + udg_colorString[i + 1] +
               GetPlayerName(Player(i)!) + ": " +
               formatTime(
                 s___times_pTime[s__times_pTime[playerTimes[i]] + i] / n,
               ),
+            15,
           );
         }
         count = count + 1;
@@ -143,108 +105,52 @@ const Trig_timeCommands_Actions = () => {
       i = i + 1;
     }
   } else if (myArg[0] === "-mytimes") {
-    DisplayTimedTextToPlayer(
-      GetTriggerPlayer()!,
-      0,
-      0,
-      15,
-      "                              |CFFFFCC00Total Sheep Round Time Per Teammate|r",
-    );
+    self.displayTimedText("                              |CFFFFCC00Total Sheep Round Time Per Teammate|r", 15);
     while (true) {
       if (i === 24) break;
-      if (wasHere[i] && i !== GetPlayerId(GetTriggerPlayer()!)) {
-        if (count === 12) {
-          TriggerSleepAction(4);
-        }
-        if (
-          s___times_pTime[
-            s__times_pTime[playerTimes[GetPlayerId(GetTriggerPlayer()!)]] +
-            GetPlayerId(GetTriggerPlayer()!)
-          ] === 0
-        ) {
-          DisplayTimedTextToPlayer(
-            GetTriggerPlayer()!,
-            0,
-            0,
+      if (wasHere[i] && i !== self.id) {
+        if (count === 12) TriggerSleepAction(4);
+        if (s___times_pTime[s__times_pTime[playerTimes[self.id]] + self.id] === 0) {
+          self.displayTimedText(
+            "                              " + udg_colorString[i + 1] + GetPlayerName(Player(i)!) + ": " +
+              formatTime(s___times_pTime[s__times_pTime[playerTimes[self.id]] + i]) + "; 0.000%",
             15,
-            "                              " + udg_colorString[i + 1] +
-              GetPlayerName(Player(i)!) + ": " +
-              formatTime(
-                s___times_pTime[
-                  s__times_pTime[
-                    playerTimes[GetPlayerId(GetTriggerPlayer()!)]
-                  ] + i
-                ],
-              ) + "; %0.000",
           );
         } else {
-          DisplayTimedTextToPlayer(
-            GetTriggerPlayer()!,
-            0,
-            0,
-            15,
+          self.displayTimedText(
             "                              " + udg_colorString[i + 1] +
-              GetPlayerName(Player(i)!) + ": " +
-              formatTime(
-                s___times_pTime[
-                  s__times_pTime[
-                    playerTimes[GetPlayerId(GetTriggerPlayer()!)]
-                  ] + i
-                ],
-              ) + "; %" +
+              GetPlayerName(Player(i)!) + ": " + formatTime(s___times_pTime[s__times_pTime[playerTimes[self.id]] + i]) +
+              "; " +
               R2S(
-                s___times_pTime[
-                  s__times_pTime[
-                    playerTimes[GetPlayerId(GetTriggerPlayer()!)]
-                  ] + i
-                ] /
-                  s___times_pTime[
-                    s__times_pTime[
-                      playerTimes[GetPlayerId(GetTriggerPlayer()!)]
-                    ] + GetPlayerId(GetTriggerPlayer()!)
-                  ] * 100,
-              ),
+                s___times_pTime[s__times_pTime[playerTimes[self.id]] + i] /
+                  s___times_pTime[s__times_pTime[playerTimes[self.id]] + self.id] * 100,
+              ) + "%",
+            15,
           );
         }
         count = count + 1;
       }
       i = i + 1;
     }
-    DisplayTimedTextToPlayer(
-      GetTriggerPlayer()!,
-      0,
-      0,
-      15,
+    self.displayTimedText(
       "                              " + "Total: " +
-        formatTime(
-          s___times_pTime[
-            s__times_pTime[playerTimes[GetPlayerId(GetTriggerPlayer()!)]] +
-            GetPlayerId(GetTriggerPlayer()!)
-          ],
-        ),
+        formatTime(s___times_pTime[s__times_pTime[playerTimes[self.id]] + self.id]),
+      15,
     );
   } else if (myArg[0] === "-maxtimes") {
-    DisplayTimedTextToPlayer(
-      GetTriggerPlayer()!,
-      0,
-      0,
-      15,
+    self.displayTimedText(
       "                              |CFFFFCC00Longest Sheep Round Per Player|r",
+      15,
     );
     while (true) {
       if (i === 24) break;
       if (wasHere[i]) {
-        if (count === 12) {
-          TriggerSleepAction(4);
-        }
-        DisplayTimedTextToPlayer(
-          GetTriggerPlayer()!,
-          0,
-          0,
-          15,
+        if (count === 12) TriggerSleepAction(4);
+        self.displayTimedText(
           "                              " + udg_colorString[i + 1] +
             GetPlayerName(Player(i)!) + ": " +
             formatTime(s__times_pTimeMax[playerTimes[i]]),
+          15,
         );
         count = count + 1;
       }
@@ -252,77 +158,39 @@ const Trig_timeCommands_Actions = () => {
     }
   } else if (myArg[0] === "-leader") {
     if (recordHolders === "") {
-      DisplayTimedTextToPlayer(
-        GetTriggerPlayer()!,
-        0,
-        0,
-        15,
-        "                              There are no leaders!",
-      );
-      DisplayTimedTextToPlayer(
-        GetTriggerPlayer()!,
-        0,
-        0,
-        15,
-        "                              There are no losers!",
-      );
+      self.displayTimedText("                              There are no leaders!", 15);
+      self.displayTimedText("                              There are no losers!", 15);
     } else {
-      DisplayTimedTextToPlayer(
-        GetTriggerPlayer()!,
-        0,
-        0,
+      self.displayTimedText(
+        "                              Leaders: " + recordHolders + " with " + formatTime(recordTime),
         15,
-        "                              " + "Leaders: " + recordHolders +
-          " with " + formatTime(recordTime),
       );
-      DisplayTimedTextToPlayer(
-        GetTriggerPlayer()!,
-        0,
-        0,
+      self.displayTimedText(
+        "                              Losers: " + loserHolders + " with " + formatTime(loserTime),
         15,
-        "                              " + "Losers: " + loserHolders +
-          " with " + formatTime(loserTime),
       );
     }
   } else if (myArg[0] === "-stime" || myArg[0] === "-stimes") {
-    DisplayTimedTextToPlayer(
-      GetTriggerPlayer()!,
-      0,
-      0,
-      15,
-      "                              |CFFFFCC00Total Time Alive as Sheep|r",
-    );
+    self.displayTimedText("                              |CFFFFCC00Total Time Alive as Sheep|r", 15);
     while (true) {
       if (i === 24) break;
       if (wasHere[i]) {
-        if (count === 12) {
-          TriggerSleepAction(4);
-        }
-        DisplayTimedTextToPlayer(
-          GetTriggerPlayer()!,
-          0,
-          0,
-          15,
-          "                              " + udg_colorString[i + 1] +
-            GetPlayerName(Player(i)!) + ": " +
+        if (count === 12) TriggerSleepAction(4);
+        self.displayTimedText(
+          "                              " + udg_colorString[i + 1] + GetPlayerName(Player(i)!) + ": " +
             formatTime(TimerGetElapsed(udg_sheepTimer[i + 1])),
+          15,
         );
         count = count + 1;
       }
       i = i + 1;
     }
-  } else if (myArg[0] === "-reset" && GetTriggerPlayer() === udg_Custom) {
+  } else if (myArg[0] === "-reset" && self.isHost) {
     recordHolders = "";
     loserHolders = "";
     recordTime = -Infinity;
     loserTime = Infinity;
-    DisplayTimedTextToPlayer(
-      GetTriggerPlayer()!,
-      0,
-      0,
-      15,
-      "                              Leaders and losers reset",
-    );
+    displayTimedTextToAll("                              Leaders and losers reset", 15);
     while (true) {
       if (i === 24) break;
       s__times_pTimeMax[playerTimes[i]] = 0;
@@ -331,52 +199,30 @@ const Trig_timeCommands_Actions = () => {
       i = i + 1;
     }
   } else if (myArg[0] === "-rtime" || myArg[0] === "-rtimes") {
-    DisplayTimedTextToPlayer(
-      GetTriggerPlayer()!,
-      0,
-      0,
-      15,
-      "                              |CFFFFCC00Sheep Round Times|r",
-    );
+    self.displayTimedText("                              |CFFFFCC00Sheep Round Times|r", 15);
     while (true) {
       if (i === 24) break;
       if (wasHere[i]) {
-        if (count === 12) {
-          TriggerSleepAction(4);
-        }
-        DisplayTimedTextToPlayer(
-          GetTriggerPlayer()!,
-          0,
-          0,
+        if (count === 12) TriggerSleepAction(4);
+        self.displayTimedText(
+          "                              " + udg_colorString[i + 1] + GetPlayerName(Player(i)!) + ": " +
+            udg_roundTimes[i + 1],
           15,
-          "                              " + udg_colorString[i + 1] +
-            GetPlayerName(Player(i)!) + ": " + udg_roundTimes[i + 1],
         );
         count = count + 1;
       }
       i = i + 1;
     }
   } else if (myArg[0] === "-ss" || myArg[0] === "-sheepSurvived") {
-    DisplayTimedTextToPlayer(
-      GetTriggerPlayer()!,
-      0,
-      0,
-      15,
-      "                              |CFFFFCC00Sheep Survived|r",
-    );
+    self.displayTimedText("                              |CFFFFCC00Sheep Survived|r", 15);
     while (true) {
       if (i === 24) break;
       if (wasHere[i]) {
-        if (count === 12) {
-          TriggerSleepAction(4);
-        }
-        DisplayTimedTextToPlayer(
-          GetTriggerPlayer()!,
-          0,
-          0,
+        if (count === 12) TriggerSleepAction(4);
+        self.displayTimedText(
+          "                              " + udg_colorString[i + 1] + GetPlayerName(Player(i)!) + ": " +
+            udg_sheepSurvived[i + 1],
           15,
-          "                              " + udg_colorString[i + 1] +
-            GetPlayerName(Player(i)!) + ": " + udg_sheepSurvived[i + 1],
         );
         count = count + 1;
       }

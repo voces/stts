@@ -1,6 +1,4 @@
 //===========================================================================
-// Trigger: setafk
-//
 // afk == 0 here
 // afk == 1 came back during pick, was not picked (not picked/not playing)
 // afk == 2 back, watching game (watching)
@@ -72,8 +70,6 @@ const Trig_setafk_Actions = () => {
   TriggerExecute(gg_trg_createLists);
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_setafk: () => void;

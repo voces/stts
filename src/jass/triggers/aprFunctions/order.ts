@@ -15,13 +15,7 @@ declare global {
 InitTrig_order = () => {
   gg_trg_order = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(gg_trg_order, EVENT_PLAYER_UNIT_ISSUED_ORDER);
-  TriggerRegisterAnyUnitEventBJ(
-    gg_trg_order,
-    EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER,
-  );
-  TriggerRegisterAnyUnitEventBJ(
-    gg_trg_order,
-    EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER,
-  );
+  TriggerRegisterAnyUnitEventBJ(gg_trg_order, EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER);
+  TriggerRegisterAnyUnitEventBJ(gg_trg_order, EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER);
   TriggerAddAction(gg_trg_order, Trig_order_Actions);
 };

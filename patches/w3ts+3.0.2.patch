@@ -115,3 +115,16 @@ index b05ed7b..064f8ea 100644
  end
  function File.writeRaw(self, filename, contents, allowReading)
      if allowReading == nil then
+diff --git a/node_modules/w3ts/system/sync.lua b/node_modules/w3ts/system/sync.lua
+index fe68445..5c78557 100644
+--- a/node_modules/w3ts/system/sync.lua
++++ b/node_modules/w3ts/system/sync.lua
+@@ -203,7 +203,7 @@ end
+ function SyncRequest.onSync(self)
+     local syncPrefix = BlzGetTriggerSyncPrefix()
+     local syncData = BlzGetTriggerSyncData()
+-    if syncPrefix == nil or syncData == nil then
++    if syncPrefix == nil or syncData == nil or (syncPrefix ~= SYNC_PREFIX and syncPrefix ~= SYNC_PREFIX_CHUNK) then
+         return
+     end
+     local packet = __TS__New(SyncIncomingPacket, syncPrefix, syncData)

@@ -1,6 +1,7 @@
 import { terrain } from "settings/terrain";
 import { removeEnumUnit } from "util/removeEnumUnit";
 import { logMassingTest } from "../hostCommands/UpdateStats";
+import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 
 const Trig_initMassTest_Func005002002 = () => {
   return GetBooleanOr(
@@ -65,46 +66,20 @@ const Trig_initMassTest_Actions = () => {
   EnumItemsInRectBJ(GetPlayableMapRect()!, Trig_initMassTest_Func008002);
   PauseAllUnitsBJ(true);
   ForForce(GetPlayersAll()!, Trig_initMassTest_Func010A);
-  DisplayTimedTextToForce(
-    GetPlayersAll()!,
-    5,
-    "                              |cff00aeef" +
-      (udg_massTimeString + " mass test"),
-  );
-  DisplayTimedTextToForce(
-    GetPlayersAll()!,
-    1,
-    "                              |cffffcc00Begin massing in 3...",
-  );
-  if (udg_Teams !== 2) {
-    return;
-  }
+  displayTimedTextToAll("                              |cff00aeef" + udg_massTimeString + " mass test", 5);
+  displayTimedTextToAll("                              |cffffcc00Begin massing in 3...", 1);
+  if (udg_Teams !== 2) return;
   TriggerSleepAction(1);
-  if (udg_Teams !== 2) {
-    return;
-  }
-  DisplayTimedTextToForce(
-    GetPlayersAll()!,
-    1,
-    "                              |cffffcc00Begin massing in 2...",
-  );
+  if (udg_Teams !== 2) return;
+  displayTimedTextToAll("                              |cffffcc00Begin massing in 2...", 1);
   TriggerSleepAction(1);
-  if (udg_Teams !== 2) {
-    return;
-  }
-  DisplayTimedTextToForce(
-    GetPlayersAll()!,
-    1,
-    "                              |cffffcc00Begin massing in 1...",
-  );
+  if (udg_Teams !== 2) return;
+  displayTimedTextToAll("                              |cffffcc00Begin massing in 1...", 1);
   TriggerSleepAction(1);
-  if (udg_Teams !== 2) {
-    return;
-  }
-  DisplayTimedTextToForce(
-    GetPlayersAll()!,
-    5,
+  if (udg_Teams !== 2) return;
+  displayTimedTextToAll(
     "                              |cffffcc00Type|r |cffed1c24-stop|r |cffffcc00to go back to practicing or |cffed1c24-redo|r |cffffcc00to try again.|r",
+    5,
   );
   PauseAllUnitsBJ(false);
   TimerStart(udg_massTimer, udg_massTime, false, null);

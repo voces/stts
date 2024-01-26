@@ -1,6 +1,5 @@
-//===========================================================================
-// Trigger: Claws 90 Recipe
-//===========================================================================
+export {};
+
 const Trig_Claws_240_Recipe_Func001Func002Func002Func001Func002Func002C = (
   tempint: number,
 ): boolean => {
@@ -79,13 +78,13 @@ const Trig_Claws_240_Recipe_Actions = () => {
                 GetItemOfTypeFromUnitBJ(GetTriggerUnit()!, FourCC("I005"))!,
               );
               UnitAddItemByIdSwapped(FourCC("I00L"), GetTriggerUnit()!);
-              AddSpecialEffectTargetUnitBJ(
-                "overhead",
-                GetTriggerUnit()!,
+              const e = AddSpecialEffectTarget(
                 "Abilities\\Spells\\Human\\HolyBolt\\HolyBoltSpecialArt.mdl",
+                GetTriggerUnit()!,
+                "overhead",
               );
               TriggerSleepAction(0.01);
-              DestroyEffectBJ(GetLastCreatedEffectBJ()!);
+              if (e) DestroyEffect(e);
             }
           }
           k = k + 1;
@@ -96,17 +95,12 @@ const Trig_Claws_240_Recipe_Actions = () => {
   }
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_Claws_90_Recipe: () => void;
 }
 InitTrig_Claws_90_Recipe = () => {
   gg_trg_Claws_90_Recipe = CreateTrigger();
-  TriggerRegisterAnyUnitEventBJ(
-    gg_trg_Claws_90_Recipe,
-    EVENT_PLAYER_UNIT_PICKUP_ITEM,
-  );
+  TriggerRegisterAnyUnitEventBJ(gg_trg_Claws_90_Recipe, EVENT_PLAYER_UNIT_PICKUP_ITEM);
   TriggerAddAction(gg_trg_Claws_90_Recipe, Trig_Claws_240_Recipe_Actions);
 };

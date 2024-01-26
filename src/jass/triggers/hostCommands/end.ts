@@ -22,7 +22,7 @@ const Trig_end_Actions = () => {
   TimerDialogDisplayBJ(true, udg_createTimerWindow);
   TriggerExecute(gg_trg_ScoreboardMultiboard);
   MultiboardMinimizeBJ(false, udg_scoreMultiboard);
-  udg_Custom = udg_noplayer;
+  udg_Custom = Player(PLAYER_NEUTRAL_PASSIVE)!;
   udg_transfer = -1;
   TriggerExecute(gg_trg_UpdateStats);
   PolledWait(180);

@@ -4,12 +4,12 @@ import { gsDistributeGold } from "functions/gs";
 import { giveAllGold } from "../commands/g";
 import { terrain } from "settings/terrain";
 import { spawns } from "settings/spawns";
-import { FogModifier, sleep } from "w3ts";
+import { FogModifier } from "w3ts";
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { setTimeout } from "util/setTimeout";
 import { UNIT_TYPE_ID_START_POSITION } from "constants";
 
-const Trig_castAbility2_Actions = async () => {
+const Trig_castAbility2_Actions = () => {
   let i = 1;
   let x: number;
   let y: number;
@@ -94,15 +94,17 @@ const Trig_castAbility2_Actions = async () => {
       PLAYER_STATE_RESOURCE_GOLD,
       GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) - 120,
     );
+    // g once (sheep)
   } else if (orderString === "manashieldon") {
     i = GetRandomInt(0, 10000);
     gSheepAbilityFlag[GetPlayerId(GetOwningPlayer(GetTriggerUnit()!))] = i;
     const u = GetTriggerUnit()!;
-    await sleep(0.25);
+    TriggerSleepAction(0.25);
     if (gSheepAbilityFlag[GetPlayerId(GetOwningPlayer(u))] === i) {
       gSheepAbilityFlag[GetPlayerId(GetOwningPlayer(u))] = -1;
       gsDistributeGold(GetOwningPlayer(u), false);
     }
+    // g twice (sheep)
   } else if (orderString === "manashieldoff") {
     gSheepAbilityFlag[GetPlayerId(GetOwningPlayer(GetTriggerUnit()!))] = -1;
     giveAllGold(GetOwningPlayer(GetTriggerUnit()!));

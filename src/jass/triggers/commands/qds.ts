@@ -1,3 +1,4 @@
+import { MapPlayerEx } from "handles/MapPlayerEx";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
 const Trig_qds_Actions_time = (playerId: number): string => {
@@ -8,7 +9,8 @@ const Trig_qds_Actions_time = (playerId: number): string => {
 const Trig_qds_Actions = () => {
   let i = 0;
   let count = 0;
-  DisplayTimedTextToPlayer(GetTriggerPlayer()!, 0, 0, 15, " ");
+  const p = MapPlayerEx.fromEvent()!;
+  p.displayTimedText(" ", 15);
   while (true) {
     if (i === bj_MAX_PLAYERS) break;
     count = 0;
@@ -18,13 +20,10 @@ const Trig_qds_Actions = () => {
         GetPlayerSlotState(Player(i)!) === PLAYER_SLOT_STATE_PLAYING &&
         udg_AFK[i + 1] === AFK_PLAYING
       ) {
-        DisplayTimedTextToPlayer(
-          GetTriggerPlayer()!,
-          0,
-          0,
-          15,
+        p.displayTimedText(
           "                              " + udg_colorString[i + 1] +
             GetPlayerName(Player(i)!) + " : " + Trig_qds_Actions_time(i),
+          15,
         );
         count = count + 1;
       }
@@ -32,7 +31,7 @@ const Trig_qds_Actions = () => {
     }
     if (count === 12) {
       TriggerSleepAction(9);
-      if (GetLocalPlayer() === GetTriggerPlayer()!) ClearTextMessages();
+      if (p.isLocal()) ClearTextMessages();
     }
   }
 };

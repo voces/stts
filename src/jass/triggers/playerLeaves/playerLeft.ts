@@ -8,15 +8,15 @@ const Trig_playerLeft_Func004C = () => {
   return true;
 };
 
-const Trig_playerLeft_Func005Func001C = () => {
-  if ((!(udg_AFK[GetConvertedPlayerId(GetTriggerPlayer()!)] === AFK_PLAYING))) {
+const Trig_playerLeft_Func005Func001C = (self: player) => {
+  if ((!(udg_AFK[GetConvertedPlayerId(self)] === AFK_PLAYING))) {
     return false;
   }
   return true;
 };
 
-const Trig_playerLeft_Func005Func002C = () => {
-  if ((!(IsPlayerInForce(GetTriggerPlayer()!, udg_Spirit) === true))) {
+const Trig_playerLeft_Func005Func002C = (self: player) => {
+  if ((!(IsPlayerInForce(self, udg_Spirit) === true))) {
     return false;
   }
   return true;
@@ -40,10 +40,10 @@ const Trig_playerLeft_Func008Func001Func001A = () => {
   );
 };
 
-const Trig_playerLeft_Func008Func001Func002001001 = () => {
+const Trig_playerLeft_Func008Func001Func002001001 = (self: player) => {
   return GetBooleanOr(
-    IsPlayerInForce(GetTriggerPlayer()!, udg_Sheep) === true,
-    IsPlayerInForce(GetTriggerPlayer()!, udg_Spirit) === true,
+    IsPlayerInForce(self, udg_Sheep) === true,
+    IsPlayerInForce(self, udg_Spirit) === true,
   );
 };
 
@@ -95,8 +95,8 @@ const Trig_playerLeft_Func009Func002A = () => {
   }
 };
 
-const Trig_playerLeft_Func009C = () => {
-  if ((!(IsPlayerInForce(GetTriggerPlayer()!, udg_Wolf) === true))) {
+const Trig_playerLeft_Func009C = (self: player) => {
+  if ((!(IsPlayerInForce(self, udg_Wolf) === true))) {
     return false;
   }
   return true;
@@ -113,8 +113,8 @@ const Trig_playerLeft_Func010Func001Func001Func003Func001C = () => {
   return true;
 };
 
-const Trig_playerLeft_Func010Func001Func001Func003C = () => {
-  if ((!(IsPlayerInForce(GetTriggerPlayer()!, udg_Draft) === true))) {
+const Trig_playerLeft_Func010Func001Func001Func003C = (self: player) => {
+  if ((!(IsPlayerInForce(self, udg_Draft) === true))) {
     return false;
   }
   return true;
@@ -223,22 +223,23 @@ const Trig_playerLeft_Func011C = () => {
   return true;
 };
 
-const Trig_playerLeft_Func015A = () => {
+const Trig_playerLeft_Func015A = (self: player) => {
   LeaderboardRemovePlayerItemBJ(
-    GetTriggerPlayer()!,
+    self,
     PlayerGetLeaderboardBJ(GetEnumPlayer()!)!,
   );
 };
 
 const Trig_playerLeft_Actions = () => {
+  const self = GetTriggerPlayer()!;
   const p = udg_Custom;
-  pub[GetPlayerId(GetTriggerPlayer()!)] = false;
-  udg_atempint = GetConvertedPlayerId(GetTriggerPlayer()!);
+  pub[GetPlayerId(self)] = false;
+  udg_atempint = GetConvertedPlayerId(self);
   if ((Trig_playerLeft_Func004C())) {
     RemoveUnit(udg_unit2[udg_atempint]);
   }
   if ((Trig_playerLeft_Func005C())) {
-    if ((Trig_playerLeft_Func005Func001C())) {
+    if ((Trig_playerLeft_Func005Func001C(self))) {
       DisplayTimedTextToForce(
         GetPlayersAll()!,
         5,
@@ -256,7 +257,7 @@ const Trig_playerLeft_Actions = () => {
       );
     }
   } else {
-    if ((Trig_playerLeft_Func005Func002C())) {
+    if ((Trig_playerLeft_Func005Func002C(self))) {
       DisplayTimedTextToForce(
         GetPlayersAll()!,
         5,
@@ -284,7 +285,7 @@ const Trig_playerLeft_Actions = () => {
     if ((Trig_playerLeft_Func008Func001C())) {
       ForForce(
         GetPlayersMatching(
-          Condition(Trig_playerLeft_Func008Func001Func002001001),
+          Condition(() => Trig_playerLeft_Func008Func001Func002001001(self)),
         )!,
         Trig_playerLeft_Func008Func001Func002A,
       );
@@ -293,9 +294,9 @@ const Trig_playerLeft_Actions = () => {
     }
     someoneLeft = true;
   }
-  if ((Trig_playerLeft_Func009C())) {
+  if ((Trig_playerLeft_Func009C(self))) {
     udg_atempgroup = GetUnitsOfPlayerMatching(
-      GetTriggerPlayer()!,
+      self,
       Condition(Trig_playerLeft_Func009Func001002002),
     )!;
     ForGroupBJ(udg_atempgroup, Trig_playerLeft_Func009Func002A);
@@ -307,8 +308,8 @@ const Trig_playerLeft_Actions = () => {
         ForForce(udg_Draft, Trig_playerLeft_Func010Func001Func001Func001A);
         TriggerExecute(gg_trg_cancel);
       } else {
-        if ((Trig_playerLeft_Func010Func001Func001Func003C())) {
-          ForceRemovePlayerSimple(GetTriggerPlayer()!, udg_Draft);
+        if ((Trig_playerLeft_Func010Func001Func001Func003C(self))) {
+          ForceRemovePlayerSimple(self, udg_Draft);
           MultiboardSetItemValueBJ(
             udg_captainsMultiboard,
             2,
@@ -350,24 +351,24 @@ const Trig_playerLeft_Actions = () => {
   if ((Trig_playerLeft_Func011C())) {
     udg_Custom = Player(PLAYER_NEUTRAL_PASSIVE)!;
     transferOwnershipOfHostFarm();
-    udg_atempgroup = GetUnitsOfPlayerAll(GetTriggerPlayer()!)!;
+    udg_atempgroup = GetUnitsOfPlayerAll(self)!;
     ForGroupBJ(udg_atempgroup, removeEnumUnit);
     udg_Custom = p;
     transferOwnershipOfHostFarm();
   } else {
-    udg_atempgroup = GetUnitsOfPlayerAll(GetTriggerPlayer()!)!;
+    udg_atempgroup = GetUnitsOfPlayerAll(self)!;
     ForGroupBJ(udg_atempgroup, removeEnumUnit);
   }
   DestroyGroup(udg_atempgroup);
   TriggerSleepAction(0.01);
   LeaderboardRemovePlayerItemBJ(
-    GetTriggerPlayer()!,
+    self,
     GetLastCreatedLeaderboard()!,
   );
-  ForForce(GetPlayersAll()!, Trig_playerLeft_Func015A);
-  ForceRemovePlayerSimple(GetTriggerPlayer()!, udg_Sheep);
-  ForceRemovePlayerSimple(GetTriggerPlayer()!, udg_Spirit);
-  ForceRemovePlayerSimple(GetTriggerPlayer()!, udg_Wolf);
+  ForForce(GetPlayersAll()!, () => Trig_playerLeft_Func015A(self));
+  ForceRemovePlayerSimple(self, udg_Sheep);
+  ForceRemovePlayerSimple(self, udg_Spirit);
+  ForceRemovePlayerSimple(self, udg_Wolf);
   if ((CountPlayersInForceBJ(udg_Sheep) === 0)) {
     TriggerExecute(gg_trg_wolvesWin);
   } else {
@@ -378,7 +379,7 @@ const Trig_playerLeft_Actions = () => {
   } else {
     DoNothing();
   }
-  udg_AFK[GetConvertedPlayerId(GetTriggerPlayer()!)] = AFK_PLAYING;
+  udg_AFK[GetConvertedPlayerId(self)] = AFK_PLAYING;
   TriggerExecute(gg_trg_createLists);
   TriggerExecute(gg_trg_setupLeaderboard);
 };

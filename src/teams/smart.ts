@@ -69,21 +69,21 @@ const perfectSmartDraft = (sheepA: number, sheepB: number): void => {
 };
 
 const perfect2v4Pattern = [
-  [0, 1],
-  [2, 3],
-  [4, 5],
-  [0, 2],
-  [1, 4],
-  [3, 5],
-  [0, 4],
-  [1, 3],
-  [2, 5],
-  [0, 3],
-  [1, 5],
-  [2, 4],
-  [0, 5],
-  [1, 2],
-  [3, 4],
+  [0, 1], // [0, 1]
+  [2, 3], // [2, 3]
+  [4, 5], // [4, 5]
+  [0, 2], // [0, 2]
+  [1, 4], // [1, 3]
+  [3, 5], // [0, 4]
+  [0, 4], // [1, 5]
+  [1, 3], // [2, 4]
+  [2, 5], // [3, 5]
+  [0, 3], // [1, 2]
+  [1, 5], // [0, 3]
+  [2, 4], // [1, 4]
+  [0, 5], // [0, 5]
+  [1, 2], // [3, 4]
+  [3, 4], // [2, 5]
 ] as [number, number][];
 
 const aSheepHasTwoHigherScThanAWolf = () => {
@@ -420,10 +420,10 @@ const togglePerfect = () => {
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   clearPlayerVariables();
 
-  let t = CreateTrigger();
-  registerAnyPlayerChatEvent(t, "-smart", false);
+  gg_trg_smart = CreateTrigger();
+  registerAnyPlayerChatEvent(gg_trg_smart, "-smart", false);
   TriggerAddCondition(
-    t,
+    gg_trg_smart,
     Condition(() => {
       if (udg_Custom !== GetTriggerPlayer() || udg_gameStarted) return false;
       const parts = GetEventPlayerChatString()!.split(" ");
@@ -431,9 +431,9 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
       return S2I(parts[1]) < getActivePlayerCount();
     }),
   );
-  TriggerAddAction(t, smart);
+  TriggerAddAction(gg_trg_smart, smart);
 
-  t = CreateTrigger();
+  let t = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_TRAIN_START);
   TriggerAddCondition(t, Condition(() => GetTrainedUnitType() === FourCC("h00E")));
   TriggerAddAction(t, smart);

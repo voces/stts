@@ -13,9 +13,6 @@ declare global {
 }
 InitTrig_timeLavender = () => {
   gg_trg_timeLavender = CreateTrigger();
-  TriggerRegisterTimerExpireEventBJ(
-    gg_trg_timeLavender,
-    udg_multiKillTimer[20],
-  );
+  TriggerRegisterTimerExpireEventBJ(gg_trg_timeLavender, udg_multiKillTimer[20]);
   TriggerAddAction(gg_trg_timeLavender, Trig_timeLavender_Actions);
 };

@@ -84,10 +84,12 @@ const Trig_createSheep_sheepActionsA = () => {
   }
   PanCameraToTimedForPlayer(GetEnumPlayer()!, spawn.x, spawn.y, 0);
 
-  const u = CreateUnit(GetEnumPlayer()!, UNIT_TYPE_ID_START_POSITION, spawn.x, spawn.y, 270)!;
-  SelectUnitForPlayerSingle(u, GetEnumPlayer()!);
-  if (spawnSetting.mode !== "free") UnitRemoveAbility(u, FourCC("Amov"));
-  if (IsPlayerInForce(GetLocalPlayer(), udg_Wolf)) SetUnitVertexColor(u, 255, 255, 255, 0);
+  if (!udg_practiceOn) {
+    const u = CreateUnit(GetEnumPlayer()!, UNIT_TYPE_ID_START_POSITION, spawn.x, spawn.y, 270)!;
+    SelectUnitForPlayerSingle(u, GetEnumPlayer()!);
+    if (spawnSetting.mode !== "free") UnitRemoveAbility(u, FourCC("Amov"));
+    if (IsPlayerInForce(GetLocalPlayer(), udg_Wolf)) SetUnitVertexColor(u, 255, 255, 255, 0);
+  }
 };
 
 const Trig_createSheep_wolfActionsA = () => {

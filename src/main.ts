@@ -1,4 +1,4 @@
-import "util/errorHooks";
+import "util/debug";
 
 import "functions/items/itemCommand";
 import "functions/remoteShop";

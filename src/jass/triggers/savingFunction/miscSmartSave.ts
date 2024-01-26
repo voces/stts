@@ -22,9 +22,6 @@ declare global {
 }
 InitTrig_miscSmartSave = () => {
   gg_trg_miscSmartSave = CreateTrigger();
-  TriggerRegisterAnyUnitEventBJ(
-    gg_trg_miscSmartSave,
-    EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER,
-  );
+  TriggerRegisterAnyUnitEventBJ(gg_trg_miscSmartSave, EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER);
   TriggerAddAction(gg_trg_miscSmartSave, Trig_miscSmartSave_Actions);
 };

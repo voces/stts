@@ -42,8 +42,6 @@ const Trig_Str_Pot_Kill_Actions = () => {
   PlaySoundBJ(gg_snd_headshot);
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_Str_Pot_Kill: () => void;
@@ -51,9 +49,6 @@ declare global {
 InitTrig_Str_Pot_Kill = () => {
   gg_trg_Str_Pot_Kill = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(gg_trg_Str_Pot_Kill, EVENT_PLAYER_UNIT_DEATH);
-  TriggerAddCondition(
-    gg_trg_Str_Pot_Kill,
-    Condition(Trig_Str_Pot_Kill_Conditions),
-  );
+  TriggerAddCondition(gg_trg_Str_Pot_Kill, Condition(Trig_Str_Pot_Kill_Conditions));
   TriggerAddAction(gg_trg_Str_Pot_Kill, Trig_Str_Pot_Kill_Actions);
 };

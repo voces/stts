@@ -51,9 +51,9 @@ export const adjustSheepTeamSize = (desiredSheep: number) => {
 };
 
 const Trig_start_Actions = () => {
-  TriggerSleepAction(0.01);
-
   udg_lastGameString = (GetEventPlayerChatString() ?? "-start").toLowerCase();
+
+  TriggerSleepAction(0.01);
 
   clearForces();
   forEachPlayingPlayer((p) => ForceAddPlayer(udg_sheepLastGame[p.id + 1] ? udg_Sheep : udg_Wolf, p.handle));

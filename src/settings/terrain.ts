@@ -3,6 +3,7 @@ import { forEachPlayer } from "util/forEachPlayer";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { addScriptHook, W3TS_HOOK } from "w3ts";
 import { spawns } from "./spawns";
+import { setTimeout } from "util/setTimeout";
 
 type Terrain = {
   name: "Revolution" | "Glory Hills";
@@ -35,8 +36,8 @@ const SHOP_C_ROTATED = FourCC("n008");
 const setTerrain = (terrainIndex: number): void => {
   Object.assign(terrain, terrains[terrainIndex]);
 
-  BlzChangeMinimapTerrainTex(terrain.minimap);
   SetCameraBoundsToRect(terrain.cameraBounds);
+  setTimeout(0.25, () => BlzChangeMinimapTerrainTex(terrain.minimap)); // Need a sufficient wait in w3ce
   PanCameraToTimed(GetRectCenterX(terrain.wolf), GetRectCenterY(terrain.wolf), 0);
   for (let i = 0; i < terrain.spawns.length; i++) {
     udg_startLocation[i + 1] = terrain.spawns[i];

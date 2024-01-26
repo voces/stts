@@ -120,10 +120,7 @@ declare global {
 }
 InitTrig_createFarm = () => {
   gg_trg_createFarm = CreateTrigger();
-  TriggerRegisterAnyUnitEventBJ(
-    gg_trg_createFarm,
-    EVENT_PLAYER_UNIT_CONSTRUCT_START,
-  );
+  TriggerRegisterAnyUnitEventBJ(gg_trg_createFarm, EVENT_PLAYER_UNIT_CONSTRUCT_START);
   TriggerAddAction(gg_trg_createFarm, Trig_createFarm_Actions);
 
   translocateTicker = Timer.create();

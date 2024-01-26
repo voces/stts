@@ -40,10 +40,7 @@ declare global {
 }
 InitTrig_Nuke_Recipe = () => {
   gg_trg_Nuke_Recipe = CreateTrigger();
-  TriggerRegisterAnyUnitEventBJ(
-    gg_trg_Nuke_Recipe,
-    EVENT_PLAYER_UNIT_PICKUP_ITEM,
-  );
+  TriggerRegisterAnyUnitEventBJ(gg_trg_Nuke_Recipe, EVENT_PLAYER_UNIT_PICKUP_ITEM);
   TriggerAddCondition(
     gg_trg_Nuke_Recipe,
     Condition(() => GetItemTypeId(GetManipulatedItem()!) === FourCC("I002") && CountPlayersInForceBJ(udg_Sheep) > 1),

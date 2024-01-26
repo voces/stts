@@ -44,6 +44,7 @@
 - Fixed -pc X
 - Refactored -qd logic a bit to hopefully fix
 - Added missing commands to Quests
+- Fixed -g all erroring
 
 # 23d
 

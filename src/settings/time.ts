@@ -5,13 +5,9 @@ const checkAutoTimeFlag = () => {
   const oldTime = udg_time;
   defaultTime();
   if (oldTime !== udg_time) {
-    BJDebugMsg("udg_autoTime = false");
     udg_autoTime = false;
     udg_time = oldTime;
-  } else {
-    BJDebugMsg("udg_autoTime = true");
-    udg_autoTime = true;
-  }
+  } else udg_autoTime = true;
 };
 
 export const updateLeaderboardSettingsDisplay = () => {
@@ -54,10 +50,11 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     t.registerAnyUnitEvent(EVENT_PLAYER_UNIT_TRAIN_START);
     t.addCondition(() => GetTrainedUnitType() === FourCC("h00G"));
     t.addAction(() => {
+      const u = GetTriggerUnit()!;
       udg_autoTime = true;
       defaultTime();
       TriggerSleepAction(0);
-      IssueImmediateOrderById(GetTriggerUnit()!, 851976);
+      IssueImmediateOrderById(u, 851976);
     });
   }
 });

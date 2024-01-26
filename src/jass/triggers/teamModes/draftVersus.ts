@@ -317,7 +317,7 @@ const Trig_draftVersus_Actions = () => {
       DestroyMultiboardBJ(udg_captainsMultiboard);
       TriggerSleepAction(0.01);
       udg_someVersusBoolean = false;
-      DisableTrigger(GetTriggeringTrigger()!);
+      DisableTrigger(gg_trg_draftVersus);
       DisableTrigger(gg_trg_giveUpCaptain);
       TriggerExecute(gg_trg_versusCountDown);
     } else {

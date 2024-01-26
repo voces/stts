@@ -269,9 +269,6 @@ declare global {
 }
 InitTrig_blightManagement = () => {
   gg_trg_blightManagement = CreateTrigger();
-  TriggerRegisterTimerExpireEventBJ(
-    gg_trg_blightManagement,
-    udg_mapSizeChangeTimer,
-  );
+  TriggerRegisterTimerExpireEventBJ(gg_trg_blightManagement, udg_mapSizeChangeTimer);
   TriggerAddAction(gg_trg_blightManagement, Trig_blightManagement_Actions);
 };

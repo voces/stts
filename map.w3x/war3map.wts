@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 23e
+Sheep Tag ReVoLuTiOn 24
 }
 
 STRING 40
@@ -3927,16 +3927,6 @@ STRING 3976
 (placeholder)
 }
 
-STRING 3979
-{
-|cff00ff00Sheep Tag ReVoLuTiOn 23e|r
-}
-
-STRING 3980
-{
-|cff00ff0023e|r
-}
-
 STRING 3982
 // Items: I00X (kaleidoscope), Description (Description)
 {
@@ -3983,5 +3973,15 @@ STRING 3992
 // Items: I00Y (mastery), Ubertip (Tooltip - Extended)
 {
 Transfers control of the targeted structure to the player who uses the Scepter.|n|cffffcc00100 gold.|r |n|cff00aeef-buy mastery: 140 gold.|r
+}
+
+STRING 3993
+{
+|cff00ff00Sheep Tag ReVoLuTiOn 24|r
+}
+
+STRING 3994
+{
+|cff00ff0024|r
 }
 

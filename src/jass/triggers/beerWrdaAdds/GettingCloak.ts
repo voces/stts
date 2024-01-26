@@ -113,13 +113,7 @@ declare global {
 }
 InitTrig_Getting_Cloak = () => {
   gg_trg_Getting_Cloak = CreateTrigger();
-  TriggerRegisterAnyUnitEventBJ(
-    gg_trg_Getting_Cloak,
-    EVENT_PLAYER_UNIT_PICKUP_ITEM,
-  );
-  TriggerAddCondition(
-    gg_trg_Getting_Cloak,
-    Condition(Trig_Getting_Cloak_Conditions),
-  );
+  TriggerRegisterAnyUnitEventBJ(gg_trg_Getting_Cloak, EVENT_PLAYER_UNIT_PICKUP_ITEM);
+  TriggerAddCondition(gg_trg_Getting_Cloak, Condition(Trig_Getting_Cloak_Conditions));
   TriggerAddAction(gg_trg_Getting_Cloak, Trig_Getting_Cloak_Actions);
 };

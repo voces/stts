@@ -1,7 +1,6 @@
 import { president } from "modes/president";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { setTimeout, Timeout } from "util/setTimeout";
-import { sleep } from "w3ts";
 
 const selectedPriority = Array.from<undefined, [player: player, timeout: Timeout] | undefined>({
   length: bj_MAX_PLAYERS,
@@ -15,7 +14,7 @@ export const inflateGoldCount = (p: player): void => {
   goldCount[GetPlayerId(p)] = max;
 };
 
-const Trig_g_showGoldCounts = async () => {
+const Trig_g_showGoldCounts = () => {
   let i = 0;
   let count = 0;
   const p = GetTriggerPlayer()!;
@@ -48,7 +47,7 @@ const Trig_g_showGoldCounts = async () => {
       i = i + 1;
     }
     if (count === 12) {
-      await sleep(9);
+      TriggerSleepAction(9);
       if (GetLocalPlayer() === p) ClearTextMessages();
     }
   }
@@ -122,7 +121,6 @@ const Trig_g_leastGoldCount = (forSheep: boolean, last: player): player => {
 };
 
 export const giveAllGold = (sender: player): void => {
-  let receiver: player | null = selectedPriority[GetPlayerId(sender)]?.[0] ?? null;
   const amount = GetPlayerState(sender, PLAYER_STATE_RESOURCE_GOLD);
   let changedReceiver = false;
   let transferDisplay:
@@ -132,11 +130,18 @@ export const giveAllGold = (sender: player): void => {
   // Don't transfer 0 gold
   if (amount === 0 || !udg_giveGold) return;
 
+  // Select to prioritize
+  let receiver: player | null = selectedPriority[GetPlayerId(sender)]?.[0] ?? null;
+  if (receiver && IsPlayerInForce(receiver, udg_Spirit)) receiver = null;
+
   // Priority is last receiver, president, or a random person with least gc
   if (!receiver) {
     if (IsPlayerInForce(sender, udg_Sheep) || IsPlayerInForce(sender, udg_Spirit)) {
       receiver = lastSheepReceiver;
-      if (receiver == null || receiver === sender || GetPlayerSlotState(receiver) === PLAYER_SLOT_STATE_LEFT) {
+      if (
+        receiver == null || receiver === sender || GetPlayerSlotState(receiver) === PLAYER_SLOT_STATE_LEFT ||
+        IsPlayerInForce(sender, udg_Spirit)
+      ) {
         receiver = president.enabled
           ? president.president.handle
           : Trig_g_leastGoldCount(true, lastReceivedFrom[GetPlayerId(sender)]);
@@ -225,7 +230,9 @@ InitTrig_g = () => {
       Filter(() => {
         const u = GetFilterUnit();
         const p = GetTriggerPlayer();
-        if (!u || !p || !IsUnitAlly(u, p) || GetOwningPlayer(u) === p) return;
+        if (
+          !u || !p || !IsUnitAlly(u, p) || GetOwningPlayer(u) === p || IsPlayerInForce(GetOwningPlayer(u), udg_Spirit)
+        ) return;
         const utid = GetUnitTypeId(u);
         return utid === sheepType || utid === shepType;
       }),

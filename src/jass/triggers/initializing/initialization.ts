@@ -1,7 +1,4 @@
-//===========================================================================
-// Trigger: initialization
-//===========================================================================
-// initialization
+export {};
 
 const Trig_isSheep = () => {
   SetCameraFieldForPlayer(
@@ -381,11 +378,9 @@ const Trig_initialization_Actions = () => {
   TriggerExecute(gg_trg_startRound);
   DisableTrigger(gg_trg_Sheep_Color);
   PlaySoundBJ(gg_snd_GoodJob);
-  DestroyTrigger(GetTriggeringTrigger()!);
+  DestroyTrigger(gg_trg_initialization);
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_initialization: () => void;
