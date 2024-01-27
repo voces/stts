@@ -1,21 +1,17 @@
-//===========================================================================
-// Trigger: sheepDamage
-//===========================================================================
+import { UNIT_TYPE_ID_FROST_FARM } from "constants";
+
 const Trig_sheepDamage_Actions = () => {
   const target = BlzGetEventDamageTarget()!;
   const source = GetEventDamageSource()!;
   if (GetUnitTypeId(target) === sheepType) {
-    if (IsUnitIllusion(source)) {
-      BlzSetEventDamage(0);
-    }
+    if (IsUnitIllusion(source)) BlzSetEventDamage(0);
+    if (GetUnitTypeId(source) === UNIT_TYPE_ID_FROST_FARM) BlzSetEventDamage(1);
     if (GetWidgetLife(target) - GetEventDamage() < 0.405) {
       ForceUICancelBJ(GetOwningPlayer(target));
     }
   }
 };
 
-//===========================================================================
-export {};
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_sheepDamage: () => void;

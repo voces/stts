@@ -5,7 +5,21 @@
 - -qd might still be busted? Maybe add events that emit death times each death (dying, killing, time in round)
 - Frost farm killing ward crashes?
 
-# 23e
+# 24a
+
+## Feature changes
+
+- Added -buy scepter alias for -buy mastery
+
+## Bug fixes
+
+- Fixed -sell not work on units with full inventories
+- Fixed auras being granted to enemies
+- Fixed frost farms not being able to attack structures or sheep
+- Fixed "undeclared global" messages
+- Fixed -gold X max (max is 9,999,999)
+
+# 24
 
 ## Feature changes
 

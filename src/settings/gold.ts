@@ -6,8 +6,8 @@ const Trig_gold_Actions = () => {
     .map((v) => S2I(v));
 
   if (parts.length === 2) {
-    udg_sheepGold = parts[0];
-    udg_wolfGold = parts[1];
+    udg_sheepGold = Math.min(parts[0], 9999999);
+    udg_wolfGold = Math.min(parts[1], 9999999);
     DisplayTimedTextToForce(
       GetPlayersAll()!,
       5,
@@ -21,7 +21,7 @@ const Trig_gold_Actions = () => {
     return;
   }
 
-  udg_sheepGold = udg_wolfGold = parts[0];
+  udg_sheepGold = udg_wolfGold = Math.min(parts[0], 9999999);
   DisplayTimedTextToForce(
     GetPlayersAll()!,
     5,

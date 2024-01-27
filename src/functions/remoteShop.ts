@@ -9,7 +9,7 @@ type Item = {
 
 const items: Item[] = [];
 
-const getSelectedInventoryUnit = () => {
+const getSelectedInventoryUnit = (allowEmpty: boolean) => {
   const g = CreateGroup()!;
   const p = GetTriggerPlayer()!;
   GroupEnumUnitsSelected(
@@ -17,7 +17,8 @@ const getSelectedInventoryUnit = () => {
     p,
     Filter(() => {
       const u = GetFilterUnit()!;
-      return !IsUnitIllusion(u) && (UnitInventorySize(u) - UnitInventoryCount(u) > 0) && IsUnitAlly(u, p);
+      return !IsUnitIllusion(u) && (UnitInventorySize(u) - (allowEmpty ? 0 : UnitInventoryCount(u)) > 0) &&
+        IsUnitAlly(u, p);
     }),
   )!;
   const u = FirstOfGroup(g);
@@ -29,7 +30,7 @@ const BuySellItem__buyAction = () => {
   const parts = GetEventPlayerChatString()!.toLowerCase().split(" ");
 
   if ((parts[0] !== "-buy" && parts[0] !== "-b") || parts.length !== 2 || parts[1].length === 0) return;
-  const u = getSelectedInventoryUnit();
+  const u = getSelectedInventoryUnit(false);
   if (!u) return;
   for (let i = 0; i < items.length; i++) {
     if (items[i].name.startsWith(parts[1])) {
@@ -55,7 +56,7 @@ const BuySellItem__sellAction = () => {
 
   if ((parts[0] !== "-sell" && parts[0] !== "-s") || parts.length !== 2 || parts[1].length === 0) return;
 
-  const u = getSelectedInventoryUnit();
+  const u = getSelectedInventoryUnit(true);
   if (!u) return;
 
   const slot = S2I(parts[1]) - 1;
@@ -145,6 +146,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     { name: "sheep", cost: 56, id: FourCC("I00G") },
     { name: "suppression", cost: 140, id: FourCC("I00V") },
     { name: "scythe", cost: 112, id: FourCC("scyt") },
+    { name: "scepter", cost: 140, id: FourCC("I00Y") },
     { name: "sobi", cost: 56, id: FourCC("I00N") },
     { name: "speed", cost: 42, id: FourCC("I00F") },
     { name: "str", cost: 42, id: FourCC("I007") },
