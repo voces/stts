@@ -1,9 +1,26 @@
 # TODO
 
 - Start shouldn't reroll president
-- Delay spawn of host farm by 0.25 seconds or something?
 - -qd might still be busted? Maybe add events that emit death times each death (dying, killing, time in round)
 - Frost farm killing ward crashes?
+
+# 24b
+
+## Feature changes
+
+- Selecting any allied unit (except wisp) sets temporary priority for "g" for selecting player
+- Delayed spawn of Host Farm by 0.25 seconds
+- Truncated out the numeric portion of player tags (verit#11278 => verit)
+
+## Balance changes
+
+- Sheep gain gold for killing enemy structures
+
+## Bug fixes
+
+- Fixed gold bounty text not showing
+- Fixed -g all
+- Fixed error copy on -buy
 
 # 24a
 

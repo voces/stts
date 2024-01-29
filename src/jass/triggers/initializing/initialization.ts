@@ -366,7 +366,7 @@ const Trig_initialization_Actions = () => {
       }
       SetPlayerName(
         Player(i)!,
-        GetPlayerName(Player(i)!) + " (" + (I2S(i + 1) + ")"),
+        GetPlayerName(Player(i)!)?.split("#")[0] + " (" + (I2S(i + 1) + ")"),
       );
     }
     i = i + 1;

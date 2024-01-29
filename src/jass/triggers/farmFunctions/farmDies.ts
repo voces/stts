@@ -3,27 +3,14 @@ const Trig_farmDies_Actions = () => {
   const pid = GetConvertedPlayerId(dyingPlayer);
   const killingPlayer = GetOwningPlayer(GetKillingUnit()!);
 
-  if (IsPlayerInForce(killingPlayer, udg_Wolf)) {
-    if (
-      IsItemOwned(
-        GetItemOfTypeFromUnitBJ(GetKillingUnit()!, FourCC("scyt"))!,
-      )
-    ) {
-      AdjustPlayerStateBJ(
-        (GetUnitPointValue(GetDyingUnit()!) * 2) + 1,
-        killingPlayer,
-        PLAYER_STATE_RESOURCE_GOLD,
-      );
-      GoldText(GetUnitPointValue(GetDyingUnit()!) * 2 + 1, GetKillingUnit()!);
-    } else {
-      AdjustPlayerStateBJ(
-        GetUnitPointValue(GetDyingUnit()!),
-        killingPlayer,
-        PLAYER_STATE_RESOURCE_GOLD,
-      );
-      GoldText(GetUnitPointValue(GetDyingUnit()!), GetKillingUnit()!);
-    }
+  if (IsPlayerEnemy(dyingPlayer, killingPlayer)) {
+    let amount = GetUnitPointValue(GetDyingUnit()!);
+    if (UnitHasItemOfTypeBJ(GetKillingUnit()!, FourCC("scyt"))) amount = amount * 2 + 1;
+
+    AdjustPlayerStateBJ(amount, killingPlayer, PLAYER_STATE_RESOURCE_GOLD);
+    GoldText(amount, GetKillingUnit()!);
   }
+
   if (udg_farmCount[pid] > 0) udg_farmCount[pid]--;
   SetPlayerState(dyingPlayer, PLAYER_STATE_RESOURCE_LUMBER, udg_farmCount[pid]);
 

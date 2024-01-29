@@ -10,6 +10,7 @@ import { createCritter } from "misc/critter";
 import { UNIT_TYPE_ID_START_POSITION } from "constants";
 import { switchSheepTimers } from "modes/switch/switch";
 import { startUpdatingLeaderboard } from "modes/switch/updateLeaderboard";
+import { cancelHostFarmSpawn } from "./startRound";
 
 let firstRound = true;
 
@@ -320,6 +321,7 @@ const Trig_createSheep_Actions_part2 = () => {
 };
 
 const Trig_createSheep_Actions = () => {
+  cancelHostFarmSpawn();
   udg_gameStarted = true;
   PauseTimerBJ(true, udg_Createtimer);
 

@@ -84,6 +84,10 @@ export class MapPlayerEx extends MapPlayer {
     return pub[this.id];
   }
 
+  colorize(msg: string, includePlayerName = false) {
+    return `${this.hex}${includePlayerName ? this.name : ""}${msg}`;
+  }
+
   toString() {
     return this.coloredName;
   }
@@ -111,6 +115,16 @@ export class MapPlayerEx extends MapPlayer {
 
   public static fromFilterUnit() {
     const u = GetFilterUnit();
+    if (u) return this.fromHandle(GetOwningPlayer(u));
+  }
+
+  public static fromKillingUnit() {
+    const u = GetKillingUnit();
+    if (u) return this.fromHandle(GetOwningPlayer(u));
+  }
+
+  public static fromDyingUnit() {
+    const u = GetDyingUnit();
     if (u) return this.fromHandle(GetOwningPlayer(u));
   }
 

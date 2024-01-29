@@ -3,6 +3,13 @@ import { stopRuneTimers } from "functions/runes";
 import { switchSheepTimers } from "modes/switch/switch";
 import { terrain } from "settings/terrain";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
+import { setTimeout, Timeout } from "util/setTimeout";
+
+let hostFarmTimeout: Timeout | undefined = undefined;
+
+export const cancelHostFarmSpawn = () => {
+  if (hostFarmTimeout) hostFarmTimeout.cancel();
+};
 
 const reviveEnumDestructable = () => {
   DestructableRestoreLife(
@@ -101,7 +108,6 @@ const resetRoundStats = () => {
   udg_dummyWisps = 0;
   udg_wispPoints = 0;
   udg_blightCounter = 0;
-  udg_runSmart = false;
   bj_forLoopAIndex = 0;
   lastSheepReceiver = null as unknown as player;
   lastWolfReceiver = null as unknown as player;
@@ -120,7 +126,6 @@ const resetRoundStats = () => {
 
 const Trig_startRound_Actions = () => {
   let p: player;
-  let u: unit;
 
   perfectRound = false;
   pauseTimers();
@@ -248,9 +253,11 @@ New? Type |CFF00AEEF-smart|r.`,
   TriggerSleepAction(0);
 
   if (udg_versus === 0) {
-    u = CreateUnit(udg_Custom, hostFarmType, GetRectCenterX(terrain.wolf), GetRectCenterY(terrain.wolf), 270)!;
-    SelectUnitForPlayerSingle(u, udg_Custom);
-    ForceUICancelBJ(udg_Custom);
+    hostFarmTimeout = setTimeout(0.25, () => {
+      const u = CreateUnit(udg_Custom, hostFarmType, GetRectCenterX(terrain.wolf), GetRectCenterY(terrain.wolf), 270)!;
+      SelectUnitForPlayerSingle(u, udg_Custom);
+      ForceUICancelBJ(udg_Custom);
+    });
   }
 };
 

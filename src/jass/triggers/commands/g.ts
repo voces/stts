@@ -230,11 +230,8 @@ InitTrig_g = () => {
       Filter(() => {
         const u = GetFilterUnit();
         const p = GetTriggerPlayer();
-        if (
-          !u || !p || !IsUnitAlly(u, p) || GetOwningPlayer(u) === p || IsPlayerInForce(GetOwningPlayer(u), udg_Spirit)
-        ) return;
-        const utid = GetUnitTypeId(u);
-        return utid === sheepType || utid === shepType;
+        return !!u && !!p && IsUnitAlly(u, p) && GetOwningPlayer(u) !== p &&
+          !IsPlayerInForce(GetOwningPlayer(u), udg_Spirit);
       }),
     );
   }

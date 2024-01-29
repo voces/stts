@@ -318,7 +318,6 @@ declare global {
   // deno-lint-ignore prefer-const
   let udg_accumPartner: Array<number>;
   let udg_atempint3: number;
-  let udg_runSmart: boolean;
   // deno-lint-ignore prefer-const
   let udg_wasHere: Array<boolean>;
   // deno-lint-ignore prefer-const
@@ -829,7 +828,6 @@ udg_sheepGold = 0;
 udg_wolfGold = 0;
 udg_accumPartner = [];
 udg_atempint3 = 0;
-udg_runSmart = false;
 udg_wasHere = [];
 udg_itemIcon = [];
 udg_cloakAbility = [];
@@ -1098,7 +1096,7 @@ transferGold = (
     amount = GetPlayerState(sender, PLAYER_STATE_RESOURCE_GOLD);
   }
 
-  if (amount === 0) return;
+  if (amount <= 0) return;
 
   AdjustPlayerStateBJ(-amount, sender, PLAYER_STATE_RESOURCE_GOLD);
   AdjustPlayerStateBJ(amount, receiver, PLAYER_STATE_RESOURCE_GOLD);
@@ -1119,9 +1117,7 @@ transferGold = (
       sender,
       0,
       0,
-      "|CFFFFCC00Gave " + I2S(amount) + " gold to " +
-        udg_colorString[GetConvertedPlayerId(receiver)] +
-        GetPlayerName(receiver) + "|CFFFFCC00.|r",
+      `|CFFFFCC00Gave ${I2S(amount)} gold to ${MapPlayerEx.fromHandle(receiver)}|CFFFFCC00.|r`,
     );
   }
 
@@ -1130,9 +1126,7 @@ transferGold = (
       receiver,
       0,
       0,
-      "|CFFFFCC00Recieved " + I2S(amount) + " gold from " +
-        udg_colorString[GetConvertedPlayerId(sender)] + GetPlayerName(sender) +
-        "|CFFFFCC00.|r",
+      `|CFFFFCC00Recieved ${I2S(amount)} gold from ${MapPlayerEx.fromHandle(sender)}|CFFFFCC00.|r`,
     );
   }
 
@@ -1148,10 +1142,9 @@ transferGold = (
           Player(i)!,
           0,
           0,
-          udg_colorString[GetConvertedPlayerId(sender)] +
-            GetPlayerName(sender) + " |CFFFFCC00gave " + I2S(amount) +
-            " gold to " + udg_colorString[GetConvertedPlayerId(receiver)] +
-            GetPlayerName(receiver) + "|CFFFFCC00.|r",
+          `${MapPlayerEx.fromHandle(sender)} |CFFFFCC00gave ${I2S(amount)} gold to ${
+            MapPlayerEx.fromHandle(receiver)
+          }|CFFFFCC00.|r`,
         );
       }
       i = i + 1;
@@ -1410,7 +1403,6 @@ const InitGlobals = () => {
   }
 
   udg_atempint3 = 0;
-  udg_runSmart = false;
   i = 0;
   while (true) {
     if ((i > 24)) break;
@@ -1820,16 +1812,11 @@ updateTimes = () => {
       IsPlayerInForce(Player(i)!, udg_Spirit)
     ) {
       s__times_sheepCount[playerTimes[i]] = s__times_sheepCount[playerTimes[i]] + 1;
-      if (s === "") {
-        s = udg_colorString[i + 1] + GetPlayerName(Player(i)!) + "|r";
-      } else {
-        s = s + ", " + udg_colorString[i + 1] + GetPlayerName(Player(i)!) +
-          "|r";
-      }
+      if (s === "") s = MapPlayerEx.fromIndex(i)!.coloredName;
+      else s = s + ", " + MapPlayerEx.fromIndex(i);
       if (emitRound) {
-        if (addedSheep) {
-          l__sheep = l__sheep + " " + I2S(i);
-        } else {
+        if (addedSheep) l__sheep = l__sheep + " " + I2S(i);
+        else {
           l__sheep = I2S(i)!;
           addedSheep = true;
         }
@@ -1841,10 +1828,7 @@ updateTimes = () => {
       n = 0;
       while (true) {
         if (n === 24) break;
-        if (
-          IsPlayerInForce(Player(n)!, udg_Sheep) ||
-          IsPlayerInForce(Player(n)!, udg_Spirit)
-        ) {
+        if (IsPlayerInForce(Player(n)!, udg_Sheep) || IsPlayerInForce(Player(n)!, udg_Spirit)) {
           s___times_pTime[s__times_pTime[playerTimes[i]] + n] = s___times_pTime[s__times_pTime[playerTimes[i]] + n] +
             timeElapsed;
         }
@@ -1916,7 +1900,7 @@ GoldText = (amount: number, u: unit): void => {
       goldTextBuffer.delete(u);
       if (GetUnitAbilityLevel(u, FourCC("Binv")) > 0) return;
       const tt = CreateTextTag()!;
-      if (IsVisibleToPlayer(GetUnitX(u), GetUnitY(u), GetLocalPlayer())) return;
+      if (!IsVisibleToPlayer(GetUnitX(u), GetUnitY(u), GetLocalPlayer())) return;
       SetTextTagPermanent(tt, false);
       SetTextTagPos(tt, GetUnitX(u), GetUnitY(u), 25);
       SetTextTagText(tt, "+" + I2S(amount), 0.0276);

@@ -17,7 +17,7 @@ const Trig_First_Blood_Actions = () => {
     udg_QDeathTime[cid] = time;
     if (time < udg_qDeath) {
       udg_qDeath = time;
-      udg_qDeathString = udg_colorString[cid] + GetPlayerName(p);
+      udg_qDeathString = UnitEx.fromDying()?.owner.coloredName ?? "";
     }
   }
 

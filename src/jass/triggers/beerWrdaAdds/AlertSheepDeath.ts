@@ -1,3 +1,4 @@
+import { MapPlayerEx } from "handles/MapPlayerEx";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 
 declare global {
@@ -17,14 +18,6 @@ InitTrig_Alert_Sheep_Death = () => {
   );
   TriggerAddAction(gg_trg_Alert_Sheep_Death, () =>
     displayTimedTextToAll(
-      `                              ${
-        udg_colorString[
-          GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
-        ]
-      }${GetPlayerName(GetOwningPlayer(GetKillingUnit()!))}|r has captured ${
-        udg_colorString[
-          GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit()!))
-        ]
-      }${GetPlayerName(GetOwningPlayer(GetDyingUnit()!))}`,
+      `                              ${MapPlayerEx.fromKillingUnit()} has captured ${MapPlayerEx.fromDyingUnit()}`,
     ));
 };

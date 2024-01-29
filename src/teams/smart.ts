@@ -294,17 +294,15 @@ const smart = () => {
 
   let sheepToDraft: number;
   const activePlayerCount = getActivePlayerCount();
-  if (udg_runSmart || parts[0] !== "-smart") {
+  if (parts[0] !== "-smart") {
     sheepToDraft = lastActivePlayerCount === activePlayerCount
       ? lastSheepToDraft
       : Math.floor(activePlayerCount / 2 - 1);
-  } else {
-    if (udg_lastGameString === "-smart") {
-      sheepToDraft = lastActivePlayerCount === activePlayerCount
-        ? lastSheepToDraft
-        : Math.floor(activePlayerCount / 2 - 1);
-    } else sheepToDraft = S2I(parts[1]);
-  }
+  } else if (udg_lastGameString === "-smart") {
+    sheepToDraft = lastActivePlayerCount === activePlayerCount
+      ? lastSheepToDraft
+      : Math.floor(activePlayerCount / 2 - 1);
+  } else sheepToDraft = S2I(parts[1]);
   if (sheepToDraft <= 0) sheepToDraft = 1;
   lastSheepToDraft = sheepToDraft;
   lastActivePlayerCount = activePlayerCount;

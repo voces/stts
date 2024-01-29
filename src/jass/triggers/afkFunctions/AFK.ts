@@ -261,9 +261,7 @@ const Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func003A = () =>
     udg_captainsMultiboard,
     3,
     udg_multiboardRow[GetConvertedPlayerId(GetEnumPlayer()!)],
-    "$" +
-      (udg_colorString[GetConvertedPlayerId(GetEnumPlayer()!)] +
-        GetPlayerName(GetEnumPlayer()!)),
+    `$${MapPlayerEx.fromEnum()!}`,
   );
 };
 
@@ -353,9 +351,7 @@ const Trig_AFK_Func005Func013Func001Func001Func010Func001Func001Func005A = () =>
     udg_captainsMultiboard,
     3,
     udg_multiboardRow[GetConvertedPlayerId(udg_captains[3])],
-    "$" +
-      (udg_colorString[GetConvertedPlayerId(udg_captains[3])] +
-        GetPlayerName(udg_captains[3])),
+    `$${MapPlayerEx.fromHandle(udg_captains[3])}`,
   );
 };
 
@@ -522,15 +518,12 @@ const Trig_AFK_Func005Func013Func001Func001Func010Func002Func003A = () => {
     udg_captainsMultiboard,
     1,
     udg_multiboardRow[GetConvertedPlayerId(GetEnumPlayer()!)],
-    "$" +
-      (udg_colorString[GetConvertedPlayerId(GetEnumPlayer()!)] +
-        GetPlayerName(GetEnumPlayer()!)),
+    `$${MapPlayerEx.fromEnum()}`,
   );
   udg_captainTurn = 3;
   MultiboardSetTitleText(
     udg_captainsMultiboard,
-    udg_colorString[GetConvertedPlayerId(udg_captains[3])] +
-      (GetPlayerName(udg_captains[3]) + "'s turn"),
+    MapPlayerEx.fromHandle(udg_captains[3]).colorize("'s turn", true),
   );
 };
 
@@ -620,9 +613,7 @@ const Trig_AFK_Func005Func013Func001Func001Func010Func002Func005A = () => {
     udg_captainsMultiboard,
     1,
     udg_multiboardRow[GetConvertedPlayerId(udg_captains[1])],
-    "$" +
-      (udg_colorString[GetConvertedPlayerId(udg_captains[1])] +
-        GetPlayerName(udg_captains[1])),
+    `$${MapPlayerEx.fromHandle(udg_captains[1])}`,
   );
 };
 
@@ -778,7 +769,7 @@ const Trig_AFK_Actions = () => {
         LeaderboardSetPlayerItemLabelBJ(
           GetTriggerPlayer()!,
           PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-          GetPlayerName(GetTriggerPlayer()!)!,
+          MapPlayerEx.fromEvent()!.coloredName,
         );
       }
     } else if (pickingAndPicked()) {
@@ -808,8 +799,7 @@ const Trig_AFK_Actions = () => {
           ) {
             MultiboardSetTitleText(
               udg_captainsMultiboard,
-              udg_colorString[GetConvertedPlayerId(udg_captains[1])] +
-                (GetPlayerName(udg_captains[1]) + "'s turn"),
+              MapPlayerEx.fromHandle(udg_captains[1]).colorize("'s turn", true),
             );
           }
         } else {
@@ -856,8 +846,7 @@ const Trig_AFK_Actions = () => {
           ) {
             MultiboardSetTitleText(
               udg_captainsMultiboard,
-              udg_colorString[GetConvertedPlayerId(udg_captains[3])] +
-                (GetPlayerName(udg_captains[3]) + "'s turn"),
+              MapPlayerEx.fromHandle(udg_captains[3]).colorize("'s turn", true),
             );
           }
         }
@@ -867,16 +856,14 @@ const Trig_AFK_Actions = () => {
           udg_captainsMultiboard,
           1,
           udg_multiboardRow[udg_atempint],
-          udg_colorString[udg_atempint] +
-            (GetPlayerName(GetTriggerPlayer()!) + " (AFK)"),
+          MapPlayerEx.fromEvent()!.colorize(" (AFK)", true),
         );
       } else {
         MultiboardSetItemValueBJ(
           udg_captainsMultiboard,
           3,
           udg_multiboardRow[udg_atempint],
-          udg_colorString[udg_atempint] +
-            (GetPlayerName(GetTriggerPlayer()!) + " (AFK)"),
+          MapPlayerEx.fromEvent()!.colorize(" (AFK)", true),
         );
       }
     } else {
@@ -899,7 +886,7 @@ const Trig_AFK_Actions = () => {
         LeaderboardAddItemBJ(
           GetTriggerPlayer()!,
           GetLastCreatedLeaderboard()!,
-          GetPlayerName(GetTriggerPlayer()!) + " (AFK)",
+          MapPlayerEx.fromEvent()!.colorize(" (AFK)", true),
           0,
         );
       }
@@ -924,7 +911,7 @@ const Trig_AFK_Actions = () => {
           LeaderboardSetPlayerItemLabelBJ(
             GetTriggerPlayer()!,
             PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-            GetPlayerName(GetTriggerPlayer()!)!,
+            MapPlayerEx.fromEvent()!.name,
           );
           bj_forLoopAIndex = bj_forLoopAIndex + 1;
         }
@@ -943,7 +930,7 @@ const Trig_AFK_Actions = () => {
           LeaderboardSetPlayerItemLabelBJ(
             GetTriggerPlayer()!,
             PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-            GetPlayerName(GetTriggerPlayer()!) + " (back)",
+            `${MapPlayerEx.fromEvent()} (back)`,
           );
           bj_forLoopAIndex = bj_forLoopAIndex + 1;
         }
@@ -961,7 +948,7 @@ const Trig_AFK_Actions = () => {
       LeaderboardAddItemBJ(
         GetTriggerPlayer()!,
         GetLastCreatedLeaderboard()!,
-        GetPlayerName(GetTriggerPlayer()!)!,
+        MapPlayerEx.fromEvent()!.name,
         0,
       );
     } else {
