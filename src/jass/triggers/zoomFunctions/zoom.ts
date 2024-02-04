@@ -1,5 +1,4 @@
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
-import { setTimeout } from "util/setTimeout";
 import { File } from "w3ts";
 
 const saveZooms = (p: player): void => {
@@ -58,15 +57,14 @@ const loadZooms = () => {
     val3 = 1650;
   } else {
     [val1, val2, val3] = s.split(" ").map((v) => S2R(v));
-    setTimeout(0.1, () =>
-      DisplayTextToPlayer(
-        GetLocalPlayer(),
-        0,
-        0,
-        `\nLoaded zooms. Sheep: |CFFED1C24${val1.toFixed(0)}|r, Wolf: |CFFED1C24${
-          val2.toFixed(0)
-        }|r, Spirit: |CFFED1C24${val3.toFixed(0)}|r.`,
-      ));
+    DisplayTextToPlayer(
+      GetLocalPlayer(),
+      0,
+      0,
+      `\nLoaded zooms. Sheep: |CFFED1C24${val1.toFixed(0)}|r, Wolf: |CFFED1C24${val2.toFixed(0)}|r, Spirit: |CFFED1C24${
+        val3.toFixed(0)
+      }|r.`,
+    );
     DisplayTextToPlayer(GetLocalPlayer(), 0, 0, "");
   }
 

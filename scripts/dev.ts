@@ -18,7 +18,7 @@ const rebuild = () => {
 
   {
     const command = new Deno.Command("deno", {
-      args: ["task", "append"],
+      args: ["task", "build-w3x"],
       stdout: "inherit",
       stderr: "inherit",
     });

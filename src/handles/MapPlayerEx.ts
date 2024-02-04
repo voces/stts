@@ -150,4 +150,8 @@ export class MapPlayerEx extends MapPlayer {
   public static fromLocal() {
     return this.fromHandle(GetLocalPlayer()) as MapPlayerEx;
   }
+
+  public static get neutralPassive() {
+    return MapPlayerEx.fromIndex(PLAYER_NEUTRAL_PASSIVE)!;
+  }
 }

@@ -1,6 +1,10 @@
+import { UnitEx } from "handles/UnitEx";
+import { isPointInPolygon } from "misc/critter";
 import { president } from "modes/president";
+import { terrain } from "settings/terrain";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { setTimeout, Timeout } from "util/setTimeout";
+import { withPlayerUnits } from "util/withGroup";
 
 const selectedPriority = Array.from<undefined, [player: player, timeout: Timeout] | undefined>({
   length: bj_MAX_PLAYERS,
@@ -56,7 +60,7 @@ const Trig_g_showGoldCounts = () => {
 const markReceiver = (sender: player, target: string): void => {
   const p = Player(S2I(target) - 1);
 
-  if (p == null) return;
+  if (p == null || sender === p) return;
 
   if ((IsPlayerInForce(sender, udg_Sheep) || IsPlayerInForce(sender, udg_Spirit)) && IsPlayerInForce(p, udg_Sheep)) {
     lastSheepReceiver = p;
@@ -190,7 +194,38 @@ const Trig_g_Actions = () => {
   // Note early returns above; mark when someone speaks
   if (str.startsWith("g")) {
     if (IsPlayerInForce(GetTriggerPlayer()!, udg_Sheep)) lastSheepReceiver = GetTriggerPlayer()!;
-    else if (IsPlayerInForce(GetTriggerPlayer()!, udg_Wolf)) lastWolfReceiver = GetTriggerPlayer()!;
+    else if (IsPlayerInForce(GetTriggerPlayer()!, udg_Wolf)) {
+      let wolf: UnitEx | undefined = undefined as UnitEx | undefined;
+      withPlayerUnits(GetTriggerPlayer()!, () => {}, (u) => {
+        if (u.typeId === shepType && !u.isIllusion()) wolf = u;
+        return false;
+      });
+      if (!wolf) return;
+      if (
+        isPointInPolygon(wolf.x, wolf.y, [
+          { x: GetRectMinX(terrain.spawnBounds), y: GetRectMinY(terrain.spawnBounds) },
+          { x: GetRectMaxX(terrain.spawnBounds), y: GetRectMinY(terrain.spawnBounds) },
+          { x: GetRectMaxX(terrain.spawnBounds), y: GetRectMaxY(terrain.spawnBounds) },
+          { x: GetRectMinX(terrain.spawnBounds), y: GetRectMaxY(terrain.spawnBounds) },
+        ])
+      ) {
+        lastWolfReceiver = GetTriggerPlayer()!;
+        if (GetLocalPlayer() === GetTriggerPlayer()) StartSound(gg_snd_ReceiveGold);
+        return;
+      }
+      let nearShop = false;
+      for (const [rect] of terrain.shops) {
+        if ((GetRectCenterX(rect) - wolf.x) ** 2 + (GetRectCenterY(rect) - wolf.y) ** 2 < 2_250_000) {
+          nearShop = true;
+          break;
+        }
+      }
+      if (nearShop) {
+        lastWolfReceiver = GetTriggerPlayer()!;
+        if (GetLocalPlayer() === GetTriggerPlayer()) StartSound(gg_snd_ReceiveGold);
+        return;
+      }
+    }
   }
 };
 

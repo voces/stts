@@ -4,16 +4,16 @@ let critter: unit | undefined;
 
 type Point = { x: number; y: number };
 
-const bounds: Point[] = [];
+const barn: Point[] = [{ x: -416, y: -1664 }, { x: -256, y: -1472 }, { x: -128, y: -1568 }, { x: -320, y: -1760 }];
 
 const isLeft = (a: Point, b: Point, x: number, y: number) => (b.x - a.x) * (y - a.y) - (x - a.x) * (b.y - a.y);
 
-const isPointInBounds = (x: number, y: number): boolean => {
+export const isPointInPolygon = (x: number, y: number, polygon: Point[]): boolean => {
   let wn = 0;
 
-  for (let i = 0; i < bounds.length; i++) {
-    const a = bounds[i];
-    const b = bounds[(i + 1) % bounds.length];
+  for (let i = 0; i < polygon.length; i++) {
+    const a = polygon[i];
+    const b = polygon[(i + 1) % polygon.length];
 
     if (a.y <= y) {
       if (b.y > y && isLeft(a, b, x, y) > 0) wn = wn + 1;
@@ -27,7 +27,7 @@ export const createCritter = () => {
   let x = GetRandomReal(-416, -128);
   let y = GetRandomReal(-1760, -1472);
   while (true) {
-    if (isPointInBounds(x, y)) break;
+    if (isPointInPolygon(x, y, barn)) break;
     x = GetRandomReal(-416, -128);
     y = GetRandomReal(-1760, -1472);
   }
@@ -40,7 +40,7 @@ const moveCritter = () => {
   let x = GetRandomReal(-416, -128);
   let y = GetRandomReal(-1760, -1472);
   while (true) {
-    if (isPointInBounds(x, y)) break;
+    if (isPointInPolygon(x, y, barn)) break;
     x = GetRandomReal(-416, -128);
     y = GetRandomReal(-1760, -1472);
   }
@@ -52,10 +52,4 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   const t = CreateTrigger();
   TriggerRegisterTimerEvent(t, 5, true);
   TriggerAddAction(t, moveCritter);
-  bounds.push(
-    { x: -416, y: -1664 },
-    { x: -256, y: -1472 },
-    { x: -128, y: -1568 },
-    { x: -320, y: -1760 },
-  );
 });

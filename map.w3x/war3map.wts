@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 24b
+Sheep Tag ReVoLuTiOn 24c
 }
 
 STRING 40
@@ -3975,13 +3975,91 @@ STRING 3992
 Transfers control of the targeted structure to the player who uses the Scepter.|n|cffffcc00100 gold.|r |n|cff00aeef-buy mastery: 140 gold.|r
 }
 
-STRING 3993
+STRING 3995
 {
-|cff00ff00Sheep Tag ReVoLuTiOn 24b|r
+|cff00ff00Sheep Tag ReVoLuTiOn 24c|r
 }
 
-STRING 3994
+STRING 3996
 {
-|cff00ff0024b|r
+|cff00ff0024c|r
+}
+
+STRING 3997
+// Units: n00A (Red Flowers), Name (Name)
+{
+Red Flowers
+}
+
+STRING 3998
+// Units: n00B (White Flowers), Name (Name)
+{
+White Flowers
+}
+
+STRING 4000
+// Doodads: LPlp (Hearts), Name (Name)
+{
+Hearts
+}
+
+STRING 4001
+// Doodads: D000 (Flowers (White)), Name (Name)
+{
+Flowers (White)
+}
+
+STRING 4002
+// Doodads: D001 (Flowers (Red)), Name (Name)
+{
+Flowers (Red)
+}
+
+STRING 4003
+// Abilities: A02G (Love Bite), Tip (Tooltip - Normal)
+{
+Love Bite
+}
+
+STRING 4004
+// Abilities: A02G (Love Bite), Name (Name)
+{
+Love Bite
+}
+
+STRING 4005
+// Buffs/Effects: B00M (), Bufftip (Tooltip)
+{
+Love Bite
+}
+
+STRING 4010
+// Buffs/Effects: B00M (), Buffubertip (Tooltip - Extended)
+{
+This unit was bitten; its movement speed, attack rate and damage have been increased.
+}
+
+STRING 4014
+// Abilities: A02F (Rejected Embrace), Tip (Tooltip - Normal)
+{
+Rejected Embrace
+}
+
+STRING 4015
+// Abilities: A02F (Rejected Embrace), Name (Name)
+{
+Rejected Embrace
+}
+
+STRING 4016
+// Buffs/Effects: B00L (), Bufftip (Tooltip)
+{
+Rejected Embrace
+}
+
+STRING 4017
+// Buffs/Effects: B00L (), Buffubertip (Tooltip - Extended)
+{
+This unit was rejected; its movement speed, attack rate and damage have been reduced.
 }
 

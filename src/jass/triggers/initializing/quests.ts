@@ -161,11 +161,18 @@ XXXandBEER
 Wrda
 
 |cffffcc00Assets & Tools|r
+HideShow icon: darkdeathknight
 Christmas lights: Vinz @ Hive
 Snowman: Thrikodius @ Hive
 Snowball: Walle @ Hive
 Santa: IamMclovin @ Hive
-HideShow icon: darkdeathknight @ Hive
+Heart item: Carrington2k
+Red & white flowers: kellym0
+Petals: Mr.Goblin
+Heart seal icon: CRAZYRUSSIAN
+Glowing heart icon: Pink_Lotus
+Heart particle: Jaccouille
+Fall in love: Kuhneghetz
 Model editor: Retera`,
     "ReplaceableTextures\\CommandButtons\\BTNPeasant.blp",
   );

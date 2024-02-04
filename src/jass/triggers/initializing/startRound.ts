@@ -53,6 +53,7 @@ const startRoundToggledTriggers = () => {
   EnableTrigger(gg_trg_view);
   EnableTrigger(gg_trg_fair);
   EnableTrigger(gg_trg_start);
+  EnableTrigger(gg_trg_smart);
   EnableTrigger(gg_trg_picksheep);
   EnableTrigger(gg_trg_switch);
   EnableTrigger(gg_trg_vamp);

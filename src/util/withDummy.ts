@@ -9,11 +9,12 @@ export const withDummy = <T>(
   owner = MapPlayerEx.fromIndex(PLAYER_NEUTRAL_PASSIVE)!,
 ) => {
   const dummy = Unit.create(owner, FourCC("h00J"), x, y)!;
+  dummy.setVertexColor(0, 0, 0, 0);
   let result: T;
   try {
     result = fn(dummy);
   } finally {
-    setTimeout(0.1, () => dummy.destroy());
+    setTimeout(2, () => dummy.destroy());
   }
   return result;
 };

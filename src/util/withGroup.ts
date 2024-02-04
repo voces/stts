@@ -1,10 +1,10 @@
-import { Unit } from "w3ts";
 import { GroupEx } from "handles/GroupEx";
 import { MapPlayerEx } from "handles/MapPlayerEx";
+import { UnitEx } from "handles/UnitEx";
 
 export const withGroup = <T>(
   fn: (group: GroupEx) => T,
-  filter?: (unit: Unit) => boolean,
+  filter?: (unit: UnitEx) => boolean,
   player?: MapPlayerEx | player,
 ) => {
   const group = GroupEx.create()!;
@@ -16,7 +16,7 @@ export const withGroup = <T>(
       : undefined;
     const start = normalizedPlayer ? normalizedPlayer.id : 0;
     const end = normalizedPlayer ? normalizedPlayer.id + 1 : bj_MAX_PLAYERS;
-    const finalFilter = filter ? () => filter(Unit.fromFilter()!) : () => true;
+    const finalFilter = filter ? () => filter(UnitEx.fromFilter()!) : () => true;
     for (let i = start; i < end; i++) {
       temp.enumUnitsOfPlayer(MapPlayerEx.fromIndex(i)!, finalFilter);
       temp.addGroupFast(group);
@@ -37,14 +37,14 @@ export const withUnitsInRange = <T>(
   y: number,
   range: number,
   fn: (group: GroupEx) => T,
-  filter?: (unit: Unit) => boolean,
+  filter?: (unit: UnitEx) => boolean,
 ) =>
   withGroup((g) => {
     g.enumUnitsInRange(
       x,
       y,
       range,
-      filter ? () => filter(Unit.fromFilter()!) : () => true,
+      filter ? () => filter(UnitEx.fromFilter()!) : () => true,
     );
     return fn(g);
   });
@@ -52,13 +52,13 @@ export const withUnitsInRange = <T>(
 export const withPlayerUnits = <T>(
   player: MapPlayerEx | player,
   fn: (units: GroupEx) => T,
-  filter?: (unit: Unit) => boolean,
+  filter?: (unit: UnitEx) => boolean,
 ) => withGroup(fn, filter, player);
 
 export const withUnitsOfType = <T>(
   unitId: string | number,
   fn: (units: GroupEx) => T,
-  filter?: (unit: Unit) => boolean,
+  filter?: (unit: UnitEx) => boolean,
 ) => {
   const typeId = typeof unitId === "string" ? FourCC(unitId) : unitId;
   return withGroup(

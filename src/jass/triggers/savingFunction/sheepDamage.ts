@@ -1,14 +1,21 @@
 import { UNIT_TYPE_ID_FROST_FARM } from "constants";
+import { loveBite, rejectedEmbrace } from "misc/valentine";
 
 const Trig_sheepDamage_Actions = () => {
   const target = BlzGetEventDamageTarget()!;
   const source = GetEventDamageSource()!;
   if (GetUnitTypeId(target) === sheepType) {
-    if (IsUnitIllusion(source)) BlzSetEventDamage(0);
-    if (GetUnitTypeId(source) === UNIT_TYPE_ID_FROST_FARM) BlzSetEventDamage(1);
-    if (GetWidgetLife(target) - GetEventDamage() < 0.405) {
-      ForceUICancelBJ(GetOwningPlayer(target));
-    }
+    if (IsUnitIllusion(source)) {
+      BlzSetEventDamage(0);
+      rejectedEmbrace(target);
+    } else if (GetUnitTypeId(source) === UNIT_TYPE_ID_FROST_FARM) BlzSetEventDamage(1);
+    else if (GetUnitTypeId(source) === sheepType) {
+      BlzSetEventDamage(0);
+      loveBite(target);
+    } else if (GetWidgetLife(target) - GetEventDamage() < 0.405) ForceUICancelBJ(GetOwningPlayer(target));
+  } else if (GetUnitTypeId(target) === shepType) {
+    if (GetUnitTypeId(source) === shepType) loveBite(target);
+    else if (GetUnitTypeId(source) === sheepType) rejectedEmbrace(target);
   }
 };
 

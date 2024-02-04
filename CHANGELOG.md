@@ -4,6 +4,29 @@
 - -qd might still be busted? Maybe add events that emit death times each death (dying, killing, time in round)
 - Frost farm killing ward crashes?
 
+# 24d
+
+## Bug fixes
+
+- Fixed players without a zoom file desyncing
+
+# 24c
+
+## Feature changes
+
+- Summer terrain
+- As wolf, "g" only grants priority if near mid or shops
+
+## Balance changes
+
+- Scepter of Mastery
+  - Reduced mana cost from 125 to 100
+  - Reduced casting time from 1 second to 0.5 seconds
+
+## Bug fixes
+
+- Fixed -smart
+
 # 24b
 
 ## Feature changes
