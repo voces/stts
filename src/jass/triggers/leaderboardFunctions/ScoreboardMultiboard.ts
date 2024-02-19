@@ -127,10 +127,10 @@ const Trig_ScoreboardMultiboard_Func020A = () => {
 
 const Trig_ScoreboardMultiboard_Actions = () => {
   DestroyMultiboardBJ(udg_scoreMultiboard);
-  udg_atempint = 12;
+  cid = 12;
   udg_atempint2 = CountPlayersInForceBJ(GetPlayersAll()!) + 1;
   CreateMultiboardBJ(
-    udg_atempint,
+    cid,
     udg_atempint2,
     "Join our Discord at https://dsc.gg/sheeptag",
   );
@@ -148,7 +148,7 @@ const Trig_ScoreboardMultiboard_Actions = () => {
   MultiboardSetItemValueBJ(udg_scoreMultiboard, 11, 1, "LSS");
   MultiboardSetItemValueBJ(udg_scoreMultiboard, 12, 1, "QD");
   bj_forLoopAIndex = 1;
-  bj_forLoopAIndexEnd = udg_atempint;
+  bj_forLoopAIndexEnd = cid;
   while (true) {
     if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
     bj_forLoopBIndex = 1;

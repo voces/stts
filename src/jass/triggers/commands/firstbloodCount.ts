@@ -16,13 +16,13 @@ const Trig_firstbloodCount_Func003Func001Func001C = () => {
 
 const Trig_firstbloodCount_Func003Func001A = (p: MapPlayerEx) => {
   if ((Trig_firstbloodCount_Func003Func001Func001C())) {
-    udg_atempint = GetConvertedPlayerId(GetEnumPlayer()!);
+    cid = GetConvertedPlayerId(GetEnumPlayer()!);
     p.displayTimedText(
-      "                              " + udg_colorString[udg_atempint] +
+      "                              " + udg_colorString[cid] +
         GetPlayerName(GetEnumPlayer()!) +
         " : " +
-        I2S(udg_firstbloodKillCounter[udg_atempint]) +
-        " | " + I2S(udg_firstbloodDeathCounter[udg_atempint]),
+        I2S(udg_firstbloodKillCounter[cid]) +
+        " | " + I2S(udg_firstbloodDeathCounter[cid]),
       15,
     );
   }

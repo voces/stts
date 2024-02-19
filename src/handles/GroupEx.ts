@@ -1,5 +1,6 @@
-import { Group, Rectangle } from "w3ts";
+import { Group, MapPlayer, Rectangle } from "w3ts";
 import { UnitEx } from "./UnitEx";
+import { MapPlayerEx } from "./MapPlayerEx";
 
 export class GroupEx extends Group {
   public static create(): GroupEx {
@@ -30,6 +31,21 @@ export class GroupEx extends Group {
       typeof filter === "function" ? Filter(() => filter(UnitEx.fromFilter()!)) : filter,
     );
     return this;
+  }
+
+  public enumUnitsOfPlayer(p: MapPlayer, filter?: boolexpr | ((unit: UnitEx) => boolean)) {
+    GroupEnumUnitsOfPlayer(
+      this.handle,
+      p.handle,
+      typeof filter === "function" ? Condition(() => filter(UnitEx.fromFilter()!)) : filter,
+    );
+    return this;
+  }
+
+  public static fromSelectedUnits(selector: MapPlayerEx, filter?: (u: UnitEx) => boolean) {
+    const g = this.create();
+    g.enumUnitsSelected(selector, filter ? () => filter(UnitEx.fromFilter()!) : null);
+    return g;
   }
 
   public static fromHandle(handle: group | undefined): GroupEx | undefined {

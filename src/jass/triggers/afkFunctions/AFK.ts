@@ -19,7 +19,7 @@ const captainsAndAfk = () => {
   if ((!(udg_Teams === TEAMS_CAPTAINS))) {
     return false;
   }
-  if ((!(udg_AFK[udg_atempint] === AFK_AFK))) {
+  if ((!(udg_AFK[cid] === AFK_AFK))) {
     return false;
   }
   return true;
@@ -667,7 +667,7 @@ const Trig_AFK_Func005Func013Func001Func001Func010C = () => {
 };
 
 const Trig_AFK_Func005Func013Func001Func001Func011C = () => {
-  if ((!(udg_sheepLastGame[udg_atempint] === true))) {
+  if ((!(udg_sheepLastGame[cid] === true))) {
     return false;
   }
   return true;
@@ -760,12 +760,12 @@ const captainsAndDraftEmpty = () => {
 
 const Trig_AFK_Actions = () => {
   if (rotated === GetTriggerPlayer()!) return;
-  udg_atempint = GetConvertedPlayerId(GetTriggerPlayer()!);
-  if (udg_AFK[udg_atempint] < AFK_AFK) { // Not AFK
+  cid = GetConvertedPlayerId(GetTriggerPlayer()!);
+  if (udg_AFK[cid] < AFK_AFK) { // Not AFK
     if (udg_gameStarted) {
-      if (udg_AFK[udg_atempint] > 0) {
-        udg_AFKOn[udg_atempint] = 1;
-        udg_AFK[udg_atempint] = AFK_AFK;
+      if (udg_AFK[cid] > 0) {
+        udg_AFKOn[cid] = 1;
+        udg_AFK[cid] = AFK_AFK;
         LeaderboardSetPlayerItemLabelBJ(
           GetTriggerPlayer()!,
           PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
@@ -773,11 +773,11 @@ const Trig_AFK_Actions = () => {
         );
       }
     } else if (pickingAndPicked()) {
-      udg_AFKOn[udg_atempint] = 1;
-      udg_AFK[udg_atempint] = AFK_AFK_DURING_ROUND;
+      udg_AFKOn[cid] = 1;
+      udg_AFK[cid] = AFK_AFK_DURING_ROUND;
     } else if (captainsAndPicked()) {
-      udg_AFKOn[udg_atempint] = 1;
-      udg_AFK[udg_atempint] = AFK_AFK_DURING_ROUND;
+      udg_AFKOn[cid] = 1;
+      udg_AFK[cid] = AFK_AFK_DURING_ROUND;
       if ((Trig_AFK_Func005Func013Func001Func001Func010C())) {
         if ((Trig_AFK_Func005Func013Func001Func001Func010Func002C())) {
           udg_atempplayer = GetForceOfPlayer(
@@ -855,14 +855,14 @@ const Trig_AFK_Actions = () => {
         MultiboardSetItemValueBJ(
           udg_captainsMultiboard,
           1,
-          udg_multiboardRow[udg_atempint],
+          udg_multiboardRow[cid],
           MapPlayerEx.fromEvent()!.colorize(" (AFK)", true),
         );
       } else {
         MultiboardSetItemValueBJ(
           udg_captainsMultiboard,
           3,
-          udg_multiboardRow[udg_atempint],
+          udg_multiboardRow[cid],
           MapPlayerEx.fromEvent()!.colorize(" (AFK)", true),
         );
       }
@@ -872,12 +872,12 @@ const Trig_AFK_Actions = () => {
         MultiboardSetItemValueBJ(
           udg_captainsMultiboard,
           2,
-          udg_multiboardRow[udg_atempint],
+          udg_multiboardRow[cid],
           "",
         );
       }
-      udg_AFKOn[udg_atempint] = 1;
-      udg_AFK[udg_atempint] = AFK_AFK;
+      udg_AFKOn[cid] = 1;
+      udg_AFK[cid] = AFK_AFK;
       LeaderboardRemovePlayerItemBJ(
         GetTriggerPlayer()!,
         GetLastCreatedLeaderboard()!,
@@ -891,15 +891,15 @@ const Trig_AFK_Actions = () => {
         );
       }
     }
-    if (udg_AFK[udg_atempint] > 2) {
+    if (udg_AFK[cid] > 2) {
       displayTimedTextToAll(
-        `                              ${MapPlayerEx.fromIndex(udg_atempint - 1)} has gone AFK.`,
+        `                              ${MapPlayerEx.fromIndex(cid - 1)} has gone AFK.`,
         5,
       );
     }
   } else {
     if (udg_gameStarted) {
-      if (udg_AFK[udg_atempint] === AFK_AFK_DURING_ROUND) {
+      if (udg_AFK[cid] === AFK_AFK_DURING_ROUND) {
         ForForce(
           GetPlayersAllies(GetTriggerPlayer()!)!,
           Trig_AFK_Func005Func001Func002Func006A,
@@ -915,12 +915,12 @@ const Trig_AFK_Actions = () => {
           );
           bj_forLoopAIndex = bj_forLoopAIndex + 1;
         }
-        udg_AFK[udg_atempint] = AFK_PLAYING;
-        SelectUnitForPlayerSingle(udg_unit[udg_atempint], GetTriggerPlayer()!);
+        udg_AFK[cid] = AFK_PLAYING;
+        SelectUnitForPlayerSingle(udg_unit[cid], GetTriggerPlayer()!);
         PanCameraToForPlayer(
           GetTriggerPlayer()!,
-          GetUnitX(udg_unit[udg_atempint]),
-          GetUnitY(udg_unit[udg_atempint]),
+          GetUnitX(udg_unit[cid]),
+          GetUnitY(udg_unit[cid]),
         );
       } else {
         bj_forLoopAIndex = 1;
@@ -934,7 +934,7 @@ const Trig_AFK_Actions = () => {
           );
           bj_forLoopAIndex = bj_forLoopAIndex + 1;
         }
-        udg_AFK[udg_atempint] = 2;
+        udg_AFK[cid] = 2;
         udg_atempplayer = GetForceOfPlayer(GetTriggerPlayer()!)!;
         DisplayTimedTextToForce(
           udg_atempplayer,
@@ -944,7 +944,7 @@ const Trig_AFK_Actions = () => {
         DestroyForce(udg_atempplayer);
       }
     } else if (captainsAndAfkOrPickingAndNotPicked2()) {
-      udg_AFK[udg_atempint] = AFK_PLAYING_PICK;
+      udg_AFK[cid] = AFK_PLAYING_PICK;
       LeaderboardAddItemBJ(
         GetTriggerPlayer()!,
         GetLastCreatedLeaderboard()!,
@@ -952,22 +952,22 @@ const Trig_AFK_Actions = () => {
         0,
       );
     } else {
-      udg_AFK[udg_atempint] = AFK_PLAYING;
+      udg_AFK[cid] = AFK_PLAYING;
       if (udg_Teams === TEAMS_CAPTAINS) {
-        if (udg_sheepLastGame[udg_atempint]) {
+        if (udg_sheepLastGame[cid]) {
           MultiboardSetItemValueBJ(
             udg_captainsMultiboard,
             1,
-            udg_multiboardRow[udg_atempint],
-            udg_colorString[udg_atempint] +
+            udg_multiboardRow[cid],
+            udg_colorString[cid] +
               GetPlayerName(GetTriggerPlayer()!),
           );
         } else {
           MultiboardSetItemValueBJ(
             udg_captainsMultiboard,
             3,
-            udg_multiboardRow[udg_atempint],
-            udg_colorString[udg_atempint] +
+            udg_multiboardRow[cid],
+            udg_colorString[cid] +
               GetPlayerName(GetTriggerPlayer()!),
           );
         }
@@ -981,7 +981,7 @@ const Trig_AFK_Actions = () => {
       0,
     );
     displayTimedTextToAll(
-      `                              ${MapPlayerEx.fromIndex(udg_atempint - 1)} is back.`,
+      `                              ${MapPlayerEx.fromIndex(cid - 1)} is back.`,
       5,
     );
     if (udg_Teams === TEAMS_PICK) {
@@ -994,8 +994,8 @@ const Trig_AFK_Actions = () => {
       if (inTeam()) {
         PanCameraToForPlayer(
           GetTriggerPlayer()!,
-          GetUnitX(udg_unit[udg_atempint]),
-          GetUnitY(udg_unit[udg_atempint]),
+          GetUnitX(udg_unit[cid]),
+          GetUnitY(udg_unit[cid]),
         );
       } else {
         udg_atempplayer = GetForceOfPlayer(
@@ -1020,8 +1020,8 @@ const Trig_AFK_Actions = () => {
       GetPlayersMatching(Condition(playingAndNotAFKOrPub))!,
       Trig_AFK_Func005Func010A,
     );
-    if (udg_sheepCount[udg_atempint] < udg_atempint2) {
-      udg_sheepCount[udg_atempint] = udg_atempint2;
+    if (udg_sheepCount[cid] < udg_atempint2) {
+      udg_sheepCount[cid] = udg_atempint2;
     }
     inflateGoldCount(GetTriggerPlayer()!);
   }

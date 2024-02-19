@@ -142,32 +142,32 @@ const indexAPlayerAfkOrReturnedDuringRound = () => {
 };
 
 const playingSheepRows = () => {
-  udg_atempint = GetConvertedPlayerId(GetEnumPlayer()!);
+  cid = GetConvertedPlayerId(GetEnumPlayer()!);
   if (udg_wispPoints > 0) {
     LeaderboardAddItemBJ(
       GetEnumPlayer()!,
       PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-      udg_colorString[udg_atempint] + GetPlayerName(GetEnumPlayer()!),
-      udg_saves[udg_atempint],
+      udg_colorString[cid] + GetPlayerName(GetEnumPlayer()!),
+      udg_saves[cid],
     );
   } else if (udg_switchOn) {
-    switchSheepTimers[udg_atempint - 1].pause();
+    switchSheepTimers[cid - 1].pause();
     LeaderboardAddItemBJ(
       GetEnumPlayer()!,
       PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-      udg_colorString[udg_atempint] + GetPlayerName(GetEnumPlayer()!),
-      Math.round(switchSheepTimers[udg_atempint - 1].elapsed),
+      udg_colorString[cid] + GetPlayerName(GetEnumPlayer()!),
+      Math.round(switchSheepTimers[cid - 1].elapsed),
     );
-    switchSheepTimers[udg_atempint - 1].resume();
+    switchSheepTimers[cid - 1].resume();
   } else {
     LeaderboardAddItemBJ(
       GetEnumPlayer()!,
       PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-      udg_colorString[udg_atempint] + GetPlayerName(GetEnumPlayer()!),
-      udg_farmCount[udg_atempint],
+      udg_colorString[cid] + GetPlayerName(GetEnumPlayer()!),
+      udg_farmCount[cid],
     );
   }
-  if (udg_AFK[udg_atempint] === AFK_AFK_DURING_ROUND) {
+  if (udg_AFK[cid] === AFK_AFK_DURING_ROUND) {
     LeaderboardSetPlayerItemLabelBJ(
       GetEnumPlayer()!,
       PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
@@ -177,33 +177,33 @@ const playingSheepRows = () => {
 };
 
 const Trig_setupLeaderboard_Func002Func023Func006Func004Func010Func004C = () => {
-  if ((!(udg_AFK[udg_atempint] === AFK_AFK_DURING_ROUND))) {
+  if ((!(udg_AFK[cid] === AFK_AFK_DURING_ROUND))) {
     return false;
   }
   return true;
 };
 
 const playingSpiritRows = () => {
-  udg_atempint = GetConvertedPlayerId(GetEnumPlayer()!);
+  cid = GetConvertedPlayerId(GetEnumPlayer()!);
   if (udg_wispPoints > 0) {
     LeaderboardAddItemBJ(
       GetEnumPlayer()!,
       PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-      udg_colorString[udg_atempint] + GetPlayerName(GetEnumPlayer()!),
-      udg_saves[udg_atempint],
+      udg_colorString[cid] + GetPlayerName(GetEnumPlayer()!),
+      udg_saves[cid],
     );
   } else if (udg_switchOn) {
     LeaderboardAddItemBJ(
       GetEnumPlayer()!,
       PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-      udg_colorString[udg_atempint] + GetPlayerName(GetEnumPlayer()!),
-      Math.round(switchSheepTimers[udg_atempint - 1].elapsed),
+      udg_colorString[cid] + GetPlayerName(GetEnumPlayer()!),
+      Math.round(switchSheepTimers[cid - 1].elapsed),
     );
   } else {
     LeaderboardAddItemBJ(
       GetEnumPlayer()!,
       PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-      udg_colorString[udg_atempint] + GetPlayerName(GetEnumPlayer()!),
+      udg_colorString[cid] + GetPlayerName(GetEnumPlayer()!),
       0,
     );
   }
@@ -224,34 +224,34 @@ const playingSpiritRows = () => {
 };
 
 const Trig_setupLeaderboard_Func002Func023Func006Func004Func014Func003C = () => {
-  if ((!(udg_AFK[udg_atempint] === AFK_AFK_DURING_ROUND))) {
+  if ((!(udg_AFK[cid] === AFK_AFK_DURING_ROUND))) {
     return false;
   }
   return true;
 };
 
 const playingWolfRows = () => {
-  udg_atempint = GetConvertedPlayerId(GetEnumPlayer()!);
+  cid = GetConvertedPlayerId(GetEnumPlayer()!);
   if (udg_wispPoints > 0) {
     LeaderboardAddItemBJ(
       GetEnumPlayer()!,
       PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-      udg_colorString[udg_atempint] + GetPlayerName(GetEnumPlayer()!),
-      udg_saves[udg_atempint],
+      udg_colorString[cid] + GetPlayerName(GetEnumPlayer()!),
+      udg_saves[cid],
     );
   } else if (udg_switchOn) {
     LeaderboardAddItemBJ(
       GetEnumPlayer()!,
       PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-      udg_colorString[udg_atempint] + GetPlayerName(GetEnumPlayer()!),
-      Math.round(switchSheepTimers[udg_atempint - 1].elapsed),
+      udg_colorString[cid] + GetPlayerName(GetEnumPlayer()!),
+      Math.round(switchSheepTimers[cid - 1].elapsed),
     );
   } else {
     LeaderboardAddItemBJ(
       GetEnumPlayer()!,
       PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-      udg_colorString[udg_atempint] + GetPlayerName(GetEnumPlayer()!),
-      udg_kills[udg_atempint],
+      udg_colorString[cid] + GetPlayerName(GetEnumPlayer()!),
+      udg_kills[cid],
     );
   }
   if ((Trig_setupLeaderboard_Func002Func023Func006Func004Func014Func003C())) {

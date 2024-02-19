@@ -1,3 +1,16 @@
+diff --git a/node_modules/w3ts/handles/group.d.ts b/node_modules/w3ts/handles/group.d.ts
+index e79608c..6bfc1df 100644
+--- a/node_modules/w3ts/handles/group.d.ts
++++ b/node_modules/w3ts/handles/group.d.ts
+@@ -41,7 +41,7 @@ export declare class Group extends Handle<group> {
+      * @bug Causes irregular behavior when used with large numbers
+      */
+     enumUnitsOfTypeCounted(unitName: string, filter: boolexpr | (() => boolean), countLimit: number): void;
+-    enumUnitsSelected(whichPlayer: MapPlayer, filter: boolexpr | (() => boolean)): void;
++    enumUnitsSelected(whichPlayer: MapPlayer, filter: null | boolexpr | (() => boolean)): void;
+     for(callback: () => void): void;
+     /**
+      * @bug May return `null` even if there are still units in the group.
 diff --git a/node_modules/w3ts/handles/handle.d.ts b/node_modules/w3ts/handles/handle.d.ts
 index 97491cd..8e105a3 100644
 --- a/node_modules/w3ts/handles/handle.d.ts

@@ -20,7 +20,7 @@ const getSelectedInventoryUnit = (allowEmpty: boolean) => {
       return !IsUnitIllusion(u) && (UnitInventorySize(u) - (allowEmpty ? 0 : UnitInventoryCount(u)) > 0) &&
         IsUnitAlly(u, p);
     }),
-  )!;
+  );
   const u = FirstOfGroup(g);
   DestroyGroup(g);
   return u;
@@ -134,7 +134,9 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     { name: "cloak", cost: 200, id: FourCC("I001") },
     { name: "crystal", cost: 28, id: FourCC("I006") }, // alias for ball
     { name: "drums", cost: 175, id: FourCC("I00U") },
+    { name: "disease", cost: 140, id: FourCC("I010") },
     { name: "endur", cost: 112, id: FourCC("I00H") },
+    { name: "forb", cost: 200, id: FourCC("I00W") }, // alias for orb
     { name: "gloves", cost: 112, id: FourCC("I004") },
     { name: "gem", cost: 56, id: FourCC("I00E") },
     { name: "golem", cost: 140, id: FourCC("I00A") },
@@ -142,6 +144,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     { name: "mana", cost: 49, id: FourCC("I00D") },
     { name: "mastery", cost: 140, id: FourCC("I00Y") },
     { name: "neck", cost: 112, id: FourCC("I00I") },
+    { name: "orb", cost: 200, id: FourCC("I00W") }, // alias for forb
     { name: "r110", cost: 112, id: FourCC("I00M") },
     { name: "sheep", cost: 56, id: FourCC("I00G") },
     { name: "suppression", cost: 140, id: FourCC("I00V") },

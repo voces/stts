@@ -1,5 +1,6 @@
 import "util/debug";
 
+import "functions/items/golemDeath";
 import "functions/items/itemCommand";
 import "functions/remoteShop";
 import "functions/runes";

@@ -151,7 +151,7 @@ const Trig_sheepSwitch_Actions = () => {
     "Abilities\\Spells\\Human\\DivineShield\\DivineShieldTarget.mdl",
   );
   udg_switchEffect[GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()!))] = GetLastCreatedEffectBJ()!;
-  udg_atempint = GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!));
+  cid = GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!));
   const timers = [
     [udg_redTimer, udg_redHideTimer],
     [udg_blueTimer, udg_blueHideTimer],

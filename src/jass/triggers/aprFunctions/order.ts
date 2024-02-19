@@ -2,8 +2,8 @@
 // Trigger: order
 //===========================================================================
 const Trig_order_Actions = () => {
-  udg_atempint = GetConvertedPlayerId(GetOwningPlayer(GetOrderedUnit()!));
-  udg_apr[udg_atempint] = (udg_apr[udg_atempint] ?? 0) + 1;
+  cid = GetConvertedPlayerId(GetOwningPlayer(GetOrderedUnit()!));
+  udg_apr[cid] = (udg_apr[cid] ?? 0) + 1;
 };
 
 //===========================================================================

@@ -9,20 +9,20 @@ const Trig_destroyAllButSavings_Func002002002 = () => {
 };
 
 const Trig_destroyAllButSavings_Actions = () => {
-  udg_atempint = GetConvertedPlayerId(GetTriggerPlayer()!);
+  cid = GetConvertedPlayerId(GetTriggerPlayer()!);
   udg_atempgroup = GetUnitsOfPlayerMatching(
-    ConvertedPlayer(udg_atempint)!,
+    ConvertedPlayer(cid)!,
     Condition(Trig_destroyAllButSavings_Func002002002),
   )!;
   ForGroupBJ(udg_atempgroup, removeEnumUnit);
-  udg_farmCount[udg_atempint] = CountLivingPlayerUnitsOfTypeId(
+  udg_farmCount[cid] = CountLivingPlayerUnitsOfTypeId(
     FourCC("h005"),
-    ConvertedPlayer(udg_atempint)!,
+    ConvertedPlayer(cid)!,
   );
   SetPlayerStateBJ(
-    ConvertedPlayer(udg_atempint)!,
+    ConvertedPlayer(cid)!,
     PLAYER_STATE_RESOURCE_LUMBER,
-    udg_farmCount[udg_atempint],
+    udg_farmCount[cid],
   );
   DestroyGroup(udg_atempgroup);
   bj_forLoopAIndex = 1;
@@ -31,9 +31,9 @@ const Trig_destroyAllButSavings_Actions = () => {
     if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
     if (!udg_switchOn) {
       LeaderboardSetPlayerItemValueBJ(
-        ConvertedPlayer(udg_atempint)!,
+        ConvertedPlayer(cid)!,
         PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-        udg_farmCount[udg_atempint],
+        udg_farmCount[cid],
       );
     }
     bj_forLoopAIndex = bj_forLoopAIndex + 1;

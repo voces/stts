@@ -16,10 +16,10 @@ const Trig_ts_Func003Func001Func001C = () => {
 
 const Trig_ts_Func003Func001A = (p: MapPlayerEx) => {
   if ((Trig_ts_Func003Func001Func001C())) {
-    udg_atempint = GetConvertedPlayerId(GetEnumPlayer()!);
+    cid = GetConvertedPlayerId(GetEnumPlayer()!);
     p.displayTimedText(
-      "                              " + udg_colorString[udg_atempint] + GetPlayerName(GetEnumPlayer()!) + " : " +
-        I2S(udg_totalSaves[udg_atempint]),
+      "                              " + udg_colorString[cid] + GetPlayerName(GetEnumPlayer()!) + " : " +
+        I2S(udg_totalSaves[cid]),
       15,
     );
   }

@@ -1,20 +1,53 @@
-# TODO
-
-- Start shouldn't reroll president
-- -qd might still be busted? Maybe add events that emit death times each death (dying, killing, time in round)
-- Frost farm killing ward crashes?
-
 # 24d
+
+## Feature chagnes
+
+- Valentine's ended
+- Added Disease Cloud
+- Added Orb of Fire
+- Consumable items now stack up to 10 times
+- Golems now drop items on expiration
+- Added -o alias for -owner (practice)
+  - -owner now works with all non-sheep/wisp units
+  - -owner sets selection
+
+## Balance changes
+
+- Reduced gold cost of Illusion Farm from 20 to 12
+- Money Farms now generate (#wolves-0.75)/(#sheep-0.75) gold every 10 seconds
+  - 1v3: 18g/m => 54g/m (+200%)
+  - 2v4: 12g/m => 15.6g/m (+30%)
+  - 3v5: 10g/m => 11.3g/m (+13%)
+  - 4v6: 9g/m => 9.7g/m (+8%)
+  - 5v5: no change (6g/m)
+- Sentry Farm
+  - Reduced initial mana 110 to 90
+  - Reduced Far Sight mana cost from 125 to 100
+- Scepter of Mastery
+  - Reduced mana cost from 100 to 75
+  - Reduced cooldown from 30 seconds to 25 seconds
+- Increased War Club hits from 15 to 100
+- Crystal Ball
+  - Removed cooldown
+  - Added 40 mana cost
+  - Increased area of effect from 1800 to 2400
 
 ## Bug fixes
 
 - Fixed players without a zoom file desyncing
+- Fixed gold distribution when a sheep leaves
 
 # 24c
 
 ## Feature changes
 
 - Summer terrain
+  - Valentine theme
+    - Lots of flowers and rose petals
+    - "Loves Bite" is a buff sheep and wolves get from attacking allies: +10% movement speed, +25% attack speed, +50%
+      damage
+    - "Rejected Embrace" is a debuff sheep and wolves get from attacking each other: -10% movement speed, -25% attack
+      speed, -50% damage
 - As wolf, "g" only grants priority if near mid or shops
 
 ## Balance changes

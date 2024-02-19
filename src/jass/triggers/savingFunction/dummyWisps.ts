@@ -9,8 +9,8 @@ const Trig_dummyWisps_Conditions = () => {
 };
 
 const Trig_dummyWisps_Actions = () => {
-  udg_atempint = GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!));
-  udg_saves[udg_atempint] = udg_saves[udg_atempint] + 1;
+  cid = GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!));
+  udg_saves[cid] = udg_saves[cid] + 1;
   DisplayTextToForce(
     GetPlayersAll()!,
     "                              " +
@@ -25,7 +25,7 @@ const Trig_dummyWisps_Actions = () => {
     PLAYER_STATE_RESOURCE_GOLD,
   );
   CreateUnit(Player(bj_PLAYER_NEUTRAL_VICTIM)!, wispType, RandomX(terrain.wisp), RandomY(terrain.wisp), 0);
-  if (udg_wispPoints > 0 && udg_saves[udg_atempint] >= udg_wispPoints) {
+  if (udg_wispPoints > 0 && udg_saves[cid] >= udg_wispPoints) {
     setTimeout(0.1, () => TriggerExecute(gg_trg_cancel));
   }
   bj_forLoopAIndex = 1;
@@ -34,9 +34,9 @@ const Trig_dummyWisps_Actions = () => {
     if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
     if (udg_wispPoints > 0) {
       LeaderboardSetPlayerItemValueBJ(
-        ConvertedPlayer(udg_atempint)!,
+        ConvertedPlayer(cid)!,
         PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-        udg_saves[udg_atempint],
+        udg_saves[cid],
       );
     }
     bj_forLoopAIndex = bj_forLoopAIndex + 1;

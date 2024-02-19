@@ -232,7 +232,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let udg_zoom: Array<number>;
   let udg_transfer: number;
-  let udg_atempint: number;
+  let cid: number;
   let udg_createTimerWindow: timerdialog;
   let udg_wolfTimer: timer;
   // deno-lint-ignore prefer-const
@@ -785,10 +785,10 @@ udg_numSheep = 0;
 udg_numWolf = 0;
 udg_zoom = [];
 udg_transfer = 0;
-udg_atempint = 0;
+cid = 0;
 udg_apr = [];
 udg_sheepLastGame = [];
-udg_farmCount = [];
+udg_farmCount = Array.from({ length: bj_MAX_PLAYER_SLOTS }, () => 0); // slots for practice
 udg_kills = [];
 udg_hideshow = [];
 udg_atempboolean = false;
@@ -1227,7 +1227,7 @@ const InitGlobals = () => {
   }
 
   udg_transfer = 0;
-  udg_atempint = 0;
+  cid = 0;
   udg_wolfTimer = CreateTimer();
   i = 0;
   while (true) {
@@ -1241,13 +1241,6 @@ const InitGlobals = () => {
   while (true) {
     if ((i > 24)) break;
     udg_sheepLastGame[i] = false;
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_farmCount[i] = 0;
     i = i + 1;
   }
 

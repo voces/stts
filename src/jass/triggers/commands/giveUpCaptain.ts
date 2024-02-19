@@ -118,7 +118,7 @@ const Trig_giveUpCaptain_Func003Func001Func001Func012001001001 = () => {
 
 const Trig_giveUpCaptain_Func003Func001Func001C = () => {
   if (
-    (!(IsPlayerInForce(ConvertedPlayer(udg_atempint)!, udg_Draft) === true))
+    (!(IsPlayerInForce(ConvertedPlayer(cid)!, udg_Draft) === true))
   ) {
     return false;
   }
@@ -160,7 +160,7 @@ const Trig_giveUpCaptain_Func003Func002Func012001001001 = () => {
 
 const Trig_giveUpCaptain_Func003Func002C = () => {
   if (
-    (!(IsPlayerInForce(ConvertedPlayer(udg_atempint)!, udg_Draft) === true))
+    (!(IsPlayerInForce(ConvertedPlayer(cid)!, udg_Draft) === true))
   ) {
     return false;
   }
@@ -188,33 +188,33 @@ const Trig_giveUpCaptain_Actions = () => {
   if ((Trig_giveUpCaptain_Func002C())) {
     if ((Trig_giveUpCaptain_Func002Func001C())) {
       if ((Trig_giveUpCaptain_Func002Func001Func002C())) {
-        udg_atempint = GetConvertedPlayerId(ForcePickRandomPlayer(udg_Draft)!);
+        cid = GetConvertedPlayerId(ForcePickRandomPlayer(udg_Draft)!);
       }
     } else {
       if ((Trig_giveUpCaptain_Func002Func001Func001C())) {
         if ((Trig_giveUpCaptain_Func002Func001Func001Func001C())) {
-          udg_atempint = GetConvertedPlayerId(
+          cid = GetConvertedPlayerId(
             ForcePickRandomPlayer(udg_Draft)!,
           );
         }
       }
     }
   } else {
-    udg_atempint = S2I(SubStringBJ(GetEventPlayerChatString()!, 7, 8)!);
+    cid = S2I(SubStringBJ(GetEventPlayerChatString()!, 7, 8)!);
   }
   if ((Trig_giveUpCaptain_Func003C())) {
     if ((Trig_giveUpCaptain_Func003Func002C())) {
-      udg_captains[1] = ConvertedPlayer(udg_atempint)!;
-      udg_atempint2 = udg_multiboardRow[udg_atempint];
-      udg_multiboardRow[udg_atempint] = udg_multiboardRow[GetConvertedPlayerId(GetTriggerPlayer()!)];
+      udg_captains[1] = ConvertedPlayer(cid)!;
+      udg_atempint2 = udg_multiboardRow[cid];
+      udg_multiboardRow[cid] = udg_multiboardRow[GetConvertedPlayerId(GetTriggerPlayer()!)];
       udg_multiboardRow[GetConvertedPlayerId(GetTriggerPlayer()!)] = udg_atempint2;
       MultiboardSetItemValueBJ(
         udg_captainsMultiboard,
         1,
-        udg_multiboardRow[udg_atempint],
+        udg_multiboardRow[cid],
         "$" +
-          (udg_colorString[udg_atempint] +
-            GetPlayerName(ConvertedPlayer(udg_atempint)!)),
+          (udg_colorString[cid] +
+            GetPlayerName(ConvertedPlayer(cid)!)),
       );
       MultiboardSetItemValueBJ(
         udg_captainsMultiboard,
@@ -224,31 +224,31 @@ const Trig_giveUpCaptain_Actions = () => {
           (GetPlayerName(GetTriggerPlayer()!) +
             ("(" + (I2S(GetConvertedPlayerId(GetTriggerPlayer()!)) + ")"))),
       );
-      udg_sheepLastGame[udg_atempint] = true;
+      udg_sheepLastGame[cid] = true;
       ForceAddPlayerSimple(GetTriggerPlayer()!, udg_Draft);
-      ForceRemovePlayerSimple(ConvertedPlayer(udg_atempint)!, udg_Draft);
+      ForceRemovePlayerSimple(ConvertedPlayer(cid)!, udg_Draft);
       if ((Trig_giveUpCaptain_Func003Func002Func010C())) {
         MultiboardSetTitleText(
           udg_captainsMultiboard,
-          udg_colorString[udg_atempint] +
-            (GetPlayerName(ConvertedPlayer(udg_atempint)!) + "'s turn"),
+          udg_colorString[cid] +
+            (GetPlayerName(ConvertedPlayer(cid)!) + "'s turn"),
         );
       }
     }
   } else {
     if ((Trig_giveUpCaptain_Func003Func001C())) {
       if ((Trig_giveUpCaptain_Func003Func001Func001C())) {
-        udg_captains[3] = ConvertedPlayer(udg_atempint)!;
-        udg_atempint2 = udg_multiboardRow[udg_atempint];
-        udg_multiboardRow[udg_atempint] = udg_multiboardRow[GetConvertedPlayerId(GetTriggerPlayer()!)];
+        udg_captains[3] = ConvertedPlayer(cid)!;
+        udg_atempint2 = udg_multiboardRow[cid];
+        udg_multiboardRow[cid] = udg_multiboardRow[GetConvertedPlayerId(GetTriggerPlayer()!)];
         udg_multiboardRow[GetConvertedPlayerId(GetTriggerPlayer()!)] = udg_atempint2;
         MultiboardSetItemValueBJ(
           udg_captainsMultiboard,
           3,
-          udg_multiboardRow[udg_atempint],
+          udg_multiboardRow[cid],
           "$" +
-            (udg_colorString[udg_atempint] +
-              GetPlayerName(ConvertedPlayer(udg_atempint)!)),
+            (udg_colorString[cid] +
+              GetPlayerName(ConvertedPlayer(cid)!)),
         );
         MultiboardSetItemValueBJ(
           udg_captainsMultiboard,
@@ -258,14 +258,14 @@ const Trig_giveUpCaptain_Actions = () => {
             (GetPlayerName(GetTriggerPlayer()!) +
               ("(" + (I2S(GetConvertedPlayerId(GetTriggerPlayer()!)) + ")"))),
         );
-        udg_sheepLastGame[udg_atempint] = false;
+        udg_sheepLastGame[cid] = false;
         ForceAddPlayerSimple(GetTriggerPlayer()!, udg_Draft);
-        ForceRemovePlayerSimple(ConvertedPlayer(udg_atempint)!, udg_Draft);
+        ForceRemovePlayerSimple(ConvertedPlayer(cid)!, udg_Draft);
         if ((Trig_giveUpCaptain_Func003Func001Func001Func010C())) {
           MultiboardSetTitleText(
             udg_captainsMultiboard,
-            udg_colorString[udg_atempint] +
-              (GetPlayerName(ConvertedPlayer(udg_atempint)!) + "'s turn"),
+            udg_colorString[cid] +
+              (GetPlayerName(ConvertedPlayer(cid)!) + "'s turn"),
           );
         }
       }

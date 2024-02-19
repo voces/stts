@@ -1,7 +1,7 @@
 const formatDuration = (ms: number) => {
   if (ms < 1) return `${Math.round(ms * 1000000)}ns`;
   if (ms < 1000) return `${Math.round(ms)}ms`;
-  return `${Math.round(ms / 1000)}s`;
+  return `${Math.round(ms / 100) / 10}s`;
 };
 
 const rebuild = () => {
@@ -56,7 +56,7 @@ for await (const event of watcher) {
     const cleaned = path.replace(`${cwd}/`, "");
     if (
       cleaned.startsWith("temp") || cleaned.startsWith("node_modules") ||
-      cleaned.startsWith("map.w3x") || cleaned.startsWith(".git")
+      cleaned.startsWith(".git")
     ) {
       continue;
     }

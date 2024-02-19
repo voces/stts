@@ -51,7 +51,7 @@ const Trig_draftPlayer_Func006Func005Func001Func002Func001C = () => {
   ) {
     return false;
   }
-  if ((!(GetEnumPlayer() !== ConvertedPlayer(udg_atempint)!))) {
+  if ((!(GetEnumPlayer() !== ConvertedPlayer(cid)!))) {
     return false;
   }
   return true;
@@ -101,7 +101,7 @@ const Trig_draftPlayer_Func006Func005Func002Func002Func001C = () => {
   ) {
     return false;
   }
-  if ((!(GetEnumPlayer() !== ConvertedPlayer(udg_atempint)!))) {
+  if ((!(GetEnumPlayer() !== ConvertedPlayer(cid)!))) {
     return false;
   }
   return true;
@@ -210,7 +210,7 @@ const Trig_draftPlayer_Func006Func009C = () => {
 
 const Trig_draftPlayer_Func006C = () => {
   if (
-    (!(IsPlayerInForce(ConvertedPlayer(udg_atempint)!, udg_Draft) === true))
+    (!(IsPlayerInForce(ConvertedPlayer(cid)!, udg_Draft) === true))
   ) {
     return false;
   }
@@ -218,14 +218,14 @@ const Trig_draftPlayer_Func006C = () => {
 };
 
 const Trig_draftPlayer_Actions = () => {
-  udg_atempint = S2I(SubStringBJ(GetEventPlayerChatString()!, 8, 9)!);
+  cid = S2I(SubStringBJ(GetEventPlayerChatString()!, 8, 9)!);
   if ((Trig_draftPlayer_Func006C())) {
     udg_draftOn = false;
     udg_giveOn = false;
     MultiboardSetItemValueBJ(
       udg_captainsMultiboard,
       2,
-      udg_multiboardRow[udg_atempint],
+      udg_multiboardRow[cid],
       "",
     );
     udg_atempboolean = false;
@@ -242,7 +242,7 @@ const Trig_draftPlayer_Actions = () => {
           Trig_draftPlayer_Func006Func005Func002Func002A,
         );
         if ((Trig_draftPlayer_Func006Func005Func002Func003C())) {
-          udg_multiboardRow[udg_atempint] = GetForLoopIndexA();
+          udg_multiboardRow[cid] = GetForLoopIndexA();
           break;
         }
         bj_forLoopAIndex = bj_forLoopAIndex + 1;
@@ -260,7 +260,7 @@ const Trig_draftPlayer_Actions = () => {
           Trig_draftPlayer_Func006Func005Func001Func002A,
         );
         if ((Trig_draftPlayer_Func006Func005Func001Func003C())) {
-          udg_multiboardRow[udg_atempint] = GetForLoopIndexA();
+          udg_multiboardRow[cid] = GetForLoopIndexA();
           break;
         }
         bj_forLoopAIndex = bj_forLoopAIndex + 1;
@@ -269,16 +269,16 @@ const Trig_draftPlayer_Actions = () => {
     MultiboardSetItemValueBJ(
       udg_captainsMultiboard,
       udg_captainTurn,
-      udg_multiboardRow[udg_atempint],
-      udg_colorString[udg_atempint] +
-        GetPlayerName(ConvertedPlayer(udg_atempint)!),
+      udg_multiboardRow[cid],
+      udg_colorString[cid] +
+        GetPlayerName(ConvertedPlayer(cid)!),
     );
     if ((Trig_draftPlayer_Func006Func007C())) {
-      udg_sheepLastGame[udg_atempint] = true;
+      udg_sheepLastGame[cid] = true;
     } else {
-      udg_sheepLastGame[udg_atempint] = false;
+      udg_sheepLastGame[cid] = false;
     }
-    ForceRemovePlayerSimple(ConvertedPlayer(udg_atempint)!, udg_Draft);
+    ForceRemovePlayerSimple(ConvertedPlayer(cid)!, udg_Draft);
     if ((Trig_draftPlayer_Func006Func009C())) {
       ForForce(udg_Draft, Trig_draftPlayer_Func006Func009Func001A);
       ForForce(GetPlayersAll()!, Trig_draftPlayer_Func006Func009Func006A);

@@ -86,7 +86,7 @@ const Trig_giveGold_Func003C = () => {
 const Trig_giveGold_Actions = () => {
   if ((Trig_giveGold_Func003C())) {
     udg_giveGold = false;
-    udg_atempint = S2I(SubStringBJ(GetEventPlayerChatString()!, 2, 3)!);
+    cid = S2I(SubStringBJ(GetEventPlayerChatString()!, 2, 3)!);
     udg_atempint2 = S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 14)!);
     if (GetPlayerState(GetTriggerPlayer()!, PLAYER_STATE_RESOURCE_GOLD) < udg_atempint2) {
       udg_atempint2 = GetPlayerState(
@@ -97,7 +97,7 @@ const Trig_giveGold_Actions = () => {
     if (udg_atempint2 > 0) {
       transferGold(
         GetTriggerPlayer()!,
-        ConvertedPlayer(udg_atempint)!,
+        ConvertedPlayer(cid)!,
         udg_atempint2,
         TRANSFER_DISPLAY_INVOLVED,
       );

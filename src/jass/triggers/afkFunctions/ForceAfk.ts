@@ -41,7 +41,7 @@ const setToHighestSc = () => {
 };
 
 const drafted = () => {
-  if (!(IsPlayerInForce(ConvertedPlayer(udg_atempint)!, udg_Draft) === true)) {
+  if (!(IsPlayerInForce(ConvertedPlayer(cid)!, udg_Draft) === true)) {
     return false;
   }
   return true;
@@ -579,14 +579,14 @@ const Trig_Force_Afk_Func003Func007Func002Func001Func010Func002C = () => {
 };
 
 const Trig_Force_Afk_Func003Func007Func002Func001Func010C = () => {
-  if ((!(ConvertedPlayer(udg_atempint) === udg_captains[1]))) {
+  if ((!(ConvertedPlayer(cid) === udg_captains[1]))) {
     return false;
   }
   return true;
 };
 
 const Trig_Force_Afk_Func003Func007Func002Func001Func011C = () => {
-  if ((!(udg_sheepLastGame[udg_atempint] === true))) {
+  if ((!(udg_sheepLastGame[cid] === true))) {
     return false;
   }
   return true;
@@ -597,7 +597,7 @@ const captainsAndDrafted = () => {
     return false;
   }
   if (
-    (!(IsPlayerInForce(ConvertedPlayer(udg_atempint)!, udg_Draft) === false))
+    (!(IsPlayerInForce(ConvertedPlayer(cid)!, udg_Draft) === false))
   ) {
     return false;
   }
@@ -605,10 +605,10 @@ const captainsAndDrafted = () => {
 };
 
 const Trig_Force_Afk_Func003Func007Func002Func005C = () => {
-  if ((IsPlayerInForce(ConvertedPlayer(udg_atempint)!, udg_Sheep) === true)) {
+  if ((IsPlayerInForce(ConvertedPlayer(cid)!, udg_Sheep) === true)) {
     return true;
   }
-  if ((IsPlayerInForce(ConvertedPlayer(udg_atempint)!, udg_Wolf) === true)) {
+  if ((IsPlayerInForce(ConvertedPlayer(cid)!, udg_Wolf) === true)) {
     return true;
   }
   return false;
@@ -680,18 +680,18 @@ const captainsAndNoOneLeftToDraft = () => {
 };
 
 const Trig_Force_Afk_Actions = () => {
-  udg_atempint = S2I(SubStringBJ(GetEventPlayerChatString()!, 7, 8)!);
-  if (udg_AFK[udg_atempint] < 3) {
+  cid = S2I(SubStringBJ(GetEventPlayerChatString()!, 7, 8)!);
+  if (udg_AFK[cid] < 3) {
     if (udg_gameStarted) {
       // Can't AFK during round... for reasons?
     } else {
       if (pickingAndPicked()) {
-        udg_AFKOn[udg_atempint] = 1;
-        udg_AFK[udg_atempint] = AFK_AFK_DURING_ROUND;
+        udg_AFKOn[cid] = 1;
+        udg_AFK[cid] = AFK_AFK_DURING_ROUND;
       } else {
         if (captainsAndDrafted()) {
-          udg_AFKOn[udg_atempint] = 1;
-          udg_AFK[udg_atempint] = AFK_AFK_DURING_ROUND;
+          udg_AFKOn[cid] = 1;
+          udg_AFK[cid] = AFK_AFK_DURING_ROUND;
           if ((Trig_Force_Afk_Func003Func007Func002Func001Func010C())) {
             if (
               (Trig_Force_Afk_Func003Func007Func002Func001Func010Func002C())
@@ -775,47 +775,47 @@ const Trig_Force_Afk_Actions = () => {
             MultiboardSetItemValueBJ(
               udg_captainsMultiboard,
               1,
-              udg_multiboardRow[udg_atempint],
-              udg_colorString[udg_atempint] +
-                (GetPlayerName(ConvertedPlayer(udg_atempint)!) + " (AFK)"),
+              udg_multiboardRow[cid],
+              udg_colorString[cid] +
+                (GetPlayerName(ConvertedPlayer(cid)!) + " (AFK)"),
             );
           } else {
             MultiboardSetItemValueBJ(
               udg_captainsMultiboard,
               3,
-              udg_multiboardRow[udg_atempint],
-              udg_colorString[udg_atempint] +
-                (GetPlayerName(ConvertedPlayer(udg_atempint)!) + " (AFK)"),
+              udg_multiboardRow[cid],
+              udg_colorString[cid] +
+                (GetPlayerName(ConvertedPlayer(cid)!) + " (AFK)"),
             );
           }
         } else {
           if (drafted()) {
-            ForceRemovePlayerSimple(ConvertedPlayer(udg_atempint)!, udg_Draft);
+            ForceRemovePlayerSimple(ConvertedPlayer(cid)!, udg_Draft);
             MultiboardSetItemValueBJ(
               udg_captainsMultiboard,
               2,
-              udg_multiboardRow[udg_atempint],
+              udg_multiboardRow[cid],
               "",
             );
           }
-          udg_AFKOn[udg_atempint] = 1;
-          udg_AFK[udg_atempint] = AFK_AFK;
+          udg_AFKOn[cid] = 1;
+          udg_AFK[cid] = AFK_AFK;
           LeaderboardRemovePlayerItemBJ(
-            ConvertedPlayer(udg_atempint)!,
+            ConvertedPlayer(cid)!,
             GetLastCreatedLeaderboard()!,
           );
           if (notPickOrCaptains()) {
             LeaderboardAddItemBJ(
-              ConvertedPlayer(udg_atempint)!,
+              ConvertedPlayer(cid)!,
               GetLastCreatedLeaderboard()!,
-              GetPlayerName(ConvertedPlayer(udg_atempint)!) + " (AFK)",
+              GetPlayerName(ConvertedPlayer(cid)!) + " (AFK)",
               0,
             );
           }
         }
       }
       displayTimedTextToAll(
-        `                              ${MapPlayerEx.fromIndex(udg_atempint - 1)} has been set to AFK.`,
+        `                              ${MapPlayerEx.fromIndex(cid - 1)} has been set to AFK.`,
         5,
       );
     }
@@ -829,13 +829,13 @@ const Trig_Force_Afk_Actions = () => {
     const f = GetPlayersMatching(Condition(playingAndNotAfk))!;
     ForForce(f, setToHighestSc);
     DestroyForce(f);
-    if (udg_sheepCount[udg_atempint] < udg_atempint2) {
-      udg_sheepCount[udg_atempint] = udg_atempint2;
+    if (udg_sheepCount[cid] < udg_atempint2) {
+      udg_sheepCount[cid] = udg_atempint2;
     }
     if (udg_Teams === TEAMS_OPEN) {
-      udg_AFK[udg_atempint] = AFK_PLAYING;
+      udg_AFK[cid] = AFK_PLAYING;
       displayTimedTextToAll(
-        `                              ${MapPlayerEx.fromIndex(udg_atempint - 1)} has been unset from AFK.`,
+        `                              ${MapPlayerEx.fromIndex(cid - 1)} has been unset from AFK.`,
         5,
       );
     }

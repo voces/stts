@@ -8,7 +8,7 @@ const SavingFarms__tick = () => {
   const sheeps = ForceEx.sheep.size() + ForceEx.wisps.size();
   const wolves = Math.max(ForceEx.wolves.size(), 1);
 
-  const rate = wolves / sheeps / 10;
+  const rate = (wolves - 0.75) / (sheeps - 0.75) / 10;
 
   GroupEnumUnitsOfType(
     g,

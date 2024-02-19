@@ -19,32 +19,32 @@ const Trig_isWolf = () => {
 };
 
 const Trig_initialization_forAllPlayersOne = () => {
-  udg_atempint = GetConvertedPlayerId(GetEnumPlayer()!);
-  udg_zoom[udg_atempint] = GetCameraField(CAMERA_FIELD_TARGET_DISTANCE);
-  playerTimes[udg_atempint - 1] = s__times_create();
-  udg_AFK[udg_atempint] = AFK_PLAYING;
-  udg_permanentHide[udg_atempint] = false;
-  udg_AFKOn[udg_atempint] = 0;
-  udg_sheepZoom[udg_atempint] = 0;
-  udg_wolfZoom[udg_atempint] = 0;
-  udg_wispZoom[udg_atempint] = 0;
-  wasHere[udg_atempint - 1] = true;
+  cid = GetConvertedPlayerId(GetEnumPlayer()!);
+  udg_zoom[cid] = GetCameraField(CAMERA_FIELD_TARGET_DISTANCE);
+  playerTimes[cid - 1] = s__times_create();
+  udg_AFK[cid] = AFK_PLAYING;
+  udg_permanentHide[cid] = false;
+  udg_AFKOn[cid] = 0;
+  udg_sheepZoom[cid] = 0;
+  udg_wolfZoom[cid] = 0;
+  udg_wispZoom[cid] = 0;
+  wasHere[cid - 1] = true;
   if (
     (GetBooleanAnd(
-      GetPlayerSlotState(ConvertedPlayer(udg_atempint)!) ===
+      GetPlayerSlotState(ConvertedPlayer(cid)!) ===
         PLAYER_SLOT_STATE_PLAYING,
-      GetPlayerSlotState(ConvertedPlayer(udg_atempint)!) !==
+      GetPlayerSlotState(ConvertedPlayer(cid)!) !==
         PLAYER_SLOT_STATE_LEFT,
     ))
   ) {
-    udg_wasHere[udg_atempint] = true;
+    udg_wasHere[cid] = true;
   }
 };
 
 const Trig_initialization_forAllPlayersTwo = () => {
   SetPlayerFlagBJ(PLAYER_STATE_GIVES_BOUNTY, false, GetEnumPlayer()!);
-  udg_atempint = GetConvertedPlayerId(GetEnumPlayer()!);
-  udg_startLocation[udg_atempint + 24] = udg_startLocation[udg_atempint];
+  cid = GetConvertedPlayerId(GetEnumPlayer()!);
+  udg_startLocation[cid + 24] = udg_startLocation[cid];
   udg_hideshow[GetConvertedPlayerId(GetEnumPlayer()!)] = false;
   udg_hideEsc[GetConvertedPlayerId(GetEnumPlayer()!)] = false;
   if (GetConvertedPlayerId(GetEnumPlayer()!) < 13) {

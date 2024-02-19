@@ -1,12 +1,12 @@
 const Trig_cancelConstruction_Actions = () => {
-  udg_atempint = GetConvertedPlayerId(
+  cid = GetConvertedPlayerId(
     GetOwningPlayer(GetCancelledStructure()!),
   );
-  if (udg_farmCount[udg_atempint] > 0) udg_farmCount[udg_atempint]--;
+  if (udg_farmCount[cid] > 0) udg_farmCount[cid]--;
   SetPlayerStateBJ(
-    ConvertedPlayer(udg_atempint)!,
+    ConvertedPlayer(cid)!,
     PLAYER_STATE_RESOURCE_LUMBER,
-    udg_farmCount[udg_atempint],
+    udg_farmCount[cid],
   );
   bj_forLoopAIndex = 1;
   bj_forLoopAIndexEnd = udg_lastPlayer;
@@ -14,9 +14,9 @@ const Trig_cancelConstruction_Actions = () => {
     if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
     if (!udg_switchOn) {
       LeaderboardSetPlayerItemValueBJ(
-        ConvertedPlayer(udg_atempint)!,
+        ConvertedPlayer(cid)!,
         PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-        udg_farmCount[udg_atempint],
+        udg_farmCount[cid],
       );
     }
     bj_forLoopAIndex = bj_forLoopAIndex + 1;

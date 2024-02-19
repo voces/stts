@@ -17,7 +17,10 @@ const Trig_kaleidoscope_Actions = () => {
       }
       i = i + 1;
     }
-    if (charges > 0) BlzSetEventDamage(baseDamage * (1 + charges * 0.36));
+    if (charges > 0) {
+      print(charges, 1 + charges * 0.36, baseDamage, baseDamage * (1 + charges * 0.36));
+      BlzSetEventDamage(baseDamage * (1 + charges * 0.36));
+    }
   }
 };
 

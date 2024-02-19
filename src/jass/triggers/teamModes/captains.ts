@@ -103,13 +103,13 @@ const Trig_captains_Func006Func001Func031A = () => {
     MultiboardSetItemValueBJ(
       udg_captainsMultiboard,
       2,
-      udg_atempint,
+      cid,
       udg_colorString[GetConvertedPlayerId(GetEnumPlayer()!)] +
         GetPlayerName(GetEnumPlayer()!),
     );
     ForceAddPlayerSimple(GetEnumPlayer()!, udg_Draft);
-    udg_multiboardRow[GetConvertedPlayerId(GetEnumPlayer()!)] = udg_atempint;
-    udg_atempint = udg_atempint + 1;
+    udg_multiboardRow[GetConvertedPlayerId(GetEnumPlayer()!)] = cid;
+    cid = cid + 1;
   }
 };
 
@@ -180,13 +180,13 @@ const Trig_captains_Func006Func037A = () => {
     MultiboardSetItemValueBJ(
       udg_captainsMultiboard,
       2,
-      udg_atempint,
+      cid,
       udg_colorString[GetConvertedPlayerId(GetEnumPlayer()!)] +
         GetPlayerName(GetEnumPlayer()!),
     );
     ForceAddPlayerSimple(GetEnumPlayer()!, udg_Draft);
-    udg_multiboardRow[GetConvertedPlayerId(GetEnumPlayer()!)] = udg_atempint;
-    udg_atempint = udg_atempint + 1;
+    udg_multiboardRow[GetConvertedPlayerId(GetEnumPlayer()!)] = cid;
+    cid = cid + 1;
   }
 };
 
@@ -253,7 +253,7 @@ const Trig_captains_Actions = () => {
     );
     udg_multiboardRow[GetConvertedPlayerId(udg_captains[1])] = 1;
     udg_multiboardRow[GetConvertedPlayerId(udg_captains[3])] = 1;
-    udg_atempint = 2;
+    cid = 2;
     ForForce(GetPlayersAll()!, Trig_captains_Func006Func037A);
     MultiboardDisplayBJ(true, udg_captainsMultiboard);
     MultiboardSuppressDisplay(false);
@@ -330,7 +330,7 @@ const Trig_captains_Actions = () => {
     );
     udg_multiboardRow[GetConvertedPlayerId(udg_captains[1])] = 1;
     udg_multiboardRow[GetConvertedPlayerId(udg_captains[3])] = 1;
-    udg_atempint = 2;
+    cid = 2;
     ForForce(GetPlayersAll()!, Trig_captains_Func006Func001Func031A);
     MultiboardDisplayBJ(true, udg_captainsMultiboard);
     MultiboardSuppressDisplay(false);

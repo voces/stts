@@ -24,6 +24,10 @@ export class UnitEx extends Unit {
     return this.fromHandle(GetFilterUnit());
   }
 
+  static fromEvent() {
+    return this.fromHandle(GetFilterUnit());
+  }
+
   public static fromHandle<T extends unit | undefined>(handle: T): T extends unit ? UnitEx : UnitEx | undefined {
     if (!handle) return undefined as T extends unit ? UnitEx : UnitEx | undefined;
     const obj = map.get(handle);

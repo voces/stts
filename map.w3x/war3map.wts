@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 24c
+Sheep Tag ReVoLuTiOn 24d
 }
 
 STRING 40
@@ -429,7 +429,7 @@ Makes you invisible for 2 minutes. If a sheep is close enough, they can see you.
 }
 
 STRING 987
-// Abilities: A00T (Kill Farm), Hotkey (Hotkey - Normal)
+// Items: I00W (forb), Hotkey (Hotkey)
 {
 X
 }
@@ -543,7 +543,7 @@ Kill Farm
 }
 
 STRING 1026
-// Abilities: A00T (Kill Farm), Unhotkey (Hotkey - Turn Off)
+// Abilities: A00T (Kill Farm), Hotkey (Hotkey - Normal)
 {
 X
 }
@@ -561,7 +561,7 @@ Locates and pings location of all sheep on the map.
 }
 
 STRING 1047
-// Abilities: A00G (HideShow), Researchhotkey (Hotkey - Learn)
+// Abilities: A00T (Kill Farm), Unhotkey (Hotkey - Turn Off)
 {
 X
 }
@@ -1027,7 +1027,7 @@ Destroys the last farm created by your sheep.
 }
 
 STRING 2083
-// Abilities: A01P (Freak Anti Stack Stomp), Hotkey (Hotkey - Normal)
+// Abilities: A00G (HideShow), Researchhotkey (Hotkey - Learn)
 {
 X
 }
@@ -1836,7 +1836,7 @@ G
 }
 
 STRING 2875
-// Buffs/Effects: B00A (Brilliance Aura), EditorSuffix (Editor Suffix)
+// Abilities: A02F (Disease Cloud), EditorSuffix (Editor Suffix)
 {
 (Item)
 }
@@ -2056,7 +2056,7 @@ This unit has increased mana regeneration.
 }
 
 STRING 3069
-// Buffs/Effects: B00F (Endurance Aura), EditorSuffix (Editor Suffix)
+// Buffs/Effects: B00A (Brilliance Aura), EditorSuffix (Editor Suffix)
 {
 (Item)
 }
@@ -2104,7 +2104,7 @@ This unit has increased movement and attack speed.
 }
 
 STRING 3092
-// Buffs/Effects: B00K (Command Aura), EditorSuffix (Editor Suffix)
+// Buffs/Effects: B00F (Endurance Aura), EditorSuffix (Editor Suffix)
 {
 (Item)
 }
@@ -3316,7 +3316,7 @@ Increases nearby friendly units mana regeneration by 3.
 }
 
 STRING 3721
-// Abilities: A022 (Share Control), Hotkey (Hotkey - Normal)
+// Items: I010 (disease), Hotkey (Hotkey)
 {
 C
 }
@@ -3777,28 +3777,10 @@ STRING 3897
 Purchase War Club
 }
 
-STRING 3898
-// Items: I00Z (club), Ubertip (Tooltip - Extended)
-{
-Allows the wolf to turn a tree into a club, increasing damage to farms but slowing attack speed.|n|cffffcc0040 gold.|r |n|cff00aeef-buy club: 56 gold.|r
-}
-
-STRING 3899
-// Items: I00Z (club), Description (Description)
-{
-Allows the wolf to turn a tree into a club, increasing damage to farms but slowing attack speed.
-}
-
 STRING 3900
 // Items: I00Y (mastery), Hotkey (Hotkey)
 {
 Z
-}
-
-STRING 3901
-// Units: h005 (Money Farm), Ubertip (Tooltip - Extended)
-{
-A farm that generates #wolves/#sheep gold every 10 seconds.|n2 sheep vs 4 wolves: 1 gold every 5 seconds|n3 sheep vs 5 wolves: 1 gold every 6 seconds|n5 sheep vs 5 wolves: 1 gold every 10 seconds
 }
 
 STRING 3915
@@ -3975,91 +3957,79 @@ STRING 3992
 Transfers control of the targeted structure to the player who uses the Scepter.|n|cffffcc00100 gold.|r |n|cff00aeef-buy mastery: 140 gold.|r
 }
 
-STRING 3995
-{
-|cff00ff00Sheep Tag ReVoLuTiOn 24c|r
-}
-
-STRING 3996
-{
-|cff00ff0024c|r
-}
-
-STRING 3997
-// Units: n00A (Red Flowers), Name (Name)
-{
-Red Flowers
-}
-
-STRING 3998
-// Units: n00B (White Flowers), Name (Name)
-{
-White Flowers
-}
-
 STRING 4000
 // Doodads: LPlp (Hearts), Name (Name)
 {
 Hearts
 }
 
-STRING 4001
-// Doodads: D000 (Flowers (White)), Name (Name)
+STRING 4018
 {
-Flowers (White)
+|cff00ff00Sheep Tag ReVoLuTiOn 24d|r
 }
 
-STRING 4002
-// Doodads: D001 (Flowers (Red)), Name (Name)
+STRING 4019
 {
-Flowers (Red)
+|cff00ff0024d|r
 }
 
-STRING 4003
-// Abilities: A02G (Love Bite), Tip (Tooltip - Normal)
+STRING 4020
+// Items: I00Z (club), Description (Description)
 {
-Love Bite
+Allows the wolf to turn a tree into a club, increasing damage to farms but slowing attack speed. Can be removed by using Mirror Image.
 }
 
-STRING 4004
-// Abilities: A02G (Love Bite), Name (Name)
+STRING 4021
+// Items: I00Z (club), Ubertip (Tooltip - Extended)
 {
-Love Bite
+Allows the wolf to turn a tree into a club, increasing damage to farms but slowing attack speed. Can be removed by using Mirror Image.|n|cffffcc0040 gold.|r |n|cff00aeef-buy club: 56 gold.|r
 }
 
-STRING 4005
-// Buffs/Effects: B00M (), Bufftip (Tooltip)
+STRING 4022
+// Units: h005 (Money Farm), Ubertip (Tooltip - Extended)
 {
-Love Bite
+A farm that generates gold depending on how many sheep and wolves there are.|n2 sheep vs 4 wolves: 1 gold every 3.8 seconds|n3 sheep vs 5 wolves: 1 gold every 5.3 seconds|n5 sheep vs 5 wolves: 1 gold every 10 seconds
 }
 
-STRING 4010
-// Buffs/Effects: B00M (), Buffubertip (Tooltip - Extended)
+STRING 4023
+// Abilities: A01P (Freak Anti Stack Stomp), Hotkey (Hotkey - Normal)
 {
-This unit was bitten; its movement speed, attack rate and damage have been increased.
+X
 }
 
-STRING 4014
-// Abilities: A02F (Rejected Embrace), Tip (Tooltip - Normal)
+STRING 4025
+// Items: I010 (disease), Tip (Tooltip - Basic)
 {
-Rejected Embrace
+Purchase Disease Cloud
 }
 
-STRING 4015
-// Abilities: A02F (Rejected Embrace), Name (Name)
+STRING 4026
+// Items: I010 (disease), Name (Name)
 {
-Rejected Embrace
+disease
 }
 
-STRING 4016
-// Buffs/Effects: B00L (), Bufftip (Tooltip)
+STRING 4028
+// Abilities: A022 (Share Control), Hotkey (Hotkey - Normal)
 {
-Rejected Embrace
+C
 }
 
-STRING 4017
-// Buffs/Effects: B00L (), Buffubertip (Tooltip - Extended)
+STRING 4029
+// Buffs/Effects: B00K (Command Aura), EditorSuffix (Editor Suffix)
 {
-This unit was rejected; its movement speed, attack rate and damage have been reduced.
+(Item)
+}
+
+STRING 4030
+// Items: I010 (disease), Ubertip (Tooltip - Extended)
+{
+Permanently infects nearby enemy structures with Disease Cloud. Disease Cloud deals <A02F,DataB1> damage per second.|n|cffff0000Cannot kill structures.|r|n|cffffcc00100 gold.|r |n|cff00aeef-buy disease: 140 gold.|r
+}
+
+STRING 4031
+// Items: I010 (disease), Description (Description)
+{
+Permanently infects nearby enemy structures with Disease Cloud. Disease Cloud deals <A02F,DataB1> damage per second.|n|cffff0000Cannot kill structures.|r|n|cffffcc00100 gold.|r |n|cff00aeef-buy disease: 140 gold.|r
 }
 

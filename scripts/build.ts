@@ -18,7 +18,8 @@ await Promise.all(files.map(async (fileName) => {
 const scriptFile = map.getScriptFile();
 if (!scriptFile) throw new Error("Could not find script file");
 const builtLua = await Deno.readTextFile("temp/out.lua");
-scriptFile.set(new TextEncoder().encode(scriptFile.text() + "\n" + builtLua));
+const combinedLua = scriptFile.text() + "\n" + builtLua;
+scriptFile.set(new TextEncoder().encode(combinedLua));
 
 const result = map.save();
 if (!result) throw new Error("Failed to save archive");
@@ -30,4 +31,5 @@ if (!name) throw new Error("Could not extract map name");
 await Promise.all([
   Deno.writeFile(`temp/release.w3x`, result),
   Deno.writeFile(`temp/${name}.w3x`, result),
+  Deno.writeTextFile("temp/combined.lua", combinedLua),
 ]);
