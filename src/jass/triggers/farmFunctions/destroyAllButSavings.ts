@@ -1,10 +1,11 @@
+import { UNIT_TYPE_ID_MONEY_FARM } from "constants";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { removeEnumUnit } from "util/removeEnumUnit";
 
 const Trig_destroyAllButSavings_Func002002002 = () => {
   return GetBooleanAnd(
     IsUnitType(GetFilterUnit()!, UNIT_TYPE_STRUCTURE) === true,
-    GetUnitTypeId(GetFilterUnit()!) !== FourCC("h005"),
+    GetUnitTypeId(GetFilterUnit()!) !== UNIT_TYPE_ID_MONEY_FARM,
   );
 };
 
@@ -16,7 +17,7 @@ const Trig_destroyAllButSavings_Actions = () => {
   )!;
   ForGroupBJ(udg_atempgroup, removeEnumUnit);
   udg_farmCount[cid] = CountLivingPlayerUnitsOfTypeId(
-    FourCC("h005"),
+    UNIT_TYPE_ID_MONEY_FARM,
     ConvertedPlayer(cid)!,
   );
   SetPlayerStateBJ(

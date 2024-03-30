@@ -1,20 +1,66 @@
 import { addScriptHook, W3TS_HOOK } from "w3ts";
 import { ForceEx } from "handles/ForceEx";
 import { MapPlayerEx } from "handles/MapPlayerEx";
+import { terrain } from "settings/terrain";
+import { UnitEx } from "handles/UnitEx";
+import { UNIT_TYPE_ID_MONEY_FARM } from "constants";
+import { income } from "settings/income";
 
 const g = CreateGroup();
 
-const SavingFarms__tick = () => {
-  const sheeps = ForceEx.sheep.size() + ForceEx.wisps.size();
-  const wolves = Math.max(ForceEx.wolves.size(), 1);
+const getDistancePenality = (u: unit) => {
+  const x = GetUnitX(u);
+  const y = GetUnitY(u);
+  const xMaxPen = GetRectMaxX(terrain.wisp);
+  const xMinPen = GetRectMinX(terrain.wisp);
+  const yMaxPen = GetRectMaxY(terrain.wisp);
+  const yMinPen = GetRectMinY(terrain.wisp);
 
-  const rate = (wolves - 0.75) / (sheeps - 0.75) / 10;
+  // Return 2.5 if in pen (bonus +1 being inside versus right outside)
+  if (x > xMinPen && x < xMaxPen && y > yMinPen && y < yMaxPen) return 2.5;
+
+  const xMaxBounds = GetRectMaxX(terrain.cameraBounds);
+  const xMinBounds = GetRectMinX(terrain.cameraBounds);
+  const yMaxBounds = GetRectMaxY(terrain.cameraBounds);
+  const yMinBounds = GetRectMinY(terrain.cameraBounds);
+
+  // Return 0.25 if outside camera bounds (edge of map)
+  if (x < xMinBounds || x > xMaxBounds || y < yMinBounds || y > yMaxBounds) return 0.25;
+
+  let xPen = x;
+  if (xPen > xMaxPen) xPen = xMaxPen;
+  else if (xPen < xMinPen) xPen = xMinPen;
+
+  let yPen = y;
+  if (yPen > yMaxPen) yPen = yMaxPen;
+  else if (yPen < yMinPen) yPen = yMinPen;
+
+  const yDelta = y < yMinPen ? (y - yMinBounds) / (yMinPen - yMinBounds) : 1 - ((y - yMaxPen) / (yMaxBounds - yMaxPen));
+  const xDelta = x < xMinPen ? (x - xMinBounds) / (xMinPen - xMinBounds) : 1 - ((x - xMaxPen) / (xMaxBounds - xMaxPen));
+
+  // Otherwise we tween between 0.25 and 1.5, with an exponential drop off
+  return Math.min(xDelta, yDelta) ** 2 * 1.25 + 0.25;
+};
+
+const SavingFarms__tick = () => {
+  for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+    const p = MapPlayerEx.fromIndex(i);
+    if (!p) continue;
+    const u = udg_unit[i + 1];
+    if (!UnitAlive(u)) continue;
+    if (ForceEx.sheep.hasPlayer(p)) {
+      p.bankedGold += income.sheep / 2 * getDistancePenality(u);
+      continue;
+    }
+    if (ForceEx.wolves.hasPlayer(p)) p.bankedGold += income.wolves * 0.37; // no wolf penality
+  }
 
   GroupEnumUnitsOfType(
     g,
-    UnitId2String(FourCC("h005"))!,
+    UnitId2String(UNIT_TYPE_ID_MONEY_FARM)!,
     Condition(() => {
-      MapPlayerEx.fromFilterUnit()!.bankedGold += rate;
+      const u = UnitEx.fromFilter()!;
+      u.owner.bankedGold += getDistancePenality(u.handle) / 6 * income.savings; // 1/3 as much income as a sheep
       return false;
     }),
   );
@@ -34,7 +80,15 @@ export const resetBankedGold = () => {
 };
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
-  const t = CreateTrigger();
-  TriggerRegisterTimerEventPeriodic(t, 1);
+  let t = CreateTrigger();
+  TriggerRegisterTimerEventPeriodic(t, 0.65);
   TriggerAddAction(t, SavingFarms__tick);
+
+  t = CreateTrigger();
+  TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_UPGRADE_START);
+  TriggerAddAction(t, () => {
+    const u = UnitEx.fromEvent();
+    if (u?.typeId !== UNIT_TYPE_ID_MONEY_FARM) return;
+    u.name = `Money Farm (${Math.round(getDistancePenality(u.handle) * 15 * income.savings)})`; // 15 = 60/4
+  });
 });

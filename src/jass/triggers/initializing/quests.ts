@@ -30,6 +30,7 @@ New? Type |CFF00AEEF-smart|r.`,
 |cff00aeef-switch |cffed1c24X Y Z W V:VV|cff00aeef:|r Killing wolf switch places with its captive. |cffed1c24X|r is time sheep are invulnerable. |cffed1c24Y|r is time before wolf spawn. |cffed1c24Z|r is number of dummy spirits. |cffed1c24W|r saves or |cffed1c24V:VV|r surival time required to win. The defaults: |cffed1c24X=5, Y=10, Z=0, W=0|r
 |cff00aeef-president |cffed1c24X|cff00aeef:|r Picks a sheep to be president. If that sheep dies, the sheep lose. All other sheep have their handicap set to X, but their wisps can freely roam the map.
 |cff00aeef-gold |cffed1c24X Y|cff00aeef:|r Gives sheep |cffed1c24X|r gold and wolves |cffed1c24Y|r gold. If |cffed1c24Y|r is omitted, both teams get |cffed1c24X|r gold.
+|cff00aeef-income |cffed1c24X Y Z|cff00aeef:|r Sets the income multipler for sheep to |cffed1c24X|r, for wolves to |cffed1c24Y|r, and for money farms to |cffed1c24Z|r.
 |cff00aeef-expand:|r Gives the Sheep more room to build over time.
 |cff00aeef-shrink:|r Gives the Sheep less room to build over time.
 |cff00aeef-farmvision |cffed1c24X|cff00aeef:|r Sets the sight radius of all farms except Sentry Farm to |cffed1c24X|r.

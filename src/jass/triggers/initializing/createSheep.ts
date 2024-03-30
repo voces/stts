@@ -195,7 +195,7 @@ const Trig_createSheep_sheepActionsB = () => {
       CreateUnit(GetEnumPlayer()!, wispType, RandomX(terrain.wisp), RandomY(terrain.wisp), 270);
     } else {
       UnitAddAbility(u, destroyAllFarms);
-      switchSheepTimers[GetPlayerId(GetEnumPlayer()!)].start(udg_time, false, () => {});
+      switchSheepTimers[GetPlayerId(GetEnumPlayer()!)].resume();
     }
   } else if (udg_shareOn === false) UnitRemoveAbility(u, shareControlAbility);
 
@@ -213,11 +213,6 @@ const Trig_createSheep_wolfActionsB = () => {
 
   if (!udg_practiceOn && udg_wolfZoom[enumPlayerId] > 0) {
     SetCameraFieldForPlayer(GetEnumPlayer()!, CAMERA_FIELD_TARGET_DISTANCE, udg_wolfZoom[enumPlayerId], 0);
-  }
-
-  if (udg_switchOn) {
-    switchSheepTimers[GetPlayerId(GetEnumPlayer()!)].start(udg_time, false, () => {});
-    switchSheepTimers[GetPlayerId(GetEnumPlayer()!)].pause();
   }
 };
 
@@ -298,8 +293,6 @@ const Trig_createSheep_Actions_part4 = () => {
   TimerStart(udg_Createtimer, 90, false, null);
   PauseTimerBJ(true, udg_Createtimer);
 
-  EnableTrigger(gg_trg_increaseGoldSheep);
-  EnableTrigger(gg_trg_increaseGoldWolf);
   TriggerExecute(gg_trg_setupLeaderboard);
 
   if (udg_practiceOn === false) {
@@ -394,6 +387,13 @@ const Trig_createSheep_Actions = () => {
   ForForce(udg_Sheep, Trig_createSheep_sheepActionsA);
   ForForce(udg_Wolf, Trig_createSheep_wolfActionsA);
 
+  if (udg_switchOn) {
+    for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+      switchSheepTimers[i].start(udg_time, false, () => {});
+      switchSheepTimers[i].pause();
+    }
+  }
+
   TriggerExecute(gg_trg_setupLeaderboard);
   LeaderboardDisplay(PlayerGetLeaderboard(GetLocalPlayer())!, true);
 
@@ -416,6 +416,7 @@ const Trig_createSheep_Actions = () => {
   }
 
   if (udg_practiceOn) {
+    clearForces();
     ForForce(GetPlayersAll()!, Trig_createSheep_addToSheepAndWolf);
     displayTimedTextToAll("                              |cff00aeefWelcome to practice mode!", 5);
     displayTimedTextToAll(

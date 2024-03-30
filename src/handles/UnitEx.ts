@@ -25,7 +25,7 @@ export class UnitEx extends Unit {
   }
 
   static fromEvent() {
-    return this.fromHandle(GetFilterUnit());
+    return this.fromHandle(GetTriggerUnit());
   }
 
   public static fromHandle<T extends unit | undefined>(handle: T): T extends unit ? UnitEx : UnitEx | undefined {

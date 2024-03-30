@@ -1,3 +1,28 @@
+# TODO
+
+- AFKs can spawn as wolf in switch
+- Make it so gold can be preserved between swaps in -switch (maybe just if gold is 0?)
+
+# 24e
+
+## Feature changes
+
+- Added -income X Y Z, which scales sheep, wolf, and money farm income (Y and Z default to X)
+
+## Balance changes
+
+- Adjusted Money Farm & Sheep income
+  - Both now generate income based on their proximity to the pen. The multiple scales from 0.25x on the edge of the map
+    up to 1.5x on the edge of the pen. Jumps to 2.5x if inside the pen.
+  - The Money Farm's name is set to "Money Farm (X)" where "X" is how much gold it generates a minute.
+
+## Bug fixes
+
+- Kaleidoscope no longer outputs debugging info
+- Fixed switch timers briefly appearing incorrect during spawn
+- Fixed Scepter of Mastery not displaying a special effect or playing an animation
+- Fixed Upgraded Aura Farm (Mana) being applied to enemies
+
 # 24d
 
 ## Feature chagnes

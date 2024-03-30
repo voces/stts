@@ -54,6 +54,7 @@ export const translocate = (unit: unit, pivot: unit) => {
   DestroyEffect(e2);
 };
 
+// TODO: would scale better if we went unit -> translocate rather than translocate -> unit
 const translocateTick = () => {
   for (let i = translocates.length - 1; i >= 0; i--) {
     const u = translocates[i];

@@ -92,8 +92,6 @@ import "./triggers/practiceCommands/speed";
 import "./triggers/practiceCommands/massTimeUp";
 import "./triggers/practiceCommands/initMassTest";
 import "./triggers/practiceCommands/mass";
-import "./triggers/resourceFunctions/increaseGoldWolf";
-import "./triggers/resourceFunctions/increaseGoldSheep";
 import "./triggers/teamModes/versus";
 import "./triggers/teamModes/draftPlayer";
 import "./triggers/teamModes/captains";
@@ -531,8 +529,6 @@ declare global {
   let gg_trg_attackFarmStrPot: trigger;
   let gg_trg_attackFarmBeamPot: trigger;
   let gg_trg_useItem: trigger;
-  let gg_trg_increaseGoldSheep: trigger;
-  let gg_trg_increaseGoldWolf: trigger;
   let gg_trg_regrowTrees: trigger;
   let gg_trg_escFix: trigger;
   let gg_trg_zoom: trigger;
@@ -2048,8 +2044,6 @@ const InitCustomTriggers = () => {
   InitTrig_useItem();
   InitTrig_suppressionField();
   InitTrig_kaleidoscope();
-  InitTrig_increaseGoldSheep();
-  InitTrig_increaseGoldWolf();
   InitTrig_escFix();
   InitTrig_zoom();
   InitTrig_zoomMsg();

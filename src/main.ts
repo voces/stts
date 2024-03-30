@@ -16,6 +16,7 @@ import "modes/vamp";
 import "settings/expand";
 import "settings/farmVision";
 import "settings/gold";
+import "settings/income";
 import "settings/shrink";
 import "settings/view";
 import "teams/fair";

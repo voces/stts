@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 24d
+Sheep Tag ReVoLuTiOn 24e
 }
 
 STRING 40
@@ -3963,16 +3963,6 @@ STRING 4000
 Hearts
 }
 
-STRING 4018
-{
-|cff00ff00Sheep Tag ReVoLuTiOn 24d|r
-}
-
-STRING 4019
-{
-|cff00ff0024d|r
-}
-
 STRING 4020
 // Items: I00Z (club), Description (Description)
 {
@@ -3983,12 +3973,6 @@ STRING 4021
 // Items: I00Z (club), Ubertip (Tooltip - Extended)
 {
 Allows the wolf to turn a tree into a club, increasing damage to farms but slowing attack speed. Can be removed by using Mirror Image.|n|cffffcc0040 gold.|r |n|cff00aeef-buy club: 56 gold.|r
-}
-
-STRING 4022
-// Units: h005 (Money Farm), Ubertip (Tooltip - Extended)
-{
-A farm that generates gold depending on how many sheep and wolves there are.|n2 sheep vs 4 wolves: 1 gold every 3.8 seconds|n3 sheep vs 5 wolves: 1 gold every 5.3 seconds|n5 sheep vs 5 wolves: 1 gold every 10 seconds
 }
 
 STRING 4023
@@ -4031,5 +4015,21 @@ STRING 4031
 // Items: I010 (disease), Description (Description)
 {
 Permanently infects nearby enemy structures with Disease Cloud. Disease Cloud deals <A02F,DataB1> damage per second.|n|cffff0000Cannot kill structures.|r|n|cffffcc00100 gold.|r |n|cff00aeef-buy disease: 140 gold.|r
+}
+
+STRING 4032
+{
+|cff00ff00Sheep Tag ReVoLuTiOn 24e|r
+}
+
+STRING 4033
+{
+|cff00ff0024e|r
+}
+
+STRING 4034
+// Units: h005 (Money Farm), Ubertip (Tooltip - Extended)
+{
+A farm that generates gold depending how close it is to the pen.
 }
 

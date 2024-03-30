@@ -170,8 +170,6 @@ const Trig_startRound_Actions = () => {
   TriggerExecute(gg_trg_createLists);
   DisableTrigger(gg_trg_sheepSwitch);
   DisableTrigger(gg_trg_sheepVamp);
-  DisableTrigger(gg_trg_increaseGoldSheep);
-  DisableTrigger(gg_trg_increaseGoldWolf);
   DisableTrigger(gg_trg_dummyWisps);
   DisableTrigger(gg_trg_attack);
   DisableTrigger(gg_trg_stop);
