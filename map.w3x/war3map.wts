@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 24e
+Sheep Tag ReVoLuTiOn 24f
 }
 
 STRING 40
@@ -4017,19 +4017,19 @@ STRING 4031
 Permanently infects nearby enemy structures with Disease Cloud. Disease Cloud deals <A02F,DataB1> damage per second.|n|cffff0000Cannot kill structures.|r|n|cffffcc00100 gold.|r |n|cff00aeef-buy disease: 140 gold.|r
 }
 
-STRING 4032
-{
-|cff00ff00Sheep Tag ReVoLuTiOn 24e|r
-}
-
-STRING 4033
-{
-|cff00ff0024e|r
-}
-
 STRING 4034
 // Units: h005 (Money Farm), Ubertip (Tooltip - Extended)
 {
 A farm that generates gold depending how close it is to the pen.
+}
+
+STRING 4035
+{
+|cff00ff00Sheep Tag ReVoLuTiOn 24f|r
+}
+
+STRING 4036
+{
+|cff00ff0024f|r
 }
 

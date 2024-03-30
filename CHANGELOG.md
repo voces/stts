@@ -1,7 +1,19 @@
 # TODO
 
-- AFKs can spawn as wolf in switch
-- Make it so gold can be preserved between swaps in -switch (maybe just if gold is 0?)
+# 24f
+
+## Feature changes
+
+- In switch, if both sheep gold and wolf gold are 0, gold is carried between switches
+
+## Bug fixes
+
+- Fixed wolves not receiving passive income
+- Fixed AFK players sometimes being added to wolves with -pick X
+
+## Source changes
+
+- Refactored AFK and merged in fAFK
 
 # 24e
 

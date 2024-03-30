@@ -1,4 +1,4 @@
-import { resetBankedGold } from "functions/farms/savingFarms";
+import { disableIncome, resetBankedGold } from "functions/farms/savingFarms";
 import { stopRuneTimers } from "functions/runes";
 import { switchSheepTimers } from "modes/switch/switch";
 import { terrain } from "settings/terrain";
@@ -170,6 +170,7 @@ const Trig_startRound_Actions = () => {
   TriggerExecute(gg_trg_createLists);
   DisableTrigger(gg_trg_sheepSwitch);
   DisableTrigger(gg_trg_sheepVamp);
+  disableIncome();
   DisableTrigger(gg_trg_dummyWisps);
   DisableTrigger(gg_trg_attack);
   DisableTrigger(gg_trg_stop);

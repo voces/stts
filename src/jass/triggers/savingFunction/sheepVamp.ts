@@ -38,7 +38,7 @@ const Trig_sheepVamp_Actions = () => {
     GetRectCenterY(terrain.wolf),
     0,
   );
-  udg_unit2[GetPlayerId(p) + 1] = CreateUnit(
+  udg_unit[GetPlayerId(p) + 1] = udg_unit2[GetPlayerId(p) + 1] = CreateUnit(
     p,
     shepType,
     GetRectCenterX(terrain.wolf),

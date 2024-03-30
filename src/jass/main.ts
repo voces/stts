@@ -109,7 +109,6 @@ import "./triggers/initializing/startRound";
 import "./triggers/initializing/versusCountDown";
 import "./triggers/afkFunctions/setafk";
 import "./triggers/afkFunctions/AFK";
-import "./triggers/afkFunctions/ForceAfk";
 import "./triggers/commands/ts";
 import "./triggers/commands/firstbloodCount";
 import "./triggers/commands/seeTime";
@@ -1150,18 +1149,16 @@ transferGold = (
 
 //library Util ends
 //library transferHelpers:
-const transferToCustom = () => {
-  SetUnitOwner(GetEnumUnit()!, udg_Custom, true);
-  SelectUnitAddForPlayer(GetEnumUnit()!, udg_Custom);
-};
-
 declare global {
   // deno-lint-ignore prefer-const
   let transferOwnershipOfHostFarm: () => void;
 }
 transferOwnershipOfHostFarm = () => {
   const g = GetUnitsOfTypeIdAll(FourCC("h00D"))!;
-  ForGroup(g, transferToCustom);
+  ForGroup(g, () => {
+    SetUnitOwner(GetEnumUnit()!, udg_Custom, true);
+    SelectUnitAddForPlayer(GetEnumUnit()!, udg_Custom);
+  });
   DestroyGroup(g);
 };
 
@@ -2077,7 +2074,6 @@ const InitCustomTriggers = () => {
   InitTrig_autocontrol();
   InitTrig_noAutoControl();
   InitTrig_order();
-  InitTrig_Force_Afk();
   InitTrig_setafk();
   InitTrig_AFK();
   InitTrig_blightManagement();

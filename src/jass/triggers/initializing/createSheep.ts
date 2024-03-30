@@ -11,6 +11,7 @@ import { UNIT_TYPE_ID_START_POSITION } from "constants";
 import { switchSheepTimers } from "modes/switch/switch";
 import { startUpdatingLeaderboard } from "modes/switch/updateLeaderboard";
 import { cancelHostFarmSpawn } from "./startRound";
+import { enableIncome } from "functions/farms/savingFarms";
 
 let firstRound = true;
 
@@ -293,6 +294,7 @@ const Trig_createSheep_Actions_part4 = () => {
   TimerStart(udg_Createtimer, 90, false, null);
   PauseTimerBJ(true, udg_Createtimer);
 
+  enableIncome();
   TriggerExecute(gg_trg_setupLeaderboard);
 
   if (udg_practiceOn === false) {

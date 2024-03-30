@@ -53,7 +53,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
       GetPlayersAll()!,
       `                              ${udg_colorString[pid + 1]}${GetPlayerName(Player(pid)!)}'s|r wolf has spawned!`,
     );
-    const wolf = CreateUnit(
+    const wolf = udg_unit[pid + 1] = CreateUnit(
       Player(pid)!,
       shepType,
       GetRectCenterX(terrain.wolf),
@@ -67,7 +67,6 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
       0,
     );
     SuspendHeroXP(wolf, true);
-    udg_unit[pid + 1] = wolf;
     SelectUnitForPlayerSingle(wolf, Player(pid)!);
     const aSheepIsNear = withUnitsInRange(
       GetRectCenterX(terrain.wolf),

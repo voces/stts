@@ -1,75 +1,41 @@
+import { MapPlayerEx } from "handles/MapPlayerEx";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
-const Trig_transfer_Func001C = () => {
-  if ((GetTriggerPlayer() === udg_Custom)) {
-    return true;
-  }
-  if ((GetTriggerPlayer() === udg_originalCustom)) {
-    return true;
-  }
-  return false;
+const hasPermission = () => {
+  const player = GetTriggerPlayer();
+  return player === udg_Custom || player === udg_originalCustom;
 };
 
 const Trig_transfer_Conditions = () => {
-  if ((!Trig_transfer_Func001C())) {
-    return false;
-  }
-  if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 11, 12)!) > 0))) {
-    return false;
-  }
-  if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 11, 12)!) < 25))) {
-    return false;
-  }
-  return true;
+  const chatNumber = S2I(SubStringBJ(GetEventPlayerChatString()!, 11, 12)!);
+  return hasPermission() && chatNumber > 0 && chatNumber < 25;
 };
 
-const Trig_transfer_Func003Func004C = () => {
-  if ((!(udg_Teams === TEAMS_PICK))) {
-    return false;
-  }
-  return true;
+const canTakeHost = () => {
+  const playerState = GetPlayerSlotState(ConvertedPlayer(udg_transfer)!);
+  const playerController = GetPlayerController(ConvertedPlayer(udg_transfer)!);
+
+  return (
+    playerState === PLAYER_SLOT_STATE_PLAYING &&
+    playerController === MAP_CONTROL_USER &&
+    !pub[udg_transfer - 1] &&
+    udg_AFK[udg_transfer] < 3
+  );
 };
 
-const Trig_transfer_Func003C = () => {
-  if (
-    (!(GetPlayerSlotState(ConvertedPlayer(udg_transfer)!) ===
-      PLAYER_SLOT_STATE_PLAYING))
-  ) {
-    return false;
-  }
-  if (
-    (!(GetPlayerSlotState(ConvertedPlayer(udg_transfer)!) !==
-      PLAYER_SLOT_STATE_LEFT))
-  ) {
-    return false;
-  }
-  if (
-    (!(GetPlayerController(ConvertedPlayer(udg_transfer)!) ===
-      MAP_CONTROL_USER))
-  ) {
-    return false;
-  }
-  if ((!(udg_AFK[udg_transfer] < 3))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_transfer_Actions = () => {
-  udg_transfer = S2I(SubStringBJ(GetEventPlayerChatString()!, 11, 12)!);
-  if ((Trig_transfer_Func003C())) {
-    udg_anactualtempplayer = udg_Custom;
+export const transferHostTo = (index: number) => {
+  const oldHost = udg_Custom;
+  udg_transfer = index;
+  if (canTakeHost()) {
     udg_Custom = ConvertedPlayer(udg_transfer)!;
-    if ((Trig_transfer_Func003Func004C())) {
-      TriggerExecute(gg_trg_setupPick);
-    }
+    if (udg_Teams === TEAMS_PICK) TriggerExecute(gg_trg_setupPick);
     udg_atempplayer = GetForceOfPlayer(GetTriggerPlayer()!)!;
     udg_atempplayer2 = GetForceOfPlayer(ConvertedPlayer(udg_transfer)!)!;
     DisplayTextToForce(
       udg_atempplayer,
       "                              |CFFFFCC00Transfered game to " +
-        (udg_colorString[udg_transfer] +
-          (GetPlayerName(ConvertedPlayer(udg_transfer)!) + "|CFFFFCC00.")),
+        udg_colorString[udg_transfer] +
+        GetPlayerName(ConvertedPlayer(udg_transfer)!) + "|CFFFFCC00.",
     );
     DisplayTextToForce(
       udg_atempplayer2,
@@ -77,23 +43,16 @@ const Trig_transfer_Actions = () => {
     );
     DestroyForce(udg_atempplayer);
     DestroyForce(udg_atempplayer2);
-    LeaderboardSetPlayerItemLabelBJ(
-      udg_anactualtempplayer,
-      GetLastCreatedLeaderboard()!,
-      udg_colorString[GetConvertedPlayerId(udg_anactualtempplayer)] +
-        GetPlayerName(udg_anactualtempplayer),
-    );
-    LeaderboardSetPlayerItemLabelBJ(
-      udg_Custom,
-      GetLastCreatedLeaderboard()!,
-      "|CFFFFFFFF$" +
-        (udg_colorString[GetConvertedPlayerId(udg_Custom)] +
-          GetPlayerName(udg_Custom)),
-    );
+    LeaderboardSetPlayerItemLabelBJ(oldHost, GetLastCreatedLeaderboard()!, MapPlayerEx.fromHandle(oldHost).coloredName);
+    LeaderboardSetPlayerItemLabelBJ(udg_Custom, GetLastCreatedLeaderboard()!, "|CFFFFFFFF$" + MapPlayerEx.host);
     transferOwnershipOfHostFarm();
   } else {
     udg_transfer = 0;
   }
+};
+
+const Trig_transfer_Actions = () => {
+  transferHostTo(S2I(SubStringBJ(GetEventPlayerChatString()!, 11, 12)!));
 };
 
 declare global {

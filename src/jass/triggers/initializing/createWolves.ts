@@ -21,6 +21,7 @@ const createWolf = () => {
   } else {
     SelectUnitForPlayerSingle(wolf, GetEnumPlayer()!);
     ForceUICancelBJ(GetEnumPlayer()!);
+    udg_unit[GetConvertedPlayerId(GetEnumPlayer()!)] = wolf;
   }
   SuspendHeroXPBJ(false, wolf);
   udg_unit2[GetConvertedPlayerId(GetEnumPlayer()!)] = wolf;

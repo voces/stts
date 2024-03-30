@@ -46,6 +46,19 @@ export class ForceEx extends Force {
     return size;
   }
 
+  public static with<T>(fn: (force: ForceEx) => T): T;
+  public static with<T>(filter: (player: MapPlayerEx) => boolean, fn: (force: ForceEx) => T): T;
+
+  // Implementation
+  public static with<T>(a: ((force: ForceEx) => T) | ((player: MapPlayerEx) => boolean), b?: (force: ForceEx) => T): T {
+    // const fn = typeof b === "function" ? b : a;
+    const force = ForceEx.create();
+    if (typeof b === "function") force.enumPlayers(a as (player: MapPlayerEx) => boolean);
+    const ret = ((typeof b === "function" ? b : a) as (force: ForceEx) => T)(force);
+    force.destroy();
+    return ret;
+  }
+
   public static fromHandle(handle: force | undefined): ForceEx | undefined {
     return handle ? this.getObject(handle) : undefined;
   }

@@ -2,78 +2,27 @@ import { switchSheepTimers } from "modes/switch/switch";
 import { removeEnumUnit } from "util/removeEnumUnit";
 
 const adjustAlliances1 = () => {
-  SetPlayerAllianceStateBJ(
-    GetEnumPlayer()!,
-    GetOwningPlayer(GetKillingUnit()!),
-    bj_ALLIANCE_UNALLIED,
-  );
-  SetPlayerAllianceStateBJ(
-    GetEnumPlayer()!,
-    GetOwningPlayer(GetKillingUnit()!),
-    bj_ALLIANCE_ALLIED_VISION,
-  );
-  SetPlayerAllianceStateBJ(
-    GetOwningPlayer(GetKillingUnit()!),
-    GetEnumPlayer()!,
-    bj_ALLIANCE_UNALLIED,
-  );
-  SetPlayerAllianceStateBJ(
-    GetOwningPlayer(GetKillingUnit()!),
-    GetEnumPlayer()!,
-    bj_ALLIANCE_ALLIED_VISION,
-  );
-  SetPlayerAllianceStateBJ(
-    GetOwningPlayer(GetTriggerUnit()!),
-    GetEnumPlayer()!,
-    bj_ALLIANCE_UNALLIED,
-  );
-  SetPlayerAllianceStateBJ(
-    GetEnumPlayer()!,
-    GetOwningPlayer(GetTriggerUnit()!),
-    bj_ALLIANCE_UNALLIED,
-  );
+  SetPlayerAllianceStateBJ(GetEnumPlayer()!, GetOwningPlayer(GetKillingUnit()!), bj_ALLIANCE_UNALLIED);
+  SetPlayerAllianceStateBJ(GetEnumPlayer()!, GetOwningPlayer(GetKillingUnit()!), bj_ALLIANCE_ALLIED_VISION);
+  SetPlayerAllianceStateBJ(GetOwningPlayer(GetKillingUnit()!), GetEnumPlayer()!, bj_ALLIANCE_UNALLIED);
+  SetPlayerAllianceStateBJ(GetOwningPlayer(GetKillingUnit()!), GetEnumPlayer()!, bj_ALLIANCE_ALLIED_VISION);
+  SetPlayerAllianceStateBJ(GetOwningPlayer(GetTriggerUnit()!), GetEnumPlayer()!, bj_ALLIANCE_UNALLIED);
+  SetPlayerAllianceStateBJ(GetEnumPlayer()!, GetOwningPlayer(GetTriggerUnit()!), bj_ALLIANCE_UNALLIED);
 };
 
 const adjustAlliances2 = () => {
-  SetPlayerAllianceStateBJ(
-    GetEnumPlayer()!,
-    GetOwningPlayer(GetTriggerUnit()!),
-    bj_ALLIANCE_UNALLIED,
-  );
-  SetPlayerAllianceStateBJ(
-    GetEnumPlayer()!,
-    GetOwningPlayer(GetTriggerUnit()!),
-    bj_ALLIANCE_ALLIED_VISION,
-  );
-  SetPlayerAllianceStateBJ(
-    GetOwningPlayer(GetTriggerUnit()!),
-    GetEnumPlayer()!,
-    bj_ALLIANCE_UNALLIED,
-  );
-  SetPlayerAllianceStateBJ(
-    GetOwningPlayer(GetTriggerUnit()!),
-    GetEnumPlayer()!,
-    bj_ALLIANCE_ALLIED_VISION,
-  );
-  SetPlayerAllianceStateBJ(
-    GetOwningPlayer(GetKillingUnit()!),
-    GetEnumPlayer()!,
-    bj_ALLIANCE_UNALLIED,
-  );
-  SetPlayerAllianceStateBJ(
-    GetEnumPlayer()!,
-    GetOwningPlayer(GetKillingUnit()!),
-    bj_ALLIANCE_UNALLIED,
-  );
+  SetPlayerAllianceStateBJ(GetEnumPlayer()!, GetOwningPlayer(GetTriggerUnit()!), bj_ALLIANCE_UNALLIED);
+  SetPlayerAllianceStateBJ(GetEnumPlayer()!, GetOwningPlayer(GetTriggerUnit()!), bj_ALLIANCE_ALLIED_VISION);
+  SetPlayerAllianceStateBJ(GetOwningPlayer(GetTriggerUnit()!), GetEnumPlayer()!, bj_ALLIANCE_UNALLIED);
+  SetPlayerAllianceStateBJ(GetOwningPlayer(GetTriggerUnit()!), GetEnumPlayer()!, bj_ALLIANCE_ALLIED_VISION);
+  SetPlayerAllianceStateBJ(GetOwningPlayer(GetKillingUnit()!), GetEnumPlayer()!, bj_ALLIANCE_UNALLIED);
+  SetPlayerAllianceStateBJ(GetEnumPlayer()!, GetOwningPlayer(GetKillingUnit()!), bj_ALLIANCE_UNALLIED);
 };
 
 const Trig_sheepSwitch_Actions = () => {
   udg_hideEsc[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()!))] = true;
   udg_hideEsc[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))] = true;
-  if (
-    udg_sheepZoom[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))] >
-      0
-  ) {
+  if (udg_sheepZoom[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))] > 0) {
     SetCameraFieldForPlayer(
       GetOwningPlayer(GetKillingUnit()!),
       CAMERA_FIELD_TARGET_DISTANCE,
@@ -81,10 +30,7 @@ const Trig_sheepSwitch_Actions = () => {
       0,
     );
   }
-  if (
-    udg_wolfZoom[GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit()!))] >
-      0
-  ) {
+  if (udg_wolfZoom[GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit()!))] > 0) {
     SetCameraFieldForPlayer(
       GetOwningPlayer(GetDyingUnit()!),
       CAMERA_FIELD_TARGET_DISTANCE,
@@ -92,26 +38,14 @@ const Trig_sheepSwitch_Actions = () => {
       0,
     );
   }
-  SetPlayerStateBJ(
-    GetOwningPlayer(GetTriggerUnit()!),
-    PLAYER_STATE_RESOURCE_LUMBER,
-    0,
-  );
-  SetPlayerStateBJ(
-    GetOwningPlayer(GetKillingUnit()!),
-    PLAYER_STATE_RESOURCE_LUMBER,
-    0,
-  );
-  SetPlayerStateBJ(
-    GetOwningPlayer(GetKillingUnit()!),
-    PLAYER_STATE_RESOURCE_GOLD,
-    udg_sheepGold,
-  );
-  SetPlayerStateBJ(
-    GetOwningPlayer(GetDyingUnit()!),
-    PLAYER_STATE_RESOURCE_GOLD,
-    udg_wolfGold,
-  );
+  SetPlayerStateBJ(GetOwningPlayer(GetTriggerUnit()!), PLAYER_STATE_RESOURCE_LUMBER, 0);
+  SetPlayerStateBJ(GetOwningPlayer(GetKillingUnit()!), PLAYER_STATE_RESOURCE_LUMBER, 0);
+  if (udg_sheepGold > 0 || udg_wolfGold > 0) {
+    SetPlayerStateBJ(GetOwningPlayer(GetKillingUnit()!), PLAYER_STATE_RESOURCE_GOLD, udg_sheepGold);
+  }
+  if (udg_sheepGold > 0 || udg_wolfGold > 0) {
+    SetPlayerStateBJ(GetOwningPlayer(GetDyingUnit()!), PLAYER_STATE_RESOURCE_GOLD, udg_wolfGold);
+  }
   udg_kills[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))] =
     udg_kills[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))] + 1;
   udg_farmCount[GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit()!))] = 0;

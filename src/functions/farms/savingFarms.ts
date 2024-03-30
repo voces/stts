@@ -46,13 +46,18 @@ const SavingFarms__tick = () => {
   for (let i = 0; i < bj_MAX_PLAYERS; i++) {
     const p = MapPlayerEx.fromIndex(i);
     if (!p) continue;
-    const u = udg_unit[i + 1];
-    if (!UnitAlive(u)) continue;
+
+    if (ForceEx.wolves.hasPlayer(p)) {
+      p.bankedGold += income.wolves * 0.37; // no wolf penality
+      continue;
+    }
+
     if (ForceEx.sheep.hasPlayer(p)) {
+      const u = udg_unit[i + 1];
+      if (!UnitAlive(u)) continue;
       p.bankedGold += income.sheep / 2 * getDistancePenality(u);
       continue;
     }
-    if (ForceEx.wolves.hasPlayer(p)) p.bankedGold += income.wolves * 0.37; // no wolf penality
   }
 
   GroupEnumUnitsOfType(
@@ -79,12 +84,17 @@ export const resetBankedGold = () => {
   for (let i = 0; i < bj_MAX_PLAYERS; i++) MapPlayerEx.fromIndex(i)!.bankedGold = 0;
 };
 
-addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
-  let t = CreateTrigger();
-  TriggerRegisterTimerEventPeriodic(t, 0.65);
-  TriggerAddAction(t, SavingFarms__tick);
+let tickTrigger: trigger;
 
-  t = CreateTrigger();
+export const enableIncome = () => EnableTrigger(tickTrigger);
+export const disableIncome = () => DisableTrigger(tickTrigger);
+
+addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
+  tickTrigger = CreateTrigger();
+  TriggerRegisterTimerEventPeriodic(tickTrigger, 0.65);
+  TriggerAddAction(tickTrigger, SavingFarms__tick);
+
+  const t = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_UPGRADE_START);
   TriggerAddAction(t, () => {
     const u = UnitEx.fromEvent();

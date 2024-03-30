@@ -2,13 +2,12 @@ import { addScriptHook, W3TS_HOOK } from "w3ts";
 
 const Trig_setupPick_Actions = () => {
   ClearTextMessages();
-  while (true) {
+  for (; udg_pickIndex < bj_MAX_PLAYERS; udg_pickIndex++) {
     if (
       GetPlayerSlotState(udg_playerList[udg_pickIndex]) === PLAYER_SLOT_STATE_PLAYING ||
       udg_pickIndex >= udg_playerCount &&
         udg_AFK[GetConvertedPlayerId(udg_playerList[udg_pickIndex])] <= 1
     ) break;
-    udg_pickIndex = udg_pickIndex + 1;
   }
   if (udg_pickIndex > udg_playerCount) { // Everyone picked
     udg_Teams = TEAMS_LOCK_IE_PLAYING;

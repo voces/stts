@@ -52,19 +52,13 @@ const Trig_pick_Actions = () => {
   EnableTrigger(gg_trg_picksheep);
   EnableTrigger(gg_trg_pickwolf);
 
-  //Quick Pick
+  // Quick Pick
   if (udg_lastGameString !== "-pick") {
-    const parts = udg_lastGameString.split(" ").slice(1).map((v) => S2I(v));
-
-    for (const pid of parts) {
-      if (
-        pid > 0 && pid < 25 && GetPlayerSlotState(Player(pid - 1)!) === PLAYER_SLOT_STATE_PLAYING &&
-        udg_AFK[pid] == AFK_PLAYING
-      ) ForceAddPlayer(udg_Sheep, Player(pid - 1)!);
-    }
+    // Already validate pids
+    for (const pid of parts) ForceAddPlayer(udg_Sheep, Player(pid - 1)!);
     for (let pid = 0; pid < bj_MAX_PLAYERS; pid++) {
       if (
-        GetPlayerSlotState(Player(pid)!) === PLAYER_SLOT_STATE_PLAYING && udg_AFK[pid] == AFK_PLAYING &&
+        GetPlayerSlotState(Player(pid)!) === PLAYER_SLOT_STATE_PLAYING && udg_AFK[pid + 1] == AFK_PLAYING &&
         !IsPlayerInForce(Player(pid)!, udg_Sheep)
       ) ForceAddPlayer(udg_Wolf, Player(pid)!);
     }

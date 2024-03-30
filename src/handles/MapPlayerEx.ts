@@ -92,6 +92,14 @@ export class MapPlayerEx extends MapPlayer {
     return this.coloredName;
   }
 
+  public static get host() {
+    return MapPlayerEx.fromHandle(udg_Custom);
+  }
+
+  public static set host(player: player | MapPlayer) {
+    udg_Custom = player instanceof MapPlayer ? player.handle : player;
+  }
+
   public static fromEnum() {
     return this.fromHandle(GetEnumPlayer());
   }
