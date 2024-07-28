@@ -91,6 +91,42 @@ gg_rct_topShop3 = nil
 gg_rct_bottomShop3 = nil
 gg_rct_Glory_Hill_ShopC1 = nil
 gg_rct_Glory_Hill_ShopC2 = nil
+gg_rct_Vro_Camera_Bounds = nil
+gg_rct_Vro_Fence = nil
+gg_rct_Vro_Invis = nil
+gg_rct_Vro_Omniscience = nil
+gg_rct_Vro_of_Speed = nil
+gg_rct_Vro_Mana = nil
+gg_rct_vro8 = nil
+gg_rct_vro7 = nil
+gg_rct_vro6 = nil
+gg_rct_vro2 = nil
+gg_rct_vro1 = nil
+gg_rct_vro4 = nil
+gg_rct_vro5 = nil
+gg_rct_vro9 = nil
+gg_rct_vro10 = nil
+gg_rct_vro11 = nil
+gg_rct_vro12 = nil
+gg_rct_vro13 = nil
+gg_rct_vro14 = nil
+gg_rct_vro15 = nil
+gg_rct_vro16 = nil
+gg_rct_vro17 = nil
+gg_rct_vro18 = nil
+gg_rct_vro19 = nil
+gg_rct_vro20 = nil
+gg_rct_vr021 = nil
+gg_rct_vro22 = nil
+gg_rct_vro23 = nil
+gg_rct_vro24 = nil
+gg_rct_vro3 = nil
+gg_rct_Vro_Shop_A1 = nil
+gg_rct_Vro_Shop_B1 = nil
+gg_rct_Vro_Shop_C1 = nil
+gg_rct_Vro_Shop_A2 = nil
+gg_rct_Vro_Shop_B2 = nil
+gg_rct_Vro_Shop_C2 = nil
 gg_snd_GoodJob = nil
 gg_snd_firstblood = nil
 gg_snd_humiliation = nil
@@ -100,6 +136,37 @@ gg_snd_Killionaire = nil
 gg_snd_TripleKill = nil
 gg_snd_Overkill = nil
 gg_snd_ReceiveGold = nil
+gg_rct_tfence = nil
+gg_rct_t1 = nil
+gg_rct_t2 = nil
+gg_rct_t3 = nil
+gg_rct_t4 = nil
+gg_rct_t5 = nil
+gg_rct_t6 = nil
+gg_rct_t7 = nil
+gg_rct_t8 = nil
+gg_rct_t9 = nil
+gg_rct_t10 = nil
+gg_rct_t11 = nil
+gg_rct_t12 = nil
+gg_rct_t13 = nil
+gg_rct_t14 = nil
+gg_rct_t15 = nil
+gg_rct_t16 = nil
+gg_rct_t17 = nil
+gg_rct_t18 = nil
+gg_rct_t19 = nil
+gg_rct_t20 = nil
+gg_rct_t21 = nil
+gg_rct_t22 = nil
+gg_rct_t23 = nil
+gg_rct_t24 = nil
+gg_rct_tcamera = nil
+gg_rct_to = nil
+gg_rct_ts = nil
+gg_rct_tm = nil
+gg_rct_ti = nil
+gg_snd_GyrocopterYesAttack1 = nil
 function InitGlobals()
 end
 
@@ -148,6 +215,10 @@ gg_snd_ReceiveGold = CreateSound("Abilities/Spells/Items/ResourceItems/ReceiveGo
 SetSoundParamsFromLabel(gg_snd_ReceiveGold, "ReceiveGold")
 SetSoundDuration(gg_snd_ReceiveGold, 589)
 SetSoundVolume(gg_snd_ReceiveGold, 127)
+gg_snd_GyrocopterYesAttack1 = CreateSound("Units/Human/Gyrocopter/GyrocopterYesAttack1.flac", false, false, true, 1, 1, "DefaultEAXON")
+SetSoundParamsFromLabel(gg_snd_GyrocopterYesAttack1, "GyrocopterYesAttack")
+SetSoundDuration(gg_snd_GyrocopterYesAttack1, 2641)
+SetSoundVolume(gg_snd_GyrocopterYesAttack1, 127)
 end
 
 function CreateRegions()
@@ -207,8 +278,8 @@ gg_rct_Blight_Top_4 = Rect(-2656.0, 768.0, 2144.0, 1440.0)
 gg_rct_Blight_Right_4 = Rect(1408.0, -2848.0, 2144.0, 800.0)
 gg_rct_Blight_Left_4 = Rect(-2656.0, -2848.0, -2080.0, 800.0)
 gg_rct_Blight_Bot_4 = Rect(-2112.0, -2848.0, 1440.0, -2432.0)
-gg_rct_Revo_Camera_Bounds = Rect(-4608.0, -5504.0, 4992.0, 4096.0)
-gg_rct_Glory_Hill_Camera_Bounds = Rect(8800.0, -5504.0, 16992.0, 3200.0)
+gg_rct_Revo_Camera_Bounds = Rect(-4608.0, -5760.0, 4992.0, 4352.0)
+gg_rct_Glory_Hill_Camera_Bounds = Rect(8832.0, -5376.0, 17024.0, 3328.0)
 gg_rct_Glory_Hill_Fence = Rect(12576.0, -1376.0, 13280.0, -672.0)
 we = AddWeatherEffect(gg_rct_Glory_Hill_Fence, FourCC("LRaa"))
 EnableWeatherEffect(we, true)
@@ -250,6 +321,74 @@ gg_rct_topShop3 = Rect(-128.0, 3904.0, 64.0, 4160.0)
 gg_rct_bottomShop3 = Rect(-128.0, -5568.0, 64.0, -5312.0)
 gg_rct_Glory_Hill_ShopC1 = Rect(8448.0, -1536.0, 8704.0, -1344.0)
 gg_rct_Glory_Hill_ShopC2 = Rect(16768.0, -1280.0, 17024.0, -1088.0)
+gg_rct_Vro_Camera_Bounds = Rect(-4416.0, -19232.0, 5184.0, -9120.0)
+gg_rct_Vro_Fence = Rect(-608.0, -14688.0, 96.0, -13856.0)
+we = AddWeatherEffect(gg_rct_Vro_Fence, FourCC("LRaa"))
+EnableWeatherEffect(we, true)
+gg_rct_Vro_Invis = Rect(-576.0, -14304.0, -480.0, -14240.0)
+gg_rct_Vro_Omniscience = Rect(-288.0, -14016.0, -224.0, -13920.0)
+gg_rct_Vro_of_Speed = Rect(-32.0, -14304.0, 64.0, -14240.0)
+gg_rct_Vro_Mana = Rect(-288.0, -14624.0, -224.0, -14528.0)
+gg_rct_vro8 = Rect(96.0, -13504.0, 192.0, -13408.0)
+gg_rct_vro7 = Rect(384.0, -14112.0, 448.0, -14016.0)
+gg_rct_vro6 = Rect(352.0, -14592.0, 448.0, -14528.0)
+gg_rct_vro2 = Rect(256.0, -15136.0, 320.0, -15040.0)
+gg_rct_vro1 = Rect(-224.0, -15136.0, -128.0, -15040.0)
+gg_rct_vro4 = Rect(-800.0, -15104.0, -704.0, -15040.0)
+gg_rct_vro5 = Rect(-992.0, -14080.0, -896.0, -14016.0)
+gg_rct_vro9 = Rect(-576.0, -13504.0, -512.0, -13408.0)
+gg_rct_vro10 = Rect(-992.0, -13632.0, -928.0, -13568.0)
+gg_rct_vro11 = Rect(-992.0, -14848.0, -928.0, -14752.0)
+gg_rct_vro12 = Rect(512.0, -14944.0, 576.0, -14848.0)
+gg_rct_vro13 = Rect(-960.0, -13856.0, -864.0, -13760.0)
+gg_rct_vro14 = Rect(352.0, -13760.0, 448.0, -13664.0)
+gg_rct_vro15 = Rect(-768.0, -13536.0, -672.0, -13440.0)
+gg_rct_vro16 = Rect(480.0, -14784.0, 576.0, -14688.0)
+gg_rct_vro17 = Rect(448.0, -13888.0, 512.0, -13824.0)
+gg_rct_vro18 = Rect(-320.0, -13536.0, -224.0, -13440.0)
+gg_rct_vro19 = Rect(32.0, -15104.0, 128.0, -15008.0)
+gg_rct_vro20 = Rect(416.0, -14272.0, 512.0, -14176.0)
+gg_rct_vr021 = Rect(-64.0, -13536.0, 32.0, -13440.0)
+gg_rct_vro22 = Rect(-512.0, -15104.0, -416.0, -15040.0)
+gg_rct_vro23 = Rect(-992.0, -14720.0, -896.0, -14624.0)
+gg_rct_vro24 = Rect(-960.0, -14304.0, -864.0, -14208.0)
+gg_rct_vro3 = Rect(-960.0, -14528.0, -896.0, -14432.0)
+gg_rct_Vro_Shop_A1 = Rect(-448.0, -9408.0, -256.0, -9152.0)
+gg_rct_Vro_Shop_B1 = Rect(-256.0, -9408.0, -128.0, -9152.0)
+gg_rct_Vro_Shop_C1 = Rect(-128.0, -9408.0, 64.0, -9152.0)
+gg_rct_Vro_Shop_A2 = Rect(-448.0, -18880.0, -256.0, -18624.0)
+gg_rct_Vro_Shop_B2 = Rect(-256.0, -18880.0, -128.0, -18624.0)
+gg_rct_Vro_Shop_C2 = Rect(-128.0, -18880.0, 64.0, -18624.0)
+gg_rct_tfence = Rect(9376.0, -10464.0, 9824.0, -10016.0)
+gg_rct_t1 = Rect(9984.0, -10368.0, 10048.0, -10304.0)
+gg_rct_t2 = Rect(9472.0, -10688.0, 9536.0, -10624.0)
+gg_rct_t3 = Rect(9152.0, -10112.0, 9216.0, -10048.0)
+gg_rct_t4 = Rect(9664.0, -9856.0, 9728.0, -9792.0)
+gg_rct_t5 = Rect(9728.0, -10688.0, 9792.0, -10624.0)
+gg_rct_t6 = Rect(9152.0, -10432.0, 9216.0, -10368.0)
+gg_rct_t7 = Rect(9408.0, -9856.0, 9472.0, -9792.0)
+gg_rct_t8 = Rect(9984.0, -10112.0, 10048.0, -10048.0)
+gg_rct_t9 = Rect(9984.0, -10688.0, 10048.0, -10624.0)
+gg_rct_t10 = Rect(9152.0, -10688.0, 9216.0, -10624.0)
+gg_rct_t11 = Rect(9152.0, -9856.0, 9216.0, -9792.0)
+gg_rct_t12 = Rect(9984.0, -9856.0, 10048.0, -9792.0)
+gg_rct_t13 = Rect(10112.0, -10528.0, 10176.0, -10464.0)
+gg_rct_t14 = Rect(9312.0, -10816.0, 9376.0, -10752.0)
+gg_rct_t15 = Rect(9024.0, -9984.0, 9088.0, -9920.0)
+gg_rct_t16 = Rect(9792.0, -9728.0, 9856.0, -9664.0)
+gg_rct_t17 = Rect(9856.0, -10816.0, 9920.0, -10752.0)
+gg_rct_t18 = Rect(9024.0, -10560.0, 9088.0, -10496.0)
+gg_rct_t19 = Rect(9280.0, -9728.0, 9344.0, -9664.0)
+gg_rct_t20 = Rect(10112.0, -9984.0, 10176.0, -9920.0)
+gg_rct_t21 = Rect(10112.0, -10816.0, 10176.0, -10752.0)
+gg_rct_t22 = Rect(9024.0, -10816.0, 9088.0, -10752.0)
+gg_rct_t23 = Rect(9024.0, -9728.0, 9088.0, -9664.0)
+gg_rct_t24 = Rect(10112.0, -9728.0, 10176.0, -9664.0)
+gg_rct_tcamera = Rect(8832.0, -11264.0, 10240.0, -9344.0)
+gg_rct_to = Rect(9568.0, -10144.0, 9632.0, -10080.0)
+gg_rct_ts = Rect(9696.0, -10272.0, 9760.0, -10208.0)
+gg_rct_tm = Rect(9568.0, -10400.0, 9632.0, -10336.0)
+gg_rct_ti = Rect(9440.0, -10272.0, 9504.0, -10208.0)
 end
 
 function InitUpgrades_Player0()
@@ -762,7 +901,7 @@ SetPlayerAllianceStateAllyBJ(Player(23), Player(22), true)
 end
 
 function main()
-SetCameraBounds(-5120.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), -5760.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM), 17664.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), 4352.0 - GetCameraMargin(CAMERA_MARGIN_TOP), -5120.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), 4352.0 - GetCameraMargin(CAMERA_MARGIN_TOP), 17664.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), -5760.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM))
+SetCameraBounds(-5120.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), -19072.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM), 17664.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), 4352.0 - GetCameraMargin(CAMERA_MARGIN_TOP), -5120.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), 4352.0 - GetCameraMargin(CAMERA_MARGIN_TOP), 17664.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), -19072.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM))
 SetDayNightModels("Environment\\DNC\\DNCLordaeron\\DNCLordaeronTerrain\\DNCLordaeronTerrain.mdl", "Environment\\DNC\\DNCLordaeron\\DNCLordaeronUnit\\DNCLordaeronUnit.mdl")
 SetWaterBaseColor(255, 255, 255, 255)
 NewSoundEnvironment("Default")

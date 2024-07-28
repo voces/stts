@@ -1,4 +1,9 @@
 {
   "deno.enable": true,
-  "deno.enablePaths": ["scripts"]
+  "deno.enablePaths": [
+    "scripts"
+  ],
+  "deno.config": "deno.json",
+  "editor.detectIndentation": false,
+  "editor.tabSize": 2
 }

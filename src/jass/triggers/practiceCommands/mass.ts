@@ -1,7 +1,9 @@
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
 const Trig_mass_Actions = () => {
-  let timeString = GetEventPlayerChatString()!.split(" ")[1] ?? "";
+  const words = GetEventPlayerChatString()!.split(" ");
+  if (words[0].toLowerCase() !== "-mass") return;
+  let timeString = words[1] ?? "";
   if (timeString === "") timeString = "18";
   const parts = timeString.split(":");
   let time = 0;

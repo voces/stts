@@ -78,6 +78,10 @@ const Trig_createSheep_sheepActionsA = () => {
       spawn.x = GetRandomReal(xOuterMin, xOuterMax);
       spawn.y = GetRandomReal(yOuterMin, yOuterMax);
     }
+  } else if (spawnSetting.mode === "free") {
+    const prev = spawns.get(GetEnumPlayer()!)!;
+    spawn.x = prev.x;
+    spawn.y = prev.y;
   }
   spawns.set(GetEnumPlayer()!, spawn);
 

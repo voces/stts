@@ -1,4 +1,4 @@
-import { Handle, Unit } from "w3ts";
+import { Handle, MapPlayer, Unit } from "w3ts";
 import { MapPlayerEx } from "./MapPlayerEx";
 
 const map = new WeakMap<unit, UnitEx>();
@@ -6,6 +6,26 @@ const map = new WeakMap<unit, UnitEx>();
 export class UnitEx extends Unit {
   get owner() {
     return MapPlayerEx.fromHandle(GetOwningPlayer(this.handle));
+  }
+
+  inventory() {
+    const items = [];
+    for (let i = 0; i < this.inventorySize; i++) {
+      const item = this.getItemInSlot(i);
+      if (item) items.push(item);
+    }
+    return items;
+  }
+
+  addAbility(abilityId: string | number) {
+    return super.addAbility(typeof abilityId === "number" ? abilityId : FourCC(abilityId));
+  }
+
+  static create(owner: MapPlayer | player, unitId: number | string, x: number, y: number, face?: number) {
+    face ??= bj_UNIT_FACING;
+    const player = owner instanceof MapPlayer ? owner.handle : owner;
+    const handle = CreateUnit(player, typeof unitId === "number" ? unitId : FourCC(unitId), x, y, face)!;
+    return this.fromHandle(handle);
   }
 
   static fromKilling() {

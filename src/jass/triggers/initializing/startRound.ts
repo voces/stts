@@ -3,6 +3,7 @@ import { stopRuneTimers } from "functions/runes";
 import { switchSheepTimers } from "modes/switch/switch";
 import { terrain } from "settings/terrain";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
+import { triggerRoundInitHooks } from "util/gameHooks";
 import { setTimeout, Timeout } from "util/setTimeout";
 
 let hostFarmTimeout: Timeout | undefined = undefined;
@@ -185,6 +186,7 @@ const Trig_startRound_Actions = () => {
     Filter(() => true),
     () => DestructableRestoreLife(GetEnumDestructable()!, GetDestructableMaxLife(GetEnumDestructable()!), true),
   );
+  triggerRoundInitHooks();
 
   for (let i = 0; i < bj_MAX_PLAYERS; i++) {
     p = Player(i)!;

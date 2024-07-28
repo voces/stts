@@ -1,7 +1,10 @@
 import { UnitEx } from "handles/UnitEx";
 import { withDummy } from "util/withDummy";
 
+const off = true;
+
 export const rejectedEmbrace = (target: unit | UnitEx) => {
+  if (off) return;
   const t = target instanceof UnitEx ? target : UnitEx.fromHandle(target);
   withDummy(
     (dummy) => {
@@ -14,6 +17,7 @@ export const rejectedEmbrace = (target: unit | UnitEx) => {
 };
 
 export const loveBite = (target: unit | UnitEx) => {
+  if (off) return;
   const t = target instanceof UnitEx ? target : UnitEx.fromHandle(target);
   withDummy(
     (dummy) => {

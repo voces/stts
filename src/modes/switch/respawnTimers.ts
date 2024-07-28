@@ -1,9 +1,6 @@
-import { addScriptHook, Trigger, Unit, W3TS_HOOK } from "w3ts";
-import { withDummy } from "util/withDummy";
-import { withUnitsInRange } from "util/withGroup";
-import { setTimeout } from "util/setTimeout";
-import { MapPlayerEx } from "handles/MapPlayerEx";
+import { addScriptHook, Trigger, W3TS_HOOK } from "w3ts";
 import { terrain } from "settings/terrain";
+import { maybeApplySecondWind } from "functions/secondWind";
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   const t = Trigger.create();
@@ -68,40 +65,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     );
     SuspendHeroXP(wolf, true);
     SelectUnitForPlayerSingle(wolf, Player(pid)!);
-    const aSheepIsNear = withUnitsInRange(
-      GetRectCenterX(terrain.wolf),
-      GetRectCenterY(terrain.wolf),
-      1000,
-      (g) => g.size > 0,
-      (u) => u.typeId === sheepType,
-    );
-
-    // Switch speed
-    if (!aSheepIsNear) {
-      withDummy(
-        (dummy) => {
-          dummy.addAbility(FourCC("A02A"));
-          dummy.issueTargetOrder("bloodlust", Unit.fromHandle(wolf)!);
-        },
-        GetUnitX(wolf),
-        GetUnitY(wolf),
-        MapPlayerEx.fromIndex(pid),
-      );
-
-      const maybeRemoveBloodlust = () => {
-        if (!UnitAlive(wolf)) return;
-        const aSheepIsNear = withUnitsInRange(
-          GetUnitX(wolf),
-          GetUnitY(wolf),
-          1000,
-          (g) => g.size > 0,
-          (u) => u.typeId === sheepType,
-        );
-        if (aSheepIsNear) UnitRemoveAbility(wolf, FourCC("B00J"));
-        else setTimeout(1, maybeRemoveBloodlust);
-      };
-      setTimeout(1, maybeRemoveBloodlust);
-    }
+    maybeApplySecondWind(wolf);
 
     ForForce(udg_Wolf, () => {
       if (

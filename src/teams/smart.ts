@@ -289,7 +289,7 @@ const smart1vX = () => {
 };
 
 const smart = () => {
-  udg_lastGameString = GetEventPlayerChatString() ?? "-smart";
+  udg_lastGameString = GetEventPlayerChatString()?.toLowerCase() ?? "-smart";
   const parts = udg_lastGameString.toLowerCase().split(" ");
 
   let sheepToDraft: number;
@@ -344,19 +344,25 @@ const smart = () => {
   TriggerExecute(gg_trg_createSheep);
 };
 
+const setPub = (pid: number, value: boolean) => {
+  if (GetPlayerSlotState(Player(pid)!) !== PLAYER_SLOT_STATE_PLAYING) return;
+  pub[pid] = value;
+  DisplayTimedTextToForce(
+    GetPlayersAll()!,
+    5,
+    "                              " + udg_colorString[pid + 1] +
+      (pub[pid] ? "Flagged " : "Unflagged ") +
+      GetPlayerName(Player(pid)!) + " as a pub.",
+  );
+};
 const togglePub = () => {
   if (udg_Custom !== GetTriggerPlayer()! || udg_gameStarted) return;
   const parts = GetEventPlayerChatString()!.split(" ");
   const i = S2I(parts[1]) - 1;
   if (GetPlayerSlotState(Player(i)!) !== PLAYER_SLOT_STATE_PLAYING) return;
-  pub[i] = !(pub[i]);
-  DisplayTimedTextToForce(
-    GetPlayersAll()!,
-    5,
-    "                              " + udg_colorString[i + 1] +
-      (pub[i] ? "Flagged " : "Unflagged ") +
-      GetPlayerName(Player(i)!) + " as a pub.",
-  );
+  const value = !(pub[i]);
+  setPub(i, value);
+  for (let n = 2; n < parts.length; n++) setPub(S2I(parts[n]) - 1, value);
 };
 
 const toggleRotate = () => {

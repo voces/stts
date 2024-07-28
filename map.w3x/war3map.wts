@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 24f
+Sheep Tag ReVoLuTiOn 24h
 }
 
 STRING 40
@@ -232,12 +232,6 @@ STRING 426
 |cffffcc00S|rheep
 }
 
-STRING 427
-// Units: EC03 (Shepherd), Tip (Tooltip - Basic)
-{
-|cffffcc00W|rolf
-}
-
 STRING 428
 // Units: EC03 (Shepherd), Ubertip (Tooltip - Extended)
 {
@@ -287,7 +281,7 @@ E
 }
 
 STRING 542
-// Items: I005 (55), Hotkey (Hotkey)
+// Units: n00A (Feinting Tower), Hotkey (Hotkey)
 {
 E
 }
@@ -543,7 +537,7 @@ Kill Farm
 }
 
 STRING 1026
-// Abilities: A00T (Kill Farm), Hotkey (Hotkey - Normal)
+// Items: I011 (hay), Hotkey (Hotkey)
 {
 X
 }
@@ -561,7 +555,7 @@ Locates and pings location of all sheep on the map.
 }
 
 STRING 1047
-// Abilities: A00T (Kill Farm), Unhotkey (Hotkey - Turn Off)
+// Abilities: A00T (Kill Farm), Hotkey (Hotkey - Normal)
 {
 X
 }
@@ -1027,7 +1021,7 @@ Destroys the last farm created by your sheep.
 }
 
 STRING 2083
-// Abilities: A00G (HideShow), Researchhotkey (Hotkey - Learn)
+// Abilities: A00T (Kill Farm), Unhotkey (Hotkey - Turn Off)
 {
 X
 }
@@ -1123,7 +1117,7 @@ Strength Beam
 }
 
 STRING 2180
-// Items: I007 (str), Hotkey (Hotkey)
+// Items: I005 (55), Hotkey (Hotkey)
 {
 E
 }
@@ -1153,19 +1147,19 @@ Buy Beam
 }
 
 STRING 2259
-// Items: I00C (invis), Hotkey (Hotkey)
+// Items: I007 (str), Hotkey (Hotkey)
 {
 E
 }
 
 STRING 2266
-// Items: I00I (neck), Hotkey (Hotkey)
+// Items: I00C (invis), Hotkey (Hotkey)
 {
 E
 }
 
 STRING 2267
-// Abilities: A011 (Rune of Invisibility), Hotkey (Hotkey - Normal)
+// Items: I00I (neck), Hotkey (Hotkey)
 {
 E
 }
@@ -1351,7 +1345,7 @@ Invulnerability
 }
 
 STRING 2429
-// Abilities: A011 (Rune of Invisibility), Unhotkey (Hotkey - Turn Off)
+// Abilities: A011 (Rune of Invisibility), Hotkey (Hotkey - Normal)
 {
 E
 }
@@ -1648,12 +1642,6 @@ STRING 2713
 // Items: I00D (mana), Ubertip (Tooltip - Extended)
 {
 Fully restores mana. |n|cffffcc0035 gold.|r |n|cff00aeef-buy mana: 49 gold.|r
-}
-
-STRING 2718
-// Items: I00G (sheep), Ubertip (Tooltip - Extended)
-{
-Locates and pings location of all sheep on the map.  |n|cffffcc0040 gold.|r |n|cff00aeef-buy sheep: 56 gold.|r
 }
 
 STRING 2736
@@ -2092,7 +2080,7 @@ Q
 }
 
 STRING 3084
-// Abilities: A018 (Invulnerability), Hotkey (Hotkey - Normal)
+// Abilities: A011 (Rune of Invisibility), Unhotkey (Hotkey - Turn Off)
 {
 E
 }
@@ -3237,12 +3225,6 @@ STRING 3674
 (wisp)
 }
 
-STRING 3678
-// Abilities: A00V (Give Ally Gold), Hotkey (Hotkey - Normal)
-{
-G
-}
-
 STRING 3679
 // Abilities: A00V (Give Ally Gold), EditorSuffix (Editor Suffix)
 {
@@ -3627,18 +3609,6 @@ STRING 3846
 F
 }
 
-STRING 3847
-// Abilities: A024 (Give Allies Gold), Hotkey (Hotkey - Normal)
-{
-G
-}
-
-STRING 3848
-// Abilities: A024 (Give Allies Gold), Unhotkey (Hotkey - Turn Off)
-{
-G
-}
-
 STRING 3866
 // Units: n005 (Shop3), Name (Name)
 {
@@ -3976,7 +3946,7 @@ Allows the wolf to turn a tree into a club, increasing damage to farms but slowi
 }
 
 STRING 4023
-// Abilities: A01P (Freak Anti Stack Stomp), Hotkey (Hotkey - Normal)
+// Abilities: A00G (HideShow), Researchhotkey (Hotkey - Learn)
 {
 X
 }
@@ -3994,7 +3964,7 @@ disease
 }
 
 STRING 4028
-// Abilities: A022 (Share Control), Hotkey (Hotkey - Normal)
+// Items: I012 (goblins), Hotkey (Hotkey)
 {
 C
 }
@@ -4023,13 +3993,301 @@ STRING 4034
 A farm that generates gold depending how close it is to the pen.
 }
 
-STRING 4035
+STRING 4039
+// Units: EC03 (Shepherd), Tip (Tooltip - Basic)
 {
-|cff00ff00Sheep Tag ReVoLuTiOn 24f|r
+Wolf
 }
 
-STRING 4036
+STRING 4067
+// Abilities: A02G (Blink), Tip (Tooltip - Normal)
 {
-|cff00ff0024f|r
+Blink
+}
+
+STRING 4068
+// Abilities: A02G (Blink), Ubertip (Tooltip - Normal - Extended)
+{
+Teleports a short distance.
+}
+
+STRING 4069
+// Abilities: A01V (Blink), EditorSuffix (Editor Suffix)
+{
+(Practice)
+}
+
+STRING 4070
+// Abilities: A02G (Blink), EditorSuffix (Editor Suffix)
+{
+(Sheep Spirit)
+}
+
+STRING 4071
+// Units: h00L (Hay Trap), Ubertip (Tooltip - Extended)
+{
+A wall of wool
+}
+
+STRING 4072
+// Units: h00L (Hay Trap), Name (Name)
+{
+Hay Trap
+}
+
+STRING 4074
+// Items: I011 (hay), Tip (Tooltip - Basic)
+{
+Purchase Hay Trap
+}
+
+STRING 4076
+// Abilities: A01P (Freak Anti Stack Stomp), Hotkey (Hotkey - Normal)
+{
+X
+}
+
+STRING 4078
+// Items: I011 (hay), Name (Name)
+{
+hay
+}
+
+STRING 4080
+// Items: I011 (hay), Description (Description)
+{
+Tosses a Hay Trap.
+}
+
+STRING 4081
+// Items: I011 (hay), Ubertip (Tooltip - Extended)
+{
+Tosses a Hay Trap at a target location. Hay Traps cannot be built on and slow enemy units.|n|cffffcc0020 gold.|r |n|cff00aeef-buy hay: 28 gold.|r
+}
+
+STRING 4082
+// Abilities: A02H (Toss Hay Trap), Name (Name)
+{
+Toss Hay Trap
+}
+
+STRING 4083
+// Abilities: A02I (Slow Aura), EditorSuffix (Editor Suffix)
+{
+(Hay Trap)
+}
+
+STRING 4084
+// Buffs/Effects: B00L (), Bufftip (Tooltip)
+{
+Hay Trap
+}
+
+STRING 4085
+// Buffs/Effects: B00L (), Buffubertip (Tooltip - Extended)
+{
+This unit is caught within a Hay Trap; its movement speed has been reduced temporarily.
+}
+
+STRING 4086
+// Upgrades: R000 (Control Magic), Tip (Tooltip)
+{
+Research Upgraded Aura Farms
+}
+
+STRING 4087
+// Upgrades: R000 (Control Magic), Name (Name)
+{
+Upgraded Aura Farms
+}
+
+STRING 4088
+// Upgrades: R000 (Control Magic), Ubertip (Tooltip - Extended)
+{
+Upgrades the auras on all Aura Farms for the entire team for the rest of the round.
+}
+
+STRING 4089
+// Upgrades: R000 (Control Magic), Hotkey (Hotkey)
+{
+A
+}
+
+STRING 4090
+// Units: n00A (Feinting Tower), Name (Name)
+{
+Feinting Tower
+}
+
+STRING 4091
+// Units: n00A (Feinting Tower), Tip (Tooltip - Basic)
+{
+Upgrade to Feinting Tower
+}
+
+STRING 4092
+// Units: n00A (Feinting Tower), Ubertip (Tooltip - Extended)
+{
+A tower that periodically creates illusions of nearby units.
+}
+
+STRING 4093
+// Abilities: A018 (Invulnerability), Hotkey (Hotkey - Normal)
+{
+E
+}
+
+STRING 4095
+// Abilities: A00V (Give Ally Gold), Hotkey (Hotkey - Normal)
+{
+G
+}
+
+STRING 4096
+// Abilities: A024 (Give Allies Gold), Hotkey (Hotkey - Normal)
+{
+G
+}
+
+STRING 4097
+// Abilities: A024 (Give Allies Gold), Unhotkey (Hotkey - Turn Off)
+{
+G
+}
+
+STRING 4098
+// Abilities: A02G (Blink), Researchhotkey (Hotkey - Learn)
+{
+G
+}
+
+STRING 4099
+// Items: I00G (sheep), Ubertip (Tooltip - Extended)
+{
+Locates and pings location of all sheep on the map.  |n|cffffcc0040 gold.|r|n|cff00aeef-buy sheep: 56 gold.|r
+}
+
+STRING 4101
+// Items: I012 (goblins), Tip (Tooltip - Basic)
+{
+Purchase Goblin Support
+}
+
+STRING 4102
+// Items: I012 (goblins), Name (Name)
+{
+goblins
+}
+
+STRING 4104
+// Abilities: A022 (Share Control), Hotkey (Hotkey - Normal)
+{
+C
+}
+
+STRING 4105
+// Abilities: A02N (Goblin Support), Name (Name)
+{
+Goblin Support
+}
+
+STRING 4106
+// Abilities: A02K (Bombs), Tip (Tooltip - Normal)
+{
+Bombs
+}
+
+STRING 4107
+// Abilities: A02K (Bombs), Name (Name)
+{
+Bombs
+}
+
+STRING 4108
+// Abilities: A02K (Bombs), Ubertip (Tooltip - Normal - Extended)
+{
+Bombs away!
+}
+
+STRING 4109
+// Units: h00M (Flying Machine), EditorSuffix (Name - Editor Suffix)
+{
+(Goblin Support)
+}
+
+STRING 4110
+// Units: u000 (Sapper), Name (Name)
+{
+Sapper
+}
+
+STRING 4111
+// Units: h00O (Pocket Factory), EditorSuffix (Name - Editor Suffix)
+{
+(Goblin Support)
+}
+
+STRING 4112
+// Units: h00O (Pocket Factory), Ubertip (Tooltip - Extended)
+{
+A wall of wool
+}
+
+STRING 4113
+// Units: h00O (Pocket Factory), Name (Name)
+{
+Pocket Factory
+}
+
+STRING 4114
+// Units: u000 (Sapper), EditorSuffix (Name - Editor Suffix)
+{
+(Goblin Support)
+}
+
+STRING 4115
+// Units: n00B (Clockwerk Goblin), EditorSuffix (Name - Editor Suffix)
+{
+(Goblin Support)
+}
+
+STRING 4117
+// Abilities: A02K (Bombs), EditorSuffix (Editor Suffix)
+{
+(Goblin Support)
+}
+
+STRING 4119
+// Abilities: A02L (Kaboom!), EditorSuffix (Editor Suffix)
+{
+(Goblin Support, Sapper)
+}
+
+STRING 4120
+// Abilities: A02M (Kaboom!), EditorSuffix (Editor Suffix)
+{
+(Goblin Support, Clockwerk Goblin)
+}
+
+STRING 4121
+// Items: I012 (goblins), Ubertip (Tooltip - Extended)
+{
+Calls for aerial goblin support to help destroy farms.|n|cffffcc00400 gold.|r|n|cff00aeef-buy goblins: 440 gold.|r
+}
+
+STRING 4122
+// Items: I012 (goblins), Description (Description)
+{
+Calls for aerial goblin support to help destroy farms.
+}
+
+STRING 4123
+{
+|cff00ff00Sheep Tag ReVoLuTiOn 24h|r
+}
+
+STRING 4124
+{
+|cff00ff0024h|r
 }
 

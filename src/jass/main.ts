@@ -146,6 +146,8 @@ import { logRound } from "./triggers/hostCommands/UpdateStats";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { president } from "modes/president";
+import { addTime } from "misc/times";
+import { income } from "settings/income";
 
 declare global {
   //globals from SavingFarms:
@@ -1685,9 +1687,9 @@ s__times_create = (): number => {
 
 declare global {
   // deno-lint-ignore prefer-const
-  let simpleformatTime: (r: number) => string;
+  let simpleformatTime: (r: number, includeMilliseconds?: boolean) => string;
 }
-simpleformatTime = (r: number): string => {
+simpleformatTime = (r: number, includeMilliseconds = false): string => {
   let s = "";
   if (r >= 36000) {
     s = I2S(R2I(r / 3600))!;
@@ -1696,24 +1698,23 @@ simpleformatTime = (r: number): string => {
     s = (s.length > 0 ? "0" : "") + I2S(R2I(r / 3600));
     r = ModuloReal(r, 3600);
   }
-  if (s !== "") {
-    s = s + ":";
-  }
+  if (s !== "") s += ":";
   if (r >= 600) {
-    s = s + I2S(R2I(r / 60));
+    s += I2S(R2I(r / 60));
     r = ModuloReal(r, 60);
   } else if (r >= 60) {
-    s = s + (s.length > 0 ? "0" : "") + I2S(R2I(r / 60));
+    s += (s.length > 0 ? "0" : "") + I2S(R2I(r / 60));
     r = ModuloReal(r, 60);
+  } else s += s.length === 0 ? "0" : "00";
+  s += ":";
+  if (includeMilliseconds) {
+    if (r >= 10) s += R2S(r);
+    else s += (s.length > 0 ? "0" : "") + R2S(r);
   } else {
-    s = s + (s.length === 0 ? "0" : "00");
+    if (r >= 10) s += I2S(R2I(r));
+    else s += (s.length > 0 ? "0" : "") + I2S(R2I(r));
   }
-  s = s + ":";
-  if (r >= 10) {
-    s = s + I2S(R2I(r));
-  } else {
-    s = s + (s.length > 0 ? "0" : "") + I2S(R2I(r));
-  }
+
   return s;
 };
 
@@ -1772,27 +1773,22 @@ declare global {
   let updateTimes: () => void;
 }
 updateTimes = () => {
-  let i = 0;
   let n: number;
   let s = "";
   let timeElapsed = TimerGetElapsed(udg_Timer);
   const emitRound = !someoneLeft && udg_sheepGold === 0 && udg_wolfGold === 0 &&
-    noHandicaps() && terrain.name === "Revolution" && president.enabled === false;
-  let l__sheep = "";
-  let addedSheep = false;
-  let wolves = "";
-  let addedWolf = false;
+    noHandicaps() && terrain.name === "Revolution" && president.enabled === false && income.sheep === 1 &&
+    income.wolves === 1 && income.savings === 1;
+  let sheepString = "";
+  let sheep = 0;
+  let wolvesString = "";
+  let wolves = 0;
 
-  if (timeElapsed <= 0.01) {
-    timeElapsed = udg_time;
-  }
+  if (timeElapsed <= 0.01) timeElapsed = udg_time;
 
-  if (udg_switchOn || vampOn || udg_practiceOn) {
-    return;
-  }
+  if (udg_switchOn || vampOn || udg_practiceOn) return;
 
-  while (true) {
-    if (i === 24) break;
+  for (let i = 0; i < bj_MAX_PLAYERS; i++) {
     if (
       IsPlayerInForce(Player(i)!, udg_Sheep) ||
       IsPlayerInForce(Player(i)!, udg_Spirit)
@@ -1801,11 +1797,9 @@ updateTimes = () => {
       if (s === "") s = MapPlayerEx.fromIndex(i)!.coloredName;
       else s = s + ", " + MapPlayerEx.fromIndex(i);
       if (emitRound) {
-        if (addedSheep) l__sheep = l__sheep + " " + I2S(i);
-        else {
-          l__sheep = I2S(i)!;
-          addedSheep = true;
-        }
+        if (sheep > 0) sheepString = sheepString + " " + I2S(i);
+        else sheepString = I2S(i)!;
+        sheep++;
       }
       udg_roundTimes[i + 1] = udg_roundTimes[i + 1] + R2S(timeElapsed) + " | ";
       if (timeElapsed > s__times_pTimeMax[playerTimes[i]]) {
@@ -1815,20 +1809,23 @@ updateTimes = () => {
       while (true) {
         if (n === 24) break;
         if (IsPlayerInForce(Player(n)!, udg_Sheep) || IsPlayerInForce(Player(n)!, udg_Spirit)) {
-          s___times_pTime[s__times_pTime[playerTimes[i]] + n] = s___times_pTime[s__times_pTime[playerTimes[i]] + n] +
-            timeElapsed;
+          s___times_pTime[s__times_pTime[playerTimes[i]] + n] = timeElapsed;
         }
         n = n + 1;
       }
     } else if (IsPlayerInForce(Player(i)!, udg_Wolf) && emitRound) {
-      if (addedWolf) {
-        wolves = wolves + " " + I2S(i);
-      } else {
-        wolves = I2S(i)!;
-        addedWolf = true;
-      }
+      if (wolves > 0) wolvesString = wolvesString + " " + I2S(i);
+      else wolvesString = I2S(i)!;
+      wolves++;
     }
-    i = i + 1;
+  }
+
+  const mode = `${sheep}v${wolves}`;
+  for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+    if (
+      IsPlayerInForce(Player(i)!, udg_Sheep) ||
+      IsPlayerInForce(Player(i)!, udg_Spirit)
+    ) addTime(i, mode, timeElapsed);
   }
 
   udg_timeString = formatTime(timeElapsed);
@@ -1846,7 +1843,7 @@ updateTimes = () => {
     loserHolders = s;
   }
 
-  if (emitRound) logRound(l__sheep, wolves, R2S(timeElapsed)!);
+  if (emitRound) logRound(sheepString, wolvesString, R2S(timeElapsed)!);
 };
 
 //Returns the index in which string part is found in string whole

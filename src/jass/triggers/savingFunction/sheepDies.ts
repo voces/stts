@@ -1,6 +1,7 @@
 import { terrain } from "settings/terrain";
 import { president } from "modes/president";
 import { withPlayerUnits, withUnitsOfType } from "util/withGroup";
+import { maybeApplySecondWind } from "functions/secondWind";
 
 const Trig_sheepDies_Actions = () => {
   const dyingPlayer = GetOwningPlayer(GetTriggerUnit()!);
@@ -65,6 +66,8 @@ const Trig_sheepDies_Actions = () => {
   }
 
   TriggerExecute(gg_trg_setupLeaderboard);
+
+  withUnitsOfType(shepType, (wolves) => wolves.forEach((wolf) => maybeApplySecondWind(wolf.handle)));
 
   const timers = [
     udg_redHideTimer,

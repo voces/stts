@@ -1,11 +1,11 @@
 import { MapPlayerEx } from "handles/MapPlayerEx";
+import { getTimes, modes } from "misc/times";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
 const Trig_timeCommands_Actions = () => {
   const self = MapPlayerEx.fromEvent()!;
   let i = 0;
-  let n: number;
   let count = 0;
   Split(GetEventPlayerChatString()!, " ", false);
   if (myArg[0] === "-times" && myArgCount === 1) {
@@ -80,29 +80,28 @@ const Trig_timeCommands_Actions = () => {
     );
   } else if (myArg[0] === "-atime" || myArg[0] === "-atimes") {
     self.displayTimedText("                              |CFFFFCC00Average Sheep Round Time|r", 15);
-    while (true) {
-      if (i === 24) break;
-      if (wasHere[i]) {
-        if (count === 12) TriggerSleepAction(4);
-        n = s__times_sheepCount[playerTimes[i]];
-        if (n === 0) {
-          self.displayTimedText(
-            "                              " + udg_colorString[i + 1] + GetPlayerName(Player(i)!) + ": N/A",
-            15,
-          );
-        } else {
-          self.displayTimedText(
-            "                              " + udg_colorString[i + 1] +
-              GetPlayerName(Player(i)!) + ": " +
-              formatTime(
-                s___times_pTime[s__times_pTime[playerTimes[i]] + i] / n,
-              ),
-            15,
-          );
-        }
-        count = count + 1;
+
+    for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+      if (!wasHere[i]) continue;
+      if (count === 12) TriggerSleepAction(4);
+      const times = getTimes(i);
+      const keys = Object.keys(times).sort();
+      const player = MapPlayerEx.fromIndex(i)!;
+      if (keys.length === 0) self.displayTimedText(`                              ${player.coloredName_}: N/A`, 15);
+      else {
+        self.displayTimedText(
+          `                              ${player.coloredName_}: ${
+            keys.map((k) =>
+              `${simpleformatTime(times[k].total / times[k].count, true)}${modes.size > 1 ? ` (${k})` : ""}`
+            )
+              .join(
+                ", ",
+              )
+          }`,
+          15,
+        );
       }
-      i = i + 1;
+      count = count + 1;
     }
   } else if (myArg[0] === "-mytimes") {
     self.displayTimedText("                              |CFFFFCC00Total Sheep Round Time Per Teammate|r", 15);

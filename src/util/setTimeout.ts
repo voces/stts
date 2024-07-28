@@ -26,3 +26,11 @@ export const setTimeout = (timeout: number, fn: () => void, periodic = false): T
     },
   };
 };
+
+export const loop = (fn: () => boolean, frequency?: number) => {
+  const t = setTimeout(frequency ?? 1, () => {
+    const result = fn();
+    if (!result) t.cancel();
+  }, true);
+  return t;
+};

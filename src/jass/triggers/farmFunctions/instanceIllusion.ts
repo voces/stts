@@ -1,9 +1,10 @@
 const Trig_instanceIllusion_Actions = () => {
-  ReplaceUnitBJ(GetTriggerUnit()!, FourCC("n004"), bj_UNIT_STATE_METHOD_RELATIVE);
-  if (GetPlayerAlliance(GetOwningPlayer(bj_lastReplacedUnit!), GetLocalPlayer(), ALLIANCE_SHARED_VISION)) {
-    SetUnitVertexColor(bj_lastReplacedUnit!, 127, 255, 127, 191);
+  const replacement = ReplaceUnitBJ(GetTriggerUnit()!, FourCC("n004"), bj_UNIT_STATE_METHOD_RELATIVE)!;
+  if (GetPlayerAlliance(GetOwningPlayer(replacement), GetLocalPlayer(), ALLIANCE_SHARED_VISION)) {
+    SetUnitVertexColor(replacement, 127, 255, 127, 191);
   }
   AdjustPlayerStateBJ(-20, GetOwningPlayer(GetLastReplacedUnitBJ()!), PLAYER_STATE_RESOURCE_GOLD);
+  SelectUnitAddForPlayer(replacement, GetTriggerPlayer()!);
 };
 
 export {};

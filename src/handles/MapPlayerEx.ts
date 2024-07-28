@@ -52,6 +52,10 @@ export class MapPlayerEx extends MapPlayer {
     return `${udg_colorString[this.cid] ?? ""}${this.name}|r`;
   }
 
+  get coloredName_() {
+    return `${udg_colorString[this.cid] ?? ""}${this.name}`;
+  }
+
   get isHere() {
     return this.slotState === PLAYER_SLOT_STATE_PLAYING;
   }

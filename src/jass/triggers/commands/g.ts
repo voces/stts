@@ -1,7 +1,7 @@
 import { UnitEx } from "handles/UnitEx";
-import { isPointInPolygon } from "misc/critter";
 import { president } from "modes/president";
 import { terrain } from "settings/terrain";
+import { isPointInRect } from "util/geometry";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { setTimeout, Timeout } from "util/setTimeout";
 import { withPlayerUnits } from "util/withGroup";
@@ -144,7 +144,7 @@ export const giveAllGold = (sender: player): void => {
       receiver = lastSheepReceiver;
       if (
         receiver == null || receiver === sender || GetPlayerSlotState(receiver) === PLAYER_SLOT_STATE_LEFT ||
-        IsPlayerInForce(sender, udg_Spirit)
+        IsPlayerInForce(receiver, udg_Spirit)
       ) {
         receiver = president.enabled
           ? president.president.handle
@@ -201,14 +201,7 @@ const Trig_g_Actions = () => {
         return false;
       });
       if (!wolf) return;
-      if (
-        isPointInPolygon(wolf.x, wolf.y, [
-          { x: GetRectMinX(terrain.spawnBounds), y: GetRectMinY(terrain.spawnBounds) },
-          { x: GetRectMaxX(terrain.spawnBounds), y: GetRectMinY(terrain.spawnBounds) },
-          { x: GetRectMaxX(terrain.spawnBounds), y: GetRectMaxY(terrain.spawnBounds) },
-          { x: GetRectMinX(terrain.spawnBounds), y: GetRectMaxY(terrain.spawnBounds) },
-        ])
-      ) {
+      if (isPointInRect(wolf.x, wolf.y, terrain.spawnBounds)) {
         lastWolfReceiver = GetTriggerPlayer()!;
         if (GetLocalPlayer() === GetTriggerPlayer()) StartSound(gg_snd_ReceiveGold);
         return;

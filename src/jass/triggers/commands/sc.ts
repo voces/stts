@@ -31,16 +31,47 @@ const Trig_sc_printSheepCounts = () => {
   }
 };
 
-const Trig_sc_setSheepCount = () => {
-  const pId = S2I(myArg[1]);
-  const newSC = S2I(myArg[2]);
-
+const setSc = (pId: number, newSC: number) => {
   udg_sheepCount[pId] = newSC;
   LeaderboardSetPlayerItemValueBJ(
     ConvertedPlayer(pId)!,
     GetLastCreatedLeaderboard()!,
     udg_sheepCount[pId],
   );
+};
+
+const Trig_sc_setSheepCount = () => {
+  // Host variant
+  if (udg_Custom === GetTriggerPlayer()) {
+    // Set specific player
+    if (myArgCount === 3) {
+      const pId = S2I(myArg[1]);
+      const newSC = S2I(myArg[2]);
+      setSc(pId, newSC);
+      return;
+    }
+
+    // Set all players
+    const newSC = S2I(myArg[1]);
+    for (let i = 1; i <= bj_MAX_PLAYERS; i++) {
+      if (GetPlayerSlotState(Player(i - 1)!) === PLAYER_SLOT_STATE_PLAYING) setSc(i, newSC);
+    }
+
+    return;
+  }
+
+  // Self variant
+  const pId = GetPlayerId(GetTriggerPlayer()!) + 1;
+  const newSC = S2I(myArg[1]);
+
+  if (newSC < udg_sheepCount[pId]) {
+    let max = -Infinity;
+    for (let i = 1; i <= bj_MAX_PLAYERS; i++) {
+      if (udg_sheepCount[i] > max && i !== pId) max = udg_sheepCount[i];
+    }
+    if (newSC <= max) return;
+  }
+  setSc(pId, newSC);
 };
 
 const Trig_sc_Actions = () => {
@@ -53,7 +84,7 @@ const Trig_sc_Actions = () => {
 
   Split(str, " ", false);
 
-  if (myArg[0] === "-sc" && myArgCount === 3 && udg_Custom === GetTriggerPlayer()!) Trig_sc_setSheepCount();
+  if (myArg[0] === "-sc" && myArgCount > 1) Trig_sc_setSheepCount();
 };
 
 declare global {

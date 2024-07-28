@@ -250,8 +250,6 @@ const handleAFK = (p: player) => {
 declare global {
   // deno-lint-ignore prefer-const
   let InitTrig_AFK: () => void;
-  // deno-lint-ignore prefer-const
-  let InitTrig_Force_Afk: () => void;
 }
 InitTrig_AFK = () => {
   gg_trg_AFK = CreateTrigger();

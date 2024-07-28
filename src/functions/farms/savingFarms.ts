@@ -42,7 +42,7 @@ const getDistancePenality = (u: unit) => {
   return Math.min(xDelta, yDelta) ** 2 * 1.25 + 0.25;
 };
 
-const SavingFarms__tick = () => {
+const tick = () => {
   for (let i = 0; i < bj_MAX_PLAYERS; i++) {
     const p = MapPlayerEx.fromIndex(i);
     if (!p) continue;
@@ -92,7 +92,7 @@ export const disableIncome = () => DisableTrigger(tickTrigger);
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   tickTrigger = CreateTrigger();
   TriggerRegisterTimerEventPeriodic(tickTrigger, 0.65);
-  TriggerAddAction(tickTrigger, SavingFarms__tick);
+  TriggerAddAction(tickTrigger, tick);
 
   const t = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_UPGRADE_START);

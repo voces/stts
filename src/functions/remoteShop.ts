@@ -139,7 +139,9 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     { name: "forb", cost: 200, id: FourCC("I00W") }, // alias for orb
     { name: "gloves", cost: 112, id: FourCC("I004") },
     { name: "gem", cost: 56, id: FourCC("I00E") },
+    { name: "goblins", cost: 440, id: FourCC("I012") },
     { name: "golem", cost: 140, id: FourCC("I00A") },
+    { name: "hay", cost: 28, id: FourCC("I011") },
     { name: "kaleidoscope", cost: 112, id: FourCC("I00X") },
     { name: "mana", cost: 49, id: FourCC("I00D") },
     { name: "mastery", cost: 140, id: FourCC("I00Y") },

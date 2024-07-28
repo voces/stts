@@ -79,14 +79,10 @@ const translocateTick = () => {
 
 const Trig_createFarm_Actions = () => {
   const u = GetConstructingStructure()!;
-  const playerId = GetConvertedPlayerId(
-    GetOwningPlayer(u),
-  );
-  let i = 1;
+  const playerId = GetConvertedPlayerId(GetOwningPlayer(u));
+  // let i = 1;
 
-  if (IsUnitIllusion(GetTriggerUnit()!)) {
-    return;
-  }
+  if (IsUnitIllusion(GetTriggerUnit()!)) return;
 
   udg_farmCount[playerId]++;
   udg_totalFarmsBuilt[playerId]++;
@@ -95,23 +91,16 @@ const Trig_createFarm_Actions = () => {
   if (GetUnitTypeId(u) === translocationFarmType) {
     translocate(udg_unit[GetPlayerId(GetOwningPlayer(u)) + 1], u);
     translocates.push(u);
-    if (translocates.length === 1) {
-      translocateTicker.start(0.03, true, translocateTick);
-    }
+    if (translocates.length === 1) translocateTicker.start(0.03, true, translocateTick);
   }
 
-  while (true) {
-    if (i > bj_MAX_PLAYERS) break;
-
-    if (!udg_switchOn) {
-      LeaderboardSetPlayerItemValueBJ(
-        ConvertedPlayer(playerId)!,
-        PlayerGetLeaderboardBJ(ConvertedPlayer(i)!)!,
-        udg_farmCount[playerId],
-      );
-    }
-
-    i = i + 1;
+  for (let i = 1; i <= bj_MAX_PLAYERS; i++) {
+    if (udg_switchOn) return;
+    LeaderboardSetPlayerItemValueBJ(
+      ConvertedPlayer(playerId)!,
+      PlayerGetLeaderboardBJ(ConvertedPlayer(i)!)!,
+      udg_farmCount[playerId],
+    );
   }
 };
 

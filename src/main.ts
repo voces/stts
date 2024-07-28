@@ -1,5 +1,8 @@
 import "util/debug";
 
+import "functions/farms/auraFarmUpgrade";
+import "functions/farms/feintingTower";
+import "functions/items/goblins";
 import "functions/items/golemDeath";
 import "functions/items/itemCommand";
 import "functions/remoteShop";
@@ -7,6 +10,7 @@ import "functions/runes";
 import "jass/main";
 import "misc/hideTimers";
 import "misc/regrowTrees";
+import "misc/testmass";
 import "misc/wispControl";
 import "modes/practice/mode";
 import "modes/president";

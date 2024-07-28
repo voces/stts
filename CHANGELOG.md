@@ -1,5 +1,42 @@
 # TODO
 
+# 24h
+
+# 24g
+
+## Gameplay changes
+
+- Added Hay Stack
+- Added Feinting Tower
+- Added Goblin Support
+- Added new terrains
+- Wolves gain Second Wind after sheep kill if far from other sheep
+
+## Balance changes
+
+- Increased gold bounty on Strong Farm from 3 to 4
+
+## Feature changes
+
+- -atime is now per setup (e.g., 2v4) rather than global and ignores -reset
+- -freespawn now remembers your previous spawn
+- -sc changes
+  - Host can now do -sc X to set all players' sheep count to X
+  - Players can now do -sc X to set their own sheep count to X (restricted)
+- -pub now accepts variable arguments
+- Added -testmass
+- Updated menu position of farms and upgrades to match keyboard layout
+- Changed critter from a rabbit to a chicken
+
+## Bug fixes
+
+- Fixed shop price of Suppression Field
+- Fixed "g" sometimes giving gold to spirits
+- Fixed observer leaving voiding round
+- Fixed rounds counting for ELO if -income set
+- Fixed disease cloud effects appearing on enemy unit hits
+- Fixed -SMART erroring
+
 # 24f
 
 ## Feature changes
