@@ -34,7 +34,7 @@ export const maybeApplySecondWind = (unit: unit) =>
   withUnitsInRange(
       GetUnitX(unit),
       GetUnitY(unit),
-      1000,
+      1500,
       (g) => g.size > 0,
       (u) => u.typeId === sheepType,
     )

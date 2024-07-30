@@ -48,7 +48,7 @@ const tick = () => {
     if (!p) continue;
 
     if (ForceEx.wolves.hasPlayer(p)) {
-      p.bankedGold += income.wolves * 0.37; // no wolf penality
+      p.bankedGold += income.wolves * 0.37 * p.handicap; // no wolf penality
       continue;
     }
 

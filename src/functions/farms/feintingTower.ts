@@ -49,7 +49,9 @@ game.onInterval(4, () => {
         clone.mana = u.mana;
         clone.setBaseDamage(-500, 0);
         clone.setBaseDamage(-500, 1);
-        if (clone.isAlly(MapPlayerEx.fromLocal())) clone.setVertexColor(63, 63, 255, 127);
+        if (clone.owner.compareAlliance(MapPlayerEx.fromLocal(), ALLIANCE_SHARED_VISION)) {
+          clone.setVertexColor(63, 63, 255, 127);
+        }
 
         // Make unselectable and not impact pathing, but will follow pathing after 0.1 seconds
         clone.addAbility(FourCC("Aloc"));
@@ -69,7 +71,9 @@ game.onInterval(4, () => {
 
         // Remove after 5 seconds
         setTimeout(5, () => {
-          if (!clone.isAlive()) return;
+          if (!clone.isAlive()) {
+            return;
+          }
 
           DisableTrigger(gg_trg_castAbilityIssueOrder);
           clone.destroy();

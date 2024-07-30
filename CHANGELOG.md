@@ -2,6 +2,20 @@
 
 # 24h
 
+## Feature changes
+
+- Handicap impacts passive wolf income
+
+## Balance changes
+
+- Increased Second Wind minimum distance to sheep application from 1000 to 1500
+
+## Bug fixes
+
+- Fixed Feinting Farm illusions being visible to non-allies
+- Fixed wisp enclosures on new terrains
+- Fixed -smart 1 not working with pubs
+
 # 24g
 
 ## Gameplay changes

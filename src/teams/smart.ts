@@ -13,7 +13,8 @@ let lastSheepToDraft = 0;
 
 const isActivePlayer = (p: player) =>
   GetPlayerSlotState(p) === PLAYER_SLOT_STATE_PLAYING &&
-  udg_AFK[GetConvertedPlayerId(p)] === AFK_PLAYING && !(pub[GetPlayerId(p)]);
+  udg_AFK[GetConvertedPlayerId(p)] === AFK_PLAYING &&
+  !(pub[GetPlayerId(p)]);
 
 const getActivePlayerCount = (): number => {
   let count = 0;
@@ -41,7 +42,7 @@ const isUnassignedActivePlayer = (p: player) => {
 
 const setupPlayerVariables = (reset: boolean): void => {
   let ties: number;
-  const blocked: Array<boolean> = [];
+  const blocked: boolean[] = [];
   if (reset) {
     blocked[GetPlayerId(perfectPlayerVariables[3])] = true;
     blocked[GetPlayerId(perfectPlayerVariables[4])] = true;
@@ -138,41 +139,29 @@ const draftLowestSCToSpirit = () => {
 };
 
 const draftLowestPCToDraft = () => {
+  // Compute PCs & minimum PC
   let minimumPartnerCount = Infinity;
-  let i: number;
-  let n: number;
-  const partnerCounts: Array<number> = [];
-  i = 0;
-  while (true) {
-    if ((i >= bj_MAX_PLAYERS)) break;
-    if ((IsPlayerInForce(Player(i)!, udg_Spirit))) {
+  const partnerCounts: number[] = [];
+  for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+    if (IsPlayerInForce(Player(i)!, udg_Spirit)) {
+      // Compute pc
       partnerCounts[i] = 0;
-      n = 0;
-      while (true) {
-        if ((n >= bj_MAX_PLAYERS)) break;
-        if ((IsPlayerInForce(Player(n)!, udg_Sheep))) {
-          partnerCounts[i] = partnerCounts[i] +
-            udg_accumPartner[i * bj_MAX_PLAYERS + (n + 1)];
+      for (let n = 0; n < bj_MAX_PLAYERS; n++) {
+        if (IsPlayerInForce(Player(n)!, udg_Sheep)) {
+          partnerCounts[i] += udg_accumPartner[i * bj_MAX_PLAYERS + (n + 1)];
         }
-        n = n + 1;
       }
-      if ((partnerCounts[i] < minimumPartnerCount)) {
-        minimumPartnerCount = partnerCounts[i];
-      }
+
+      if (partnerCounts[i] < minimumPartnerCount) minimumPartnerCount = partnerCounts[i];
     }
-    i = i + 1;
   }
-  i = 0;
-  while (true) {
-    if ((i >= bj_MAX_PLAYERS)) break;
-    if (
-      (IsPlayerInForce(Player(i)!, udg_Spirit) &&
-        partnerCounts[i] === minimumPartnerCount)
-    ) {
+
+  // Draft
+  for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+    if (IsPlayerInForce(Player(i)!, udg_Spirit) && partnerCounts[i] === minimumPartnerCount) {
       ForceRemovePlayer(udg_Spirit, Player(i)!);
       ForceAddPlayer(udg_Draft, Player(i)!);
     }
-    i = i + 1;
   }
 };
 
@@ -180,37 +169,23 @@ export const maybeRotate = () => {
   const currentSc = udg_sheepCount[GetConvertedPlayerId(rotated)];
   let lowestSc = Infinity;
   let ties = 0;
-  let i: number;
   let newRotated!: player;
-  if ((GetPlayerSlotState(rotated) === PLAYER_SLOT_STATE_LEFT)) {
-    rotated = Player(PLAYER_NEUTRAL_PASSIVE)!;
-  }
-  if ((rotated === Player(PLAYER_NEUTRAL_PASSIVE)!)) {
-    return;
-  }
-  i = 0;
-  while (true) {
-    if ((i >= bj_MAX_PLAYERS)) break;
-    if (
-      (udg_AFK[i + 1] === AFK_PLAYING &&
-        GetPlayerSlotState(Player(i)!) === PLAYER_SLOT_STATE_PLAYING)
-    ) {
-      if ((udg_sheepCount[i + 1] < lowestSc)) {
+  if (GetPlayerSlotState(rotated) === PLAYER_SLOT_STATE_LEFT) rotated = Player(PLAYER_NEUTRAL_PASSIVE)!;
+  if (rotated === Player(PLAYER_NEUTRAL_PASSIVE)!) return;
+  for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+    if (udg_AFK[i + 1] === AFK_PLAYING && GetPlayerSlotState(Player(i)!) === PLAYER_SLOT_STATE_PLAYING) {
+      if (udg_sheepCount[i + 1] < lowestSc) {
         lowestSc = udg_sheepCount[i + 1];
         newRotated = Player(i)!;
         ties = 0;
-      } else if ((udg_sheepCount[i + 1] === lowestSc)) {
-        if ((GetRandomReal(0, 1) < 1 / (ties + 2))) {
-          newRotated = Player(i)!;
-        }
-        ties = ties + 1;
+      } else if (udg_sheepCount[i + 1] === lowestSc) {
+        // WAT?
+        if (GetRandomReal(0, 1) < 1 / (ties + 2)) newRotated = Player(i)!;
+        ties++;
       }
     }
-    i = i + 1;
   }
-  if ((lowestSc <= currentSc)) {
-    return;
-  }
+  if (lowestSc <= currentSc) return;
   udg_AFK[GetConvertedPlayerId(rotated)] = AFK_PLAYING;
   udg_AFK[GetConvertedPlayerId(newRotated)] = AFK_AFK;
   const unrotated = rotated;
@@ -231,35 +206,39 @@ const Smart__traditionalSmart = (sheepToDraft: number): void => {
   let p: player;
   let playersInSpirit: number;
   let playersInDraft: number;
-  ForForce(GetPlayersAll()!, () => {
-    if (isActivePlayer(GetEnumPlayer()!)) {
-      ForceAddPlayer(udg_Wolf, GetEnumPlayer()!);
-    }
-  });
+
+  // Put non-pubs as wolf
+  ForForce(GetPlayersAll()!, () => isActivePlayer(GetEnumPlayer()!) && ForceAddPlayer(udg_Wolf, GetEnumPlayer()!));
   draftLowestSCToSpirit();
+
+  // Seed the team with someone with lowest SC
   p = ForcePickRandomPlayer(udg_Spirit)!;
   ForceRemovePlayer(udg_Spirit, p);
   ForceAddPlayer(udg_Sheep, p);
   playersInSpirit = CountPlayersInForceBJ(udg_Spirit);
-  sheepToDraft = sheepToDraft - 1;
-  while (true) {
-    if ((sheepToDraft <= 0)) break;
-    if ((playersInSpirit === 0)) {
+  sheepToDraft--;
+
+  // Draft from lowest SC then lowest PC counts
+  while (sheepToDraft > 0) {
+    // Refill spirits
+    if (playersInSpirit === 0) {
       draftLowestSCToSpirit();
       playersInSpirit = CountPlayersInForceBJ(udg_Spirit);
     }
+
     draftLowestPCToDraft();
     playersInDraft = CountPlayersInForceBJ(udg_Draft);
-    playersInSpirit = playersInSpirit - playersInDraft;
-    while (true) {
-      if ((!(sheepToDraft > 0 && playersInDraft > 0))) break;
+    playersInSpirit -= playersInDraft;
+    while (sheepToDraft > 0 && playersInDraft > 0) {
       p = ForcePickRandomPlayer(udg_Draft)!;
       ForceRemovePlayer(udg_Draft, p);
       ForceAddPlayer(udg_Sheep, p);
-      sheepToDraft = sheepToDraft - 1;
-      playersInDraft = playersInDraft - 1;
+      sheepToDraft--;
+      playersInDraft--;
     }
   }
+
+  // Place remaining as wolves
   ForForce(udg_Spirit, () => {
     ForceRemovePlayer(udg_Spirit, GetEnumPlayer()!);
     ForceAddPlayer(udg_Wolf, GetEnumPlayer()!);
@@ -274,6 +253,7 @@ const smart1vX = () => {
   let pool: MapPlayerEx[] = [];
   let minSc = Infinity;
   forEachPlayingPlayer((p) => {
+    if (pub[p.id]) return;
     if (p.sheepLastGame) return ForceEx.wolves.addPlayer(p);
     if (p.sheepCount < minSc) {
       pool.forEach((p) => ForceEx.wolves.addPlayer(p));
@@ -325,9 +305,7 @@ const smart = () => {
   let addedToWolf = false;
   for (let i = pubStart; i < end; i++) {
     const n = i % bj_MAX_PLAYERS;
-    if (
-      pub[n] && GetPlayerSlotState(Player(n)!) === PLAYER_SLOT_STATE_PLAYING
-    ) {
+    if (pub[n] && GetPlayerSlotState(Player(n)!) === PLAYER_SLOT_STATE_PLAYING) {
       if (addToSheep) ForceAddPlayer(udg_Sheep, Player(n)!);
       else {
         ForceAddPlayer(udg_Wolf, Player(n)!);
@@ -361,8 +339,7 @@ const togglePub = () => {
   const i = S2I(parts[1]) - 1;
   if (GetPlayerSlotState(Player(i)!) !== PLAYER_SLOT_STATE_PLAYING) return;
   const value = !(pub[i]);
-  setPub(i, value);
-  for (let n = 2; n < parts.length; n++) setPub(S2I(parts[n]) - 1, value);
+  for (let n = 1; n < parts.length; n++) setPub(S2I(parts[n]) - 1, value);
 };
 
 const toggleRotate = () => {

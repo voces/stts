@@ -23,7 +23,7 @@ type Terrain = {
   shops: [location: rect, type: number][];
 };
 
-const terrains: Terrain[] = [];
+export const terrains: Terrain[] = [];
 export const terrain: Terrain = {} as Terrain;
 
 const SHOP_A = FourCC("nC12");

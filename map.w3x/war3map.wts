@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 24h
+Sheep Tag ReVoLuTiOn 24i
 }
 
 STRING 40
@@ -4281,13 +4281,13 @@ STRING 4122
 Calls for aerial goblin support to help destroy farms.
 }
 
-STRING 4123
+STRING 4125
 {
-|cff00ff00Sheep Tag ReVoLuTiOn 24h|r
+|cff00ff00Sheep Tag ReVoLuTiOn 24i|r
 }
 
-STRING 4124
+STRING 4126
 {
-|cff00ff0024h|r
+|cff00ff0024i|r
 }
 
