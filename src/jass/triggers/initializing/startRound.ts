@@ -107,6 +107,7 @@ const resetRoundStats = () => {
   udg_Teams = TEAMS_OPEN;
   udg_captainTurn = 0;
   udg_gameStarted = false;
+  wolvesCreated = false;
   udg_dummyWisps = 0;
   udg_wispPoints = 0;
   udg_blightCounter = 0;

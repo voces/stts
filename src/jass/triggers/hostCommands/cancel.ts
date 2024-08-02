@@ -1,3 +1,4 @@
+import { ForceEx } from "handles/ForceEx";
 import { displaySwitchWinner } from "modes/switch/winnerMsg";
 import { enforceTeamResourceMultiboard } from "userSettings/teamResources";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
@@ -64,6 +65,8 @@ const Trig_cancel_Actions = () => {
   }
 
   if (udg_switchOn) displaySwitchWinner();
+
+  if (wolvesCreated) ForceEx.sheep.for((s) => udg_totalFarmCountBeforeWolves[s.id].pop());
 
   TriggerExecute(gg_trg_startRound);
 };

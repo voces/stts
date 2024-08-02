@@ -1,5 +1,32 @@
 # TODO
 
+- Mana Bomb
+
+# 24i
+
+## Feature changes
+
+- Added Bloodlust to Magic Farm
+
+## Balance changes
+
+- Reduced Hay Trap's slow debuff from -50% movement speed to -20% movement speed
+- Increased Hay Trap's build time from instant to 4 seconds
+- Added some jumps to tiny terrain
+- Magic Farm changes
+  - Reduced base mana regeneration from 3.5/s to 2/s
+  - Reduced mana maximum from 300 to 100
+  - Reduced mana cost of Invisibility from 50 to 30
+- Sentry Farm changes
+  - Increased Far Sight area of effect from 1200 to 3600
+  - Increased Far Sight duration from 5 seconds to 15 seconds
+
+## Bug fixes
+
+- Practice turns president mode off
+- Fixed Feinting Farm's feints coloration
+- Fixed average farm count before wolves to handle -cancel
+
 # 24h
 
 ## Feature changes

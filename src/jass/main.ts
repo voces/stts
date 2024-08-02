@@ -441,9 +441,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let udg_totalFarmsBuilt: Array<number>;
   // deno-lint-ignore prefer-const
-  let udg_totalFarmCountBeforeWolves: Array<number>;
-  // deno-lint-ignore prefer-const
-  let udg_averageFarmCountBeforeWolves: Array<number>;
+  let udg_totalFarmCountBeforeWolves: number[][];
   // deno-lint-ignore prefer-const
   let udg_roundTimes: Array<string>;
   // deno-lint-ignore prefer-const
@@ -736,6 +734,8 @@ declare global {
   // deno-lint-ignore prefer-const
   let s__times_sheepCount: Array<number>;
   let f__arg__this: number;
+  // deno-lint-ignore prefer-const
+  let wolvesCreated: boolean;
 }
 
 //globals from Util:
@@ -875,11 +875,11 @@ udg_isAnon = false;
 udg_vwins = [];
 udg_totalFarmsBuilt = [];
 udg_totalFarmCountBeforeWolves = [];
-udg_averageFarmCountBeforeWolves = [];
 udg_roundTimes = [];
 udg_sheepSurvived = [];
 udg_autocontrol = [];
 udg_autoTime = true;
+wolvesCreated = false;
 
 // Generated
 AFK_PLAYING = 0;
@@ -1621,14 +1621,7 @@ const InitGlobals = () => {
   i = 0;
   while (true) {
     if ((i > 24)) break;
-    udg_totalFarmCountBeforeWolves[i] = 0;
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_averageFarmCountBeforeWolves[i] = 0;
+    udg_totalFarmCountBeforeWolves[i] = [];
     i = i + 1;
   }
 

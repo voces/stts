@@ -1,10 +1,10 @@
 import { Effect, MapPlayer, Trigger } from "w3ts";
 import { UNIT_TYPE_ID_FEINTING_TOWER } from "constants";
-import { MapPlayerEx } from "handles/MapPlayerEx";
 import { UnitEx } from "handles/UnitEx";
 import { game } from "util/game";
 import { setTimeout } from "util/setTimeout";
 import { withUnitsInRange } from "util/withGroup";
+import { MapPlayerEx } from "handles/MapPlayerEx";
 
 const feintingTowers = new Set<UnitEx>();
 let ticker: Trigger;
@@ -49,8 +49,8 @@ game.onInterval(4, () => {
         clone.mana = u.mana;
         clone.setBaseDamage(-500, 0);
         clone.setBaseDamage(-500, 1);
-        if (clone.owner.compareAlliance(MapPlayerEx.fromLocal(), ALLIANCE_SHARED_VISION)) {
-          clone.setVertexColor(63, 63, 255, 127);
+        if (u.owner.compareAlliance(MapPlayerEx.fromLocal(), ALLIANCE_SHARED_VISION)) {
+          clone.setVertexColor(127, 255, 127, 127);
         }
 
         // Make unselectable and not impact pathing, but will follow pathing after 0.1 seconds

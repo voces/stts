@@ -4,6 +4,7 @@ import "./attack";
 import "./disable";
 import "./owner";
 import "./stop";
+import { president } from "modes/president";
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   gg_trg_practice = CreateTrigger();
@@ -26,6 +27,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     udg_sheepGold = 1000000;
     udg_wolfGold = 1000000;
     udg_Teams = TEAMS_LOCK_IE_PLAYING;
+    president.enabled = false;
     EnableTrigger(gg_trg_attack);
     EnableTrigger(gg_trg_stop);
     EnableTrigger(gg_trg_mass);

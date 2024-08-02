@@ -1847,12 +1847,6 @@ STRING 2891
 Far Sight
 }
 
-STRING 2893
-// Abilities: A01I (Far Sight), Ubertip (Tooltip - Normal - Extended)
-{
-Reveals a targeted area, including invisible units, for 5 seconds.
-}
-
 STRING 2895
 // Abilities: A01O (Rune of Mana), Name (Name)
 {
@@ -4289,5 +4283,71 @@ STRING 4125
 STRING 4126
 {
 |cff00ff0024i|r
+}
+
+STRING 4127
+// Abilities: A00F (Invisibility Farm), EditorSuffix (Editor Suffix)
+{
+(Magic Farm)
+}
+
+STRING 4129
+// Abilities: A02J (Bloodlust), EditorSuffix (Editor Suffix)
+{
+(Magic Farm)
+}
+
+STRING 4130
+// Abilities: A02J (Bloodlust), Hotkey (Hotkey - Normal)
+{
+C
+}
+
+STRING 4132
+// Abilities: A02J (Bloodlust), Ubertip (Tooltip - Normal - Extended)
+{
+Increases a friendly unit's movement speed by <A02J,DataB1,%>%. |nLasts <A02J,Dur1> seconds.
+}
+
+STRING 4133
+// Abilities: A01I (Far Sight), EditorSuffix (Editor Suffix)
+{
+(Sentry Farm)
+}
+
+STRING 4134
+// Abilities: A01I (Far Sight), Ubertip (Tooltip - Normal - Extended)
+{
+Reveals a targeted area, including invisible units, for 15 seconds.
+}
+
+STRING 4135
+// Abilities: A02O (Devotion Aura), EditorSuffix (Editor Suffix)
+{
+(Critter)
+}
+
+STRING 4138
+// Buffs/Effects: B00M (Chicken Blessing), EditorSuffix (Editor Suffix)
+{
+(Critter)
+}
+
+STRING 4143
+// Buffs/Effects: B00M (Chicken Blessing), EditorName (Name (Editor Only))
+{
+Chicken Blessing
+}
+
+STRING 4144
+// Buffs/Effects: B00M (Chicken Blessing), Buffubertip (Tooltip - Extended)
+{
+This unit has been blessed by a chicken; it has greatly increased armor.
+}
+
+STRING 4145
+// Buffs/Effects: B00M (Chicken Blessing), Bufftip (Tooltip)
+{
+Chicken Blessing
 }
 

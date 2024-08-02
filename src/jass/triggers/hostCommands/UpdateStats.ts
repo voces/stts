@@ -31,8 +31,11 @@ const Trig_UpdateStats_forEnumPlayer = () => {
 
   setPlayerFlag(p.handle, "drawer");
   logFarmsBuilt(p.handle, udg_totalFarmsBuilt[p.cid]);
-  udg_averageFarmCountBeforeWolves[p.cid] = udg_totalFarmCountBeforeWolves[p.cid] / udg_sheepCount[p.cid];
-  logAverageFarmCountBeforeWolves(p.handle, udg_averageFarmCountBeforeWolves[p.cid]);
+  logAverageFarmCountBeforeWolves(
+    p.handle,
+    udg_totalFarmCountBeforeWolves[p.cid - 1].reduce((a, b) => a + b) /
+      udg_totalFarmCountBeforeWolves[p.cid - 1].length,
+  );
   logSaves(p.handle, udg_totalSaves[p.cid]);
   logKills(p.handle, udg_totalKills[p.cid]);
   logWins(p.handle, udg_wins[p.cid]);

@@ -1,14 +1,17 @@
 import { startRuneTimer } from "functions/runes";
+import { ForceEx } from "handles/ForceEx";
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { terrain } from "settings/terrain";
 import { forEachPlayer } from "util/forEachPlayer";
 
 const createWolf = () => {
-  if (!udg_practiceOn && udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === AFK_PLAYING) {
-    PanCameraToTimedForPlayer(GetEnumPlayer()!, GetRectCenterX(terrain.wolf), GetRectCenterY(terrain.wolf), 0);
+  const p = GetEnumPlayer()!;
+  const cid = GetConvertedPlayerId(p);
+  if (!udg_practiceOn && udg_AFK[cid] === AFK_PLAYING) {
+    PanCameraToTimedForPlayer(p, GetRectCenterX(terrain.wolf), GetRectCenterY(terrain.wolf), 0);
   }
-  const wolf = CreateUnit(GetEnumPlayer()!, shepType, GetRectCenterX(terrain.wolf), GetRectCenterY(terrain.wolf), 270)!;
-  if (udg_freakHotkeys[GetConvertedPlayerId(GetEnumPlayer()!)]) {
+  const wolf = CreateUnit(p, shepType, GetRectCenterX(terrain.wolf), GetRectCenterY(terrain.wolf), 270)!;
+  if (udg_freakHotkeys[cid]) {
     UnitRemoveAbility(wolf, FourCC("A00S"));
     UnitRemoveAbility(wolf, FourCC("A018"));
     UnitAddAbility(wolf, FourCC("A01H"));
@@ -19,24 +22,22 @@ const createWolf = () => {
     SetUnitOwner(wolf, Player(bj_PLAYER_NEUTRAL_VICTIM)!, false);
     IssueImmediateOrderBJ(wolf, "holdposition");
   } else {
-    SelectUnitForPlayerSingle(wolf, GetEnumPlayer()!);
-    ForceUICancelBJ(GetEnumPlayer()!);
-    udg_unit[GetConvertedPlayerId(GetEnumPlayer()!)] = wolf;
+    SelectUnitForPlayerSingle(wolf, p);
+    ForceUICancelBJ(p);
+    udg_unit[cid] = wolf;
   }
   SuspendHeroXPBJ(false, wolf);
-  udg_unit2[GetConvertedPlayerId(GetEnumPlayer()!)] = wolf;
+  udg_unit2[cid] = wolf;
 };
 
 const Trig_createWolves_Actions = () => {
   if (autoCancel()) return;
 
   ForForce(udg_Wolf, createWolf);
+  ForceEx.sheep.for((s) => udg_totalFarmCountBeforeWolves[s.id].push(udg_farmCount[s.id + 1]));
 
-  ForForce(udg_Sheep, () => {
-    udg_totalFarmCountBeforeWolves[GetConvertedPlayerId(GetEnumPlayer()!)] =
-      udg_totalFarmCountBeforeWolves[GetConvertedPlayerId(GetEnumPlayer()!)] +
-      udg_farmCount[GetConvertedPlayerId(GetEnumPlayer()!)];
-  });
+  wolvesCreated = true;
+
   DisplayTimedTextToForce(
     udg_Sheep,
     5,
