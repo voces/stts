@@ -1766,7 +1766,6 @@ declare global {
   let updateTimes: () => void;
 }
 updateTimes = () => {
-  let n: number;
   let s = "";
   let timeElapsed = TimerGetElapsed(udg_Timer);
   const emitRound = !someoneLeft && udg_sheepGold === 0 && udg_wolfGold === 0 &&
@@ -1786,39 +1785,38 @@ updateTimes = () => {
       IsPlayerInForce(Player(i)!, udg_Sheep) ||
       IsPlayerInForce(Player(i)!, udg_Spirit)
     ) {
+      sheep++;
       s__times_sheepCount[playerTimes[i]] = s__times_sheepCount[playerTimes[i]] + 1;
       if (s === "") s = MapPlayerEx.fromIndex(i)!.coloredName;
       else s = s + ", " + MapPlayerEx.fromIndex(i);
       if (emitRound) {
         if (sheep > 0) sheepString = sheepString + " " + I2S(i);
         else sheepString = I2S(i)!;
-        sheep++;
       }
       udg_roundTimes[i + 1] = udg_roundTimes[i + 1] + R2S(timeElapsed) + " | ";
-      if (timeElapsed > s__times_pTimeMax[playerTimes[i]]) {
-        s__times_pTimeMax[playerTimes[i]] = timeElapsed;
-      }
-      n = 0;
-      while (true) {
-        if (n === 24) break;
+      if (timeElapsed > s__times_pTimeMax[playerTimes[i]]) s__times_pTimeMax[playerTimes[i]] = timeElapsed;
+      for (let n = 0; n < bj_MAX_PLAYERS; n++) {
         if (IsPlayerInForce(Player(n)!, udg_Sheep) || IsPlayerInForce(Player(n)!, udg_Spirit)) {
-          s___times_pTime[s__times_pTime[playerTimes[i]] + n] = timeElapsed;
+          s___times_pTime[s__times_pTime[playerTimes[i]] + n] += timeElapsed;
         }
-        n = n + 1;
       }
-    } else if (IsPlayerInForce(Player(i)!, udg_Wolf) && emitRound) {
-      if (wolves > 0) wolvesString = wolvesString + " " + I2S(i);
-      else wolvesString = I2S(i)!;
+    } else if (IsPlayerInForce(Player(i)!, udg_Wolf)) {
       wolves++;
+      if (emitRound) {
+        if (wolves > 0) wolvesString = wolvesString + " " + I2S(i);
+        else wolvesString = I2S(i)!;
+      }
     }
   }
 
-  const mode = `${sheep}v${wolves}`;
-  for (let i = 0; i < bj_MAX_PLAYERS; i++) {
-    if (
-      IsPlayerInForce(Player(i)!, udg_Sheep) ||
-      IsPlayerInForce(Player(i)!, udg_Spirit)
-    ) addTime(i, mode, timeElapsed);
+  if (!someoneLeft) {
+    const mode = `${sheep}v${wolves}`;
+    for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+      if (
+        IsPlayerInForce(Player(i)!, udg_Sheep) ||
+        IsPlayerInForce(Player(i)!, udg_Spirit)
+      ) addTime(i, mode, timeElapsed);
+    }
   }
 
   udg_timeString = formatTime(timeElapsed);

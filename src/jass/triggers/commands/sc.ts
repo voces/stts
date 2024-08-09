@@ -31,7 +31,7 @@ const Trig_sc_printSheepCounts = () => {
   }
 };
 
-const setSc = (pId: number, newSC: number) => {
+export const setSc = (pId: number, newSC: number) => {
   udg_sheepCount[pId] = newSC;
   LeaderboardSetPlayerItemValueBJ(
     ConvertedPlayer(pId)!,

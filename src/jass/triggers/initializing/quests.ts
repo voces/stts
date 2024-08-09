@@ -5,11 +5,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   CreateQuestBJ(
     bj_QUESTTYPE_OPT_DISCOVERED,
     "Sheep Tag ReVoLuTiOn",
-    `Join our Discord |CFF00AEEFhttps://dsc.gg/sheeptag|r for more Sheep Tag!
-
-See |cff00aeefGame Info|r (|cffed1c24F9|r) for commands, Hall of Fame, and more information.
-
-New? Type |CFF00AEEF-smart|r.`,
+    "Join our Discord |CFF00AEEFhttps://dsc.gg/sheeptag|r for more Sheep Tag!",
     "ReplaceableTextures\\CommandButtons\\BTNSheep.blp",
   );
 

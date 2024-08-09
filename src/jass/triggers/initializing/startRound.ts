@@ -1,5 +1,6 @@
 import { disableIncome, resetBankedGold } from "functions/farms/savingFarms";
 import { stopRuneTimers } from "functions/runes";
+import { MapPlayerEx } from "handles/MapPlayerEx";
 import { switchSheepTimers } from "modes/switch/switch";
 import { terrain } from "settings/terrain";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
@@ -112,8 +113,8 @@ const resetRoundStats = () => {
   udg_wispPoints = 0;
   udg_blightCounter = 0;
   bj_forLoopAIndex = 0;
-  lastSheepReceiver = null as unknown as player;
-  lastWolfReceiver = null as unknown as player;
+  lastSheepReceiver = null;
+  lastWolfReceiver = null;
   if (udg_practiceOn) {
     autoCancelEnabled = true;
     udg_practiceOn = false;
@@ -240,14 +241,15 @@ const Trig_startRound_Actions = () => {
     startRoundToggledTriggers();
   } else {
     if (init) {
-      displayTimedTextToAll(
-        `Join our Discord |CFF00AEEFhttps://dsc.gg/sheeptag|r for more Sheep Tag!
+      for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+        const p = MapPlayerEx.fromIndex(i);
+        if (!p?.isActiveHuman) continue;
+        p.displayTimedText(`Join our Discord |CFF00AEEFhttps://dsc.gg/sheeptag|r for more Sheep Tag!
 
 See |cff00aeefGame Info|r (|cffed1c24F9|r) for commands, Hall of Fame, and more information.
 
-New? Type |CFF00AEEF-smart|r.`,
-        60,
-      );
+${p.isHost ? "New? Type |CFF00AEEF-smart|r." : `Please wait until ${MapPlayerEx.host} starts the game.`}`);
+      }
     }
     EnableTrigger(gg_trg_position);
     startRoundToggledTriggers();

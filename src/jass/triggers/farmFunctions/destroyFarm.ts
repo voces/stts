@@ -1,24 +1,20 @@
 const Trig_destroyFarm_Actions = () => {
-  cid = GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()!));
-  if (udg_farmCount[cid] > 0) udg_farmCount[cid]--;
-  SetPlayerStateBJ(
-    ConvertedPlayer(cid)!,
-    PLAYER_STATE_RESOURCE_LUMBER,
-    udg_farmCount[cid],
-  );
-  RemoveUnit(GetTriggerUnit()!);
-  bj_forLoopAIndex = 1;
-  bj_forLoopAIndexEnd = udg_lastPlayer;
-  while (true) {
-    if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-    if (!udg_switchOn) {
-      LeaderboardSetPlayerItemValueBJ(
-        ConvertedPlayer(cid)!,
-        PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
-        udg_farmCount[cid],
-      );
-    }
-    bj_forLoopAIndex = bj_forLoopAIndex + 1;
+  const u = GetTriggerUnit()!;
+  const owner = GetOwningPlayer(u);
+  const ownerId = GetConvertedPlayerId(owner);
+
+  if (udg_farmCount[ownerId] > 0) udg_farmCount[ownerId]--;
+  SetPlayerStateBJ(owner, PLAYER_STATE_RESOURCE_LUMBER, udg_farmCount[ownerId]);
+
+  for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+    const p = Player(i)!;
+    if (IsUnitSelected(u, p)) SelectUnitAddForPlayer(udg_unit[i + 1], p);
+  }
+  RemoveUnit(u);
+
+  if (udg_switchOn) return;
+  for (let i = 1; i <= bj_MAX_PLAYERS; i++) {
+    LeaderboardSetPlayerItemValueBJ(owner, PlayerGetLeaderboardBJ(ConvertedPlayer(i)!)!, udg_farmCount[ownerId]);
   }
 };
 

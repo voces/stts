@@ -80,7 +80,6 @@ const translocateTick = () => {
 const Trig_createFarm_Actions = () => {
   const u = GetConstructingStructure()!;
   const playerId = GetConvertedPlayerId(GetOwningPlayer(u));
-  // let i = 1;
 
   if (IsUnitIllusion(GetTriggerUnit()!)) return;
 

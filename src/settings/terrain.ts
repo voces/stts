@@ -40,7 +40,7 @@ const setTerrain = (terrainIndex: number): void => {
   setTimeout(0.25, () => BlzChangeMinimapTerrainTex(terrain.minimap)); // Need a sufficient wait in w3ce
   PanCameraToTimed(GetRectCenterX(terrain.wolf), GetRectCenterY(terrain.wolf), 0);
   for (let i = 0; i < terrain.spawns.length; i++) {
-    udg_startLocation[i + 1] = terrain.spawns[i];
+    udg_masterStartLocation[i + 1] = udg_startLocation[i + 1] = terrain.spawns[i];
     const p = Player(i);
     if (p) spawns.set(p, { x: GetRectCenterX(terrain.spawns[i]), y: GetRectCenterY(terrain.spawns[i]) });
   }
@@ -160,56 +160,6 @@ const initTerrains = () => {
   });
 
   terrains.push({
-    name: "Tiny",
-    minimap: "war3mapImported\\tiny.blp",
-    cameraBounds: gg_rct_tcamera,
-    spawnType: "playerColor",
-    wisp: gg_rct_tfence,
-    wolf: gg_rct_tfence,
-    runes: {
-      invis: gg_rct_ti,
-      speed: gg_rct_ts,
-      omniscience: gg_rct_to,
-      mana: gg_rct_tm,
-    },
-    spawns: [
-      gg_rct_t1,
-      gg_rct_t2,
-      gg_rct_t3,
-      gg_rct_t4,
-      gg_rct_t5,
-      gg_rct_t6,
-      gg_rct_t7,
-      gg_rct_t8,
-      gg_rct_t9,
-      gg_rct_t10,
-      gg_rct_t11,
-      gg_rct_t12,
-      gg_rct_t13,
-      gg_rct_t14,
-      gg_rct_t15,
-      gg_rct_t16,
-      gg_rct_t17,
-      gg_rct_t18,
-      gg_rct_t19,
-      gg_rct_t20,
-      gg_rct_t21,
-      gg_rct_t22,
-      gg_rct_t23,
-      gg_rct_t24,
-    ],
-    spawnBounds: GetEntireMapRect()!,
-    shops: [
-      // [gg_rct_Vro_Shop_A1, SHOP_A],
-      // [gg_rct_Vro_Shop_A2, SHOP_A],
-      // [gg_rct_Vro_Shop_B1, SHOP_B],
-      // [gg_rct_Vro_Shop_B2, SHOP_B],
-      // [gg_rct_Vro_Shop_C1, SHOP_C],
-      // [gg_rct_Vro_Shop_C2, SHOP_C],
-    ],
-  });
-
-  terrains.push({
     name: "Vro",
     minimap: "war3mapImported\\classic.blp",
     cameraBounds: gg_rct_Vro_Camera_Bounds,
@@ -256,6 +206,56 @@ const initTerrains = () => {
       [gg_rct_Vro_Shop_B2, SHOP_B],
       [gg_rct_Vro_Shop_C1, SHOP_C],
       [gg_rct_Vro_Shop_C2, SHOP_C],
+    ],
+  });
+
+  terrains.push({
+    name: "Tiny",
+    minimap: "war3mapImported\\tiny.blp",
+    cameraBounds: gg_rct_tcamera,
+    spawnType: "playerColor",
+    wisp: gg_rct_tfence,
+    wolf: gg_rct_tfence,
+    runes: {
+      invis: gg_rct_ti,
+      speed: gg_rct_ts,
+      omniscience: gg_rct_to,
+      mana: gg_rct_tm,
+    },
+    spawns: [
+      gg_rct_t1,
+      gg_rct_t2,
+      gg_rct_t3,
+      gg_rct_t4,
+      gg_rct_t5,
+      gg_rct_t6,
+      gg_rct_t7,
+      gg_rct_t8,
+      gg_rct_t9,
+      gg_rct_t10,
+      gg_rct_t11,
+      gg_rct_t12,
+      gg_rct_t13,
+      gg_rct_t14,
+      gg_rct_t15,
+      gg_rct_t16,
+      gg_rct_t17,
+      gg_rct_t18,
+      gg_rct_t19,
+      gg_rct_t20,
+      gg_rct_t21,
+      gg_rct_t22,
+      gg_rct_t23,
+      gg_rct_t24,
+    ],
+    spawnBounds: GetEntireMapRect()!,
+    shops: [
+      // [gg_rct_Vro_Shop_A1, SHOP_A],
+      // [gg_rct_Vro_Shop_A2, SHOP_A],
+      // [gg_rct_Vro_Shop_B1, SHOP_B],
+      // [gg_rct_Vro_Shop_B2, SHOP_B],
+      // [gg_rct_Vro_Shop_C1, SHOP_C],
+      // [gg_rct_Vro_Shop_C2, SHOP_C],
     ],
   });
 

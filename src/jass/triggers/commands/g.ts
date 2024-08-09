@@ -69,8 +69,7 @@ const markReceiver = (sender: player, target: string): void => {
   }
 };
 
-const Trig_g_leastGoldCount = (forSheep: boolean, last: player): player => {
-  let i = 0;
+const Trig_g_leastGoldCount = (forSheep: boolean, last: player): player | null => {
   let least = -1;
   let ties = 0;
   let p!: player;
@@ -78,13 +77,12 @@ const Trig_g_leastGoldCount = (forSheep: boolean, last: player): player => {
   let backupTies = 0;
   let backupLeast = -1;
 
-  while (true) {
-    if (i === bj_MAX_PLAYERS) break;
+  for (let i = 0; i < bj_MAX_PLAYERS; i++) {
     if (
       GetTriggerPlayer() !== Player(i)! &&
       GetPlayerSlotState(Player(i)!) === PLAYER_SLOT_STATE_PLAYING &&
-      ((forSheep && (IsPlayerInForce(Player(i)!, udg_Sheep))) ||
-        (!forSheep && (IsPlayerInForce(Player(i)!, udg_Wolf))))
+      (forSheep && IsPlayerInForce(Player(i)!, udg_Sheep) ||
+        (!forSheep && IsPlayerInForce(Player(i)!, udg_Wolf)))
     ) {
       if (pub[i] || last === Player(i)!) {
         if (goldCount[i] < backupLeast || backupLeast === -1) {
@@ -93,9 +91,7 @@ const Trig_g_leastGoldCount = (forSheep: boolean, last: player): player => {
           backupTies = 0;
         } else if (goldCount[i] === backupLeast) {
           // This makes it so everyone has equal chance in the event of a tie
-          if (GetRandomReal(0, 1) < (1 / (backupTies + 2))) {
-            backup = Player(i)!;
-          }
+          if (GetRandomReal(0, 1) < (1 / (backupTies + 2))) backup = Player(i)!;
           backupTies = backupTies + 1;
         }
       } else if (goldCount[i] < least || least === -1) {
@@ -104,17 +100,14 @@ const Trig_g_leastGoldCount = (forSheep: boolean, last: player): player => {
         ties = 0;
       } else if (goldCount[i] === least) {
         // This makes it so everyone has equal chance in the event of a tie
-        if (GetRandomReal(0, 1) < (1 / (ties + 2))) {
-          p = Player(i)!;
-        }
+        if (GetRandomReal(0, 1) < (1 / (ties + 2))) p = Player(i)!;
         ties = ties + 1;
       }
     }
-    i = i + 1;
   }
 
   if (p == null) {
-    if (backup == null) return null as unknown as player;
+    if (backup == null) return null;
     p = backup;
   }
 

@@ -7,7 +7,7 @@ import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { clearForces } from "util/clearForces";
 import { spawns, spawnSetting } from "settings/spawns";
 import { createCritter } from "misc/critter";
-import { UNIT_TYPE_ID_START_POSITION } from "constants";
+import { ABILITY_TYPE_ID_RESET_START_POSITION, UNIT_TYPE_ID_START_POSITION } from "constants";
 import { switchSheepTimers } from "modes/switch/switch";
 import { startUpdatingLeaderboard } from "modes/switch/updateLeaderboard";
 import { cancelHostFarmSpawn } from "./startRound";
@@ -44,6 +44,7 @@ const Trig_createSheep_sheepActionsA = () => {
     if (IsPlayerInForce(p, udg_Sheep) && udg_AFK[i] === AFK_PLAYING && !udg_practiceOn) {
       if (
         IsPlayerInForce(p, udg_Sheep) &&
+        GetPlayerController(p) === MAP_CONTROL_USER &&
         (udg_shareOn && udg_autocontrol[GetPlayerId(GetEnumPlayer()!)] &&
             !(pub[i - 1]) && !udg_practiceOn && !udg_switchOn &&
             !(noAutoControl[i - 1]) ||
@@ -94,6 +95,7 @@ const Trig_createSheep_sheepActionsA = () => {
     const u = CreateUnit(GetEnumPlayer()!, UNIT_TYPE_ID_START_POSITION, spawn.x, spawn.y, 270)!;
     SelectUnitForPlayerSingle(u, GetEnumPlayer()!);
     if (spawnSetting.mode !== "free") UnitRemoveAbility(u, FourCC("Amov"));
+    else UnitAddAbility(u, ABILITY_TYPE_ID_RESET_START_POSITION);
     if (IsPlayerInForce(GetLocalPlayer(), udg_Wolf)) SetUnitVertexColor(u, 255, 255, 255, 0);
   }
 };
@@ -110,20 +112,12 @@ const Trig_createSheep_wolfActionsA = () => {
     p = ConvertedPlayer(i)!;
     if (
       GetPlayerController(GetEnumPlayer()!) === MAP_CONTROL_COMPUTER &&
-      IsPlayerInForce(p, udg_Wolf)
-    ) {
-      SetPlayerAllianceStateBJ(
-        GetEnumPlayer()!,
-        p,
-        bj_ALLIANCE_ALLIED_ADVUNITS,
-      );
-    } else if (
-      udg_practiceOn || udg_AFK[i] === AFK_AFK || IsPlayerInForce(p, udg_Wolf)
-    ) {
+      IsPlayerInForce(p, udg_Wolf) &&
+      GetPlayerController(p) === MAP_CONTROL_USER
+    ) SetPlayerAllianceStateBJ(GetEnumPlayer()!, p, bj_ALLIANCE_ALLIED_ADVUNITS);
+    else if (udg_practiceOn || udg_AFK[i] === AFK_AFK || IsPlayerInForce(p, udg_Wolf)) {
       SetPlayerAllianceStateBJ(GetEnumPlayer()!, p, bj_ALLIANCE_ALLIED_VISION);
-    } else {
-      SetPlayerAllianceStateBJ(GetEnumPlayer()!, p, bj_ALLIANCE_UNALLIED);
-    }
+    } else SetPlayerAllianceStateBJ(GetEnumPlayer()!, p, bj_ALLIANCE_UNALLIED);
     i = i + 1;
   }
 

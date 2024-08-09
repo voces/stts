@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 24i
+Sheep Tag ReVoLuTiOn 24j
 }
 
 STRING 40
@@ -144,7 +144,7 @@ W
 
 STRING 241
 {
-discord.gg/Y4dHvwX
+discord.gg/SKvs9C8WA5
 }
 
 STRING 298
@@ -4275,16 +4275,6 @@ STRING 4122
 Calls for aerial goblin support to help destroy farms.
 }
 
-STRING 4125
-{
-|cff00ff00Sheep Tag ReVoLuTiOn 24i|r
-}
-
-STRING 4126
-{
-|cff00ff0024i|r
-}
-
 STRING 4127
 // Abilities: A00F (Invisibility Farm), EditorSuffix (Editor Suffix)
 {
@@ -4349,5 +4339,63 @@ STRING 4145
 // Buffs/Effects: B00M (Chicken Blessing), Bufftip (Tooltip)
 {
 Chicken Blessing
+}
+
+STRING 4146
+{
+|cff00ff00Sheep Tag ReVoLuTiOn 24j|r
+}
+
+STRING 4147
+{
+|cff00ff0024j|r
+}
+
+STRING 4148
+// Doodads: D000 (Magic Fence), Name (Name)
+{
+Magic Fence
+}
+
+STRING 4152
+// Abilities: A02P (Reset start position), Hotkey (Hotkey - Normal)
+{
+R
+}
+
+STRING 4153
+// Abilities: A02P (Reset start position), Name (Name)
+{
+Reset start position
+}
+
+STRING 4154
+// Abilities: A02P (Reset start position), Unhotkey (Hotkey - Turn Off)
+{
+R
+}
+
+STRING 4155
+// Abilities: A02P (Reset start position), Tip (Tooltip - Normal)
+{
+Reset start position
+}
+
+STRING 4156
+// Abilities: A02P (Reset start position), Ubertip (Tooltip - Normal - Extended)
+{
+Resets your start position to your initial position or the one you've chosen with -position X.
+}
+
+STRING 4157
+// Abilities: A02P (Reset start position), Untip (Tooltip - Turn Off)
+{
+Reset start position
+}
+
+STRING 4158
+// Abilities: A02P (Reset start position), Unubertip (Tooltip - Turn Off - Extended)
+{
+Resets your start position to your initial position or the one you've chosen with -position X.
 }
 

@@ -4,6 +4,7 @@ import { clearForces } from "util/clearForces";
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { ForceEx } from "handles/ForceEx";
 import { forEachPlayingPlayer } from "util/forEachPlayingPlayer";
+import { setSc } from "jass/triggers/commands/sc";
 
 const perfectPlayerVariables: player[] = [];
 let pubStart = 0;
@@ -324,7 +325,31 @@ const smart = () => {
 
 const setPub = (pid: number, value: boolean) => {
   if (GetPlayerSlotState(Player(pid)!) !== PLAYER_SLOT_STATE_PLAYING) return;
+
+  // Increase gold count to minimum
+  let minGoldCount = goldCount[pid];
+  if (!value) {
+    for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+      if (!pub[i] && goldCount[i] < minGoldCount) minGoldCount = goldCount[i];
+    }
+    if (goldCount[pid] < minGoldCount) goldCount[pid] = minGoldCount;
+  }
+
+  // Decrease sheep count to maximum
+  let maxSheepCount = 0;
+  if (!value) {
+    for (let i = 1; i <= bj_MAX_PLAYERS; i++) {
+      if (!pub[i - 1] && udg_sheepCount[i] > maxSheepCount) {
+        BJDebugMsg(`adjusting max sc to ${udg_sheepCount[i]} from player ${i}`);
+        maxSheepCount = udg_sheepCount[i];
+      }
+    }
+    BJDebugMsg(`max non-pub sc is ${maxSheepCount}, player's is ${udg_sheepCount[pid + 1]}`);
+    if (udg_sheepCount[pid + 1] > maxSheepCount) setSc(pid + 1, maxSheepCount);
+  }
+
   pub[pid] = value;
+
   DisplayTimedTextToForce(
     GetPlayersAll()!,
     5,
@@ -336,6 +361,7 @@ const setPub = (pid: number, value: boolean) => {
 const togglePub = () => {
   if (udg_Custom !== GetTriggerPlayer()! || udg_gameStarted) return;
   const parts = GetEventPlayerChatString()!.split(" ");
+  if (parts.length === 1) return;
   const i = S2I(parts[1]) - 1;
   if (GetPlayerSlotState(Player(i)!) !== PLAYER_SLOT_STATE_PLAYING) return;
   const value = !(pub[i]);

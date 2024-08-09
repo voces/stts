@@ -2,11 +2,30 @@
 
 - Mana Bomb
 
+# 24j
+
+## Feature changes
+
+- Using Destroy (D) on a farm selects your primary unit
+- Unflagging someone as a pub adjusts their counters (sc & gc)
+- -position available outside of a round in additional to in -practice
+- Added Reset start position ability to Start position
+- Changed intro message for non-hosts
+
+## Bug fixes
+
+- Fixed Hard Farms being stackable
+- Fixed spawn location for Player 21 (Coal) on experimental terrain
+- Fixed -times
+- Fixed -atimes breaking due to unemitable rounds; rounds in which someone leaves does not count towards atimes
+- Fixed Discord links
+
 # 24i
 
 ## Feature changes
 
 - Added Bloodlust to Magic Farm
+- Added Critter Blessing
 
 ## Balance changes
 

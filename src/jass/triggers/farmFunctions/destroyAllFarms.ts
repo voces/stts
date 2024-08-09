@@ -1,16 +1,11 @@
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { removeEnumUnit } from "util/removeEnumUnit";
 
-export const Trig_destroyAllFarms_Func002002002 = () => {
-  return (IsUnitType(GetFilterUnit()!, UNIT_TYPE_STRUCTURE) === true);
-};
+export const isFilterUnitStructure = () => IsUnitType(GetFilterUnit()!, UNIT_TYPE_STRUCTURE);
 
 const Trig_destroyAllFarms_Actions = () => {
   cid = GetConvertedPlayerId(GetTriggerPlayer()!);
-  udg_atempgroup = GetUnitsOfPlayerMatching(
-    ConvertedPlayer(cid)!,
-    Condition(Trig_destroyAllFarms_Func002002002),
-  )!;
+  udg_atempgroup = GetUnitsOfPlayerMatching(ConvertedPlayer(cid)!, Condition(isFilterUnitStructure))!;
   udg_farmCount[cid] = 0;
   SetPlayerStateBJ(
     ConvertedPlayer(cid)!,
