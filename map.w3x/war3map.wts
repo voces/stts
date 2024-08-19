@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 24j
+Sheep Tag ReVoLuTiOn 24k
 }
 
 STRING 40
@@ -372,18 +372,6 @@ STRING 943
 // Units: hC05 (Invisible Farm), Hotkey (Hotkey)
 {
 X
-}
-
-STRING 953
-// Units: nC12 (Shop1), Name (Name)
-{
-Shop1
-}
-
-STRING 954
-// Units: n001 (Shop2), Name (Name)
-{
-Shop2
 }
 
 STRING 956
@@ -3603,44 +3591,20 @@ STRING 3846
 F
 }
 
-STRING 3866
-// Units: n005 (Shop3), Name (Name)
-{
-Shop3
-}
-
-STRING 3867
-// Units: n006 (Shop1), Name (Name)
-{
-Shop1
-}
-
 STRING 3868
-// Units: n006 (Shop1), EditorSuffix (Name - Editor Suffix)
+// Units: n006 (Consumable Items), EditorSuffix (Name - Editor Suffix)
 {
 (Rotated)
-}
-
-STRING 3869
-// Units: n007 (Shop2), Name (Name)
-{
-Shop2
 }
 
 STRING 3870
-// Units: n007 (Shop2), EditorSuffix (Name - Editor Suffix)
+// Units: n007 (Permanent Items), EditorSuffix (Name - Editor Suffix)
 {
 (Rotated)
 }
 
-STRING 3871
-// Units: n008 (Shop3), Name (Name)
-{
-Shop3
-}
-
 STRING 3872
-// Units: n008 (Shop3), EditorSuffix (Name - Editor Suffix)
+// Units: n008 (Miscellaneous Items), EditorSuffix (Name - Editor Suffix)
 {
 (Rotated)
 }
@@ -4053,12 +4017,6 @@ STRING 4080
 Tosses a Hay Trap.
 }
 
-STRING 4081
-// Items: I011 (hay), Ubertip (Tooltip - Extended)
-{
-Tosses a Hay Trap at a target location. Hay Traps cannot be built on and slow enemy units.|n|cffffcc0020 gold.|r |n|cff00aeef-buy hay: 28 gold.|r
-}
-
 STRING 4082
 // Abilities: A02H (Toss Hay Trap), Name (Name)
 {
@@ -4341,16 +4299,6 @@ STRING 4145
 Chicken Blessing
 }
 
-STRING 4146
-{
-|cff00ff00Sheep Tag ReVoLuTiOn 24j|r
-}
-
-STRING 4147
-{
-|cff00ff0024j|r
-}
-
 STRING 4148
 // Doodads: D000 (Magic Fence), Name (Name)
 {
@@ -4397,5 +4345,93 @@ STRING 4158
 // Abilities: A02P (Reset start position), Unubertip (Tooltip - Turn Off - Extended)
 {
 Resets your start position to your initial position or the one you've chosen with -position X.
+}
+
+STRING 4159
+{
+|cff00ff00Sheep Tag ReVoLuTiOn 24k|r
+}
+
+STRING 4160
+{
+|cff00ff0024k|r
+}
+
+STRING 4166
+// Units: n005 (Miscellaneous Items), EditorSuffix (Name - Editor Suffix)
+{
+(Inline)
+}
+
+STRING 4167
+// Units: nC12 (Consumable Items), Name (Name)
+{
+Consumable Items
+}
+
+STRING 4168
+// Units: n001 (Permanent Items), Name (Name)
+{
+Permanent Items
+}
+
+STRING 4169
+// Units: n005 (Miscellaneous Items), Name (Name)
+{
+Miscellaneous Items
+}
+
+STRING 4170
+// Units: n006 (Consumable Items), Name (Name)
+{
+Consumable Items
+}
+
+STRING 4171
+// Units: n007 (Permanent Items), Name (Name)
+{
+Permanent Items
+}
+
+STRING 4172
+// Units: n008 (Miscellaneous Items), Name (Name)
+{
+Miscellaneous Items
+}
+
+STRING 4173
+// Units: n00C (Consumable Items), Name (Name)
+{
+Consumable Items
+}
+
+STRING 4174
+// Units: n00C (Consumable Items), EditorSuffix (Name - Editor Suffix)
+{
+(Inline)
+}
+
+STRING 4175
+// Units: n00D (Permanent Items), Name (Name)
+{
+Permanent Items
+}
+
+STRING 4176
+// Units: n00D (Permanent Items), EditorSuffix (Name - Editor Suffix)
+{
+(Inline)
+}
+
+STRING 4177
+// Units: n00E (Miscellaneous Items), Name (Name)
+{
+Miscellaneous Items
+}
+
+STRING 4178
+// Items: I011 (hay), Ubertip (Tooltip - Extended)
+{
+Tosses a Hay Trap at a target location. Hay Traps block units and are difficult for sheep to kill.|n|cffffcc0030 gold.|r |n|cff00aeef-buy hay: 42 gold.|r
 }
 

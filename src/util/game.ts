@@ -52,6 +52,12 @@ export const game = {
     t.addAction(() => fn({ unit: UnitEx.fromEvent()! }));
     return Promise.resolve(t);
   },
+  onConstructionCancel: (fn: (event: { unit: UnitEx }) => void) => {
+    const t = Trigger.create();
+    t.registerAnyUnitEvent(EVENT_PLAYER_UNIT_CONSTRUCT_CANCEL);
+    t.addAction(() => fn({ unit: UnitEx.fromEvent()! }));
+    return Promise.resolve(t);
+  },
   onResearch: (fn: (event: { researchId: number; unit: UnitEx; player: MapPlayerEx }) => void) => {
     const t = Trigger.create();
     t.registerAnyUnitEvent(EVENT_PLAYER_UNIT_RESEARCH_FINISH);

@@ -40,6 +40,20 @@ export class MapPlayerEx extends MapPlayer {
     DisplayTimedTextToPlayer(this.handle, 0, 0, duration, message);
   }
 
+  getSelection() {
+    const units: unit[] = [];
+    const condition = Condition(() => {
+      const u = GetFilterUnit();
+      if (u && UnitAlive(u)) units.push(u);
+      return false;
+    });
+    const g = CreateGroup();
+    GroupEnumUnitsSelected(g, this.handle, condition);
+    DestroyCondition(condition);
+    DestroyGroup(g);
+    return units;
+  }
+
   get isHost() {
     return this.handle === udg_Custom;
   }

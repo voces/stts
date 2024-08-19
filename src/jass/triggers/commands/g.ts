@@ -1,7 +1,9 @@
 import { UnitEx } from "handles/UnitEx";
 import { president } from "modes/president";
 import { terrain } from "settings/terrain";
+import { displayToVerit } from "util/displayTimedTextToAll";
 import { isPointInRect } from "util/geometry";
+import { isUnitSameTeam } from "util/isUnitSameTeam";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { setTimeout, Timeout } from "util/setTimeout";
 import { withPlayerUnits } from "util/withGroup";
@@ -128,17 +130,20 @@ export const giveAllGold = (sender: player): void => {
   if (amount === 0 || !udg_giveGold) return;
 
   // Select to prioritize
+  let goldStep = "selection";
   let receiver: player | null = selectedPriority[GetPlayerId(sender)]?.[0] ?? null;
   if (receiver && IsPlayerInForce(receiver, udg_Spirit)) receiver = null;
 
   // Priority is last receiver, president, or a random person with least gc
   if (!receiver) {
     if (IsPlayerInForce(sender, udg_Sheep) || IsPlayerInForce(sender, udg_Spirit)) {
+      goldStep = "train";
       receiver = lastSheepReceiver;
       if (
         receiver == null || receiver === sender || GetPlayerSlotState(receiver) === PLAYER_SLOT_STATE_LEFT ||
         IsPlayerInForce(receiver, udg_Spirit)
       ) {
+        goldStep = president.enabled ? "president" : "algo";
         receiver = president.enabled
           ? president.president.handle
           : Trig_g_leastGoldCount(true, lastReceivedFrom[GetPlayerId(sender)]);
@@ -151,8 +156,10 @@ export const giveAllGold = (sender: player): void => {
     }
   }
 
-  // Don't transfer to self
+  // Don't transfer to self, a leaver, or a wisp
   if (receiver === sender || receiver == null || GetPlayerSlotState(receiver) === PLAYER_SLOT_STATE_LEFT) return;
+  // TODO: remove in 2025 if no hits
+  if (IsPlayerInForce(receiver, udg_Spirit)) displayToVerit(`Gold given to wisp on step ${goldStep}`);
 
   // Ensure a train is established
   if ((IsPlayerInForce(sender, udg_Sheep) || IsPlayerInForce(sender, udg_Spirit)) && lastSheepReceiver !== receiver) {
@@ -251,7 +258,7 @@ InitTrig_g = () => {
       Filter(() => {
         const u = GetFilterUnit();
         const p = GetTriggerPlayer();
-        return !!u && !!p && IsUnitAlly(u, p) && GetOwningPlayer(u) !== p &&
+        return !!u && !!p && isUnitSameTeam(u, p) && GetOwningPlayer(u) !== p &&
           !IsPlayerInForce(GetOwningPlayer(u), udg_Spirit);
       }),
     );

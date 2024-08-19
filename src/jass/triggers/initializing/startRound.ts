@@ -244,7 +244,7 @@ const Trig_startRound_Actions = () => {
       for (let i = 0; i < bj_MAX_PLAYERS; i++) {
         const p = MapPlayerEx.fromIndex(i);
         if (!p?.isActiveHuman) continue;
-        p.displayTimedText(`Join our Discord |CFF00AEEFhttps://dsc.gg/sheeptag|r for more Sheep Tag!
+        p.displayTimedText(`\nJoin our Discord |CFF00AEEFhttps://dsc.gg/sheeptag|r for more Sheep Tag!
 
 See |cff00aeefGame Info|r (|cffed1c24F9|r) for commands, Hall of Fame, and more information.
 

@@ -93,8 +93,8 @@ const Trig_createFarm_Actions = () => {
     if (translocates.length === 1) translocateTicker.start(0.03, true, translocateTick);
   }
 
+  if (udg_switchOn) return;
   for (let i = 1; i <= bj_MAX_PLAYERS; i++) {
-    if (udg_switchOn) return;
     LeaderboardSetPlayerItemValueBJ(
       ConvertedPlayer(playerId)!,
       PlayerGetLeaderboardBJ(ConvertedPlayer(i)!)!,

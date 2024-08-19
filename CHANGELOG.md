@@ -2,6 +2,42 @@
 
 - Mana Bomb
 
+# 24k
+
+## Feature changes
+
+- Hay Stack rework
+  - Removed Slow Aura
+  - Blocks pathing
+  - Increased gold cost from 20/28 to 30/42
+  - Can be killed in one hit by shepherds
+  - Added death animation
+- Cancelling a farm in construction selects your primary unit if your selection is left empty
+- Updated Destroy (D) to only select your primary unit if your selection is left empty
+- Added Compact terrain
+- -terrain now accepts an optional argument, either the index or name of the terrain
+- Adjusted Experimental Terrain
+- Added -handicap pub X
+- Default pub handicap increased from 100% to 150%
+- -buy will fallback to main unit if no selected unit has an open inventory slot
+- Adjusted position of some farms in build menu so hotkeys in grid mode and classic are more aligned
+
+## Balance changes
+
+- Feinting Tower adjustments
+  - Increased area of effect from 1000 to 1200
+  - Decreased cost from 30 to 20
+- Increased Kaleidoscope max stacks from 9 to 10, the same as other charges
+- Decreased cooldown on Scepter of Mastery from 25 seconds to 20 seconds
+
+## Bug fixes
+
+- Fixed a bug in which selecting a shop gives it temporary gold priority
+- Fixed a bug in which sheep locations were pinged on the minimap if you receive Second Wind
+- Fixed ELO team strings
+- Removed debug messages when using -pub
+- Fixed a few overlapping hotkeys in grid mode
+
 # 24j
 
 ## Feature changes

@@ -5,6 +5,8 @@ import { MapPlayerEx } from "handles/MapPlayerEx";
 import { ForceEx } from "handles/ForceEx";
 import { forEachPlayingPlayer } from "util/forEachPlayingPlayer";
 import { setSc } from "jass/triggers/commands/sc";
+import { getAllHandicap, getPubHandicap } from "jass/triggers/commands/handicap";
+import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 
 const perfectPlayerVariables: player[] = [];
 let pubStart = 0;
@@ -325,38 +327,29 @@ const smart = () => {
 
 const setPub = (pid: number, value: boolean) => {
   if (GetPlayerSlotState(Player(pid)!) !== PLAYER_SLOT_STATE_PLAYING) return;
+  const p = MapPlayerEx.fromIndex(pid)!;
 
-  // Increase gold count to minimum
-  let minGoldCount = goldCount[pid];
   if (!value) {
+    // Increase gold count to minimum
+    let minGoldCount = goldCount[pid];
     for (let i = 0; i < bj_MAX_PLAYERS; i++) {
       if (!pub[i] && goldCount[i] < minGoldCount) minGoldCount = goldCount[i];
     }
     if (goldCount[pid] < minGoldCount) goldCount[pid] = minGoldCount;
-  }
 
-  // Decrease sheep count to maximum
-  let maxSheepCount = 0;
-  if (!value) {
+    // Decrease sheep count to maximum
+    let maxSheepCount = 0;
     for (let i = 1; i <= bj_MAX_PLAYERS; i++) {
-      if (!pub[i - 1] && udg_sheepCount[i] > maxSheepCount) {
-        BJDebugMsg(`adjusting max sc to ${udg_sheepCount[i]} from player ${i}`);
-        maxSheepCount = udg_sheepCount[i];
-      }
+      if (!pub[i - 1] && udg_sheepCount[i] > maxSheepCount) maxSheepCount = udg_sheepCount[i];
     }
-    BJDebugMsg(`max non-pub sc is ${maxSheepCount}, player's is ${udg_sheepCount[pid + 1]}`);
     if (udg_sheepCount[pid + 1] > maxSheepCount) setSc(pid + 1, maxSheepCount);
-  }
+
+    p.handicap = getAllHandicap() / 100;
+  } else p.handicap = getPubHandicap() / 100;
 
   pub[pid] = value;
 
-  DisplayTimedTextToForce(
-    GetPlayersAll()!,
-    5,
-    "                              " + udg_colorString[pid + 1] +
-      (pub[pid] ? "Flagged " : "Unflagged ") +
-      GetPlayerName(Player(pid)!) + " as a pub.",
-  );
+  displayTimedTextToAll(`                              ${value ? "Flagged" : "Unflagged"} ${p} as a pub.`, 5);
 };
 const togglePub = () => {
   if (udg_Custom !== GetTriggerPlayer()! || udg_gameStarted) return;

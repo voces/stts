@@ -3,7 +3,7 @@ import { setTimeout } from "util/setTimeout";
 import { Effect, Trigger } from "w3ts";
 
 const sheepLocaterPing = () => {
-  if (IsUnitIllusion(GetEnumUnit()!)) {
+  if (IsUnitIllusion(GetEnumUnit()!) || BlzGetUnitAbility(GetEnumUnit()!, FourCC("Aloc"))) {
     return;
   }
 

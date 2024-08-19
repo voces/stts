@@ -23,7 +23,7 @@ const getSelectedInventoryUnit = (allowEmpty: boolean) => {
   );
   const u = FirstOfGroup(g);
   DestroyGroup(g);
-  return u;
+  return u || udg_unit[GetPlayerId(p) + 1];
 };
 
 const BuySellItem__buyAction = () => {
@@ -141,7 +141,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     { name: "gem", cost: 56, id: FourCC("I00E") },
     { name: "goblins", cost: 440, id: FourCC("I012") },
     { name: "golem", cost: 140, id: FourCC("I00A") },
-    { name: "hay", cost: 28, id: FourCC("I011") },
+    { name: "hay", cost: 42, id: FourCC("I011") },
     { name: "kaleidoscope", cost: 112, id: FourCC("I00X") },
     { name: "mana", cost: 49, id: FourCC("I00D") },
     { name: "mastery", cost: 140, id: FourCC("I00Y") },

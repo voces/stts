@@ -1,16 +1,26 @@
+import { MapPlayerEx } from "handles/MapPlayerEx";
+
 const Trig_destroyFarm_Actions = () => {
   const u = GetTriggerUnit()!;
   const owner = GetOwningPlayer(u);
   const ownerId = GetConvertedPlayerId(owner);
+  const desels: MapPlayerEx[] = [];
 
   if (udg_farmCount[ownerId] > 0) udg_farmCount[ownerId]--;
   SetPlayerStateBJ(owner, PLAYER_STATE_RESOURCE_LUMBER, udg_farmCount[ownerId]);
 
   for (let i = 0; i < bj_MAX_PLAYERS; i++) {
-    const p = Player(i)!;
-    if (IsUnitSelected(u, p)) SelectUnitAddForPlayer(udg_unit[i + 1], p);
+    const p = MapPlayerEx.fromIndex(i)!;
+    if (IsUnitSelected(u, p.handle)) desels.push(p);
   }
+
   RemoveUnit(u);
+
+  for (const p of desels) {
+    if (p.getSelection().length === 0 && UnitAlive(udg_unit[p.cid])) {
+      SelectUnitAddForPlayer(udg_unit[p.cid], p.handle);
+    }
+  }
 
   if (udg_switchOn) return;
   for (let i = 1; i <= bj_MAX_PLAYERS; i++) {

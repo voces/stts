@@ -5,6 +5,7 @@ BulletDeathTime=0.0
 CancelTime=0.0
 ChanceToMiss=0.0
 ConstructionRefundRate=0.8
+DamageBonusHero=10.00,1.00,1.00,0.50,1.00,1.00,0.05,1.00
 DamageBonusSpells=1.00,0.00,1.00,1.00,1.00,0.75,0.05,1.00
 DecayTime=0.0
 DisplayEnemyInventory=1

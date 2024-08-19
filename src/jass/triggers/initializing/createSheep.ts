@@ -357,7 +357,7 @@ const Trig_createSheep_Actions = () => {
     CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE)!, type, GetRectCenterX(rect), GetRectCenterY(rect), 270);
   }
 
-  if (terrain.name === "Revolution") {
+  if (terrain.name === "Classic") {
     createCritter();
     // CreateUnit(
     //   Player(PLAYER_NEUTRAL_AGGRESSIVE)!,

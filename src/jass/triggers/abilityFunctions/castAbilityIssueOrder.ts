@@ -73,8 +73,8 @@ const Trig_castAbility2_Actions = () => {
     // Ping allies
     for (let i = 1; i <= bj_MAX_PLAYERS; i++) {
       if (GetUnitTypeId(udg_unit[i]) === sheepType && udg_unit[i] !== GetTriggerUnit()!) {
-        PingMinimapForForce(
-          GetForceOfPlayer(GetOwningPlayer(GetTriggerUnit()!))!,
+        PingMinimapForPlayer(
+          GetOwningPlayer(GetTriggerUnit()!),
           GetUnitX(udg_unit[i]),
           GetUnitY(udg_unit[i]),
           2,

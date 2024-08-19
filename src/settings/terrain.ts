@@ -3,10 +3,11 @@ import { forEachPlayer } from "util/forEachPlayer";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { addScriptHook, W3TS_HOOK } from "w3ts";
 import { spawns } from "./spawns";
-import { setTimeout } from "util/setTimeout";
+import { displayTimedTextToAll } from "util/displayTimedTextToAll";
+import { formatList } from "util/formatList";
 
 type Terrain = {
-  name: "Revolution" | "Glory Hills" | "Vro" | "Tiny";
+  name: "Classic" | "Glory Hills" | "Experimental" | "Tiny" | "Compact";
   minimap: string;
   cameraBounds: rect;
   spawnType: "playerColor" | "team";
@@ -28,31 +29,61 @@ export const terrain: Terrain = {} as Terrain;
 
 const SHOP_A = FourCC("nC12");
 const SHOP_A_ROTATED = FourCC("n006");
+const SHOP_A_INLINE = FourCC("n00C");
 const SHOP_B = FourCC("n001");
 const SHOP_B_ROTATED = FourCC("n007");
-const SHOP_C = FourCC("n005");
+const SHOP_B_INLINE = FourCC("n00D");
+const SHOP_C = FourCC("n00E");
 const SHOP_C_ROTATED = FourCC("n008");
+const SHOP_C_INLINE = FourCC("n005");
 
-const setTerrain = (terrainIndex: number): void => {
+const setTerrain = (terrainIndex: number, init = false): void => {
   Object.assign(terrain, terrains[terrainIndex]);
 
   SetCameraBoundsToRect(terrain.cameraBounds);
-  setTimeout(0.25, () => BlzChangeMinimapTerrainTex(terrain.minimap)); // Need a sufficient wait in w3ce
+  BlzChangeMinimapTerrainTex(terrain.minimap);
   PanCameraToTimed(GetRectCenterX(terrain.wolf), GetRectCenterY(terrain.wolf), 0);
   for (let i = 0; i < terrain.spawns.length; i++) {
     udg_masterStartLocation[i + 1] = udg_startLocation[i + 1] = terrain.spawns[i];
     const p = Player(i);
     if (p) spawns.set(p, { x: GetRectCenterX(terrain.spawns[i]), y: GetRectCenterY(terrain.spawns[i]) });
   }
+
+  if (!init) displayTimedTextToAll(`Terrain set to |CFFED1C24${terrain.name}|r.`);
+};
+
+const getIndex = () => {
+  const parts = GetEventPlayerChatString()!.split(" ");
+  if (parts.length < 2) return (terrains.findIndex((t) => t.name === terrain.name) + 1) % terrains.length;
+  const input = parts[1].toLowerCase();
+
+  for (let i = 0; i < terrains.length; i++) if (terrains[i].name.toLowerCase().startsWith(input)) return i;
+
+  // Handles natives
+  if (string.match(input, "^%-?%d+$")[0] !== undefined) {
+    const index = parseInt(input);
+    if (index === 0) return;
+    return (((index < 0 ? index : index - 1) % terrains.length) + terrains.length) % terrains.length;
+  }
+
+  DisplayTimedTextToPlayer(
+    GetTriggerPlayer()!,
+    0,
+    0,
+    5,
+    `Did not find matching terrain. Terrain names are: ${formatList(terrains.map((t) => `|CFFED1C24${t.name}|r`))}.`,
+  );
 };
 
 const initTrigger = () => {
   const t = CreateTrigger();
-  registerAnyPlayerChatEvent(t, "-terrain");
+  registerAnyPlayerChatEvent(t, "-terrain", false);
   TriggerAddCondition(t, Condition(() => GetTriggerPlayer() === udg_Custom && !udg_gameStarted));
   TriggerAddAction(t, () => {
     const g = GroupEx.create().enumUnitsInRect(terrain.wolf, (u) => u.typeId === hostFarmType);
-    setTerrain((terrains.findIndex((t) => t.name === terrain.name) + 1) % terrains.length);
+    const index = getIndex();
+    if (typeof index !== "number") return;
+    setTerrain(index);
     g.forEach((u) => u.setPosition(GetRectCenterX(terrain.wolf), GetRectCenterY(terrain.wolf)));
     g.destroy();
   });
@@ -60,7 +91,7 @@ const initTrigger = () => {
 
 const initTerrains = () => {
   terrains.push({
-    name: "Revolution",
+    name: "Classic",
     minimap: "war3mapImported\\classic.blp",
     cameraBounds: gg_rct_Revo_Camera_Bounds,
     spawnType: "playerColor",
@@ -160,7 +191,7 @@ const initTerrains = () => {
   });
 
   terrains.push({
-    name: "Vro",
+    name: "Experimental",
     minimap: "war3mapImported\\classic.blp",
     cameraBounds: gg_rct_Vro_Camera_Bounds,
     spawnType: "playerColor",
@@ -249,13 +280,53 @@ const initTerrains = () => {
       gg_rct_t24,
     ],
     spawnBounds: GetEntireMapRect()!,
+    shops: [],
+  });
+
+  terrains.push({
+    name: "Compact",
+    minimap: "war3mapImported\\compact.blp",
+    cameraBounds: gg_rct_compactCamera,
+    spawnType: "playerColor",
+    wisp: gg_rct_compactFence,
+    wolf: gg_rct_compactFence,
+    runes: {
+      invis: gg_rct_compactInvis,
+      speed: gg_rct_compactSpeed,
+      omniscience: gg_rct_compactOmniscience,
+      mana: gg_rct_compactMana,
+    },
+    spawns: [
+      gg_rct_compact1,
+      gg_rct_compact2,
+      gg_rct_compact3,
+      gg_rct_compact4,
+      gg_rct_compact5,
+      gg_rct_compact6,
+      gg_rct_compact7,
+      gg_rct_compact8,
+      gg_rct_compact9,
+      gg_rct_compact10,
+      gg_rct_compact11,
+      gg_rct_compact12,
+      gg_rct_compact13,
+      gg_rct_compact14,
+      gg_rct_compact15,
+      gg_rct_compact16,
+      gg_rct_compact17,
+      gg_rct_compact18,
+      gg_rct_compact19,
+      gg_rct_compact20,
+      gg_rct_compact21,
+      gg_rct_compact22,
+      gg_rct_compact23,
+      gg_rct_compact24,
+    ],
+    spawnBounds: GetEntireMapRect()!,
     shops: [
-      // [gg_rct_Vro_Shop_A1, SHOP_A],
-      // [gg_rct_Vro_Shop_A2, SHOP_A],
-      // [gg_rct_Vro_Shop_B1, SHOP_B],
-      // [gg_rct_Vro_Shop_B2, SHOP_B],
-      // [gg_rct_Vro_Shop_C1, SHOP_C],
-      // [gg_rct_Vro_Shop_C2, SHOP_C],
+      [gg_rct_compactShopA, SHOP_A_INLINE],
+      [gg_rct_compactShopB, SHOP_B_INLINE],
+      [gg_rct_compactShopC, SHOP_C_INLINE],
     ],
   });
 
@@ -280,5 +351,5 @@ const initTerrains = () => {
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   initTrigger();
   initTerrains();
-  setTerrain(0);
+  setTerrain(0, true);
 });

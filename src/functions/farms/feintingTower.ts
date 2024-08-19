@@ -25,7 +25,7 @@ game.onInterval(4, () => {
 
     let madeSpawnEffect = false;
 
-    withUnitsInRange(tower.x, tower.y, 1000, (units) =>
+    withUnitsInRange(tower.x, tower.y, 1200, (units) =>
       units.forEach((u) => {
         if (
           u.moveSpeed === 0 || !u.isAlive() || u.isIllusion() || !tower.isAlly(u.owner) || !u.isAlly(tower.owner) ||

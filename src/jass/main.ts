@@ -785,7 +785,7 @@ udg_transfer = 0;
 cid = 0;
 udg_apr = [];
 udg_sheepLastGame = [];
-udg_farmCount = Array.from({ length: bj_MAX_PLAYER_SLOTS }, () => 0); // slots for practice
+udg_farmCount = Array.from({ length: bj_MAX_PLAYER_SLOTS }, () => 0); // extra slots for practice
 udg_kills = [];
 udg_hideshow = [];
 udg_atempboolean = false;
@@ -1769,7 +1769,7 @@ updateTimes = () => {
   let s = "";
   let timeElapsed = TimerGetElapsed(udg_Timer);
   const emitRound = !someoneLeft && udg_sheepGold === 0 && udg_wolfGold === 0 &&
-    noHandicaps() && terrain.name === "Revolution" && president.enabled === false && income.sheep === 1 &&
+    noHandicaps() && terrain.name === "Classic" && president.enabled === false && income.sheep === 1 &&
     income.wolves === 1 && income.savings === 1;
   let sheepString = "";
   let sheep = 0;
@@ -1785,14 +1785,11 @@ updateTimes = () => {
       IsPlayerInForce(Player(i)!, udg_Sheep) ||
       IsPlayerInForce(Player(i)!, udg_Spirit)
     ) {
-      sheep++;
       s__times_sheepCount[playerTimes[i]] = s__times_sheepCount[playerTimes[i]] + 1;
       if (s === "") s = MapPlayerEx.fromIndex(i)!.coloredName;
       else s = s + ", " + MapPlayerEx.fromIndex(i);
-      if (emitRound) {
-        if (sheep > 0) sheepString = sheepString + " " + I2S(i);
-        else sheepString = I2S(i)!;
-      }
+      if (sheep > 0) sheepString = sheepString + " " + I2S(i);
+      else sheepString = I2S(i)!;
       udg_roundTimes[i + 1] = udg_roundTimes[i + 1] + R2S(timeElapsed) + " | ";
       if (timeElapsed > s__times_pTimeMax[playerTimes[i]]) s__times_pTimeMax[playerTimes[i]] = timeElapsed;
       for (let n = 0; n < bj_MAX_PLAYERS; n++) {
@@ -1800,12 +1797,11 @@ updateTimes = () => {
           s___times_pTime[s__times_pTime[playerTimes[i]] + n] += timeElapsed;
         }
       }
+      sheep++;
     } else if (IsPlayerInForce(Player(i)!, udg_Wolf)) {
+      if (wolves > 0) wolvesString = wolvesString + " " + I2S(i);
+      else wolvesString = I2S(i)!;
       wolves++;
-      if (emitRound) {
-        if (wolves > 0) wolvesString = wolvesString + " " + I2S(i);
-        else wolvesString = I2S(i)!;
-      }
     }
   }
 

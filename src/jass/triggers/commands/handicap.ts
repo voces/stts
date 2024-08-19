@@ -2,6 +2,12 @@ import { MapPlayerEx } from "handles/MapPlayerEx";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
+let pubHandicap = 150;
+export const getPubHandicap = () => pubHandicap;
+
+let allHandicap = 100;
+export const getAllHandicap = () => allHandicap;
+
 const Trig_handicap_Actions = () => {
   const triggerPlayer = MapPlayerEx.fromEvent()!;
   const parts = GetEventPlayerChatString()?.split(" ") ?? [];
@@ -9,10 +15,25 @@ const Trig_handicap_Actions = () => {
   const handicap = S2R(parts[parts.length === 3 && triggerPlayer.isHost ? 2 : 1]);
   if (handicap < 23 || handicap > 500) return;
 
-  if (triggerPlayer.isHost && parts[1] === "all") {
-    for (let i = 0; i < bj_MAX_PLAYERS; i++) MapPlayerEx.fromIndex(i)!.handicap = handicap / 100;
-    displayTimedTextToAll(`All players' handicap set to ${R2S(handicap)}%.`, 5);
-    return;
+  if (triggerPlayer.isHost) {
+    if (parts[1] === "all") {
+      allHandicap = handicap;
+      const appliesToPubs = handicap > pubHandicap;
+      if (appliesToPubs) pubHandicap = handicap;
+      for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+        const p = MapPlayerEx.fromIndex(i)!;
+        if (appliesToPubs || !p.isPub) p.handicap = handicap / 100;
+      }
+      displayTimedTextToAll(`All players' handicap set to ${R2S(handicap)}%.`, 5);
+      return;
+    } else if (parts[1] === "pub") {
+      pubHandicap = handicap;
+      for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+        const p = MapPlayerEx.fromIndex(i)!;
+        if (p.isPub) p.handicap = pubHandicap / 100;
+      }
+      displayTimedTextToAll(`Pubs' handicap set to ${R2S(handicap)}%.`, 5);
+    }
   }
 
   const adjustedPlayer = parts.length === 3 && triggerPlayer.isHost
