@@ -74,12 +74,6 @@ const Trig_initialization_Actions = () => {
   udg_versus = 0;
   udg_versusOff = false;
   udg_mapName = "    Sheep Tag ReVoLuTiOn";
-  udg_cloakAbility[1] = FourCC("A00Y");
-  udg_cloakAbility[2] = FourCC("A011");
-  udg_cloakAbility[3] = FourCC("A012");
-  udg_cloakAbility[4] = FourCC("A014");
-  udg_cloakAbility[5] = FourCC("A015");
-  udg_cloakAbility[6] = FourCC("A016");
   udg_colorString[1] = "|CFFFF0000";
   udg_colorString[2] = "|CFF0000FF";
   udg_colorString[3] = "|CFF18E7BD";
@@ -225,30 +219,8 @@ const Trig_initialization_Actions = () => {
     udg_QDeathTime[GetForLoopIndexA()] = Infinity;
     udg_camLock[GetForLoopIndexA()] = true;
     udg_firstRound[GetForLoopIndexA()] = true;
-    udg_PlayerName[GetForLoopIndexA()] = GetPlayerName(
-      ConvertedPlayer(GetForLoopIndexA())!,
-    )!;
     bj_forLoopAIndex = bj_forLoopAIndex + 1;
   }
-
-  udg_itemIcon[0] = "ReplaceableTextures\\CommandButtons\\BTNCancel.blp";
-  udg_itemIcon[1] = "ReplaceableTextures\\CommandButtons\\BTNImprovedStrengthOfTheWild.blp";
-  udg_itemIcon[2] = "ReplaceableTextures\\CommandButtons\\BTNAdvancedStrengthOfTheWild.blp.blp";
-  udg_itemIcon[3] = "ReplaceableTextures\\CommandButtons\\BTNStrengthOfTheWild.blp";
-  udg_itemIcon[4] = "ReplaceableTextures\\CommandButtons\\BTNCrystalBall.blp";
-  udg_itemIcon[5] = "ReplaceableTextures\\CommandButtons\\BTNInfernalStone.blp";
-  udg_itemIcon[6] = "ReplaceableTextures\\CommandButtons\\BTNBootsOfSpeed.blp";
-  udg_itemIcon[7] = "ReplaceableTextures\\CommandButtons\\BTNCloakOfFlames.blp";
-  udg_itemIcon[8] = "ReplaceableTextures\\CommandButtons\\BTNGem.blp";
-  udg_itemIcon[9] = "ReplaceableTextures\\CommandButtons\\BTNGlove.blp";
-  udg_itemIcon[10] = "ReplaceableTextures\\CommandButtons\\BTNRockGolem.blp";
-  udg_itemIcon[11] = "ReplaceableTextures\\CommandButtons\\BTNLesserInvisibility.blp";
-  udg_itemIcon[12] = "ReplaceableTextures\\CommandButtons\\BTNSnazzyPotion.blp";
-  udg_itemIcon[13] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueSmall.blp";
-  udg_itemIcon[14] = "ReplaceableTextures\\CommandButtons\\BTNNecklace.blp";
-  udg_itemIcon[15] = "ReplaceableTextures\\CommandButtons\\BTNSheep.blp";
-  udg_itemIcon[16] = "ReplaceableTextures\\CommandButtons\\BTNPotionRed.blp";
-  udg_itemIcon[17] = "ReplaceableTextures\\CommandButtons\\BTNPotionOfRestoration.blp";
 
   udg_Custom = Player(0)!;
   udg_originalCustom = Player(0)!;

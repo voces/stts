@@ -13,17 +13,16 @@ import { setTimeout } from "util/setTimeout";
 import { withUnitsOfType } from "util/withGroup";
 
 game.onItemUsed(({ item, unit }) => {
-  const owner = unit.owner;
-
   if (item.typeId !== ITEM_TYPE_ID_GOBLINS) return;
 
+  const owner = unit.owner;
   const direction = Math.random() * Math.PI * 2;
 
   PlaySoundBJ(gg_snd_GyrocopterYesAttack1);
 
   withUnitsOfType(sheepType, (sheep) =>
     sheep.map((s) => {
-      if (s.getAbility(FourCC("Aloc"))) return;
+      if (s.isIllusion()) return;
 
       const start = findRayRectangleIntersection(s, terrain.cameraBounds, direction + Math.PI);
       if (!start) return;

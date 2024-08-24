@@ -1,17 +1,7 @@
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
-const Anonymous_Conditions = () => {
-  if ((!(GetTriggerPlayer() === udg_Custom))) {
-    return false;
-  }
-  return true;
-};
-
 const Anonymous_Actions = () => {
-  let udg_tempInt: number;
   const tempPlayerColors: Array<number> = [];
-  let isAvailable: boolean;
-  let i: number;
   udg_isAnon = true;
   if (BlzGetFrameByName("ChatPlayerRadioButton", 0) != null) {
     BlzFrameSetVisible(BlzGetFrameByName("ChatPlayerLabel", 0)!, false);
@@ -42,102 +32,52 @@ const Anonymous_Actions = () => {
     BlzFrameSetVisible(BlzGetFrameByName("ResourceTradingTitle", 0)!, false);
     BlzFrameSetVisible(BlzGetFrameByName("PlayersHeader", 0)!, false);
 
-    bj_forLoopAIndex = 0;
-    bj_forLoopAIndexEnd = 23;
-    while (true) {
-      if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-      udg_tempInt = GetForLoopIndexA();
-      BlzFrameSetVisible(
-        BlzGetFrameByName("AllianceSlot", udg_tempInt)!,
-        false,
-      );
-      BlzFrameSetVisible(
-        BlzGetFrameByName("PlayerNameLabel", udg_tempInt)!,
-        false,
-      );
-      BlzFrameSetVisible(
-        BlzGetFrameByName("ColorBackdrop", udg_tempInt)!,
-        false,
-      );
-      BlzFrameSetVisible(BlzGetFrameByName("ColorBorder", udg_tempInt)!, false);
-      BlzFrameSetVisible(
-        BlzGetFrameByName("AllyCheckBox", udg_tempInt)!,
-        false,
-      );
-      BlzFrameSetVisible(
-        BlzGetFrameByName("GoldBackdrop", udg_tempInt)!,
-        false,
-      );
-      BlzFrameSetVisible(BlzGetFrameByName("GoldText", udg_tempInt)!, false);
-      BlzFrameSetVisible(
-        BlzGetFrameByName("LumberBackdrop", udg_tempInt)!,
-        false,
-      );
-      BlzFrameSetVisible(BlzGetFrameByName("LumberText", udg_tempInt)!, false);
-      BlzFrameSetVisible(
-        BlzGetFrameByName("UnitsCheckBox", udg_tempInt)!,
-        false,
-      );
-      BlzFrameSetVisible(
-        BlzGetFrameByName("VisionCheckBox", udg_tempInt)!,
-        false,
-      );
-      bj_forLoopAIndex = bj_forLoopAIndex + 1;
-    }
-  } else {
-    bj_forLoopAIndex = 0;
-    bj_forLoopAIndexEnd = 11 * 24 + 16;
-    while (true) {
-      if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-      CreateGroup();
-
-      bj_forLoopAIndex = bj_forLoopAIndex + 1;
+    for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+      BlzFrameSetVisible(BlzGetFrameByName("AllianceSlot", i)!, false);
+      BlzFrameSetVisible(BlzGetFrameByName("PlayerNameLabel", i)!, false);
+      BlzFrameSetVisible(BlzGetFrameByName("ColorBackdrop", i)!, false);
+      BlzFrameSetVisible(BlzGetFrameByName("ColorBorder", i)!, false);
+      BlzFrameSetVisible(BlzGetFrameByName("AllyCheckBox", i)!, false);
+      BlzFrameSetVisible(BlzGetFrameByName("GoldBackdrop", i)!, false);
+      BlzFrameSetVisible(BlzGetFrameByName("GoldText", i)!, false);
+      BlzFrameSetVisible(BlzGetFrameByName("LumberBackdrop", i)!, false);
+      BlzFrameSetVisible(BlzGetFrameByName("LumberText", i)!, false);
+      BlzFrameSetVisible(BlzGetFrameByName("UnitsCheckBox", i)!, false);
+      BlzFrameSetVisible(BlzGetFrameByName("VisionCheckBox", i)!, false);
     }
   }
 
-  bj_forLoopAIndex = 1;
-  bj_forLoopAIndexEnd = 24;
-  i = 0;
-  while (true) {
-    if (i > 24) break;
-    udg_anonPlayerColors[i] = -1;
-    i = i + 1;
-  }
-  while (true) {
-    if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-    udg_tempInt = GetForLoopIndexA();
-    while (true) {
-      tempPlayerColors[udg_tempInt] = GetRandomInt(1, 24);
-      isAvailable = true;
-      i = 1;
-      while (true) {
-        if (i > 24) break;
-        if ((tempPlayerColors[udg_tempInt] === udg_anonPlayerColors[i])) {
-          isAvailable = false;
+  for (let i = 1; i <= bj_MAX_PLAYERS; i++) udg_anonPlayerColors[i] = -1;
+
+  for (let i = 1; i <= bj_MAX_PLAYERS; i++) {
+    let isNotAvailable = true;
+    while (isNotAvailable) {
+      isNotAvailable = false;
+      tempPlayerColors[i] = GetRandomInt(1, bj_MAX_PLAYERS);
+      for (let n = 1; n <= bj_MAX_PLAYERS; n++) {
+        if (tempPlayerColors[i] === udg_anonPlayerColors[n]) {
+          isNotAvailable = true;
+          continue;
         }
-        i = i + 1;
       }
-      if (isAvailable) break;
     }
-    udg_anonPlayerColors[udg_tempInt] = tempPlayerColors[udg_tempInt];
+    udg_anonPlayerColors[i] = tempPlayerColors[i];
     SetPlayerColorBJ(
-      ConvertedPlayer(udg_tempInt)!,
-      udg_playerColor[udg_anonPlayerColors[udg_tempInt]],
+      ConvertedPlayer(i)!,
+      udg_playerColor[udg_anonPlayerColors[i]],
       true,
     );
-    SetPlayerName(ConvertedPlayer(udg_tempInt)!, "sheep");
-    bj_forLoopAIndex = bj_forLoopAIndex + 1;
+    SetPlayerName(ConvertedPlayer(i)!, "sheep");
   }
-  i = 1;
-  while (true) {
-    if (i > 24) break;
+
+  for (let i = 1; i <= bj_MAX_PLAYERS; i++) {
     udg_startLocation[i] = udg_masterStartLocation[udg_anonPlayerColors[i]];
     udg_colorString[i] = udg_masterColorString[udg_anonPlayerColors[i]];
     udg_SheepColorR[i] = udg_masterSheepColorR[udg_anonPlayerColors[i]];
     udg_SheepColorG[i] = udg_masterSheepColorG[udg_anonPlayerColors[i]];
     udg_SheepColorB[i] = udg_masterSheepColorB[udg_anonPlayerColors[i]];
-    i = i + 1;
   }
+
   udg_Custom = ForcePickRandomPlayer(GetPlayersAll()!)!;
   udg_transfer = GetConvertedPlayerId(udg_Custom);
   DisplayTextToForce(
@@ -155,6 +95,6 @@ InitTrig_Anonymous = () => {
   gg_trg_Anonymous = CreateTrigger();
   registerAnyPlayerChatEvent(gg_trg_Anonymous, "-anon");
   registerAnyPlayerChatEvent(gg_trg_Anonymous, "-anonymous");
-  TriggerAddCondition(gg_trg_Anonymous, Condition(Anonymous_Conditions));
+  TriggerAddCondition(gg_trg_Anonymous, Condition(() => GetTriggerPlayer() === udg_Custom));
   TriggerAddAction(gg_trg_Anonymous, Anonymous_Actions);
 };

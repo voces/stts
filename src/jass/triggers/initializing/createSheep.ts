@@ -12,6 +12,7 @@ import { switchSheepTimers } from "modes/switch/switch";
 import { startUpdatingLeaderboard } from "modes/switch/updateLeaderboard";
 import { cancelHostFarmSpawn } from "./startRound";
 import { enableIncome } from "functions/farms/savingFarms";
+import { ForceEx } from "handles/ForceEx";
 
 let firstRound = true;
 
@@ -401,10 +402,10 @@ const Trig_createSheep_Actions = () => {
     if (udg_versus === 1) president.president = MapPlayerEx.fromHandle(udg_captains[1]);
     else if (udg_versus === 2) president.president = MapPlayerEx.fromHandle(udg_captains[3]);
     else {
-      president.president = MapPlayerEx.fromHandle(ForcePickRandomPlayer(udg_Sheep))!;
-      for (let i = 0; i < 10 && president.president.isPub; i++) {
-        president.president = MapPlayerEx.fromHandle(ForcePickRandomPlayer(udg_Sheep))!;
-      }
+      const all = ForceEx.sheep.toArray();
+      const nonPubs = all.filter((p) => !p.isPub);
+      if (nonPubs.length > 0) president.president = nonPubs[Math.floor(nonPubs.length * Math.random())];
+      else president.president = all[Math.floor(all.length * Math.random())];
     }
 
     ForForce(udg_Sheep, () => {

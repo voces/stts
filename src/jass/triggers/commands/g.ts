@@ -1,3 +1,4 @@
+import { MapPlayerEx } from "handles/MapPlayerEx";
 import { UnitEx } from "handles/UnitEx";
 import { president } from "modes/president";
 import { terrain } from "settings/terrain";
@@ -21,41 +22,19 @@ export const inflateGoldCount = (p: player): void => {
 };
 
 const Trig_g_showGoldCounts = () => {
-  let i = 0;
   let count = 0;
-  const p = GetTriggerPlayer()!;
-  DisplayTimedTextToPlayer(
-    p,
-    0,
-    0,
-    15,
-    "                              |CFFFFCC00Gold Count|r",
-  );
-  while (true) {
-    if (i === bj_MAX_PLAYERS) break;
-    count = 0;
-    while (true) {
-      if (i === bj_MAX_PLAYERS || count === 12) break;
-      if (
-        GetPlayerSlotState(Player(i)!) === PLAYER_SLOT_STATE_PLAYING &&
-        udg_AFK[i + 1] === AFK_PLAYING
-      ) {
-        DisplayTimedTextToPlayer(
-          p,
-          0,
-          0,
-          15,
-          "                              " + udg_colorString[i + 1] +
-            GetPlayerName(Player(i)!) + " : " + I2S(R2I(goldCount[i])),
-        );
-        count = count + 1;
-      }
-      i = i + 1;
-    }
-    if (count === 12) {
+  const triggerer = MapPlayerEx.fromEvent()!;
+  triggerer.displayTimedText("                              |CFFFFCC00Gold Count|r", 15);
+  for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+    const p = MapPlayerEx.fromIndex(i);
+    if (!p || p.slotState === PLAYER_SLOT_STATE_EMPTY) continue;
+    if (count > 0 && (count % 15 === 0)) {
       TriggerSleepAction(9);
-      if (GetLocalPlayer() === p) ClearTextMessages();
+      count = 0;
+      triggerer.displayTimedText("                              |CFFFFCC00Gold Count (cont.)|r", 15);
     }
+    triggerer.displayTimedText(`                              ${p.coloredName_} : ${I2S(R2I(goldCount[i]))}`, 15);
+    count++;
   }
 };
 

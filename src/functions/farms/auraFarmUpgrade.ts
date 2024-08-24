@@ -55,6 +55,8 @@ game.onResearch(({ researchId, player }) => {
 });
 
 game.onNewUnit(({ newUnit }) => {
+  if (newUnit.typeId !== UNIT_TYPE_ID_AURA_FARM) return;
+
   const owner = newUnit.owner;
   if (owner.isWolf ? !wolvesResearched : !sheepResearched) {
     if (owner.isWolf ? !sheepResearched : !wolvesResearched) {
@@ -63,8 +65,6 @@ game.onNewUnit(({ newUnit }) => {
     }
     return;
   }
-
-  if (newUnit.typeId !== UNIT_TYPE_ID_AURA_FARM) return;
 
   upgradeAuras(newUnit);
 });

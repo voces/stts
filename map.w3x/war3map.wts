@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 24k
+Sheep Tag ReVoLuTiOn 24l
 }
 
 STRING 40
@@ -4347,16 +4347,6 @@ STRING 4158
 Resets your start position to your initial position or the one you've chosen with -position X.
 }
 
-STRING 4159
-{
-|cff00ff00Sheep Tag ReVoLuTiOn 24k|r
-}
-
-STRING 4160
-{
-|cff00ff0024k|r
-}
-
 STRING 4166
 // Units: n005 (Miscellaneous Items), EditorSuffix (Name - Editor Suffix)
 {
@@ -4433,5 +4423,15 @@ STRING 4178
 // Items: I011 (hay), Ubertip (Tooltip - Extended)
 {
 Tosses a Hay Trap at a target location. Hay Traps block units and are difficult for sheep to kill.|n|cffffcc0030 gold.|r |n|cff00aeef-buy hay: 42 gold.|r
+}
+
+STRING 4179
+{
+|cff00ff00Sheep Tag ReVoLuTiOn 24l|r
+}
+
+STRING 4180
+{
+|cff00ff0024l|r
 }
 

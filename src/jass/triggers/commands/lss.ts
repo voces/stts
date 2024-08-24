@@ -1,119 +1,21 @@
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
-const Trig_lss_Func003Func001Func001C = () => {
-  if ((!(GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING))) {
-    return false;
-  }
-  if ((!(GetPlayerSlotState(GetEnumPlayer()!) !== PLAYER_SLOT_STATE_LEFT))) {
-    return false;
-  }
-  if ((!(udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === AFK_PLAYING))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_lss_Func003Func001A = (p: MapPlayerEx) => {
-  if ((Trig_lss_Func003Func001Func001C())) {
-    cid = GetConvertedPlayerId(GetEnumPlayer()!);
-    p.displayTimedText(
-      "                              " + udg_colorString[cid] + GetPlayerName(GetEnumPlayer()!) + " : " +
-        I2S(udg_lssCounter[cid]),
-      15,
-    );
-  }
-};
-
-const Trig_lss_Func003Func002Func001C = () => {
-  if (
-    (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexA())!) ===
-      PLAYER_SLOT_STATE_PLAYING))
-  ) {
-    return false;
-  }
-  if (
-    (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexA())!) !==
-      PLAYER_SLOT_STATE_LEFT))
-  ) {
-    return false;
-  }
-  if (
-    (!(udg_AFK[GetConvertedPlayerId(ConvertedPlayer(GetForLoopIndexA())!)] ===
-      0))
-  ) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_lss_Func003Func006Func001C = () => {
-  if (
-    (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexA())!) ===
-      PLAYER_SLOT_STATE_PLAYING))
-  ) {
-    return false;
-  }
-  if (
-    (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexA())!) !==
-      PLAYER_SLOT_STATE_LEFT))
-  ) {
-    return false;
-  }
-  if (
-    (!(udg_AFK[GetConvertedPlayerId(ConvertedPlayer(GetForLoopIndexA())!)] ===
-      0))
-  ) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_lss_Func003C = () => {
-  if ((!(CountPlayersInForceBJ(GetPlayersAll()!) > 14))) {
-    return false;
-  }
-  return true;
-};
-
 const Trig_lss_Actions = () => {
-  const p = MapPlayerEx.fromEvent()!;
-  p.displayTimedText("                              |CFFFFCC00Last Sheep Standing|r", 15);
-  if ((Trig_lss_Func003C())) {
-    bj_forLoopAIndex = 1;
-    bj_forLoopAIndexEnd = 12;
-    while (true) {
-      if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-      if ((Trig_lss_Func003Func002Func001C())) {
-        p.displayTimedText(
-          "                              " +
-            udg_colorString[GetForLoopIndexA()] +
-            GetPlayerName(ConvertedPlayer(GetForLoopIndexA())!) +
-            " : " + I2S(udg_lssCounter[GetForLoopIndexA()]),
-          15,
-        );
-      }
-      bj_forLoopAIndex = bj_forLoopAIndex + 1;
+  let count = 0;
+  const triggerer = MapPlayerEx.fromEvent()!;
+  triggerer.displayTimedText("                              |CFFFFCC00Last Sheep Standing|r", 15);
+  for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+    const p = MapPlayerEx.fromIndex(i);
+    if (!p || p.slotState === PLAYER_SLOT_STATE_EMPTY) continue;
+    if (count > 0 && (count % 15 === 0)) {
+      TriggerSleepAction(9);
+      count = 0;
+      triggerer.displayTimedText("                              |CFFFFCC00Last Sheep Standing (cont.)|r", 15);
     }
-    TriggerSleepAction(9);
-    if (p.isLocal()) ClearTextMessages();
-    p.displayTimedText("                              |CFFFFCC00Last Sheep Standing|r", 15);
-    bj_forLoopAIndex = 13;
-    bj_forLoopAIndexEnd = 24;
-    while (true) {
-      if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-      if (Trig_lss_Func003Func006Func001C()) {
-        p.displayTimedText(
-          "                              " +
-            udg_colorString[GetForLoopIndexA()] +
-            GetPlayerName(ConvertedPlayer(GetForLoopIndexA())!) +
-            " : " + I2S(udg_lssCounter[GetForLoopIndexA()]),
-          15,
-        );
-      }
-      bj_forLoopAIndex = bj_forLoopAIndex + 1;
-    }
-  } else ForForce(GetPlayersAll()!, () => Trig_lss_Func003Func001A(p));
+    triggerer.displayTimedText(`                              ${p.coloredName_} : ${I2S(udg_lssCounter[i + 1])}`, 15);
+    count++;
+  }
 };
 
 declare global {

@@ -1,3 +1,4 @@
+import { updateTimes } from "stats/updateTimes";
 import { maybeRotate } from "teams/smart";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { setTimeout } from "util/setTimeout";
@@ -12,7 +13,7 @@ const Trig_wolvesWin_Actions = () => {
   if (udg_Teams === TEAMS_LOCK_IE_PLAYING) {
     if (udg_versus === 1) udg_gameTime[1] = TimerGetElapsed(udg_Timer);
     else if (udg_versus === 2) udg_gameTime[2] = TimerGetElapsed(udg_Timer);
-    else setTimeout(0.05, () => displayTimedTextToAll(`\n                              ${fullTimeString}.`));
+    else setTimeout(0.05, () => displayTimedTextToAll(`\n                              ${fullTimeString}.`, 18));
     updateTimes();
     maybeRotate();
     TriggerExecute(gg_trg_startRound);

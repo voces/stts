@@ -9,23 +9,20 @@ import { addScriptHook, W3TS_HOOK } from "w3ts";
 const gsSort = () => {
   let swapAmount: number;
   let swapPlayerIndex: number;
-  let i = 1;
-  let n: number;
 
-  while (true) {
+  for (let i = 1; i < gsLength; i++) {
     if (i >= gsLength) break;
     swapAmount = gsAmounts[i];
     swapPlayerIndex = gsPlayerIndices[i];
-    n = i - 1;
-    while (true) {
-      if (n < 0 || gsAmounts[n] <= swapAmount) break;
+
+    let n = i - 1;
+    for (; n >= 0 && gsAmounts[n] > swapAmount; n--) {
       gsAmounts[n + 1] = gsAmounts[n];
       gsPlayerIndices[n + 1] = gsPlayerIndices[n];
       n = n - 1;
     }
     gsAmounts[n + 1] = swapAmount;
     gsPlayerIndices[n + 1] = swapPlayerIndex;
-    i = i + 1;
   }
 };
 

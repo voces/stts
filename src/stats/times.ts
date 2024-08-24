@@ -1,5 +1,11 @@
+import { MapPlayerEx } from "handles/MapPlayerEx";
+
 const times: Record<string, { total: number; count: number }>[] = [];
 export const modes = new Set<string>();
+
+type Round = { sheep: MapPlayerEx[]; wolves: MapPlayerEx[]; time: number };
+
+const rounds: Round[] = [];
 
 export const addTime = (playerId: number, mode: string, time: number) => {
   modes.add(mode);
@@ -9,4 +15,10 @@ export const addTime = (playerId: number, mode: string, time: number) => {
   times[playerId][mode].count++;
 };
 
+export const addRound = (sheep: MapPlayerEx[], wolves: MapPlayerEx[], time: number) => {
+  rounds.push({ sheep, wolves, time });
+};
+
 export const getTimes = (playerId: number) => times[playerId] ?? {};
+
+export const getRounds = (...sheep: MapPlayerEx[]) => rounds.filter((r) => sheep.every((s) => r.sheep.includes(s)));

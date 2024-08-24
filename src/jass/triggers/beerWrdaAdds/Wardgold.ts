@@ -26,11 +26,7 @@ InitTrig_Ward_gold = () => {
     const y = dyingUnit.y;
     const killingUnit = Unit.fromHandle(GetKillingUnit())!;
 
-    AdjustPlayerStateBJ(
-      4,
-      killingUnit.owner.handle,
-      PLAYER_STATE_RESOURCE_GOLD,
-    );
+    AdjustPlayerStateBJ(4, killingUnit.owner.handle, PLAYER_STATE_RESOURCE_GOLD);
     GoldText(4, killingUnit.handle);
 
     withUnitsInRange(x, y, 256, () => undefined, (u) => {

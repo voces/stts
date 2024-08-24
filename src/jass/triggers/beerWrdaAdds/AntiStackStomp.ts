@@ -33,26 +33,16 @@ const Stomp_Actions = () => {
     GetUnitLoc(GetTriggerUnit()!),
     Condition(Stomp_cond2),
   )!;
-  const atempeffect: Array<effect> = [];
-  let i = 0;
+  const atempeffect: effect[] = [];
   ForGroupBJ(atempgroup, Stomp_cond1);
   DestroyGroup(atempgroup);
-  while (true) {
-    if (i >= 24) break;
-    atempeffect[i] = udg_antiStackEffect[i + 1];
-    i = i + 1;
-  }
+  for (let i = 0; i < bj_MAX_PLAYERS; i++) atempeffect[i] = udg_antiStackEffect[i + 1];
   TriggerSleepAction(4);
-  i = 0;
-  while (true) {
-    if (i >= 24) break;
-    if ((atempeffect[i] === udg_antiStackEffect[i + 1])) {
+  for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+    if (atempeffect[i] === udg_antiStackEffect[i + 1]) {
       SetPlayerUnitAvailableBJ(FourCC("n002"), true, ConvertedPlayer(i + 1)!);
-      DestroyEffectBJ(
-        udg_antiStackEffect[GetConvertedPlayerId(ConvertedPlayer(i + 1)!)],
-      );
+      DestroyEffectBJ(udg_antiStackEffect[GetConvertedPlayerId(ConvertedPlayer(i + 1)!)]);
     }
-    i = i + 1;
   }
 };
 

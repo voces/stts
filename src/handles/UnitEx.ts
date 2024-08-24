@@ -21,6 +21,10 @@ export class UnitEx extends Unit {
     return super.addAbility(typeof abilityId === "number" ? abilityId : FourCC(abilityId));
   }
 
+  isIllusion(): boolean {
+    return super.isIllusion() || !!this.getAbility(FourCC("Aloc"));
+  }
+
   static create(owner: MapPlayer | player, unitId: number | string, x: number, y: number, face?: number) {
     face ??= bj_UNIT_FACING;
     const player = owner instanceof MapPlayer ? owner.handle : owner;

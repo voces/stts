@@ -1,3 +1,5 @@
+import { MapPlayerEx } from "handles/MapPlayerEx";
+import { UnitEx } from "handles/UnitEx";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { addScriptHook, W3TS_HOOK } from "w3ts";
 
@@ -16,9 +18,9 @@ const getSelectedInventoryUnit = (allowEmpty: boolean) => {
     g,
     p,
     Filter(() => {
-      const u = GetFilterUnit()!;
-      return !IsUnitIllusion(u) && (UnitInventorySize(u) - (allowEmpty ? 0 : UnitInventoryCount(u)) > 0) &&
-        IsUnitAlly(u, p);
+      const u = UnitEx.fromFilter();
+      return u && !u.isIllusion() && (u.inventorySize - (allowEmpty ? 0 : UnitInventoryCount(u.handle)) > 0) &&
+        u.isAlly(MapPlayerEx.fromHandle(p));
     }),
   );
   const u = FirstOfGroup(g);

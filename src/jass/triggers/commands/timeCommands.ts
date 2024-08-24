@@ -1,6 +1,7 @@
 import { MapPlayerEx } from "handles/MapPlayerEx";
-import { getTimes, modes } from "misc/times";
+import { getRounds, getTimes, modes } from "stats/times";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
+import { formatList } from "util/formatList";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
 const Trig_timeCommands_Actions = () => {
@@ -205,7 +206,7 @@ const Trig_timeCommands_Actions = () => {
         if (count === 12) TriggerSleepAction(4);
         self.displayTimedText(
           "                              " + udg_colorString[i + 1] + GetPlayerName(Player(i)!) + ": " +
-            udg_roundTimes[i + 1],
+            udg_roundTimes[i + 1].slice(0, -2),
           15,
         );
         count = count + 1;
@@ -227,6 +228,26 @@ const Trig_timeCommands_Actions = () => {
       }
       i = i + 1;
     }
+  } else if (myArg[0] === "-rounds") {
+    const matchingPlayers = myArg.slice(1).map((a) => MapPlayerEx.fromIndex(parseInt(a) - 1))
+      .filter((p): p is MapPlayerEx => !!p && p.slotState !== PLAYER_SLOT_STATE_EMPTY);
+    const rounds = getRounds(...matchingPlayers);
+
+    if (rounds.length === 0) {
+      return self.displayTimedText(
+        `|CFFFFCC00No rounds${matchingPlayers.length > 0 ? ` with ${formatList(matchingPlayers)}` : ""}|r`,
+      );
+    }
+
+    self.displayTimedText(
+      matchingPlayers.length > 0
+        ? `|CFFFFCC00Rounds with ${formatList(matchingPlayers)}:|r`
+        : "|CFFFFCC00All rounds:|r",
+      15,
+    );
+    for (const round of rounds) {
+      self.displayTimedText(`${formatList(round.sheep)}: ${formatTime(round.time)}`, 15);
+    }
   }
 };
 
@@ -247,5 +268,6 @@ InitTrig_timeCommands = () => {
   registerAnyPlayerChatEvent(gg_trg_timeCommands, "-loser");
   registerAnyPlayerChatEvent(gg_trg_timeCommands, "-reset");
   registerAnyPlayerChatEvent(gg_trg_timeCommands, "-atime", false); // -atimes
+  registerAnyPlayerChatEvent(gg_trg_timeCommands, "-rounds", false); // accepts arguments
   TriggerAddAction(gg_trg_timeCommands, Trig_timeCommands_Actions);
 };

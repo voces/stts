@@ -35,7 +35,6 @@ import "./triggers/beerWrdaAdds/AntiStackStomp";
 import "./triggers/beerWrdaAdds/SexyOff";
 import "./triggers/beerWrdaAdds/LastSheepStanding";
 import "./triggers/beerWrdaAdds/Anonymous";
-import "./triggers/beerWrdaAdds/LosingCloak";
 import "./triggers/beerWrdaAdds/SayQDeath";
 import "./triggers/beerWrdaAdds/SheepColor";
 import "./triggers/beerWrdaAdds/blightManagement";
@@ -141,13 +140,8 @@ import "./triggers/shareControl/noAutoControl";
 import { setTimeout, Timeout } from "util/setTimeout";
 import { removeEnumUnit } from "util/removeEnumUnit";
 import { updateLeaderboardSettingsDisplay } from "settings/time";
-import { terrain } from "settings/terrain";
-import { logRound } from "./triggers/hostCommands/UpdateStats";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { MapPlayerEx } from "handles/MapPlayerEx";
-import { president } from "modes/president";
-import { addTime } from "misc/times";
-import { income } from "settings/income";
 
 declare global {
   //globals from SavingFarms:
@@ -319,10 +313,6 @@ declare global {
   let udg_atempint3: number;
   // deno-lint-ignore prefer-const
   let udg_wasHere: Array<boolean>;
-  // deno-lint-ignore prefer-const
-  let udg_itemIcon: Array<string>;
-  // deno-lint-ignore prefer-const
-  let udg_cloakAbility: Array<number>;
   let udg_someVersusBoolean: boolean;
   let udg_versusTime: number;
   // deno-lint-ignore prefer-const
@@ -348,10 +338,7 @@ declare global {
   // deno-lint-ignore prefer-const
   let udg_QDeathTime: Array<number>;
   let udg_Force: force;
-  // deno-lint-ignore prefer-const
-  let udg_PlayerName: Array<string>;
   let udg_IntLoop: number;
-  let udg_IntCloakCount: number;
   // deno-lint-ignore prefer-const
   let udg_unit2: Array<unit>;
   // deno-lint-ignore prefer-const
@@ -826,8 +813,6 @@ udg_wolfGold = 0;
 udg_accumPartner = [];
 udg_atempint3 = 0;
 udg_wasHere = [];
-udg_itemIcon = [];
-udg_cloakAbility = [];
 udg_someVersusBoolean = false;
 udg_versusTime = 0;
 udg_firstBlood = false;
@@ -840,9 +825,7 @@ udg_lssCounter = [];
 udg_wins = [];
 udg_qDeath = Infinity;
 udg_QDeathTime = Array.from({ length: bj_MAX_PLAYERS + 1 }, () => Infinity);
-udg_PlayerName = [];
 udg_IntLoop = 0;
-udg_IntCloakCount = 0;
 udg_unit2 = [];
 udg_totalSaves = Array.from({ length: bj_MAX_PLAYERS + 1 }, () => 0);
 udg_totalKills = Array.from({ length: bj_MAX_PLAYERS + 1 }, () => 0);
@@ -1085,8 +1068,6 @@ transferGold = (
   amount: number,
   display: number,
 ): void => {
-  let i: number;
-
   if (IsPlayerAlly(sender, receiver) === false) return;
 
   if (amount > GetPlayerState(sender, PLAYER_STATE_RESOURCE_GOLD)) {
@@ -1100,13 +1081,10 @@ transferGold = (
 
   if (udg_switchOn === false && vampOn === false && udg_practiceOn === false) {
     if (IsPlayerInForce(sender, udg_Wolf)) {
-      wolfGoldGiven[GetPlayerId(sender)] = wolfGoldGiven[GetPlayerId(sender)] +
-        amount;
+      wolfGoldGiven[GetPlayerId(sender)] = wolfGoldGiven[GetPlayerId(sender)] + amount;
     } else if (IsPlayerInForce(sender, udg_Sheep)) {
       sheepGoldGiven[GetPlayerId(sender)] = sheepGoldGiven[GetPlayerId(sender)] + amount;
-    } else {
-      spiritGoldGiven[GetPlayerId(sender)] = spiritGoldGiven[GetPlayerId(sender)] + amount;
-    }
+    } else spiritGoldGiven[GetPlayerId(sender)] = spiritGoldGiven[GetPlayerId(sender)] + amount;
   }
 
   if (display >= TRANSFER_DISPLAY_SOURCE) {
@@ -1128,15 +1106,11 @@ transferGold = (
   }
 
   if (display >= TRANSFER_DISPLAY_TEAM) {
-    i = 0;
-    while (true) {
-      if (i >= bj_MAX_PLAYERS) break;
-      if (
-        Player(i) !== sender && Player(i) !== receiver &&
-        IsPlayerAlly(sender, Player(i)!)
-      ) {
+    for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+      const p = Player(i);
+      if (p && p !== sender && p !== receiver && IsPlayerAlly(sender, p)) {
         DisplayTextToPlayer(
-          Player(i)!,
+          p,
           0,
           0,
           `${MapPlayerEx.fromHandle(sender)} |CFFFFCC00gave ${I2S(amount)} gold to ${
@@ -1144,7 +1118,6 @@ transferGold = (
           }|CFFFFCC00.|r`,
         );
       }
-      i = i + 1;
     }
   }
 };
@@ -1182,7 +1155,48 @@ transferOwnershipOfHostFarm = () => {
 //***************************************************************************
 
 const InitGlobals = () => {
-  let i = 0;
+  for (let i = 0; i <= bj_MAX_PLAYERS; i++) {
+    udg_switch[i] = 0;
+    udg_zoom[i] = 0;
+    udg_apr[i] = 0;
+    udg_sheepLastGame[i] = false;
+    udg_kills[i] = 0;
+    udg_hideshow[i] = false;
+    udg_positionArray[i] = 0;
+    udg_sheepCount[i] = 0;
+    udg_permanentHide[i] = false;
+    udg_AFK[i] = AFK_PLAYING;
+    udg_colorString[i] = "";
+    udg_saves[i] = 0;
+    udg_AFKOn[i] = 0;
+    udg_hideEsc[i] = false;
+    udg_wolfZoom[i] = 0;
+    udg_sheepZoom[i] = 0;
+    udg_multiboardRow[i] = 0;
+    udg_wispZoom[i] = 0;
+    udg_gameTime[i] = 0;
+    udg_wasHere[i] = false;
+    udg_humiliationCheck[i] = false;
+    udg_firstbloodKillCounter[i] = 0;
+    udg_firstbloodDeathCounter[i] = 0;
+    udg_lssCounter[i] = 0;
+    udg_wins[i] = 0;
+    udg_sheepTimer[i] = CreateTimer();
+    udg_camLock[i] = false;
+    udg_firstRound[i] = false;
+    udg_disable[i] = false;
+    udg_multiKillTimer[i] = CreateTimer();
+    udg_multiKillNum[i] = 0;
+    udg_playerColor[i] = PLAYER_COLOR_RED;
+    udg_anonPlayerColors[i] = -1;
+    udg_masterColorString[i] = "";
+    udg_vwins[i] = 0;
+    udg_totalFarmsBuilt[i] = 0;
+    udg_totalFarmCountBeforeWolves[i] = [];
+    udg_roundTimes[i] = "";
+    udg_sheepSurvived[i] = "";
+  }
+  for (let i = 0; i <= bj_MAX_PLAYERS * bj_MAX_PLAYERS; i++) udg_accumPartner[i] = 0;
   udg_Timer = CreateTimer();
   udg_Sheep = CreateForce()!;
   udg_Wolf = CreateForce()!;
@@ -1190,13 +1204,6 @@ const InitGlobals = () => {
   udg_lastPlayer = 0;
   udg_pickIndex = 1;
   udg_Createtimer = CreateTimer();
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_switch[i] = 0;
-    i = i + 1;
-  }
-
   udg_redTimer = CreateTimer();
   udg_blueTimer = CreateTimer();
   udg_yellowTimer = CreateTimer();
@@ -1214,45 +1221,10 @@ const InitGlobals = () => {
   udg_numSheep = 0;
   udg_numWolf = 0;
   udg_atempgroup = CreateGroup()!;
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_zoom[i] = 0;
-    i = i + 1;
-  }
-
   udg_transfer = 0;
   cid = 0;
   udg_wolfTimer = CreateTimer();
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_apr[i] = 0;
-    i = i + 1;
-  }
-
   udg_timeString = "";
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_sheepLastGame[i] = false;
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_kills[i] = 0;
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_hideshow[i] = false;
-    i = i + 1;
-  }
-
   udg_atempboolean = false;
   udg_switchOn = false;
   udg_gameTimer = CreateTimer();
@@ -1263,60 +1235,11 @@ const InitGlobals = () => {
   udg_giveGold = true;
   udg_wolfSpawn = 10;
   udg_sheepInvul = 5;
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_positionArray[i] = 0;
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_sheepCount[i] = 0;
-    i = i + 1;
-  }
-
   udg_dummyWisps = 0;
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_permanentHide[i] = false;
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_AFK[i] = AFK_PLAYING;
-    i = i + 1;
-  }
-
   udg_playerCount = 0;
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_colorString[i] = "";
-    i = i + 1;
-  }
-
   udg_numPick = 0;
   udg_wispPoints = 0;
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_saves[i] = 0;
-    i = i + 1;
-  }
-
   udg_atempstring = "";
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_AFKOn[i] = 0;
-    i = i + 1;
-  }
-
   udg_redHideTimer = CreateTimer();
   udg_blueHideTimer = CreateTimer();
   udg_tealHideTimer = CreateTimer();
@@ -1329,206 +1252,31 @@ const InitGlobals = () => {
   udg_lbHideTimer = CreateTimer();
   udg_dgHideTimer = CreateTimer();
   udg_brownHideTimer = CreateTimer();
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_hideEsc[i] = false;
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_wolfZoom[i] = 0;
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_sheepZoom[i] = 0;
-    i = i + 1;
-  }
-
   udg_captainTurn = 0;
   udg_Draft = CreateForce()!;
   udg_captainRow = 0;
   udg_draftOn = false;
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_multiboardRow[i] = 0;
-    i = i + 1;
-  }
-
   udg_giveOn = true;
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_wispZoom[i] = 0;
-    i = i + 1;
-  }
-
   udg_versus = 0;
   udg_pickAgain = false;
-  i = 0;
-  while (true) {
-    if ((i > 2)) break;
-    udg_gameTime[i] = 0;
-    i = i + 1;
-  }
-
+  udg_gameTime[0] = 0;
+  udg_gameTime[1] = 0;
   udg_shareOn = false;
   udg_versusOff = false;
   udg_sheepGold = 0;
   udg_wolfGold = 0;
   udg_mapName = "";
-  i = 0;
-  while (true) {
-    if ((i > 576)) break;
-    udg_accumPartner[i] = 0;
-    i = i + 1;
-  }
-
   udg_atempint3 = 0;
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_wasHere[i] = false;
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 17)) break;
-    udg_itemIcon[i] = "";
-    i = i + 1;
-  }
-
   udg_someVersusBoolean = false;
   udg_versusTime = 0;
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_humiliationCheck[i] = false;
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_firstbloodKillCounter[i] = 0;
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_firstbloodDeathCounter[i] = 0;
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_lssCounter[i] = 0;
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_wins[i] = 0;
-    i = i + 1;
-  }
-
   udg_Force = CreateForce()!;
-  i = 0;
-  while (true) {
-    if ((i > 1)) break;
-    udg_PlayerName[i] = "";
-    i = i + 1;
-  }
-
   udg_IntLoop = 0;
-  udg_IntCloakCount = 0;
-
-  i = 0;
-  while (true) {
-    if ((i > 1)) break;
-    udg_SheepColorR[i] = 0;
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 1)) break;
-    udg_SheepColorG[i] = 0;
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 1)) break;
-    udg_SheepColorB[i] = 0;
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 1)) break;
-    udg_freakHotkeys[i] = false;
-    i = i + 1;
-  }
-
   udg_atempplayer = CreateForce()!;
   udg_atempplayer2 = CreateForce()!;
   udg_practiceOn = false;
   udg_massTime = 120;
   udg_massTimer = CreateTimer();
   udg_massTimeString = "";
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_sheepTimer[i] = CreateTimer();
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_camLock[i] = false;
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_firstRound[i] = false;
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_disable[i] = false;
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_multiKillTimer[i] = CreateTimer();
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_multiKillNum[i] = 0;
-    i = i + 1;
-  }
-
   udg_maroonHideTimer = CreateTimer();
   udg_navyHideTimer = CreateTimer();
   udg_turquoiseHideTimer = CreateTimer();
@@ -1561,90 +1309,7 @@ const InitGlobals = () => {
   udg_blightAlterationTime = 0;
   udg_blightAlterations = 4;
   udg_draftMultiboardWidth = 25;
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_playerColor[i] = PLAYER_COLOR_RED;
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_anonPlayerColors[i] = -1;
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_masterColorString[i] = "";
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 1)) break;
-    udg_masterSheepColorB[i] = 0;
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 1)) break;
-    udg_masterSheepColorG[i] = 0;
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 1)) break;
-    udg_masterSheepColorR[i] = 0;
-    i = i + 1;
-  }
-
   udg_isAnon = false;
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_vwins[i] = 0;
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_totalFarmsBuilt[i] = 0;
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_totalFarmCountBeforeWolves[i] = [];
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_roundTimes[i] = "";
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 24)) break;
-    udg_sheepSurvived[i] = "";
-    i = i + 1;
-  }
-
-  i = 0;
-  while (true) {
-    if ((i > 1)) break;
-    udg_autocontrol[i] = false;
-    i = i + 1;
-  }
 };
 
 //***************************************************************************
@@ -1743,94 +1408,6 @@ formatTime = (r: number): string => {
     s = s + "0" + R2S(r);
   }
   return s;
-};
-
-const noHandicaps = () => {
-  let i = 0;
-  let playing: boolean;
-  while (true) {
-    if (i === bj_MAX_PLAYERS) break;
-    playing = IsPlayerInForce(Player(i)!, udg_Sheep) ||
-      IsPlayerInForce(Player(i)!, udg_Spirit) ||
-      IsPlayerInForce(Player(i)!, udg_Wolf);
-    if (GetPlayerHandicap(Player(i)!) !== 1 && playing) {
-      return false;
-    }
-    i = i + 1;
-  }
-  return true;
-};
-
-declare global {
-  // deno-lint-ignore prefer-const
-  let updateTimes: () => void;
-}
-updateTimes = () => {
-  let s = "";
-  let timeElapsed = TimerGetElapsed(udg_Timer);
-  const emitRound = !someoneLeft && udg_sheepGold === 0 && udg_wolfGold === 0 &&
-    noHandicaps() && terrain.name === "Classic" && president.enabled === false && income.sheep === 1 &&
-    income.wolves === 1 && income.savings === 1;
-  let sheepString = "";
-  let sheep = 0;
-  let wolvesString = "";
-  let wolves = 0;
-
-  if (timeElapsed <= 0.01) timeElapsed = udg_time;
-
-  if (udg_switchOn || vampOn || udg_practiceOn) return;
-
-  for (let i = 0; i < bj_MAX_PLAYERS; i++) {
-    if (
-      IsPlayerInForce(Player(i)!, udg_Sheep) ||
-      IsPlayerInForce(Player(i)!, udg_Spirit)
-    ) {
-      s__times_sheepCount[playerTimes[i]] = s__times_sheepCount[playerTimes[i]] + 1;
-      if (s === "") s = MapPlayerEx.fromIndex(i)!.coloredName;
-      else s = s + ", " + MapPlayerEx.fromIndex(i);
-      if (sheep > 0) sheepString = sheepString + " " + I2S(i);
-      else sheepString = I2S(i)!;
-      udg_roundTimes[i + 1] = udg_roundTimes[i + 1] + R2S(timeElapsed) + " | ";
-      if (timeElapsed > s__times_pTimeMax[playerTimes[i]]) s__times_pTimeMax[playerTimes[i]] = timeElapsed;
-      for (let n = 0; n < bj_MAX_PLAYERS; n++) {
-        if (IsPlayerInForce(Player(n)!, udg_Sheep) || IsPlayerInForce(Player(n)!, udg_Spirit)) {
-          s___times_pTime[s__times_pTime[playerTimes[i]] + n] += timeElapsed;
-        }
-      }
-      sheep++;
-    } else if (IsPlayerInForce(Player(i)!, udg_Wolf)) {
-      if (wolves > 0) wolvesString = wolvesString + " " + I2S(i);
-      else wolvesString = I2S(i)!;
-      wolves++;
-    }
-  }
-
-  if (!someoneLeft) {
-    const mode = `${sheep}v${wolves}`;
-    for (let i = 0; i < bj_MAX_PLAYERS; i++) {
-      if (
-        IsPlayerInForce(Player(i)!, udg_Sheep) ||
-        IsPlayerInForce(Player(i)!, udg_Spirit)
-      ) addTime(i, mode, timeElapsed);
-    }
-  }
-
-  udg_timeString = formatTime(timeElapsed);
-  fullTimeString = s + " with " + formatTime(timeElapsed);
-
-  if (timeElapsed > recordTime) {
-    if (recordTime !== -Infinity) fullTimeString = fullTimeString + " (leader)";
-    recordTime = timeElapsed;
-    recordHolders = s;
-  }
-
-  if (timeElapsed < loserTime) {
-    if (loserTime !== Infinity) fullTimeString = fullTimeString + " (loser)";
-    loserTime = timeElapsed;
-    loserHolders = s;
-  }
-
-  if (emitRound) logRound(sheepString, wolvesString, R2S(timeElapsed)!);
 };
 
 //Returns the index in which string part is found in string whole
@@ -2070,7 +1647,6 @@ const InitCustomTriggers = () => {
   InitTrig_Alert_Sheep_Death();
   InitTrig_Say_Q_Death();
   InitTrig_Getting_Cloak();
-  InitTrig_Losing_Cloak();
   InitTrig_Anti_Stack_Stomp();
   InitTrig_Str_Pot_Kill();
   InitTrig_Humil_Check();

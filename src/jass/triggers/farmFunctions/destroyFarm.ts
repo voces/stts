@@ -14,6 +14,7 @@ const Trig_destroyFarm_Actions = () => {
     if (IsUnitSelected(u, p.handle)) desels.push(p);
   }
 
+  KillUnit(u);
   RemoveUnit(u);
 
   for (const p of desels) {

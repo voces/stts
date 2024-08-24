@@ -1,108 +1,27 @@
-//===========================================================================
-// Trigger: Getting Cloak
-//===========================================================================
-const Trig_Getting_Cloak_Conditions = () => {
-  if ((!(GetItemTypeId(GetManipulatedItem()!) === FourCC("I001")))) {
-    return false;
-  }
-  return true;
-};
+import { setTimeout } from "util/setTimeout";
 
-const Trig_Getting_Cloak_Func002Func001C = () => {
-  if ((!(GetManipulatedItem()! != null))) {
-    return false;
-  }
-  if (
-    (!(GetItemTypeId(GetManipulatedItem()!) ===
-      GetItemTypeId(UnitItemInSlotBJ(GetTriggerUnit()!, udg_IntLoop)!)))
-  ) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_Getting_Cloak_Func003Func001Func001Func001Func001Func001C = () => {
-  if ((!(udg_IntCloakCount === 6))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_Getting_Cloak_Func003Func001Func001Func001Func001C = () => {
-  if ((!(udg_IntCloakCount === 5))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_Getting_Cloak_Func003Func001Func001Func001C = () => {
-  if ((!(udg_IntCloakCount === 4))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_Getting_Cloak_Func003Func001Func001C = () => {
-  if ((!(udg_IntCloakCount === 3))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_Getting_Cloak_Func003Func001C = () => {
-  if ((!(udg_IntCloakCount === 2))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_Getting_Cloak_Func003C = () => {
-  if ((!(udg_IntCloakCount === 1))) {
-    return false;
-  }
-  return true;
-};
+const cloakAbilityMap = [
+  0,
+  FourCC("A013"),
+  FourCC("A014"),
+  FourCC("A017"),
+  FourCC("A01C"),
+  FourCC("A01M"),
+  FourCC("A01N"),
+];
 
 const Trig_Getting_Cloak_Actions = () => {
-  udg_IntCloakCount = 0;
-  udg_IntLoop = 1;
-  while (true) {
-    if (udg_IntLoop > 6) break;
-    if ((Trig_Getting_Cloak_Func002Func001C())) {
-      udg_IntCloakCount = udg_IntCloakCount + 1;
+  const u = GetTriggerUnit()!;
+  let itm = GetManipulatedItem();
+  setTimeout(0.01, () => {
+    let cloaks = 0;
+    for (let i = 0; i < bj_MAX_INVENTORY; i++) {
+      if (itm && GetItemTypeId(UnitItemInSlot(u, i)!) === FourCC("I001")) cloaks++;
     }
-    udg_IntLoop = udg_IntLoop + 1;
-  }
-  if ((Trig_Getting_Cloak_Func003C())) {
-    UnitAddAbilityBJ(FourCC("A013"), GetTriggerUnit()!);
-  } else {
-    if ((Trig_Getting_Cloak_Func003Func001C())) {
-      UnitRemoveAbilityBJ(FourCC("A013"), GetTriggerUnit()!);
-      UnitAddAbilityBJ(FourCC("A014"), GetTriggerUnit()!);
-    } else {
-      if ((Trig_Getting_Cloak_Func003Func001Func001C())) {
-        UnitRemoveAbilityBJ(FourCC("A014"), GetTriggerUnit()!);
-        UnitAddAbilityBJ(FourCC("A017"), GetTriggerUnit()!);
-      } else {
-        if ((Trig_Getting_Cloak_Func003Func001Func001Func001C())) {
-          UnitRemoveAbilityBJ(FourCC("A017"), GetTriggerUnit()!);
-          UnitAddAbilityBJ(FourCC("A01C"), GetTriggerUnit()!);
-        } else {
-          if ((Trig_Getting_Cloak_Func003Func001Func001Func001Func001C())) {
-            UnitRemoveAbilityBJ(FourCC("A01C"), GetTriggerUnit()!);
-            UnitAddAbilityBJ(FourCC("A01M"), GetTriggerUnit()!);
-          } else {
-            if (
-              (Trig_Getting_Cloak_Func003Func001Func001Func001Func001Func001C())
-            ) {
-              UnitRemoveAbilityBJ(FourCC("A01M"), GetTriggerUnit()!);
-              UnitAddAbilityBJ(FourCC("A01N"), GetTriggerUnit()!);
-            }
-          }
-        }
-      }
-    }
-  }
+    if (cloaks > 1) UnitRemoveAbility(u, cloakAbilityMap[cloaks - 1]);
+    if (cloaks > 0) UnitAddAbility(u, cloakAbilityMap[cloaks]);
+    if (cloaks < 6) UnitRemoveAbility(u, cloakAbilityMap[cloaks + 1]);
+  });
 };
 
 //===========================================================================
@@ -114,6 +33,7 @@ declare global {
 InitTrig_Getting_Cloak = () => {
   gg_trg_Getting_Cloak = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(gg_trg_Getting_Cloak, EVENT_PLAYER_UNIT_PICKUP_ITEM);
-  TriggerAddCondition(gg_trg_Getting_Cloak, Condition(Trig_Getting_Cloak_Conditions));
+  TriggerRegisterAnyUnitEventBJ(gg_trg_Getting_Cloak, EVENT_PLAYER_UNIT_DROP_ITEM);
+  TriggerAddCondition(gg_trg_Getting_Cloak, Condition(() => GetItemTypeId(GetManipulatedItem()!) === FourCC("I001")));
   TriggerAddAction(gg_trg_Getting_Cloak, Trig_Getting_Cloak_Actions);
 };

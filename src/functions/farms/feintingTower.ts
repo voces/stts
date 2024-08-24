@@ -28,8 +28,7 @@ game.onInterval(4, () => {
     withUnitsInRange(tower.x, tower.y, 1200, (units) =>
       units.forEach((u) => {
         if (
-          u.moveSpeed === 0 || !u.isAlive() || u.isIllusion() || !tower.isAlly(u.owner) || !u.isAlly(tower.owner) ||
-          u.getAbility(FourCC("Aloc"))
+          u.moveSpeed === 0 || !u.isAlive() || u.isIllusion() || !tower.isAlly(u.owner) || !u.isAlly(tower.owner)
         ) return;
 
         if (!madeSpawnEffect) {

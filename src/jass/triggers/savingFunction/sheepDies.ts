@@ -26,8 +26,7 @@ const Trig_sheepDies_Actions = () => {
   udg_farmCount[dyingPlayerId] = 0;
 
   const wolfCount = CountPlayersInForceBJ(udg_Wolf);
-  const sheepCount = CountPlayersInForceBJ(udg_Sheep) +
-    CountPlayersInForceBJ(udg_Spirit);
+  const sheepCount = CountPlayersInForceBJ(udg_Sheep) + CountPlayersInForceBJ(udg_Spirit);
   // double division because this baked logic was broken; in 2v4, all wolves get 6 gold
   const teamIncome = Math.floor(100 / wolfCount / wolfCount);
   const killerIncome = teamIncome + 10 * sheepCount;

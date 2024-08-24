@@ -3,16 +3,10 @@ import { setTimeout } from "util/setTimeout";
 import { Effect, Trigger } from "w3ts";
 
 const sheepLocaterPing = () => {
-  if (IsUnitIllusion(GetEnumUnit()!) || BlzGetUnitAbility(GetEnumUnit()!, FourCC("Aloc"))) {
-    return;
-  }
+  const u = UnitEx.fromEnum();
+  if (!u || u.isIllusion()) return;
 
-  PingMinimapForForce(
-    udg_Wolf,
-    GetUnitX(GetEnumUnit()!),
-    GetUnitY(GetEnumUnit()!),
-    2,
-  );
+  PingMinimapForForce(udg_Wolf, u.x, u.y, 2);
 };
 
 const sheepLocater = () => {

@@ -1,6 +1,27 @@
 # TODO
 
 - Mana Bomb
+- Area of Suppression crashes game ?
+
+# 24l
+
+## Feature changes
+
+- President mode will always grant president to non-pubs first
+- Added -rounds
+- Extended automatic last from 10 seconds to 18 seconds
+- Updated some command outputs
+
+## Balance changes
+
+- Decreased cooldown on Scepter of Mastery from 25 seconds to 20 seconds
+
+## Bug fixes
+
+- Fixed Destroy (D) not selecting primary unit
+- Fixed a bug in which wolves could get extra kill gold if they have a Feinting Tower
+- Fixed location of scorched barn on Compact terrain
+- Cleaned up -rtimes to not include trailing "|"
 
 # 24k
 
@@ -28,7 +49,6 @@
   - Increased area of effect from 1000 to 1200
   - Decreased cost from 30 to 20
 - Increased Kaleidoscope max stacks from 9 to 10, the same as other charges
-- Decreased cooldown on Scepter of Mastery from 25 seconds to 20 seconds
 
 ## Bug fixes
 

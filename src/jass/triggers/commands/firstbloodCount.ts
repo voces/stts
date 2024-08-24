@@ -1,128 +1,23 @@
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
-const Trig_firstbloodCount_Func003Func001Func001C = () => {
-  if ((!(GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING))) {
-    return false;
-  }
-  if ((!(GetPlayerSlotState(GetEnumPlayer()!) !== PLAYER_SLOT_STATE_LEFT))) {
-    return false;
-  }
-  if ((!(udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === AFK_PLAYING))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_firstbloodCount_Func003Func001A = (p: MapPlayerEx) => {
-  if ((Trig_firstbloodCount_Func003Func001Func001C())) {
-    cid = GetConvertedPlayerId(GetEnumPlayer()!);
-    p.displayTimedText(
-      "                              " + udg_colorString[cid] +
-        GetPlayerName(GetEnumPlayer()!) +
-        " : " +
-        I2S(udg_firstbloodKillCounter[cid]) +
-        " | " + I2S(udg_firstbloodDeathCounter[cid]),
-      15,
-    );
-  }
-};
-
-const Trig_firstbloodCount_Func003Func002Func001C = () => {
-  if (
-    (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexA())!) ===
-      PLAYER_SLOT_STATE_PLAYING))
-  ) {
-    return false;
-  }
-  if (
-    (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexA())!) !==
-      PLAYER_SLOT_STATE_LEFT))
-  ) {
-    return false;
-  }
-  if (
-    (!(udg_AFK[GetConvertedPlayerId(ConvertedPlayer(GetForLoopIndexA())!)] ===
-      0))
-  ) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_firstbloodCount_Func003Func006Func001C = () => {
-  if (
-    (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexA())!) ===
-      PLAYER_SLOT_STATE_PLAYING))
-  ) {
-    return false;
-  }
-  if (
-    (!(GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexA())!) !==
-      PLAYER_SLOT_STATE_LEFT))
-  ) {
-    return false;
-  }
-  if (
-    (!(udg_AFK[GetConvertedPlayerId(ConvertedPlayer(GetForLoopIndexA())!)] ===
-      0))
-  ) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_firstbloodCount_Func003C = () => {
-  if ((!(CountPlayersInForceBJ(GetPlayersAll()!) > 14))) {
-    return false;
-  }
-  return true;
-};
-
 const Trig_firstbloodCount_Actions = () => {
-  const p = MapPlayerEx.fromEvent()!;
-  p.displayTimedText("                              |CFFFFCC00First Blood Kills | Deaths|r", 15);
-  if ((Trig_firstbloodCount_Func003C())) {
-    bj_forLoopAIndex = 1;
-    bj_forLoopAIndexEnd = 12;
-    while (true) {
-      if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-      if ((Trig_firstbloodCount_Func003Func002Func001C())) {
-        p.displayTimedText(
-          "                              " +
-            udg_colorString[GetForLoopIndexA()] +
-            GetPlayerName(ConvertedPlayer(GetForLoopIndexA())!) +
-            " : " +
-            I2S(udg_firstbloodKillCounter[GetForLoopIndexA()]) +
-            " | " +
-            I2S(udg_firstbloodDeathCounter[GetForLoopIndexA()]),
-          15,
-        );
-      }
-      bj_forLoopAIndex = bj_forLoopAIndex + 1;
+  const triggerer = MapPlayerEx.fromEvent()!;
+  let count = 0;
+  triggerer.displayTimedText("                              |CFFFFCC00First Blood Kills | Deaths|r", 15);
+  for (let cid = 1; cid <= bj_MAX_PLAYERS; cid++) {
+    const p = MapPlayerEx.fromIndex(cid - 1);
+    if (!p || p.slotState === PLAYER_SLOT_STATE_EMPTY) continue;
+    if (count > 0 && (count % 15 === 0)) {
+      TriggerSleepAction(9);
+      count = 0;
+      triggerer.displayTimedText("                              |CFFFFCC00First Blood Kills | Deaths (cont.)|r", 15);
     }
-    TriggerSleepAction(9);
-    if (p.isLocal()) ClearTextMessages();
-    p.displayTimedText("                              |CFFFFCC00First Blood Kills | Deaths|r", 15);
-    bj_forLoopAIndex = 13;
-    bj_forLoopAIndexEnd = 24;
-    while (true) {
-      if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-      if ((Trig_firstbloodCount_Func003Func006Func001C())) {
-        p.displayTimedText(
-          "                              " +
-            udg_colorString[GetForLoopIndexA()] +
-            GetPlayerName(ConvertedPlayer(GetForLoopIndexA())!) +
-            " : " +
-            I2S(udg_firstbloodKillCounter[GetForLoopIndexA()]) +
-            " | " +
-            I2S(udg_firstbloodDeathCounter[GetForLoopIndexA()]),
-          15,
-        );
-      }
-      bj_forLoopAIndex = bj_forLoopAIndex + 1;
-    }
-  } else ForForce(GetPlayersAll()!, () => Trig_firstbloodCount_Func003Func001A(p));
+    const fbk = I2S(udg_firstbloodKillCounter[cid]);
+    const fbd = I2S(udg_firstbloodDeathCounter[cid]);
+    triggerer.displayTimedText(`                              ${p.coloredName_} : ${fbk} | ${fbd}`, 15);
+    count++;
+  }
 };
 
 declare global {

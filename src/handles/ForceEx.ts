@@ -40,6 +40,16 @@ export class ForceEx extends Force {
     return players;
   }
 
+  toArray() {
+    const arr: MapPlayerEx[] = [];
+    this.for((p) => arr.push(p));
+    return arr;
+  }
+
+  *[Symbol.iterator]() {
+    for (const p of this.toArray()) yield p;
+  }
+
   public size() {
     let size = 0;
     ForForce(this.handle, () => size++);
