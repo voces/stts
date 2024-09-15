@@ -1,4 +1,4 @@
-import { Force } from "w3ts";
+import { Force, MapPlayer } from "w3ts";
 import { MapPlayerEx } from "./MapPlayerEx";
 
 const map = new WeakMap<force, ForceEx>();
@@ -38,6 +38,10 @@ export class ForceEx extends Force {
     });
 
     return players;
+  }
+
+  hasPlayer(whichPlayer: MapPlayer | player): boolean {
+    return IsPlayerInForce(whichPlayer instanceof MapPlayer ? whichPlayer.handle : whichPlayer, this.handle);
   }
 
   toArray() {

@@ -5,8 +5,8 @@ import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { game } from "util/game";
 import { setTimeout } from "util/setTimeout";
 import { addScriptHook, FogModifier, W3TS_HOOK } from "w3ts";
-
-export const spawnSetting = { mode: "static" as "static" | "free" | "random" };
+import { spawnSetting } from "./settings";
+import { updateLeaderboardSettingsDisplay } from "./time";
 
 export const spawns = new Map<player, { x: number; y: number }>();
 
@@ -21,6 +21,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
         spawnSetting.mode === "free" ? "enabled" : "disabled"
       }|r`,
     );
+    updateLeaderboardSettingsDisplay();
   });
 
   t = TriggerEx.create();
@@ -33,6 +34,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
         spawnSetting.mode === "random" ? "enabled" : "disabled"
       }|r`,
     );
+    updateLeaderboardSettingsDisplay();
   });
 });
 

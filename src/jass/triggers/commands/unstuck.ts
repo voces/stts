@@ -1,36 +1,22 @@
-//===========================================================================
-// Trigger: unstuck
-//===========================================================================
-const Trig_unstuck_Actions = () => {
-  const p = GetTriggerPlayer()!;
-  let u: unit | undefined = CreateUnit(p, unstuckType, 0, 0, 270)!;
-  const g = GetUnitsSelectedAll(p)!;
-  SelectUnitForPlayerSingle(u, p);
-  ForceUICancelBJ(p);
-  RemoveUnit(u);
-  u = FirstOfGroup(g);
-  while (true) {
-    if (u == null) break;
-    SelectUnitAddForPlayer(u, p);
-    GroupRemoveUnit(g, u);
-    u = FirstOfGroup(g);
-  }
-  DestroyGroup(g);
-};
+import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+import { addScriptHook, W3TS_HOOK } from "w3ts";
 
-//===========================================================================
-export {};
-declare global {
-  // deno-lint-ignore prefer-const
-  let InitTrig_unstuck: () => void;
-}
-InitTrig_unstuck = () => {
-  let i = 0;
-  gg_trg_unstuck = CreateTrigger();
-  while (true) {
-    TriggerRegisterPlayerChatEvent(gg_trg_unstuck, Player(i)!, "-u", false);
-    i = i + 1;
-    if (i === bj_MAX_PLAYERS) break;
-  }
-  TriggerAddAction(gg_trg_unstuck, Trig_unstuck_Actions);
-};
+addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
+  const t = CreateTrigger();
+  registerAnyPlayerChatEvent(t, "-u");
+  TriggerAddAction(t, () => {
+    const p = GetTriggerPlayer()!;
+
+    const g = CreateGroup();
+    GroupEnumUnitsSelected(g, p);
+
+    const u = CreateUnit(p, unstuckType, 0, 0, 270)!;
+    SelectUnitForPlayerSingle(u, p);
+
+    ForceUICancelBJ(p);
+    RemoveUnit(u);
+
+    ForGroup(g, () => SelectUnitAddForPlayer(GetEnumUnit()!, p));
+    DestroyGroup(g);
+  });
+});

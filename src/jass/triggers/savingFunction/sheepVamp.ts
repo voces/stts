@@ -2,7 +2,7 @@ import { terrain } from "settings/terrain";
 
 const Trig_sheepVamp_Conditions = () => {
   return GetUnitTypeId(GetTriggerUnit()!) === sheepType &&
-    IsUnitIllusionBJ(GetTriggerUnit()!) === false;
+    !IsUnitIllusion(GetTriggerUnit()!);
 };
 
 const Trig_sheepVamp_Actions = () => {

@@ -1,11 +1,22 @@
-import { addScriptHook, Trigger, W3TS_HOOK } from "w3ts";
+import { addScriptHook, Trigger, Unit, W3TS_HOOK } from "w3ts";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+import { president } from "settings/settings";
+import { updateLeaderboardSettingsDisplay } from "settings/time";
+import { withDummy } from "util/withDummy";
 import { MapPlayerEx } from "handles/MapPlayerEx";
+import { ABILITY_TYPE_ID_PRESIDENT } from "constants";
 
-export const president = {
-  enabled: false,
-  president: MapPlayerEx.fromIndex(PLAYER_NEUTRAL_PASSIVE)!,
-  handicap: 1,
+export const applyPresidentBuff = (target: Unit | unit) => {
+  const handle = target instanceof Unit ? target.handle : target;
+  withDummy(
+    (dummy) => {
+      dummy.addAbility(ABILITY_TYPE_ID_PRESIDENT);
+      IssueTargetOrder(dummy.handle, "innerfire", handle);
+    },
+    GetUnitX(handle),
+    GetUnitY(handle),
+    MapPlayerEx.fromEnum(),
+  );
 };
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
@@ -41,5 +52,6 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
           : "disabled"
       }|r`,
     );
+    updateLeaderboardSettingsDisplay();
   });
 });

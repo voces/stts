@@ -1,5 +1,6 @@
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { addScriptHook, W3TS_HOOK } from "w3ts";
+import { updateLeaderboardSettingsDisplay } from "./time";
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   gg_trg_mapExpand = CreateTrigger();
@@ -13,5 +14,6 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
       5,
       `                              |cffffcc00Expand mode ${udg_mapExpand ? "enabled" : "disabled"}.`,
     );
+    updateLeaderboardSettingsDisplay();
   });
 });

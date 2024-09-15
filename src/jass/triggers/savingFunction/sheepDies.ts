@@ -1,5 +1,5 @@
 import { terrain } from "settings/terrain";
-import { president } from "modes/president";
+import { president } from "settings/settings";
 import { withPlayerUnits, withUnitsOfType } from "util/withGroup";
 import { maybeApplySecondWind } from "functions/secondWind";
 
@@ -25,26 +25,31 @@ const Trig_sheepDies_Actions = () => {
   udg_totalKills[killingPlayerId] = (udg_totalKills[killingPlayerId] ?? 0) + 1;
   udg_farmCount[dyingPlayerId] = 0;
 
-  const wolfCount = CountPlayersInForceBJ(udg_Wolf);
-  const sheepCount = CountPlayersInForceBJ(udg_Sheep) + CountPlayersInForceBJ(udg_Spirit);
-  // double division because this baked logic was broken; in 2v4, all wolves get 6 gold
-  const teamIncome = Math.floor(100 / wolfCount / wolfCount);
-  const killerIncome = teamIncome + 10 * sheepCount;
+  const sheepCount = CountPlayersInForceBJ(udg_Sheep);
 
-  withUnitsOfType(shepType, (g) =>
-    g.forEach((u) => {
-      const p = u.owner.handle;
-      const income = p === killingPlayer ? killerIncome : teamIncome;
-      if (!u.isIllusion()) AdjustPlayerStateBJ(income, p!, PLAYER_STATE_RESOURCE_GOLD);
-      GoldText(income, u.handle);
-    }));
+  if (sheepCount > 0) {
+    const wolfCount = CountPlayersInForceBJ(udg_Wolf);
+    const sheepAndSpiritCount = sheepCount + CountPlayersInForceBJ(udg_Spirit);
+
+    // double division because this baked logic was broken; in 2v4, all wolves get 6 gold
+    const teamIncome = Math.floor(100 / wolfCount / wolfCount);
+    const killerIncome = teamIncome + 10 * sheepAndSpiritCount;
+
+    withUnitsOfType(shepType, (g) =>
+      g.forEach((u) => {
+        const p = u.owner.handle;
+        const income = p === killingPlayer ? killerIncome : teamIncome;
+        if (!u.isIllusion()) AdjustPlayerStateBJ(income, p!, PLAYER_STATE_RESOURCE_GOLD);
+        GoldText(income, u.handle);
+      }));
+  }
 
   withPlayerUnits(dyingPlayer, (g) => g.forEach((u) => u.destroy()));
 
   ForceRemovePlayerSimple(dyingPlayer, udg_Sheep);
   ForceAddPlayerSimple(dyingPlayer, udg_Spirit);
 
-  if (CountPlayersInForceBJ(udg_Sheep) === 0) TriggerExecute(gg_trg_wolvesWin);
+  if (sheepCount === 1) TriggerExecute(gg_trg_wolvesWin);
   else if (president.enabled) {
     if (president.president.handle === dyingPlayer) {
       ForForce(udg_Sheep, () => {
@@ -109,7 +114,7 @@ InitTrig_sheepDies = () => {
     gg_trg_sheepDies,
     Condition(() =>
       GetUnitTypeId(GetDyingUnit()!) === sheepType &&
-      IsUnitIllusionBJ(GetDyingUnit()!) === false
+      !IsUnitIllusion(GetDyingUnit()!)
     ),
   );
   TriggerAddAction(gg_trg_sheepDies, Trig_sheepDies_Actions);

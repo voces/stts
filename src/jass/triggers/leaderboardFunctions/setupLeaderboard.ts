@@ -14,7 +14,6 @@ import { updateLeaderboardSettingsDisplay } from "settings/time";
 const filterPlayerPlayingAndNotAfk = () => {
   return (
     GetPlayerSlotState(GetFilterPlayer()!) === PLAYER_SLOT_STATE_PLAYING &&
-    GetPlayerSlotState(GetFilterPlayer()!) !== PLAYER_SLOT_STATE_LEFT &&
     udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === AFK_PLAYING
   );
 };
@@ -58,7 +57,6 @@ const setLeaderboardStyle = () => {
 const filterPlayerPlayingAndAfk = () => {
   return (
     GetPlayerSlotState(GetFilterPlayer()!) === PLAYER_SLOT_STATE_PLAYING &&
-    GetPlayerSlotState(GetFilterPlayer()!) !== PLAYER_SLOT_STATE_LEFT &&
     udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === AFK_AFK
   );
 };
@@ -285,12 +283,8 @@ const Trig_setupLeaderboard_Func002Func023Func006Func004Func015C = () => {
 };
 
 const Trig_setupLeaderboard_Func002Func023Func006Func005Func001Func001C = () => {
-  if ((udg_hideshow[GetConvertedPlayerId(GetEnumPlayer()!)] === true)) {
-    return true;
-  }
-  if ((udg_permanentHide[GetConvertedPlayerId(GetEnumPlayer()!)] === true)) {
-    return true;
-  }
+  if (udg_hideshow[GetConvertedPlayerId(GetEnumPlayer()!)]) return true;
+  if (udg_permanentHide[GetConvertedPlayerId(GetEnumPlayer()!)]) return true;
   return false;
 };
 
@@ -340,9 +334,7 @@ const Trig_setupLeaderboard_Func003Func001A = () => {
 };
 
 const Trig_setupLeaderboard_Func003C = () => {
-  if ((!(udg_isAnon === true))) {
-    return false;
-  }
+  if (!udg_isAnon) return false;
   return true;
 };
 

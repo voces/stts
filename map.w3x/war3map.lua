@@ -200,6 +200,7 @@ gg_snd_TripleKill = nil
 gg_snd_Overkill = nil
 gg_snd_ReceiveGold = nil
 gg_snd_GyrocopterYesAttack1 = nil
+gg_snd_Error = nil
 function InitGlobals()
 end
 
@@ -252,6 +253,10 @@ gg_snd_GyrocopterYesAttack1 = CreateSound("Units/Human/Gyrocopter/GyrocopterYesA
 SetSoundParamsFromLabel(gg_snd_GyrocopterYesAttack1, "GyrocopterYesAttack")
 SetSoundDuration(gg_snd_GyrocopterYesAttack1, 2641)
 SetSoundVolume(gg_snd_GyrocopterYesAttack1, 127)
+gg_snd_Error = CreateSound("Sound/Interface/Error.flac", false, false, false, 0, 0, "DefaultEAXON")
+SetSoundParamsFromLabel(gg_snd_Error, "InterfaceError")
+SetSoundDuration(gg_snd_Error, 614)
+SetSoundVolume(gg_snd_Error, 127)
 end
 
 function CreateRegions()
@@ -354,7 +359,7 @@ gg_rct_topShop3 = Rect(-128.0, 3904.0, 64.0, 4160.0)
 gg_rct_bottomShop3 = Rect(-128.0, -5568.0, 64.0, -5312.0)
 gg_rct_Glory_Hill_ShopC1 = Rect(8448.0, -1536.0, 8704.0, -1344.0)
 gg_rct_Glory_Hill_ShopC2 = Rect(16768.0, -1280.0, 17024.0, -1088.0)
-gg_rct_Vro_Camera_Bounds = Rect(-4416.0, -19232.0, 5184.0, -9120.0)
+gg_rct_Vro_Camera_Bounds = Rect(-4608.0, -18816.0, 4864.0, -9216.0)
 gg_rct_Vro_Fence = Rect(-608.0, -14688.0, 96.0, -13856.0)
 we = AddWeatherEffect(gg_rct_Vro_Fence, FourCC("LRaa"))
 EnableWeatherEffect(we, true)

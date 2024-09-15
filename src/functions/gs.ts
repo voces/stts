@@ -1,92 +1,66 @@
 // Adapted from https://softwareengineering.stackexchange.com/q/291117
 
 import { giveAllGold } from "jass/triggers/commands/g";
-import { president } from "modes/president";
+import { president } from "settings/settings";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { addScriptHook, W3TS_HOOK } from "w3ts";
 
-// Sorts gsAmounts and gsPlayerIndices as one
-const gsSort = () => {
-  let swapAmount: number;
-  let swapPlayerIndex: number;
-
-  for (let i = 1; i < gsLength; i++) {
-    if (i >= gsLength) break;
-    swapAmount = gsAmounts[i];
-    swapPlayerIndex = gsPlayerIndices[i];
-
-    let n = i - 1;
-    for (; n >= 0 && gsAmounts[n] > swapAmount; n--) {
-      gsAmounts[n + 1] = gsAmounts[n];
-      gsPlayerIndices[n + 1] = gsPlayerIndices[n];
-      n = n - 1;
-    }
-    gsAmounts[n + 1] = swapAmount;
-    gsPlayerIndices[n + 1] = swapPlayerIndex;
-  }
+type GSPlayer = {
+  player: number;
+  gold: number;
+  dist: number;
 };
 
 // Fills gsDist; expects gsAmounts, and gsLength to be set
-const gsDistribute = (initial: number): void => {
-  let total = initial;
+const gsDistribute = (available: number, players: GSPlayer[]): void => {
+  let total = available;
   let idx = 0;
 
-  // Sorts gsAmounts increasing, bringing gsPlayerIndices with it
-  gsSort();
+  // Sort players by increasing gold amount
+  players.sort((a, b) => a.gold - b.gold);
 
-  // First pass find total and count
-  for (let i = 0; i < gsLength; i++) {
-    idx = i;
-    total = total + gsAmounts[i];
-    if (i >= gsLength - 1 || total / (idx + 1) <= gsAmounts[idx + 1]) break;
+  // First pass to find how many players to distribute to and the total
+  for (; idx < players.length; idx++) {
+    total += players[idx].gold;
+    // Break when the average would exceed the next player's gold (i.e., they wouldn't get anything)
+    if (idx >= players.length - 1 || total / (idx + 1) <= players[idx + 1].gold) break;
   }
 
   const count = idx + 1;
   const avg = Math.floor(total / count);
-  const remainder = ModuloInteger(total, count);
+  const remainder = total % count;
 
-  // Figure out gsDist gsAmounts
-  for (let i = 0; i < count; i++) {
-    if (i < remainder) gsDist[i] = avg - gsAmounts[i] + 1;
-    else gsDist[i] = avg - gsAmounts[i];
-  }
+  // Second pass to set the `dist` for each player
+  for (let i = 0; i < count; i++) players[i].dist = avg - players[i].gold + (i < remainder ? 1 : 0);
 };
 
 export const gsDistributeGold = (fromPlayer: player, allGold: boolean): void => {
   const pId = GetPlayerId(fromPlayer);
-  let isAlly: boolean;
-  let isHere: boolean;
-  let isHuman: boolean;
-  let isWisp: boolean;
   const includeSelf = !allGold;
-  gsLength = 0;
+  const players: GSPlayer[] = [];
   for (let i = 0; i < bj_MAX_PLAYERS; i++) {
-    isAlly = IsPlayerAlly(fromPlayer, Player(i)!);
-    isHere = GetPlayerSlotState(Player(i)!) === PLAYER_SLOT_STATE_PLAYING &&
-      udg_AFK[i + 1] === AFK_PLAYING;
-    isHuman = GetPlayerController(Player(i)!) === MAP_CONTROL_USER;
-    isWisp = IsPlayerInForce(Player(i)!, udg_Spirit);
+    const isAlly = IsPlayerAlly(fromPlayer, Player(i)!);
+    const isHere = GetPlayerSlotState(Player(i)!) === PLAYER_SLOT_STATE_PLAYING && udg_AFK[i + 1] === AFK_PLAYING;
+    // const isHuman = GetPlayerController(Player(i)!) === MAP_CONTROL_USER;
+    const isHuman = true;
+    const isWisp = IsPlayerInForce(Player(i)!, udg_Spirit);
     if (isAlly && isHere && isHuman && (!isWisp || (i === pId && includeSelf)) && (includeSelf || i !== pId)) {
-      gsPlayerIndices[gsLength] = i;
-      if (i === pId) gsAmounts[gsLength] = 0;
-      else gsAmounts[gsLength] = GetPlayerState(Player(i)!, PLAYER_STATE_RESOURCE_GOLD);
-      gsDist[gsLength] = 0;
-      gsLength = gsLength + 1;
+      players.push({
+        player: i,
+        gold: i === pId ? 0 : GetPlayerState(Player(i)!, PLAYER_STATE_RESOURCE_GOLD),
+        dist: 0,
+      });
     }
   }
 
-  if (gsLength === 0) return;
+  if (players.length === 0) return;
 
-  gsDistribute(GetPlayerState(fromPlayer, PLAYER_STATE_RESOURCE_GOLD));
+  gsDistribute(GetPlayerState(fromPlayer, PLAYER_STATE_RESOURCE_GOLD), players);
 
-  for (let i = 0; i < gsLength; i++) {
-    if (gsPlayerIndices[i] !== pId && gsDist[i] > 0) {
-      transferGold(fromPlayer, Player(gsPlayerIndices[i])!, gsDist[i], TRANSFER_DISPLAY_INVOLVED);
-    }
-  }
+  for (const { player, dist } of players) transferGold(fromPlayer, Player(player)!, dist, TRANSFER_DISPLAY_INVOLVED);
 };
 
-const Trig_gs_UnitActions = () => {
+const wispGAbility = () => {
   const p = GetOwningPlayer(GetTriggerUnit()!);
   if (
     udg_giveGold && GetSpellAbilityId() === FourCC("A020") &&
@@ -113,5 +87,5 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
 
   const t = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_SPELL_CAST);
-  TriggerAddAction(t, Trig_gs_UnitActions);
+  TriggerAddAction(t, wispGAbility);
 });

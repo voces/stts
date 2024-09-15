@@ -27,13 +27,8 @@ const Trig_versus_Func004C = () => {
 };
 
 const Trig_versus_Func005001001001 = () => {
-  return GetBooleanAnd(
-    GetPlayerSlotState(GetFilterPlayer()!) === PLAYER_SLOT_STATE_PLAYING,
-    GetBooleanAnd(
-      GetPlayerSlotState(GetFilterPlayer()!) !== PLAYER_SLOT_STATE_LEFT,
-      udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === AFK_PLAYING,
-    ),
-  );
+  return GetPlayerSlotState(GetFilterPlayer()!) === PLAYER_SLOT_STATE_PLAYING &&
+    udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === AFK_PLAYING;
 };
 
 const Trig_versus_Conditions = () => {
@@ -82,9 +77,6 @@ const Trig_versus_Func006Func004Func026Func003Func001C = () => {
   if ((!(GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING))) {
     return false;
   }
-  if ((!(GetPlayerSlotState(GetEnumPlayer()!) !== PLAYER_SLOT_STATE_LEFT))) {
-    return false;
-  }
   if ((!(udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === AFK_PLAYING))) {
     return false;
   }
@@ -122,9 +114,6 @@ const Trig_versus_Func006Func004Func037Func001C = () => {
     return false;
   }
   if ((!(udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === AFK_PLAYING))) {
-    return false;
-  }
-  if ((!(GetPlayerSlotState(GetEnumPlayer()!) !== PLAYER_SLOT_STATE_LEFT))) {
     return false;
   }
   if ((!(GetEnumPlayer() !== udg_captains[1]))) {
@@ -181,22 +170,8 @@ const Trig_versus_Func006Func004C = () => {
   }
   if (
     (!(GetPlayerSlotState(
-      ConvertedPlayer(S2I(SubStringBJ(GetEventPlayerChatString()!, 9, 10)!))!,
-    ) !== PLAYER_SLOT_STATE_LEFT))
-  ) {
-    return false;
-  }
-  if (
-    (!(GetPlayerSlotState(
       ConvertedPlayer(S2I(SubStringBJ(GetEventPlayerChatString()!, 11, 13)!))!,
     ) === PLAYER_SLOT_STATE_PLAYING))
-  ) {
-    return false;
-  }
-  if (
-    (!(GetPlayerSlotState(
-      ConvertedPlayer(S2I(SubStringBJ(GetEventPlayerChatString()!, 11, 13)!))!,
-    ) !== PLAYER_SLOT_STATE_LEFT))
   ) {
     return false;
   }
@@ -225,9 +200,6 @@ const Trig_versus_Func006Func026002 = () => {
 
 const Trig_versus_Func006Func029Func001C = () => {
   if ((!(GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING))) {
-    return false;
-  }
-  if ((!(GetPlayerSlotState(GetEnumPlayer()!) !== PLAYER_SLOT_STATE_LEFT))) {
     return false;
   }
   if ((!(udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === AFK_PLAYING))) {
@@ -260,9 +232,6 @@ const Trig_versus_Func006Func043Func001C = () => {
     return false;
   }
   if ((!(udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === AFK_PLAYING))) {
-    return false;
-  }
-  if ((!(GetPlayerSlotState(GetEnumPlayer()!) !== PLAYER_SLOT_STATE_LEFT))) {
     return false;
   }
   if ((!(GetEnumPlayer() !== udg_captains[1]))) {

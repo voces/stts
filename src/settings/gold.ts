@@ -1,5 +1,6 @@
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { addScriptHook, W3TS_HOOK } from "w3ts";
+import { updateLeaderboardSettingsDisplay } from "./time";
 
 const Trig_gold_Actions = () => {
   const parts = GetEventPlayerChatString()!.toLowerCase().split(" ").slice(1)
@@ -27,6 +28,8 @@ const Trig_gold_Actions = () => {
     5,
     `                              |cffffcc00Set gold to ${I2S(udg_sheepGold)}.|r`,
   );
+
+  updateLeaderboardSettingsDisplay();
 };
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {

@@ -28,5 +28,3 @@ import "teams/fair";
 import "teams/pick";
 import "teams/reverse";
 import "teams/start";
-
-import "functions/debug";

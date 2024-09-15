@@ -2,9 +2,7 @@
 // Trigger: shareControl
 //===========================================================================
 const Trig_shareControl_Conditions = () => {
-  if ((!(udg_shareOn === true))) {
-    return false;
-  }
+  if (!udg_shareOn) return false;
   if ((!(udg_Teams === TEAMS_LOCK_IE_PLAYING))) {
     return false;
   }
@@ -13,11 +11,11 @@ const Trig_shareControl_Conditions = () => {
 
 const Trig_shareControl_Func003Func001Func001C = () => {
   if (
-    (!(GetPlayerAlliance(
+    !GetPlayerAlliance(
       ConvertedPlayer(GetForLoopIndexA())!,
       ConvertedPlayer(GetForLoopIndexB())!,
       ALLIANCE_SHARED_CONTROL,
-    ) === true))
+    )
   ) {
     return false;
   }

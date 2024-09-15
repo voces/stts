@@ -2,15 +2,9 @@
 // Trigger: MultiKillCheck
 //===========================================================================
 const Trig_MultiKillCheck_Conditions = () => {
-  if ((!(GetUnitTypeId(GetDyingUnit()!) === sheepType))) {
-    return false;
-  }
-  if ((!(IsUnitIllusionBJ(GetDyingUnit()!) === false))) {
-    return false;
-  }
-  if ((!(udg_switchOn === false))) {
-    return false;
-  }
+  if (GetUnitTypeId(GetDyingUnit()!) !== sheepType) return false;
+  if (IsUnitIllusion(GetDyingUnit()!)) return false;
+  if (udg_switchOn) return false;
   return true;
 };
 

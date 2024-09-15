@@ -1,5 +1,6 @@
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { addScriptHook, Trigger, W3TS_HOOK } from "w3ts";
+import { farmVision, income, president, spawnSetting } from "./settings";
 
 const checkAutoTimeFlag = () => {
   const oldTime = udg_time;
@@ -14,6 +15,21 @@ export const updateLeaderboardSettingsDisplay = () => {
   let s = "|CFFED1C24Next: " + simpleformatTime(udg_time);
   if (udg_switchOn) s += " switch";
   if (vampOn) s += " vamp";
+  if (president.enabled) s += " pres";
+  if (udg_viewOn) s += " view";
+  if (farmVision.vision !== -1) s += ` v${farmVision.vision}`;
+  if (udg_mapExpand) s += " expand";
+  if (udg_mapShrink) s += " shrink";
+  if (udg_sheepGold > 0 || udg_wolfGold > 0) {
+    if (udg_sheepGold === udg_wolfGold) s += ` g${udg_sheepGold}`;
+    else s += ` g${udg_sheepGold},${udg_wolfGold}`;
+  }
+  if (income.sheep !== 1 || income.wolves !== 1 || income.savings !== 1) {
+    if (income.sheep === income.wolves && income.sheep === income.savings) s += ` i${income.sheep}`;
+    else if (income.sheep === income.savings) s += ` i${income.sheep},${income.wolves}`;
+    else s += ` i${income.sheep},${income.wolves},${income.savings}`;
+  }
+  if (spawnSetting.mode !== "static") s += spawnSetting.mode === "free" ? " fs" : " rs";
 
   LeaderboardSetPlayerItemLabelBJ(Player(PLAYER_NEUTRAL_PASSIVE)!, GetLastCreatedLeaderboard()!, s);
 };

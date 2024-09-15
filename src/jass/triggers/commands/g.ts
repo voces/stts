@@ -1,6 +1,7 @@
+import { ABILITY_TYPE_ID_GIVE_ALLY_GOLD_WOLF } from "constants";
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { UnitEx } from "handles/UnitEx";
-import { president } from "modes/president";
+import { president } from "settings/settings";
 import { terrain } from "settings/terrain";
 import { displayToVerit } from "util/displayTimedTextToAll";
 import { isPointInRect } from "util/geometry";
@@ -204,7 +205,7 @@ const Trig_g_Actions = () => {
 const Trig_g_SpellCast = () => {
   const p = GetOwningPlayer(GetTriggerUnit()!);
   if (
-    udg_giveGold && GetSpellAbilityId() === FourCC("A00V") &&
+    udg_giveGold && GetSpellAbilityId() === ABILITY_TYPE_ID_GIVE_ALLY_GOLD_WOLF &&
     GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) > 0 &&
     IsPlayerInForce(p, udg_Wolf)
   ) giveAllGold(p);

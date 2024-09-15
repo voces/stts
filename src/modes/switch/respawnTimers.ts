@@ -1,6 +1,7 @@
 import { addScriptHook, Trigger, W3TS_HOOK } from "w3ts";
 import { terrain } from "settings/terrain";
 import { maybeApplySecondWind } from "functions/secondWind";
+import { ABILITY_TYPE_ID_GIVE_ALLY_GOLD_WOLF } from "constants";
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   const t = Trigger.create();
@@ -57,6 +58,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
       GetRectCenterY(terrain.wolf),
       270,
     )!;
+    if (udg_switchOn) UnitRemoveAbility(wolf, ABILITY_TYPE_ID_GIVE_ALLY_GOLD_WOLF);
     PanCameraToTimedForPlayer(
       Player(pid)!,
       GetUnitX(wolf),

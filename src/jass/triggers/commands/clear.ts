@@ -10,6 +10,6 @@ declare global {
 }
 InitTrig_clear = () => {
   gg_trg_clear = CreateTrigger();
-  registerAnyPlayerChatEvent(gg_trg_clear, "-clear", true);
+  registerAnyPlayerChatEvent(gg_trg_clear, "-clear");
   TriggerAddAction(gg_trg_clear, Trig_clear_Actions);
 };

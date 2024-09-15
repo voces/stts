@@ -2,7 +2,7 @@
 // Trigger: pickwolf
 //===========================================================================
 const Trig_pickwolf_Conditions = () => {
-  if ((!(GetTrainedUnitType() === FourCC("EC03")))) {
+  if ((!(GetTrainedUnitType() === shepType))) {
     return false;
   }
   return true;

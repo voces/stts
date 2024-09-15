@@ -45,19 +45,19 @@ const Trig_castAbility2_Actions = () => {
   let u: unit;
   let p: player;
   const orderString = OrderId2StringBJ(GetIssuedOrderId());
-  if (IsUnitIllusionBJ(GetTriggerUnit()!) || udg_Teams !== TEAMS_LOCK_IE_PLAYING) return;
+  if (IsUnitIllusion(GetTriggerUnit()!) || udg_Teams !== TEAMS_LOCK_IE_PLAYING) return;
 
   if (GetUnitTypeId(GetTriggerUnit()!) === UNIT_TYPE_ID_START_POSITION) return handleSpawnActions(orderString);
 
   if (orderString === "defend" || orderString === "undefend") {
     // Destroy all farms
     if (
-      udg_switchOn === true ||
-      udg_practiceOn === true && GetUnitTypeId(GetTriggerUnit()!) === sheepType
+      udg_switchOn ||
+      udg_practiceOn && GetUnitTypeId(GetTriggerUnit()!) === sheepType
     ) {
       if (!UnitAlive(GetTriggerUnit()!)) return;
       i = GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()!));
-      if (udg_disable[i] === false) {
+      if (!udg_disable[i]) {
         udg_atempgroup = GetUnitsOfPlayerMatching(ConvertedPlayer(i)!, Condition(isFilterUnitStructure))!;
         udg_farmCount[i] = 0;
         SetPlayerStateBJ(ConvertedPlayer(i)!, PLAYER_STATE_RESOURCE_LUMBER, udg_farmCount[i]);

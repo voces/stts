@@ -1,12 +1,8 @@
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
 const Trig_show_Func001C = () => {
-  if ((!(GetEventPlayerChatString() === "-s"))) {
-    return false;
-  }
-  if ((!(udg_practiceOn === true))) {
-    return false;
-  }
+  if (GetEventPlayerChatString() !== "-s") return false;
+  if (!udg_practiceOn) return false;
   return true;
 };
 

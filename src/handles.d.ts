@@ -209,3 +209,4 @@ declare let gg_snd_TripleKill: sound;
 declare let gg_snd_Overkill: sound;
 declare let gg_snd_ReceiveGold: sound;
 declare let gg_snd_GyrocopterYesAttack1: sound;
+declare let gg_snd_Error: sound;

@@ -4,13 +4,9 @@ import { logMassingTest } from "../hostCommands/UpdateStats";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 
 const Trig_initMassTest_Func005002002 = () => {
-  return GetBooleanOr(
-    IsUnitType(GetFilterUnit()!, UNIT_TYPE_STRUCTURE) === true,
-    GetBooleanOr(
-      IsUnitIllusionBJ(GetFilterUnit()!) === true,
-      GetUnitTypeId(GetFilterUnit()!) === FourCC("ngst"),
-    ),
-  );
+  return IsUnitType(GetFilterUnit()!, UNIT_TYPE_STRUCTURE) ||
+    IsUnitIllusion(GetFilterUnit()!) ||
+    GetUnitTypeId(GetFilterUnit()!) === FourCC("ngst");
 };
 
 const Trig_initMassTest_Func008002 = () => {

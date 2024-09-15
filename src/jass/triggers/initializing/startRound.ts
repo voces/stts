@@ -165,7 +165,7 @@ const Trig_startRound_Actions = () => {
       udg_AFK[i + 1] = AFK_PLAYING;
     }
 
-    if (udg_viewOn === false && !udg_view[i + 1]) {
+    if (!udg_viewOn && !udg_view[i + 1]) {
       udg_view[i + 1] = CreateFogModifierRectBJ(true, Player(i)!, FOG_OF_WAR_VISIBLE, GetPlayableMapRect()!);
     }
   }
@@ -216,14 +216,14 @@ const Trig_startRound_Actions = () => {
   ForForce(udg_Spirit, moveEnumPlayerFromSpiritToSheep);
   ForForce(GetPlayersAll()!, destroyEnumPlayerView);
 
-  if (udg_versus === 1 && udg_versusOff === false && udg_someVersusBoolean === false) {
+  if (udg_versus === 1 && !udg_versusOff && !udg_someVersusBoolean) {
     udg_versus = 2;
     udg_Teams = TEAMS_LOCK_IE_PLAYING;
     ForceClear(udg_Sheep);
     ForceClear(udg_Wolf);
     ForceClear(udg_Spirit);
     TriggerExecute(gg_trg_versusCountDown);
-  } else if (udg_versus === 2 && udg_versusOff === false && udg_someVersusBoolean === false) {
+  } else if (udg_versus === 2 && !udg_versusOff && !udg_someVersusBoolean) {
     udg_time = 0;
     udg_versus = 0;
 

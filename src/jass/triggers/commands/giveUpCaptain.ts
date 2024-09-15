@@ -24,20 +24,16 @@ const Trig_giveUpCaptain_Conditions = () => {
   if ((!Trig_giveUpCaptain_Func005C())) {
     return false;
   }
-  if ((!(udg_giveOn === true))) {
+  if (!udg_giveOn) {
     return false;
   }
   return true;
 };
 
 const Trig_giveUpCaptain_Func002Func001Func001Func001Func002001001001 = () => {
-  return GetBooleanAnd(
-    udg_sheepLastGame[GetConvertedPlayerId(GetFilterPlayer()!)] === false,
-    GetBooleanAnd(
-      IsPlayerInForce(GetFilterPlayer()!, udg_Draft) === false,
-      GetFilterPlayer() !== udg_captains[3],
-    ),
-  );
+  return !udg_sheepLastGame[GetConvertedPlayerId(GetFilterPlayer()!)] &&
+    !IsPlayerInForce(GetFilterPlayer()!, udg_Draft) &&
+    GetFilterPlayer() !== udg_captains[3];
 };
 
 const Trig_giveUpCaptain_Func002Func001Func001Func001C = () => {
@@ -63,13 +59,9 @@ const Trig_giveUpCaptain_Func002Func001Func001C = () => {
 };
 
 const Trig_giveUpCaptain_Func002Func001Func002Func002001001001 = () => {
-  return GetBooleanAnd(
-    udg_sheepLastGame[GetConvertedPlayerId(GetFilterPlayer()!)] === true,
-    GetBooleanAnd(
-      IsPlayerInForce(GetFilterPlayer()!, udg_Draft) === false,
-      GetFilterPlayer() !== udg_captains[1],
-    ),
-  );
+  return udg_sheepLastGame[GetConvertedPlayerId(GetFilterPlayer()!)] &&
+    !IsPlayerInForce(GetFilterPlayer()!, udg_Draft) &&
+    GetFilterPlayer() !== udg_captains[1];
 };
 
 const Trig_giveUpCaptain_Func002Func001Func002C = () => {
@@ -107,21 +99,13 @@ const Trig_giveUpCaptain_Func003Func001Func001Func010C = () => {
 };
 
 const Trig_giveUpCaptain_Func003Func001Func001Func012001001001 = () => {
-  return GetBooleanAnd(
-    udg_sheepLastGame[GetConvertedPlayerId(GetFilterPlayer()!)] === false,
-    GetBooleanAnd(
-      IsPlayerInForce(GetFilterPlayer()!, udg_Draft) === false,
-      GetFilterPlayer() !== udg_captains[3],
-    ),
-  );
+  return !udg_sheepLastGame[GetConvertedPlayerId(GetFilterPlayer()!)] &&
+    !IsPlayerInForce(GetFilterPlayer()!, udg_Draft) &&
+    GetFilterPlayer() !== udg_captains[3];
 };
 
 const Trig_giveUpCaptain_Func003Func001Func001C = () => {
-  if (
-    (!(IsPlayerInForce(ConvertedPlayer(cid)!, udg_Draft) === true))
-  ) {
-    return false;
-  }
+  if (!IsPlayerInForce(ConvertedPlayer(cid)!, udg_Draft)) return false;
   if (
     (!(CountPlayersInForceBJ(
       GetPlayersMatching(
@@ -149,21 +133,13 @@ const Trig_giveUpCaptain_Func003Func002Func010C = () => {
 };
 
 const Trig_giveUpCaptain_Func003Func002Func012001001001 = () => {
-  return GetBooleanAnd(
-    udg_sheepLastGame[GetConvertedPlayerId(GetFilterPlayer()!)] === true,
-    GetBooleanAnd(
-      IsPlayerInForce(GetFilterPlayer()!, udg_Draft) === false,
-      GetFilterPlayer() !== udg_captains[1],
-    ),
-  );
+  return udg_sheepLastGame[GetConvertedPlayerId(GetFilterPlayer()!)] &&
+    !IsPlayerInForce(GetFilterPlayer()!, udg_Draft) &&
+    GetFilterPlayer() !== udg_captains[1];
 };
 
 const Trig_giveUpCaptain_Func003Func002C = () => {
-  if (
-    (!(IsPlayerInForce(ConvertedPlayer(cid)!, udg_Draft) === true))
-  ) {
-    return false;
-  }
+  if (!IsPlayerInForce(ConvertedPlayer(cid)!, udg_Draft)) return false;
   if (
     (!(CountPlayersInForceBJ(
       GetPlayersMatching(

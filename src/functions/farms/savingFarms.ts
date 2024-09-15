@@ -4,7 +4,7 @@ import { MapPlayerEx } from "handles/MapPlayerEx";
 import { terrain } from "settings/terrain";
 import { UnitEx } from "handles/UnitEx";
 import { UNIT_TYPE_ID_MONEY_FARM } from "constants";
-import { income } from "settings/income";
+import { income } from "settings/settings";
 
 const g = CreateGroup();
 

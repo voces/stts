@@ -21,7 +21,5 @@ InitTrig_antishareruin = () => {
     );
   }
 
-  TriggerAddAction(t, () => {
-    if (GetTriggerPlayer() === GetLocalPlayer()) SelectUnit(GetTriggerUnit()!, false);
-  });
+  TriggerAddAction(t, () => SelectUnitRemoveForPlayer(GetTriggerUnit()!, GetTriggerPlayer()!));
 };

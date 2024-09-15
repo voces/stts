@@ -14,15 +14,9 @@ const Trig_Claws_of_Velocity_Recipe_Func001Func001C = () => {
 };
 
 const Trig_Claws_of_Velocity_Recipe_Func001Func002C = () => {
-  if ((!(UnitHasItemOfTypeBJ(GetTriggerUnit()!, FourCC("I00T")) === true))) {
-    return false;
-  }
-  if ((!(UnitHasItemOfTypeBJ(GetTriggerUnit()!, FourCC("I004")) === true))) {
-    return false;
-  }
-  if ((!(UnitHasItemOfTypeBJ(GetTriggerUnit()!, FourCC("I005")) === true))) {
-    return false;
-  }
+  if (!UnitHasItemOfTypeBJ(GetTriggerUnit()!, FourCC("I00T"))) return false;
+  if (!UnitHasItemOfTypeBJ(GetTriggerUnit()!, FourCC("I004"))) return false;
+  if (!UnitHasItemOfTypeBJ(GetTriggerUnit()!, FourCC("I005"))) return false;
   return true;
 };
 

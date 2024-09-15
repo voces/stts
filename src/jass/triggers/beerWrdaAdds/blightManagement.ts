@@ -58,7 +58,7 @@ const Trig_blightManagement_Func001Func003C = () => {
 };
 
 const Trig_blightManagement_Func001C = () => {
-  if ((!(udg_mapShrink === true))) {
+  if ((!udg_mapShrink)) {
     return false;
   }
   return true;

@@ -1,5 +1,6 @@
 import { UNIT_TYPE_ID_START_POSITION } from "constants";
 import { enforceTeamResourceMultiboard } from "userSettings/teamResources";
+import { addScriptHook, W3TS_HOOK } from "w3ts";
 
 const Trig_hideEsc_filterNonControlledUnits = () => {
   const u = GetFilterUnit()!;
@@ -32,17 +33,8 @@ const Trig_hideEsc_Actions = () => {
   enforceTeamResourceMultiboard();
 };
 
-declare global {
-  // deno-lint-ignore prefer-const
-  let InitTrig_hideEsc: () => void;
-}
-InitTrig_hideEsc = () => {
-  let i = 0;
-  gg_trg_hideEsc = CreateTrigger();
-  while (true) {
-    if (i === bj_MAX_PLAYERS) break;
-    TriggerRegisterPlayerEventEndCinematic(gg_trg_hideEsc, Player(i)!);
-    i = i + 1;
-  }
-  TriggerAddAction(gg_trg_hideEsc, Trig_hideEsc_Actions);
-};
+addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
+  const t = CreateTrigger();
+  for (let i = 0; i < bj_MAX_PLAYERS; i++) TriggerRegisterPlayerEventEndCinematic(t, Player(i)!);
+  TriggerAddAction(t, Trig_hideEsc_Actions);
+});

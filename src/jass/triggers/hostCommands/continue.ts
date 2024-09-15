@@ -1,58 +1,17 @@
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
-const Trig_continue_Conditions = () => {
-  if ((!(GetTriggerPlayer() === udg_Custom))) {
-    return false;
-  }
-  if ((!(udg_versus > 0))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_continue_Func002Func001Func001Func002C = () => {
-  if (
-    (!(udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)] === false))
-  ) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_continue_Func002Func001Func001C = () => {
-  if ((!(udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === AFK_PLAYING))) {
-    return false;
-  }
-  if ((!(GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING))) {
-    return false;
-  }
-  if ((!(GetPlayerSlotState(GetEnumPlayer()!) !== PLAYER_SLOT_STATE_LEFT))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_continue_Func002Func001A = () => {
-  if ((Trig_continue_Func002Func001Func001C())) {
-    if ((Trig_continue_Func002Func001Func001Func002C())) {
-      ForceAddPlayerSimple(GetEnumPlayer()!, udg_Wolf);
-    } else {
-      ForceAddPlayerSimple(GetEnumPlayer()!, udg_Sheep);
-    }
-  }
-};
-
-const Trig_continue_Func002C = () => {
-  if ((!(udg_versus === 1))) {
-    return false;
-  }
-  return true;
-};
-
 const Trig_continue_Actions = () => {
   udg_versusOff = false;
-  if ((Trig_continue_Func002C())) {
-    ForForce(GetPlayersAll()!, Trig_continue_Func002Func001A);
+  if (udg_versus === 1) {
+    ForForce(GetPlayersAll()!, () => {
+      if (
+        udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === AFK_PLAYING &&
+        GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING
+      ) {
+        const force = !udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)] ? udg_Wolf : udg_Sheep;
+        ForceAddPlayerSimple(GetEnumPlayer()!, force);
+      }
+    });
   }
   udg_time = udg_versusTime;
   DisableTrigger(GetTriggeringTrigger()!);
@@ -66,6 +25,6 @@ declare global {
 InitTrig_continue = () => {
   gg_trg_continue = CreateTrigger();
   registerAnyPlayerChatEvent(gg_trg_continue, "-continue");
-  TriggerAddCondition(gg_trg_continue, Condition(Trig_continue_Conditions));
+  TriggerAddCondition(gg_trg_continue, Condition(() => GetTriggerPlayer() === udg_Custom && udg_versus > 0));
   TriggerAddAction(gg_trg_continue, Trig_continue_Actions);
 };

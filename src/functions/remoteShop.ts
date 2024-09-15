@@ -1,12 +1,15 @@
+import { ForceEx } from "handles/ForceEx";
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { UnitEx } from "handles/UnitEx";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+import { withGroup } from "util/withGroup";
 import { addScriptHook, W3TS_HOOK } from "w3ts";
 
 type Item = {
   name: string;
   cost: number;
   id: number;
+  one?: boolean;
 };
 
 const items: Item[] = [];
@@ -28,20 +31,60 @@ const getSelectedInventoryUnit = (allowEmpty: boolean) => {
   return u || udg_unit[GetPlayerId(p) + 1];
 };
 
+const teamHasTeamItem = (item: Item, player: player) => {
+  if (!item.one) return false;
+
+  if (!ForceEx.wolves.hasPlayer(player)) return false;
+
+  let alreadyHaveItem = false;
+
+  withGroup((g) => {
+    for (let i = 0; i < bj_MAX_PLAYERS && !alreadyHaveItem; i++) {
+      const p = MapPlayerEx.fromIndex(i);
+      if (!p?.isActiveHuman || !ForceEx.wolves.hasPlayer(p)) continue;
+      g.enumUnitsOfPlayer(p, (f) => {
+        if (alreadyHaveItem || f.hasItemOfType(item.id)) alreadyHaveItem = true;
+        return false;
+      });
+    }
+  });
+
+  if (alreadyHaveItem) {
+    if (player === GetLocalPlayer()) StartSound(gg_snd_Error);
+    DisplayTimedTextToPlayer(
+      player,
+      0,
+      0,
+      15,
+      `                              |CFF00AEEFYour team already has ${item.name}`,
+    );
+    return true;
+  }
+
+  return false;
+};
+
 const BuySellItem__buyAction = () => {
   const parts = GetEventPlayerChatString()!.toLowerCase().split(" ");
 
   if ((parts[0] !== "-buy" && parts[0] !== "-b") || parts.length !== 2 || parts[1].length === 0) return;
+
   const u = getSelectedInventoryUnit(false);
   if (!u) return;
+
+  const p = GetTriggerPlayer()!;
+
   for (let i = 0; i < items.length; i++) {
     if (items[i].name.startsWith(parts[1])) {
-      if (GetPlayerState(GetTriggerPlayer()!, PLAYER_STATE_RESOURCE_GOLD) >= items[i].cost) {
+      if (teamHasTeamItem(items[i], p)) return;
+
+      if (GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) >= items[i].cost) {
         UnitAddItemById(u, items[i].id);
-        AdjustPlayerStateSimpleBJ(GetTriggerPlayer()!, PLAYER_STATE_RESOURCE_GOLD, -items[i].cost);
+        AdjustPlayerStateSimpleBJ(p, PLAYER_STATE_RESOURCE_GOLD, -items[i].cost);
       } else {
+        if (p === GetLocalPlayer()) StartSound(gg_snd_Error);
         DisplayTimedTextToPlayer(
-          GetTriggerPlayer()!,
+          p,
           0,
           0,
           15,
@@ -126,7 +169,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     { name: "1c", cost: 200, id: FourCC("I005") },
     { name: "boots", cost: 112, id: FourCC("I009") },
     { name: "ball", cost: 28, id: FourCC("I006") }, // alias for crystal
-    { name: "bril", cost: 98, id: FourCC("I003") },
+    { name: "bril", cost: 98, id: FourCC("I003"), one: true },
     { name: "beam", cost: 112, id: FourCC("I000") },
     { name: "bomber", cost: 75, id: FourCC("I002") },
     { name: "c8", cost: 21, id: FourCC("I00B") },
@@ -135,13 +178,13 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     { name: "club", cost: 56, id: FourCC("I00Z") },
     { name: "cloak", cost: 200, id: FourCC("I001") },
     { name: "crystal", cost: 28, id: FourCC("I006") }, // alias for ball
-    { name: "drums", cost: 175, id: FourCC("I00U") },
+    { name: "drums", cost: 175, id: FourCC("I00U"), one: true },
     { name: "disease", cost: 140, id: FourCC("I010") },
-    { name: "endur", cost: 112, id: FourCC("I00H") },
+    { name: "endur", cost: 112, id: FourCC("I00H"), one: true },
     { name: "forb", cost: 200, id: FourCC("I00W") }, // alias for orb
     { name: "gloves", cost: 112, id: FourCC("I004") },
     { name: "gem", cost: 56, id: FourCC("I00E") },
-    { name: "goblins", cost: 440, id: FourCC("I012") },
+    { name: "goblins", cost: 390, id: FourCC("I012") },
     { name: "golem", cost: 140, id: FourCC("I00A") },
     { name: "hay", cost: 42, id: FourCC("I011") },
     { name: "kaleidoscope", cost: 112, id: FourCC("I00X") },

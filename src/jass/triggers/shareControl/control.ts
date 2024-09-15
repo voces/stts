@@ -1,29 +1,17 @@
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
 const Trig_control_Conditions = () => {
-  if ((!(udg_isAnon === false))) {
-    return false;
-  }
+  if (udg_isAnon) return false;
   if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 5)!) < 25))) {
     return false;
   }
   if ((!(S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 5)!) > 0))) {
     return false;
   }
-  if (
-    (!(IsPlayerAlly(
-      GetTriggerPlayer()!,
-      ConvertedPlayer(S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 5)!))!,
-    ) === true))
-  ) {
+  if (!IsPlayerAlly(GetTriggerPlayer()!, ConvertedPlayer(S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 5)!))!)) {
     return false;
   }
-  if (
-    (!(IsPlayerAlly(
-      ConvertedPlayer(S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 5)!))!,
-      GetTriggerPlayer()!,
-    ) === true))
-  ) {
+  if (!IsPlayerAlly(ConvertedPlayer(S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 5)!))!, GetTriggerPlayer()!)) {
     return false;
   }
   if (
@@ -38,9 +26,7 @@ const Trig_control_Conditions = () => {
   ) {
     return false;
   }
-  if ((!(udg_shareOn === true))) {
-    return false;
-  }
+  if (!udg_shareOn) return false;
   if ((!(udg_Teams === TEAMS_LOCK_IE_PLAYING))) {
     return false;
   }
@@ -49,20 +35,20 @@ const Trig_control_Conditions = () => {
 
 const Trig_control_Func003C = () => {
   if (
-    (!(GetPlayerAlliance(
+    !GetPlayerAlliance(
       GetTriggerPlayer()!,
       ConvertedPlayer(S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 5)!))!,
       ALLIANCE_SHARED_VISION,
-    ) === true))
+    )
   ) {
     return false;
   }
   if (
-    (!(GetPlayerAlliance(
+    GetPlayerAlliance(
       GetTriggerPlayer()!,
       ConvertedPlayer(S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 5)!))!,
       ALLIANCE_SHARED_ADVANCED_CONTROL,
-    ) === false))
+    )
   ) {
     return false;
   }

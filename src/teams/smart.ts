@@ -443,7 +443,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   TriggerAddAction(t, togglePub);
 
   t = CreateTrigger();
-  registerAnyPlayerChatEvent(t, "-rotate", true);
+  registerAnyPlayerChatEvent(t, "-rotate");
   TriggerAddAction(t, toggleRotate);
 
   t = CreateTrigger();

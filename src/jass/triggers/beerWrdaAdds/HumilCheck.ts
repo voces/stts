@@ -2,19 +2,9 @@ import { UnitEx } from "handles/UnitEx";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 
 const Trig_Humil_Check_Conditions = () => {
-  if ((!(GetUnitTypeId(GetDyingUnit()!) === sheepType))) {
-    return false;
-  }
-  if ((!(IsUnitIllusionBJ(GetDyingUnit()!) === false))) {
-    return false;
-  }
-  if (
-    (!(udg_humiliationCheck[
-      GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit()!))
-    ] === true))
-  ) {
-    return false;
-  }
+  if (GetUnitTypeId(GetDyingUnit()!) !== sheepType) return false;
+  if (IsUnitIllusion(GetDyingUnit()!)) return false;
+  if (!udg_humiliationCheck[GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit()!))]) return false;
   return true;
 };
 

@@ -25,6 +25,18 @@ export class UnitEx extends Unit {
     return super.isIllusion() || !!this.getAbility(FourCC("Aloc"));
   }
 
+  hasItemOfType(itemType: number) {
+    for (let i = 0; i < this.inventorySize; i++) {
+      const item = this.getItemInSlot(i);
+      if (item?.typeId === itemType) return true;
+    }
+    return false;
+  }
+
+  hasBuff(buffId: number) {
+    return GetUnitAbilityLevel(this.handle, buffId) > 0;
+  }
+
   static create(owner: MapPlayer | player, unitId: number | string, x: number, y: number, face?: number) {
     face ??= bj_UNIT_FACING;
     const player = owner instanceof MapPlayer ? owner.handle : owner;

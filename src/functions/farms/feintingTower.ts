@@ -1,5 +1,5 @@
 import { Effect, MapPlayer, Trigger } from "w3ts";
-import { UNIT_TYPE_ID_FEINTING_TOWER } from "constants";
+import { BUFF_TYPE_ID_PRESIDENT, UNIT_TYPE_ID_FEINTING_TOWER } from "constants";
 import { UnitEx } from "handles/UnitEx";
 import { game } from "util/game";
 import { setTimeout } from "util/setTimeout";
@@ -50,6 +50,9 @@ game.onInterval(4, () => {
         clone.setBaseDamage(-500, 1);
         if (u.owner.compareAlliance(MapPlayerEx.fromLocal(), ALLIANCE_SHARED_VISION)) {
           clone.setVertexColor(127, 255, 127, 127);
+        }
+        if (u.hasBuff(BUFF_TYPE_ID_PRESIDENT)) {
+          Effect.createAttachment("war3mapImported/president", clone, "head");
         }
 
         // Make unselectable and not impact pathing, but will follow pathing after 0.1 seconds

@@ -1,8 +1,7 @@
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { logRound } from "jass/triggers/hostCommands/UpdateStats";
 import { addRound, addTime } from "stats/times";
-import { president } from "modes/president";
-import { income } from "settings/income";
+import { income, president } from "settings/settings";
 import { terrain } from "settings/terrain";
 
 const noHandicaps = () => {
@@ -19,7 +18,7 @@ export const updateTimes = () => {
   let s = "";
   let timeElapsed = TimerGetElapsed(udg_Timer);
   const emitRound = !someoneLeft && udg_sheepGold === 0 && udg_wolfGold === 0 &&
-    noHandicaps() && terrain.name === "Classic" && president.enabled === false && income.sheep === 1 &&
+    noHandicaps() && terrain.name === "Classic" && !president.enabled && income.sheep === 1 &&
     income.wolves === 1 && income.savings === 1;
   let sheepString = "";
   let sheep = 0;

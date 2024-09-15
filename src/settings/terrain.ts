@@ -192,7 +192,7 @@ const initTerrains = () => {
 
   terrains.push({
     name: "Experimental",
-    minimap: "war3mapImported\\classic.blp",
+    minimap: "war3mapImported\\experimental.blp",
     cameraBounds: gg_rct_Vro_Camera_Bounds,
     spawnType: "playerColor",
     wisp: gg_rct_Vro_Fence,

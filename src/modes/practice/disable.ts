@@ -9,10 +9,10 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     const cid = MapPlayerEx.fromEvent()!.cid;
     udg_disable[cid] = !udg_disable[cid];
     if (udg_disable[cid]) {
-      UnitRemoveAbility(udg_unit[cid], FourCC("A00U"));
+      UnitRemoveAbility(udg_unit[cid], destroyAllFarms);
       DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, "|CFFFFCC00D|restroy All Farms |CFFED1C24Disabled|r");
     } else {
-      UnitAddAbility(udg_unit[cid], FourCC("A00U"));
+      UnitAddAbility(udg_unit[cid], destroyAllFarms);
       DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 10, "|CFFFFCC00D|restroy All Farms |CFF00AEEFEnabled|r");
     }
   });

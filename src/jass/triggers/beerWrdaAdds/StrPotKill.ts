@@ -1,44 +1,19 @@
 import { UnitEx } from "handles/UnitEx";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 
-const Trig_Str_Pot_Kill_Func003C = () => {
-  if ((UnitHasBuffBJ(GetKillingUnit()!, FourCC("B001")) === true)) {
-    return true;
-  }
-  if ((UnitHasBuffBJ(GetKillingUnit()!, FourCC("B008")) === true)) {
-    return true;
-  }
-  return false;
-};
-
 const Trig_Str_Pot_Kill_Conditions = () => {
-  if ((!(GetUnitTypeId(GetDyingUnit()!) === sheepType))) {
-    return false;
-  }
-  if ((!(IsUnitIllusionBJ(GetDyingUnit()!) === false))) {
-    return false;
-  }
-  if ((!Trig_Str_Pot_Kill_Func003C())) {
+  if (GetUnitTypeId(GetDyingUnit()!) !== sheepType) return false;
+  if (IsUnitIllusion(GetDyingUnit()!)) return false;
+  if (!UnitHasBuffBJ(GetKillingUnit()!, FourCC("B001")) && !UnitHasBuffBJ(GetKillingUnit()!, FourCC("B008"))) {
     return false;
   }
   return true;
 };
 
 const Trig_Str_Pot_Kill_Actions = () => {
-  udg_atemploc = GetUnitLoc(GetDyingUnit()!);
-  CreateNUnitsAtLoc(
-    1,
-    FourCC("hfoo"),
-    Player(PLAYER_NEUTRAL_PASSIVE)!,
-    GetUnitLoc(GetDyingUnit()!),
-    bj_UNIT_FACING,
-  );
-  RemoveLocation(udg_atemploc);
-  ExplodeUnitBJ(GetLastCreatedUnit()!);
-  displayTimedTextToAll(
-    `                              ${UnitEx.fromKilling()?.owner} headshot ${UnitEx.fromDying()?.owner}`,
-    5,
-  );
+  const u = UnitEx.fromDying()!;
+  ExplodeUnitBJ(CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE)!, FourCC("hfoo"), u.x, u.y, 0)!);
+  displayTimedTextToAll(`                              ${UnitEx.fromKilling()?.owner} headshot ${u.owner}`, 5);
   PlaySoundBJ(gg_snd_headshot);
 };
 

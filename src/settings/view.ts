@@ -1,5 +1,6 @@
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { addScriptHook, W3TS_HOOK } from "w3ts";
+import { updateLeaderboardSettingsDisplay } from "./time";
 
 const Trig_view_Actions = () => {
   udg_viewOn = !udg_viewOn;
@@ -10,6 +11,7 @@ const Trig_view_Actions = () => {
       if (udg_view[i + 1]) udg_view[i] = (DestroyFogModifier(udg_view[i + 1]!), undefined);
     }
   }
+  updateLeaderboardSettingsDisplay();
 };
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {

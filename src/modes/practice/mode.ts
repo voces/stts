@@ -4,7 +4,7 @@ import "./attack";
 import "./disable";
 import "./owner";
 import "./stop";
-import { president } from "modes/president";
+import { president } from "settings/settings";
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   gg_trg_practice = CreateTrigger();

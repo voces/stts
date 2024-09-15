@@ -1,5 +1,5 @@
 import { updateLeaderboardSettingsDisplay } from "settings/time";
-import { president } from "modes/president";
+import { president } from "settings/settings";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { addScriptHook, Timer, W3TS_HOOK } from "w3ts";
 

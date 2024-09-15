@@ -11,7 +11,6 @@ const restoreTeams = () => {
 
   if (
     playerSlotState === PLAYER_SLOT_STATE_PLAYING &&
-    playerSlotState !== PLAYER_SLOT_STATE_LEFT &&
     (playerAFKStatus === AFK_PLAYING ||
       playerAFKStatus === AFK_PLAYING_PICK ||
       playerAFKStatus === AFK_AFK_DURING_ROUND)

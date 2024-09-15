@@ -1,3 +1,4 @@
+import { ABILITY_TYPE_ID_GIVE_ALLY_GOLD_WOLF } from "constants";
 import { startRuneTimer } from "functions/runes";
 import { ForceEx } from "handles/ForceEx";
 import { MapPlayerEx } from "handles/MapPlayerEx";
@@ -18,10 +19,11 @@ const createWolf = () => {
     UnitAddAbility(wolf, FourCC("A01F"));
   }
   if (udg_practiceOn) {
-    UnitRemoveAbility(wolf, FourCC("A00V"));
+    UnitRemoveAbility(wolf, ABILITY_TYPE_ID_GIVE_ALLY_GOLD_WOLF);
     SetUnitOwner(wolf, Player(bj_PLAYER_NEUTRAL_VICTIM)!, false);
     IssueImmediateOrderBJ(wolf, "holdposition");
   } else {
+    if (udg_switchOn) UnitRemoveAbility(wolf, ABILITY_TYPE_ID_GIVE_ALLY_GOLD_WOLF);
     SelectUnitForPlayerSingle(wolf, p);
     ForceUICancelBJ(p);
     udg_unit[cid] = wolf;

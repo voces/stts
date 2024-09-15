@@ -2,6 +2,35 @@
 
 - Mana Bomb
 - Area of Suppression crashes game ?
+- -cancel -smart in 1vX
+- Selection bug
+- -ff
+- President ward death crash?
+
+# 24m
+
+## Feature changes
+
+- Wolves can no longer use -buy to buy duplicate auras
+- Added error sounds when commands error
+- Added game settings to "Next" display
+- Removed Give Ally Gold from wolf in switch
+- Adjusted Experimental terrain
+- Updated Quests to fit all commands
+- Updated item descriptions to be more consistent
+
+## Balance changes
+
+- Decreased Hay Trap's armor from 130 to 80, making it possible to destroy in two consecutive attacks
+- Decreased gold cost of Goblin Support from 400 to 350
+
+## Bug fixes
+
+- Fixed -g sometimes doing things incorrectly
+- Feinting Tower now clones president crown
+- Fixed leftover debug command
+- Removed Share Control and Give Allies Gold and added Locate Allies when sheep after kill in switch
+- Fixed Discord link in map description
 
 # 24l
 

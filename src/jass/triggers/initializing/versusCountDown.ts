@@ -9,11 +9,7 @@ const Trig_versusCountDown_Func002Func001C = () => {
 };
 
 const Trig_versusCountDown_Func002Func006Func001Func002C = () => {
-  if (
-    (!(udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)] === true))
-  ) {
-    return false;
-  }
+  if (!udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)]) return false;
   return true;
 };
 
@@ -24,9 +20,6 @@ const Trig_versusCountDown_Func002Func006Func001C = () => {
   if (
     (!(GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING))
   ) {
-    return false;
-  }
-  if ((!(GetPlayerSlotState(GetEnumPlayer()!) !== PLAYER_SLOT_STATE_LEFT))) {
     return false;
   }
   return true;
@@ -43,19 +36,13 @@ const Trig_versusCountDown_Func002Func006A = () => {
 };
 
 const Trig_versusCountDown_Func002C = () => {
-  if ((!(udg_versus === 2))) {
-    return false;
-  }
+  if (udg_versus !== 2) return false;
   return true;
 };
 
 const Trig_versusCountDown_Func004C = () => {
-  if ((!(udg_versus > 0))) {
-    return false;
-  }
-  if ((!(udg_versusOff === false))) {
-    return false;
-  }
+  if (udg_versus <= 0) return false;
+  if (udg_versusOff) return false;
   return true;
 };
 

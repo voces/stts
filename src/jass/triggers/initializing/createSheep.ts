@@ -1,11 +1,9 @@
-import { Unit } from "w3ts";
-import { president } from "modes/president";
-import { withDummy } from "util/withDummy";
+import { president, spawnSetting } from "settings/settings";
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { terrain } from "settings/terrain";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { clearForces } from "util/clearForces";
-import { spawns, spawnSetting } from "settings/spawns";
+import { spawns } from "settings/spawns";
 import { createCritter } from "misc/critter";
 import { ABILITY_TYPE_ID_RESET_START_POSITION, UNIT_TYPE_ID_START_POSITION } from "constants";
 import { switchSheepTimers } from "modes/switch/switch";
@@ -13,6 +11,7 @@ import { startUpdatingLeaderboard } from "modes/switch/updateLeaderboard";
 import { cancelHostFarmSpawn } from "./startRound";
 import { enableIncome } from "functions/farms/savingFarms";
 import { ForceEx } from "handles/ForceEx";
+import { applyPresidentBuff } from "modes/president";
 
 let firstRound = true;
 
@@ -122,18 +121,14 @@ const Trig_createSheep_wolfActionsA = () => {
     i = i + 1;
   }
 
-  if (udg_practiceOn === false && udg_wolfZoom[enumPlayerId] > 0) {
+  if (!udg_practiceOn && udg_wolfZoom[enumPlayerId] > 0) {
     SetCameraFieldForPlayer(GetEnumPlayer()!, CAMERA_FIELD_TARGET_DISTANCE, udg_wolfZoom[enumPlayerId], 0);
   }
 };
 
 const Trig_createSheep_addToSheepAndWolf = () => {
   const p = GetEnumPlayer()!;
-  if (
-    GetPlayerSlotState(p) === PLAYER_SLOT_STATE_PLAYING &&
-    udg_AFK[GetConvertedPlayerId(p)] === AFK_PLAYING &&
-    GetPlayerSlotState(p) !== PLAYER_SLOT_STATE_LEFT
-  ) {
+  if (GetPlayerSlotState(p) === PLAYER_SLOT_STATE_PLAYING && udg_AFK[GetConvertedPlayerId(p)] === AFK_PLAYING) {
     ForceAddPlayerSimple(p, udg_Sheep);
     ForceAddPlayerSimple(p, udg_Wolf);
   }
@@ -166,17 +161,7 @@ const Trig_createSheep_sheepActionsB = () => {
   if (
     president.enabled &&
     president.president?.id === GetPlayerId(GetEnumPlayer()!)
-  ) {
-    withDummy(
-      (dummy) => {
-        dummy.addAbility(FourCC("A028"));
-        dummy.issueTargetOrder("innerfire", Unit.fromHandle(u)!);
-      },
-      GetUnitX(u),
-      GetUnitY(u),
-      MapPlayerEx.fromEnum(),
-    );
-  }
+  ) applyPresidentBuff(u);
 
   SelectUnitForPlayerSingle(u, GetEnumPlayer()!);
   ForceUICancelBJ(GetEnumPlayer()!);
@@ -197,7 +182,7 @@ const Trig_createSheep_sheepActionsB = () => {
       UnitAddAbility(u, destroyAllFarms);
       switchSheepTimers[GetPlayerId(GetEnumPlayer()!)].resume();
     }
-  } else if (udg_shareOn === false) UnitRemoveAbility(u, shareControlAbility);
+  } else if (!udg_shareOn) UnitRemoveAbility(u, shareControlAbility);
 
   if (udg_sheepZoom[enumPlayerId] > 0) {
     SetCameraFieldForPlayer(GetEnumPlayer()!, CAMERA_FIELD_TARGET_DISTANCE, udg_sheepZoom[enumPlayerId], 0);
@@ -296,7 +281,7 @@ const Trig_createSheep_Actions_part4 = () => {
   enableIncome();
   TriggerExecute(gg_trg_setupLeaderboard);
 
-  if (udg_practiceOn === false) {
+  if (!udg_practiceOn) {
     if (CountPlayersInForceBJ(udg_Wolf) === 0) TriggerExecute(gg_trg_sheepWin);
     if (CountPlayersInForceBJ(udg_Sheep) === 0) TriggerExecute(gg_trg_wolvesWin);
   }
@@ -343,7 +328,7 @@ const Trig_createSheep_Actions = () => {
 
   ForForce(udg_Spirit, moveEnumPlayerFromSpiritToSheep);
 
-  if (udg_practiceOn === false) {
+  if (!udg_practiceOn) {
     if (CountPlayersInForceBJ(udg_Wolf) === 0) {
       TriggerExecute(gg_trg_sheepWin);
       return;
@@ -376,7 +361,7 @@ const Trig_createSheep_Actions = () => {
     ClearTextMessages();
   } else ClearTextMessagesBJ(udg_Sheep);
 
-  if (udg_round2 === false && udg_Teams === TEAMS_INIT) {
+  if (!udg_round2 && udg_Teams === TEAMS_INIT) {
     clearForces();
     ForForce(GetPlayersAll()!, setTeamOneSheep);
   }

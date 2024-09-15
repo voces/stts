@@ -1,12 +1,15 @@
+import {
+  ABILITY_TYPE_ID_BLUE_WARD,
+  ABILITY_TYPE_ID_HIDE_SHOW,
+  ABILITY_TYPE_ID_TRANSLOCATE,
+  BUFF_TYPE_ID_FROST,
+} from "constants";
 import { enforceTeamResourceMultiboard } from "userSettings/teamResources";
 
 const Trig_castAbility_Actions = () => {
   const u = GetTriggerUnit()!;
   const p = GetOwningPlayer(u);
-  if (
-    GetSpellAbilityId() === FourCC("A00G") &&
-    udg_permanentHide[GetConvertedPlayerId(p)] === false
-  ) {
+  if (GetSpellAbilityId() === ABILITY_TYPE_ID_HIDE_SHOW && !udg_permanentHide[GetConvertedPlayerId(p)]) {
     if (IsLeaderboardDisplayed(PlayerGetLeaderboard(p)!)) {
       LeaderboardDisplay(PlayerGetLeaderboard(p)!, false);
       udg_hideshow[GetConvertedPlayerId(p)] = true;
@@ -15,12 +18,10 @@ const Trig_castAbility_Actions = () => {
       udg_hideshow[GetConvertedPlayerId(p)] = false;
     }
     enforceTeamResourceMultiboard();
-  } else if (
-    GetSpellAbilityId() === FourCC("A00M") &&
-    GetUnitAbilityLevel(u, FourCC("B005")) > 0
-  ) {
-    UnitRemoveBuffBJ(FourCC("B005"), GetSpellAbilityUnit()!);
-  } else if (GetSpellAbilityId() === FourCC("A029")) {
+    // Not really sure what this is for
+  } else if (GetSpellAbilityId() === ABILITY_TYPE_ID_BLUE_WARD && GetUnitAbilityLevel(u, BUFF_TYPE_ID_FROST) > 0) {
+    UnitRemoveBuffBJ(BUFF_TYPE_ID_FROST, GetSpellAbilityUnit()!);
+  } else if (GetSpellAbilityId() === ABILITY_TYPE_ID_TRANSLOCATE) {
     IssueImmediateOrder(u, "stop");
     SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) + 10);
   }

@@ -160,17 +160,6 @@ declare global {
   let sheepGoldGiven: Array<number>;
   // deno-lint-ignore prefer-const
   let spiritGoldGiven: Array<number>;
-  //endglobals from Util
-  //globals from gs:
-  // deno-lint-ignore prefer-const
-  let gsAmounts: Array<number>;
-  // deno-lint-ignore prefer-const
-  let gsPlayerIndices: Array<number>;
-  let gsLength: number;
-  // deno-lint-ignore prefer-const
-  let gsDist: Array<number>;
-  //endglobals from gs
-  //globals from Smart:
   // deno-lint-ignore prefer-const
   let pub: Array<boolean>;
   // deno-lint-ignore prefer-const
@@ -491,7 +480,6 @@ declare global {
   let gg_trg_ScoreboardMultiboard: trigger;
   let gg_trg_hide: trigger;
   let gg_trg_show: trigger;
-  let gg_trg_hideEsc: trigger;
   let gg_trg_setupLeaderboard: trigger;
   let gg_trg_miscSmartSave: trigger;
   let gg_trg_wispControl: trigger;
@@ -538,7 +526,6 @@ declare global {
   let gg_trg_g: trigger;
   let gg_trg_lss: trigger;
   let gg_trg_seeTime: trigger;
-  let gg_trg_unstuck: trigger;
   let gg_trg_giveUpCaptain: trigger;
   let gg_trg_timeCommands: trigger;
   let gg_trg_handicap: trigger;
@@ -734,11 +721,6 @@ wolfGoldGiven = Array.from({ length: bj_MAX_PLAYERS }, () => 0);
 sheepGoldGiven = Array.from({ length: bj_MAX_PLAYERS }, () => 0);
 spiritGoldGiven = Array.from({ length: bj_MAX_PLAYERS }, () => 0);
 //endglobals from Util
-//globals from gs:
-gsAmounts = [];
-gsPlayerIndices = [];
-gsDist = [];
-//endglobals from gs
 //globals from Smart:
 pub = [];
 rotated = Player(PLAYER_NEUTRAL_PASSIVE)!;
@@ -1068,7 +1050,8 @@ transferGold = (
   amount: number,
   display: number,
 ): void => {
-  if (IsPlayerAlly(sender, receiver) === false) return;
+  if (sender === receiver) return;
+  if (!IsPlayerAlly(sender, receiver)) return;
 
   if (amount > GetPlayerState(sender, PLAYER_STATE_RESOURCE_GOLD)) {
     amount = GetPlayerState(sender, PLAYER_STATE_RESOURCE_GOLD);
@@ -1079,7 +1062,7 @@ transferGold = (
   AdjustPlayerStateBJ(-amount, sender, PLAYER_STATE_RESOURCE_GOLD);
   AdjustPlayerStateBJ(amount, receiver, PLAYER_STATE_RESOURCE_GOLD);
 
-  if (udg_switchOn === false && vampOn === false && udg_practiceOn === false) {
+  if (!udg_switchOn && !vampOn && !udg_practiceOn) {
     if (IsPlayerInForce(sender, udg_Wolf)) {
       wolfGoldGiven[GetPlayerId(sender)] = wolfGoldGiven[GetPlayerId(sender)] + amount;
     } else if (IsPlayerInForce(sender, udg_Sheep)) {
@@ -1485,7 +1468,7 @@ declare global {
 autoCancel = () => {
   let i = 0;
   let flag = false;
-  if (autoCancelEnabled && udg_switchOn === false && vampOn === false) {
+  if (autoCancelEnabled && !udg_switchOn && !vampOn) {
     while (true) {
       if (i === 24) break;
       if (IsPlayerInForce(Player(i)!, udg_Sheep)) {
@@ -1577,7 +1560,6 @@ const InitCustomTriggers = () => {
   InitTrig_ScoreboardMultiboard();
   InitTrig_hide();
   InitTrig_show();
-  InitTrig_hideEsc();
   InitTrig_setupLeaderboard();
   InitTrig_miscSmartSave();
   InitTrig_sheepSwitch();
@@ -1623,7 +1605,6 @@ const InitCustomTriggers = () => {
   InitTrig_g();
   InitTrig_lss();
   InitTrig_seeTime();
-  InitTrig_unstuck();
   InitTrig_giveUpCaptain();
   InitTrig_timeCommands();
   InitTrig_handicap();

@@ -64,24 +64,26 @@ const Trig_sheepSwitch_Actions = () => {
   SelectUnitForPlayerSingle(GetLastCreatedUnit()!, GetOwningPlayer(GetKillingUnit()!));
   ForceUICancelBJ(GetOwningPlayer(GetKillingUnit()!));
   RemoveUnit(GetLastCreatedUnit()!);
-  bj_lastCreatedUnit = CreateUnit(
+  const sheep = CreateUnit(
     GetOwningPlayer(GetKillingUnit()!),
     sheepType,
     GetUnitX(GetTriggerUnit()!),
     GetUnitY(GetTriggerUnit()!),
     GetUnitFacing(GetTriggerUnit()!),
-  );
+  )!;
   switchSheepTimers[GetPlayerId(GetOwningPlayer(GetKillingUnit()!))].resume();
   switchSheepTimers[GetPlayerId(GetOwningPlayer(GetTriggerUnit()!))].pause();
-  udg_unit[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))] = GetLastCreatedUnit()!;
-  UnitRemoveAbilityBJ(FourCC("A00D"), GetLastCreatedUnit()!);
-  UnitAddAbilityBJ(FourCC("A00U"), GetLastCreatedUnit()!);
-  SetPlayerUnitAvailableBJ(FourCC("n002"), true, GetOwningPlayer(GetLastCreatedUnit()!));
-  SelectUnitForPlayerSingle(GetLastCreatedUnit()!, GetOwningPlayer(GetKillingUnit()!));
-  SetUnitInvulnerable(GetLastCreatedUnit()!, true);
+  udg_unit[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))] = sheep;
+  UnitRemoveAbility(sheep, shareControlAbility);
+  UnitRemoveAbility(sheep, giveAlliesGoldSheepAbility);
+  UnitAddAbility(sheep, destroyAllFarms);
+
+  SetPlayerUnitAvailableBJ(FourCC("n002"), true, GetOwningPlayer(sheep));
+  SelectUnitForPlayerSingle(sheep, GetOwningPlayer(GetKillingUnit()!));
+  SetUnitInvulnerable(sheep, true);
   AddSpecialEffectTargetUnitBJ(
     "origin",
-    GetLastCreatedUnit()!,
+    sheep,
     "Abilities\\Spells\\Human\\DivineShield\\DivineShieldTarget.mdl",
   );
   udg_switchEffect[GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()!))] = GetLastCreatedEffectBJ()!;
@@ -218,7 +220,7 @@ InitTrig_sheepSwitch = () => {
     gg_trg_sheepSwitch,
     Condition(() =>
       GetUnitTypeId(GetTriggerUnit()!) === sheepType &&
-      !IsUnitIllusionBJ(GetDyingUnit()!)
+      !IsUnitIllusion(GetDyingUnit()!)
     ),
   );
   TriggerAddAction(gg_trg_sheepSwitch, Trig_sheepSwitch_Actions);

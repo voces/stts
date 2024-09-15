@@ -1,5 +1,5 @@
 import { terrain, terrains } from "settings/terrain";
-import { president } from "modes/president";
+import { president } from "settings/settings";
 import { addScriptHook, W3TS_HOOK } from "w3ts";
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {

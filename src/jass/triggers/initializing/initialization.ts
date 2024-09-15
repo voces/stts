@@ -29,14 +29,7 @@ const Trig_initialization_forAllPlayersOne = () => {
   udg_wolfZoom[cid] = 0;
   udg_wispZoom[cid] = 0;
   wasHere[cid - 1] = true;
-  if (
-    (GetBooleanAnd(
-      GetPlayerSlotState(ConvertedPlayer(cid)!) ===
-        PLAYER_SLOT_STATE_PLAYING,
-      GetPlayerSlotState(ConvertedPlayer(cid)!) !==
-        PLAYER_SLOT_STATE_LEFT,
-    ))
-  ) {
+  if (GetPlayerSlotState(ConvertedPlayer(cid)!) === PLAYER_SLOT_STATE_PLAYING) {
     udg_wasHere[cid] = true;
   }
 };

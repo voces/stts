@@ -5,10 +5,7 @@ const Stomp_Conditions = () => {
     GetSpellAbilityId() === FourCC("A01P");
 };
 
-const Stomp_cond2 = () => {
-  return (GetUnitTypeId(GetFilterUnit()!) === sheepType &&
-    IsUnitIllusion(GetFilterUnit()!) === false);
-};
+const Stomp_cond2 = () => GetUnitTypeId(GetFilterUnit()!) === sheepType && !IsUnitIllusion(GetFilterUnit()!);
 
 const Stomp_cond1 = () => {
   DestroyEffectBJ(

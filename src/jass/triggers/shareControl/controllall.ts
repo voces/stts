@@ -17,9 +17,7 @@ const Trig_controllal_Conditions = () => {
   if ((!Trig_controllal_Func002C())) {
     return false;
   }
-  if ((!(udg_shareOn === true))) {
-    return false;
-  }
+  if (!udg_shareOn) return false;
   if ((!(udg_Teams === TEAMS_LOCK_IE_PLAYING))) {
     return false;
   }
@@ -51,24 +49,8 @@ const Trig_controllal_Func008Func001Func002C = () => {
 };
 
 const Trig_controllal_Func008Func001C = () => {
-  if (
-    (!(GetPlayerAlliance(
-      udg_anactualtempplayer,
-      GetEnumPlayer()!,
-      ALLIANCE_SHARED_VISION,
-    ) === true))
-  ) {
-    return false;
-  }
-  if (
-    (!(GetPlayerAlliance(
-      udg_anactualtempplayer,
-      GetEnumPlayer()!,
-      ALLIANCE_SHARED_ADVANCED_CONTROL,
-    ) === false))
-  ) {
-    return false;
-  }
+  if (!GetPlayerAlliance(udg_anactualtempplayer, GetEnumPlayer()!, ALLIANCE_SHARED_VISION)) return false;
+  if (GetPlayerAlliance(udg_anactualtempplayer, GetEnumPlayer()!, ALLIANCE_SHARED_ADVANCED_CONTROL)) return false;
   return true;
 };
 

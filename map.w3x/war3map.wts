@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 24l
+Sheep Tag ReVoLuTiOn 24m
 }
 
 STRING 40
@@ -28,10 +28,9 @@ STRING 40
 
 STRING 41
 {
-Sheep Tag ReVoLuTiOn created by GosuSheep and Chakra.
-Check quests for more information.
+Join our Discord https://dsc.gg/sheeptag or discord.gg/SKvs9C8WA5
 
-Join our Discord https://dsc.gg/sheeptag or https://discord.gg/Y4dHvwX
+Check quests for game modes and commands.
 }
 
 STRING 48
@@ -144,7 +143,7 @@ W
 
 STRING 241
 {
-discord.gg/SKvs9C8WA5
+GosuSheep & Chakra
 }
 
 STRING 298
@@ -2277,12 +2276,6 @@ STRING 3256
 Engulfs this unit in fire which deals 15 damage per second to nearby enemy land units.|n|cffffcc00160 gold.|r |n|cff00aeef-buy cloak: 200 gold.|r
 }
 
-STRING 3257
-// Items: I001 (cloak), Description (Description)
-{
-Engulfs this unit in fire which deals 15 damage per second to nearby enemy land units.|n|cffffcc00160 gold.|r |n|cff00aeef-buy cloak: 200 gold.|r
-}
-
 STRING 3258
 // Items: I00Q (Practice), Ubertip (Tooltip - Extended)
 {
@@ -2403,12 +2396,6 @@ STRING 3317
 Claws of Attack +110|nIncreases the attack damage of this unit by 110 when worn.|n|n|cffffff00Requires:|r|cffffcc00|n  - 2 Claws of Attack +55|r|n|n|cffffcc0080 gold.|r |n|cff00aeef-buy r110: 112 gold.|r
 }
 
-STRING 3318
-// Items: I00M (r110), Description (Description)
-{
-Claws of Attack +110|nIncreases the attack damage of this unit by 110 when worn.|n|n|cffffff00Requires:|r|cffffcc00|n  - 2 Claws of Attack +55|r
-}
-
 STRING 3319
 // Items: I00M (r110), Name (Name)
 {
@@ -2443,12 +2430,6 @@ STRING 3325
 // Items: I00T (rVelocity), Ubertip (Tooltip - Extended)
 {
 Claws of Velocity|nIncreases the attack damage of this unit by 55 and attack speed by 33% when worn.|n|n|cffffff00Requires:|r|cffffcc00|n  - Claws of Attack +55|r|cffffcc00|n  - Gloves of Haste|r|n|n|cffffcc0080 gold.|r |n|cff00aeef-buy velocity: 112 gold.|r
-}
-
-STRING 3326
-// Items: I00T (rVelocity), Description (Description)
-{
-Claws of Velocity|nIncreases the attack damage of this unit by 55 and attack speed by 33% when worn.|n|n|cffffff00Requires:|r|cffffcc00|n  - Claws of Attack +55|r|cffffcc00|n  - Gloves of Haste|r
 }
 
 STRING 3327
@@ -3429,12 +3410,6 @@ STRING 3761
 Adds <A021,DataA1> bonus fire damage when carried, damaging nearby farms.|n|cffffcc00160 gold.|r |n|cff00aeef-buy forb: 200 gold.|r
 }
 
-STRING 3762
-// Items: I00W (forb), Description (Description)
-{
-Adds <A021,DataA1> bonus fire damage when carried, damaging nearby farms.|n|cffffcc00160 gold.
-}
-
 STRING 3763
 // Items: I00V (suppression), Name (Name)
 {
@@ -3933,18 +3908,6 @@ STRING 4029
 (Item)
 }
 
-STRING 4030
-// Items: I010 (disease), Ubertip (Tooltip - Extended)
-{
-Permanently infects nearby enemy structures with Disease Cloud. Disease Cloud deals <A02F,DataB1> damage per second.|n|cffff0000Cannot kill structures.|r|n|cffffcc00100 gold.|r |n|cff00aeef-buy disease: 140 gold.|r
-}
-
-STRING 4031
-// Items: I010 (disease), Description (Description)
-{
-Permanently infects nearby enemy structures with Disease Cloud. Disease Cloud deals <A02F,DataB1> damage per second.|n|cffff0000Cannot kill structures.|r|n|cffffcc00100 gold.|r |n|cff00aeef-buy disease: 140 gold.|r
-}
-
 STRING 4034
 // Units: h005 (Money Farm), Ubertip (Tooltip - Extended)
 {
@@ -4221,12 +4184,6 @@ STRING 4120
 (Goblin Support, Clockwerk Goblin)
 }
 
-STRING 4121
-// Items: I012 (goblins), Ubertip (Tooltip - Extended)
-{
-Calls for aerial goblin support to help destroy farms.|n|cffffcc00400 gold.|r|n|cff00aeef-buy goblins: 440 gold.|r
-}
-
 STRING 4122
 // Items: I012 (goblins), Description (Description)
 {
@@ -4425,13 +4382,55 @@ STRING 4178
 Tosses a Hay Trap at a target location. Hay Traps block units and are difficult for sheep to kill.|n|cffffcc0030 gold.|r |n|cff00aeef-buy hay: 42 gold.|r
 }
 
-STRING 4179
+STRING 4181
 {
-|cff00ff00Sheep Tag ReVoLuTiOn 24l|r
+|cff00ff00Sheep Tag ReVoLuTiOn 24m|r
 }
 
-STRING 4180
+STRING 4182
 {
-|cff00ff0024l|r
+|cff00ff0024m|r
+}
+
+STRING 4183
+// Items: I012 (goblins), Ubertip (Tooltip - Extended)
+{
+Calls for aerial goblin support to help destroy farms.|n|cffffcc00350 gold.|r|n|cff00aeef-buy goblins: 390 gold.|r
+}
+
+STRING 4184
+// Items: I010 (disease), Ubertip (Tooltip - Extended)
+{
+Permanently infects nearby enemy structures with Disease Cloud. Disease Cloud deals 1.5 damage per second.|n|cffff0000Cannot kill structures.|r|n|cffffcc00100 gold.|r |n|cff00aeef-buy disease: 140 gold.|r
+}
+
+STRING 4189
+// Items: I00M (r110), Description (Description)
+{
+Claws of Attack +110|nIncreases the attack damage of this unit by 110 when worn.
+}
+
+STRING 4190
+// Items: I001 (cloak), Description (Description)
+{
+Engulfs this unit in fire which deals 15 damage per second to nearby enemy land units.
+}
+
+STRING 4191
+// Items: I00T (rVelocity), Description (Description)
+{
+Claws of Velocity|nIncreases the attack damage of this unit by 55 and attack speed by 33% when worn.
+}
+
+STRING 4192
+// Items: I00W (forb), Description (Description)
+{
+Adds <A021,DataA1> bonus fire damage when carried, damaging nearby farms.
+}
+
+STRING 4193
+// Items: I010 (disease), Description (Description)
+{
+Permanently infects nearby enemy structures with Disease Cloud. Disease Cloud deals 1.5 damage per second.|n|cffff0000Cannot kill structures.|r
 }
 

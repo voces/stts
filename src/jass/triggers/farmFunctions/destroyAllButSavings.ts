@@ -3,10 +3,8 @@ import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { removeEnumUnit } from "util/removeEnumUnit";
 
 const Trig_destroyAllButSavings_Func002002002 = () => {
-  return GetBooleanAnd(
-    IsUnitType(GetFilterUnit()!, UNIT_TYPE_STRUCTURE) === true,
-    GetUnitTypeId(GetFilterUnit()!) !== UNIT_TYPE_ID_MONEY_FARM,
-  );
+  return IsUnitType(GetFilterUnit()!, UNIT_TYPE_STRUCTURE) &&
+    GetUnitTypeId(GetFilterUnit()!) !== UNIT_TYPE_ID_MONEY_FARM;
 };
 
 const Trig_destroyAllButSavings_Actions = () => {

@@ -10,13 +10,8 @@ import { MapPlayerEx } from "handles/MapPlayerEx";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 
 const Trig_setafk_Func001001001 = () => {
-  return GetBooleanAnd(
-    GetPlayerSlotState(GetFilterPlayer()!) === PLAYER_SLOT_STATE_PLAYING,
-    GetBooleanAnd(
-      GetPlayerSlotState(GetFilterPlayer()!) !== PLAYER_SLOT_STATE_LEFT,
-      udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === AFK_PLAYING,
-    ),
-  );
+  return GetPlayerSlotState(GetFilterPlayer()!) === PLAYER_SLOT_STATE_PLAYING &&
+    udg_AFK[GetConvertedPlayerId(GetFilterPlayer()!)] === AFK_PLAYING;
 };
 
 const Trig_setafk_Func001Func001Func003C = () => {
