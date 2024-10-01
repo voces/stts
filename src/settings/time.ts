@@ -1,6 +1,7 @@
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { addScriptHook, Trigger, W3TS_HOOK } from "w3ts";
-import { farmVision, income, president, spawnSetting } from "./settings";
+import { farmVision, income, president, spawnSetting, switchSetting } from "./settings";
+import { triggerIntermissionUpdate } from "ui/hooks";
 
 const checkAutoTimeFlag = () => {
   const oldTime = udg_time;
@@ -12,8 +13,16 @@ const checkAutoTimeFlag = () => {
 };
 
 export const updateLeaderboardSettingsDisplay = () => {
+  triggerIntermissionUpdate();
+
   let s = "|CFFED1C24Next: " + simpleformatTime(udg_time);
-  if (udg_switchOn) s += " switch";
+  if (udg_switchOn) {
+    s += " switch";
+    if (udg_wispPoints > 0) {
+      s += ` to ${udg_wispPoints}`;
+      if (Number.isFinite(switchSetting.goalTime)) s += ` or ${simpleformatTime(switchSetting.goalTime)}`;
+    } else if (Number.isFinite(switchSetting.goalTime)) s += ` to ${simpleformatTime(switchSetting.goalTime)}`;
+  }
   if (vampOn) s += " vamp";
   if (president.enabled) s += " pres";
   if (udg_viewOn) s += " view";

@@ -2,6 +2,8 @@
 // Trigger: kaleidoscope
 //===========================================================================
 
+import { game } from "util/game";
+
 const Trig_kaleidoscope_Actions = () => {
   const u = GetEventDamageSource()!;
   let i = 0;
@@ -32,3 +34,7 @@ InitTrig_kaleidoscope = () => {
   TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_DAMAGING);
   TriggerAddAction(t, Trig_kaleidoscope_Actions);
 };
+
+game.onSummon((e) => {
+  if (e.summon.hasItemOfType(kaleidoscope)) e.summon.pauseTimedLife(true);
+});

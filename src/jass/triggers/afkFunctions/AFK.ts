@@ -1,4 +1,4 @@
-import { terrain } from "settings/terrain";
+import { terrain } from "settings/settings";
 import { inflateGoldCount } from "../commands/g";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";

@@ -129,7 +129,7 @@ const Trig_createLists_Actions = () => {
   udg_numWolf = 0;
   for (let i = 1; i <= bj_MAX_PLAYERS; i++) {
     if (isPlayingAndNotAfk(i)) {
-      if (udg_sheepLastGame[cid]) udg_numSheep++;
+      if (udg_sheepLastGame[i]) udg_numSheep++;
       else udg_numWolf++;
     }
   }

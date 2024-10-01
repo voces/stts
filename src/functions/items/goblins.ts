@@ -6,11 +6,21 @@ import {
   UNIT_TYPE_ID_SAPPER,
 } from "constants";
 import { UnitEx } from "handles/UnitEx";
-import { terrain } from "settings/terrain";
+import { terrain } from "settings/settings";
 import { game } from "util/game";
 import { angleBetweenPoints, distanceBetweenPoints, findRayRectangleIntersection } from "util/geometry";
 import { setTimeout } from "util/setTimeout";
 import { withUnitsOfType } from "util/withGroup";
+
+const dropDistance = 400;
+const minSpeed = 15;
+const topLoadedSpeed = 30;
+const topUnloadedSpeed = 35;
+const deaccelerationWindow = 2500;
+const accelerationWindow = 1500;
+const waveCount = 4;
+const waveSize = 6;
+const waveFrequency = 4;
 
 game.onItemUsed(({ item, unit }) => {
   if (item.typeId !== ITEM_TYPE_ID_GOBLINS) return;
@@ -31,26 +41,52 @@ game.onItemUsed(({ item, unit }) => {
       if (!end) return;
 
       const deployPoint = { x: s.x, y: s.y };
+      let target = deployPoint;
       const u = UnitEx.create(owner, UNIT_TYPE_ID_GYRO, start.x, start.y, direction * bj_RADTODEG);
       u.issueOrderAt("move", end.x, end.y);
       let deployed = false;
-      let last = distanceBetweenPoints(u, deployPoint);
-      const { cancel } = setTimeout(1, () => {
-        if (u.currentOrder === 0 || !unit.isAlive()) {
+      let steps = 0;
+      let dropPoint = { x: 0, y: 0 };
+      const { cancel } = setTimeout(0.03, () => {
+        steps++;
+        if (!unit.isAlive()) {
           cancel();
           u.destroy();
-        }
-        if (deployed) return;
-        const next = distanceBetweenPoints(u, deployPoint);
-        if (next < last && next > 500) {
-          last = next;
           return;
         }
+
+        const distanceToTarget = distanceBetweenPoints(u, target);
+        if (target === end && distanceToTarget < 50) {
+          cancel();
+          u.destroy();
+          return;
+        }
+
+        let speed = topUnloadedSpeed;
+        if (target === deployPoint) {
+          if (distanceToTarget < deaccelerationWindow + dropDistance) {
+            speed = minSpeed +
+              (topLoadedSpeed - minSpeed) * (distanceToTarget - dropDistance) / deaccelerationWindow;
+          }
+        } else {
+          const distanceFromDropPoint = distanceBetweenPoints(u, dropPoint);
+          speed = distanceFromDropPoint < accelerationWindow
+            ? minSpeed + (topUnloadedSpeed - minSpeed) * distanceFromDropPoint / accelerationWindow
+            : topUnloadedSpeed;
+        }
+        const angle = Math.atan2(target.y - u.y, target.x - u.x);
+        u.setPosition(u.x + speed * Math.cos(angle), u.y + speed * Math.sin(angle));
+        BlzSetUnitFacingEx(u.handle, angle * bj_RADTODEG);
+
+        if (deployed || (steps % 33 === 0)) return;
+
+        if (distanceToTarget > dropDistance) return;
 
         deployed = true;
         const sample = UnitEx.create(u.owner, UNIT_TYPE_ID_FACTORY, deployPoint.x, deployPoint.y);
         const buildPoint = { x: sample.x, y: sample.y };
         sample.destroy();
+        dropPoint = { x: u.x, y: u.y };
         const sapper = UnitEx.create(
           u.owner,
           UNIT_TYPE_ID_SAPPER,
@@ -61,26 +97,30 @@ game.onItemUsed(({ item, unit }) => {
         sapper.setPathing(true);
         BlzQueueBuildOrderById(sapper.handle, UNIT_TYPE_ID_FACTORY, buildPoint.x, buildPoint.y);
         BlzQueueImmediateOrderById(sapper.handle, 852041);
+        target = end;
       }, true);
     }));
 });
 
 game.onConstructionFinish(({ unit }) => {
   if (unit.typeId !== UNIT_TYPE_ID_FACTORY) return;
-  unit.applyTimedLife(FourCC("BTFL"), 30);
-  const { cancel } = setTimeout(1, () => {
-    if (!unit.isAlive()) {
-      cancel();
-      return;
+  unit.applyTimedLife(FourCC("BTFL"), (waveCount - 1) * waveFrequency + 0.125);
+  const spawnWave = () => {
+    for (let i = 0; i < waveSize; i++) {
+      const goblin = UnitEx.create(
+        unit.owner,
+        UNIT_TYPE_ID_CLOCKWERK,
+        unit.x + 160 * (Math.random() - 0.5),
+        unit.y + 160 * (Math.random() - 0.5),
+      );
+      goblin.applyTimedLife(FourCC("BTFL"), 10);
+      goblin.setPathing(true);
+      BlzQueueImmediateOrderById(goblin.handle, 852041);
     }
-    const goblin = UnitEx.create(
-      unit.owner,
-      UNIT_TYPE_ID_CLOCKWERK,
-      unit.x + Math.random() - 0.5,
-      unit.y + Math.random() - 0.5,
-    );
-    goblin.applyTimedLife(FourCC("BTFL"), 10);
-    goblin.setPathing(true);
-    BlzQueueImmediateOrderById(goblin.handle, 852041);
+  };
+  const { cancel } = setTimeout(waveFrequency, () => {
+    if (!unit.isAlive()) return cancel();
+    spawnWave();
   }, true);
+  spawnWave();
 });

@@ -24,7 +24,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
 
     if (g.size === 0) g.addUnit(UnitEx.fromHandle(udg_unit2[p.cid]));
 
-    const newOwner = ownUnitsSelected ? MapPlayerEx.fromIndex(bj_PLAYER_NEUTRAL_VICTIM)! : p;
+    const newOwner = ownUnitsSelected ? MapPlayerEx.fromIndex(PLAYER_NEUTRAL_AGGRESSIVE)! : p;
     const addOrRemove = ownUnitsSelected ? "remove" : "add";
     let set = ownNeutrals.get(p);
     if (!set) {

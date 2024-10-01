@@ -2,16 +2,38 @@ import { UnitEx } from "handles/UnitEx";
 import { setTimeout } from "util/setTimeout";
 import { addScriptHook, Effect, Trigger, W3TS_HOOK } from "w3ts";
 
+const recents: { caster: UnitEx; target: UnitEx }[] = [];
+
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
-  const t = Trigger.create();
+  let t = Trigger.create();
   t.registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_CHANNEL);
   t.addAction(() => {
     if (GetSpellAbilityId() !== FourCC("A02E")) return;
-    const u = UnitEx.fromEvent();
-    if (!u) return;
-    u.setAnimation("spell");
-    const e = Effect.createAttachment("Abilities/Spells/Human/ManaShield/ManaShieldCaster", u, "origin");
-    if (!e) return;
-    setTimeout(1.5, () => e.destroy());
+    const caster = UnitEx.fromEvent();
+    const target = UnitEx.fromHandle(GetSpellTargetUnit());
+
+    if (!caster || !target) return;
+
+    caster.mana -= 100;
+    caster.setAnimation("spell");
+    recents.push({ caster, target });
+    setTimeout(2, () => {
+      const idx = recents.findIndex((r) => r.caster === caster);
+      if (idx >= 0) recents.splice(idx, 1);
+    });
+
+    const e1 = Effect.createAttachment("Abilities/Spells/Human/ManaShield/ManaShieldCaster", caster, "origin");
+    if (e1) setTimeout(1.5, () => e1.destroy());
+
+    const e2 = Effect.createAttachment("Abilities/Spells/Items/AIco/CrownOfCmndTarget", target, "overhead");
+    if (e2) setTimeout(2, () => e2.destroy());
+  });
+
+  t = Trigger.create();
+  t.registerAnyUnitEvent(EVENT_PLAYER_UNIT_CHANGE_OWNER);
+  t.addAction(() => {
+    const target = UnitEx.fromEvent();
+    const caster = recents.find((r) => r.target === target)?.caster;
+    if (caster) caster.mana += 100;
   });
 });

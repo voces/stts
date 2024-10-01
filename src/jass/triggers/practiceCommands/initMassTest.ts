@@ -1,4 +1,4 @@
-import { terrain } from "settings/terrain";
+import { terrain } from "settings/settings";
 import { removeEnumUnit } from "util/removeEnumUnit";
 import { logMassingTest } from "../hostCommands/UpdateStats";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";

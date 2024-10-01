@@ -106,6 +106,10 @@ export class MapPlayerEx extends MapPlayer {
     return `${this.hex}${includePlayerName ? this.name : ""}${msg}`;
   }
 
+  setCameraDistance(distance: number) {
+    SetCameraFieldForPlayer(this.handle, CAMERA_FIELD_TARGET_DISTANCE, distance, 0);
+  }
+
   toString() {
     return this.coloredName;
   }

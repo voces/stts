@@ -40,7 +40,8 @@ export class UnitEx extends Unit {
   static create(owner: MapPlayer | player, unitId: number | string, x: number, y: number, face?: number) {
     face ??= bj_UNIT_FACING;
     const player = owner instanceof MapPlayer ? owner.handle : owner;
-    const handle = CreateUnit(player, typeof unitId === "number" ? unitId : FourCC(unitId), x, y, face)!;
+    const handle = CreateUnit(player, typeof unitId === "number" ? unitId : FourCC(unitId), x, y, face);
+    if (!handle) throw `Unable to create unit of type ${unitId} for ${owner} at (${x}, ${y})`;
     return this.fromHandle(handle);
   }
 

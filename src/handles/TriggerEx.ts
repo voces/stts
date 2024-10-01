@@ -16,6 +16,15 @@ export class TriggerEx extends Trigger {
     return this;
   }
 
+  registerAnyPlayerKeyEvent(whichKey: oskeytype, metaKey: number, fireOnKeyDown: boolean) {
+    for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+      this.registerPlayerKeyEvent(MapPlayerEx.fromIndex(i)!, whichKey, metaKey, fireOnKeyDown);
+    }
+    EVENT_PLAYER_KEY_DOWN;
+
+    return this;
+  }
+
   static create(): TriggerEx {
     const handle = CreateTrigger();
     const obj = this.getObject(handle) as TriggerEx;

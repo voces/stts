@@ -1,8 +1,7 @@
 import { ABILITY_TYPE_ID_GIVE_ALLY_GOLD_WOLF } from "constants";
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { UnitEx } from "handles/UnitEx";
-import { president } from "settings/settings";
-import { terrain } from "settings/terrain";
+import { president, terrain } from "settings/settings";
 import { displayToVerit } from "util/displayTimedTextToAll";
 import { isPointInRect } from "util/geometry";
 import { isUnitSameTeam } from "util/isUnitSameTeam";

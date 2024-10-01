@@ -142,6 +142,7 @@ import { removeEnumUnit } from "util/removeEnumUnit";
 import { updateLeaderboardSettingsDisplay } from "settings/time";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { MapPlayerEx } from "handles/MapPlayerEx";
+import { DisplayType } from "constants";
 
 declare global {
   //globals from SavingFarms:
@@ -1041,14 +1042,14 @@ declare global {
     sender: player,
     receiver: player,
     amount: number,
-    display: number,
+    display: DisplayType,
   ) => void;
 }
 transferGold = (
   sender: player,
   receiver: player,
   amount: number,
-  display: number,
+  display: DisplayType,
 ): void => {
   if (sender === receiver) return;
   if (!IsPlayerAlly(sender, receiver)) return;
@@ -1216,7 +1217,7 @@ const InitGlobals = () => {
   udg_viewOn = false;
   udg_atempint2 = 0;
   udg_giveGold = true;
-  udg_wolfSpawn = 10;
+  udg_wolfSpawn = 3;
   udg_sheepInvul = 5;
   udg_dummyWisps = 0;
   udg_playerCount = 0;

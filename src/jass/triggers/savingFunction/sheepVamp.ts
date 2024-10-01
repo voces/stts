@@ -1,4 +1,5 @@
-import { terrain } from "settings/terrain";
+import { terrain } from "settings/settings";
+import { setTimeout } from "util/setTimeout";
 
 const Trig_sheepVamp_Conditions = () => {
   return GetUnitTypeId(GetTriggerUnit()!) === sheepType &&
@@ -38,13 +39,16 @@ const Trig_sheepVamp_Actions = () => {
     GetRectCenterY(terrain.wolf),
     0,
   );
-  udg_unit[GetPlayerId(p) + 1] = udg_unit2[GetPlayerId(p) + 1] = CreateUnit(
-    p,
-    shepType,
-    GetRectCenterX(terrain.wolf),
-    GetRectCenterY(terrain.wolf),
-    270,
-  )!;
+  const roundOver = CountPlayersInForceBJ(udg_Sheep) === 0;
+  if (!roundOver) {
+    udg_unit[GetPlayerId(p) + 1] = udg_unit2[GetPlayerId(p) + 1] = CreateUnit(
+      p,
+      shepType,
+      GetRectCenterX(terrain.wolf),
+      GetRectCenterY(terrain.wolf),
+      270,
+    )!;
+  }
   while (true) {
     if (i === 24) break;
     if (IsPlayerInForce(Player(i)!, udg_Sheep)) {
@@ -60,9 +64,7 @@ const Trig_sheepVamp_Actions = () => {
   SelectUnitForPlayerSingle(udg_unit[GetPlayerId(p) + 1], p);
   udg_sheepLastGame[GetPlayerId(p) + 1] = false;
   udg_kills[GetPlayerId(l) + 1] = udg_kills[GetPlayerId(l) + 1] + 1;
-  if (CountPlayersInForceBJ(udg_Sheep) === 0) {
-    TriggerExecute(gg_trg_wolvesWin);
-  }
+  if (roundOver) setTimeout(0.5, () => TriggerExecute(gg_trg_wolvesWin));
   TriggerExecute(gg_trg_setupLeaderboard);
   DisplayTimedTextToForce(
     GetPlayersAll()!,

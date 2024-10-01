@@ -24,6 +24,14 @@ export class GroupEx extends Group {
     return ret;
   }
 
+  public some(fn: (unit: UnitEx) => boolean) {
+    let pass = false;
+    this.forEach((u) => {
+      if (!pass && fn(u)) pass = true;
+    });
+    return pass;
+  }
+
   public enumUnitsInRect(r: Rectangle | rect, filter?: boolexpr | ((unit: UnitEx) => boolean)) {
     GroupEnumUnitsInRect(
       this.handle,

@@ -1,11 +1,19 @@
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { addScriptHook, File, W3TS_HOOK } from "w3ts";
 
-const TEAM_RESOURCES_DEFAULT = 0;
-const TEAM_RESOURCES_TWINED = 1;
-const TEAM_RESOURCES_HIDDEN = 2;
+export const TEAM_RESOURCES_DEFAULT = 0;
+export const TEAM_RESOURCES_TWINED = 1;
+export const TEAM_RESOURCES_HIDDEN = 2;
 
 let teamResources: number = TEAM_RESOURCES_DEFAULT;
+
+export const getTeamResources = () => teamResources;
+export const setTeamResources = (player: player, value: number) => {
+  if (player !== GetLocalPlayer()) return;
+  teamResources = value;
+  File.write("revo/teamResources.txt", I2S(teamResources)!);
+  enforceTeamResourceMultiboard();
+};
 
 export const enforceTeamResourceMultiboard = () => {
   if (

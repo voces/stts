@@ -1,0 +1,190 @@
+IncludeFile "UI\FrameDef\UI\EscMenuMainPanel.fdf",
+
+Frame "GLUETEXTBUTTON" "SheepTagPreferencesButton" INHERITS WITHCHILDREN "EscMenuButtonTemplate" {
+  SetPoint BOTTOM, "OptionsButton", TOP, 0.0, 0.002,
+  TabFocusNext "OptionsButton",
+  ControlShortcutKey "KEY_SAVE_GAME_SHORTCUT", // No work
+
+  ButtonText "SheepTagPreferencesButtonText",
+  Frame "TEXT" "SheepTagPreferencesButtonText" INHERITS "EscMenuButtonTextTemplate" {
+    Text "Sheep Tag Preferences",
+  }
+}
+
+Frame "DIALOG" "SheepTagPreferencesPanel" {
+  SetPoint TOP, "ConsoleUI", TOP, 0.0, -0.06,
+  Height 0.35,
+  Width 0.34,
+
+  TabFocusPush,
+
+  Frame "TEXT" "SheepTagPreferencesTitle" INHERITS "EscMenuTitleTextTemplate" {
+    SetPoint TOP, "SheepTagPreferencesPanel", TOP, 0.0, -0.03,
+    FontColor 1.0 1.0 1.0 1.0,
+    Text "Sheep Tag Preferences",
+  }
+
+  // Zoom
+
+  Frame "TEXT" "SheepZoomLabel" INHERITS "EscMenuButtonTextTemplate" {
+    SetPoint TOPLEFT, "SheepTagPreferencesPanel", TOPLEFT, 0.025, -0.07,
+    Text "Sheep zoom:",
+  }
+
+  Frame "EDITBOX" "SheepZoomEditBox" INHERITS WITHCHILDREN "EscMenuEditBoxTemplate" {
+    SetPoint LEFT, "SheepZoomLabel", LEFT, 0.09, 0.0,
+    Height 0.029,
+    Width 0.05,
+    TabFocusNext "WolfZoomLabel",
+  }
+
+  Frame "TEXT" "WolfZoomLabel" INHERITS "EscMenuButtonTextTemplate" {
+    SetPoint TOPLEFT, "SheepZoomLabel", BOTTOMLEFT, 0, -0.014,
+    Text "Wolf zoom:",
+  }
+
+  Frame "EDITBOX" "WolfZoomEditBox" INHERITS WITHCHILDREN "EscMenuEditBoxTemplate" {
+    SetPoint LEFT, "WolfZoomLabel", LEFT, 0.09, 0.0,
+    Height 0.029,
+    Width 0.05,
+    TabFocusNext "WispZoomEditBox",
+  }
+
+  Frame "TEXT" "WispZoomLabel" INHERITS "EscMenuButtonTextTemplate" {
+    SetPoint TOPLEFT, "WolfZoomLabel", BOTTOMLEFT, 0, -0.014,
+    Text "Wisp zoom:",
+  }
+
+  Frame "EDITBOX" "WispZoomEditBox" INHERITS WITHCHILDREN "EscMenuEditBoxTemplate" {
+    SetPoint LEFT, "WispZoomLabel", LEFT, 0.09, 0.0,
+    Height 0.029,
+    Width 0.05,
+    TabFocusNext "AutoControlCheckbox",
+  }
+
+  // Auto control
+
+  Frame "GLUECHECKBOX" "AutoControlCheckbox" INHERITS WITHCHILDREN "EscMenuCheckBoxTemplate" {
+    Checked,
+    SetPoint TOPLEFT, "WispZoomLabel", BOTTOMLEFT, 0, -0.015,
+    Height 0.024,
+    Width 0.024,
+    TabFocusNext "AutoControlCheckboxChecked",
+  }
+
+  Frame "GLUECHECKBOX" "AutoControlCheckboxChecked" INHERITS WITHCHILDREN "EscMenuCheckBoxTemplate" {
+    SetPoint TOPLEFT, "WispZoomLabel", BOTTOMLEFT, 0, -0.02,
+    Height 0.024,
+    Width 0.024,
+    TabFocusNext "NoAutoControlCheckbox",
+  }
+
+  Frame "TEXT" "AutoControlLabel" INHERITS "EscMenuButtonTextTemplate" {
+    SetPoint LEFT, "AutoControlCheckbox", RIGHT, 0.005, 0,
+    // FontColor 1.0 1.0 1.0 1.0,
+    Text "Automatically share control",
+  }
+
+  // No auto control
+
+  Frame "GLUECHECKBOX" "NoAutoControlCheckbox" INHERITS WITHCHILDREN "EscMenuCheckBoxTemplate" {
+    SetPoint TOPLEFT, "AutoControlCheckbox", BOTTOMLEFT, 0, -0.002,
+    Height 0.024,
+    Width 0.024,
+    TabFocusNext "NoAutoControlCheckboxChecked",
+  }
+
+  Frame "GLUECHECKBOX" "NoAutoControlCheckboxChecked" INHERITS WITHCHILDREN "EscMenuCheckBoxTemplate" {
+    Checked,
+    SetPoint TOPLEFT, "AutoControlCheckbox", BOTTOMLEFT, 0, -0.002,
+    Height 0.024,
+    Width 0.024,
+    TabFocusNext "TeamResourcesShownRadio",
+  }
+
+  Frame "TEXT" "NoAutoControlLabel" INHERITS "EscMenuButtonTextTemplate" {
+    SetPoint LEFT, "NoAutoControlCheckbox", RIGHT, 0.005, 0,
+    // FontColor 1.0 1.0 1.0 1.0,
+    Text "Do not automatically receive control",
+  }
+
+  // Team resources
+
+  Frame "RADIOGROUP" "TeamResourcesRadioGroup" {
+    ControlStyle "EXCLUSIVE",
+
+    Frame "GLUECHECKBOX" "TeamResourcesShownRadio" INHERITS WITHCHILDREN "EscMenuRadioButtonTemplate" {
+      SetPoint TOPLEFT, "NoAutoControlCheckbox", BOTTOMLEFT, 0.004, -0.01,
+      TabFocusNext "TeamResourcesShownRadioChecked",
+    }
+
+    Frame "GLUECHECKBOX" "TeamResourcesShownRadioChecked" INHERITS WITHCHILDREN "EscMenuRadioButtonTemplate" {
+      Checked,
+      SetPoint TOPLEFT, "NoAutoControlCheckbox", BOTTOMLEFT, 0.004, -0.01,
+      TabFocusNext "TeamResourcesHiddenRadio",
+    }
+
+    Frame "TEXT" "TeamResourcesShownLabel" INHERITS "EscMenuButtonTextTemplate" {
+      SetPoint LEFT, "TeamResourcesShownRadio", RIGHT, 0.009, 0,
+      // FontColor 1.0 1.0 1.0 1.0,
+      Text "Show team resources",
+    }
+
+    Frame "GLUECHECKBOX" "TeamResourcesHiddenRadio" INHERITS WITHCHILDREN "EscMenuRadioButtonTemplate" {
+      SetPoint TOPLEFT, "TeamResourcesShownRadio", BOTTOMLEFT, 0, -0.002,
+      TabFocusNext "TeamResourcesHiddenRadioChecked",
+    }
+
+    Frame "GLUECHECKBOX" "TeamResourcesHiddenRadioChecked" INHERITS WITHCHILDREN "EscMenuRadioButtonTemplate" {
+      Checked,
+      SetPoint TOPLEFT, "TeamResourcesShownRadio", BOTTOMLEFT, 0, -0.002,
+      TabFocusNext "TeamResourcesTwinRadio",
+    }
+
+    Frame "TEXT" "TeamResourcesHiddenLabel" INHERITS "EscMenuButtonTextTemplate" {
+      SetPoint LEFT, "TeamResourcesHiddenRadio", RIGHT, 0.009, 0,
+      // FontColor 1.0 1.0 1.0 1.0,
+      Text "Hide team resources",
+    }
+
+    Frame "GLUECHECKBOX" "TeamResourcesTwinRadio" INHERITS WITHCHILDREN "EscMenuRadioButtonTemplate" {
+      SetPoint TOPLEFT, "TeamResourcesHiddenRadio", BOTTOMLEFT, 0, -0.002,
+      TabFocusNext "TeamResourcesTwinRadioChecked",
+    }
+
+    Frame "GLUECHECKBOX" "TeamResourcesTwinRadioChecked" INHERITS WITHCHILDREN "EscMenuRadioButtonTemplate" {
+      Checked,
+      SetPoint TOPLEFT, "TeamResourcesHiddenRadio", BOTTOMLEFT, 0, -0.002,
+      TabFocusNext "SheepTagPreferencesReturnButton",
+    }
+
+    Frame "TEXT" "TeamResourcesTwinLabel" INHERITS "EscMenuButtonTextTemplate" {
+      SetPoint LEFT, "TeamResourcesTwinRadio", RIGHT, 0.009, 0,
+      // FontColor 1.0 1.0 1.0 1.0,
+      Text "Tie team resource visibility with leaderboard",
+    }
+
+    RadioItem "TeamResourcesShownRadio",
+    RadioItem "TeamResourcesShownRadioChecked",
+    RadioItem "TeamResourcesHiddenRadio",
+    RadioItem "TeamResourcesHiddenRadioChecked",
+    RadioItem "TeamResourcesTwinRadio",
+    RadioItem "TeamResourcesTwinRadioChecked",
+  }
+
+  // Return to game
+
+  Frame "GLUETEXTBUTTON" "SheepTagPreferencesReturnButton" INHERITS WITHCHILDREN "EscMenuButtonTemplate" {
+    SetPoint BOTTOM, "SheepTagPreferencesPanel", BOTTOM, 0.0, 0.03,
+    ControlShortcutKey "KEY_RETURN_TO_GAME_SHORTCUT",
+
+    ButtonText "SheepTagPreferencesReturnButtonText",
+    Frame "TEXT" "SheepTagPreferencesReturnButtonText" INHERITS "EscMenuButtonTextTemplate" {
+      Text "KEY_RETURN_TO_GAME",
+    }
+  }
+
+  DialogBackdrop "SheepTagPreferencesPanelBackdrop",
+  Frame "BACKDROP" "SheepTagPreferencesPanelBackdrop" INHERITS "EscMenuBackdrop" {
+  }
+}

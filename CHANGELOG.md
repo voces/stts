@@ -6,6 +6,49 @@
 - Selection bug
 - -ff
 - President ward death crash?
+- Vamp/switch unsets
+- Customize Help and Tips: UI\helpstrings.txt, UI\tipstrings.txt
+- Remove Save Game, Resume Game
+- Added Sheep Tag Preferences
+
+# 24n
+
+## Feature changes
+
+- Custom UI
+- When a sheep dies, their gold is automatically distributed to allies
+  - In president mode, all gold goes to the president
+- Goblin Support changes
+  - Adjusted movement of Gyrocopter (faster, straighter, with acceleration and deceleration at drop point) longer period
+  - Decreased Pocket Factory build from 4 seconds to 3 seconds
+  - Decreased Pocket Factory's hits to kill from 7 to 5
+  - Changed Pocket Factory to spawn waves of Clockwerk Goblins over a shorter period
+  - Increased partial damage AoE of Clockwerk Goblins from 200 to 300
+- Kaleidoscope now makes illusions permanent
+- -freespawn now works in middle of rounds
+- Updated gold and food copy to reflect recent proximity based changes.
+
+## Balance changes
+
+- Hay Trap now has an animation in which it is tossed
+- Sentry Ward changes
+  - Wards can no longer attack sheep
+  - Increased mana cost from 50 to 75
+  - Increased damage from 10 to 15
+  - Wards reveal illusions from Feinting Tower
+- Scepter of Mastery changes
+  - Increased cast time from 0.5 seconds to 1 second
+  - Increased mana cost from 75 to 100 and is charged up front
+  - Takeover special effect begins immediately instead of after cast succeeds
+  - Decreased cooldown from 20 seconds to 5 seconds
+- Increased Second Wind debuff occurring 1250 away from nearest sheep from 1000
+
+## Bug fixes
+
+- Fixed multiboard displaying incorrect team counts
+- Fixed -START printing an error
+- Fixed a wisp spawning at end of vamp
+- Fixed automatic last round time showing up after vamp
 
 # 24m
 

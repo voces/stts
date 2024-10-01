@@ -1,6 +1,5 @@
-import { president, spawnSetting } from "settings/settings";
+import { president, spawnSetting, terrain } from "settings/settings";
 import { MapPlayerEx } from "handles/MapPlayerEx";
-import { terrain } from "settings/terrain";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { clearForces } from "util/clearForces";
 import { spawns } from "settings/spawns";
@@ -12,6 +11,7 @@ import { cancelHostFarmSpawn } from "./startRound";
 import { enableIncome } from "functions/farms/savingFarms";
 import { ForceEx } from "handles/ForceEx";
 import { applyPresidentBuff } from "modes/president";
+import { triggerOnRoundStart } from "util/onRoundStart";
 
 let firstRound = true;
 
@@ -279,6 +279,7 @@ const Trig_createSheep_Actions_part4 = () => {
   PauseTimerBJ(true, udg_Createtimer);
 
   enableIncome();
+  triggerOnRoundStart();
   TriggerExecute(gg_trg_setupLeaderboard);
 
   if (!udg_practiceOn) {

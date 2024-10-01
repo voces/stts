@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 24m
+Sheep Tag ReVoLuTiOn 24n
 }
 
 STRING 40
@@ -586,11 +586,6 @@ Game Info
 STRING 1059
 {
 Map Info
-}
-
-STRING 1060
-{
-Gold is gained over time and from killing sheep (wolves) and saving spirits (sheep).
 }
 
 STRING 1094
@@ -1550,11 +1545,6 @@ Makes you invisible for 45 seconds. If a sheep is close enough, they can see you
 STRING 2628
 {
 Money Farms:
-}
-
-STRING 2630
-{
-The amount of money farms you have.
 }
 
 STRING 2631
@@ -3812,18 +3802,6 @@ STRING 3976
 (placeholder)
 }
 
-STRING 3982
-// Items: I00X (kaleidoscope), Description (Description)
-{
-Increases the damage of illusions by 10% of base damage per charge. Can be consumed to swap places with your illusion.
-}
-
-STRING 3984
-// Items: I00X (kaleidoscope), Ubertip (Tooltip - Extended)
-{
-Increases the damage multiple of illusions by 9% per charge.|nCan be consumed to swap places with your illusion.|nContains <I00X,uses> charges.|n|cffffcc0080 gold.|r |n|cff00aeef-buy kaleidoscope: 112 gold.|r
-}
-
 STRING 3985
 // Items: I00V (suppression), Ubertip (Tooltip - Extended)
 {
@@ -3993,7 +3971,7 @@ STRING 4083
 }
 
 STRING 4084
-// Buffs/Effects: B00L (), Bufftip (Tooltip)
+// Units: h00N (Hay Trap), Name (Name)
 {
 Hay Trap
 }
@@ -4382,16 +4360,6 @@ STRING 4178
 Tosses a Hay Trap at a target location. Hay Traps block units and are difficult for sheep to kill.|n|cffffcc0030 gold.|r |n|cff00aeef-buy hay: 42 gold.|r
 }
 
-STRING 4181
-{
-|cff00ff00Sheep Tag ReVoLuTiOn 24m|r
-}
-
-STRING 4182
-{
-|cff00ff0024m|r
-}
-
 STRING 4183
 // Items: I012 (goblins), Ubertip (Tooltip - Extended)
 {
@@ -4432,5 +4400,81 @@ STRING 4193
 // Items: I010 (disease), Description (Description)
 {
 Permanently infects nearby enemy structures with Disease Cloud. Disease Cloud deals 1.5 damage per second.|n|cffff0000Cannot kill structures.|r
+}
+
+STRING 4194
+{
+|cff00ff00Sheep Tag ReVoLuTiOn 24n|r
+}
+
+STRING 4195
+{
+|cff00ff0024n|r
+}
+
+STRING 4196
+// Units: n00F (Invis check), Name (Name)
+{
+Invis check
+}
+
+STRING 4197
+// Units: n00G (visibility dummy), Name (Name)
+{
+visibility dummy
+}
+
+STRING 4199
+{
+The amount of money farms you have. Money farms are more effective near the middle.
+}
+
+STRING 4201
+{
+|CFF0054A6Sheep|r
+Gold is gained over time based on your sheep's distance from the middle and can be increased by building money Farms. Saving dead allies also grants gold.
+
+|CFFED1C24Wolf|r
+Gold is gained over time. Killing farms and sheep also grants go
+}
+
+STRING 4202
+{
+ 
+}
+
+STRING 4205
+{
+Perfection:
+}
+
+STRING 4206
+// Units: h00L (Hay Trap), EditorSuffix (Name - Editor Suffix)
+{
+(Placement)
+}
+
+STRING 4207
+// Units: h00N (Hay Trap), Ubertip (Tooltip - Extended)
+{
+A wall of wool
+}
+
+STRING 4208
+// Buffs/Effects: B00L (), Bufftip (Tooltip)
+{
+Hay Trap
+}
+
+STRING 4210
+// Items: I00X (kaleidoscope), Ubertip (Tooltip - Extended)
+{
+Makes illusions permanent and increases the damage multiple of them by 9% per charge.|nCan be consumed to swap places with your illusion.|nContains <I00X,uses> charges.|n|cffffcc0080 gold.|r |n|cff00aeef-buy kaleidoscope: 112 gold.|r
+}
+
+STRING 4211
+// Items: I00X (kaleidoscope), Description (Description)
+{
+Makes illusions permanent and increases the damage multiple of them by 9% per charge. Can be consumed to swap places with your illusion.
 }
 

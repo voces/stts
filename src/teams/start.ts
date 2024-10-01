@@ -51,7 +51,7 @@ export const adjustSheepTeamSize = (desiredSheep: number) => {
 };
 
 const Trig_start_Actions = () => {
-  udg_lastGameString = (GetEventPlayerChatString() ?? "-start").toLowerCase();
+  udg_lastGameString = (GetEventPlayerChatString()?.toLowerCase() ?? "-start").toLowerCase();
 
   TriggerSleepAction(0.01);
 
@@ -74,7 +74,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     gg_trg_start,
     Condition(() => {
       if (GetTriggerPlayer() !== udg_Custom) return false;
-      const s = GetEventPlayerChatString() ?? "";
+      const s = GetEventPlayerChatString()?.toLowerCase() ?? "";
       if (s === "-start" || s === "-restart") return true;
       const count = S2I(s.split(" ")[1]);
       return count > 0 && count < 24;

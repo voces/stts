@@ -1,4 +1,4 @@
-import { terrain } from "settings/terrain";
+import { terrain } from "settings/settings";
 import { setTimeout } from "util/setTimeout";
 
 const Trig_dummyWisps_Conditions = () => {

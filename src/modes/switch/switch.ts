@@ -1,13 +1,9 @@
 import { updateLeaderboardSettingsDisplay } from "settings/time";
-import { president } from "settings/settings";
+import { president, switchSetting } from "settings/settings";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { addScriptHook, Timer, W3TS_HOOK } from "w3ts";
 
 export const switchSheepTimers = Array.from({ length: bj_MAX_PLAYERS }, () => Timer.create());
-
-let goalTime = Infinity;
-
-export const getGoalTime = () => goalTime;
 
 const Trig_switch_Actions = () => {
   const s = GetEventPlayerChatString()!.toLowerCase();
@@ -35,7 +31,7 @@ const Trig_switch_Actions = () => {
     udg_wolfSpawn = 3;
     udg_dummyWisps = 0;
     udg_wispPoints = 0;
-    goalTime = Infinity;
+    switchSetting.goalTime = Infinity;
   } else {
     const parts = s.split(" ").slice(1);
     const args = parts.filter((a) => !a.includes(":")).map((a) => a === "" ? 0 : S2I(a));
@@ -45,8 +41,12 @@ const Trig_switch_Actions = () => {
     udg_wispPoints = args.length > 3 && args[3] >= 0 && args[3] <= 10 ? args[3] : 0;
 
     const time = parts.find((a) => a.includes(":"));
-    if (time) goalTime = time.split(":").reduceRight((sum, v, i, arr) => sum + S2R(v) * 60 ** (arr.length - i - 1), 0);
-    else goalTime = Infinity;
+    if (time) {
+      switchSetting.goalTime = time.split(":").reduceRight(
+        (sum, v, i, arr) => sum + S2R(v) * 60 ** (arr.length - i - 1),
+        0,
+      );
+    } else switchSetting.goalTime = Infinity;
   }
   updateLeaderboardSettingsDisplay();
 };

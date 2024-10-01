@@ -2,7 +2,7 @@ import { removeEnumUnit } from "util/removeEnumUnit";
 import { isFilterUnitStructure } from "../farmFunctions/destroyAllFarms";
 import { gsDistributeGold } from "functions/gs";
 import { giveAllGold } from "../commands/g";
-import { terrain } from "settings/terrain";
+import { terrain } from "settings/settings";
 import { spawns } from "settings/spawns";
 import { FogModifier } from "w3ts";
 import { MapPlayerEx } from "handles/MapPlayerEx";

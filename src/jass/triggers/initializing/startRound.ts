@@ -2,7 +2,8 @@ import { disableIncome, resetBankedGold } from "functions/farms/savingFarms";
 import { stopRuneTimers } from "functions/runes";
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { switchSheepTimers } from "modes/switch/switch";
-import { terrain } from "settings/terrain";
+import { terrain } from "settings/settings";
+import { showIntermission } from "ui/api";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { triggerRoundInitHooks } from "util/gameHooks";
 import { setTimeout, Timeout } from "util/setTimeout";
@@ -258,6 +259,7 @@ ${p.isHost ? "New? Type |CFF00AEEF-smart|r." : `Please wait until ${MapPlayerEx.
   TriggerSleepAction(0);
 
   if (udg_versus === 0) {
+    showIntermission();
     hostFarmTimeout = setTimeout(0.25, () => {
       const u = CreateUnit(udg_Custom, hostFarmType, GetRectCenterX(terrain.wolf), GetRectCenterY(terrain.wolf), 270)!;
       SelectUnitForPlayerSingle(u, udg_Custom);

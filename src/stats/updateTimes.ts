@@ -1,8 +1,7 @@
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { logRound } from "jass/triggers/hostCommands/UpdateStats";
 import { addRound, addTime } from "stats/times";
-import { income, president } from "settings/settings";
-import { terrain } from "settings/terrain";
+import { income, president, terrain } from "settings/settings";
 
 const noHandicaps = () => {
   for (let i = 0; i < bj_MAX_PLAYERS; i++) {

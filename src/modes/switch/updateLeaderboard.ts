@@ -1,5 +1,6 @@
 import { setTimeout, Timeout } from "util/setTimeout";
-import { getGoalTime, switchSheepTimers } from "./switch";
+import { switchSheepTimers } from "./switch";
+import { switchSetting } from "settings/settings";
 
 let timeout: Timeout | undefined = undefined;
 
@@ -14,7 +15,6 @@ export const startUpdatingLeaderboard = () => {
       return;
     }
 
-    const goalTime = getGoalTime();
     let won = false;
 
     for (let i = 0; i < bj_MAX_PLAYERS; i++) {
@@ -23,7 +23,7 @@ export const startUpdatingLeaderboard = () => {
         if (IsPlayerInForce(p, udg_Sheep)) switchSheepTimers[i].pause();
         const t = Math.round(switchSheepTimers[i].elapsed);
         LeaderboardSetPlayerItemValueBJ(p, PlayerGetLeaderboardBJ(GetLocalPlayer())!, t);
-        if (t >= goalTime) won = true;
+        if (t >= switchSetting.goalTime) won = true;
         if (IsPlayerInForce(p, udg_Sheep)) switchSheepTimers[i].resume();
       }
     }

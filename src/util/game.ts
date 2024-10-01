@@ -20,6 +20,15 @@ export const game = {
     t.addAction(() => fn({ newUnit: UnitEx.fromEvent()! }));
     return Promise.resolve(t);
   },
+  onSummon: (fn: (event: { summon: UnitEx; summoner: UnitEx }) => void) => {
+    const t = Trigger.create();
+    t.registerAnyUnitEvent(EVENT_PLAYER_UNIT_SUMMON);
+    t.addAction(() => {
+      const summon = GetSummonedUnit();
+      if (!summon) return;
+      fn({ summon: UnitEx.fromHandle(summon), summoner: UnitEx.fromHandle(GetSummoningUnit())! });
+    });
+  },
   onUnitDeath: (fn: (event: { dyingUnit: UnitEx }) => void) => {
     const t = Trigger.create();
     t.registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH);

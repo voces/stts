@@ -271,21 +271,14 @@ const smart1vX = () => {
   pool.forEach((p) => ForceEx.wolves.addPlayer(p));
 };
 
-const smart = () => {
-  udg_lastGameString = GetEventPlayerChatString()?.toLowerCase() ?? "-smart";
-  const parts = udg_lastGameString.toLowerCase().split(" ");
-
+export const smart = (sheep?: number) => {
   let sheepToDraft: number;
   const activePlayerCount = getActivePlayerCount();
-  if (parts[0] !== "-smart") {
+  if (typeof sheep !== "number") {
     sheepToDraft = lastActivePlayerCount === activePlayerCount
       ? lastSheepToDraft
       : Math.floor(activePlayerCount / 2 - 1);
-  } else if (udg_lastGameString === "-smart") {
-    sheepToDraft = lastActivePlayerCount === activePlayerCount
-      ? lastSheepToDraft
-      : Math.floor(activePlayerCount / 2 - 1);
-  } else sheepToDraft = S2I(parts[1]);
+  } else sheepToDraft = sheep;
   if (sheepToDraft <= 0) sheepToDraft = 1;
   lastSheepToDraft = sheepToDraft;
   lastActivePlayerCount = activePlayerCount;
@@ -323,6 +316,12 @@ const smart = () => {
 
   udg_Teams = TEAMS_LOCK_IE_PLAYING;
   TriggerExecute(gg_trg_createSheep);
+};
+
+const smartCommand = () => {
+  udg_lastGameString = GetEventPlayerChatString()?.toLowerCase() ?? "-smart";
+  const parts = udg_lastGameString.toLowerCase().split(" ");
+  smart(parts.length > 1 ? S2I(parts[1]) : undefined);
 };
 
 const setPub = (pid: number, value: boolean) => {
@@ -431,7 +430,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
       return S2I(parts[1]) < getActivePlayerCount();
     }),
   );
-  TriggerAddAction(gg_trg_smart, smart);
+  TriggerAddAction(gg_trg_smart, smartCommand);
 
   let t = CreateTrigger();
   TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_TRAIN_START);

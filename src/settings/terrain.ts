@@ -5,8 +5,11 @@ import { addScriptHook, W3TS_HOOK } from "w3ts";
 import { spawns } from "./spawns";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { formatList } from "util/formatList";
+import { terrain } from "./settings";
+import { terrainUpdatedViaCommand } from "ui/hooks";
 
-type Terrain = {
+export type Terrain = {
+  index: number;
   name: "Classic" | "Glory Hills" | "Experimental" | "Tiny" | "Compact";
   minimap: string;
   cameraBounds: rect;
@@ -25,7 +28,6 @@ type Terrain = {
 };
 
 export const terrains: Terrain[] = [];
-export const terrain: Terrain = {} as Terrain;
 
 const SHOP_A = FourCC("nC12");
 const SHOP_A_ROTATED = FourCC("n006");
@@ -37,7 +39,8 @@ const SHOP_C = FourCC("n00E");
 const SHOP_C_ROTATED = FourCC("n008");
 const SHOP_C_INLINE = FourCC("n005");
 
-const setTerrain = (terrainIndex: number, init = false): void => {
+export const setTerrain = (terrainIndex: number, notify = false): void => {
+  const g = GroupEx.create().enumUnitsInRect(terrain.wolf, (u) => u.typeId === hostFarmType);
   Object.assign(terrain, terrains[terrainIndex]);
 
   SetCameraBoundsToRect(terrain.cameraBounds);
@@ -49,12 +52,15 @@ const setTerrain = (terrainIndex: number, init = false): void => {
     if (p) spawns.set(p, { x: GetRectCenterX(terrain.spawns[i]), y: GetRectCenterY(terrain.spawns[i]) });
   }
 
-  if (!init) displayTimedTextToAll(`Terrain set to |CFFED1C24${terrain.name}|r.`);
+  if (!notify) displayTimedTextToAll(`Terrain set to |CFFED1C24${terrain.name}|r.`);
+
+  g.forEach((u) => u.setPosition(GetRectCenterX(terrain.wolf), GetRectCenterY(terrain.wolf)));
+  g.destroy();
 };
 
 const getIndex = () => {
   const parts = GetEventPlayerChatString()!.split(" ");
-  if (parts.length < 2) return (terrains.findIndex((t) => t.name === terrain.name) + 1) % terrains.length;
+  if (parts.length < 2) return (terrain.index + 1) % terrains.length;
   const input = parts[1].toLowerCase();
 
   for (let i = 0; i < terrains.length; i++) if (terrains[i].name.toLowerCase().startsWith(input)) return i;
@@ -80,17 +86,16 @@ const initTrigger = () => {
   registerAnyPlayerChatEvent(t, "-terrain", false);
   TriggerAddCondition(t, Condition(() => GetTriggerPlayer() === udg_Custom && !udg_gameStarted));
   TriggerAddAction(t, () => {
-    const g = GroupEx.create().enumUnitsInRect(terrain.wolf, (u) => u.typeId === hostFarmType);
     const index = getIndex();
     if (typeof index !== "number") return;
     setTerrain(index);
-    g.forEach((u) => u.setPosition(GetRectCenterX(terrain.wolf), GetRectCenterY(terrain.wolf)));
-    g.destroy();
+    terrainUpdatedViaCommand();
   });
 };
 
 const initTerrains = () => {
   terrains.push({
+    index: terrains.length,
     name: "Classic",
     minimap: "war3mapImported\\classic.blp",
     cameraBounds: gg_rct_Revo_Camera_Bounds,
@@ -141,6 +146,7 @@ const initTerrains = () => {
   });
 
   terrains.push({
+    index: terrains.length,
     name: "Glory Hills",
     minimap: "war3mapImported\\gloryhills.blp",
     cameraBounds: gg_rct_Glory_Hill_Camera_Bounds,
@@ -191,6 +197,7 @@ const initTerrains = () => {
   });
 
   terrains.push({
+    index: terrains.length,
     name: "Experimental",
     minimap: "war3mapImported\\experimental.blp",
     cameraBounds: gg_rct_Vro_Camera_Bounds,
@@ -241,6 +248,7 @@ const initTerrains = () => {
   });
 
   terrains.push({
+    index: terrains.length,
     name: "Tiny",
     minimap: "war3mapImported\\tiny.blp",
     cameraBounds: gg_rct_tcamera,
@@ -284,6 +292,7 @@ const initTerrains = () => {
   });
 
   terrains.push({
+    index: terrains.length,
     name: "Compact",
     minimap: "war3mapImported\\compact.blp",
     cameraBounds: gg_rct_compactCamera,

@@ -1,5 +1,5 @@
 import { addScriptHook, Trigger, W3TS_HOOK } from "w3ts";
-import { terrain } from "settings/terrain";
+import { terrain } from "settings/settings";
 import { maybeApplySecondWind } from "functions/secondWind";
 import { ABILITY_TYPE_ID_GIVE_ALLY_GOLD_WOLF } from "constants";
 

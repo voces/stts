@@ -1,5 +1,6 @@
 // Adapted from https://softwareengineering.stackexchange.com/q/291117
 
+import { DisplayType } from "constants";
 import { giveAllGold } from "jass/triggers/commands/g";
 import { president } from "settings/settings";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
@@ -34,15 +35,18 @@ const gsDistribute = (available: number, players: GSPlayer[]): void => {
   for (let i = 0; i < count; i++) players[i].dist = avg - players[i].gold + (i < remainder ? 1 : 0);
 };
 
-export const gsDistributeGold = (fromPlayer: player, allGold: boolean): void => {
+export const gsDistributeGold = (
+  fromPlayer: player,
+  allGold: boolean,
+  display: DisplayType = TRANSFER_DISPLAY_INVOLVED,
+): void => {
   const pId = GetPlayerId(fromPlayer);
   const includeSelf = !allGold;
   const players: GSPlayer[] = [];
   for (let i = 0; i < bj_MAX_PLAYERS; i++) {
     const isAlly = IsPlayerAlly(fromPlayer, Player(i)!);
     const isHere = GetPlayerSlotState(Player(i)!) === PLAYER_SLOT_STATE_PLAYING && udg_AFK[i + 1] === AFK_PLAYING;
-    // const isHuman = GetPlayerController(Player(i)!) === MAP_CONTROL_USER;
-    const isHuman = true;
+    const isHuman = GetPlayerController(Player(i)!) === MAP_CONTROL_USER;
     const isWisp = IsPlayerInForce(Player(i)!, udg_Spirit);
     if (isAlly && isHere && isHuman && (!isWisp || (i === pId && includeSelf)) && (includeSelf || i !== pId)) {
       players.push({
@@ -57,7 +61,7 @@ export const gsDistributeGold = (fromPlayer: player, allGold: boolean): void => 
 
   gsDistribute(GetPlayerState(fromPlayer, PLAYER_STATE_RESOURCE_GOLD), players);
 
-  for (const { player, dist } of players) transferGold(fromPlayer, Player(player)!, dist, TRANSFER_DISPLAY_INVOLVED);
+  for (const { player, dist } of players) transferGold(fromPlayer, Player(player)!, dist, display);
 };
 
 const wispGAbility = () => {

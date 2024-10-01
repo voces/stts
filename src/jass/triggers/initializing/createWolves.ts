@@ -2,7 +2,7 @@ import { ABILITY_TYPE_ID_GIVE_ALLY_GOLD_WOLF } from "constants";
 import { startRuneTimer } from "functions/runes";
 import { ForceEx } from "handles/ForceEx";
 import { MapPlayerEx } from "handles/MapPlayerEx";
-import { terrain } from "settings/terrain";
+import { terrain } from "settings/settings";
 import { forEachPlayer } from "util/forEachPlayer";
 
 const createWolf = () => {

@@ -5,10 +5,11 @@ import { game } from "util/game";
 import { setTimeout } from "util/setTimeout";
 import { withUnitsInRange } from "util/withGroup";
 import { MapPlayerEx } from "handles/MapPlayerEx";
+import { hasTrueVision } from "util/hasTrueVision";
+import { getTerrainZ } from "util/getTerrainZ";
 
 const feintingTowers = new Set<UnitEx>();
 let ticker: Trigger;
-const location = Location(0, 0);
 
 game.onInterval(4, () => {
   if (feintingTowers.size === 0) {
@@ -35,8 +36,7 @@ game.onInterval(4, () => {
           madeSpawnEffect = true;
           const e = Effect.create("Abilities/Spells/Undead/DeathPact/DeathPactTarget", tower.x, tower.y);
           if (e) {
-            MoveLocation(location, tower.x, tower.y);
-            e.z = GetLocationZ(location) + 175;
+            e.z = getTerrainZ(tower.x, tower.y) + 175;
             setTimeout(2, () => e.destroy());
           }
         }
@@ -48,12 +48,11 @@ game.onInterval(4, () => {
         clone.mana = u.mana;
         clone.setBaseDamage(-500, 0);
         clone.setBaseDamage(-500, 1);
-        if (u.owner.compareAlliance(MapPlayerEx.fromLocal(), ALLIANCE_SHARED_VISION)) {
-          clone.setVertexColor(127, 255, 127, 127);
-        }
-        if (u.hasBuff(BUFF_TYPE_ID_PRESIDENT)) {
-          Effect.createAttachment("war3mapImported/president", clone, "head");
-        }
+        const local = MapPlayerEx.fromLocal();
+        const check1 = hasTrueVision(u.x, u.y, local);
+        const check2 = u.owner.compareAlliance(local, ALLIANCE_SHARED_VISION);
+        if (check1 || check2) clone.setVertexColor(127, 255, 127, 127);
+        if (u.hasBuff(BUFF_TYPE_ID_PRESIDENT)) Effect.createAttachment("war3mapImported/president", clone, "head");
 
         // Make unselectable and not impact pathing, but will follow pathing after 0.1 seconds
         clone.addAbility(FourCC("Aloc"));
@@ -83,8 +82,7 @@ game.onInterval(4, () => {
 
           const e = Effect.create("Abilities/Spells/Human/Feedback/ArcaneTowerAttack", clone.x, clone.y);
           if (e) {
-            MoveLocation(location, clone.x, clone.y);
-            e.z = GetLocationZ(location) + 40;
+            e.z = getTerrainZ(clone.x, clone.y) + 40;
             setTimeout(2, () => e.destroy());
           }
         });

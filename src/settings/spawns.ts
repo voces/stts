@@ -14,7 +14,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   let t = TriggerEx.create();
   t.registerAnyPlayerChatEvent("-freespawn", false); // allow -freespawns
   t.addAction(() => {
-    if (udg_gameStarted || !MapPlayerEx.fromEvent()!.isHost) return;
+    if (!MapPlayerEx.fromEvent()!.isHost) return;
     spawnSetting.mode = spawnSetting.mode === "free" ? "static" : "free";
     displayTimedTextToAll(
       `                              |CFF00AEEFFree spawns |CFFED1C24${

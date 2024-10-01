@@ -1,0 +1,749 @@
+IncludeFile "UI\FrameDef\UI\EscMenuTemplates.fdf",
+IncludeFile "UI\FrameDef\UI\QuestDialog.fdf",
+IncludeFile "UI\FrameDef\UI\EscMenuMainPanel.fdf",
+
+Frame "POPUPMENU" "SheepTagPopupMenuTemplate" {
+  Width 0.10,
+  Height 0.024,
+  PopupButtonInset 0.01,
+
+  ControlBackdrop "SheepTagPopupMenuTemplateBackdrop",
+  Frame "BACKDROP" "SheepTagPopupMenuTemplateBackdrop" INHERITS "EscMenuButtonBackdropTemplate" {
+  }
+
+  ControlDisabledBackdrop "SheepTagPopupMenuTemplateDisabledBackdrop",
+  Frame "BACKDROP" "SheepTagPopupMenuTemplateDisabledBackdrop" INHERITS "EscMenuButtonDisabledBackdropTemplate" {
+  }
+
+  PopupTitleFrame "SheepTagPopupMenuTemplateTitle",
+  Frame "GLUETEXTBUTTON" "SheepTagPopupMenuTemplateTitle" INHERITS WITHCHILDREN "EscMenuPopupMenuTitleTemplate" {
+    FrameFont "MasterFont",0.0085,"",
+  }
+
+  PopupArrowFrame "SheepTagPopupMenuTemplateArrow",
+  Frame "BUTTON" "SheepTagPopupMenuTemplateArrow" INHERITS WITHCHILDREN "EscMenuPopupMenuArrowTemplate" { 
+  }
+}
+
+Frame "POPUPMENU" "SheepTagPlayerTeamTemplate" {
+  UseActiveContext,
+  Width 0.012,
+  Height 0.012,
+  PopupButtonInset 0.01, // -x offset for PopupArrowFrame from RIGHT of the POPUPMENU
+
+  // Background Enabled
+  ControlBackdrop "SheepTagPlayerTeamBackdrop",
+  Frame "BACKDROP" "SheepTagPlayerTeamBackdrop" {
+    UseActiveContext,
+    BackdropBackground "",
+    // BackdropBackground "ReplaceableTextures\CommandButtons\BTNSheep.blp",
+  }
+
+  // Background Disabled
+  ControlDisabledBackdrop "SheepTagPlayerTeamDisabledBackdrop",
+  Frame "BACKDROP" "SheepTagPlayerTeamDisabledBackdrop" {
+    UseActiveContext,
+    BackdropBackground "",
+    // BackdropBackground "ReplaceableTextures\CommandButtons\BTNSheep.blp",
+  }
+
+  // Text markup for the current selected Text, also can be used with a FrameEvent to know when someone starts selecting.
+  PopupTitleFrame "SheepTagPlayerTeamPopupMenuTitle",
+  Frame "GLUETEXTBUTTON" "SheepTagPlayerTeamPopupMenuTitle" {
+    Alpha 0,
+  }
+
+  PopupMenuFrame "SheepTagPlayerTeamMenu",
+  Frame "MENU" "SheepTagPlayerTeamMenu" INHERITS WITHCHILDREN "EscMenuPopupMenuMenuTemplate" {
+    MenuItem "Sheep", -2,
+    MenuItem "Wolf", -2,
+    MenuItem "AFK", -2,
+    MenuItem "Pub", -2,
+    MenuItem "Kick", -2,
+  }
+}
+
+Frame "DIALOG" "SheepTagPlayerRowTemplate" {
+  Width 0.266,
+
+  Frame "POPUPMENU" "SheepTagPlayerTeam" INHERITS WITHCHILDREN "SheepTagPlayerTeamTemplate" {
+    UseActiveContext,
+    SetPoint LEFT, "SheepTagPlayerRowTemplate", LEFT, 0.005, 0,
+  }
+
+  Frame "TEXT" "SheepTagPlayerRowName" INHERITS "EscMenuInfoTextTemplate" {
+    UseActiveContext,
+    SetPoint LEFT, "SheepTagPlayerRowTemplate", LEFT, 0.02, 0,
+    Text "",
+  }
+
+  Frame "TEXT" "SheepTagPlayerRowSheepCount" INHERITS "EscMenuInfoTextTemplate" {
+    UseActiveContext,
+    SetPoint RIGHT, "SheepTagPlayerRowName", LEFT, 0.11, 0,
+    FontColor 1 1 1 1,
+    Text "",
+  }
+
+  Frame "EDITBOX" "SheepTagPlayerRowSheepCountEditBox" {
+    UseActiveContext,
+    SetPoint RIGHT, "SheepTagPlayerRowSheepCount", RIGHT, 0, 0,
+    Height 0.013,
+    Width 0.02,
+    EditMaxChars 2,
+    DecorateFileNames,
+    FrameFont "EscMenuTextFont", 0.011, "",
+    
+    EditTextFrame "SheepTagPlayerRowSheepCountEditBoxText",
+    Frame "TEXT" "SheepTagPlayerRowSheepCountEditBoxText" INHERITS "EscMenuInfoTextTemplate" {
+      UseActiveContext,
+      FontColor 1 1 1,
+      FontDisabledColor 1 1 1,
+    }
+  }
+
+  Frame "TEXT" "SheepTagPlayerRowHandicap" INHERITS "EscMenuInfoTextTemplate" {
+    UseActiveContext,
+    SetPoint RIGHT, "SheepTagPlayerRowSheepCount", RIGHT, 0.04, 0,
+    FontColor 1 1 1 1,
+    Text "",
+  }
+
+  Frame "EDITBOX" "SheepTagPlayerRowHandicapEditBox" {
+    UseActiveContext,
+    SetPoint RIGHT, "SheepTagPlayerRowHandicap", RIGHT, 0, 0,
+    Height 0.013,
+    Width 0.03,
+    EditMaxChars 3,
+    DecorateFileNames,
+    FrameFont "EscMenuTextFont", 0.011, "",
+    
+    EditTextFrame "SheepTagPlayerRowHandicapEditBoxText",
+    Frame "TEXT" "SheepTagPlayerRowHandicapEditBoxText" INHERITS "EscMenuInfoTextTemplate" {
+      UseActiveContext,
+      FontColor 1 1 1,
+      FontDisabledColor 1 1 1,
+    }
+  }
+
+  Frame "TEXT" "SheepTagPlayerRowAverage" INHERITS "EscMenuInfoTextTemplate" {
+    UseActiveContext,
+    SetPoint RIGHT, "SheepTagPlayerRowHandicap", RIGHT, 0.06, 0,
+    FontColor 1 1 1 1,
+    Text "1:23.456",
+  }
+
+  Frame "TEXT" "SheepTagPlayerRowDeathOrder" INHERITS "EscMenuInfoTextTemplate" {
+    UseActiveContext,
+    SetPoint RIGHT, "SheepTagPlayerRowAverage", RIGHT, 0.03, 0,
+    FontColor 1 1 1 1,
+    Text "-",
+  }
+
+  DialogBackdrop "SheepTagPlayerRowBackdrop",
+  Frame "BACKDROP" "SheepTagPlayerRowBackdrop" {
+    UseActiveContext,
+    BackdropTileBackground,
+    BackdropBackground "replaceabletextures\teamcolor\teamcolor00",
+    BackdropBlendAll,
+  }
+}
+
+Frame "FRAME" "SheepTagIntermission" {
+  Frame "DIALOG" "SheepTagSettings" {
+    SetPoint TOP, "ConsoleUI", TOP, -0.13, -0.047,
+    Height 0.385,
+    Width 0.25,
+
+    Frame "GLUETEXTBUTTON" "SheepTagRoundSettingsButton" INHERITS WITHCHILDREN "EscMenuButtonTemplate" {
+      SetPoint TOPLEFT, "SheepTagSettings", TOPLEFT, 0.025, -0.025,
+      Width 0.06667,
+
+      ButtonText "SheepTagRoundSettingsButtonText",
+      Frame "TEXT" "SheepTagRoundSettingsButtonText" INHERITS "EscMenuButtonTextTemplate" {
+        Text "Round",
+      }
+    }
+
+    Frame "GLUETEXTBUTTON" "SheepTagGoldSettingsButton" INHERITS WITHCHILDREN "EscMenuButtonTemplate" {
+      SetPoint LEFT, "SheepTagRoundSettingsButton", RIGHT, 0, 0,
+      Width 0.06667,
+
+      ButtonText "SheepTagGoldSettingsButtonText",
+      Frame "TEXT" "SheepTagGoldSettingsButtonText" INHERITS "EscMenuButtonTextTemplate" {
+        Text "Gold",
+      }
+    }
+
+    Frame "GLUETEXTBUTTON" "SheepTagOtherSettingsButton" INHERITS WITHCHILDREN "EscMenuButtonTemplate" {
+      SetPoint LEFT, "SheepTagGoldSettingsButton", RIGHT, 0, 0,
+      Width 0.06667,
+
+      ButtonText "SheepTagOtherSettingsButtonText",
+      Frame "TEXT" "SheepTagOtherSettingsButtonText" INHERITS "EscMenuButtonTextTemplate" {
+        Text "Other",
+      }
+    }
+
+    // Round settings
+
+    Frame "FRAME" "SheepTagRoundSettings" {
+
+      // Mode
+
+      Frame "TEXT" "SheepTagRoundModeLabel" INHERITS "EscMenuButtonTextTemplate" {
+        SetPoint TOPLEFT, "SheepTagRoundSettingsButton", BOTTOMLEFT, 0, -0.01,
+        Text "Mode:",
+      }
+
+      Frame "POPUPMENU" "SheepTagMode" INHERITS WITHCHILDREN "SheepTagPopupMenuTemplate" {
+        SetPoint RIGHT, "SheepTagRoundModeLabel", LEFT, 0.2, 0,
+
+        PopupMenuFrame "EscOptionsWindowModePopupMenuMenu",
+        Frame "MENU" "EscOptionsWindowModePopupMenuMenu" INHERITS WITHCHILDREN "EscMenuPopupMenuMenuTemplate" {
+          MenuItem "Survival", -2,
+          MenuItem "President", -2,
+          MenuItem "Switch", -2,
+          MenuItem "Vamp", -2,
+          FrameFont "MasterFont", 0.009, "",
+        }
+      }
+
+      // President
+
+      Frame "FRAME" "SheepTagPresidentOptions" {
+        Frame "TEXT" "SheepTagPresidentHandicapLabel" INHERITS "EscMenuButtonTextTemplate" {
+          SetPoint TOPLEFT, "SheepTagRoundModeLabel", BOTTOMLEFT, 0, -0.014,
+          Text "Handicap:",
+        }
+
+        Frame "EDITBOX" "SheepTagPresidentHandicap" INHERITS WITHCHILDREN "EscMenuEditBoxTemplate" {
+          SetPoint RIGHT, "SheepTagPresidentHandicapLabel", LEFT, 0.2, 0,
+          Height 0.029,
+          Width 0.1,
+          EditMaxChars 3,
+        }
+      }
+
+      // Switch
+
+      Frame "FRAME" "SheepTagSwitchOptions" {
+        // Sheep invul
+
+        Frame "TEXT" "SheepTagSwitchInvulLabel" INHERITS "EscMenuButtonTextTemplate" {
+          SetPoint TOPLEFT, "SheepTagRoundModeLabel", BOTTOMLEFT, 0, -0.014,
+          Text "Sheep invul:",
+        }
+
+        Frame "SLIDER" "SheepTagSwitchInvul" INHERITS WITHCHILDREN "EscMenuSliderTemplate" {
+          SetPoint RIGHT, "SheepTagSwitchInvulLabel", LEFT, 0.2, -0.004,
+          Width 0.1,
+          SliderMinValue 0,
+          SliderMaxValue 10,
+          SliderInitialValue 5,
+          SliderStepSize 1,
+        }
+
+        Frame "TEXT" "SheepTagSwitchInvulValue" INHERITS "EscMenuLabelTextSmallTemplate" {
+          SetPoint BOTTOMRIGHT, "SheepTagSwitchInvul", TOPRIGHT, -0.005, 0,
+          Text "5",
+        }
+
+        // Wolf spawn delay
+
+        Frame "TEXT" "SheepTagSwitchWolfLabel" INHERITS "EscMenuButtonTextTemplate" {
+          SetPoint TOPLEFT, "SheepTagSwitchInvulLabel", BOTTOMLEFT, 0, -0.014,
+          Text "Wolf spawn:",
+        }
+
+        Frame "SLIDER" "SheepTagSwitchWolf" INHERITS WITHCHILDREN "EscMenuSliderTemplate" {
+          SetPoint RIGHT, "SheepTagSwitchWolfLabel", LEFT, 0.2, -0.004,
+          Width 0.1,
+          SliderMinValue 0,
+          SliderMaxValue 10,
+          SliderInitialValue 3,
+          SliderStepSize 1,
+        }
+
+        Frame "TEXT" "SheepTagSwitchWolfValue" INHERITS "EscMenuLabelTextSmallTemplate" {
+          SetPoint BOTTOMRIGHT, "SheepTagSwitchWolf", TOPRIGHT, -0.005, 0,
+          Text "3",
+        }
+
+        // Spirits
+
+        Frame "TEXT" "SheepTagSwitchSpiritsLabel" INHERITS "EscMenuButtonTextTemplate" {
+          SetPoint TOPLEFT, "SheepTagSwitchWolfLabel", BOTTOMLEFT, 0, -0.014,
+          Text "Spirits:",
+        }
+
+        Frame "SLIDER" "SheepTagSwitchSpirits" INHERITS WITHCHILDREN "EscMenuSliderTemplate" {
+          SetPoint RIGHT, "SheepTagSwitchSpiritsLabel", LEFT, 0.2, -0.004,
+          Width 0.1,
+          SliderMinValue 0,
+          SliderMaxValue 10,
+          SliderInitialValue 0,
+          SliderStepSize 1,
+        }
+
+        Frame "TEXT" "SheepTagSwitchSpiritsValue" INHERITS "EscMenuLabelTextSmallTemplate" {
+          SetPoint BOTTOMRIGHT, "SheepTagSwitchSpirits", TOPRIGHT, -0.005, 0,
+          Text "0",
+        }
+
+        // Saves to win
+
+        Frame "TEXT" "SheepTagSwitchSavesLabel" INHERITS "EscMenuButtonTextTemplate" {
+          SetPoint TOPLEFT, "SheepTagSwitchSpiritsLabel", BOTTOMLEFT, 0, -0.014,
+          Text "Saves to win:",
+        }
+
+        Frame "SLIDER" "SheepTagSwitchSaves" INHERITS WITHCHILDREN "EscMenuSliderTemplate" {
+          SetPoint RIGHT, "SheepTagSwitchSavesLabel", LEFT, 0.2, -0.004,
+          Width 0.1,
+          SliderMinValue 1,
+          SliderMaxValue 26,
+          SliderInitialValue 26,
+          SliderStepSize 1,
+        }
+
+        Frame "TEXT" "SheepTagSwitchSavesValue" INHERITS "EscMenuLabelTextSmallTemplate" {
+          SetPoint BOTTOMRIGHT, "SheepTagSwitchSaves", TOPRIGHT, -0.005, 0,
+          Text "∞",
+        }
+
+        // Time to win
+
+        Frame "TEXT" "SheepTagSwitchTimeLabel" INHERITS "EscMenuButtonTextTemplate" {
+          SetPoint TOPLEFT, "SheepTagSwitchSavesLabel", BOTTOMLEFT, 0, -0.014,
+          Text "Time to win:",
+        }
+
+        Frame "SLIDER" "SheepTagSwitchTime" INHERITS WITHCHILDREN "EscMenuSliderTemplate" {
+          SetPoint RIGHT, "SheepTagSwitchTimeLabel", LEFT, 0.2, -0.004,
+          Width 0.1,
+          SliderMinValue 1,
+          SliderMaxValue 21,
+          SliderInitialValue 21,
+          SliderStepSize 1,
+        }
+
+        Frame "TEXT" "SheepTagSwitchTimeValue" INHERITS "EscMenuLabelTextSmallTemplate" {
+          SetPoint BOTTOMRIGHT, "SheepTagSwitchTime", TOPRIGHT, -0.005, 0,
+          Text "∞",
+        }
+      }
+
+      Frame "TEXT" "SheepTagTerrainLabel" INHERITS "EscMenuButtonTextTemplate" {
+        SetPoint TOPLEFT, "SheepTagRoundModeLabel", BOTTOMLEFT, 0, -0.014,
+        Text "Terrain:",
+      }
+
+      Frame "POPUPMENU" "SheepTagTerrain" INHERITS WITHCHILDREN "SheepTagPopupMenuTemplate" {
+        SetPoint RIGHT, "SheepTagTerrainLabel", LEFT, 0.2, 0,
+
+        PopupMenuFrame "EscOptionsWindowModePopupMenuMenu",
+        Frame "MENU" "EscOptionsWindowModePopupMenuMenu" INHERITS WITHCHILDREN "EscMenuPopupMenuMenuTemplate" {
+          MenuItem "Revo", -2,
+          MenuItem "Glory Hills", -2,
+          MenuItem "Experimental", -2,
+          MenuItem "Tiny", -2,
+          MenuItem "Compact", -2,
+          FrameFont "MasterFont", 0.009, "",
+        }
+      }
+
+      Frame "FRAME" "SheepTagClassicOptions" {
+
+        // Shrink
+
+        Frame "GLUECHECKBOX" "SheepTagShrink" INHERITS WITHCHILDREN "EscMenuCheckBoxTemplate" {
+          SetPoint TOPLEFT, "SheepTagTerrainLabel", BOTTOMLEFT, 0, -0.008,
+          Height 0.024,
+          Width 0.024,
+        }
+
+        Frame "TEXT" "SheepTagShrinkLabel" INHERITS "EscMenuButtonTextTemplate" {
+          SetPoint LEFT, "SheepTagShrink", RIGHT, 0.005, 0,
+          Text "Shrink",
+        }
+        
+        // Expand
+
+        Frame "GLUECHECKBOX" "SheepTagExpand" INHERITS WITHCHILDREN "EscMenuCheckBoxTemplate" {
+          SetPoint LEFT, "SheepTagShrinkLabel", RIGHT, 0.02, 0,
+          Height 0.024,
+          Width 0.024,
+        }
+
+        Frame "TEXT" "SheepTagExpandLabel" INHERITS "EscMenuButtonTextTemplate" {
+          SetPoint LEFT, "SheepTagExpand", RIGHT, 0.005, 0,
+          Text "Expand",
+        }
+      }
+
+    }
+
+    // Gold settings
+
+    Frame "FRAME" "SheepTagGoldSettings" {
+
+      // Sheep gold
+
+      Frame "TEXT" "SheepTagSheepGoldLabel" INHERITS "EscMenuButtonTextTemplate" {
+        SetPoint TOPLEFT, "SheepTagRoundSettingsButton", BOTTOMLEFT, 0, -0.01,
+        Text "Sheep gold:",
+      }
+
+      Frame "EDITBOX" "SheepTagSheepGold" INHERITS WITHCHILDREN "EscMenuEditBoxTemplate" {
+        SetPoint RIGHT, "SheepTagSheepGoldLabel", LEFT, 0.2, 0,
+        Height 0.029,
+        Width 0.07,
+        EditMaxChars 7,
+      }
+
+      // Wolf gold
+
+      Frame "TEXT" "SheepTagWolfGoldLabel" INHERITS "EscMenuButtonTextTemplate" {
+        SetPoint TOPLEFT, "SheepTagSheepGoldLabel", BOTTOMLEFT, 0, -0.014,
+        Text "Wolf gold:",
+      }
+
+      Frame "EDITBOX" "SheepTagWolfGold" INHERITS WITHCHILDREN "EscMenuEditBoxTemplate" {
+        SetPoint RIGHT, "SheepTagWolfGoldLabel", LEFT, 0.2, 0,
+        Height 0.029,
+        Width 0.07,
+        EditMaxChars 7,
+      }
+
+      // Sheep income
+
+      Frame "TEXT" "SheepTagSheepIncomeLabel" INHERITS "EscMenuButtonTextTemplate" {
+        SetPoint TOPLEFT, "SheepTagWolfGoldLabel", BOTTOMLEFT, 0, -0.014,
+        Text "Sheep income:",
+      }
+
+      Frame "EDITBOX" "SheepTagSheepIncome" INHERITS WITHCHILDREN "EscMenuEditBoxTemplate" {
+        SetPoint RIGHT, "SheepTagSheepIncomeLabel", LEFT, 0.2, 0,
+        Height 0.029,
+        Width 0.07,
+        EditMaxChars 7,
+      }
+
+      // Wolf income
+
+      Frame "TEXT" "SheepTagWolfIncomeLabel" INHERITS "EscMenuButtonTextTemplate" {
+        SetPoint TOPLEFT, "SheepTagSheepIncomeLabel", BOTTOMLEFT, 0, -0.014,
+        Text "Wolf income:",
+      }
+
+      Frame "EDITBOX" "SheepTagWolfIncome" INHERITS WITHCHILDREN "EscMenuEditBoxTemplate" {
+        SetPoint RIGHT, "SheepTagWolfIncomeLabel", LEFT, 0.2, 0,
+        Height 0.029,
+        Width 0.07,
+        EditMaxChars 7,
+      }
+
+      // Money farm income
+
+      Frame "TEXT" "SheepTagMoneyFarmIncomeLabel" INHERITS "EscMenuButtonTextTemplate" {
+        SetPoint TOPLEFT, "SheepTagWolfIncomeLabel", BOTTOMLEFT, 0, -0.014,
+        Text "Money farm income:",
+      }
+
+      Frame "EDITBOX" "SheepTagMoneyFarmIncome" INHERITS WITHCHILDREN "EscMenuEditBoxTemplate" {
+        SetPoint RIGHT, "SheepTagMoneyFarmIncomeLabel", LEFT, 0.2, 0,
+        Height 0.029,
+        Width 0.07,
+        EditMaxChars 7,
+      }
+
+    }
+
+    // Other settings
+    Frame "FRAME" "SheepTagOtherSettings" {
+
+      // Time
+
+      Frame "TEXT" "SheepTagTimeLabel" INHERITS "EscMenuButtonTextTemplate" {
+        SetPoint TOPLEFT, "SheepTagRoundSettingsButton", BOTTOMLEFT, 0, -0.01,
+        Text "Time:",
+      }
+
+      Frame "SLIDER" "SheepTagTime" INHERITS WITHCHILDREN "EscMenuSliderTemplate" {
+        SetPoint RIGHT, "SheepTagTimeLabel", LEFT, 0.2, -0.004,
+        Width 0.1,
+        SliderMinValue 1,
+        SliderMaxValue 20,
+        SliderInitialValue 6,
+        SliderStepSize 1,
+      }
+
+      Frame "TEXT" "SheepTagTimeValue" INHERITS "EscMenuLabelTextSmallTemplate" {
+        SetPoint BOTTOMRIGHT, "SheepTagTime", TOPRIGHT, -0.005, 0,
+        Text "6:00",
+      }
+
+      // Spawn
+
+      Frame "TEXT" "SheepTagSpawnLabel" INHERITS "EscMenuButtonTextTemplate" {
+        SetPoint TOPLEFT, "SheepTagTimeLabel", BOTTOMLEFT, 0, -0.014,
+        Text "Spawn:",
+      }
+
+      Frame "POPUPMENU" "SheepTagSpawn" INHERITS WITHCHILDREN "SheepTagPopupMenuTemplate" {
+        SetPoint RIGHT, "SheepTagSpawnLabel", LEFT, 0.2, 0,
+
+        PopupMenuFrame "EscOptionsWindowModePopupMenuMenu",
+        Frame "MENU" "EscOptionsWindowModePopupMenuMenu" INHERITS WITHCHILDREN "EscMenuPopupMenuMenuTemplate" {
+          MenuItem "Fixed", -2,
+          MenuItem "Random", -2,
+          MenuItem "Free", -2,
+          FrameFont "MasterFont", 0.009, "",
+        }
+      }
+
+      // View
+
+      Frame "GLUECHECKBOX" "SheepTagView" INHERITS WITHCHILDREN "EscMenuCheckBoxTemplate" {
+        SetPoint TOPLEFT, "SheepTagSpawnLabel", BOTTOMLEFT, 0, -0.008,
+        Height 0.024,
+        Width 0.024,
+      }
+
+      Frame "TEXT" "SheepTagViewLabel" INHERITS "EscMenuButtonTextTemplate" {
+        SetPoint LEFT, "SheepTagView", RIGHT, 0.005, 0,
+        Text "View",
+      }
+
+      // Farm vision
+
+      Frame "TEXT" "SheepTagFarmVisionLabel" INHERITS "EscMenuButtonTextTemplate" {
+        SetPoint TOPLEFT, "SheepTagView", BOTTOMLEFT, 0, -0.008,
+        Text "Farm vision:",
+      }
+
+      Frame "EDITBOX" "SheepTagFarmVision" INHERITS WITHCHILDREN "EscMenuEditBoxTemplate" {
+        SetPoint RIGHT, "SheepTagFarmVisionLabel", LEFT, 0.2, 0,
+        Height 0.029,
+        Width 0.1,
+        EditMaxChars 4,
+      }
+
+      // Auto cancel
+
+      Frame "GLUECHECKBOX" "SheepTagAutoCancel" INHERITS WITHCHILDREN "EscMenuCheckBoxTemplate" {
+        SetPoint TOPLEFT, "SheepTagFarmVisionLabel", BOTTOMLEFT, 0, -0.008,
+        Height 0.024,
+        Width 0.024,
+      }
+
+      Frame "TEXT" "SheepTagAutoCancelLabel" INHERITS "EscMenuButtonTextTemplate" {
+        SetPoint LEFT, "SheepTagAutoCancel", RIGHT, 0.005, 0,
+        Text "Auto cancel on AFK",
+      }
+
+      // Allow sharing control
+
+      Frame "GLUECHECKBOX" "SheepTagControl" INHERITS WITHCHILDREN "EscMenuCheckBoxTemplate" {
+        SetPoint TOPLEFT, "SheepTagAutoCancel", BOTTOMLEFT, 0, -0.008,
+        Height 0.024,
+        Width 0.024,
+      }
+
+      Frame "TEXT" "SheepTagControlLabel" INHERITS "EscMenuButtonTextTemplate" {
+        SetPoint LEFT, "SheepTagControl", RIGHT, 0.005, 0,
+        Text "Allow sharing control",
+      }
+
+    }
+
+    Frame "GLUETEXTBUTTON" "SheepTagSmartButton" INHERITS WITHCHILDREN "EscMenuButtonTemplate" {
+      SetPoint BOTTOMRIGHT, "SheepTagSettings", BOTTOMRIGHT, -0.025, 0.025,
+      Width 0.057,
+
+      ButtonText "SheepTagSmartText",
+      Frame "TEXT" "SheepTagSmartText" INHERITS "EscMenuButtonTextTemplate" {
+        Text "|ccfffffffS|rmart",
+      }
+
+      ToolTip "SheepTagSmartButtonTooltip",
+      Frame "BACKDROP" "SheepTagSmartButtonTooltip" INHERITS "QuestButtonBaseTemplate" {
+        SetPoint TOPLEFT, "SheepTagSmartButton", TOPRIGHT, 0.005, 0.01,
+        Width 0.15,
+        Height 0.04,
+
+        Frame "TEXT" "SheepTagSmartButtonTooltipText" INHERITS "EscMenuLabelTextSmallTemplate" {
+          SetPoint TOPLEFT, "SheepTagSmartButtonTooltip", TOPLEFT, 0.01, -0.01,
+          Width 0.13,
+          Height 0.02,
+          FontColor 1 1 1 1,
+          Text "Randomize teams, balancing sheep count and team uniqueness.",
+        }
+      }
+    }
+
+    Frame "GLUETEXTBUTTON" "SheepTagStartButton" INHERITS WITHCHILDREN "EscMenuButtonTemplate" {
+      SetPoint RIGHT, "SheepTagSmartButton", LEFT, 0, 0,
+      Width 0.052,
+
+      ButtonText "SheepTagStartText",
+      Frame "TEXT" "SheepTagStartText" INHERITS "EscMenuButtonTextTemplate" {
+        Text "St|ccfffffffa|rrt",
+      }
+    }
+
+    Frame "GLUETEXTBUTTON" "SheepTagVersusButton" INHERITS WITHCHILDREN "EscMenuButtonTemplate" {
+      SetPoint RIGHT, "SheepTagStartButton", LEFT, 0, 0,
+      Width 0.06,
+
+      ButtonText "SheepTagVersusButtonText",
+      Frame "TEXT" "SheepTagVersusButtonText" INHERITS "EscMenuButtonTextTemplate" {
+        Text "|ccfffffffV|rersus",
+      }
+    }
+
+    Frame "EDITBOX" "SheepTagDesiredSheep" INHERITS WITHCHILDREN "EscMenuEditBoxTemplate" {
+      SetPoint BOTTOMRIGHT, "SheepTagSmartButton", TOPRIGHT, 0, 0,
+      Height 0.029,
+      Width 0.04,
+      EditMaxChars 2,
+    }
+
+    Frame "TEXT" "SheepTagDesiredSheepLabel" INHERITS "EscMenuButtonTextTemplate" {
+      SetPoint RIGHT, "SheepTagDesiredSheep", LEFT, -0.005, 0,
+      Text "Sheep:",
+    }
+
+    DialogBackdrop "SheepTagPreferencesPanelBackdrop",
+    Frame "BACKDROP" "SheepTagPreferencesPanelBackdrop" INHERITS "EscMenuBackdrop" {
+    }
+  }
+
+  Frame "DIALOG" "SheepTagPlayers" {
+    SetPoint TOP, "ConsoleUI", TOP, 0.16, -0.047,
+    Height 0.385,
+    Width 0.3,
+    DecorateFileNames,
+
+    DialogBackdrop "SheepTagPlayersBackdrop",
+    Frame "BACKDROP" "SheepTagPlayersBackdrop" INHERITS "EscMenuBackdrop" {
+    }
+
+    Frame "FRAME" "SheepTagPlayersHeader" {
+      SetPoint TOPLEFT, "SheepTagPlayers", TOPLEFT, 0.0168, -0.018,
+      Height 0.01396,
+      Width 0.266,
+
+      Frame "TEXT" "SheepTagPlayersHeaderName" INHERITS "EscMenuLabelTextSmallTemplate" {
+        SetPoint LEFT, "SheepTagPlayersHeader", LEFT, 0.02, 0,
+        Text "Player",
+      }
+
+      Frame "TEXT" "SheepTagPlayersHeaderSheepCount" INHERITS "EscMenuLabelTextSmallTemplate" {
+        SetPoint RIGHT, "SheepTagPlayersHeaderName", LEFT, 0.11, 0,
+        Text "SC",
+
+        ToolTip "SheepTagPlayersHeaderSheepCountTooltip",
+        Frame "BACKDROP" "SheepTagPlayersHeaderSheepCountTooltip" INHERITS "QuestButtonBaseTemplate" {
+          SetPoint TOPLEFT, "SheepTagPlayersHeaderSheepCount", TOPRIGHT, 0.005, 0.01,
+          Width 0.15,
+          Height 0.04,
+
+          Frame "TEXT" "SheepTagPlayersHeaderSheepCountTooltipText" INHERITS "EscMenuLabelTextSmallTemplate" {
+            SetPoint TOPLEFT, "SheepTagPlayersHeaderSheepCountTooltip", TOPLEFT, 0.01, -0.01,
+            Width 0.13,
+            Height 0.02,
+            FontColor 1 1 1 1,
+            Text "How many times this player has played sheep.",
+          }
+        }
+      }
+
+      Frame "TEXT" "SheepTagPlayersHeaderHandicap" INHERITS "EscMenuLabelTextSmallTemplate" {
+        SetPoint RIGHT, "SheepTagPlayersHeaderSheepCount", RIGHT, 0.04, 0,
+        Text "HCP",
+
+        ToolTip "SheepTagPlayersHeaderHandicapTooltip",
+        Frame "BACKDROP" "SheepTagPlayersHeaderHandicapTooltip" INHERITS "QuestButtonBaseTemplate" {
+          SetPoint TOPLEFT, "SheepTagPlayersHeaderHandicap", TOPRIGHT, 0.005, 0.01,
+          Width 0.15,
+          Height 0.04,
+
+          Frame "TEXT" "SheepTagPlayersHeaderHandicapTooltipText" INHERITS "EscMenuLabelTextSmallTemplate" {
+            SetPoint TOPLEFT, "SheepTagPlayersHeaderHandicapTooltip", TOPLEFT, 0.01, -0.01,
+            Width 0.13,
+            Height 0.02,
+            FontColor 1 1 1 1,
+            Text "Handicap impacts farm HP and passive gold income.",
+          }
+        }
+      }
+
+      Frame "TEXT" "SheepTagPlayersHeaderAverage" INHERITS "EscMenuLabelTextSmallTemplate" {
+        SetPoint RIGHT, "SheepTagPlayersHeaderHandicap", RIGHT, 0.06, 0,
+        Text "Average",
+
+        ToolTip "SheepTagPlayersHeaderAverageTooltip",
+        Frame "BACKDROP" "SheepTagPlayersHeaderAverageTooltip" INHERITS "QuestButtonBaseTemplate" {
+          SetPoint TOPLEFT, "SheepTagPlayersHeaderAverage", TOPRIGHT, 0.005, 0.01,
+          Width 0.15,
+          Height 0.04,
+
+          Frame "TEXT" "SheepTagPlayersHeaderAverageTooltipText" INHERITS "EscMenuLabelTextSmallTemplate" {
+            SetPoint TOPLEFT, "SheepTagPlayersHeaderAverageTooltip", TOPLEFT, 0.01, -0.01,
+            Width 0.13,
+            Height 0.02,
+            FontColor 1 1 1 1,
+            Text "Average length of this player's sheep rounds.",
+          }
+        }
+      }
+
+      Frame "TEXT" "SheepTagPlayersHeaderDeathOrder" INHERITS "EscMenuLabelTextSmallTemplate" {
+        SetPoint RIGHT, "SheepTagPlayersHeaderAverage", RIGHT, 0.03, 0,
+        Text "DO",
+
+        ToolTip "SheepTagPlayersHeaderDeathOrderTooltip",
+        Frame "BACKDROP" "SheepTagPlayersHeaderDeathOrderTooltip" INHERITS "QuestButtonBaseTemplate" {
+          SetPoint TOPLEFT, "SheepTagPlayersHeaderDeathOrder", TOPRIGHT, 0.005, 0.01,
+          Width 0.15,
+          Height 0.06,
+
+          Frame "TEXT" "SheepTagPlayersHeaderDeathOrderTooltipText" INHERITS "EscMenuLabelTextSmallTemplate" {
+            SetPoint TOPLEFT, "SheepTagPlayersHeaderDeathOrderTooltip", TOPLEFT, 0.01, -0.01,
+            Width 0.13,
+            Height 0.04,
+            FontColor 1 1 1 1,
+            Text "The averaged death order during sheep rounds, where 0 indicates last to die.",
+          }
+        }
+      }
+    }
+
+  }
+
+  Frame "GLUETEXTBUTTON" "SheepTagEndButton" INHERITS WITHCHILDREN "EscMenuButtonTemplate" {
+    SetPoint BOTTOMLEFT, "SheepTagPlayers", BOTTOMRIGHT, 0, 0.008,
+    Width 0.046,
+
+    ButtonText "SheepTagEndButtonText",
+    Frame "TEXT" "SheepTagEndButtonText" INHERITS "EscMenuButtonTextTemplate" {
+      Text "End",
+    }
+  }
+}
+
+// Game mode: Classic, Switch, Vamp, President (Menu)
+//   If switch:
+//     Sheep Invul: Slider (0 - 10)
+//     Wolf Delay: Slider (0 - 10)
+//     Spirits: Slider (0 - 10)
+//     Saves to Win: Slider (0 - 25)
+//     Time to Win: Slidey (0 - 10:00)
+//  Switch: Invul, Spawn delay, Spirits, Saves to win, Surival to win
+//  President: Handicap
+// Gold settings: gold (sheep, wolf), income (sheep, wolf, money farms)
+// Terrain settings: terrain (all options), expand, shrink
+// Team settings: rotate, sheep, perfect
+// REMAIN: time, view, farmvision, spawn, handicap, perfect
+// START: pick, versus, start, smart

@@ -20,7 +20,7 @@ const applySecondWind = (unit: unit) => {
     const aSheepIsNear = withUnitsInRange(
       GetUnitX(unit),
       GetUnitY(unit),
-      1000,
+      1250,
       (g) => g.size > 0,
       (u) => u.typeId === sheepType,
     );

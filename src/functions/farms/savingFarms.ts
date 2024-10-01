@@ -1,10 +1,9 @@
 import { addScriptHook, W3TS_HOOK } from "w3ts";
 import { ForceEx } from "handles/ForceEx";
 import { MapPlayerEx } from "handles/MapPlayerEx";
-import { terrain } from "settings/terrain";
 import { UnitEx } from "handles/UnitEx";
 import { UNIT_TYPE_ID_MONEY_FARM } from "constants";
-import { income } from "settings/settings";
+import { income, terrain } from "settings/settings";
 
 const g = CreateGroup();
 
@@ -99,6 +98,8 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   TriggerAddAction(t, () => {
     const u = UnitEx.fromEvent();
     if (u?.typeId !== UNIT_TYPE_ID_MONEY_FARM) return;
-    u.name = `Money Farm (${Math.round(getDistancePenality(u.handle) * 15 * income.savings)})`; // 15 = 60/4
+    u.name = `Money Farm (|cffffcc00${
+      Math.round(getDistancePenality(u.handle) * 15 * income.savings)
+    } gold per minute|r)`; // 15 = 60/4
   });
 });

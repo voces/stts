@@ -1,5 +1,4 @@
-import { terrain } from "settings/terrain";
-import { president } from "settings/settings";
+import { president, terrain } from "settings/settings";
 
 const Trig_spiritDies_Conditions = () => {
   return GetUnitTypeId(GetTriggerUnit()!) === wispType;

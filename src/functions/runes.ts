@@ -1,4 +1,4 @@
-import { terrain } from "settings/terrain";
+import { terrain } from "settings/settings";
 import { setTimeout, Timeout } from "util/setTimeout";
 import { addScriptHook, Item, Trigger, W3TS_HOOK } from "w3ts";
 
