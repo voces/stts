@@ -24,16 +24,16 @@ export const inflateGoldCount = (p: player): void => {
 const Trig_g_showGoldCounts = () => {
   let count = 0;
   const triggerer = MapPlayerEx.fromEvent()!;
-  triggerer.displayTimedText("                              |CFFFFCC00Gold Count|r", 15);
+  triggerer.displayTimedText("|CFFFFCC00Gold Count|r", 15);
   for (let i = 0; i < bj_MAX_PLAYERS; i++) {
     const p = MapPlayerEx.fromIndex(i);
     if (!p || p.slotState === PLAYER_SLOT_STATE_EMPTY) continue;
     if (count > 0 && (count % 15 === 0)) {
       TriggerSleepAction(9);
       count = 0;
-      triggerer.displayTimedText("                              |CFFFFCC00Gold Count (cont.)|r", 15);
+      triggerer.displayTimedText("|CFFFFCC00Gold Count (cont.)|r", 15);
     }
-    triggerer.displayTimedText(`                              ${p.coloredName_} : ${I2S(R2I(goldCount[i]))}`, 15);
+    triggerer.displayTimedText(`${p.coloredName_} : ${I2S(R2I(goldCount[i]))}`, 15);
     count++;
   }
 };
@@ -124,7 +124,7 @@ export const giveAllGold = (sender: player): void => {
       ) {
         goldStep = president.enabled ? "president" : "algo";
         receiver = president.enabled
-          ? president.president.handle
+          ? president.president!.handle
           : Trig_g_leastGoldCount(true, lastReceivedFrom[GetPlayerId(sender)]);
       }
     } else if (IsPlayerInForce(sender, udg_Wolf)) {

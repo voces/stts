@@ -44,7 +44,7 @@ const Trig_spiritDies_Actions = () => {
   DisplayTimedTextToForce(
     GetPlayersAll()!,
     5,
-    "                              " + udg_colorString[killingPlayerId] +
+    udg_colorString[killingPlayerId] +
       GetPlayerName(killingPlayer) + "|r has freed " +
       udg_colorString[dyingPlayerId] + GetPlayerName(dyingPlayer),
   );

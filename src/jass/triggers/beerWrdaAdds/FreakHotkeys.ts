@@ -21,11 +21,7 @@ const Trig_FreakHotkeys_Actions = () => {
   if ((Trig_FreakHotkeys_Func026C())) {
     udg_freakHotkeys[GetConvertedPlayerId(GetTriggerPlayer()!)] = true;
     if (udg_gameStarted) {
-      DisplayTimedTextToForce(
-        udg_atempplayer,
-        5,
-        "                              |CFFFFCC00Freak Keys Enabled|r",
-      );
+      DisplayTimedTextToForce(udg_atempplayer, 5, "|CFFFFCC00Freak Keys Enabled|r");
       udg_atempgroup = GetUnitsOfPlayerAndTypeId(GetTriggerPlayer()!, shepType)!;
       ForGroupBJ(udg_atempgroup, Trig_FreakHotkeys_Func026Func004Func003A);
       DestroyGroup(udg_atempgroup);
@@ -33,11 +29,7 @@ const Trig_FreakHotkeys_Actions = () => {
   } else {
     udg_freakHotkeys[GetConvertedPlayerId(GetTriggerPlayer()!)] = false;
     if (udg_gameStarted) {
-      DisplayTimedTextToForce(
-        udg_atempplayer,
-        5,
-        "                              |CFFFFCC00Freak Keys Disabled|r",
-      );
+      DisplayTimedTextToForce(udg_atempplayer, 5, "|CFFFFCC00Freak Keys Disabled|r");
       udg_atempgroup = GetUnitsOfPlayerAndTypeId(GetTriggerPlayer()!, shepType)!;
       ForGroupBJ(udg_atempgroup, Trig_FreakHotkeys_Func026Func002Func003A);
       DestroyGroup(udg_atempgroup);

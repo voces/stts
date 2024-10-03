@@ -1,23 +1,8 @@
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
 const Trig_last_Actions = () => {
-  if (udg_timeString === "") {
-    DisplayTimedTextToPlayer(
-      GetTriggerPlayer()!,
-      0,
-      0,
-      15,
-      "                              No rounds have been played yet.",
-    );
-  } else {
-    DisplayTimedTextToPlayer(
-      GetTriggerPlayer()!,
-      0,
-      0,
-      15,
-      "                              Last: " + fullTimeString + ".",
-    );
-  }
+  if (udg_timeString === "") DisplayTimedTextToPlayer(GetTriggerPlayer()!, 0, 0, 15, "No rounds have been played yet.");
+  else DisplayTimedTextToPlayer(GetTriggerPlayer()!, 0, 0, 15, "Last: " + fullTimeString + ".");
 };
 
 declare global {

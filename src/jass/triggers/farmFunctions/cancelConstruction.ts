@@ -7,7 +7,7 @@ const Trig_cancelConstruction_Actions = () => {
   bj_forLoopAIndexEnd = udg_lastPlayer;
   if (!udg_switchOn) {
     for (let i = 1; i <= bj_MAX_PLAYERS; i++) {
-      LeaderboardSetPlayerItemValueBJ(p, PlayerGetLeaderboardBJ(ConvertedPlayer(i)!)!, udg_farmCount[cid]);
+      LeaderboardSetPlayerItemValueBJ(p, PlayerGetLeaderboard(ConvertedPlayer(i)!)!, udg_farmCount[cid]);
     }
   }
 };

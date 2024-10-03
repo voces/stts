@@ -56,7 +56,7 @@ const teamHasTeamItem = (item: Item, player: player) => {
       0,
       0,
       15,
-      `                              |CFF00AEEFYour team already has ${item.name}`,
+      `|CFF00AEEFYour team already has ${item.name}`,
     );
     return true;
   }
@@ -83,13 +83,7 @@ const BuySellItem__buyAction = () => {
         AdjustPlayerStateSimpleBJ(p, PLAYER_STATE_RESOURCE_GOLD, -items[i].cost);
       } else {
         if (p === GetLocalPlayer()) StartSound(gg_snd_Error);
-        DisplayTimedTextToPlayer(
-          p,
-          0,
-          0,
-          15,
-          "                              |CFF00AEEFThat item set is " + I2S(items[i].cost) + " gold.",
-        );
+        DisplayTimedTextToPlayer(p, 0, 0, 15, "|CFF00AEEFThat item set is " + I2S(items[i].cost) + " gold.");
       }
       break;
     }

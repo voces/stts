@@ -16,8 +16,8 @@ InitTrig_Alert_Sheep_Death = () => {
         !udg_humiliationCheck[GetConvertedPlayerId(GetOwningPlayer(u))] && udg_firstBlood;
     }),
   );
-  TriggerAddAction(gg_trg_Alert_Sheep_Death, () =>
-    displayTimedTextToAll(
-      `                              ${MapPlayerEx.fromKillingUnit()} has captured ${MapPlayerEx.fromDyingUnit()}`,
-    ));
+  TriggerAddAction(
+    gg_trg_Alert_Sheep_Death,
+    () => displayTimedTextToAll(`${MapPlayerEx.fromKillingUnit()} has captured ${MapPlayerEx.fromDyingUnit()}`),
+  );
 };

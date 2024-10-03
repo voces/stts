@@ -1,3 +1,4 @@
+import { hideIntermission } from "ui/api";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
 const Trig_versus_Func004Func002C = () => {
@@ -17,7 +18,7 @@ const Trig_versus_Func004Func002C = () => {
 };
 
 const Trig_versus_Func004C = () => {
-  if ((GetEventPlayerChatString() === "-versus")) {
+  if ((GetEventPlayerChatString() === "-versus" || GetEventPlayerChatString() === "")) {
     return true;
   }
   if ((Trig_versus_Func004Func002C())) {
@@ -259,13 +260,14 @@ const Trig_versus_Func006Func043A = () => {
 };
 
 const Trig_versus_Func006C = () => {
-  if ((!(GetEventPlayerChatString() === "-versus"))) {
+  if ((!(GetEventPlayerChatString() === "-versus" || GetEventPlayerChatString() === ""))) {
     return false;
   }
   return true;
 };
 
 const Trig_versus_Actions = () => {
+  hideIntermission();
   const s = GetEventPlayerChatString()!;
   TriggerSleepAction(0.01);
   if ((Trig_versus_Func006C())) {
@@ -295,20 +297,13 @@ const Trig_versus_Actions = () => {
     TimerStart(udg_Createtimer, 300, false, null);
     TimerDialogDisplayBJ(true, udg_createTimerWindow);
     ForForce(GetPlayersAll()!, Trig_versus_Func006Func029A);
-    ForForce(
-      GetForceOfPlayer(ForcePickRandomPlayer(udg_Spirit)!)!,
-      Trig_versus_Func006Func030A,
-    );
-    ForForce(
-      GetForceOfPlayer(ForcePickRandomPlayer(udg_Spirit)!)!,
-      Trig_versus_Func006Func031A,
-    );
+    ForForce(GetForceOfPlayer(ForcePickRandomPlayer(udg_Spirit)!)!, Trig_versus_Func006Func030A);
+    ForForce(GetForceOfPlayer(ForcePickRandomPlayer(udg_Spirit)!)!, Trig_versus_Func006Func031A);
     ForForce(udg_Spirit, Trig_versus_Func006Func032A);
     CreateMultiboardBJ(
       3,
       25,
-      udg_colorString[GetConvertedPlayerId(udg_captains[1])] +
-        (GetPlayerName(udg_captains[1]) + "'s turn"),
+      udg_colorString[GetConvertedPlayerId(udg_captains[1])] + GetPlayerName(udg_captains[1]) + "'s turn",
     );
     udg_sheepLastGame[GetConvertedPlayerId(udg_captains[1])] = true;
     udg_sheepLastGame[GetConvertedPlayerId(udg_captains[3])] = false;
@@ -317,60 +312,25 @@ const Trig_versus_Actions = () => {
     bj_forLoopAIndexEnd = 25;
     while (true) {
       if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-      MultiboardSetItemStyleBJ(
-        udg_captainsMultiboard,
-        1,
-        GetForLoopIndexA(),
-        true,
-        false,
-      );
-      MultiboardSetItemStyleBJ(
-        udg_captainsMultiboard,
-        2,
-        GetForLoopIndexA(),
-        true,
-        false,
-      );
-      MultiboardSetItemStyleBJ(
-        udg_captainsMultiboard,
-        3,
-        GetForLoopIndexA(),
-        true,
-        false,
-      );
-      MultiboardSetItemWidthBJ(
-        udg_captainsMultiboard,
-        1,
-        GetForLoopIndexA(),
-        udg_draftMultiboardWidth,
-      );
-      MultiboardSetItemWidthBJ(
-        udg_captainsMultiboard,
-        2,
-        GetForLoopIndexA(),
-        udg_draftMultiboardWidth,
-      );
-      MultiboardSetItemWidthBJ(
-        udg_captainsMultiboard,
-        3,
-        GetForLoopIndexA(),
-        udg_draftMultiboardWidth,
-      );
+      MultiboardSetItemStyleBJ(udg_captainsMultiboard, 1, GetForLoopIndexA(), true, false);
+      MultiboardSetItemStyleBJ(udg_captainsMultiboard, 2, GetForLoopIndexA(), true, false);
+      MultiboardSetItemStyleBJ(udg_captainsMultiboard, 3, GetForLoopIndexA(), true, false);
+      MultiboardSetItemWidthBJ(udg_captainsMultiboard, 1, GetForLoopIndexA(), udg_draftMultiboardWidth);
+      MultiboardSetItemWidthBJ(udg_captainsMultiboard, 2, GetForLoopIndexA(), udg_draftMultiboardWidth);
+      MultiboardSetItemWidthBJ(udg_captainsMultiboard, 3, GetForLoopIndexA(), udg_draftMultiboardWidth);
       bj_forLoopAIndex = bj_forLoopAIndex + 1;
     }
     MultiboardSetItemValueBJ(
       udg_captainsMultiboard,
       1,
       1,
-      ("$" + udg_colorString[GetConvertedPlayerId(udg_captains[1])]) +
-        GetPlayerName(udg_captains[1]),
+      "$" + udg_colorString[GetConvertedPlayerId(udg_captains[1])] + GetPlayerName(udg_captains[1]),
     );
     MultiboardSetItemValueBJ(
       udg_captainsMultiboard,
       3,
       1,
-      ("$" + udg_colorString[GetConvertedPlayerId(udg_captains[3])]) +
-        GetPlayerName(udg_captains[3]),
+      "$" + udg_colorString[GetConvertedPlayerId(udg_captains[3])] + GetPlayerName(udg_captains[3]),
     );
     udg_multiboardRow[GetConvertedPlayerId(udg_captains[1])] = 1;
     udg_multiboardRow[GetConvertedPlayerId(udg_captains[3])] = 1;
@@ -414,28 +374,17 @@ const Trig_versus_Actions = () => {
       TimerDialogDisplayBJ(true, udg_createTimerWindow);
       if ((Trig_versus_Func006Func004Func026C())) {
         ForForce(GetPlayersAll()!, Trig_versus_Func006Func004Func026Func003A);
-        ForForce(
-          GetForceOfPlayer(ForcePickRandomPlayer(udg_Spirit)!)!,
-          Trig_versus_Func006Func004Func026Func004A,
-        );
-        ForForce(
-          GetForceOfPlayer(ForcePickRandomPlayer(udg_Spirit)!)!,
-          Trig_versus_Func006Func004Func026Func005A,
-        );
+        ForForce(GetForceOfPlayer(ForcePickRandomPlayer(udg_Spirit)!)!, Trig_versus_Func006Func004Func026Func004A);
+        ForForce(GetForceOfPlayer(ForcePickRandomPlayer(udg_Spirit)!)!, Trig_versus_Func006Func004Func026Func005A);
         ForForce(udg_Spirit, Trig_versus_Func006Func004Func026Func006A);
       } else {
-        udg_captains[1] = ConvertedPlayer(
-          S2I(SubStringBJ(s, 9, 10)!),
-        )!;
-        udg_captains[3] = ConvertedPlayer(
-          S2I(SubStringBJ(s, 11, 13)!),
-        )!;
+        udg_captains[1] = ConvertedPlayer(S2I(SubStringBJ(s, 9, 10)!))!;
+        udg_captains[3] = ConvertedPlayer(S2I(SubStringBJ(s, 11, 13)!))!;
       }
       CreateMultiboardBJ(
         3,
         25,
-        udg_colorString[GetConvertedPlayerId(udg_captains[1])] +
-          (GetPlayerName(udg_captains[1]) + "'s turn"),
+        udg_colorString[GetConvertedPlayerId(udg_captains[1])] + (GetPlayerName(udg_captains[1]) + "'s turn"),
       );
       udg_sheepLastGame[GetConvertedPlayerId(udg_captains[1])] = true;
       udg_sheepLastGame[GetConvertedPlayerId(udg_captains[3])] = false;
@@ -444,60 +393,25 @@ const Trig_versus_Actions = () => {
       bj_forLoopAIndexEnd = 25;
       while (true) {
         if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-        MultiboardSetItemStyleBJ(
-          udg_captainsMultiboard,
-          1,
-          GetForLoopIndexA(),
-          true,
-          false,
-        );
-        MultiboardSetItemStyleBJ(
-          udg_captainsMultiboard,
-          2,
-          GetForLoopIndexA(),
-          true,
-          false,
-        );
-        MultiboardSetItemStyleBJ(
-          udg_captainsMultiboard,
-          3,
-          GetForLoopIndexA(),
-          true,
-          false,
-        );
-        MultiboardSetItemWidthBJ(
-          udg_captainsMultiboard,
-          1,
-          GetForLoopIndexA(),
-          udg_draftMultiboardWidth,
-        );
-        MultiboardSetItemWidthBJ(
-          udg_captainsMultiboard,
-          2,
-          GetForLoopIndexA(),
-          udg_draftMultiboardWidth,
-        );
-        MultiboardSetItemWidthBJ(
-          udg_captainsMultiboard,
-          3,
-          GetForLoopIndexA(),
-          udg_draftMultiboardWidth,
-        );
+        MultiboardSetItemStyleBJ(udg_captainsMultiboard, 1, GetForLoopIndexA(), true, false);
+        MultiboardSetItemStyleBJ(udg_captainsMultiboard, 2, GetForLoopIndexA(), true, false);
+        MultiboardSetItemStyleBJ(udg_captainsMultiboard, 3, GetForLoopIndexA(), true, false);
+        MultiboardSetItemWidthBJ(udg_captainsMultiboard, 1, GetForLoopIndexA(), udg_draftMultiboardWidth);
+        MultiboardSetItemWidthBJ(udg_captainsMultiboard, 2, GetForLoopIndexA(), udg_draftMultiboardWidth);
+        MultiboardSetItemWidthBJ(udg_captainsMultiboard, 3, GetForLoopIndexA(), udg_draftMultiboardWidth);
         bj_forLoopAIndex = bj_forLoopAIndex + 1;
       }
       MultiboardSetItemValueBJ(
         udg_captainsMultiboard,
         1,
         1,
-        ("$" + udg_colorString[GetConvertedPlayerId(udg_captains[1])]) +
-          GetPlayerName(udg_captains[1]),
+        "$" + udg_colorString[GetConvertedPlayerId(udg_captains[1])] + GetPlayerName(udg_captains[1]),
       );
       MultiboardSetItemValueBJ(
         udg_captainsMultiboard,
         3,
         1,
-        ("$" + udg_colorString[GetConvertedPlayerId(udg_captains[3])]) +
-          GetPlayerName(udg_captains[3]),
+        "$" + udg_colorString[GetConvertedPlayerId(udg_captains[3])] + GetPlayerName(udg_captains[3]),
       );
       udg_multiboardRow[GetConvertedPlayerId(udg_captains[1])] = 1;
       udg_multiboardRow[GetConvertedPlayerId(udg_captains[3])] = 1;

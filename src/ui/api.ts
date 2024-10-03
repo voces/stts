@@ -1,11 +1,13 @@
-import { income, president, switchSetting, terrain } from "settings/settings";
+import { farmVision, income, president, settings, spawnSetting, switchSetting, terrain } from "settings/settings";
 import { setTerrain } from "settings/terrain";
 import { frames } from "./frames";
 import { onTerrainUpdatedViaCommand, onUpdateIntermission } from "./hooks";
-import { getInHouseCount, parseDesiredSheep } from "./util";
+import { getActivePlayerCount, getInHouseCount, toStringWithPrecision } from "./util";
 import { adjustSheepTeamSize } from "teams/start";
 import { smart as actualSmart } from "teams/smart";
 import { FrameEx } from "handles/FrameEx";
+import { MapPlayerEx } from "handles/MapPlayerEx";
+import { getTimes } from "stats/times";
 
 const updatePresidentHandicap = () => {
   frames.settings.president.handicap.text = (president.handicap * 100).toFixed(0);
@@ -94,18 +96,28 @@ export const updateMode = (value?: number) => {
     ? frames.settings.switch.timeLabel
     : frames.settings.modeLabel;
   frames.settings.terrain.label.setPoint(FRAMEPOINT_TOPLEFT, relative, FRAMEPOINT_BOTTOMLEFT, 0, -0.014);
+  frames.settings.shrink.visible = udg_mapShrink;
+  frames.settings.expand.visible = udg_mapExpand;
 
   updatePresidentHandicap();
   updateSwitchSettings();
 };
 
 const updateGold = () => {
-  BJDebugMsg("updateGold");
   frames.settings.sheepGold.text = udg_sheepGold.toFixed(0);
   frames.settings.wolfGold.text = udg_wolfGold.toFixed(0);
   frames.settings.sheepIncome.text = income.sheep.toFixed(0);
   frames.settings.wolfIncome.text = income.wolves.toFixed(0);
   frames.settings.moneyFarmIncome.text = income.savings.toFixed(0);
+};
+
+const updateOther = () => {
+  frames.settings.time.text = (udg_time / 30).toFixed(0);
+  frames.settings.spawn.value = spawnSetting.mode === "static" ? 0 : spawnSetting.mode === "free" ? 1 : 2;
+  frames.settings.view.visible = udg_viewOn;
+  frames.settings.farmVision.value = farmVision.vision === -1 ? 9 : farmVision.vision / 64;
+  frames.settings.autoCancel.visible = autoCancelEnabled;
+  frames.settings.allowShareControl.visible = udg_shareOn;
 };
 
 export const updateTerrain = (value?: number) => {
@@ -116,14 +128,12 @@ export const updateTerrain = (value?: number) => {
   }
   frames.settings.terrain.options.visible = value === 0;
 };
-
 onTerrainUpdatedViaCommand(updateTerrain);
 
 let previousPlayersCount = 0;
-
 export const updateDesiredSheep = () => {
   const inHouseCount = getInHouseCount();
-  const current = parseDesiredSheep(frames.settings.desiredSheep.text, false);
+  const current = settings.desiredSheep;
   if (previousPlayersCount === inHouseCount && current !== 0) {
     if (current >= inHouseCount) {
       frames.settings.desiredSheep.text = (inHouseCount - 1).toFixed(0);
@@ -134,21 +144,71 @@ export const updateDesiredSheep = () => {
   frames.settings.desiredSheep.text = (Math.floor(previousPlayersCount / 2 - 1)).toFixed(0);
 };
 
+export const updatePlayers = () => {
+  const playerCount = getActivePlayerCount();
+  const sheep = settings.desiredSheep;
+  const wolves = playerCount - sheep;
+
+  for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+    if (!frames.players[i]) continue;
+    const p = MapPlayerEx.fromIndex(i)!;
+    const {
+      container,
+      backdrop,
+      team,
+      teamBackdrop,
+      sheepCount,
+      handicap,
+      average,
+      deathOrder,
+    } = frames.players[i];
+
+    team.enabled = p.isHere;
+
+    if (!p.isHere) {
+      container.alpha = 63;
+      backdrop.alpha = 15;
+    } else if (p.afk !== AFK_PLAYING) {
+      container.alpha = 159;
+      backdrop.alpha = 27;
+    } else {
+      container.alpha = 255;
+      backdrop.alpha = 31;
+    }
+
+    if (p.isSheep) teamBackdrop.setTexture("ReplaceableTextures/CommandButtons/BTNSheep.blp");
+    else if (p.isWolf) teamBackdrop.setTexture("ReplaceableTextures/CommandButtons/BTNRaider.blp");
+    else teamBackdrop.setTexture("ReplaceableTextures/CommandButtons/BTNWisp.blp");
+
+    sheepCount.text = p.sheepCount.toFixed(0);
+    sheepCount.enabled = p.isHere;
+
+    handicap.text = (p.handicap * 100).toFixed(0) + "%";
+    handicap.enabled = p.isHere;
+
+    const times = getTimes(i);
+    const timeStat = times[`${sheep}v${wolves}`] ?? { total: 0, count: 0 };
+    average.text = timeStat.count === 0 ? "-" : simpleformatTime(timeStat.total / timeStat.count, true);
+
+    const deathStat = p.deathOrder[`${sheep}v${wolves}`] ?? { total: 0, count: 0 };
+    deathOrder.text = deathStat.count === 0 ? "-" : toStringWithPrecision(deathStat.total / deathStat.count, 1);
+  }
+};
+
 export const updateIntermission = () => {
-  BJDebugMsg("updateIntermission");
   if (frames.intermissionFrames.length === 0) return;
   updateMode();
   updateGold();
+  updateOther();
   updateDesiredSheep();
+  updatePlayers();
 };
 onUpdateIntermission(updateIntermission);
 
-export const showIntermission = () => {
-  BJDebugMsg("showIntermission");
-  updateIntermission();
-  for (const frame of frames.intermissionFrames) frame.visible = true;
+export const adjustChatFrames = () => {
+  if (frames.settings.container === undefined) return;
 
-  if (frames.settings.container !== undefined) {
+  if (frames.intermissionFrames[0].visible) {
     FrameEx.fromOrigin(ORIGIN_FRAME_CHAT_MSG).setPoint(
       FRAMEPOINT_RIGHT,
       frames.settings.container,
@@ -156,30 +216,53 @@ export const showIntermission = () => {
       0,
       0,
     );
+    FrameEx.fromOrigin(ORIGIN_FRAME_UNIT_MSG)
+      .clearPoints()
+      .setPoint(FRAMEPOINT_BOTTOMLEFT, frames.intermissionFrames[2], FRAMEPOINT_TOPLEFT, 0, 0)
+      .setPoint(
+        FRAMEPOINT_BOTTOMRIGHT,
+        frames.intermissionFrames[2],
+        FRAMEPOINT_TOPLEFT,
+        BlzGetLocalClientWidth() / BlzGetLocalClientHeight() * 0.6 / 2 - 0.32,
+        0,
+      );
+  } else {
+    FrameEx.fromOrigin(ORIGIN_FRAME_CHAT_MSG).setPoint(
+      FRAMEPOINT_RIGHT,
+      // Technically this cuts it off a bit early, but that's fine
+      FrameEx.fromOrigin(ORIGIN_FRAME_WORLD_FRAME),
+      FRAMEPOINT_RIGHT,
+      -0.05,
+      0,
+    );
+    FrameEx.fromOrigin(ORIGIN_FRAME_UNIT_MSG)
+      .clearPoints()
+      .setAbsPoint(FRAMEPOINT_BOTTOMLEFT, 0.25, 0.25)
+      .setAbsPoint(FRAMEPOINT_BOTTOMRIGHT, 0.55, 0.25);
   }
 };
 
+export const showIntermission = () => {
+  updateIntermission();
+  if (frames.intermissionFrames[0].visible === true) return;
+  for (const frame of frames.intermissionFrames) frame.visible = true;
+  adjustChatFrames();
+};
+
 export const hideIntermission = () => {
+  if (frames.intermissionFrames[0].visible === false) return;
   for (const frame of frames.intermissionFrames) frame.visible = false;
-  FrameEx.fromOrigin(ORIGIN_FRAME_CHAT_MSG).setPoint(
-    FRAMEPOINT_RIGHT,
-    // Technically this cuts it off a bit early, but that's fine
-    FrameEx.fromOrigin(ORIGIN_FRAME_WORLD_FRAME),
-    FRAMEPOINT_RIGHT,
-    -0.05,
-    0,
-  );
+  frames.endConfirmation.visible = false;
+  adjustChatFrames();
 };
 
 export const start = () => {
-  const desiredSheep = parseDesiredSheep(frames.settings.desiredSheep.text);
-  adjustSheepTeamSize(desiredSheep);
+  // const desiredSheep = parseDesiredSheep(frames.settings.desiredSheep.text);
+  adjustSheepTeamSize(settings.desiredSheep);
   udg_Teams = TEAMS_LOCK_IE_PLAYING;
   TriggerExecute(gg_trg_createSheep);
-  hideIntermission();
 };
 
 export const smart = () => {
-  actualSmart();
-  hideIntermission();
+  actualSmart(settings.desiredSheep);
 };

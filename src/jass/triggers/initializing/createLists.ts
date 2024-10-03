@@ -181,17 +181,17 @@ const Trig_createLists_Actions = () => {
     for (let i = 1; i <= bj_MAX_PLAYERS; i++) {
       LeaderboardSetPlayerItemLabelBJ(
         Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
-        PlayerGetLeaderboardBJ(ConvertedPlayer(i)!)!,
+        PlayerGetLeaderboard(ConvertedPlayer(i)!)!,
         "Sheep: " + I2S(CountPlayersInForceBJ(udg_Sheep)) + "                    (Farms)",
       );
       LeaderboardSetPlayerItemLabelBJ(
         Player(bj_PLAYER_NEUTRAL_VICTIM)!,
-        PlayerGetLeaderboardBJ(ConvertedPlayer(i)!)!,
+        PlayerGetLeaderboard(ConvertedPlayer(i)!)!,
         "Spirits: " + I2S(CountPlayersInForceBJ(udg_Spirit)),
       );
       LeaderboardSetPlayerItemLabelBJ(
         Player(bj_PLAYER_NEUTRAL_EXTRA)!,
-        PlayerGetLeaderboardBJ(ConvertedPlayer(i)!)!,
+        PlayerGetLeaderboard(ConvertedPlayer(i)!)!,
         "Wolves: " + I2S(CountPlayersInForceBJ(udg_Sheep)) + "                    (Kills)",
       );
     }

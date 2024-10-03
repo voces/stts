@@ -12,10 +12,31 @@ import {
 } from "userSettings/teamResources";
 import { setTimeout, Timeout } from "util/setTimeout";
 import { addScriptHook, File, W3TS_HOOK } from "w3ts";
-import { smart, start, updateDesiredSheep, updateMode, updateTerrain } from "./api";
+import {
+  adjustChatFrames,
+  hideIntermission,
+  showIntermission,
+  smart,
+  start,
+  updateDesiredSheep,
+  updateMode,
+  updatePlayers,
+  updateTerrain,
+} from "./api";
 import { frames } from "./frames";
-import { income, president, switchSetting } from "settings/settings";
+import {
+  farmVision as farmVisionSetting,
+  income,
+  president,
+  settings,
+  spawnSetting,
+  switchSetting,
+} from "settings/settings";
 import { parseDesiredSheep, toStringWithPrecision } from "./util";
+import { checkAutoTimeFlag } from "settings/time";
+import { handleAFK } from "jass/triggers/afkFunctions/AFK";
+import { setPub } from "teams/smart";
+import { transferHostTo } from "jass/triggers/hostCommands/transfer";
 
 let sheepZoomEditBox: FrameEx | undefined;
 let wolfZoomEditBox: FrameEx | undefined;
@@ -43,6 +64,94 @@ const handleZoom =
 
 const getFrames = <T extends string[]>(...names: T) =>
   names.map((name) => FrameEx.fromName(name)) as { [K in keyof T]: FrameEx };
+
+const setupSlider = (
+  name: string,
+  { format = (v) => v.toFixed(0), onChange }: { format?: (v: number) => string; onChange?: (v: number) => void } = {},
+) => {
+  const slider = FrameEx.fromName(name);
+  const display = FrameEx.fromName(`${name}Value`);
+
+  display.clearPoints();
+  display.setPoint(FRAMEPOINT_BOTTOM, slider.getChild(2), FRAMEPOINT_TOP, 0, 0);
+  slider.onSliderChange(({ value }) => {
+    display.text = format(value);
+    onChange?.(value);
+  });
+
+  return slider;
+};
+
+const editBoxDelayedOnChange = (
+  editBox: FrameEx,
+  { onChange, delay = 2 }: {
+    onChange?: (frames: { value: string }) => void;
+    delay?: number;
+  },
+) => {
+  let timer: Timeout | undefined;
+  editBox.onChange(({ value }) => {
+    timer?.cancel();
+    timer = setTimeout(delay, () => onChange?.({ ...frames, value }));
+  });
+};
+
+const setupEditableText = (
+  name: string,
+  { context = 0, onFocus, onBlur }: {
+    context?: number;
+    onFocus?: (frames: { label: FrameEx; editBox: FrameEx }) => void;
+    onBlur?: (frames: { label: FrameEx; editBox: FrameEx; modified: boolean; value?: string }) => void;
+  },
+) => {
+  const label = FrameEx.fromName(name, context);
+  const editBox = FrameEx.fromName(`${name}EditBox`, context);
+  const frames = { label, editBox };
+  editBox.visible = false;
+  let timer: Timeout | undefined;
+  let justClicked = false;
+  editBox.onChange(({ value }) => {
+    if (justClicked) return justClicked = false;
+    timer?.cancel();
+    timer = setTimeout(0.75, () => {
+      label.visible = true;
+      editBox.setFocus(false).setVisible(false);
+      onBlur?.({ ...frames, modified: true, value });
+    });
+  });
+  label.onClick(() => {
+    label.visible = false;
+    justClicked = true;
+    editBox.setVisible(true).setFocus(true);
+    onFocus?.(frames);
+    timer = setTimeout(2, () => {
+      label.visible = true;
+      editBox.setFocus(false).setVisible(false);
+      onBlur?.({ ...frames, modified: false });
+    });
+  });
+  return frames;
+};
+
+const syncCheckbox = (
+  checkbox: FrameEx,
+  { createContext = 0, onClick, checked = false }: {
+    checked?: boolean;
+    createContext?: number;
+    onClick?: (value: boolean) => void;
+  } = {},
+) => {
+  checkbox.visible = false;
+  const box = FrameEx.create("CheckboxButtonTemplate", checkbox.parent, 0, createContext);
+  box.setAllPoints(checkbox);
+  const check = FrameEx.fromName("CheckboxButtonCheckedTemplate", createContext);
+  check.visible = checked;
+  box.onClick(() => {
+    const checked = check.visible = !check.visible;
+    onClick?.(checked);
+  });
+  return check;
+};
 
 const setupPreferences = () => {
   const pid = GetPlayerId(GetLocalPlayer());
@@ -149,81 +258,15 @@ const setupPreferences = () => {
   });
 };
 
-const setupSlider = (
-  name: string,
-  { format = (v) => v.toFixed(0), onChange }: { format?: (v: number) => string; onChange?: (v: number) => void } = {},
-) => {
-  const slider = FrameEx.fromName(name);
-  const display = FrameEx.fromName(`${name}Value`);
-
-  display.clearPoints();
-  display.setPoint(FRAMEPOINT_BOTTOM, slider.getChild(2), FRAMEPOINT_TOP, 0, 0);
-  slider.onSliderChange(({ value }) => {
-    display.text = format(value);
-    onChange?.(value);
-  });
-
-  return slider;
-};
-
-const editBoxDelayedOnChange = (
-  editBox: FrameEx,
-  { onChange, delay = 2 }: {
-    onChange?: (frames: { value: string }) => void;
-    delay?: number;
-  },
-) => {
-  let timer: Timeout | undefined;
-  editBox.onChange(({ value }) => {
-    timer?.cancel();
-    timer = setTimeout(delay, () => onChange?.({ ...frames, value }));
-  });
-};
-
-const setupEditableText = (
-  name: string,
-  { context = 0, onFocus, onBlur }: {
-    context?: number;
-    onFocus?: (frames: { label: FrameEx; editBox: FrameEx }) => void;
-    onBlur?: (frames: { label: FrameEx; editBox: FrameEx; modified: boolean; value?: string }) => void;
-  },
-) => {
-  const label = FrameEx.fromName(name, context);
-  const editBox = FrameEx.fromName(`${name}EditBox`, context);
-  const frames = { label, editBox };
-  editBox.visible = false;
-  let timer: Timeout | undefined;
-  let justClicked = false;
-  editBox.onChange(({ value }) => {
-    if (justClicked) return justClicked = false;
-    timer?.cancel();
-    timer = setTimeout(0.75, () => {
-      label.visible = true;
-      editBox.setFocus(false).setVisible(false);
-      onBlur?.({ ...frames, modified: true, value });
-    });
-  });
-  label.onClick(() => {
-    label.visible = false;
-    justClicked = true;
-    editBox.setVisible(true).setFocus(true);
-    onFocus?.(frames);
-    timer = setTimeout(2, () => {
-      label.visible = true;
-      editBox.setFocus(false).setVisible(false);
-      onBlur?.({ ...frames, modified: false });
-    });
-  });
-  return frames;
-};
-
 const setupIntermission = () => {
-  FrameEx.create("SheepTagIntermission", ORIGIN_FRAME_WORLD_FRAME);
+  FrameEx.create("SheepTagIntermission", "ConsoleUIBackdrop");
   const settingsContainer = FrameEx.fromName("SheepTagSettings");
+  const players = FrameEx.fromName("SheepTagPlayers");
+  const extra = FrameEx.fromName("SheepTagExtra");
   frames.intermissionFrames.push(
     settingsContainer,
-    FrameEx.fromName("SheepTagPlayers"),
-    FrameEx.fromName("SheepTagEndButton"),
+    players,
+    extra,
   );
   frames.settings.container = settingsContainer;
 
@@ -252,6 +295,8 @@ const setupIntermission = () => {
 
     terrainLabel,
     terrain,
+    shrinkCheckbox,
+    expandCheckbox,
 
     classicTerrainOptions,
 
@@ -261,16 +306,24 @@ const setupIntermission = () => {
     wolfIncome,
     moneyFarmIncome,
 
-    farmVision,
+    time,
     spawn,
-    _time,
+    view,
+    farmVision,
+    autoCancel,
+    allowShareControl,
 
     desiredSheep,
-    _versus,
+    versusButton,
     startButton,
     smartButton,
 
-    players,
+    practice,
+    end,
+
+    endConfirmationContainer,
+    endConfirmCancel,
+    endConfirmEnd,
   ] = getFrames(
     "SheepTagRoundSettingsButton",
     "SheepTagRoundSettings",
@@ -287,21 +340,41 @@ const setupIntermission = () => {
     "SheepTagSwitchTimeLabel",
     "SheepTagTerrainLabel",
     "SheepTagTerrain",
+    "SheepTagShrink",
+    "SheepTagExpand",
     "SheepTagClassicOptions",
     "SheepTagSheepGold",
     "SheepTagWolfGold",
     "SheepTagSheepIncome",
     "SheepTagWolfIncome",
     "SheepTagMoneyFarmIncome",
-    "SheepTagFarmVision",
-    "SheepTagSpawn",
     "SheepTagTime",
+    "SheepTagSpawn",
+    "SheepTagView",
+    "SheepTagFarmVision",
+    "SheepTagAutoCancel",
+    "SheepTagControl",
     "SheepTagDesiredSheep",
     "SheepTagVersusButton",
     "SheepTagStartButton",
     "SheepTagSmartButton",
-    "SheepTagPlayers",
+    "SheepTagPracticeButton",
+    "SheepTagEndButton",
+    "SheepTagEndConfirmation",
+    "SheepTagEndConfirmationCancel",
+    "SheepTagEndConfirmationEnd",
   );
+
+  const consoleBackdrop = FrameEx.fromName("ConsoleUIBackdrop");
+  extra.setParent(consoleBackdrop).clearPoints()
+    .setPoint(FRAMEPOINT_BOTTOMLEFT, players, FRAMEPOINT_BOTTOMRIGHT, 0.01, 0);
+  // .setWidth(0.1);
+  practice.setParent(consoleBackdrop)
+    .setPoint(FRAMEPOINT_TOPRIGHT, extra, FRAMEPOINT_TOPRIGHT, -0.02, -0.02)
+    .children.forEach((child) => child.setParent(consoleBackdrop).setAllPoints(practice));
+  end.setParent(consoleBackdrop)
+    .setPoint(FRAMEPOINT_BOTTOMRIGHT, extra, FRAMEPOINT_BOTTOMRIGHT, -0.02, 0.02)
+    .children.forEach((child) => child.setParent(consoleBackdrop).setAllPoints(end));
 
   frames.settings.modeLabel = modeLabel;
   frames.settings.mode = mode;
@@ -316,22 +389,32 @@ const setupIntermission = () => {
   goldSettings.visible = false;
   otherSettings.visible = false;
 
+  roundSettingsButton.getChild(0).setTexture("UI/Widgets/BattleNet/bnet-tab-up.blp");
   roundSettingsButton.onClick(() => {
     roundSettings.visible = true;
+    roundSettingsButton.getChild(0).setTexture("UI/Widgets/BattleNet/bnet-tab-up.blp");
     goldSettings.visible = false;
+    goldSettingsButton.getChild(0).setTexture("UI/Widgets/BattleNet/bnet-tab-down.blp");
     otherSettings.visible = false;
+    otherSettingsButton.getChild(0).setTexture("UI/Widgets/BattleNet/bnet-tab-down.blp");
   });
 
   goldSettingsButton.onClick(() => {
     roundSettings.visible = false;
+    roundSettingsButton.getChild(0).setTexture("UI/Widgets/BattleNet/bnet-tab-down.blp");
     goldSettings.visible = true;
+    goldSettingsButton.getChild(0).setTexture("UI/Widgets/BattleNet/bnet-tab-up.blp");
     otherSettings.visible = false;
+    otherSettingsButton.getChild(0).setTexture("UI/Widgets/BattleNet/bnet-tab-down.blp");
   });
 
   otherSettingsButton.onClick(() => {
     roundSettings.visible = false;
+    roundSettingsButton.getChild(0).setTexture("UI/Widgets/BattleNet/bnet-tab-down.blp");
     goldSettings.visible = false;
+    goldSettingsButton.getChild(0).setTexture("UI/Widgets/BattleNet/bnet-tab-down.blp");
     otherSettings.visible = true;
+    otherSettingsButton.getChild(0).setTexture("UI/Widgets/BattleNet/bnet-tab-up.blp");
   });
 
   // Round settings
@@ -369,6 +452,27 @@ const setupIntermission = () => {
 
   terrain.value = 0;
   terrain.onItemChanged(({ value }) => updateTerrain(value));
+
+  frames.settings.shrink = syncCheckbox(shrinkCheckbox, {
+    checked: udg_mapShrink,
+    onClick: (v) => {
+      udg_mapShrink = v;
+      if (v) {
+        udg_mapExpand = false;
+        frames.settings.expand.visible = false;
+      }
+    },
+  });
+  frames.settings.expand = syncCheckbox(expandCheckbox, {
+    checked: udg_mapExpand,
+    onClick: (v) => {
+      udg_mapExpand = v;
+      if (v) {
+        udg_mapShrink = false;
+        frames.settings.shrink.visible = false;
+      }
+    },
+  });
 
   // Resource settings
 
@@ -413,21 +517,70 @@ const setupIntermission = () => {
 
   // Other settings
 
-  farmVision.text = "64";
+  frames.settings.time = time;
+  frames.settings.spawn = spawn;
+  frames.settings.farmVision = farmVision;
+
+  setupSlider("SheepTagTime", {
+    format: (v) => simpleformatTime(v * 60),
+    onChange: (v) => {
+      udg_time = v * 60;
+      checkAutoTimeFlag();
+    },
+  });
+  spawn.onItemChanged(({ value }) => spawnSetting.mode = value === 0 ? "static" : value === 1 ? "free" : "random");
   spawn.value = 0;
-  setupSlider("SheepTagTime", { format: (v) => simpleformatTime(v * 60) });
+  frames.settings.view = syncCheckbox(view, {
+    checked: udg_mapExpand,
+    onClick: (v) => {
+      udg_viewOn = v;
+      for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+        const modifier = udg_view[i + 1];
+        if (v) {
+          if (!modifier) {
+            udg_view[i + 1] = CreateFogModifierRectBJ(true, Player(i)!, FOG_OF_WAR_VISIBLE, GetWorldBounds()!);
+          }
+        } else if (modifier) {
+          DestroyFogModifier(modifier);
+          udg_view[i + 1] = undefined;
+        }
+      }
+    },
+  });
+  setupSlider("SheepTagFarmVision", {
+    format: (v) => v === 9 ? "Default" : v === 28 ? "1800" : (v * 64).toFixed(0),
+    onChange: (v) => {
+      farmVisionSetting.vision = v === 9 ? -1 : v === 28 ? 1800 : v * 64;
+      if (v === 9) DisableTrigger(farmVisionSetting.trigger);
+      else EnableTrigger(farmVisionSetting.trigger);
+    },
+  });
+  frames.settings.autoCancel = syncCheckbox(autoCancel, {
+    checked: autoCancelEnabled,
+    onClick: (v) => autoCancelEnabled = v,
+  });
+  frames.settings.allowShareControl = syncCheckbox(allowShareControl, {
+    checked: autoCancelEnabled,
+    onClick: (v) => udg_shareOn = v,
+  });
 
   // Starting
 
   frames.settings.desiredSheep = desiredSheep;
   updateDesiredSheep();
+  desiredSheep.onChange(({ value }) => {
+    const parsed = parseDesiredSheep(value);
+    settings.desiredSheep = parsed;
+  });
   editBoxDelayedOnChange(desiredSheep, {
     onChange: ({ value }) => {
       const parsed = parseDesiredSheep(value);
+      settings.desiredSheep = parsed;
       if (desiredSheep.text !== parsed.toFixed()) desiredSheep.text = parsed.toFixed();
     },
   });
 
+  versusButton.onClick(() => TriggerExecute(gg_trg_versus));
   startButton.onClick(start);
   smartButton.onClick(smart);
 
@@ -448,20 +601,48 @@ const setupIntermission = () => {
     row.setPoint(FRAMEPOINT_TOPLEFT, prev, FRAMEPOINT_BOTTOMLEFT, 0, 0);
     row.height = rowHeight;
 
-    FrameEx.fromName("SheepTagPlayerRowBackdrop", i)
+    const backdrop = FrameEx.fromName("SheepTagPlayerRowBackdrop", i)
       .setTexture(`replaceabletextures/teamcolor/teamcolor${i.toString().padStart(2, "0")}`)
       .setAlpha(31);
 
     const team = FrameEx.fromName("SheepTagPlayerTeam", i);
     team.onItemChanged(({ value }) => {
-      // TODO
       team.value = -1;
+
+      // Make sheep
+      if (value === 0) {
+        if (p.afk !== AFK_PLAYING) handleAFK(p.handle);
+        if (ForceEx.wolves.hasPlayer(p)) ForceEx.wolves.removePlayer(p);
+        if (!ForceEx.sheep.hasPlayer(p)) ForceEx.sheep.addPlayer(p);
+        settings.desiredSheep = ForceEx.sheep.size();
+        desiredSheep.text = settings.desiredSheep.toFixed(0);
+        // Make wolf
+      } else if (value === 1) {
+        if (p.afk !== AFK_PLAYING) handleAFK(p.handle);
+        if (ForceEx.sheep.hasPlayer(p)) ForceEx.sheep.removePlayer(p);
+        if (!ForceEx.wolves.hasPlayer(p)) ForceEx.wolves.addPlayer(p);
+        settings.desiredSheep = ForceEx.sheep.size();
+        desiredSheep.text = settings.desiredSheep.toFixed(0);
+        // Mark AFK
+      } else if (value === 2) {
+        if (p.afk === AFK_PLAYING) handleAFK(p.handle);
+        if (ForceEx.wolves.hasPlayer(p)) ForceEx.wolves.removePlayer(p);
+        if (ForceEx.sheep.hasPlayer(p)) ForceEx.sheep.removePlayer(p);
+        settings.desiredSheep = ForceEx.sheep.size();
+        desiredSheep.text = settings.desiredSheep.toFixed(0);
+        // Toggle pub
+      } else if (value === 3) setPub(p.id, !p.isPub, false);
+      // Transfer host
+      else if (value === 4) transferHostTo(p.cid);
+      // Kick
+      else if (value === 5) CustomDefeatBJ(p.handle, "You were disconnected.");
+
+      updatePlayers();
     });
-    const backdrop = team.getChild(0);
-    backdrop.setTexture(`ReplaceableTextures/CommandButtons/${p.id > 11 ? "BTNRaider" : "BTNSheep"}.blp`);
+    const teamBackdrop = team.getChild(0);
+    teamBackdrop.setTexture(`ReplaceableTextures/CommandButtons/${p.id > 11 ? "BTNRaider" : "BTNSheep"}.blp`);
     const disabledBackdrop = team.getChild(1);
     disabledBackdrop.setTexture(`ReplaceableTextures/CommandButtons/${p.id > 11 ? "BTNRaider" : "BTNSheep"}.blp`);
-    team.enabled = false;
 
     FrameEx.fromName("SheepTagPlayerRowName", i).setText(p.coloredName);
 
@@ -483,7 +664,7 @@ const setupIntermission = () => {
     const { label: handicapLabel } = setupEditableText("SheepTagPlayerRowHandicap", {
       context: i,
       onFocus: ({ editBox }) => {
-        editBox.setText((p.handicap * 100).toFixed(0));
+        editBox.setText(p.handicap === 1 ? "" : (p.handicap * 100).toFixed(0));
       },
       onBlur: ({ label, value }) => {
         if (!value) return;
@@ -494,8 +675,41 @@ const setupIntermission = () => {
     });
     handicapLabel.text = (p.handicap * 100).toFixed(0) + "%";
 
+    frames.players[i] = {
+      container: row,
+      backdrop,
+      team,
+      teamBackdrop,
+      sheepCount: sheepCountLabel,
+      handicap: handicapLabel,
+      average: FrameEx.fromName("SheepTagPlayerRowAverage", i),
+      deathOrder: FrameEx.fromName("SheepTagPlayerRowDeathOrder", i),
+    };
+
     prev = row;
   }
+
+  practice.onClick(() => TriggerExecute(gg_trg_practice));
+  end.onClick(() => {
+    hideIntermission();
+    endConfirmationContainer.visible = true;
+  });
+
+  frames.endConfirmation = endConfirmationContainer;
+  endConfirmationContainer.visible = false;
+
+  endConfirmCancel.onClick(() => {
+    endConfirmationContainer.visible = false;
+    showIntermission();
+  });
+
+  endConfirmEnd.onClick(() => {
+    endConfirmationContainer.visible = false;
+    TriggerExecute(gg_trg_end);
+  });
+
+  hideIntermission();
+  adjustChatFrames();
 };
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {

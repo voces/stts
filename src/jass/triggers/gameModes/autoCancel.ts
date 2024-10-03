@@ -19,7 +19,7 @@ InitTrig_autoCancel = () => {
     DisplayTimedTextToForce(
       GetPlayersAll()!,
       10,
-      `                              |CFF00AEEFAutocancel |CFFED1C24${autoCancelEnabled ? "enabled" : "disabled"}|r`,
+      `|CFF00AEEFAutocancel |CFFED1C24${autoCancelEnabled ? "enabled" : "disabled"}|r`,
     );
   });
 };

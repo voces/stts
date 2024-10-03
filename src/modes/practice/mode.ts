@@ -34,7 +34,6 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     EnableTrigger(gg_trg_owner);
     EnableTrigger(gg_trg_speed);
     autoCancelEnabled = false;
-    if (udg_viewOn) TriggerExecute(gg_trg_view);
     TriggerExecute(gg_trg_createSheep);
   });
 });

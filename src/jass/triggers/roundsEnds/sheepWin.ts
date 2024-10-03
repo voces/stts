@@ -1,4 +1,6 @@
+import { ForceEx } from "handles/ForceEx";
 import { displaySwitchWinner } from "modes/switch/winnerMsg";
+import { president } from "settings/settings";
 import { updateTimes } from "stats/updateTimes";
 import { maybeRotate } from "teams/smart";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
@@ -20,6 +22,7 @@ const updateSheepStats = () => {
 };
 
 const Trig_sheepWin_Actions = () => {
+  if (!president.enabled) ForceEx.sheep.for((p) => p.survived());
   if (!udg_practiceOn && !udg_switchOn) {
     udg_atempgroup = GetUnitsOfTypeIdAll(sheepType)!;
     udg_atempstring = I2S(CountUnitsInGroup(udg_atempgroup))!;
@@ -32,7 +35,7 @@ const Trig_sheepWin_Actions = () => {
   if (udg_Teams === TEAMS_LOCK_IE_PLAYING) {
     if (udg_versus === 1) udg_gameTime[1] = udg_time;
     else if (udg_versus === 2) udg_gameTime[2] = udg_time;
-    else setTimeout(0.05, () => displayTimedTextToAll(`\n                              ${fullTimeString}.`, 18));
+    else setTimeout(0.05, () => displayTimedTextToAll(`\n${fullTimeString}.`, 18));
     updateTimes();
     TriggerExecute(gg_trg_startRound);
   }

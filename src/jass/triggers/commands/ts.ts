@@ -15,7 +15,7 @@ const Trig_ts_Func003Func001A = (p: MapPlayerEx) => {
   if ((Trig_ts_Func003Func001Func001C())) {
     cid = GetConvertedPlayerId(GetEnumPlayer()!);
     p.displayTimedText(
-      "                              " + udg_colorString[cid] + GetPlayerName(GetEnumPlayer()!) + " : " +
+      udg_colorString[cid] + GetPlayerName(GetEnumPlayer()!) + " : " +
         I2S(udg_totalSaves[cid]),
       15,
     );
@@ -75,7 +75,7 @@ const Trig_ts_Func003C = () => {
 
 const Trig_ts_Actions = () => {
   const p = MapPlayerEx.fromEvent()!;
-  p.displayTimedText("                              |CFFFFCC00Total Saves|r", 15);
+  p.displayTimedText("|CFFFFCC00Total Saves|r", 15);
   if ((Trig_ts_Func003C())) {
     bj_forLoopAIndex = 1;
     bj_forLoopAIndexEnd = 12;
@@ -83,7 +83,7 @@ const Trig_ts_Actions = () => {
       if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
       if ((Trig_ts_Func003Func002Func001C())) {
         p.displayTimedText(
-          "                              " + udg_colorString[GetForLoopIndexA()] +
+          udg_colorString[GetForLoopIndexA()] +
             GetPlayerName(ConvertedPlayer(GetForLoopIndexA())!) + " : " + I2S(udg_totalSaves[GetForLoopIndexA()]),
           15,
         );
@@ -92,14 +92,14 @@ const Trig_ts_Actions = () => {
     }
     TriggerSleepAction(9);
     if (p.isLocal()) ClearTextMessages();
-    p.displayTimedText("                              |CFFFFCC00Total Saves|r", 15);
+    p.displayTimedText("|CFFFFCC00Total Saves|r", 15);
     bj_forLoopAIndex = 13;
     bj_forLoopAIndexEnd = 24;
     while (true) {
       if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
       if ((Trig_ts_Func003Func006Func001C())) {
         p.displayTimedText(
-          "                              " + udg_colorString[GetForLoopIndexA()] +
+          udg_colorString[GetForLoopIndexA()] +
             GetPlayerName(ConvertedPlayer(GetForLoopIndexA())!) + " : " + I2S(udg_totalSaves[GetForLoopIndexA()]),
           15,
         );

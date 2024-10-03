@@ -16,11 +16,7 @@ const Trig_pickwolf_Actions = () => {
     "|CFFED1C24Wolf",
   );
   udg_atempplayer = GetForceOfPlayer(udg_playerList[udg_pickIndex])!;
-  DisplayTimedTextToForce(
-    udg_atempplayer,
-    30,
-    "                             You've Been Added To The Wolf Team.",
-  );
+  DisplayTimedTextToForce(udg_atempplayer, 30, "You've Been Added To The Wolf Team.");
   DestroyForce(udg_atempplayer);
   udg_pickIndex = udg_pickIndex + 1;
   TriggerExecute(gg_trg_setupPick);

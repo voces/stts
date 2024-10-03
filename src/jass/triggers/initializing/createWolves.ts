@@ -40,11 +40,7 @@ const Trig_createWolves_Actions = () => {
 
   wolvesCreated = true;
 
-  DisplayTimedTextToForce(
-    udg_Sheep,
-    5,
-    "                              The wolves have been set free!",
-  );
+  DisplayTimedTextToForce(udg_Sheep, 5, "The wolves have been set free!");
 
   TimerDialogDisplayBJ(false, udg_wolfTimerWindow);
   PauseTimerBJ(false, udg_Timer);

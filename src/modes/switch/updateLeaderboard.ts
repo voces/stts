@@ -22,7 +22,7 @@ export const startUpdatingLeaderboard = () => {
       if (IsPlayerInForce(p, udg_Sheep) || IsPlayerInForce(p, udg_Wolf)) {
         if (IsPlayerInForce(p, udg_Sheep)) switchSheepTimers[i].pause();
         const t = Math.round(switchSheepTimers[i].elapsed);
-        LeaderboardSetPlayerItemValueBJ(p, PlayerGetLeaderboardBJ(GetLocalPlayer())!, t);
+        LeaderboardSetPlayerItemValueBJ(p, PlayerGetLeaderboard(GetLocalPlayer())!, t);
         if (t >= switchSetting.goalTime) won = true;
         if (IsPlayerInForce(p, udg_Sheep)) switchSheepTimers[i].resume();
       }

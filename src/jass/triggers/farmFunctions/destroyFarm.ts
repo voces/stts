@@ -25,7 +25,7 @@ const Trig_destroyFarm_Actions = () => {
 
   if (udg_switchOn) return;
   for (let i = 1; i <= bj_MAX_PLAYERS; i++) {
-    LeaderboardSetPlayerItemValueBJ(owner, PlayerGetLeaderboardBJ(ConvertedPlayer(i)!)!, udg_farmCount[ownerId]);
+    LeaderboardSetPlayerItemValueBJ(owner, PlayerGetLeaderboard(ConvertedPlayer(i)!)!, udg_farmCount[ownerId]);
   }
 };
 

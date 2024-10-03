@@ -10,7 +10,7 @@ const Trig_SexyOn_Conditions = () => {
 
 const Trig_SexyOn_Actions = () => {
   EnableTrigger(gg_trg_Sheep_Color);
-  displayTimedTextToAll("                              |CFFFFCC00Sexy Enabled|r", 5);
+  displayTimedTextToAll("|CFFFFCC00Sexy Enabled|r", 5);
 };
 
 declare global {

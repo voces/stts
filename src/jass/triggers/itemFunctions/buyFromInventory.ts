@@ -20,7 +20,7 @@ const Trig_buyFromInventory_Actions = () => {
       if (currentGold >= data[i].cost) {
         UnitAddItemById(learningUnit, FourCC(data[i].item));
         AdjustPlayerStateBJ(-data[i].cost, GetOwningPlayer(learningUnit), PLAYER_STATE_RESOURCE_GOLD);
-      } else p.displayTimedText(`                              |CFF00AEEFThat item is ${data[i].cost} gold.`);
+      } else p.displayTimedText(`|CFF00AEEFThat item is ${data[i].cost} gold.`);
       TriggerSleepAction(0.01);
       UnitRemoveAbility(learningUnit, learnedSkill);
       break;

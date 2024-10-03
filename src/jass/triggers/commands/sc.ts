@@ -15,11 +15,7 @@ const Trig_sc_printSheepCounts = () => {
         GetPlayerSlotState(Player(i)!) === PLAYER_SLOT_STATE_PLAYING &&
         udg_AFK[i + 1] === AFK_PLAYING
       ) {
-        p.displayTimedText(
-          "                              " + udg_colorString[i + 1] +
-            GetPlayerName(Player(i)!) + " : " + I2S(udg_sheepCount[i + 1]),
-          15,
-        );
+        p.displayTimedText(udg_colorString[i + 1] + GetPlayerName(Player(i)!) + " : " + I2S(udg_sheepCount[i + 1]), 15);
         count = count + 1;
       }
       i = i + 1;

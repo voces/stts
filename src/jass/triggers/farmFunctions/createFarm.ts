@@ -97,7 +97,7 @@ const Trig_createFarm_Actions = () => {
   for (let i = 1; i <= bj_MAX_PLAYERS; i++) {
     LeaderboardSetPlayerItemValueBJ(
       ConvertedPlayer(playerId)!,
-      PlayerGetLeaderboardBJ(ConvertedPlayer(i)!)!,
+      PlayerGetLeaderboard(ConvertedPlayer(i)!)!,
       udg_farmCount[playerId],
     );
   }

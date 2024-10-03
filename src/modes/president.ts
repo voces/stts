@@ -46,7 +46,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     DisplayTimedTextToForce(
       GetPlayersAll()!,
       10,
-      `                              |CFF00AEEFProtect the President |CFFED1C24${
+      `|CFF00AEEFProtect the President |CFFED1C24${
         president.enabled
           ? `enabled${president.handicap === 0.75 ? "" : ` (${president.handicap * 100}%)`}`
           : "disabled"

@@ -1,4 +1,4 @@
-import { MapPlayerEx } from "handles/MapPlayerEx";
+import type { MapPlayerEx } from "handles/MapPlayerEx";
 import type { Terrain } from "./terrain";
 
 export const income = {
@@ -9,16 +9,16 @@ export const income = {
 
 export const president = {
   enabled: false,
-  president: MapPlayerEx.fromIndex(PLAYER_NEUTRAL_PASSIVE)!,
+  president: undefined as MapPlayerEx | undefined,
   handicap: 0.75,
 };
 
 export const spawnSetting = { mode: "static" as "static" | "free" | "random" };
 
-export const farmVision = { vision: -1 };
+export const farmVision = { vision: -1, trigger: undefined as unknown as trigger };
 
-export const switchSetting = {
-  goalTime: Infinity,
-};
+export const switchSetting = { goalTime: Infinity };
 
 export const terrain: Terrain = {} as Terrain;
+
+export const settings = { desiredSheep: 0, teamConfiguration: { sheep: 0, wolves: 0 } };

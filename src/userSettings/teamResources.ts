@@ -35,29 +35,11 @@ const Trig_teamResources_Actions = () => {
   teamResources = ModuloInteger(teamResources + 1, 3);
   File.write("revo/teamResources.txt", I2S(teamResources)!);
   if (teamResources === TEAM_RESOURCES_DEFAULT) {
-    DisplayTimedTextToPlayer(
-      GetTriggerPlayer()!,
-      0,
-      0,
-      15,
-      "                              |CFF00AEEFShared resources shown",
-    );
+    DisplayTimedTextToPlayer(GetTriggerPlayer()!, 0, 0, 15, "|CFF00AEEFShared resources shown");
   } else if (teamResources === TEAM_RESOURCES_TWINED) {
-    DisplayTimedTextToPlayer(
-      GetTriggerPlayer()!,
-      0,
-      0,
-      15,
-      "                              |CFF00AEEFShared resources twinned",
-    );
+    DisplayTimedTextToPlayer(GetTriggerPlayer()!, 0, 0, 15, "|CFF00AEEFShared resources twinned");
   } else {
-    DisplayTimedTextToPlayer(
-      GetTriggerPlayer()!,
-      0,
-      0,
-      15,
-      "                              |CFF00AEEFShared resources hidden",
-    );
+    DisplayTimedTextToPlayer(GetTriggerPlayer()!, 0, 0, 15, "|CFF00AEEFShared resources hidden");
   }
 
   enforceTeamResourceMultiboard();

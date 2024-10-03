@@ -198,7 +198,7 @@ export const maybeRotate = () => {
     DisplayTimedTextToForce(
       GetPlayersAll()!,
       5,
-      "|r                              Swapping in " +
+      "|rSwapping in " +
         udg_colorString[GetConvertedPlayerId(unrotated)] +
         GetPlayerName(unrotated) + "|r.",
     );
@@ -324,7 +324,7 @@ const smartCommand = () => {
   smart(parts.length > 1 ? S2I(parts[1]) : undefined);
 };
 
-const setPub = (pid: number, value: boolean) => {
+export const setPub = (pid: number, value: boolean, message = true) => {
   if (GetPlayerSlotState(Player(pid)!) !== PLAYER_SLOT_STATE_PLAYING) return;
   const p = MapPlayerEx.fromIndex(pid)!;
 
@@ -348,7 +348,7 @@ const setPub = (pid: number, value: boolean) => {
 
   pub[pid] = value;
 
-  displayTimedTextToAll(`                              ${value ? "Flagged" : "Unflagged"} ${p} as a pub.`, 5);
+  if (message) displayTimedTextToAll(`${value ? "Flagged" : "Unflagged"} ${p} as a pub.`, 5);
 };
 const togglePub = () => {
   if (udg_Custom !== GetTriggerPlayer()! || udg_gameStarted) return;
@@ -366,11 +366,7 @@ const toggleRotate = () => {
   let r: number;
   if (udg_Custom !== GetTriggerPlayer()! || udg_gameStarted) return;
   if (rotated === Player(PLAYER_NEUTRAL_PASSIVE)!) {
-    DisplayTimedTextToForce(
-      GetPlayersAll()!,
-      5,
-      "                              Rotation enabled.",
-    );
+    DisplayTimedTextToForce(GetPlayersAll()!, 5, "Rotation enabled.");
     for (let i = 0; i < bj_MAX_PLAYERS; i++) {
       if (!isActivePlayer(Player(i)!)) continue;
 
@@ -390,11 +386,7 @@ const toggleRotate = () => {
     return;
   }
 
-  DisplayTimedTextToForce(
-    GetPlayersAll()!,
-    5,
-    "                              Rotation disabled.",
-  );
+  DisplayTimedTextToForce(GetPlayersAll()!, 5, "Rotation disabled.");
   udg_AFK[GetConvertedPlayerId(rotated)] = AFK_PLAYING;
   rotated = Player(PLAYER_NEUTRAL_PASSIVE)!;
   TriggerExecute(gg_trg_setupLeaderboard);
@@ -409,11 +401,7 @@ const togglePerfect = () => {
     clearPlayerVariables();
     perfectSmartIndex = 0;
   }
-  DisplayTimedTextToForce(
-    GetPlayersAll()!,
-    5,
-    `                              Perfect smart ${perfectSmartEnabled ? "enabled" : "disabled"}.`,
-  );
+  DisplayTimedTextToForce(GetPlayersAll()!, 5, `Perfect smart ${perfectSmartEnabled ? "enabled" : "disabled"}.`);
 };
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {

@@ -13,11 +13,8 @@ const Trig_dummyWisps_Actions = () => {
   udg_saves[cid] = udg_saves[cid] + 1;
   DisplayTextToForce(
     GetPlayersAll()!,
-    "                              " +
-      udg_colorString[
-        GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
-      ] + GetPlayerName(GetOwningPlayer(GetKillingUnit()!)) +
-      "|r killed a spirit for 100 gold!",
+    udg_colorString[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))] +
+      GetPlayerName(GetOwningPlayer(GetKillingUnit()!)) + "|r killed a spirit for 100 gold!",
   );
   AdjustPlayerStateBJ(
     100,
@@ -35,7 +32,7 @@ const Trig_dummyWisps_Actions = () => {
     if (udg_wispPoints > 0) {
       LeaderboardSetPlayerItemValueBJ(
         ConvertedPlayer(cid)!,
-        PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
+        PlayerGetLeaderboard(ConvertedPlayer(GetForLoopIndexA())!)!,
         udg_saves[cid],
       );
     }

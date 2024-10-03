@@ -36,7 +36,7 @@ const Trig_playerLeft_Actions = () => {
   DisplayTimedTextToForce(
     GetPlayersAll()!,
     5,
-    `                              ${MapPlayerEx.fromIndex(pid)} has left the game. (${
+    `${MapPlayerEx.fromIndex(pid)} has left the game. (${
       udg_sheepLastGame[cid]
         ? IsPlayerInForce(leaver, udg_Spirit) ? "Spirit" : "Sheep"
         : udg_AFK[GetConvertedPlayerId(leaver)] === AFK_PLAYING
@@ -108,7 +108,7 @@ const Trig_playerLeft_Actions = () => {
     leaver,
     GetLastCreatedLeaderboard()!,
   );
-  ForForce(GetPlayersAll()!, () => LeaderboardRemovePlayerItemBJ(leaver, PlayerGetLeaderboardBJ(GetEnumPlayer()!)!));
+  ForForce(GetPlayersAll()!, () => LeaderboardRemovePlayerItemBJ(leaver, PlayerGetLeaderboard(GetEnumPlayer()!)!));
   ForceRemovePlayerSimple(leaver, udg_Sheep);
   ForceRemovePlayerSimple(leaver, udg_Spirit);
   ForceRemovePlayerSimple(leaver, udg_Wolf);

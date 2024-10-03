@@ -52,7 +52,7 @@ const Trig_setafk_Func001A = () => {
         0,
       );
     }
-    displayTimedTextToAll(`                              ${MapPlayerEx.fromEnum()} has been set to AFK.`, 5);
+    displayTimedTextToAll(`${MapPlayerEx.fromEnum()} has been set to AFK.`, 5);
   }
 };
 

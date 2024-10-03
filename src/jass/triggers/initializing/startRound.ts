@@ -2,17 +2,10 @@ import { disableIncome, resetBankedGold } from "functions/farms/savingFarms";
 import { stopRuneTimers } from "functions/runes";
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { switchSheepTimers } from "modes/switch/switch";
-import { terrain } from "settings/settings";
+import { deathOrder } from "stats/deathOrder";
 import { showIntermission } from "ui/api";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { triggerRoundInitHooks } from "util/gameHooks";
-import { setTimeout, Timeout } from "util/setTimeout";
-
-let hostFarmTimeout: Timeout | undefined = undefined;
-
-export const cancelHostFarmSpawn = () => {
-  if (hostFarmTimeout) hostFarmTimeout.cancel();
-};
 
 const reviveEnumDestructable = () => {
   DestructableRestoreLife(
@@ -31,12 +24,6 @@ const resetEnumRoundStats = (i: number): void => {
 
   if (udg_AFKOn[i] === 1) udg_AFKOn[i] = 2;
   else if (udg_AFKOn[i] === 2) udg_AFKOn[i] = 0;
-};
-
-const destroyEnumPlayerView = () => {
-  const i = GetConvertedPlayerId(GetEnumPlayer()!);
-  if (udg_view[i]) DestroyFogModifier(udg_view[i]!);
-  udg_view[i] = undefined;
 };
 
 const removeDraft = () => {
@@ -123,10 +110,10 @@ const resetRoundStats = () => {
   someoneLeft = false;
   udg_switchOn = false;
   vampOn = false;
-  udg_viewOn = false;
   udg_shareOn = true;
   udg_pickIndex = 1;
   goldRaces = 0;
+  deathOrder.deaths = 0;
 };
 
 const Trig_startRound_Actions = () => {
@@ -150,8 +137,9 @@ const Trig_startRound_Actions = () => {
 
   for (let i = 0; i < bj_MAX_PLAYERS; i++) {
     switchSheepTimers[i].start(0.01, false, () => {}); // clear elapsed
-    DestroyLeaderboardBJ(PlayerGetLeaderboardBJ(Player(i)!)!);
+    DestroyLeaderboardBJ(PlayerGetLeaderboard(Player(i)!)!);
     udg_switch[i + 1] = 0;
+    MapPlayerEx.fromIndex(i)!.diedThisRound = false;
 
     for (let n = 0; n < bj_MAX_PLAYERS; n++) {
       SetPlayerAllianceStateBJ(
@@ -164,10 +152,6 @@ const Trig_startRound_Actions = () => {
     if (udg_AFK[i + 1] === AFK_AFK_DURING_ROUND) udg_AFK[i + 1] = AFK_AFK;
     else if (udg_AFK[i + 1] === AFK_RETURNED_DURING_ROUND || udg_AFK[i + 1] === AFK_PLAYING_PICK) {
       udg_AFK[i + 1] = AFK_PLAYING;
-    }
-
-    if (!udg_viewOn && !udg_view[i + 1]) {
-      udg_view[i + 1] = CreateFogModifierRectBJ(true, Player(i)!, FOG_OF_WAR_VISIBLE, GetPlayableMapRect()!);
     }
   }
 
@@ -193,7 +177,7 @@ const Trig_startRound_Actions = () => {
 
   for (let i = 0; i < bj_MAX_PLAYERS; i++) {
     p = Player(i)!;
-    DestroyLeaderboardBJ(PlayerGetLeaderboardBJ(p)!);
+    DestroyLeaderboardBJ(PlayerGetLeaderboard(p)!);
     PauseTimer(udg_sheepTimer[i + 1]);
     SetPlayerStateBJ(p, PLAYER_STATE_RESOURCE_GOLD, 0);
     SetPlayerStateBJ(p, PLAYER_STATE_RESOURCE_LUMBER, 0);
@@ -215,7 +199,6 @@ const Trig_startRound_Actions = () => {
   TimerDialogDisplayBJ(false, udg_massTimerWindow);
 
   ForForce(udg_Spirit, moveEnumPlayerFromSpiritToSheep);
-  ForForce(GetPlayersAll()!, destroyEnumPlayerView);
 
   if (udg_versus === 1 && !udg_versusOff && !udg_someVersusBoolean) {
     udg_versus = 2;
@@ -228,16 +211,16 @@ const Trig_startRound_Actions = () => {
     udg_time = 0;
     udg_versus = 0;
 
-    displayTimedTextToAll("                              |cff00aeefTeam 1 lasted " + formatTime(udg_gameTime[1]), 60);
-    displayTimedTextToAll("                              |cffed1c24Team 2 lasted " + formatTime(udg_gameTime[2]), 60);
+    displayTimedTextToAll("|cff00aeefTeam 1 lasted " + formatTime(udg_gameTime[1]), 60);
+    displayTimedTextToAll("|cffed1c24Team 2 lasted " + formatTime(udg_gameTime[2]), 60);
 
     if (udg_gameTime[1] > udg_gameTime[2]) {
-      displayTimedTextToAll("                              |cff00aeefTeam 1 wins!", 60);
+      displayTimedTextToAll("|cff00aeefTeam 1 wins!", 60);
       ForForce(udg_Wolf, Update_Versus_Wins);
     } else if (udg_gameTime[2] > udg_gameTime[1]) {
-      displayTimedTextToAll("                              |cffed1c24Team 2 wins!", 60);
+      displayTimedTextToAll("|cffed1c24Team 2 wins!", 60);
       ForForce(udg_Sheep, Update_Versus_Wins);
-    } else displayTimedTextToAll("                              |cffed1c24Tie game!", 60);
+    } else displayTimedTextToAll("|cffed1c24Tie game!", 60);
 
     startRoundToggledTriggers();
   } else {
@@ -258,14 +241,7 @@ ${p.isHost ? "New? Type |CFF00AEEF-smart|r." : `Please wait until ${MapPlayerEx.
 
   TriggerSleepAction(0);
 
-  if (udg_versus === 0) {
-    showIntermission();
-    hostFarmTimeout = setTimeout(0.25, () => {
-      const u = CreateUnit(udg_Custom, hostFarmType, GetRectCenterX(terrain.wolf), GetRectCenterY(terrain.wolf), 270)!;
-      SelectUnitForPlayerSingle(u, udg_Custom);
-      ForceUICancelBJ(udg_Custom);
-    });
-  }
+  if (udg_versus === 0) showIntermission();
 };
 
 declare global {

@@ -80,10 +80,7 @@ const Anonymous_Actions = () => {
 
   udg_Custom = ForcePickRandomPlayer(GetPlayersAll()!)!;
   udg_transfer = GetConvertedPlayerId(udg_Custom);
-  DisplayTextToForce(
-    GetForceOfPlayer(udg_Custom)!,
-    "                              |CFFFFCC00You now have control of the game.",
-  );
+  DisplayTextToForce(GetForceOfPlayer(udg_Custom)!, "|CFFFFCC00You now have control of the game.");
   TriggerExecute(gg_trg_setupLeaderboard);
 };
 

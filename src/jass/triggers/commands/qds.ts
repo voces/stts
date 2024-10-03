@@ -9,16 +9,16 @@ const formatedQDTime = (playerId: number): string => {
 const Trig_qds_Actions = () => {
   let count = 0;
   const triggerer = MapPlayerEx.fromEvent()!;
-  triggerer.displayTimedText("                              |CFFFFCC00Quick Deaths|r", 15);
+  triggerer.displayTimedText("|CFFFFCC00Quick Deaths|r", 15);
   for (let i = 0; i < bj_MAX_PLAYERS; i++) {
     const p = MapPlayerEx.fromIndex(i);
     if (!p || p.slotState === PLAYER_SLOT_STATE_EMPTY) continue;
     if (count > 0 && (count % 15 === 0)) {
       TriggerSleepAction(9);
       count = 0;
-      triggerer.displayTimedText("                              |CFFFFCC00Quick Deaths (cont.)|r", 15);
+      triggerer.displayTimedText("|CFFFFCC00Quick Deaths (cont.)|r", 15);
     }
-    triggerer.displayTimedText(`                              ${p.coloredName_} : ${formatedQDTime(i)}`, 15);
+    triggerer.displayTimedText(`${p.coloredName_} : ${formatedQDTime(i)}`, 15);
     count++;
   }
 };

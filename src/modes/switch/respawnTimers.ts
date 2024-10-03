@@ -49,7 +49,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
 
     DisplayTextToForce(
       GetPlayersAll()!,
-      `                              ${udg_colorString[pid + 1]}${GetPlayerName(Player(pid)!)}'s|r wolf has spawned!`,
+      `${udg_colorString[pid + 1]}${GetPlayerName(Player(pid)!)}'s|r wolf has spawned!`,
     );
     const wolf = udg_unit[pid + 1] = CreateUnit(
       Player(pid)!,

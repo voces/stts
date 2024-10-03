@@ -14,10 +14,7 @@ const Trig_position_Actions = () => {
     ) return;
   }
   udg_startLocation[p.cid] = udg_masterStartLocation[positionIndex];
-  p.displayTimedText(
-    udg_masterColorString[positionIndex] + "                              Set spawn position to: " + I2S(positionIndex),
-    8,
-  );
+  p.displayTimedText(udg_masterColorString[positionIndex] + "Set spawn position to: " + I2S(positionIndex), 8);
   const pos = {
     x: GetRectCenterX(udg_startLocation[p.cid]),
     y: GetRectCenterY(udg_startLocation[p.cid]),

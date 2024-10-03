@@ -3,7 +3,7 @@ import { addScriptHook, Trigger, W3TS_HOOK } from "w3ts";
 import { farmVision, income, president, spawnSetting, switchSetting } from "./settings";
 import { triggerIntermissionUpdate } from "ui/hooks";
 
-const checkAutoTimeFlag = () => {
+export const checkAutoTimeFlag = () => {
   const oldTime = udg_time;
   defaultTime();
   if (oldTime !== udg_time) {

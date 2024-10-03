@@ -82,7 +82,7 @@ const Trig_SexyOff_Actions = () => {
   udg_SheepColorG[24] = 26.67;
   udg_SheepColorB[24] = 20.04;
   DisableTrigger(gg_trg_Sheep_Color);
-  displayTimedTextToAll("                              |CFFFFCC00Sexy Disabled|r", 5);
+  displayTimedTextToAll("|CFFFFCC00Sexy Disabled|r", 5);
 };
 
 declare global {

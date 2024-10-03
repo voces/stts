@@ -13,7 +13,7 @@ const Trig_Str_Pot_Kill_Conditions = () => {
 const Trig_Str_Pot_Kill_Actions = () => {
   const u = UnitEx.fromDying()!;
   ExplodeUnitBJ(CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE)!, FourCC("hfoo"), u.x, u.y, 0)!);
-  displayTimedTextToAll(`                              ${UnitEx.fromKilling()?.owner} headshot ${u.owner}`, 5);
+  displayTimedTextToAll(`${UnitEx.fromKilling()?.owner} headshot ${u.owner}`, 5);
   PlaySoundBJ(gg_snd_headshot);
 };
 

@@ -1,6 +1,6 @@
 import { ForceEx } from "handles/ForceEx";
 
-const getActivePlayerCount = () => ForceEx.all.toArray().reduce((count, p) => count + (p.isActive ? 1 : 0), 0);
+export const getActivePlayerCount = () => ForceEx.all.toArray().reduce((count, p) => count + (p.isActive ? 1 : 0), 0);
 
 export const getInHouseCount = () =>
   ForceEx.all.toArray().reduce((count, p) => count + (p.isActive && !p.isPub ? 1 : 0), 0);
@@ -12,9 +12,9 @@ export const parseDesiredSheep = (value: string, lowerBound = true) => {
   return highBounded;
 };
 
-export const toStringWithPrecision = (value: number) =>
+export const toStringWithPrecision = (value: number, precision = 3) =>
   string.gsub(
-    string.gsub(string.format("%.3f", value), "0+$", "")[0],
+    string.gsub(string.format(`%.${precision}f`, value), "0+$", "")[0],
     "%.$",
     "",
   )[0];

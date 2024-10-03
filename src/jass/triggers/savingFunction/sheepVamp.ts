@@ -69,7 +69,7 @@ const Trig_sheepVamp_Actions = () => {
   DisplayTimedTextToForce(
     GetPlayersAll()!,
     5,
-    "                              " + udg_colorString[GetPlayerId(l) + 1] +
+    udg_colorString[GetPlayerId(l) + 1] +
       GetPlayerName(l) + "|r turned " + udg_colorString[GetPlayerId(p) + 1] +
       GetPlayerName(p) + "|r.",
   );

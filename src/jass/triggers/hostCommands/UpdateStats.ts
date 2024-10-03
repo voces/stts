@@ -58,9 +58,9 @@ const Trig_UpdateStats_Actions = () => {
   logEnd();
   TriggerSleepAction(0.3);
   displayTimedTextToAll(
-    `                              |cff00aeefW3MMD|r stats have been saved to the replay!
-    
-    Upload your replays to |cff00aeefhttps://wc3stats.com/|r`,
+    `|cff00aeefW3MMD|r stats have been saved to the replay!
+
+Upload your replays to |cff00aeefhttps://wc3stats.com/|r`,
     30,
   );
 };

@@ -10,13 +10,13 @@ const Trig_timeCommands_Actions = () => {
   let count = 0;
   Split(GetEventPlayerChatString()!, " ", false);
   if (myArg[0] === "-times" && myArgCount === 1) {
-    self.displayTimedText("                              |CFFFFCC00Total Sheep Round Time|r", 15);
+    self.displayTimedText("|CFFFFCC00Total Sheep Round Time|r", 15);
     while (true) {
       if (i === 24) break;
       if (wasHere[i]) {
         if (count === 12) TriggerSleepAction(4);
         self.displayTimedText(
-          "                              " + udg_colorString[i + 1] +
+          udg_colorString[i + 1] +
             GetPlayerName(Player(i)!) + ": " +
             formatTime(s___times_pTime[s__times_pTime[playerTimes[i]] + i]),
           15,
@@ -36,7 +36,7 @@ const Trig_timeCommands_Actions = () => {
           ] === 0
         ) {
           self.displayTimedText(
-            "                              " + udg_colorString[i + 1] +
+            udg_colorString[i + 1] +
               GetPlayerName(Player(i)!) + ": " +
               formatTime(
                 s___times_pTime[
@@ -47,7 +47,7 @@ const Trig_timeCommands_Actions = () => {
           );
         } else {
           self.displayTimedText(
-            "                              " + udg_colorString[i + 1] +
+            udg_colorString[i + 1] +
               GetPlayerName(Player(i)!) + ": " +
               formatTime(
                 s___times_pTime[
@@ -71,7 +71,7 @@ const Trig_timeCommands_Actions = () => {
       i = i + 1;
     }
     self.displayTimedText(
-      "                              " + "Total: " +
+      "Total: " +
         formatTime(
           s___times_pTime[
             s__times_pTime[playerTimes[S2I(myArg[1]) - 1]] + S2I(myArg[1]) - 1
@@ -80,7 +80,7 @@ const Trig_timeCommands_Actions = () => {
       15,
     );
   } else if (myArg[0] === "-atime" || myArg[0] === "-atimes") {
-    self.displayTimedText("                              |CFFFFCC00Average Sheep Round Time|r", 15);
+    self.displayTimedText("|CFFFFCC00Average Sheep Round Time|r", 15);
 
     for (let i = 0; i < bj_MAX_PLAYERS; i++) {
       if (!wasHere[i]) continue;
@@ -88,10 +88,10 @@ const Trig_timeCommands_Actions = () => {
       const times = getTimes(i);
       const keys = Object.keys(times).sort();
       const player = MapPlayerEx.fromIndex(i)!;
-      if (keys.length === 0) self.displayTimedText(`                              ${player.coloredName_}: N/A`, 15);
+      if (keys.length === 0) self.displayTimedText(`${player.coloredName_}: N/A`, 15);
       else {
         self.displayTimedText(
-          `                              ${player.coloredName_}: ${
+          `${player.coloredName_}: ${
             keys.map((k) =>
               `${simpleformatTime(times[k].total / times[k].count, true)}${modes.size > 1 ? ` (${k})` : ""}`
             )
@@ -105,20 +105,20 @@ const Trig_timeCommands_Actions = () => {
       count = count + 1;
     }
   } else if (myArg[0] === "-mytimes") {
-    self.displayTimedText("                              |CFFFFCC00Total Sheep Round Time Per Teammate|r", 15);
+    self.displayTimedText("|CFFFFCC00Total Sheep Round Time Per Teammate|r", 15);
     while (true) {
       if (i === 24) break;
       if (wasHere[i] && i !== self.id) {
         if (count === 12) TriggerSleepAction(4);
         if (s___times_pTime[s__times_pTime[playerTimes[self.id]] + self.id] === 0) {
           self.displayTimedText(
-            "                              " + udg_colorString[i + 1] + GetPlayerName(Player(i)!) + ": " +
+            udg_colorString[i + 1] + GetPlayerName(Player(i)!) + ": " +
               formatTime(s___times_pTime[s__times_pTime[playerTimes[self.id]] + i]) + "; 0.000%",
             15,
           );
         } else {
           self.displayTimedText(
-            "                              " + udg_colorString[i + 1] +
+            udg_colorString[i + 1] +
               GetPlayerName(Player(i)!) + ": " + formatTime(s___times_pTime[s__times_pTime[playerTimes[self.id]] + i]) +
               "; " +
               R2S(
@@ -133,13 +133,13 @@ const Trig_timeCommands_Actions = () => {
       i = i + 1;
     }
     self.displayTimedText(
-      "                              " + "Total: " +
+      "Total: " +
         formatTime(s___times_pTime[s__times_pTime[playerTimes[self.id]] + self.id]),
       15,
     );
   } else if (myArg[0] === "-maxtimes") {
     self.displayTimedText(
-      "                              |CFFFFCC00Longest Sheep Round Per Player|r",
+      "|CFFFFCC00Longest Sheep Round Per Player|r",
       15,
     );
     while (true) {
@@ -147,7 +147,7 @@ const Trig_timeCommands_Actions = () => {
       if (wasHere[i]) {
         if (count === 12) TriggerSleepAction(4);
         self.displayTimedText(
-          "                              " + udg_colorString[i + 1] +
+          udg_colorString[i + 1] +
             GetPlayerName(Player(i)!) + ": " +
             formatTime(s__times_pTimeMax[playerTimes[i]]),
           15,
@@ -158,26 +158,26 @@ const Trig_timeCommands_Actions = () => {
     }
   } else if (myArg[0] === "-leader") {
     if (recordHolders === "") {
-      self.displayTimedText("                              There are no leaders!", 15);
-      self.displayTimedText("                              There are no losers!", 15);
+      self.displayTimedText("There are no leaders!", 15);
+      self.displayTimedText("There are no losers!", 15);
     } else {
       self.displayTimedText(
-        "                              Leaders: " + recordHolders + " with " + formatTime(recordTime),
+        "Leaders: " + recordHolders + " with " + formatTime(recordTime),
         15,
       );
       self.displayTimedText(
-        "                              Losers: " + loserHolders + " with " + formatTime(loserTime),
+        "Losers: " + loserHolders + " with " + formatTime(loserTime),
         15,
       );
     }
   } else if (myArg[0] === "-stime" || myArg[0] === "-stimes") {
-    self.displayTimedText("                              |CFFFFCC00Total Time Alive as Sheep|r", 15);
+    self.displayTimedText("|CFFFFCC00Total Time Alive as Sheep|r", 15);
     while (true) {
       if (i === 24) break;
       if (wasHere[i]) {
         if (count === 12) TriggerSleepAction(4);
         self.displayTimedText(
-          "                              " + udg_colorString[i + 1] + GetPlayerName(Player(i)!) + ": " +
+          udg_colorString[i + 1] + GetPlayerName(Player(i)!) + ": " +
             formatTime(TimerGetElapsed(udg_sheepTimer[i + 1])),
           15,
         );
@@ -190,7 +190,7 @@ const Trig_timeCommands_Actions = () => {
     loserHolders = "";
     recordTime = -Infinity;
     loserTime = Infinity;
-    displayTimedTextToAll("                              Leaders and losers reset", 15);
+    displayTimedTextToAll("Leaders and losers reset", 15);
     while (true) {
       if (i === 24) break;
       s__times_pTimeMax[playerTimes[i]] = 0;
@@ -199,13 +199,13 @@ const Trig_timeCommands_Actions = () => {
       i = i + 1;
     }
   } else if (myArg[0] === "-rtime" || myArg[0] === "-rtimes") {
-    self.displayTimedText("                              |CFFFFCC00Sheep Round Times|r", 15);
+    self.displayTimedText("|CFFFFCC00Sheep Round Times|r", 15);
     while (true) {
       if (i === 24) break;
       if (wasHere[i]) {
         if (count === 12) TriggerSleepAction(4);
         self.displayTimedText(
-          "                              " + udg_colorString[i + 1] + GetPlayerName(Player(i)!) + ": " +
+          udg_colorString[i + 1] + GetPlayerName(Player(i)!) + ": " +
             udg_roundTimes[i + 1].slice(0, -2),
           15,
         );
@@ -214,13 +214,13 @@ const Trig_timeCommands_Actions = () => {
       i = i + 1;
     }
   } else if (myArg[0] === "-ss" || myArg[0] === "-sheepSurvived") {
-    self.displayTimedText("                              |CFFFFCC00Sheep Survived|r", 15);
+    self.displayTimedText("|CFFFFCC00Sheep Survived|r", 15);
     while (true) {
       if (i === 24) break;
       if (wasHere[i]) {
         if (count === 12) TriggerSleepAction(4);
         self.displayTimedText(
-          "                              " + udg_colorString[i + 1] + GetPlayerName(Player(i)!) + ": " +
+          udg_colorString[i + 1] + GetPlayerName(Player(i)!) + ": " +
             udg_sheepSurvived[i + 1],
           15,
         );

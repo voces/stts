@@ -6,17 +6,15 @@ const Trig_massTimeUp_Actions = () => {
   PauseTimerBJ(false, udg_Timer);
   TimerDialogDisplayBJ(true, udg_TimerWindow);
   TimerDialogDisplayBJ(false, udg_massTimerWindow);
-  displayTimedTextToAll(
-    "                              |CFFFFCC00Time! Scores |r",
-    15,
+  displayTimedTextToAll("|CFFFFCC00Time! Scores |r", 15);
+  ForForce(
+    GetPlayersAll()!,
+    () =>
+      displayTimedTextToAll(
+        `${MapPlayerEx.fromEnum()} massed ${I2S(GetPlayerStructureCount(GetEnumPlayer()!, true))} farms`,
+        15,
+      ),
   );
-  ForForce(GetPlayersAll()!, () =>
-    displayTimedTextToAll(
-      `                              ${MapPlayerEx.fromEnum()} massed ${
-        I2S(GetPlayerStructureCount(GetEnumPlayer()!, true))
-      } farms`,
-      15,
-    ));
   EnableTrigger(gg_trg_mass);
 };
 

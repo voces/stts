@@ -62,19 +62,19 @@ const Trig_initMassTest_Actions = () => {
   EnumItemsInRectBJ(GetPlayableMapRect()!, Trig_initMassTest_Func008002);
   PauseAllUnitsBJ(true);
   ForForce(GetPlayersAll()!, Trig_initMassTest_Func010A);
-  displayTimedTextToAll("                              |cff00aeef" + udg_massTimeString + " mass test", 5);
-  displayTimedTextToAll("                              |cffffcc00Begin massing in 3...", 1);
+  displayTimedTextToAll("|cff00aeef" + udg_massTimeString + " mass test", 5);
+  displayTimedTextToAll("|cffffcc00Begin massing in 3...", 1);
   if (udg_Teams !== 2) return;
   TriggerSleepAction(1);
   if (udg_Teams !== 2) return;
-  displayTimedTextToAll("                              |cffffcc00Begin massing in 2...", 1);
+  displayTimedTextToAll("|cffffcc00Begin massing in 2...", 1);
   TriggerSleepAction(1);
   if (udg_Teams !== 2) return;
-  displayTimedTextToAll("                              |cffffcc00Begin massing in 1...", 1);
+  displayTimedTextToAll("|cffffcc00Begin massing in 1...", 1);
   TriggerSleepAction(1);
   if (udg_Teams !== 2) return;
   displayTimedTextToAll(
-    "                              |cffffcc00Type|r |cffed1c24-stop|r |cffffcc00to go back to practicing or |cffed1c24-redo|r |cffffcc00to try again.|r",
+    "|cffffcc00Type|r |cffed1c24-stop|r |cffffcc00to go back to practicing or |cffed1c24-redo|r |cffffcc00to try again.|r",
     5,
   );
   PauseAllUnitsBJ(false);

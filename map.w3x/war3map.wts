@@ -708,12 +708,12 @@ sheep
 
 STRING 1474
 {
-                              %s gave you control.
+%s gave you control.
 }
 
 STRING 1475
 {
-                              %s took control from you.
+%s took control from you.
 }
 
 STRING 1676

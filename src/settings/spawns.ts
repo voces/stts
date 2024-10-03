@@ -16,11 +16,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   t.addAction(() => {
     if (!MapPlayerEx.fromEvent()!.isHost) return;
     spawnSetting.mode = spawnSetting.mode === "free" ? "static" : "free";
-    displayTimedTextToAll(
-      `                              |CFF00AEEFFree spawns |CFFED1C24${
-        spawnSetting.mode === "free" ? "enabled" : "disabled"
-      }|r`,
-    );
+    displayTimedTextToAll(`|CFF00AEEFFree spawns |CFFED1C24${spawnSetting.mode === "free" ? "enabled" : "disabled"}|r`);
     updateLeaderboardSettingsDisplay();
   });
 
@@ -30,9 +26,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     if (udg_gameStarted || !MapPlayerEx.fromEvent()!.isHost) return;
     spawnSetting.mode = spawnSetting.mode === "random" ? "static" : "random";
     displayTimedTextToAll(
-      `                              |CFF00AEEFRandom spawns |CFFED1C24${
-        spawnSetting.mode === "random" ? "enabled" : "disabled"
-      }|r`,
+      `|CFF00AEEFRandom spawns |CFFED1C24${spawnSetting.mode === "random" ? "enabled" : "disabled"}|r`,
     );
     updateLeaderboardSettingsDisplay();
   });

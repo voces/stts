@@ -1,7 +1,9 @@
+import { hideIntermission } from "ui/api";
 import { addScriptHook, W3TS_HOOK } from "w3ts";
 
 const Trig_setupPick_Actions = () => {
   ClearTextMessages();
+  hideIntermission();
   for (; udg_pickIndex < bj_MAX_PLAYERS; udg_pickIndex++) {
     if (
       GetPlayerSlotState(udg_playerList[udg_pickIndex]) === PLAYER_SLOT_STATE_PLAYING ||
@@ -32,15 +34,12 @@ const Trig_setupPick_Actions = () => {
     GetForceOfPlayer(udg_Custom)!,
     30,
     `Press |CFF0054A6S|r                                    Press |CFFED1C24W|r
-For Sheep                              For Wolf`.split("\n").map((v) => `${" ".repeat(70)}${v}`).join(
-      "\n",
-    ),
+For Sheep                              For Wolf`,
   );
   DisplayTimedTextToForce(
     GetForceOfPlayer(udg_Custom)!,
     30,
-    " ".repeat(87) +
-      udg_colorString[GetConvertedPlayerId(udg_playerList[udg_pickIndex])] +
+    "\n" + udg_colorString[GetConvertedPlayerId(udg_playerList[udg_pickIndex])] +
       GetPlayerName(udg_playerList[udg_pickIndex]),
   );
 };

@@ -68,11 +68,7 @@ const Trig_versusCountDown_Actions = () => {
     } else {
       DoNothing();
     }
-    DisplayTextToForce(
-      GetPlayersAll()!,
-      "                              |cff00aeefTeam 1 lasted " +
-        udg_atempstring,
-    );
+    DisplayTextToForce(GetPlayersAll()!, "|cff00aeefTeam 1 lasted " + udg_atempstring);
     udg_time = 1200;
     ForForce(GetPlayersAll()!, Trig_versusCountDown_Func002Func006A);
   } else {

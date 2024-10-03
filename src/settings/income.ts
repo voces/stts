@@ -13,7 +13,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
 
     if (s === "-income") {
       income.sheep = income.wolves = income.savings = 1;
-      displayTimedTextToAll("                              |cffffcc00Income set to 1x.|r");
+      displayTimedTextToAll("|cffffcc00Income set to 1x.|r");
       updateLeaderboardSettingsDisplay();
       return;
     }
@@ -27,16 +27,16 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     income.savings = savings;
 
     if (income.sheep === income.wolves && income.sheep === income.savings) {
-      displayTimedTextToAll(`                              |cffffcc00Income set to ${income.sheep}x.|r`);
+      displayTimedTextToAll(`|cffffcc00Income set to ${income.sheep}x.|r`);
       updateLeaderboardSettingsDisplay();
       return;
     }
 
-    displayTimedTextToAll(`                              |cffffcc00Sheep income set to ${income.sheep}x.|r`);
+    displayTimedTextToAll(`|cffffcc00Sheep income set to ${income.sheep}x.|r`);
     if (income.sheep !== income.savings) {
-      displayTimedTextToAll(`                              |cffffcc00Money Farm income set to ${income.savings}x.|r`);
+      displayTimedTextToAll(`|cffffcc00Money Farm income set to ${income.savings}x.|r`);
     }
-    displayTimedTextToAll(`                              |cffffcc00Wolf set to ${income.wolves}x.|r`);
+    displayTimedTextToAll(`|cffffcc00Wolf set to ${income.wolves}x.|r`);
     updateLeaderboardSettingsDisplay();
   });
 });

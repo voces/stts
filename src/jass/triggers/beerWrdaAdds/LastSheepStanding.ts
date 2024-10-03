@@ -13,7 +13,7 @@ const Trig_Last_Sheep_Standing_Func001A = () => {
   udg_lssCounter[GetConvertedPlayerId(GetEnumPlayer()!)] = udg_lssCounter[GetConvertedPlayerId(GetEnumPlayer()!)] + 1;
   if (CountPlayersInForceBJ(udg_Spirit) >= 1) {
     const p = MapPlayerEx.fromEnum();
-    displayTimedTextToAll(`                              ${p?.hex}It really is ${p?.name}!`, 5);
+    displayTimedTextToAll(`${p?.hex}It really is ${p?.name}!`, 5);
   }
 };
 

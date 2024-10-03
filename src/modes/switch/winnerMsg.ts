@@ -13,7 +13,7 @@ export const displaySwitchWinner = () => {
   );
 
   displayTimedTextToAll(
-    `\n                              ${winner} wins with ${
+    `\n${winner} wins with ${
       udg_wispPoints > 0
         ? `${udg_saves[winner.cid]} saves`
         : `${simpleformatTime(switchSheepTimers[winner.id].elapsed)}`

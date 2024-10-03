@@ -16,6 +16,7 @@
 ## Feature changes
 
 - Custom UI
+  - -view is persisted between rounds
 - When a sheep dies, their gold is automatically distributed to allies
   - In president mode, all gold goes to the president
 - Goblin Support changes

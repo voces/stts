@@ -1,9 +1,29 @@
+import { settings } from "settings/settings";
+import { deathOrder } from "stats/deathOrder";
 import { MapPlayer, Unit } from "w3ts";
 
 const map = new Map<player, MapPlayerEx>();
 
 export class MapPlayerEx extends MapPlayer {
   bankedGold = 0;
+
+  readonly deathOrder: Record<string, { total: number; count: number } | undefined> = {};
+  diedThisRound = false;
+  died() {
+    if (this.diedThisRound) return;
+    this.diedThisRound = true;
+    const v = `${settings.teamConfiguration.sheep}v${settings.teamConfiguration.wolves}`;
+    const stat = this.deathOrder[v] ?? (this.deathOrder[v] = { total: 0, count: 0 });
+    stat.count++;
+    stat.total += settings.teamConfiguration.sheep - deathOrder.deaths++;
+  }
+
+  survived() {
+    if (this.diedThisRound) return;
+    const v = `${settings.teamConfiguration.sheep}v${settings.teamConfiguration.wolves}`;
+    const stat = this.deathOrder[v] ?? (this.deathOrder[v] = { total: 0, count: 0 });
+    stat.count++;
+  }
 
   get cid() {
     return this.id + 1;

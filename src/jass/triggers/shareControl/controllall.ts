@@ -62,7 +62,7 @@ const Trig_controllal_Func008A = () => {
       }
       DisplayTextToForce(
         udg_atempplayer,
-        "                              |CFFFFCC00Gave control to " +
+        "|CFFFFCC00Gave control to " +
           (udg_colorString[GetConvertedPlayerId(GetEnumPlayer()!)] +
             (GetPlayerName(GetEnumPlayer()!) + "|CFFFFCC00.")),
       );
@@ -76,7 +76,7 @@ const Trig_controllal_Func008A = () => {
     if ((Trig_controllal_Func008Func001Func001C())) {
       DisplayTextToForce(
         udg_atempplayer,
-        "                              |CFFFFCC00Took control from " +
+        "|CFFFFCC00Took control from " +
           (udg_colorString[GetConvertedPlayerId(GetEnumPlayer()!)] +
             (GetPlayerName(GetEnumPlayer()!) + "|CFFFFCC00.")),
       );

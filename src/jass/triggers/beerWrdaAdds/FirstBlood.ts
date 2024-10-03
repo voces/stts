@@ -7,10 +7,7 @@ const Trig_First_Blood_Actions = () => {
   udg_firstBlood = true;
   udg_firstbloodDeathCounter[cid]++;
   udg_firstbloodKillCounter[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))]++;
-  displayTimedTextToAll(
-    `                              ${UnitEx.fromKilling()?.owner} scored firstblood on ${UnitEx.fromDying()?.owner}`,
-    5,
-  );
+  displayTimedTextToAll(`${UnitEx.fromKilling()?.owner} scored firstblood on ${UnitEx.fromDying()?.owner}`, 5);
   const time = TimerGetElapsed(udg_Timer);
   const prevTime = udg_QDeathTime[cid];
   if (time < prevTime) {

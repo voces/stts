@@ -1,4 +1,4 @@
-import { president, spawnSetting, terrain } from "settings/settings";
+import { president, settings, spawnSetting, terrain } from "settings/settings";
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { clearForces } from "util/clearForces";
@@ -7,11 +7,11 @@ import { createCritter } from "misc/critter";
 import { ABILITY_TYPE_ID_RESET_START_POSITION, UNIT_TYPE_ID_START_POSITION } from "constants";
 import { switchSheepTimers } from "modes/switch/switch";
 import { startUpdatingLeaderboard } from "modes/switch/updateLeaderboard";
-import { cancelHostFarmSpawn } from "./startRound";
 import { enableIncome } from "functions/farms/savingFarms";
 import { ForceEx } from "handles/ForceEx";
 import { applyPresidentBuff } from "modes/president";
 import { triggerOnRoundStart } from "util/onRoundStart";
+import { hideIntermission } from "ui/api";
 
 let firstRound = true;
 
@@ -291,17 +291,16 @@ const Trig_createSheep_Actions_part4 = () => {
 };
 
 const Trig_createSheep_Actions_part3 = () => {
-  displayTimedTextToAll("                              |cffffcc00Game starting in 1...", 1);
+  displayTimedTextToAll("|cffffcc00Game starting in 1...", 1);
   TimerStart(createSheepTimer, 1, false, Trig_createSheep_Actions_part4);
 };
 
 const Trig_createSheep_Actions_part2 = () => {
-  displayTimedTextToAll("                              |cffffcc00Game starting in 2...", 1);
+  displayTimedTextToAll("|cffffcc00Game starting in 2...", 1);
   TimerStart(createSheepTimer, 1, false, Trig_createSheep_Actions_part3);
 };
 
 const Trig_createSheep_Actions = () => {
-  cancelHostFarmSpawn();
   udg_gameStarted = true;
   PauseTimerBJ(true, udg_Createtimer);
 
@@ -402,31 +401,20 @@ const Trig_createSheep_Actions = () => {
     ForForce(udg_Wolf, () => MapPlayerEx.fromEnum()!.handicap = 1);
   }
 
+  settings.teamConfiguration = { sheep: ForceEx.sheep.size(), wolves: ForceEx.wolves.size() };
+  hideIntermission();
+
   if (udg_practiceOn) {
     clearForces();
     ForForce(GetPlayersAll()!, Trig_createSheep_addToSheepAndWolf);
-    displayTimedTextToAll("                              |cff00aeefWelcome to practice mode!", 5);
-    displayTimedTextToAll(
-      "                              Commands: |cffed1c24-a -s -owner -disable -mass -speed 1-5",
-      5,
-    );
+    displayTimedTextToAll("|cff00aeefWelcome to practice mode!", 5);
+    displayTimedTextToAll("Commands: |cffed1c24-a -s -owner -disable -mass -speed 1-5", 5);
     Trig_createSheep_Actions_part4();
   } else {
-    DisplayTimedTextToForce(
-      udg_Sheep,
-      4,
-      "                              |cff00aeefYou are |cffed1c24Sheep|cff00aeef this round.",
-    );
-    DisplayTimedTextToForce(
-      udg_Wolf,
-      4,
-      "                              |cff00aeefYou are |cffed1c24Wolf|cff00aeef this round.",
-    );
+    DisplayTimedTextToForce(udg_Sheep, 4, "|cff00aeefYou are |cffed1c24Sheep|cff00aeef this round.");
+    DisplayTimedTextToForce(udg_Wolf, 4, "|cff00aeefYou are |cffed1c24Wolf|cff00aeef this round.");
 
-    displayTimedTextToAll(
-      "                              |cffffcc00Game starting in 3...",
-      1,
-    );
+    displayTimedTextToAll("|cffffcc00Game starting in 3...", 1);
     TimerStart(createSheepTimer, 1, false, Trig_createSheep_Actions_part2);
   }
 };

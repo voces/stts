@@ -1,9 +1,8 @@
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
 const Trig_hide_Actions = () => {
-  if (udg_Teams === TEAMS_LOCK_IE_PLAYING) {
-    LeaderboardDisplayBJ(false, PlayerGetLeaderboardBJ(GetTriggerPlayer()!)!);
-  }
+  if (udg_Teams === TEAMS_LOCK_IE_PLAYING) LeaderboardDisplay(PlayerGetLeaderboard(GetTriggerPlayer()!)!, false);
+
   udg_permanentHide[GetConvertedPlayerId(GetTriggerPlayer()!)] = true;
 };
 

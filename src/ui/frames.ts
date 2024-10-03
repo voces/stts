@@ -41,10 +41,14 @@ export const frames: {
     desiredSheep: FrameEx;
   };
   players: {
+    container: FrameEx;
+    backdrop: FrameEx;
     team: FrameEx;
+    teamBackdrop: FrameEx;
     sheepCount: FrameEx;
     handicap: FrameEx;
     average: FrameEx;
     deathOrder: FrameEx;
   }[];
+  endConfirmation: FrameEx;
 } = { intermissionFrames: [], settings: { president: {}, switch: {}, terrain: {} }, players: [] } as any;

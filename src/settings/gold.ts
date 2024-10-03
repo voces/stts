@@ -12,22 +12,18 @@ const Trig_gold_Actions = () => {
     DisplayTimedTextToForce(
       GetPlayersAll()!,
       5,
-      `                              |cffffcc00Set |cff00aeefsheep|cffffcc00 gold to ${I2S(udg_sheepGold)}.|r`,
+      `|cffffcc00Set |cff00aeefsheep|cffffcc00 gold to ${I2S(udg_sheepGold)}.|r`,
     );
     DisplayTimedTextToForce(
       GetPlayersAll()!,
       5,
-      `                              |cffffcc00Set |cffed1c24wolf|cffffcc00 gold to ${I2S(udg_wolfGold)}.|r`,
+      `|cffffcc00Set |cffed1c24wolf|cffffcc00 gold to ${I2S(udg_wolfGold)}.|r`,
     );
     return;
   }
 
   udg_sheepGold = udg_wolfGold = Math.min(parts[0], 9999999);
-  DisplayTimedTextToForce(
-    GetPlayersAll()!,
-    5,
-    `                              |cffffcc00Set gold to ${I2S(udg_sheepGold)}.|r`,
-  );
+  DisplayTimedTextToForce(GetPlayersAll()!, 5, `|cffffcc00Set gold to ${I2S(udg_sheepGold)}.|r`);
 
   updateLeaderboardSettingsDisplay();
 };

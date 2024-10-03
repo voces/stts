@@ -1,7 +1,7 @@
 IncludeFile "UI\FrameDef\UI\EscMenuMainPanel.fdf",
 
 Frame "GLUETEXTBUTTON" "SheepTagPreferencesButton" INHERITS WITHCHILDREN "EscMenuButtonTemplate" {
-  SetPoint BOTTOM, "OptionsButton", TOP, 0.0, 0.002,
+  SetPoint BOTTOM, "OptionsButton", TOP, 0, 0.002,
   TabFocusNext "OptionsButton",
   ControlShortcutKey "KEY_SAVE_GAME_SHORTCUT", // No work
 
@@ -12,15 +12,17 @@ Frame "GLUETEXTBUTTON" "SheepTagPreferencesButton" INHERITS WITHCHILDREN "EscMen
 }
 
 Frame "DIALOG" "SheepTagPreferencesPanel" {
-  SetPoint TOP, "ConsoleUI", TOP, 0.0, -0.06,
+  SetPoint TOP, "ConsoleUI", TOP, 0, -0.06,
   Height 0.35,
   Width 0.34,
 
   TabFocusPush,
 
   Frame "TEXT" "SheepTagPreferencesTitle" INHERITS "EscMenuTitleTextTemplate" {
-    SetPoint TOP, "SheepTagPreferencesPanel", TOP, 0.0, -0.03,
-    FontColor 1.0 1.0 1.0 1.0,
+    SetPoint TOP, "SheepTagPreferencesPanel", TOP, 0, -0.03,
+    FontColor 1 1 1,
+    Width 0.2,
+    FontJustificationH JUSTIFYCENTER,
     Text "Sheep Tag Preferences",
   }
 
@@ -28,37 +30,43 @@ Frame "DIALOG" "SheepTagPreferencesPanel" {
 
   Frame "TEXT" "SheepZoomLabel" INHERITS "EscMenuButtonTextTemplate" {
     SetPoint TOPLEFT, "SheepTagPreferencesPanel", TOPLEFT, 0.025, -0.07,
+    Width 0.09,
+    FontJustificationH JUSTIFYLEFT,
     Text "Sheep zoom:",
   }
 
   Frame "EDITBOX" "SheepZoomEditBox" INHERITS WITHCHILDREN "EscMenuEditBoxTemplate" {
-    SetPoint LEFT, "SheepZoomLabel", LEFT, 0.09, 0.0,
+    SetPoint LEFT, "SheepZoomLabel", LEFT, 0.09, 0,
     Height 0.029,
-    Width 0.05,
+    Width 0.055,
     TabFocusNext "WolfZoomLabel",
   }
 
   Frame "TEXT" "WolfZoomLabel" INHERITS "EscMenuButtonTextTemplate" {
     SetPoint TOPLEFT, "SheepZoomLabel", BOTTOMLEFT, 0, -0.014,
+    Width 0.09,
+    FontJustificationH JUSTIFYLEFT,
     Text "Wolf zoom:",
   }
 
   Frame "EDITBOX" "WolfZoomEditBox" INHERITS WITHCHILDREN "EscMenuEditBoxTemplate" {
-    SetPoint LEFT, "WolfZoomLabel", LEFT, 0.09, 0.0,
+    SetPoint LEFT, "WolfZoomLabel", LEFT, 0.09, 0,
     Height 0.029,
-    Width 0.05,
+    Width 0.055,
     TabFocusNext "WispZoomEditBox",
   }
 
   Frame "TEXT" "WispZoomLabel" INHERITS "EscMenuButtonTextTemplate" {
     SetPoint TOPLEFT, "WolfZoomLabel", BOTTOMLEFT, 0, -0.014,
+    Width 0.09,
+    FontJustificationH JUSTIFYLEFT,
     Text "Wisp zoom:",
   }
 
   Frame "EDITBOX" "WispZoomEditBox" INHERITS WITHCHILDREN "EscMenuEditBoxTemplate" {
-    SetPoint LEFT, "WispZoomLabel", LEFT, 0.09, 0.0,
+    SetPoint LEFT, "WispZoomLabel", LEFT, 0.09, 0,
     Height 0.029,
-    Width 0.05,
+    Width 0.055,
     TabFocusNext "AutoControlCheckbox",
   }
 
@@ -81,7 +89,8 @@ Frame "DIALOG" "SheepTagPreferencesPanel" {
 
   Frame "TEXT" "AutoControlLabel" INHERITS "EscMenuButtonTextTemplate" {
     SetPoint LEFT, "AutoControlCheckbox", RIGHT, 0.005, 0,
-    // FontColor 1.0 1.0 1.0 1.0,
+    Width 0.3,
+    FontJustificationH JUSTIFYLEFT,
     Text "Automatically share control",
   }
 
@@ -104,7 +113,8 @@ Frame "DIALOG" "SheepTagPreferencesPanel" {
 
   Frame "TEXT" "NoAutoControlLabel" INHERITS "EscMenuButtonTextTemplate" {
     SetPoint LEFT, "NoAutoControlCheckbox", RIGHT, 0.005, 0,
-    // FontColor 1.0 1.0 1.0 1.0,
+    Width 0.3,
+    FontJustificationH JUSTIFYLEFT,
     Text "Do not automatically receive control",
   }
 
@@ -126,7 +136,8 @@ Frame "DIALOG" "SheepTagPreferencesPanel" {
 
     Frame "TEXT" "TeamResourcesShownLabel" INHERITS "EscMenuButtonTextTemplate" {
       SetPoint LEFT, "TeamResourcesShownRadio", RIGHT, 0.009, 0,
-      // FontColor 1.0 1.0 1.0 1.0,
+      Width 0.3,
+      FontJustificationH JUSTIFYLEFT,
       Text "Show team resources",
     }
 
@@ -143,7 +154,8 @@ Frame "DIALOG" "SheepTagPreferencesPanel" {
 
     Frame "TEXT" "TeamResourcesHiddenLabel" INHERITS "EscMenuButtonTextTemplate" {
       SetPoint LEFT, "TeamResourcesHiddenRadio", RIGHT, 0.009, 0,
-      // FontColor 1.0 1.0 1.0 1.0,
+      Width 0.3,
+      FontJustificationH JUSTIFYLEFT,
       Text "Hide team resources",
     }
 
@@ -160,7 +172,8 @@ Frame "DIALOG" "SheepTagPreferencesPanel" {
 
     Frame "TEXT" "TeamResourcesTwinLabel" INHERITS "EscMenuButtonTextTemplate" {
       SetPoint LEFT, "TeamResourcesTwinRadio", RIGHT, 0.009, 0,
-      // FontColor 1.0 1.0 1.0 1.0,
+      Width 0.3,
+      FontJustificationH JUSTIFYLEFT,
       Text "Tie team resource visibility with leaderboard",
     }
 
@@ -175,7 +188,7 @@ Frame "DIALOG" "SheepTagPreferencesPanel" {
   // Return to game
 
   Frame "GLUETEXTBUTTON" "SheepTagPreferencesReturnButton" INHERITS WITHCHILDREN "EscMenuButtonTemplate" {
-    SetPoint BOTTOM, "SheepTagPreferencesPanel", BOTTOM, 0.0, 0.03,
+    SetPoint BOTTOM, "SheepTagPreferencesPanel", BOTTOM, 0, 0.03,
     ControlShortcutKey "KEY_RETURN_TO_GAME_SHORTCUT",
 
     ButtonText "SheepTagPreferencesReturnButtonText",

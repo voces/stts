@@ -16,11 +16,7 @@ const Trig_picksheep_Actions = () => {
     "|CFF00AEEFSheep",
   );
   udg_atempplayer = GetForceOfPlayer(udg_playerList[udg_pickIndex])!;
-  DisplayTimedTextToForce(
-    udg_atempplayer,
-    30,
-    "                             You've Been Added To The Sheep Team.",
-  );
+  DisplayTimedTextToForce(udg_atempplayer, 30, "You've Been Added To The Sheep Team.");
   DestroyForce(udg_atempplayer);
   udg_pickIndex = udg_pickIndex + 1;
   TriggerExecute(gg_trg_setupPick);

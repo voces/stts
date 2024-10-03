@@ -28,7 +28,7 @@ const Trig_farmDies_Actions = () => {
   if (!udg_switchOn) {
     LeaderboardSetPlayerItemValueBJ(
       dyingPlayer,
-      PlayerGetLeaderboardBJ(dyingPlayer)!,
+      PlayerGetLeaderboard(dyingPlayer)!,
       udg_farmCount[pid],
     );
   }

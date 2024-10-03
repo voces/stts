@@ -33,14 +33,10 @@ export const transferHostTo = (index: number) => {
     udg_atempplayer2 = GetForceOfPlayer(ConvertedPlayer(udg_transfer)!)!;
     DisplayTextToForce(
       udg_atempplayer,
-      "                              |CFFFFCC00Transfered game to " +
-        udg_colorString[udg_transfer] +
-        GetPlayerName(ConvertedPlayer(udg_transfer)!) + "|CFFFFCC00.",
+      "|CFFFFCC00Transfered game to " + udg_colorString[udg_transfer] + GetPlayerName(ConvertedPlayer(udg_transfer)!) +
+        "|CFFFFCC00.",
     );
-    DisplayTextToForce(
-      udg_atempplayer2,
-      "                              |CFFFFCC00You now have control of the game.",
-    );
+    DisplayTextToForce(udg_atempplayer2, "|CFFFFCC00You now have control of the game.");
     DestroyForce(udg_atempplayer);
     DestroyForce(udg_atempplayer2);
     LeaderboardSetPlayerItemLabelBJ(oldHost, GetLastCreatedLeaderboard()!, MapPlayerEx.fromHandle(oldHost).coloredName);

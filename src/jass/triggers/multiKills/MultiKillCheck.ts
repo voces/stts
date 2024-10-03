@@ -95,12 +95,8 @@ const Trig_MultiKillCheck_Actions = () => {
       DisplayTimedTextToForce(
         GetPlayersAll()!,
         5,
-        ("                              " +
-          udg_colorString[
-            GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
-          ]) +
-          (GetPlayerName(GetOwningPlayer(GetKillingUnit()!)) +
-            "|r |CFF00AEEFDouble Kill!|r"),
+        udg_colorString[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))] +
+          GetPlayerName(GetOwningPlayer(GetKillingUnit()!)) + "|r |CFF00AEEFDouble Kill!|r",
       );
       PlaySoundBJ(gg_snd_DoubleKill);
     } else {
@@ -111,12 +107,8 @@ const Trig_MultiKillCheck_Actions = () => {
         DisplayTimedTextToForce(
           GetPlayersAll()!,
           5,
-          ("                              " +
-            udg_colorString[
-              GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
-            ]) +
-            (GetPlayerName(GetOwningPlayer(GetKillingUnit()!)) +
-              "|r |CFF00AEEFTriple Kill!|r"),
+          udg_colorString[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))] +
+            GetPlayerName(GetOwningPlayer(GetKillingUnit()!)) + "|r |CFF00AEEFTriple Kill!|r",
         );
         PlaySoundBJ(gg_snd_TripleKill);
       } else {
@@ -127,12 +119,8 @@ const Trig_MultiKillCheck_Actions = () => {
           DisplayTimedTextToForce(
             GetPlayersAll()!,
             5,
-            ("                              " +
-              udg_colorString[
-                GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
-              ]) +
-              (GetPlayerName(GetOwningPlayer(GetKillingUnit()!)) +
-                "|r |CFF00AEEFOverkill!|r"),
+            udg_colorString[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))] +
+              GetPlayerName(GetOwningPlayer(GetKillingUnit()!)) + "|r |CFF00AEEFOverkill!|r",
           );
           PlaySoundBJ(gg_snd_Overkill);
         } else {
@@ -148,30 +136,16 @@ const Trig_MultiKillCheck_Actions = () => {
               DisplayTimedTextToForce(
                 GetPlayersAll()!,
                 5,
-                ("                              " +
-                  udg_colorString[
-                    GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
-                  ]) +
-                  (GetPlayerName(GetOwningPlayer(GetKillingUnit()!)) +
-                    "|r |CFF00AEEFKILLIONAIRE!!!|r"),
+                udg_colorString[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))] +
+                  GetPlayerName(GetOwningPlayer(GetKillingUnit()!)) + "|r |CFF00AEEFKILLIONAIRE!!!|r",
               );
             } else {
               DisplayTimedTextToForce(
                 GetPlayersAll()!,
                 5,
-                ("                              " +
-                  udg_colorString[
-                    GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
-                  ]) +
-                  (GetPlayerName(GetOwningPlayer(GetKillingUnit()!)) +
-                    ("|r |CFF00AEEFKILLIONAIRE!!!|r |CFFED1C24x" +
-                      I2S(
-                        udg_multiKillNum[
-                          GetConvertedPlayerId(
-                            GetOwningPlayer(GetKillingUnit()!),
-                          )
-                        ] - 4,
-                      ))),
+                udg_colorString[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))] +
+                  GetPlayerName(GetOwningPlayer(GetKillingUnit()!)) + "|r |CFF00AEEFKILLIONAIRE!!!|r |CFFED1C24x" +
+                  I2S(udg_multiKillNum[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))] - 4),
               );
             }
             PlaySoundBJ(gg_snd_Killionaire);

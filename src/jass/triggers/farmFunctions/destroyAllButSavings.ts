@@ -31,7 +31,7 @@ const Trig_destroyAllButSavings_Actions = () => {
     if (!udg_switchOn) {
       LeaderboardSetPlayerItemValueBJ(
         ConvertedPlayer(cid)!,
-        PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
+        PlayerGetLeaderboard(ConvertedPlayer(GetForLoopIndexA())!)!,
         udg_farmCount[cid],
       );
     }

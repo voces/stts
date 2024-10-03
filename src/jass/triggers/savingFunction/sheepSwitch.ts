@@ -196,7 +196,7 @@ const Trig_sheepSwitch_Actions = () => {
   DisplayTimedTextToForce(
     GetPlayersAll()!,
     5,
-    `                              ${
+    `${
       udg_colorString[
         GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()!))
       ]

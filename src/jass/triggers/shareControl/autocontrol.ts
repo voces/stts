@@ -8,21 +8,9 @@ const Trig_autocontrol_Actions = () => {
   if (GetLocalPlayer() !== GetTriggerPlayer()!) return;
 
   if (enabled) {
-    DisplayTimedTextToPlayer(
-      GetTriggerPlayer()!,
-      0,
-      0,
-      15,
-      "                              |CFF00AEEFAutocontrol enabled",
-    );
+    DisplayTimedTextToPlayer(GetTriggerPlayer()!, 0, 0, 15, "|CFF00AEEFAutocontrol enabled");
   } else {
-    DisplayTimedTextToPlayer(
-      GetTriggerPlayer()!,
-      0,
-      0,
-      15,
-      "                              |CFF00AEEFAutocontrol disabled",
-    );
+    DisplayTimedTextToPlayer(GetTriggerPlayer()!, 0, 0, 15, "|CFF00AEEFAutocontrol disabled");
   }
 
   File.write("revo/autocontrol.txt", B2S(enabled));

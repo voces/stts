@@ -46,7 +46,7 @@ const Trig_cancel_Actions = () => {
           udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)] =
             !(udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)]),
       );
-    }
+    } else if (!udg_gameStarted && udg_versus === 1) udg_versus = 0;
     udg_versusTime = udg_time;
     udg_time = 0;
   }

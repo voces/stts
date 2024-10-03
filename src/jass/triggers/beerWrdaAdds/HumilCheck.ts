@@ -9,10 +9,7 @@ const Trig_Humil_Check_Conditions = () => {
 };
 
 const Trig_Humil_Check_Actions = () => {
-  displayTimedTextToAll(
-    `                              ${UnitEx.fromDying()?.owner} got humiliated by ${UnitEx.fromKilling()?.owner}`,
-    5,
-  );
+  displayTimedTextToAll(`${UnitEx.fromDying()?.owner} got humiliated by ${UnitEx.fromKilling()?.owner}`, 5);
   PlaySoundBJ(gg_snd_humiliation);
 };
 

@@ -13,7 +13,7 @@ const Trig_noAutoControl_Actions = () => {
       0,
       0,
       15,
-      "                              |CFF00AEEFYou will no longer automatically receive control",
+      "|CFF00AEEFYou will no longer automatically receive control",
     );
   } else {
     DisplayTimedTextToPlayer(
@@ -21,7 +21,7 @@ const Trig_noAutoControl_Actions = () => {
       0,
       0,
       15,
-      "                              |CFF00AEEFYou will now automatically receive control",
+      "|CFF00AEEFYou will now automatically receive control",
     );
   }
 

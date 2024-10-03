@@ -9,11 +9,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   TriggerAddAction(gg_trg_mapExpand, () => {
     udg_mapExpand = !udg_mapExpand;
     if (udg_mapExpand) udg_mapShrink = false;
-    DisplayTimedTextToForce(
-      GetPlayersAll()!,
-      5,
-      `                              |cffffcc00Expand mode ${udg_mapExpand ? "enabled" : "disabled"}.`,
-    );
+    DisplayTimedTextToForce(GetPlayersAll()!, 5, `|cffffcc00Expand mode ${udg_mapExpand ? "enabled" : "disabled"}.`);
     updateLeaderboardSettingsDisplay();
   });
 });

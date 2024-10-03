@@ -3,6 +3,7 @@ import { withPlayerUnits, withUnitsOfType } from "util/withGroup";
 import { maybeApplySecondWind } from "functions/secondWind";
 import { gsDistributeGold } from "functions/gs";
 import { TRANSFER_DISPLAY_NONE } from "constants";
+import { MapPlayerEx } from "handles/MapPlayerEx";
 
 const Trig_sheepDies_Actions = () => {
   const dyingPlayer = GetOwningPlayer(GetTriggerUnit()!);
@@ -12,6 +13,8 @@ const Trig_sheepDies_Actions = () => {
   const x = GetUnitX(GetDyingUnit()!);
   const y = GetUnitY(GetDyingUnit()!);
   const f = GetUnitFacing(GetDyingUnit()!);
+
+  if (!president.enabled) MapPlayerEx.fromHandle(dyingPlayer).died();
 
   PauseTimer(udg_sheepTimer[dyingPlayerId]);
 
@@ -52,7 +55,7 @@ const Trig_sheepDies_Actions = () => {
 
   if (sheepCount === 1) TriggerExecute(gg_trg_wolvesWin);
   else if (president.enabled) {
-    if (president.president.handle === dyingPlayer) {
+    if (president.president!.handle === dyingPlayer) {
       ForForce(udg_Sheep, () => {
         const p = GetEnumPlayer()!;
         ForceRemovePlayer(udg_Sheep, p);
@@ -65,7 +68,7 @@ const Trig_sheepDies_Actions = () => {
       SelectUnitForPlayerSingle(u, dyingPlayer);
       transferGold(
         dyingPlayer,
-        president.president.handle,
+        president.president!.handle,
         GetPlayerState(dyingPlayer, PLAYER_STATE_RESOURCE_GOLD),
         TRANSFER_DISPLAY_NONE,
       );

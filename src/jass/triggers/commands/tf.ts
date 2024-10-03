@@ -15,8 +15,7 @@ const Trig_tf_Actions = () => {
         udg_AFK[i + 1] === AFK_PLAYING
       ) {
         p.displayTimedText(
-          "                              " + udg_colorString[i + 1] +
-            GetPlayerName(Player(i)!) + " : " + I2S(udg_totalFarmsBuilt[i + 1]),
+          udg_colorString[i + 1] + GetPlayerName(Player(i)!) + " : " + I2S(udg_totalFarmsBuilt[i + 1]),
           15,
         );
         count = count + 1;

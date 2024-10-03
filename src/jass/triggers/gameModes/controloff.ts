@@ -3,18 +3,10 @@ import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 const Trig_controloff_Actions = () => {
   if (udg_shareOn) {
     udg_shareOn = false;
-    DisplayTimedTextToForce(
-      GetPlayersAll()!,
-      5,
-      "                              |cffffcc00Sharing Control has been disabled.",
-    );
+    DisplayTimedTextToForce(GetPlayersAll()!, 5, "|cffffcc00Sharing Control has been disabled.");
   } else {
     udg_shareOn = true;
-    DisplayTimedTextToForce(
-      GetPlayersAll()!,
-      5,
-      "                              |cffffcc00Sharing Control has been enabled.",
-    );
+    DisplayTimedTextToForce(GetPlayersAll()!, 5, "|cffffcc00Sharing Control has been enabled.");
   }
 };
 

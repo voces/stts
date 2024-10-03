@@ -60,7 +60,7 @@ const Trig_control_Actions = () => {
   if ((Trig_control_Func003C())) {
     DisplayTextToForce(
       udg_atempplayer,
-      "                              |CFFFFCC00Gave control to " +
+      "|CFFFFCC00Gave control to " +
         (udg_colorString[S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 5)!)] +
           (GetPlayerName(
             ConvertedPlayer(
@@ -76,7 +76,7 @@ const Trig_control_Actions = () => {
   } else {
     DisplayTextToForce(
       udg_atempplayer,
-      "                              |CFFFFCC00Took control from " +
+      "|CFFFFCC00Took control from " +
         (udg_colorString[S2I(SubStringBJ(GetEventPlayerChatString()!, 4, 5)!)] +
           (GetPlayerName(
             ConvertedPlayer(

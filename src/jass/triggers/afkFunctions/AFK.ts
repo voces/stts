@@ -75,7 +75,7 @@ const handleCaptainSelection = (captainIndex: number, conditionFunc: () => boole
   }
 };
 
-const handleAFK = (p: player) => {
+export const handleAFK = (p: player) => {
   if (rotated === p) return;
   const cid = GetConvertedPlayerId(p);
 
@@ -90,7 +90,7 @@ const handleAFK = (p: player) => {
       updateAFKStatus(AFK_AFK);
       LeaderboardSetPlayerItemLabelBJ(
         p,
-        PlayerGetLeaderboardBJ(ConvertedPlayer(GetForLoopIndexA())!)!,
+        PlayerGetLeaderboard(ConvertedPlayer(GetForLoopIndexA())!)!,
         MapPlayerEx.fromEvent()!.coloredName,
       );
     } else if (udg_Teams === TEAMS_PICK && (IsPlayerInForce(p, udg_Sheep) || IsPlayerInForce(p, udg_Wolf))) {
@@ -153,7 +153,7 @@ const handleAFK = (p: player) => {
         for (let i = 1; i <= udg_lastPlayer; i++) {
           LeaderboardSetPlayerItemLabelBJ(
             p,
-            PlayerGetLeaderboardBJ(ConvertedPlayer(i)!)!,
+            PlayerGetLeaderboard(ConvertedPlayer(i)!)!,
             MapPlayerEx.fromEvent()!.name,
           );
         }
@@ -164,17 +164,13 @@ const handleAFK = (p: player) => {
         for (let i = 1; i <= udg_lastPlayer; i++) {
           LeaderboardSetPlayerItemLabelBJ(
             p,
-            PlayerGetLeaderboardBJ(ConvertedPlayer(i)!)!,
+            PlayerGetLeaderboard(ConvertedPlayer(i)!)!,
             `${MapPlayerEx.fromEvent()} (back)`,
           );
         }
         udg_AFK[cid] = 2;
         udg_atempplayer = GetForceOfPlayer(p)!;
-        DisplayTimedTextToForce(
-          udg_atempplayer,
-          10,
-          "                              |CFF00AEEFYou can watch this game until it ends.",
-        );
+        DisplayTimedTextToForce(udg_atempplayer, 10, "|CFF00AEEFYou can watch this game until it ends.");
         DestroyForce(udg_atempplayer);
       }
     } else if (
@@ -259,9 +255,7 @@ InitTrig_AFK = () => {
     handleAFK(p);
     const cid = GetConvertedPlayerId(p);
     displayTimedTextToAll(
-      `                              ${MapPlayerEx.fromIndex(cid - 1)} ${
-        udg_AFK[cid] < AFK_AFK ? "is back" : "has gone AFK"
-      }.`,
+      `${MapPlayerEx.fromIndex(cid - 1)} ${udg_AFK[cid] < AFK_AFK ? "is back" : "has gone AFK"}.`,
       5,
     );
   });
@@ -274,9 +268,7 @@ InitTrig_AFK = () => {
     if (cid < 1 || cid > bj_MAX_PLAYERS) return;
     handleAFK(ConvertedPlayer(cid)!);
     displayTimedTextToAll(
-      `                              ${MapPlayerEx.fromIndex(cid - 1)} has been ${
-        udg_AFK[cid] < AFK_AFK ? "unset from" : "set to"
-      } AFK.`,
+      `${MapPlayerEx.fromIndex(cid - 1)} has been ${udg_AFK[cid] < AFK_AFK ? "unset from" : "set to"} AFK.`,
       5,
     );
   });

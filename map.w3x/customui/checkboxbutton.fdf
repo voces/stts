@@ -1,0 +1,38 @@
+Frame "GLUETEXTBUTTON" "CheckboxButtonTemplate" {
+  Width 0.024,
+  Height 0.024,
+  ControlStyle "AUTOTRACK|HIGHLIGHTONMOUSEOVER",
+
+  ControlBackdrop "CheckboxButtonBackdropTemplate",
+  Frame "BACKDROP" "CheckboxButtonBackdropTemplate" {
+    BackdropBackground "ui\widgets\escmenu\human\checkbox-background.blp",
+    BackdropBlendAll,
+  }
+
+  ControlPushedBackdrop "CheckboxButtonPushedBackdropTemplate",
+  Frame "BACKDROP" "CheckboxButtonPushedBackdropTemplate" {
+    BackdropBackground "ui/widgets/escmenu/human/checkbox-depressed.blp",
+    BackdropBlendAll,
+  }
+
+  ControlDisabledBackdrop "CheckboxButtonDisabledBackdropTemplate",
+  Frame "BACKDROP" "CheckboxButtonDisabledBackdropTemplate" {
+    BackdropBackground "ui/widgets/escmenu/human/checkbox-background-disabled.blp",
+    BackdropBlendAll,
+  }
+
+  ControlMouseOverHighlight "CheckboxButtonMouseOverHighlightTemplate",
+  Frame "HIGHLIGHT" "CheckboxButtonMouseOverHighlightTemplate" {
+    HighlightType "FILETEXTURE",
+    HighlightAlphaFile "UI\Widgets\BattleNet\bnet-button01-highlight-mouse.blp",    
+    HighlightAlphaMode "ADD",
+  }
+
+  Frame "BACKDROP" "CheckboxButtonCheckedTemplate" {
+    UseActiveContext,
+    SetPoint TOPLEFT, "CheckboxButtonTemplate", TOPLEFT, 0, 0,
+    SetPoint BOTTOMRIGHT, "CheckboxButtonTemplate", BOTTOMRIGHT, 0, 0,
+    BackdropBackground "ui\widgets\escmenu\human\checkbox-check.blp",
+    BackdropBlendAll,
+  }
+}

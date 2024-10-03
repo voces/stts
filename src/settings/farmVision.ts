@@ -5,13 +5,13 @@ import { farmVision } from "./settings";
 import { updateLeaderboardSettingsDisplay } from "./time";
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
-  const createFarmTrigger = CreateTrigger();
-  TriggerRegisterAnyUnitEventBJ(createFarmTrigger, EVENT_PLAYER_UNIT_CONSTRUCT_START);
-  TriggerAddAction(createFarmTrigger, () => {
+  farmVision.trigger = CreateTrigger();
+  TriggerRegisterAnyUnitEventBJ(farmVision.trigger, EVENT_PLAYER_UNIT_CONSTRUCT_START);
+  TriggerAddAction(farmVision.trigger, () => {
     if (GetUnitTypeId(GetConstructingStructure()!) === sentryFarmType) return;
     BlzSetUnitRealField(GetConstructingStructure()!, UNIT_RF_SIGHT_RADIUS, farmVision.vision);
   });
-  DisableTrigger(createFarmTrigger);
+  DisableTrigger(farmVision.trigger);
 
   const t = CreateTrigger();
   registerAnyPlayerChatEvent(t, "-farmvision", false);
@@ -22,22 +22,20 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     if (s === "-farmvision") {
       if (farmVision.vision >= 0) {
         farmVision.vision = -1;
-        DisableTrigger(createFarmTrigger);
-        displayTimedTextToAll("                              |CFF00AEEFFarm vision restored|r");
+        DisableTrigger(farmVision.trigger);
+        displayTimedTextToAll("|CFF00AEEFFarm vision restored|r");
       } else {
         farmVision.vision = 64;
-        EnableTrigger(createFarmTrigger);
-        displayTimedTextToAll("                              |CFF00AEEFFarm vision set to |CFFED1C2464|r");
+        EnableTrigger(farmVision.trigger);
+        displayTimedTextToAll("|CFF00AEEFFarm vision set to |CFFED1C2464|r");
       }
       updateLeaderboardSettingsDisplay();
       return;
     }
 
     farmVision.vision = S2I(s.split(" ")[1]);
-    EnableTrigger(createFarmTrigger);
-    displayTimedTextToAll(
-      `                              |CFF00AEEFFarm vision set to |CFFED1C24${I2S(farmVision.vision)}|r`,
-    );
+    EnableTrigger(farmVision.trigger);
+    displayTimedTextToAll(`|CFF00AEEFFarm vision set to |CFFED1C24${I2S(farmVision.vision)}|r`);
     updateLeaderboardSettingsDisplay();
   });
 });

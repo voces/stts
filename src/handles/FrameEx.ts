@@ -10,7 +10,10 @@ export class FrameEx extends Frame {
   onClick(fn: (event: { player: MapPlayerEx }) => void) {
     const t = CreateTrigger();
     BlzTriggerRegisterFrameEvent(t, this.handle, FRAMEEVENT_CONTROL_CLICK);
-    TriggerAddAction(t, () => fn({ player: MapPlayerEx.fromEvent()! }));
+    TriggerAddAction(t, () => {
+      this.setEnabled(false).setEnabled(true);
+      fn({ player: MapPlayerEx.fromEvent()! });
+    });
     return this;
   }
 
@@ -59,6 +62,16 @@ export class FrameEx extends Frame {
     return child;
   }
 
+  get children() {
+    const count = this.childrenCount;
+    const output: FrameEx[] = [];
+    for (let i = 0; i < count; i++) {
+      const child = this.getChild(i);
+      if (child !== null) output.push(child);
+    }
+    return output;
+  }
+
   static create(
     name: string,
     owner: FrameEx | Frame | framehandle | string | originframetype,
@@ -67,6 +80,20 @@ export class FrameEx extends Frame {
   ): FrameEx {
     const frame = BlzCreateFrame(name, FrameEx.resolve(owner).handle, priority, createContext);
     if (!frame) throw `Error calling BlzCreateFrame(${name}, ${owner}, ${priority}, ${createContext})`;
+    return FrameEx.fromHandle(frame);
+  }
+
+  static createType(
+    name: string,
+    owner: FrameEx | Frame | framehandle | string | originframetype,
+    createContext: number,
+    typeName: string,
+    inherits: string,
+  ) {
+    const frame = BlzCreateFrameByType(typeName, name, FrameEx.resolve(owner).handle, inherits, createContext);
+    if (!frame) {
+      throw `Error calling BlzCreateFrameByType(${typeName}, ${name}, ${owner}, ${inherits}, ${createContext})`;
+    }
     return FrameEx.fromHandle(frame);
   }
 

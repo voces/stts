@@ -45,43 +45,23 @@ const Trig_speed_Func002C = () => {
 const Trig_speed_Actions = () => {
   if ((Trig_speed_Func002C())) {
     SetGameSpeed(MAP_SPEED_SLOWEST);
-    DisplayTimedTextToForce(
-      GetPlayersAll()!,
-      8,
-      "                              Set game speed to: |cff00aeefSlowest|r",
-    );
+    DisplayTimedTextToForce(GetPlayersAll()!, 8, "Set game speed to: |cff00aeefSlowest|r");
   } else {
     if ((Trig_speed_Func002Func001C())) {
       SetGameSpeed(MAP_SPEED_SLOW);
-      DisplayTimedTextToForce(
-        GetPlayersAll()!,
-        8,
-        "                              Set game speed to: |cff00aeefSlow|r",
-      );
+      DisplayTimedTextToForce(GetPlayersAll()!, 8, "Set game speed to: |cff00aeefSlow|r");
     } else {
       if ((Trig_speed_Func002Func001Func002C())) {
         SetGameSpeed(MAP_SPEED_NORMAL);
-        DisplayTimedTextToForce(
-          GetPlayersAll()!,
-          8,
-          "                              Set game speed to: |cff00aeefNormal|r",
-        );
+        DisplayTimedTextToForce(GetPlayersAll()!, 8, "Set game speed to: |cff00aeefNormal|r");
       } else {
         if ((Trig_speed_Func002Func001Func002Func002C())) {
           SetGameSpeed(MAP_SPEED_FAST);
-          DisplayTimedTextToForce(
-            GetPlayersAll()!,
-            8,
-            "                              Set game speed to: |cff00aeefFast|r",
-          );
+          DisplayTimedTextToForce(GetPlayersAll()!, 8, "Set game speed to: |cff00aeefFast|r");
         } else {
           if ((Trig_speed_Func002Func001Func002Func002Func002C())) {
             SetGameSpeed(MAP_SPEED_FASTEST);
-            DisplayTimedTextToForce(
-              GetPlayersAll()!,
-              8,
-              "                              Set game speed to: |cff00aeefFastest|r",
-            );
+            DisplayTimedTextToForce(GetPlayersAll()!, 8, "Set game speed to: |cff00aeefFastest|r");
           }
         }
       }
