@@ -1,0 +1,20 @@
+IncludeFile "UI\FrameDef\UI\EscMenuTemplates.fdf",
+
+Frame "BACKDROP" "SheepTagTooltip" {
+  // Width 0.103, // Should be +0.012 of text width
+  // Height 0.052, // Should be +0.012 of text height
+
+  BackdropBackground "UI\Widgets\ToolTips\Human\human-tooltip-background.blp",
+  BackdropCornerFlags "UL|UR|BL|BR|T|L|B|R",
+  BackdropCornerSize 0.01,
+  BackdropBackgroundSize 0.128,
+  BackdropBackgroundInsets 0.0025 0.0025 0.0025 0.0025,
+  BackdropEdgeFile "UI\Widgets\ToolTips\Human\human-tooltip-border.blp",
+  BackdropBlendAll,
+}
+
+Frame "TEXT" "SheepTagTooltipText" INHERITS "EscMenuLabelTextSmallTemplate" {
+  SetPoint TOPLEFT, "SheepTagTooltip", TOPLEFT, 0.006, -0.006,
+  FontColor 1 1 1,
+  Text "The averaged death order during sheep rounds, where 1 indicates last to die.",
+}

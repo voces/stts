@@ -1,6 +1,7 @@
 IncludeFile "UI\FrameDef\UI\EscMenuTemplates.fdf",
 IncludeFile "UI\FrameDef\UI\QuestDialog.fdf",
 IncludeFile "UI\FrameDef\UI\EscMenuMainPanel.fdf",
+IncludeFile "customui\tooltip.fdf",
 
 Frame "POPUPMENU" "SheepTagPopupMenuTemplate" {
   Width 0.10,
@@ -103,7 +104,7 @@ Frame "DIALOG" "SheepTagPlayerRowTemplate" {
     SetPoint LEFT, "SheepTagPlayerRowName", RIGHT, 0, 0,
     Width 0.015,
     FontJustificationH JUSTIFYRIGHT,
-    FontColor 1 1 1 1,
+    FontColor 1 1 1,
     Text "0",
   }
 
@@ -129,7 +130,7 @@ Frame "DIALOG" "SheepTagPlayerRowTemplate" {
     SetPoint LEFT, "SheepTagPlayerRowSheepCount", RIGHT, 0, 0,
     Width 0.04,
     FontJustificationH JUSTIFYRIGHT,
-    FontColor 1 1 1 1,
+    FontColor 1 1 1,
     Text "100%",
   }
 
@@ -155,7 +156,7 @@ Frame "DIALOG" "SheepTagPlayerRowTemplate" {
     SetPoint LEFT, "SheepTagPlayerRowHandicap", RIGHT, 0, 0,
     Width 0.06,
     FontJustificationH JUSTIFYRIGHT,
-    FontColor 1 1 1 1,
+    FontColor 1 1 1,
     Text "-",
   }
 
@@ -164,7 +165,7 @@ Frame "DIALOG" "SheepTagPlayerRowTemplate" {
     SetPoint LEFT, "SheepTagPlayerRowAverage", RIGHT, 0, 0,
     Width 0.032,
     FontJustificationH JUSTIFYRIGHT,
-    FontColor 1 1 1 1,
+    FontColor 1 1 1,
     Text "-",
   }
 
@@ -687,16 +688,15 @@ Frame "FRAME" "SheepTagIntermission" {
       }
 
       ToolTip "SheepTagSmartButtonTooltip",
-      Frame "BACKDROP" "SheepTagSmartButtonTooltip" INHERITS "QuestButtonBaseTemplate" {
-        SetPoint TOPLEFT, "SheepTagSmartButton", TOPRIGHT, 0.005, 0.01,
-        Width 0.15,
-        Height 0.048,
+      Frame "BACKDROP" "SheepTagSmartButtonTooltip" INHERITS "SheepTagTooltip" {
+        SetPoint TOPLEFT, "SheepTagSmartButton", TOPRIGHT, 0.005, 0.0025,
+        Width 0.142,
+        Height 0.042,
 
-        Frame "TEXT" "SheepTagSmartButtonTooltipText" INHERITS "EscMenuLabelTextSmallTemplate" {
-          SetPoint TOPLEFT, "SheepTagSmartButtonTooltip", TOPLEFT, 0.01, -0.01,
+        Frame "TEXT" "SheepTagSmartButtonTooltipText" INHERITS "SheepTagTooltipText" {
+          SetPoint TOPLEFT, "SheepTagSmartButtonTooltip", TOPLEFT, 0.006, -0.006,
           Width 0.13,
           Height 0.03,
-          FontColor 1 1 1 1,
           Text "Randomize teams, balancing sheep count and team uniqueness.",
         }
       }
@@ -713,16 +713,15 @@ Frame "FRAME" "SheepTagIntermission" {
       }
 
       ToolTip "SheepTagStartButtonTooltip",
-      Frame "BACKDROP" "SheepTagStartButtonTooltip" INHERITS "QuestButtonBaseTemplate" {
-        SetPoint TOPLEFT, "SheepTagStartButton", TOPRIGHT, 0.005, 0.01,
-        Width 0.15,
-        Height 0.048,
+      Frame "BACKDROP" "SheepTagStartButtonTooltip" INHERITS "SheepTagTooltip" {
+        SetPoint TOPLEFT, "SheepTagStartButton", TOPRIGHT, 0.005, 0.0025,
+        Width 0.142,
+        Height 0.042,
 
-        Frame "TEXT" "SheepTagStartButtonTooltipText" INHERITS "EscMenuLabelTextSmallTemplate" {
-          SetPoint TOPLEFT, "SheepTagStartButtonTooltip", TOPLEFT, 0.01, -0.01,
+        Frame "TEXT" "SheepTagStartButtonTooltipText" INHERITS "SheepTagTooltipText" {
+          SetPoint TOPLEFT, "SheepTagStartButtonTooltip", TOPLEFT, 0.006, -0.006,
           Width 0.13,
           Height 0.03,
-          FontColor 1 1 1 1,
           Text "Start the game with the current teams, adding or removing sheep as needed.",
         }
       }
@@ -786,16 +785,15 @@ Frame "FRAME" "SheepTagIntermission" {
         FontJustificationH JUSTIFYRIGHT,
 
         ToolTip "SheepTagPlayersHeaderSheepCountTooltip",
-        Frame "BACKDROP" "SheepTagPlayersHeaderSheepCountTooltip" INHERITS "QuestButtonBaseTemplate" {
+        Frame "BACKDROP" "SheepTagPlayersHeaderSheepCountTooltip" INHERITS "SheepTagTooltip" {
           SetPoint TOPLEFT, "SheepTagPlayersHeaderSheepCount", TOPRIGHT, 0.005, 0.01,
-          Width 0.15,
-          Height 0.04,
+          Width 0.142,
+          Height 0.032,
 
-          Frame "TEXT" "SheepTagPlayersHeaderSheepCountTooltipText" INHERITS "EscMenuLabelTextSmallTemplate" {
-            SetPoint TOPLEFT, "SheepTagPlayersHeaderSheepCountTooltip", TOPLEFT, 0.01, -0.01,
+          Frame "TEXT" "SheepTagPlayersHeaderSheepCountTooltipText" INHERITS "SheepTagTooltipText" {
+            SetPoint TOPLEFT, "SheepTagPlayersHeaderSheepCountTooltip", TOPLEFT, 0.006, -0.006,
             Width 0.13,
             Height 0.02,
-            FontColor 1 1 1 1,
             Text "How many times this player has played sheep.",
           }
         }
@@ -808,16 +806,15 @@ Frame "FRAME" "SheepTagIntermission" {
         FontJustificationH JUSTIFYRIGHT,
 
         ToolTip "SheepTagPlayersHeaderHandicapTooltip",
-        Frame "BACKDROP" "SheepTagPlayersHeaderHandicapTooltip" INHERITS "QuestButtonBaseTemplate" {
+        Frame "BACKDROP" "SheepTagPlayersHeaderHandicapTooltip" INHERITS "SheepTagTooltip" {
           SetPoint TOPLEFT, "SheepTagPlayersHeaderHandicap", TOPRIGHT, 0.005, 0.01,
-          Width 0.15,
-          Height 0.04,
+          Width 0.142,
+          Height 0.032,
 
-          Frame "TEXT" "SheepTagPlayersHeaderHandicapTooltipText" INHERITS "EscMenuLabelTextSmallTemplate" {
-            SetPoint TOPLEFT, "SheepTagPlayersHeaderHandicapTooltip", TOPLEFT, 0.01, -0.01,
+          Frame "TEXT" "SheepTagPlayersHeaderHandicapTooltipText" INHERITS "SheepTagTooltipText" {
+            SetPoint TOPLEFT, "SheepTagPlayersHeaderHandicapTooltip", TOPLEFT, 0.006, -0.006,
             Width 0.13,
             Height 0.02,
-            FontColor 1 1 1 1,
             Text "Handicap impacts farm HP and passive gold income.",
           }
         }
@@ -830,16 +827,15 @@ Frame "FRAME" "SheepTagIntermission" {
         FontJustificationH JUSTIFYRIGHT,
 
         ToolTip "SheepTagPlayersHeaderAverageTooltip",
-        Frame "BACKDROP" "SheepTagPlayersHeaderAverageTooltip" INHERITS "QuestButtonBaseTemplate" {
+        Frame "BACKDROP" "SheepTagPlayersHeaderAverageTooltip" INHERITS "SheepTagTooltip" {
           SetPoint TOPLEFT, "SheepTagPlayersHeaderAverage", TOPRIGHT, 0.005, 0.01,
-          Width 0.15,
-          Height 0.04,
+          Width 0.132,
+          Height 0.032,
 
-          Frame "TEXT" "SheepTagPlayersHeaderAverageTooltipText" INHERITS "EscMenuLabelTextSmallTemplate" {
-            SetPoint TOPLEFT, "SheepTagPlayersHeaderAverageTooltip", TOPLEFT, 0.01, -0.01,
-            Width 0.13,
+          Frame "TEXT" "SheepTagPlayersHeaderAverageTooltipText" INHERITS "SheepTagTooltipText" {
+            SetPoint TOPLEFT, "SheepTagPlayersHeaderAverageTooltip", TOPLEFT, 0.006, -0.006,
+            Width 0.12,
             Height 0.02,
-            FontColor 1 1 1 1,
             Text "Average length of this player's sheep rounds.",
           }
         }
@@ -852,16 +848,15 @@ Frame "FRAME" "SheepTagIntermission" {
         FontJustificationH JUSTIFYRIGHT,
 
         ToolTip "SheepTagPlayersHeaderDeathOrderTooltip",
-        Frame "BACKDROP" "SheepTagPlayersHeaderDeathOrderTooltip" INHERITS "QuestButtonBaseTemplate" {
+        Frame "BACKDROP" "SheepTagPlayersHeaderDeathOrderTooltip" INHERITS "SheepTagTooltip" {
           SetPoint TOPLEFT, "SheepTagPlayersHeaderDeathOrder", TOPRIGHT, 0.005, 0.01,
-          Width 0.15,
-          Height 0.06,
+          Width 0.112,
+          Height 0.052,
 
-          Frame "TEXT" "SheepTagPlayersHeaderDeathOrderTooltipText" INHERITS "EscMenuLabelTextSmallTemplate" {
-            SetPoint TOPLEFT, "SheepTagPlayersHeaderDeathOrderTooltip", TOPLEFT, 0.01, -0.01,
-            Width 0.13,
+          Frame "TEXT" "SheepTagPlayersHeaderDeathOrderTooltipText" INHERITS "SheepTagTooltipText" {
+            SetPoint TOPLEFT, "SheepTagPlayersHeaderDeathOrderTooltip", TOPLEFT, 0.006, -0.006,
+            Width 0.1,
             Height 0.04,
-            FontColor 1 1 1 1,
             Text "The averaged death order during sheep rounds, where 1 indicates last to die.",
           }
         }
