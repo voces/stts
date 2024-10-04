@@ -64,10 +64,10 @@ Frame "POPUPMENU" "SheepTagPlayerTeamTemplate" {
   Frame "MENU" "SheepTagPlayerTeamMenu" INHERITS WITHCHILDREN "EscMenuPopupMenuMenuTemplate" {
     FrameFont "EscMenuTextFont", 0.01, "",
 
+    MenuItem "Toggle casual", -2,
+    MenuItem "Make AFK", -2,
     MenuItem "Make sheep", -2,
     MenuItem "Make wolf", -2,
-    MenuItem "Make AFK", -2,
-    MenuItem "Toggle Pub", -2,
     MenuItem "Transfer host", -2,
     MenuItem "Kick", -2,
   }
@@ -79,6 +79,15 @@ Frame "DIALOG" "SheepTagPlayerRowTemplate" {
   Frame "POPUPMENU" "SheepTagPlayerTeam" INHERITS WITHCHILDREN "SheepTagPlayerTeamTemplate" {
     UseActiveContext,
     SetPoint LEFT, "SheepTagPlayerRowTemplate", LEFT, 0.005, 0,
+  }
+
+  Frame "BACKDROP" "SheepTagPlayerRowPub" {
+    UseActiveContext,
+    SetPoint TOPRIGHT, "SheepTagPlayerTeam", TOPRIGHT, 0.003, 0.001,
+    Height 0.008,
+    Width 0.008,
+    BackdropBackground "ui\console\reforged\controlpanel\observer-control-menu-icon-time-hover_4k.blp",
+    BackdropBlendAll,
   }
 
   Frame "TEXT" "SheepTagPlayerRowName" INHERITS "EscMenuInfoTextTemplate" {
@@ -768,21 +777,6 @@ Frame "FRAME" "SheepTagIntermission" {
         SetPoint LEFT, "SheepTagPlayersHeader", LEFT, 0.02, 0,
         Text "Player",
         Width 0.095,
-
-        ToolTip "SheepTagPlayersHeaderNameTooltip",
-        Frame "BACKDROP" "SheepTagPlayersHeaderNameTooltip" INHERITS "QuestButtonBaseTemplate" {
-          SetPoint TOPLEFT, "SheepTagPlayersHeaderSheepCount", TOPRIGHT, 0.005, 0.01,
-          Width 0.15,
-          Height 0.04,
-
-          Frame "TEXT" "SheepTagPlayersHeaderNameTooltipText" INHERITS "EscMenuLabelTextSmallTemplate" {
-            SetPoint TOPLEFT, "SheepTagPlayersHeaderNameTooltip", TOPLEFT, 0.01, -0.01,
-            Width 0.13,
-            Height 0.02,
-            FontColor 1 1 1 1,
-            Text "How many times this player has played sheep.",
-          }
-        }
       }
 
       Frame "TEXT" "SheepTagPlayersHeaderSheepCount" INHERITS "EscMenuLabelTextSmallTemplate" {
@@ -868,7 +862,7 @@ Frame "FRAME" "SheepTagIntermission" {
             Width 0.13,
             Height 0.04,
             FontColor 1 1 1 1,
-            Text "The averaged death order during sheep rounds, where 0 indicates last to die.",
+            Text "The averaged death order during sheep rounds, where 1 indicates last to die.",
           }
         }
       }
@@ -926,6 +920,7 @@ Frame "FRAME" "SheepTagIntermission" {
       Text "End game?",
     }
 
+    DialogCancelButton "SheepTagEndConfirmationCancel",
     Frame "GLUETEXTBUTTON" "SheepTagEndConfirmationCancel" INHERITS WITHCHILDREN "EscMenuButtonTemplate" {
       SetPoint BOTTOMLEFT, "SheepTagEndConfirmation", BOTTOMLEFT, 0.03, 0.03,
       Width 0.09,
@@ -936,6 +931,7 @@ Frame "FRAME" "SheepTagIntermission" {
       }
     }
 
+    DialogOkButton "SheepTagEndConfirmationEnd",
     Frame "GLUETEXTBUTTON" "SheepTagEndConfirmationEnd" INHERITS WITHCHILDREN "EscMenuButtonTemplate" {
       SetPoint BOTTOMRIGHT, "SheepTagEndConfirmation", BOTTOMRIGHT, -0.03, 0.03,
       Width 0.09,

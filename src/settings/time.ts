@@ -3,17 +3,17 @@ import { addScriptHook, Trigger, W3TS_HOOK } from "w3ts";
 import { farmVision, income, president, spawnSetting, switchSetting } from "./settings";
 import { triggerIntermissionUpdate } from "ui/hooks";
 
-export const checkAutoTimeFlag = () => {
+export const checkAutoTimeFlag = (skipIntermission = false) => {
   const oldTime = udg_time;
-  defaultTime();
+  defaultTime(skipIntermission);
   if (oldTime !== udg_time) {
     udg_autoTime = false;
     udg_time = oldTime;
   } else udg_autoTime = true;
 };
 
-export const updateLeaderboardSettingsDisplay = () => {
-  triggerIntermissionUpdate();
+export const updateLeaderboardSettingsDisplay = (skipIntermission = false) => {
+  if (!skipIntermission) triggerIntermissionUpdate();
 
   let s = "|CFFED1C24Next: " + simpleformatTime(udg_time);
   if (udg_switchOn) {

@@ -1012,9 +1012,9 @@ S2B = (str: string): boolean => {
 //sets a default time if need be
 declare global {
   // deno-lint-ignore prefer-const
-  let defaultTime: () => void;
+  let defaultTime: (skipIntermission?: boolean) => void;
 }
-defaultTime = () => {
+defaultTime = (skipIntermission = false) => {
   if (!udg_autoTime) return;
 
   const i = CountPlayersInForceBJ(udg_Sheep);
@@ -1033,7 +1033,7 @@ defaultTime = () => {
   else if (i + n >= 8) udg_time = 480;
   else udg_time = 360;
 
-  updateLeaderboardSettingsDisplay();
+  updateLeaderboardSettingsDisplay(skipIntermission);
 };
 
 declare global {

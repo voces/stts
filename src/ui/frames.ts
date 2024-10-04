@@ -1,9 +1,14 @@
 import { FrameEx } from "handles/FrameEx";
 
+type Checkbox = { checked: boolean; enabled: boolean };
+
 export const frames: {
   intermissionFrames: FrameEx[];
   settings: {
     container: FrameEx;
+    roundTab: FrameEx;
+    goldTab: FrameEx;
+    otherTab: FrameEx;
     modeLabel: FrameEx;
     mode: FrameEx;
     president: {
@@ -25,8 +30,8 @@ export const frames: {
       select: FrameEx;
       options: FrameEx;
     };
-    shrink: FrameEx;
-    expand: FrameEx;
+    shrink: Checkbox;
+    expand: Checkbox;
     sheepGold: FrameEx;
     wolfGold: FrameEx;
     sheepIncome: FrameEx;
@@ -34,10 +39,10 @@ export const frames: {
     moneyFarmIncome: FrameEx;
     time: FrameEx;
     spawn: FrameEx;
-    view: FrameEx;
+    view: Checkbox;
     farmVision: FrameEx;
-    autoCancel: FrameEx;
-    allowShareControl: FrameEx;
+    autoCancel: Checkbox;
+    allowShareControl: Checkbox;
     desiredSheep: FrameEx;
   };
   players: {
@@ -45,10 +50,17 @@ export const frames: {
     backdrop: FrameEx;
     team: FrameEx;
     teamBackdrop: FrameEx;
+    disabledTeamBackdrop: FrameEx;
     sheepCount: FrameEx;
     handicap: FrameEx;
+    pubMark: FrameEx;
     average: FrameEx;
     deathOrder: FrameEx;
   }[];
   endConfirmation: FrameEx;
+  versus: FrameEx;
+  start: FrameEx;
+  smart: FrameEx;
+  practice: FrameEx;
+  end: FrameEx;
 } = { intermissionFrames: [], settings: { president: {}, switch: {}, terrain: {} }, players: [] } as any;

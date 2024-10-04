@@ -1,4 +1,5 @@
 import { MapPlayerEx } from "handles/MapPlayerEx";
+import { updateIntermission } from "ui/api";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
 const hasPermission = () => {
@@ -42,6 +43,7 @@ export const transferHostTo = (index: number) => {
     LeaderboardSetPlayerItemLabelBJ(oldHost, GetLastCreatedLeaderboard()!, MapPlayerEx.fromHandle(oldHost).coloredName);
     LeaderboardSetPlayerItemLabelBJ(udg_Custom, GetLastCreatedLeaderboard()!, "|CFFFFFFFF$" + MapPlayerEx.host);
     transferOwnershipOfHostFarm();
+    updateIntermission();
   } else {
     udg_transfer = 0;
   }

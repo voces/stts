@@ -77,14 +77,14 @@ const setupSlider = (
   slider.onSliderChange(({ value }) => {
     display.text = format(value);
     onChange?.(value);
-  });
+  }, true);
 
   return slider;
 };
 
 const editBoxDelayedOnChange = (
   editBox: FrameEx,
-  { onChange, delay = 2 }: {
+  { onChange, delay = 2.5 }: {
     onChange?: (frames: { value: string }) => void;
     delay?: number;
   },
@@ -93,14 +93,16 @@ const editBoxDelayedOnChange = (
   editBox.onChange(({ value }) => {
     timer?.cancel();
     timer = setTimeout(delay, () => onChange?.({ ...frames, value }));
-  });
+  }, true);
 };
 
 const setupEditableText = (
   name: string,
   { context = 0, onFocus, onBlur }: {
     context?: number;
+    /** @async only runs for local player */
     onFocus?: (frames: { label: FrameEx; editBox: FrameEx }) => void;
+    /** @sync runs for all players */
     onBlur?: (frames: { label: FrameEx; editBox: FrameEx; modified: boolean; value?: string }) => void;
   },
 ) => {
@@ -113,45 +115,69 @@ const setupEditableText = (
   editBox.onChange(({ value }) => {
     if (justClicked) return justClicked = false;
     timer?.cancel();
-    timer = setTimeout(0.75, () => {
+    timer = setTimeout(1, () => {
       label.visible = true;
       editBox.setFocus(false).setVisible(false);
       onBlur?.({ ...frames, modified: true, value });
     });
-  });
-  label.onClick(() => {
-    label.visible = false;
-    justClicked = true;
-    editBox.setVisible(true).setFocus(true);
-    onFocus?.(frames);
-    timer = setTimeout(2, () => {
-      label.visible = true;
-      editBox.setFocus(false).setVisible(false);
+  }, true);
+  label.onClick(({ player }) => {
+    if (!player.isHost) return;
+    if (player.isLocal()) {
+      label.visible = false;
+      justClicked = true;
+      editBox.setVisible(true).setFocus(true);
+      onFocus?.(frames);
+    }
+    timer = setTimeout(2.5, () => {
+      if (player.isLocal()) {
+        label.visible = true;
+        editBox.setFocus(false).setVisible(false);
+      }
       onBlur?.({ ...frames, modified: false });
     });
   });
   return frames;
 };
 
-const syncCheckbox = (
-  checkbox: FrameEx,
-  { createContext = 0, onClick, checked = false }: {
+class Checkbox {
+  private box: FrameEx;
+  private check: FrameEx;
+
+  constructor(checkbox: FrameEx, { createContext = 0, onClick, checked = false }: {
     checked?: boolean;
     createContext?: number;
     onClick?: (value: boolean) => void;
-  } = {},
-) => {
-  checkbox.visible = false;
-  const box = FrameEx.create("CheckboxButtonTemplate", checkbox.parent, 0, createContext);
-  box.setAllPoints(checkbox);
-  const check = FrameEx.fromName("CheckboxButtonCheckedTemplate", createContext);
-  check.visible = checked;
-  box.onClick(() => {
-    const checked = check.visible = !check.visible;
-    onClick?.(checked);
-  });
-  return check;
-};
+  } = {}) {
+    checkbox.visible = false;
+    this.box = FrameEx.create("CheckboxButtonTemplate", checkbox.parent, 0, createContext);
+    this.box.setAllPoints(checkbox);
+    this.check = FrameEx.fromName("CheckboxButtonCheckedTemplate", createContext);
+    this.check.visible = checked;
+    this.box.onClick(() => {
+      const checked = this.check.visible = !this.check.visible;
+      setTimeout(0.01, () => this.box.enabled = MapPlayerEx.fromLocal().isHost);
+      onClick?.(checked);
+    });
+  }
+
+  set checked(value: boolean) {
+    this.check.visible = value;
+    setTimeout(0.01, () => this.box.enabled = MapPlayerEx.fromLocal().isHost);
+  }
+
+  get checked() {
+    return this.check.visible;
+  }
+
+  set enabled(value: boolean) {
+    this.box.enabled = value;
+  }
+
+  get enabled() {
+    return this.box.enabled;
+  }
+}
 
 const setupPreferences = () => {
   const pid = GetPlayerId(GetLocalPlayer());
@@ -170,18 +196,22 @@ const setupPreferences = () => {
   BlzFrameSetVisible(BlzGetFrameByName("LoadGameButton", 0)!, false);
 
   // Disable saving via Alt+S
-  BlzFrameSetEnable(BlzGetFrameByName("SaveGameSaveButton", 0)!, false);
-  // BlzFrameSetVisible(BlzGetFrameByName("EscMenuSaveLoadContainer", 0)!, false);
+  BlzFrameSetEnable(BlzGetFrameByName("SaveGameFileEditBox", 0)!, false);
+  BlzFrameSetVisible(BlzGetFrameByName("SaveGameSaveButton", 0)!, false);
 
   const escPanel = FrameEx.fromName("InsideMainPanel");
   const preferencesButton = FrameEx.create("SheepTagPreferencesButton", escPanel);
-  preferencesButton.parent.parent.parent.enabled = false;
-  preferencesButton.parent.parent.parent.enabled = true;
+  preferencesButton.setVisible(false).setVisible(true);
 
-  preferencesButton.onClick(() => {
+  preferencesButton.onClick(({ player }) => {
     escapeTrigger.enabled = true;
-    if (GetLocalPlayer() !== GetTriggerPlayer()) return;
-    ForceUICancel();
+
+    const mainPanel = FrameEx.fromName("MainPanel");
+    preferencesPanel.setParent(mainPanel.parent);
+
+    if (!player.isLocal()) return;
+
+    mainPanel.setVisible(false);
     preferencesPanel.visible = true;
   });
 
@@ -255,6 +285,8 @@ const setupPreferences = () => {
   FrameEx.fromName("SheepTagPreferencesReturnButton").onClick(({ player }) => {
     if (!player.isLocal()) return;
     preferencesPanel.visible = false;
+    ForceUICancel();
+    FrameEx.fromName("MainPanel").setVisible(true);
   });
 };
 
@@ -368,7 +400,6 @@ const setupIntermission = () => {
   const consoleBackdrop = FrameEx.fromName("ConsoleUIBackdrop");
   extra.setParent(consoleBackdrop).clearPoints()
     .setPoint(FRAMEPOINT_BOTTOMLEFT, players, FRAMEPOINT_BOTTOMRIGHT, 0.01, 0);
-  // .setWidth(0.1);
   practice.setParent(consoleBackdrop)
     .setPoint(FRAMEPOINT_TOPRIGHT, extra, FRAMEPOINT_TOPRIGHT, -0.02, -0.02)
     .children.forEach((child) => child.setParent(consoleBackdrop).setAllPoints(practice));
@@ -376,6 +407,9 @@ const setupIntermission = () => {
     .setPoint(FRAMEPOINT_BOTTOMRIGHT, extra, FRAMEPOINT_BOTTOMRIGHT, -0.02, 0.02)
     .children.forEach((child) => child.setParent(consoleBackdrop).setAllPoints(end));
 
+  frames.settings.roundTab = roundSettingsButton;
+  frames.settings.goldTab = goldSettingsButton;
+  frames.settings.otherTab = otherSettingsButton;
   frames.settings.modeLabel = modeLabel;
   frames.settings.mode = mode;
   frames.settings.president.container = presidentOptions;
@@ -392,35 +426,47 @@ const setupIntermission = () => {
   roundSettingsButton.getChild(0).setTexture("UI/Widgets/BattleNet/bnet-tab-up.blp");
   roundSettingsButton.onClick(() => {
     roundSettings.visible = true;
-    roundSettingsButton.getChild(0).setTexture("UI/Widgets/BattleNet/bnet-tab-up.blp");
     goldSettings.visible = false;
-    goldSettingsButton.getChild(0).setTexture("UI/Widgets/BattleNet/bnet-tab-down.blp");
     otherSettings.visible = false;
+    roundSettingsButton.getChild(0).setTexture("UI/Widgets/BattleNet/bnet-tab-up.blp");
+    goldSettingsButton.getChild(0).setTexture("UI/Widgets/BattleNet/bnet-tab-down.blp");
     otherSettingsButton.getChild(0).setTexture("UI/Widgets/BattleNet/bnet-tab-down.blp");
+    const isHost = MapPlayerEx.fromLocal().isHost;
+    roundSettingsButton.enabled = isHost;
+    goldSettingsButton.enabled = isHost;
+    otherSettingsButton.enabled = isHost;
   });
 
   goldSettingsButton.onClick(() => {
     roundSettings.visible = false;
-    roundSettingsButton.getChild(0).setTexture("UI/Widgets/BattleNet/bnet-tab-down.blp");
     goldSettings.visible = true;
-    goldSettingsButton.getChild(0).setTexture("UI/Widgets/BattleNet/bnet-tab-up.blp");
     otherSettings.visible = false;
+    roundSettingsButton.getChild(0).setTexture("UI/Widgets/BattleNet/bnet-tab-down.blp");
+    goldSettingsButton.getChild(0).setTexture("UI/Widgets/BattleNet/bnet-tab-up.blp");
     otherSettingsButton.getChild(0).setTexture("UI/Widgets/BattleNet/bnet-tab-down.blp");
+    const isHost = MapPlayerEx.fromLocal().isHost;
+    roundSettingsButton.enabled = isHost;
+    goldSettingsButton.enabled = isHost;
+    otherSettingsButton.enabled = isHost;
   });
 
   otherSettingsButton.onClick(() => {
     roundSettings.visible = false;
-    roundSettingsButton.getChild(0).setTexture("UI/Widgets/BattleNet/bnet-tab-down.blp");
     goldSettings.visible = false;
-    goldSettingsButton.getChild(0).setTexture("UI/Widgets/BattleNet/bnet-tab-down.blp");
     otherSettings.visible = true;
+    roundSettingsButton.getChild(0).setTexture("UI/Widgets/BattleNet/bnet-tab-down.blp");
+    goldSettingsButton.getChild(0).setTexture("UI/Widgets/BattleNet/bnet-tab-down.blp");
     otherSettingsButton.getChild(0).setTexture("UI/Widgets/BattleNet/bnet-tab-up.blp");
+    const isHost = MapPlayerEx.fromLocal().isHost;
+    roundSettingsButton.enabled = isHost;
+    goldSettingsButton.enabled = isHost;
+    otherSettingsButton.enabled = isHost;
   });
 
   // Round settings
 
   mode.value = 0;
-  mode.onItemChanged(({ value }) => updateMode(value));
+  mode.onItemChanged(({ value }) => updateMode(value), true);
 
   frames.settings.switch.invul = setupSlider("SheepTagSwitchInvul", { onChange: (v) => udg_sheepInvul = v });
   frames.settings.switch.wolf = setupSlider("SheepTagSwitchWolf", { onChange: (v) => udg_wolfSpawn = v });
@@ -451,25 +497,25 @@ const setupIntermission = () => {
   frames.settings.terrain.options = classicTerrainOptions;
 
   terrain.value = 0;
-  terrain.onItemChanged(({ value }) => updateTerrain(value));
+  terrain.onItemChanged(({ value }) => updateTerrain(value), true);
 
-  frames.settings.shrink = syncCheckbox(shrinkCheckbox, {
+  frames.settings.shrink = new Checkbox(shrinkCheckbox, {
     checked: udg_mapShrink,
     onClick: (v) => {
       udg_mapShrink = v;
       if (v) {
         udg_mapExpand = false;
-        frames.settings.expand.visible = false;
+        frames.settings.expand.checked = false;
       }
     },
   });
-  frames.settings.expand = syncCheckbox(expandCheckbox, {
+  frames.settings.expand = new Checkbox(expandCheckbox, {
     checked: udg_mapExpand,
     onClick: (v) => {
       udg_mapExpand = v;
       if (v) {
         udg_mapShrink = false;
-        frames.settings.shrink.visible = false;
+        frames.settings.shrink.checked = false;
       }
     },
   });
@@ -525,12 +571,15 @@ const setupIntermission = () => {
     format: (v) => simpleformatTime(v * 60),
     onChange: (v) => {
       udg_time = v * 60;
-      checkAutoTimeFlag();
+      checkAutoTimeFlag(true);
     },
   });
-  spawn.onItemChanged(({ value }) => spawnSetting.mode = value === 0 ? "static" : value === 1 ? "free" : "random");
+  spawn.onItemChanged(
+    ({ value }) => spawnSetting.mode = value === 0 ? "static" : value === 1 ? "free" : "random",
+    true,
+  );
   spawn.value = 0;
-  frames.settings.view = syncCheckbox(view, {
+  frames.settings.view = new Checkbox(view, {
     checked: udg_mapExpand,
     onClick: (v) => {
       udg_viewOn = v;
@@ -555,11 +604,11 @@ const setupIntermission = () => {
       else EnableTrigger(farmVisionSetting.trigger);
     },
   });
-  frames.settings.autoCancel = syncCheckbox(autoCancel, {
+  frames.settings.autoCancel = new Checkbox(autoCancel, {
     checked: autoCancelEnabled,
     onClick: (v) => autoCancelEnabled = v,
   });
-  frames.settings.allowShareControl = syncCheckbox(allowShareControl, {
+  frames.settings.allowShareControl = new Checkbox(allowShareControl, {
     checked: autoCancelEnabled,
     onClick: (v) => udg_shareOn = v,
   });
@@ -571,7 +620,7 @@ const setupIntermission = () => {
   desiredSheep.onChange(({ value }) => {
     const parsed = parseDesiredSheep(value);
     settings.desiredSheep = parsed;
-  });
+  }, true);
   editBoxDelayedOnChange(desiredSheep, {
     onChange: ({ value }) => {
       const parsed = parseDesiredSheep(value);
@@ -583,6 +632,10 @@ const setupIntermission = () => {
   versusButton.onClick(() => TriggerExecute(gg_trg_versus));
   startButton.onClick(start);
   smartButton.onClick(smart);
+
+  frames.versus = versusButton;
+  frames.start = startButton;
+  frames.smart = smartButton;
 
   // Players
 
@@ -609,40 +662,48 @@ const setupIntermission = () => {
     team.onItemChanged(({ value }) => {
       team.value = -1;
 
-      // Make sheep
-      if (value === 0) {
-        if (p.afk !== AFK_PLAYING) handleAFK(p.handle);
-        if (ForceEx.wolves.hasPlayer(p)) ForceEx.wolves.removePlayer(p);
-        if (!ForceEx.sheep.hasPlayer(p)) ForceEx.sheep.addPlayer(p);
-        settings.desiredSheep = ForceEx.sheep.size();
-        desiredSheep.text = settings.desiredSheep.toFixed(0);
-        // Make wolf
-      } else if (value === 1) {
-        if (p.afk !== AFK_PLAYING) handleAFK(p.handle);
-        if (ForceEx.sheep.hasPlayer(p)) ForceEx.sheep.removePlayer(p);
-        if (!ForceEx.wolves.hasPlayer(p)) ForceEx.wolves.addPlayer(p);
-        settings.desiredSheep = ForceEx.sheep.size();
-        desiredSheep.text = settings.desiredSheep.toFixed(0);
-        // Mark AFK
-      } else if (value === 2) {
+      // Toggle casual
+      if (value === 0) setPub(p.id, !p.isPub, false);
+      // Make AFK
+      else if (value === 1) {
         if (p.afk === AFK_PLAYING) handleAFK(p.handle);
         if (ForceEx.wolves.hasPlayer(p)) ForceEx.wolves.removePlayer(p);
         if (ForceEx.sheep.hasPlayer(p)) ForceEx.sheep.removePlayer(p);
         settings.desiredSheep = ForceEx.sheep.size();
+        updateDesiredSheep();
         desiredSheep.text = settings.desiredSheep.toFixed(0);
-        // Toggle pub
-      } else if (value === 3) setPub(p.id, !p.isPub, false);
-      // Transfer host
-      else if (value === 4) transferHostTo(p.cid);
+        // Make sheep
+      } else if (value === 2) {
+        if (p.afk !== AFK_PLAYING) handleAFK(p.handle);
+        if (ForceEx.wolves.hasPlayer(p)) ForceEx.wolves.removePlayer(p);
+        if (!ForceEx.sheep.hasPlayer(p)) ForceEx.sheep.addPlayer(p);
+        settings.desiredSheep = ForceEx.sheep.size();
+        updateDesiredSheep();
+        desiredSheep.text = settings.desiredSheep.toFixed(0);
+        // Make wolf
+      } else if (value === 3) {
+        if (p.afk !== AFK_PLAYING) handleAFK(p.handle);
+        if (ForceEx.sheep.hasPlayer(p)) ForceEx.sheep.removePlayer(p);
+        if (!ForceEx.wolves.hasPlayer(p)) ForceEx.wolves.addPlayer(p);
+        settings.desiredSheep = ForceEx.sheep.size();
+        updateDesiredSheep();
+        desiredSheep.text = settings.desiredSheep.toFixed(0);
+        // Transfer host
+      } else if (value === 4) transferHostTo(p.cid);
       // Kick
-      else if (value === 5) CustomDefeatBJ(p.handle, "You were disconnected.");
+      else if (value === 5) {
+        CustomDefeatBJ(p.handle, "You were disconnected.");
+        settings.desiredSheep = ForceEx.sheep.size();
+        updateDesiredSheep();
+        desiredSheep.text = settings.desiredSheep.toFixed(0);
+      }
 
       updatePlayers();
-    });
+    }, true);
     const teamBackdrop = team.getChild(0);
     teamBackdrop.setTexture(`ReplaceableTextures/CommandButtons/${p.id > 11 ? "BTNRaider" : "BTNSheep"}.blp`);
-    const disabledBackdrop = team.getChild(1);
-    disabledBackdrop.setTexture(`ReplaceableTextures/CommandButtons/${p.id > 11 ? "BTNRaider" : "BTNSheep"}.blp`);
+    const disabledTeamBackdrop = team.getChild(1);
+    disabledTeamBackdrop.setTexture(`ReplaceableTextures/CommandButtons/${p.id > 11 ? "BTNRaider" : "BTNSheep"}.blp`);
 
     FrameEx.fromName("SheepTagPlayerRowName", i).setText(p.coloredName);
 
@@ -675,13 +736,31 @@ const setupIntermission = () => {
     });
     handicapLabel.text = (p.handicap * 100).toFixed(0) + "%";
 
+    const pubMark = FrameEx.fromName("SheepTagPlayerRowPub", i).setVisible(false);
+    // {
+    //   const backdrop = FrameEx.create("QuestButtonBaseTemplate", "ConsoleUIBackdrop", 0, i);
+    //   const copy = FrameEx.createType(
+    //     "SheepTagPlayerRowPubMarkTooltip",
+    //     backdrop,
+    //     i,
+    //     "TEXT",
+    //     "",
+    //   ).setSize(0.25, 0).setEnabled(false).setText("BLAH BLAH BLAH BLAH BLAH BLAH BLAH BLAH")
+    //     .setPoint(FRAMEPOINT_TOPLEFT, pubMark, FRAMEPOINT_TOPRIGHT, 0, 0);
+    //   backdrop.setPoint(FRAMEPOINT_BOTTOMLEFT, copy, FRAMEPOINT_BOTTOMLEFT, -0.01, -0.01)
+    //     .setPoint(FRAMEPOINT_TOPRIGHT, copy, FRAMEPOINT_TOPRIGHT, 0.01, 0.01);
+    //   pubMark.setTooltip(backdrop);
+    // }
+
     frames.players[i] = {
       container: row,
       backdrop,
       team,
       teamBackdrop,
+      disabledTeamBackdrop,
       sheepCount: sheepCountLabel,
       handicap: handicapLabel,
+      pubMark: pubMark,
       average: FrameEx.fromName("SheepTagPlayerRowAverage", i),
       deathOrder: FrameEx.fromName("SheepTagPlayerRowDeathOrder", i),
     };
@@ -694,6 +773,9 @@ const setupIntermission = () => {
     hideIntermission();
     endConfirmationContainer.visible = true;
   });
+
+  frames.practice = practice;
+  frames.end = end;
 
   frames.endConfirmation = endConfirmationContainer;
   endConfirmationContainer.visible = false;

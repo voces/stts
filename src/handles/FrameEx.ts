@@ -7,21 +7,27 @@ const isOriginFrameType = (value: unknown): value is originframetype => `${value
 const map = new Map<framehandle, FrameEx>();
 
 export class FrameEx extends Frame {
-  onClick(fn: (event: { player: MapPlayerEx }) => void) {
+  onClick(fn: (event: { player: MapPlayerEx }) => void, autoBlur = true) {
     const t = CreateTrigger();
     BlzTriggerRegisterFrameEvent(t, this.handle, FRAMEEVENT_CONTROL_CLICK);
     TriggerAddAction(t, () => {
-      this.setEnabled(false).setEnabled(true);
+      if (autoBlur) this.setEnabled(false).setEnabled(true);
       fn({ player: MapPlayerEx.fromEvent()! });
     });
     return this;
   }
 
   /** For edit box */
-  onChange(fn: (event: { player: MapPlayerEx; value: string }) => void) {
+  onChange(fn: (event: { player: MapPlayerEx; value: string }) => void, synced?: boolean) {
     const t = TriggerEx.create();
     t.triggerRegisterFrameEvent(this, FRAMEEVENT_EDITBOX_TEXT_CHANGED);
-    t.addAction(() => fn({ player: MapPlayerEx.fromEvent()!, value: this.text }));
+    t.addAction(() => {
+      const player = MapPlayerEx.fromEvent()!;
+      if (synced && !player.isHost) return;
+      const text = BlzGetTriggerFrameText()!;
+      if (synced && !player.isLocal()) this.text = text;
+      fn({ player, value: text });
+    });
     return t;
   }
 
@@ -37,18 +43,30 @@ export class FrameEx extends Frame {
   }
 
   /** For popup menus */
-  onItemChanged(fn: (event: { player: MapPlayerEx; value: number }) => void) {
+  onItemChanged(fn: (event: { player: MapPlayerEx; value: number }) => void, synced?: boolean) {
     const t = CreateTrigger();
     BlzTriggerRegisterFrameEvent(t, this.handle, FRAMEEVENT_POPUPMENU_ITEM_CHANGED);
-    TriggerAddAction(t, () => fn({ player: MapPlayerEx.fromEvent()!, value: BlzGetTriggerFrameValue() }));
+    TriggerAddAction(t, () => {
+      const player = MapPlayerEx.fromEvent()!;
+      if (synced && !player.isHost) return;
+      const value = BlzGetTriggerFrameValue();
+      if (synced && !player.isLocal()) this.value = value;
+      fn({ player, value });
+    });
     return this;
   }
 
   /** For sliders */
-  onSliderChange(fn: (event: { player: MapPlayerEx; value: number }) => void) {
+  onSliderChange(fn: (event: { player: MapPlayerEx; value: number }) => void, synced?: boolean) {
     const t = CreateTrigger();
     BlzTriggerRegisterFrameEvent(t, this.handle, FRAMEEVENT_SLIDER_VALUE_CHANGED);
-    TriggerAddAction(t, () => fn({ player: MapPlayerEx.fromEvent()!, value: BlzGetTriggerFrameValue() }));
+    TriggerAddAction(t, () => {
+      const player = MapPlayerEx.fromEvent()!;
+      if (synced && !player.isHost) return;
+      const value = BlzGetTriggerFrameValue();
+      if (synced && !player.isLocal()) this.value = value;
+      fn({ player, value });
+    });
     return this;
   }
 
@@ -70,6 +88,12 @@ export class FrameEx extends Frame {
       if (child !== null) output.push(child);
     }
     return output;
+  }
+
+  getParent() {
+    const parent = FrameEx.fromHandle(BlzFrameGetParent(this.handle));
+    if (!parent) throw `Error getting parent`;
+    return parent;
   }
 
   static create(
