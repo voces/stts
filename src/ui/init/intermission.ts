@@ -1,29 +1,8 @@
 import { ForceEx } from "handles/ForceEx";
 import { FrameEx } from "handles/FrameEx";
 import { MapPlayerEx } from "handles/MapPlayerEx";
-import { TriggerEx } from "handles/TriggerEx";
-import { onZoomChange, saveZooms } from "jass/triggers/zoomFunctions/zoom";
-import {
-  getTeamResources,
-  setTeamResources,
-  TEAM_RESOURCES_DEFAULT,
-  TEAM_RESOURCES_HIDDEN,
-  TEAM_RESOURCES_TWINED,
-} from "userSettings/teamResources";
-import { setTimeout, Timeout } from "util/setTimeout";
-import { addScriptHook, File, W3TS_HOOK } from "w3ts";
-import {
-  adjustChatFrames,
-  hideIntermission,
-  showIntermission,
-  smart,
-  start,
-  updateDesiredSheep,
-  updateMode,
-  updatePlayers,
-  updateTerrain,
-} from "./api";
-import { frames } from "./frames";
+import { handleAFK } from "jass/triggers/afkFunctions/AFK";
+import { transferHostTo } from "jass/triggers/hostCommands/transfer";
 import {
   farmVision as farmVisionSetting,
   income,
@@ -32,265 +11,16 @@ import {
   spawnSetting,
   switchSetting,
 } from "settings/settings";
-import { parseDesiredSheep, toStringWithPrecision } from "./util";
 import { checkAutoTimeFlag } from "settings/time";
-import { handleAFK } from "jass/triggers/afkFunctions/AFK";
 import { setPub } from "teams/smart";
-import { transferHostTo } from "jass/triggers/hostCommands/transfer";
+import { adjustChatFrames, hideIntermission, showIntermission, smart, start } from "ui/api";
+import { updateTerrain } from "ui/api/modes";
+import { updateDesiredSheep, updateMode, updatePlayers, updateScButtons } from "ui/api/updateIntermission";
+import { frames } from "ui/frames";
+import { parseDesiredSheep, toStringWithPrecision } from "ui/util";
+import { Checkbox, editBoxDelayedOnChange, getFrames, setupEditableText, setupSlider } from "./util";
 
-let sheepZoomEditBox: FrameEx | undefined;
-let wolfZoomEditBox: FrameEx | undefined;
-let wispZoomEditBox: FrameEx | undefined;
-
-const updateZooms = (cid: number) => {
-  if (sheepZoomEditBox) sheepZoomEditBox.text = udg_sheepZoom[cid].toFixed(0);
-  if (wolfZoomEditBox) wolfZoomEditBox.text = udg_wolfZoom[cid].toFixed(0);
-  if (wispZoomEditBox) wispZoomEditBox.text = udg_wispZoom[cid].toFixed(0);
-};
-onZoomChange(updateZooms);
-
-const handleZoom =
-  (which: "sheep" | "wolf" | "wisp") => ({ player, value }: { player: MapPlayerEx; value: string }) => {
-    const zoom = parseInt(value);
-    if (zoom > 400) {
-      const array = which === "sheep" ? udg_sheepZoom : which === "wolf" ? udg_wolfZoom : udg_wispZoom;
-      array[player.cid] = zoom;
-      saveZooms(player.handle);
-      if (which === "sheep" && ForceEx.sheep.hasPlayer(player)) player.setCameraDistance(zoom);
-      if (which === "wolf" && ForceEx.wolves.hasPlayer(player)) player.setCameraDistance(zoom);
-      if (which === "wisp" && (ForceEx.wisps.hasPlayer(player) || player.afk > 0)) player.setCameraDistance(zoom);
-    }
-  };
-
-const getFrames = <T extends string[]>(...names: T) =>
-  names.map((name) => FrameEx.fromName(name)) as { [K in keyof T]: FrameEx };
-
-const setupSlider = (
-  name: string,
-  { format = (v) => v.toFixed(0), onChange }: { format?: (v: number) => string; onChange?: (v: number) => void } = {},
-) => {
-  const slider = FrameEx.fromName(name);
-  const display = FrameEx.fromName(`${name}Value`);
-
-  display.clearPoints();
-  display.setPoint(FRAMEPOINT_BOTTOM, slider.getChild(2), FRAMEPOINT_TOP, 0, 0);
-  slider.onSliderChange(({ value }) => {
-    display.text = format(value);
-    onChange?.(value);
-  }, true);
-
-  return slider;
-};
-
-const editBoxDelayedOnChange = (
-  editBox: FrameEx,
-  { onChange, delay = 2.5 }: {
-    onChange?: (frames: { value: string }) => void;
-    delay?: number;
-  },
-) => {
-  let timer: Timeout | undefined;
-  editBox.onChange(({ value }) => {
-    timer?.cancel();
-    timer = setTimeout(delay, () => onChange?.({ ...frames, value }));
-  }, true);
-};
-
-const setupEditableText = (
-  name: string,
-  { context = 0, onFocus, onBlur }: {
-    context?: number;
-    /** @async only runs for local player */
-    onFocus?: (frames: { label: FrameEx; editBox: FrameEx }) => void;
-    /** @sync runs for all players */
-    onBlur?: (frames: { label: FrameEx; editBox: FrameEx; modified: boolean; value?: string }) => void;
-  },
-) => {
-  const label = FrameEx.fromName(name, context);
-  const editBox = FrameEx.fromName(`${name}EditBox`, context);
-  const frames = { label, editBox };
-  editBox.visible = false;
-  let timer: Timeout | undefined;
-  let justClicked = false;
-  editBox.onChange(({ value }) => {
-    if (justClicked) return justClicked = false;
-    timer?.cancel();
-    timer = setTimeout(1, () => {
-      label.visible = true;
-      editBox.setFocus(false).setVisible(false);
-      onBlur?.({ ...frames, modified: true, value });
-    });
-  }, true);
-  label.onClick(({ player }) => {
-    if (!player.isHost) return;
-    if (player.isLocal()) {
-      label.visible = false;
-      justClicked = true;
-      editBox.setVisible(true).setFocus(true);
-      onFocus?.(frames);
-    }
-    timer = setTimeout(2.5, () => {
-      if (player.isLocal()) {
-        label.visible = true;
-        editBox.setFocus(false).setVisible(false);
-      }
-      onBlur?.({ ...frames, modified: false });
-    });
-  });
-  return frames;
-};
-
-class Checkbox {
-  private box: FrameEx;
-  private check: FrameEx;
-
-  constructor(checkbox: FrameEx, { createContext = 0, onClick, checked = false }: {
-    checked?: boolean;
-    createContext?: number;
-    onClick?: (value: boolean) => void;
-  } = {}) {
-    checkbox.visible = false;
-    this.box = FrameEx.create("CheckboxButtonTemplate", checkbox.parent, 0, createContext);
-    this.box.setAllPoints(checkbox);
-    this.check = FrameEx.fromName("CheckboxButtonCheckedTemplate", createContext);
-    this.check.visible = checked;
-    this.box.onClick(() => {
-      const checked = this.check.visible = !this.check.visible;
-      setTimeout(0.01, () => this.box.enabled = MapPlayerEx.fromLocal().isHost);
-      onClick?.(checked);
-    });
-  }
-
-  set checked(value: boolean) {
-    this.check.visible = value;
-    setTimeout(0.01, () => this.box.enabled = MapPlayerEx.fromLocal().isHost);
-  }
-
-  get checked() {
-    return this.check.visible;
-  }
-
-  set enabled(value: boolean) {
-    this.box.enabled = value;
-  }
-
-  get enabled() {
-    return this.box.enabled;
-  }
-}
-
-const setupPreferences = () => {
-  const pid = GetPlayerId(GetLocalPlayer());
-  const cid = pid + 1;
-
-  const escapeTrigger = TriggerEx.create();
-  escapeTrigger.registerAnyPlayerKeyEvent(OSKEY_ESCAPE, 0, true);
-  escapeTrigger.addAction(() => {
-    if (preferencesPanel.visible) preferencesPanel.visible = false;
-  });
-  escapeTrigger.enabled = false;
-
-  // Hide save/load buttons
-  BlzFrameSetVisible(BlzGetFrameByName("SaveGameButton", 0)!, false);
-  BlzFrameSetEnable(BlzGetFrameByName("SaveGameButton", 0)!, false);
-  BlzFrameSetVisible(BlzGetFrameByName("LoadGameButton", 0)!, false);
-
-  // Disable saving via Alt+S
-  BlzFrameSetEnable(BlzGetFrameByName("SaveGameFileEditBox", 0)!, false);
-  BlzFrameSetVisible(BlzGetFrameByName("SaveGameSaveButton", 0)!, false);
-
-  const escPanel = FrameEx.fromName("InsideMainPanel");
-  const preferencesButton = FrameEx.create("SheepTagPreferencesButton", escPanel);
-  preferencesButton.setVisible(false).setVisible(true);
-
-  preferencesButton.onClick(({ player }) => {
-    escapeTrigger.enabled = true;
-
-    const mainPanel = FrameEx.fromName("MainPanel");
-    preferencesPanel.setParent(mainPanel.parent);
-
-    if (!player.isLocal()) return;
-
-    mainPanel.setVisible(false);
-    preferencesPanel.visible = true;
-  });
-
-  const preferencesPanel = FrameEx.create("SheepTagPreferencesPanel", "ConsoleUIBackdrop");
-  preferencesPanel.visible = false;
-
-  sheepZoomEditBox = FrameEx.fromName("SheepZoomEditBox");
-  sheepZoomEditBox.onChange(handleZoom("sheep"));
-  wolfZoomEditBox = FrameEx.fromName("WolfZoomEditBox");
-  wolfZoomEditBox.onChange(handleZoom("wolf"));
-  wispZoomEditBox = FrameEx.fromName("WispZoomEditBox");
-  wispZoomEditBox.onChange(handleZoom("wisp"));
-  updateZooms(cid);
-
-  const autoControlCheckbox = FrameEx.fromName("AutoControlCheckbox");
-  const autoControlCheckboxInverted = FrameEx.fromName("AutoControlCheckboxChecked");
-  (udg_autocontrol[pid] ? autoControlCheckbox : autoControlCheckboxInverted).visible = false;
-  (udg_autocontrol[pid] ? autoControlCheckboxInverted : autoControlCheckbox).onToggle(({ player, checked }) => {
-    udg_autocontrol[player.id] = checked;
-    File.write("revo/autocontrol.txt", B2S(checked));
-  });
-
-  const noAutoControlCheckbox = FrameEx.fromName("NoAutoControlCheckbox");
-  const noAutoControlCheckboxInverted = FrameEx.fromName("NoAutoControlCheckboxChecked");
-  (noAutoControl[pid] ? noAutoControlCheckbox : noAutoControlCheckboxInverted).visible = false;
-  (noAutoControl[pid] ? noAutoControlCheckboxInverted : noAutoControlCheckbox).onToggle(({ player, checked }) => {
-    noAutoControl[player.id] = checked;
-    File.write("revo/noAutoControl.txt", B2S(checked));
-  });
-
-  const teamResourcesShownRadioUnchecked = FrameEx.fromName("TeamResourcesShownRadio");
-  const teamResourcesShownRadioChecked = FrameEx.fromName("TeamResourcesShownRadioChecked");
-
-  const teamResourcesTwinRadioUnchecked = FrameEx.fromName("TeamResourcesTwinRadio");
-  const teamResourcesTwinRadioChecked = FrameEx.fromName("TeamResourcesTwinRadioChecked");
-
-  const teamResourcesHiddenRadioUnchecked = FrameEx.fromName("TeamResourcesHiddenRadio");
-  const teamResourcesHiddenRadioChecked = FrameEx.fromName("TeamResourcesHiddenRadioChecked");
-
-  const teamResources = getTeamResources();
-
-  let initialRadio: FrameEx | undefined = teamResources === TEAM_RESOURCES_DEFAULT
-    ? teamResourcesShownRadioChecked
-    : teamResources === TEAM_RESOURCES_TWINED
-    ? teamResourcesTwinRadioChecked
-    : teamResourcesHiddenRadioChecked;
-
-  ([
-    [teamResourcesShownRadioUnchecked, TEAM_RESOURCES_DEFAULT, false],
-    [teamResourcesShownRadioChecked, TEAM_RESOURCES_DEFAULT, true],
-    [teamResourcesTwinRadioUnchecked, TEAM_RESOURCES_TWINED, false],
-    [teamResourcesTwinRadioChecked, TEAM_RESOURCES_TWINED, true],
-    [teamResourcesHiddenRadioUnchecked, TEAM_RESOURCES_HIDDEN, false],
-    [teamResourcesHiddenRadioChecked, TEAM_RESOURCES_HIDDEN, true],
-  ] as const).forEach(([radio, value, checked]) => {
-    if (teamResources === value && !checked) radio.visible = false;
-    else if (teamResources !== value && checked) radio.visible = false;
-    radio.onToggle(({ player, checked }) => {
-      if (!checked) return;
-      setTeamResources(player.handle, value);
-      if (initialRadio && radio !== initialRadio && player.isLocal()) {
-        initialRadio.visible = false;
-        if (initialRadio === teamResourcesShownRadioChecked) teamResourcesShownRadioUnchecked.visible = true;
-        else if (initialRadio === teamResourcesTwinRadioChecked) teamResourcesTwinRadioUnchecked.visible = true;
-        else teamResourcesHiddenRadioUnchecked.visible = true;
-        initialRadio = undefined;
-      }
-    });
-  });
-
-  FrameEx.fromName("SheepTagPreferencesReturnButton").onClick(({ player }) => {
-    if (!player.isLocal()) return;
-    preferencesPanel.visible = false;
-    ForceUICancel();
-    FrameEx.fromName("MainPanel").setVisible(true);
-  });
-};
-
-const setupIntermission = () => {
+export const initIntermission = () => {
   FrameEx.create("SheepTagIntermission", "ConsoleUIBackdrop");
   const settingsContainer = FrameEx.fromName("SheepTagSettings");
   const players = FrameEx.fromName("SheepTagPlayers");
@@ -354,6 +84,7 @@ const setupIntermission = () => {
     end,
 
     endConfirmationContainer,
+    endConfirmationTitle,
     endConfirmCancel,
     endConfirmEnd,
   ] = getFrames(
@@ -393,6 +124,7 @@ const setupIntermission = () => {
     "SheepTagPracticeButton",
     "SheepTagEndButton",
     "SheepTagEndConfirmation",
+    "SheepTagEndConfirmationTitle",
     "SheepTagEndConfirmationCancel",
     "SheepTagEndConfirmationEnd",
   );
@@ -718,6 +450,7 @@ const setupIntermission = () => {
         const parsed = Math.max(tonumber(value) || 0, 0);
         label.text = parsed.toFixed(0);
         p.sheepCount = parsed;
+        updateScButtons();
       },
     });
     sheepCountLabel.text = "0";
@@ -737,20 +470,6 @@ const setupIntermission = () => {
     handicapLabel.text = (p.handicap * 100).toFixed(0) + "%";
 
     const pubMark = FrameEx.fromName("SheepTagPlayerRowPub", i).setVisible(false);
-    // {
-    //   const backdrop = FrameEx.create("QuestButtonBaseTemplate", "ConsoleUIBackdrop", 0, i);
-    //   const copy = FrameEx.createType(
-    //     "SheepTagPlayerRowPubMarkTooltip",
-    //     backdrop,
-    //     i,
-    //     "TEXT",
-    //     "",
-    //   ).setSize(0.25, 0).setEnabled(false).setText("BLAH BLAH BLAH BLAH BLAH BLAH BLAH BLAH")
-    //     .setPoint(FRAMEPOINT_TOPLEFT, pubMark, FRAMEPOINT_TOPRIGHT, 0, 0);
-    //   backdrop.setPoint(FRAMEPOINT_BOTTOMLEFT, copy, FRAMEPOINT_BOTTOMLEFT, -0.01, -0.01)
-    //     .setPoint(FRAMEPOINT_TOPRIGHT, copy, FRAMEPOINT_TOPRIGHT, 0.01, 0.01);
-    //   pubMark.setTooltip(backdrop);
-    // }
 
     frames.players[i] = {
       container: row,
@@ -775,9 +494,13 @@ const setupIntermission = () => {
   });
 
   frames.practice = practice;
-  frames.end = end;
+  frames.end = {
+    button: end,
+    confirm: endConfirmationContainer,
+    title: endConfirmationTitle,
+    confirmButton: endConfirmEnd,
+  };
 
-  frames.endConfirmation = endConfirmationContainer;
   endConfirmationContainer.visible = false;
 
   endConfirmCancel.onClick(() => {
@@ -793,11 +516,3 @@ const setupIntermission = () => {
   hideIntermission();
   adjustChatFrames();
 };
-
-addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
-  setTimeout(0.01, () => {
-    BlzLoadTOCFile("customui/main.toc");
-    setupIntermission();
-    setupPreferences();
-  });
-});

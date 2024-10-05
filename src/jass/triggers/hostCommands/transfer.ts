@@ -1,5 +1,5 @@
 import { MapPlayerEx } from "handles/MapPlayerEx";
-import { updateIntermission } from "ui/api";
+import { updateIntermission } from "ui/api/updateIntermission";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
 const hasPermission = () => {

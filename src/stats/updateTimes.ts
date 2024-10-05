@@ -71,13 +71,13 @@ export const updateTimes = () => {
   fullTimeString = s + " with " + formatTime(timeElapsed);
 
   if (timeElapsed > recordTime) {
-    if (recordTime !== -Infinity) fullTimeString = fullTimeString + " (leader)";
+    if (recordTime !== -Infinity) fullTimeString += " (leader)";
     recordTime = timeElapsed;
     recordHolders = s;
   }
 
   if (timeElapsed < loserTime) {
-    if (loserTime !== Infinity) fullTimeString = fullTimeString + " (loser)";
+    if (loserTime !== Infinity) fullTimeString += " (loser)";
     loserTime = timeElapsed;
     loserHolders = s;
   }

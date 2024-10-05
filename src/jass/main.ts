@@ -1425,15 +1425,17 @@ GoldText = (amount: number, u: unit): void => {
     prev[1].cancel();
   }
 
+  const x = GetUnitX(u);
+  const y = GetUnitY(u);
   goldTextBuffer.set(u, [
     amount,
     setTimeout(0.05, () => {
       goldTextBuffer.delete(u);
       if (GetUnitAbilityLevel(u, FourCC("Binv")) > 0) return;
       const tt = CreateTextTag()!;
-      if (!IsVisibleToPlayer(GetUnitX(u), GetUnitY(u), GetLocalPlayer())) return;
+      if (!IsVisibleToPlayer(x, y, GetLocalPlayer())) return;
       SetTextTagPermanent(tt, false);
-      SetTextTagPos(tt, GetUnitX(u), GetUnitY(u), 25);
+      SetTextTagPos(tt, x, y, 25);
       SetTextTagText(tt, "+" + I2S(amount), 0.0276);
       SetTextTagColor(tt, 217, 217, 25, 0);
       SetTextTagFadepoint(tt, 0);

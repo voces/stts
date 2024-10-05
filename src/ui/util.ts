@@ -43,3 +43,27 @@ export const toStringWithPrecision = (value: number, precision = 3) =>
     "%.$",
     "",
   )[0];
+
+const getAdjustedSc = (p: MapPlayerEx) => {
+  if (udg_gameStarted && (p.isSheep || p.isWisp)) return p.sheepCount - 1;
+  return p.sheepCount;
+};
+
+export const isScEven = () => {
+  let count = -1;
+  for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+    const p = MapPlayerEx.fromIndex(i);
+    if (p?.isActive && !p.isPub) {
+      if (count === -1) count = getAdjustedSc(p);
+      else if (count !== getAdjustedSc(p)) return false;
+    }
+  }
+  return true;
+};
+
+export const precisionCompare = (a: number, b: number, precision = 3) => {
+  const as = a.toFixed(precision);
+  const bs = b.toFixed(precision);
+  if (as === bs) return "equal";
+  return tonumber(as)! > tonumber(bs)! ? "greater" : "less";
+};

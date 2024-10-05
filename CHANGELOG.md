@@ -8,15 +8,19 @@
 - President ward death crash?
 - Vamp/switch unsets
 - Customize Help and Tips: UI\helpstrings.txt, UI\tipstrings.txt
-- Remove Save Game, Resume Game
-- Added Sheep Tag Preferences
+- No leader/loser alert on first 3 rounds
 
 # 24n
 
 ## Feature changes
 
-- Custom UI
-  - -view is persisted between rounds
+- UI
+  - Removed Save Game, Load Game
+  - Added Sheep Tag Preferences
+  - Added Intermission
+  - Added Quick Buy v2
+  - Warn on exit with uneven SC
+  - Added -do
 - When a sheep dies, their gold is automatically distributed to allies
   - In president mode, all gold goes to the president
 - Goblin Support changes
@@ -26,6 +30,7 @@
   - Changed Pocket Factory to spawn waves of Clockwerk Goblins over a shorter period
   - Increased partial damage AoE of Clockwerk Goblins from 200 to 300
 - Kaleidoscope now makes illusions permanent
+- -view is persisted between rounds
 - -freespawn now works in middle of rounds
 - Updated gold and food copy to reflect recent proximity based changes.
 
@@ -50,6 +55,7 @@
 - Fixed -START printing an error
 - Fixed a wisp spawning at end of vamp
 - Fixed automatic last round time showing up after vamp
+- Fixed -afk/-fafk showing messages when trying to AFK in middle of a round
 
 # 24m
 

@@ -3,6 +3,7 @@ import { FrameEx } from "handles/FrameEx";
 type Checkbox = { checked: boolean; enabled: boolean };
 
 export const frames: {
+  preferences: FrameEx;
   intermissionFrames: FrameEx[];
   settings: {
     container: FrameEx;
@@ -57,10 +58,14 @@ export const frames: {
     average: FrameEx;
     deathOrder: FrameEx;
   }[];
-  endConfirmation: FrameEx;
   versus: FrameEx;
   start: FrameEx;
   smart: FrameEx;
   practice: FrameEx;
-  end: FrameEx;
-} = { intermissionFrames: [], settings: { president: {}, switch: {}, terrain: {} }, players: [] } as any;
+  end: {
+    button: FrameEx;
+    confirm: FrameEx;
+    title: FrameEx;
+    confirmButton: FrameEx;
+  };
+} = { intermissionFrames: [], settings: { president: {}, switch: {}, terrain: {} }, players: [], end: {} } as any;

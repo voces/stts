@@ -3,6 +3,7 @@ import { startRuneTimer } from "functions/runes";
 import { ForceEx } from "handles/ForceEx";
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { terrain } from "settings/settings";
+import { updateScButtons } from "ui/api/updateIntermission";
 import { forEachPlayer } from "util/forEachPlayer";
 
 const createWolf = () => {
@@ -39,6 +40,7 @@ const Trig_createWolves_Actions = () => {
   ForceEx.sheep.for((s) => udg_totalFarmCountBeforeWolves[s.id].push(udg_farmCount[s.id + 1]));
 
   wolvesCreated = true;
+  updateScButtons();
 
   DisplayTimedTextToForce(udg_Sheep, 5, "The wolves have been set free!");
 

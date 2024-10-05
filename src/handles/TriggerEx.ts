@@ -20,7 +20,6 @@ export class TriggerEx extends Trigger {
     for (let i = 0; i < bj_MAX_PLAYERS; i++) {
       this.registerPlayerKeyEvent(MapPlayerEx.fromIndex(i)!, whichKey, metaKey, fireOnKeyDown);
     }
-    EVENT_PLAYER_KEY_DOWN;
 
     return this;
   }

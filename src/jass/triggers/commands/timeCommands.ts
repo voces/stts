@@ -94,10 +94,7 @@ const Trig_timeCommands_Actions = () => {
           `${player.coloredName_}: ${
             keys.map((k) =>
               `${simpleformatTime(times[k].total / times[k].count, true)}${modes.size > 1 ? ` (${k})` : ""}`
-            )
-              .join(
-                ", ",
-              )
+            ).join(", ")
           }`,
           15,
         );

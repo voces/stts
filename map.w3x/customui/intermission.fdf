@@ -197,11 +197,12 @@ Frame "GLUETEXTBUTTON" "TabButtonTemplate" {
 }
 
 Frame "FRAME" "SheepTagIntermission" {
+  TabFocusPush,
+
   Frame "DIALOG" "SheepTagSettings" {
     SetPoint TOP, "ConsoleUI", TOP, -0.13, -0.047,
     Height 0.385,
     Width 0.25,
-    TabFocusPush,
 
     Frame "GLUETEXTBUTTON" "SheepTagRoundSettingsButton" INHERITS WITHCHILDREN "TabButtonTemplate" {
       SetPoint TOPLEFT, "SheepTagSettings", TOPLEFT, 0.0168, -0.0168,
@@ -870,7 +871,6 @@ Frame "FRAME" "SheepTagIntermission" {
     Height 0.11,
     Width 0.15,
     DecorateFileNames,
-    TabFocusPush,
 
     DialogBackdrop "SheepTagExtraBackdrop",
     Frame "BACKDROP" "SheepTagExtraBackdrop" INHERITS "EscMenuBackdrop" {
@@ -879,11 +879,11 @@ Frame "FRAME" "SheepTagIntermission" {
     Frame "GLUETEXTBUTTON" "SheepTagPracticeButton" INHERITS WITHCHILDREN "EscMenuButtonTemplate" {
       SetPoint TOPLEFT, "SheepTagExtra", TOPLEFT, 0.02, -0.02,
       SetPoint TOPRIGHT, "SheepTagExtra", TOPRIGHT, -0.02, -0.02,
-      ControlShortcutKey "KEY_PLAY_GAME_SHORTCUT",
+      ControlShortcutKey "KEY_RETURN_TO_GAME_SHORTCUT",
 
       ButtonText "SheepTagPracticeButtonText",
       Frame "TEXT" "SheepTagPracticeButtonText" INHERITS "EscMenuButtonTextTemplate" {
-        Text "|cffffffffP|rractice",
+        Text "P|cffffffffr|ractice",
       }
     }
 

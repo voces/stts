@@ -76,7 +76,7 @@ const handleCaptainSelection = (captainIndex: number, conditionFunc: () => boole
 };
 
 export const handleAFK = (p: player) => {
-  if (rotated === p) return;
+  if (rotated === p) return false;
   const cid = GetConvertedPlayerId(p);
 
   const updateAFKStatus = (status: typeof AFK_AFK | typeof AFK_AFK_DURING_ROUND) => {
@@ -86,7 +86,7 @@ export const handleAFK = (p: player) => {
 
   if (udg_AFK[cid] < AFK_AFK) { // Leaving
     if (udg_gameStarted) {
-      if (udg_AFK[cid] === 0) return;
+      if (udg_AFK[cid] === 0) return false;
       updateAFKStatus(AFK_AFK);
       LeaderboardSetPlayerItemLabelBJ(
         p,
@@ -241,6 +241,8 @@ export const handleAFK = (p: player) => {
     DisableTrigger(gg_trg_draftPlayer);
     TriggerExecute(gg_trg_createSheep);
   }
+
+  return true;
 };
 
 declare global {
@@ -252,7 +254,7 @@ InitTrig_AFK = () => {
   registerAnyPlayerChatEvent(gg_trg_AFK, "-afk");
   TriggerAddAction(gg_trg_AFK, () => {
     const p = GetTriggerPlayer()!;
-    handleAFK(p);
+    if (!handleAFK(p)) return;
     const cid = GetConvertedPlayerId(p);
     displayTimedTextToAll(
       `${MapPlayerEx.fromIndex(cid - 1)} ${udg_AFK[cid] < AFK_AFK ? "is back" : "has gone AFK"}.`,
@@ -266,7 +268,7 @@ InitTrig_AFK = () => {
     if (GetTriggerPlayer() !== udg_Custom) return;
     const cid = S2I(GetEventPlayerChatString()!.split(" ")[1] ?? "");
     if (cid < 1 || cid > bj_MAX_PLAYERS) return;
-    handleAFK(ConvertedPlayer(cid)!);
+    if (!handleAFK(ConvertedPlayer(cid)!)) return;
     displayTimedTextToAll(
       `${MapPlayerEx.fromIndex(cid - 1)} has been ${udg_AFK[cid] < AFK_AFK ? "unset from" : "set to"} AFK.`,
       5,

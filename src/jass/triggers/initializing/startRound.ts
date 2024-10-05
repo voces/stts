@@ -1,8 +1,7 @@
 import { disableIncome, resetBankedGold } from "functions/farms/savingFarms";
 import { stopRuneTimers } from "functions/runes";
-import { MapPlayerEx } from "handles/MapPlayerEx";
+import { deathOrder, MapPlayerEx } from "handles/MapPlayerEx";
 import { switchSheepTimers } from "modes/switch/switch";
-import { deathOrder } from "stats/deathOrder";
 import { showIntermission } from "ui/api";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { triggerRoundInitHooks } from "util/gameHooks";

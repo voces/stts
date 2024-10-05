@@ -1,6 +1,7 @@
 import { settings } from "settings/settings";
-import { deathOrder } from "stats/deathOrder";
 import { MapPlayer, Unit } from "w3ts";
+
+export const deathOrder = { deaths: 0 };
 
 const map = new Map<player, MapPlayerEx>();
 
