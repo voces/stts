@@ -27,8 +27,8 @@ const getCounts = () => {
 
 export const getIdealDesiredSheep = () => {
   const { regulars, pubs } = getCounts();
-  if (pubs % 2 === 0) return Math.floor((regulars + pubs) / 2 - 1);
-  return Math.floor((regulars + pubs + 1) / 2 - 1);
+  if (pubs % 2 === 0) return Math.max(Math.floor((regulars + pubs) / 2 - 1), 1);
+  return Math.max(Math.floor((regulars + pubs + 1) / 2 - 1), 1);
 };
 
 export const parseDesiredSheep = (value: string) => {

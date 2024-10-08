@@ -79,16 +79,13 @@ const Trig_Sheep_Color_Actions = () => {
   DisplayTimedTextToForce(
     GetForceOfPlayer(GetTriggerPlayer()!)!,
     10,
-    "     " +
-      ("Sheep color changed to " +
-        (R2S(udg_SheepColorR[GetConvertedPlayerId(GetTriggerPlayer()!)]) +
-          ("% |CFFFF0000Red|r " +
-            (R2S(udg_SheepColorG[GetConvertedPlayerId(GetTriggerPlayer()!)]) +
-              ("% |CFF18BE00Green|r " +
-                (R2S(
-                  udg_SheepColorB[GetConvertedPlayerId(GetTriggerPlayer()!)],
-                ) +
-                  "% |CFF0000FFBlue|r")))))),
+    "Sheep color changed to " +
+      R2S(udg_SheepColorR[GetConvertedPlayerId(GetTriggerPlayer()!)]) +
+      "% |CFFFF0000Red|r " +
+      R2S(udg_SheepColorG[GetConvertedPlayerId(GetTriggerPlayer()!)]) +
+      "% |CFF18BE00Green|r " +
+      R2S(udg_SheepColorB[GetConvertedPlayerId(GetTriggerPlayer()!)]) +
+      "% |CFF0000FFBlue|r",
   );
   ForGroupBJ(
     GetUnitsOfPlayerAndTypeId(GetTriggerPlayer()!, sheepType)!,

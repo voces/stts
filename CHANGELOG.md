@@ -6,48 +6,56 @@
 - Selection bug
 - -ff
 - President ward death crash?
-- Vamp/switch unsets
-- Customize Help and Tips: UI\helpstrings.txt, UI\tipstrings.txt
 - No leader/loser alert on first 3 rounds
+- Grid display? (with blueprints via invisible units)
 
 # 24n
 
 ## Feature changes
 
-- UI
+- UX
+  - Expanded Quick Shop to have 11 items
+  - Added Intermission screen
+  - Added Sheep Tag Preferences screen
   - Removed Save Game, Load Game
-  - Added Sheep Tag Preferences
-  - Added Intermission
-  - Added Quick Buy v2
   - Warn on exit with uneven SC
   - Added -do
+  - Sheep income rate displayed in Upkeep
+  - Cleaned up unit damage display to only render a single value
+  - Customized Help and Tips
+  - Added some sounds
+  - Removed commands from Quests (now available in Help)
 - When a sheep dies, their gold is automatically distributed to allies
   - In president mode, all gold goes to the president
 - Goblin Support changes
-  - Adjusted movement of Gyrocopter (faster, straighter, with acceleration and deceleration at drop point) longer period
+  - Adjusted movement of Gyrocopter: faster, straighter, with deceleration and acceleration at drop point
   - Decreased Pocket Factory build from 4 seconds to 3 seconds
   - Decreased Pocket Factory's hits to kill from 7 to 5
   - Changed Pocket Factory to spawn waves of Clockwerk Goblins over a shorter period
   - Increased partial damage AoE of Clockwerk Goblins from 200 to 300
+- Added Shadowsight to Sentry Farm
 - Kaleidoscope now makes illusions permanent
-- -view is persisted between rounds
+- -view, -switch, -vamp, and -control are persisted between rounds
 - -freespawn now works in middle of rounds
 - Updated gold and food copy to reflect recent proximity based changes.
 
 ## Balance changes
 
 - Hay Trap now has an animation in which it is tossed
-- Sentry Ward changes
-  - Wards can no longer attack sheep
-  - Increased mana cost from 50 to 75
-  - Increased damage from 10 to 15
-  - Wards reveal illusions from Feinting Tower
+- Decreased gold cost of Potion of Strength from 30 (42) to 25 (35)
+- Decreased gold cost of Magic Farm and Tiny Magic Farm from 52 to 40
 - Scepter of Mastery changes
   - Increased cast time from 0.5 seconds to 1 second
   - Increased mana cost from 75 to 100 and is charged up front
   - Takeover special effect begins immediately instead of after cast succeeds
   - Decreased cooldown from 20 seconds to 5 seconds
+- Sentry Ward changes
+  - Wards can no longer attack sheep
+  - Increased mana cost from 50 to 75
+  - Increased damage from 10 to 15
+  - Wards reveal illusions from Feinting Tower
 - Increased Second Wind debuff occurring 1250 away from nearest sheep from 1000
+- Decreased mana cost of Far Sight on Sentry Farm from 100 to 75
 
 ## Bug fixes
 
@@ -56,6 +64,7 @@
 - Fixed a wisp spawning at end of vamp
 - Fixed automatic last round time showing up after vamp
 - Fixed -afk/-fafk showing messages when trying to AFK in middle of a round
+- Fixed autocancel not automatically marking AFK sheep as AFK
 
 # 24m
 

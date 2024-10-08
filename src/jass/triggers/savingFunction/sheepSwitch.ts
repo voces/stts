@@ -1,4 +1,6 @@
+import { UnitEx } from "handles/UnitEx";
 import { switchSheepTimers } from "modes/switch/switch";
+import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { removeEnumUnit } from "util/removeEnumUnit";
 
 const adjustAlliances1 = () => {
@@ -193,19 +195,7 @@ const Trig_sheepSwitch_Actions = () => {
     false,
     null,
   );
-  DisplayTimedTextToForce(
-    GetPlayersAll()!,
-    5,
-    `${
-      udg_colorString[
-        GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()!))
-      ]
-    }${GetPlayerName(GetOwningPlayer(GetTriggerUnit()!))} (sheep)|r switched with ${
-      udg_colorString[
-        GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))
-      ]
-    }${GetPlayerName(GetOwningPlayer(GetKillingUnit()!))} (wolf)|r.`,
-  );
+  displayTimedTextToAll(`${UnitEx.fromKilling()!.owner} has taken ${UnitEx.fromEvent()!.owner}'s sheep.`);
 };
 
 declare global {
@@ -214,7 +204,6 @@ declare global {
 }
 InitTrig_sheepSwitch = () => {
   gg_trg_sheepSwitch = CreateTrigger();
-  DisableTrigger(gg_trg_sheepSwitch);
   TriggerRegisterAnyUnitEventBJ(gg_trg_sheepSwitch, EVENT_PLAYER_UNIT_DEATH);
   TriggerAddCondition(
     gg_trg_sheepSwitch,

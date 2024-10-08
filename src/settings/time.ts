@@ -3,8 +3,27 @@ import { addScriptHook, Trigger, W3TS_HOOK } from "w3ts";
 import { farmVision, income, president, spawnSetting, switchSetting } from "./settings";
 import { triggerIntermissionUpdate } from "ui/hooks";
 
+export const getDefaultTime = () => {
+  const i = CountPlayersInForceBJ(udg_Sheep);
+  const n = CountPlayersInForceBJ(udg_Wolf);
+
+  if (i === 1 && n === 3) return 180;
+  else if (i === 2 && n === 4) return 360;
+  else if (i === 3 && n === 4) return 720;
+  else if (i === 3 && n === 5) return 480;
+  else if (i === 4 && n === 6) return 600;
+  else if (i === 5 && n === 5) return 900;
+  else if (i === 5 && n === 6) return 720;
+  else if (i === 6 && n === 6) return 1200;
+  else if (i + n >= 12) return 1200;
+  else if (i + n >= 10) return 900;
+  else if (i + n >= 8) return 480;
+  return 360;
+};
+
 export const checkAutoTimeFlag = (skipIntermission = false) => {
   const oldTime = udg_time;
+  udg_autoTime = true;
   defaultTime(skipIntermission);
   if (oldTime !== udg_time) {
     udg_autoTime = false;

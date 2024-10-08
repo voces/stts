@@ -9,6 +9,7 @@ type Item = {
   name: string;
   cost: number;
   id: number;
+  quick?: string;
   one?: boolean;
 };
 
@@ -56,7 +57,7 @@ const teamHasTeamItem = (item: Item, player: player) => {
       0,
       0,
       15,
-      `|CFF00AEEFYour team already has ${item.name}`,
+      `|cffed1c24Your team already has ${item.name}.`,
     );
     return true;
   }
@@ -161,39 +162,55 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
 
   items.push(
     { name: "1c", cost: 200, id: FourCC("I005") },
-    { name: "boots", cost: 112, id: FourCC("I009") },
+    { name: "boots", cost: 112, id: FourCC("I009"), quick: "n00Q" },
     { name: "ball", cost: 28, id: FourCC("I006") }, // alias for crystal
     { name: "bril", cost: 98, id: FourCC("I003"), one: true },
-    { name: "beam", cost: 112, id: FourCC("I000") },
-    { name: "bomber", cost: 75, id: FourCC("I002") },
+    { name: "beam", cost: 112, id: FourCC("I000"), quick: "n00L" },
+    { name: "bomber", cost: 75, id: FourCC("I002"), quick: "n00J" },
     { name: "c8", cost: 21, id: FourCC("I00B") },
     { name: "c16", cost: 53, id: FourCC("I008") },
     { name: "c55", cost: 200, id: FourCC("I005") },
     { name: "club", cost: 56, id: FourCC("I00Z") },
     { name: "cloak", cost: 200, id: FourCC("I001") },
     { name: "crystal", cost: 28, id: FourCC("I006") }, // alias for ball
-    { name: "drums", cost: 175, id: FourCC("I00U"), one: true },
+    { name: "drums", cost: 175, id: FourCC("I00U"), quick: "n00O", one: true },
     { name: "disease", cost: 140, id: FourCC("I010") },
-    { name: "endur", cost: 112, id: FourCC("I00H"), one: true },
+    { name: "endur", cost: 112, id: FourCC("I00H"), quick: "n00N", one: true },
     { name: "forb", cost: 200, id: FourCC("I00W") }, // alias for orb
     { name: "gloves", cost: 112, id: FourCC("I004") },
     { name: "gem", cost: 56, id: FourCC("I00E") },
     { name: "goblins", cost: 390, id: FourCC("I012") },
-    { name: "golem", cost: 140, id: FourCC("I00A") },
-    { name: "hay", cost: 42, id: FourCC("I011") },
+    { name: "golem", cost: 140, id: FourCC("I00A"), quick: "n00I" },
+    { name: "hay", cost: 42, id: FourCC("I011"), quick: "n00M" },
     { name: "kaleidoscope", cost: 112, id: FourCC("I00X") },
     { name: "mana", cost: 49, id: FourCC("I00D") },
     { name: "mastery", cost: 140, id: FourCC("I00Y") },
-    { name: "neck", cost: 112, id: FourCC("I00I") },
+    { name: "neck", cost: 112, id: FourCC("I00I"), quick: "n00P" },
     { name: "orb", cost: 200, id: FourCC("I00W") }, // alias for forb
     { name: "r110", cost: 112, id: FourCC("I00M") },
-    { name: "sheep", cost: 56, id: FourCC("I00G") },
-    { name: "suppression", cost: 140, id: FourCC("I00V") },
+    { name: "sheep", cost: 56, id: FourCC("I00G"), one: true },
+    { name: "suppression", cost: 140, id: FourCC("I00V"), quick: "n00R" },
     { name: "scythe", cost: 112, id: FourCC("scyt") },
     { name: "scepter", cost: 140, id: FourCC("I00Y") },
     { name: "sobi", cost: 56, id: FourCC("I00N") },
-    { name: "speed", cost: 42, id: FourCC("I00F") },
-    { name: "str", cost: 42, id: FourCC("I007") },
+    { name: "speed", cost: 42, id: FourCC("I00F"), quick: "n00H" },
+    { name: "str", cost: 35, id: FourCC("I007"), quick: "n00K" },
     { name: "velocity", cost: 112, id: FourCC("I00T") },
   );
+
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i];
+    t = CreateTrigger();
+    const quick = item.quick;
+    if (!quick) continue;
+    TriggerRegisterCommandEvent(t, FourCC("AEbu"), UnitId2String(FourCC(quick))!);
+    TriggerAddAction(t, () => {
+      const u = UnitEx.fromEvent()!;
+      if (u.owner.gold < item.cost) return;
+      if (teamHasTeamItem(item, GetOwningPlayer(u.handle))) return;
+      if (u.isSelected(MapPlayerEx.fromLocal())) ForceUICancel();
+      u.owner.gold -= item.cost;
+      u.addItemById(item.id);
+    });
+  }
 });

@@ -76,7 +76,7 @@ export class FrameEx extends Frame {
 
   getChild(index: number) {
     const child = FrameEx.fromHandle(BlzFrameGetChild(this.handle, index));
-    if (!child) throw `Error getting child ${index}`;
+    if (!child || GetHandleId(child.handle) === 0) throw `Error getting child ${index}`;
     return child;
   }
 
@@ -85,14 +85,14 @@ export class FrameEx extends Frame {
     const output: FrameEx[] = [];
     for (let i = 0; i < count; i++) {
       const child = this.getChild(i);
-      if (child !== null) output.push(child);
+      if (child !== null && GetHandleId(child.handle) > 0) output.push(child);
     }
     return output;
   }
 
   getParent() {
     const parent = FrameEx.fromHandle(BlzFrameGetParent(this.handle));
-    if (!parent) throw `Error getting parent`;
+    if (!parent || GetHandleId(parent.handle) === 0) throw `Error getting parent`;
     return parent;
   }
 

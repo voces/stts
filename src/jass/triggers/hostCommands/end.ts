@@ -1,3 +1,5 @@
+import { FrameEx } from "handles/FrameEx";
+import { hideIntermission } from "ui/api";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
 const Trig_end_Conditions = () => {
@@ -16,6 +18,11 @@ https://dsc.gg/sheeptag`,
 };
 
 const Trig_end_Actions = () => {
+  hideIntermission();
+  FrameEx.create("EscMenuEditBoxTemplate", ORIGIN_FRAME_GAME_UI)
+    .setAbsPoint(FRAMEPOINT_CENTER, 0.4, 0.175)
+    .setSize(0.135, 0.029)
+    .setText("https://dsc.gg/sheeptag");
   PauseTimerBJ(true, udg_Createtimer);
   TimerStart(udg_Createtimer, 180, false, null);
   TimerDialogSetTitleBJ(udg_createTimerWindow, "Game ending...");

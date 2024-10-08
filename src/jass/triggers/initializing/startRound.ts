@@ -1,6 +1,7 @@
 import { disableIncome, resetBankedGold } from "functions/farms/savingFarms";
 import { stopRuneTimers } from "functions/runes";
 import { deathOrder, MapPlayerEx } from "handles/MapPlayerEx";
+import { restoreSettings } from "modes/practice/mode";
 import { switchSheepTimers } from "modes/switch/switch";
 import { showIntermission } from "ui/api";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
@@ -35,7 +36,6 @@ const Update_Versus_Wins = () => {
 
 const startRoundToggledTriggers = () => {
   EnableTrigger(gg_trg_gold);
-  EnableTrigger(gg_trg_createSheep);
   EnableTrigger(gg_trg_pick);
   EnableTrigger(gg_trg_pickwolf);
   EnableTrigger(gg_trg_end);
@@ -46,8 +46,6 @@ const startRoundToggledTriggers = () => {
   EnableTrigger(gg_trg_picksheep);
   EnableTrigger(gg_trg_switch);
   EnableTrigger(gg_trg_vamp);
-  EnableTrigger(gg_trg_sheepDies);
-  EnableTrigger(gg_trg_spiritDies);
   EnableTrigger(gg_trg_reverse);
   EnableTrigger(gg_trg_time);
   EnableTrigger(gg_trg_captains);
@@ -96,20 +94,15 @@ const resetRoundStats = () => {
   udg_captainTurn = 0;
   udg_gameStarted = false;
   wolvesCreated = false;
-  udg_dummyWisps = 0;
-  udg_wispPoints = 0;
   udg_blightCounter = 0;
   bj_forLoopAIndex = 0;
   lastSheepReceiver = null;
   lastWolfReceiver = null;
   if (udg_practiceOn) {
-    autoCancelEnabled = true;
     udg_practiceOn = false;
+    restoreSettings();
   }
   someoneLeft = false;
-  udg_switchOn = false;
-  vampOn = false;
-  udg_shareOn = true;
   udg_pickIndex = 1;
   goldRaces = 0;
   deathOrder.deaths = 0;
@@ -138,7 +131,9 @@ const Trig_startRound_Actions = () => {
     switchSheepTimers[i].start(0.01, false, () => {}); // clear elapsed
     DestroyLeaderboardBJ(PlayerGetLeaderboard(Player(i)!)!);
     udg_switch[i + 1] = 0;
-    MapPlayerEx.fromIndex(i)!.diedThisRound = false;
+    const p = MapPlayerEx.fromIndex(i)!;
+    p.diedThisRound = false;
+    p.setState(PLAYER_STATE_GOLD_UPKEEP_RATE, 0);
 
     for (let n = 0; n < bj_MAX_PLAYERS; n++) {
       SetPlayerAllianceStateBJ(
@@ -155,16 +150,8 @@ const Trig_startRound_Actions = () => {
   }
 
   TriggerExecute(gg_trg_createLists);
-  DisableTrigger(gg_trg_sheepSwitch);
-  DisableTrigger(gg_trg_sheepVamp);
   disableIncome();
-  DisableTrigger(gg_trg_dummyWisps);
-  DisableTrigger(gg_trg_attack);
-  DisableTrigger(gg_trg_stop);
-  DisableTrigger(gg_trg_mass);
   DisableTrigger(gg_trg_reset);
-  DisableTrigger(gg_trg_owner);
-  DisableTrigger(gg_trg_speed);
 
   EnumItemsInRect(GetEntireMapRect()!, Filter(() => true), () => RemoveItem(GetEnumItem()!));
   EnumDestructablesInRect(

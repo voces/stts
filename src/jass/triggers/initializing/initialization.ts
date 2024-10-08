@@ -42,8 +42,10 @@ const Trig_initialization_forAllPlayersTwo = () => {
   udg_hideEsc[GetConvertedPlayerId(GetEnumPlayer()!)] = false;
   if (GetConvertedPlayerId(GetEnumPlayer()!) < 13) {
     udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)] = true;
+    ForceAddPlayer(udg_Sheep, GetEnumPlayer()!);
   } else {
     udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)] = false;
+    ForceAddPlayer(udg_Wolf, GetEnumPlayer()!);
   }
   bj_forLoopAIndex = 1;
   bj_forLoopAIndexEnd = 24;

@@ -139,7 +139,7 @@ import "./triggers/shareControl/controllall";
 import "./triggers/shareControl/noAutoControl";
 import { setTimeout, Timeout } from "util/setTimeout";
 import { removeEnumUnit } from "util/removeEnumUnit";
-import { updateLeaderboardSettingsDisplay } from "settings/time";
+import { getDefaultTime, updateLeaderboardSettingsDisplay } from "settings/time";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { DisplayType } from "constants";
@@ -763,8 +763,8 @@ udg_switchOn = false;
 udg_viewOn = false;
 udg_atempint2 = 0;
 udg_giveGold = false;
-udg_wolfSpawn = 0;
-udg_sheepInvul = 0;
+udg_wolfSpawn = 3;
+udg_sheepInvul = 5;
 udg_positionArray = [];
 udg_sheepCount = [];
 udg_dummyWisps = 0;
@@ -789,7 +789,7 @@ udg_wispZoom = [];
 udg_versus = 0;
 udg_pickAgain = false;
 udg_gameTime = [];
-udg_shareOn = false;
+udg_shareOn = true;
 udg_versusOff = false;
 udg_sheepGold = 0;
 udg_wolfGold = 0;
@@ -1017,23 +1017,10 @@ declare global {
 defaultTime = (skipIntermission = false) => {
   if (!udg_autoTime) return;
 
-  const i = CountPlayersInForceBJ(udg_Sheep);
-  const n = CountPlayersInForceBJ(udg_Wolf);
+  const oldTime = udg_time;
+  udg_time = getDefaultTime();
 
-  if (i === 1 && n === 3) udg_time = 180;
-  else if (i === 2 && n === 4) udg_time = 360;
-  else if (i === 3 && n === 4) udg_time = 720;
-  else if (i === 3 && n === 5) udg_time = 480;
-  else if (i === 4 && n === 6) udg_time = 600;
-  else if (i === 5 && n === 5) udg_time = 900;
-  else if (i === 5 && n === 6) udg_time = 720;
-  else if (i === 6 && n === 6) udg_time = 1200;
-  else if (i + n >= 12) udg_time = 1200;
-  else if (i + n >= 10) udg_time = 900;
-  else if (i + n >= 8) udg_time = 480;
-  else udg_time = 360;
-
-  updateLeaderboardSettingsDisplay(skipIntermission);
+  if (oldTime !== udg_time) updateLeaderboardSettingsDisplay(skipIntermission);
 };
 
 declare global {
@@ -1210,19 +1197,14 @@ const InitGlobals = () => {
   udg_wolfTimer = CreateTimer();
   udg_timeString = "";
   udg_atempboolean = false;
-  udg_switchOn = false;
   udg_gameTimer = CreateTimer();
   udg_gameTimeString = "";
   udg_lastGameString = "";
   udg_viewOn = false;
   udg_atempint2 = 0;
   udg_giveGold = true;
-  udg_wolfSpawn = 3;
-  udg_sheepInvul = 5;
-  udg_dummyWisps = 0;
   udg_playerCount = 0;
   udg_numPick = 0;
-  udg_wispPoints = 0;
   udg_atempstring = "";
   udg_redHideTimer = CreateTimer();
   udg_blueHideTimer = CreateTimer();
@@ -1245,7 +1227,6 @@ const InitGlobals = () => {
   udg_pickAgain = false;
   udg_gameTime[0] = 0;
   udg_gameTime[1] = 0;
-  udg_shareOn = false;
   udg_versusOff = false;
   udg_sheepGold = 0;
   udg_wolfGold = 0;
@@ -1469,31 +1450,25 @@ declare global {
   let autoCancel: () => boolean;
 }
 autoCancel = () => {
-  let i = 0;
   let flag = false;
-  if (autoCancelEnabled && !udg_switchOn && !vampOn) {
-    while (true) {
-      if (i === 24) break;
-      if (IsPlayerInForce(Player(i)!, udg_Sheep)) {
-        if (udg_apr[i + 1] < 3) {
-          flag = true;
-          if (IsPlayerInForce(Player(i)!, AFKers)) {
-            udg_AFK[i + 1] = AFK_AFK;
-            LeaderboardRemovePlayerItemBJ(
-              Player(i + 1)!,
-              GetLastCreatedLeaderboard()!,
-            );
-            displayTimedTextToAll(`							  ${MapPlayerEx.fromIndex(i - 1)} has been set to AFK.`, 5);
-          }
-          ForceAddPlayer(AFKers, Player(i)!);
-        } else {
-          ForceRemovePlayer(AFKers, Player(i)!);
+  if (autoCancelEnabled && !udg_practiceOn && !udg_switchOn && !vampOn) {
+    for (let i = 1; i <= bj_MAX_PLAYERS; i++) {
+      const p = MapPlayerEx.fromIndex(i - 1);
+      if (!p?.isSheep) continue;
+      if (udg_apr[i] < 3) {
+        flag = true;
+        if (!IsPlayerInForce(p.handle, AFKers)) {
+          udg_AFK[i] = AFK_AFK;
+          LeaderboardRemovePlayerItemBJ(p.handle, GetLastCreatedLeaderboard()!);
+          displayTimedTextToAll(`${p} has been set to AFK.`, 5);
+          ForceRemovePlayer(udg_Sheep, p.handle);
         }
-      }
-      i = i + 1;
+        ForceAddPlayer(AFKers, p.handle);
+      } else ForceRemovePlayer(AFKers, p.handle);
     }
   }
   if (flag) {
+    StartSound(gg_snd_KnightNoFood1);
     TriggerExecute(gg_trg_cancel);
   }
   return flag;

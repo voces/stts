@@ -1,3 +1,4 @@
+UI/FrameDef/UI/EscMenuTemplates.fdf
 customui/preferences.fdf
 customui/intermission.fdf
 customui/checkboxbutton.fdf

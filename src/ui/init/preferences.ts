@@ -59,6 +59,9 @@ export const initPreferences = () => {
   BlzFrameSetVisible(BlzGetFrameByName("SaveGameSaveButton", 0)!, false);
   BlzFrameSetEnable(BlzGetFrameByName("OverwriteOverwriteButton", 0)!, false);
 
+  // Modify Tips
+  BlzFrameSetText(BlzGetFrameByName("TipsTitleText", 0)!, "Sheep Tag Tips");
+
   const escPanel = FrameEx.fromName("InsideMainPanel");
   const preferencesButton = FrameEx.create("SheepTagPreferencesButton", escPanel);
   preferencesButton.setVisible(false).setVisible(true);

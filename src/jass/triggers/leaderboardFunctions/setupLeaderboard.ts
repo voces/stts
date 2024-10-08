@@ -141,7 +141,7 @@ const indexAPlayerAfkOrReturnedDuringRound = () => {
 
 const playingSheepRows = () => {
   cid = GetConvertedPlayerId(GetEnumPlayer()!);
-  if (udg_wispPoints > 0) {
+  if (udg_switchOn && udg_wispPoints > 0) {
     LeaderboardAddItemBJ(
       GetEnumPlayer()!,
       PlayerGetLeaderboard(ConvertedPlayer(GetForLoopIndexA())!)!,
@@ -183,7 +183,7 @@ const Trig_setupLeaderboard_Func002Func023Func006Func004Func010Func004C = () => 
 
 const playingSpiritRows = () => {
   cid = GetConvertedPlayerId(GetEnumPlayer()!);
-  if (udg_wispPoints > 0) {
+  if (udg_switchOn && udg_wispPoints > 0) {
     LeaderboardAddItemBJ(
       GetEnumPlayer()!,
       PlayerGetLeaderboard(ConvertedPlayer(GetForLoopIndexA())!)!,
@@ -230,7 +230,7 @@ const Trig_setupLeaderboard_Func002Func023Func006Func004Func014Func003C = () => 
 
 const playingWolfRows = () => {
   cid = GetConvertedPlayerId(GetEnumPlayer()!);
-  if (udg_wispPoints > 0) {
+  if (udg_switchOn && udg_wispPoints > 0) {
     LeaderboardAddItemBJ(
       GetEnumPlayer()!,
       PlayerGetLeaderboard(ConvertedPlayer(GetForLoopIndexA())!)!,
@@ -532,7 +532,7 @@ const Trig_setupLeaderboard_Actions = () => {
         GetForceOfPlayer(ConvertedPlayer(GetForLoopIndexA())!)!,
         udg_mapName,
       );
-      if (udg_wispPoints > 0) {
+      if (udg_switchOn && udg_wispPoints > 0) {
         LeaderboardAddItemBJ(
           Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
           PlayerGetLeaderboard(ConvertedPlayer(GetForLoopIndexA())!)!,
@@ -576,7 +576,7 @@ const Trig_setupLeaderboard_Actions = () => {
         false,
       );
       ForForce(udg_Sheep, playingSheepRows);
-      if (udg_wispPoints > 0) {
+      if (udg_switchOn && udg_wispPoints > 0) {
         LeaderboardAddItemBJ(
           Player(bj_PLAYER_NEUTRAL_VICTIM)!,
           PlayerGetLeaderboard(ConvertedPlayer(GetForLoopIndexA())!)!,
@@ -607,7 +607,7 @@ const Trig_setupLeaderboard_Actions = () => {
         false,
       );
       ForForce(udg_Spirit, playingSpiritRows);
-      if (udg_wispPoints > 0) {
+      if (udg_switchOn && udg_wispPoints > 0) {
         LeaderboardAddItemBJ(
           Player(PLAYER_NEUTRAL_PASSIVE)!,
           PlayerGetLeaderboard(ConvertedPlayer(GetForLoopIndexA())!)!,

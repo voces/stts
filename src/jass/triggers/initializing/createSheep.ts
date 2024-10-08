@@ -138,11 +138,7 @@ const Trig_createSheep_sheepActionsB = () => {
   let i = 1;
   const enumPlayerId = GetConvertedPlayerId(GetEnumPlayer()!);
 
-  SetPlayerStateBJ(
-    GetEnumPlayer()!,
-    PLAYER_STATE_RESOURCE_GOLD,
-    udg_sheepGold,
-  );
+  SetPlayerState(GetEnumPlayer()!, PLAYER_STATE_RESOURCE_GOLD, udg_practiceOn ? 1000000 : udg_sheepGold);
 
   if (udg_AFK[enumPlayerId] === AFK_AFK_DURING_ROUND) {
     while (true) {
@@ -192,7 +188,7 @@ const Trig_createSheep_sheepActionsB = () => {
 const Trig_createSheep_wolfActionsB = () => {
   const enumPlayerId = GetConvertedPlayerId(GetEnumPlayer()!);
 
-  SetPlayerStateBJ(GetEnumPlayer()!, PLAYER_STATE_RESOURCE_GOLD, udg_wolfGold);
+  SetPlayerState(GetEnumPlayer()!, PLAYER_STATE_RESOURCE_GOLD, udg_practiceOn ? 1000000 : udg_wolfGold);
 
   udg_sheepLastGame[enumPlayerId] = false;
 
@@ -225,6 +221,42 @@ const Trig_createSheep_disableTrigs = () => {
   DisableTrigger(gg_trg_mapShrink);
   DisableTrigger(gg_trg_mapExpand);
   DisableTrigger(gg_trg_Anonymous);
+
+  // President uses same triggers as survival
+  const mode = udg_switchOn ? "switch" : vampOn ? "vamp" : "survival";
+
+  if (mode === "switch") {
+    EnableTrigger(gg_trg_dummyWisps);
+    EnableTrigger(gg_trg_sheepSwitch);
+  } else {
+    DisableTrigger(gg_trg_dummyWisps);
+    DisableTrigger(gg_trg_sheepSwitch);
+  }
+
+  if (mode === "vamp") EnableTrigger(gg_trg_sheepVamp);
+  else DisableTrigger(gg_trg_sheepVamp);
+
+  if (mode === "survival") {
+    EnableTrigger(gg_trg_sheepDies);
+    EnableTrigger(gg_trg_spiritDies);
+  } else {
+    DisableTrigger(gg_trg_sheepDies);
+    DisableTrigger(gg_trg_spiritDies);
+  }
+
+  if (udg_practiceOn) {
+    EnableTrigger(gg_trg_attack);
+    EnableTrigger(gg_trg_stop);
+    EnableTrigger(gg_trg_mass);
+    EnableTrigger(gg_trg_owner);
+    EnableTrigger(gg_trg_speed);
+  } else {
+    DisableTrigger(gg_trg_attack);
+    DisableTrigger(gg_trg_stop);
+    DisableTrigger(gg_trg_mass);
+    DisableTrigger(gg_trg_owner);
+    DisableTrigger(gg_trg_speed);
+  }
 };
 
 const Trig_createSheep_Actions_part4 = () => {
@@ -246,7 +278,9 @@ const Trig_createSheep_Actions_part4 = () => {
   ForForce(udg_Sheep, Trig_createSheep_sheepActionsB);
   ForForce(udg_Wolf, Trig_createSheep_wolfActionsB);
 
-  TimerStart(udg_Timer, udg_time, false, null);
+  if (udg_practiceOn || MapPlayerEx.fromLocal().isSheep) StartSound(gg_snd_SheepWhat1);
+
+  TimerStart(udg_Timer, udg_practiceOn ? 120 * 60 : udg_time, false, null);
 
   if (udg_switchOn || udg_practiceOn) TriggerExecute(gg_trg_createWolves);
   else {
@@ -291,11 +325,13 @@ const Trig_createSheep_Actions_part4 = () => {
 };
 
 const Trig_createSheep_Actions_part3 = () => {
+  StartSound(gg_snd_BattleNetTick);
   displayTimedTextToAll("|cffffcc00Game starting in 1...", 1);
   TimerStart(createSheepTimer, 1, false, Trig_createSheep_Actions_part4);
 };
 
 const Trig_createSheep_Actions_part2 = () => {
+  StartSound(gg_snd_BattleNetTick);
   displayTimedTextToAll("|cffffcc00Game starting in 2...", 1);
   TimerStart(createSheepTimer, 1, false, Trig_createSheep_Actions_part3);
 };
@@ -414,6 +450,7 @@ const Trig_createSheep_Actions = () => {
     DisplayTimedTextToForce(udg_Sheep, 4, "|cff00aeefYou are |cffed1c24Sheep|cff00aeef this round.");
     DisplayTimedTextToForce(udg_Wolf, 4, "|cff00aeefYou are |cffed1c24Wolf|cff00aeef this round.");
 
+    StartSound(gg_snd_BattleNetTick);
     displayTimedTextToAll("|cffffcc00Game starting in 3...", 1);
     TimerStart(createSheepTimer, 1, false, Trig_createSheep_Actions_part2);
   }

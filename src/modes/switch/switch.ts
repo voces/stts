@@ -7,21 +7,12 @@ export const switchSheepTimers = Array.from({ length: bj_MAX_PLAYERS }, () => Ti
 
 const Trig_switch_Actions = () => {
   const s = GetEventPlayerChatString()!.toLowerCase();
-  if (udg_switchOn && s === "-switch") { // disabling
-    EnableTrigger(gg_trg_sheepDies);
-    EnableTrigger(gg_trg_spiritDies);
-    DisableTrigger(gg_trg_sheepSwitch);
+  if (udg_switchOn && s === "-switch") {
     udg_switchOn = false;
-    udg_dummyWisps = 0;
-    udg_wispPoints = 0;
     updateLeaderboardSettingsDisplay();
     return;
   }
 
-  DisableTrigger(gg_trg_sheepDies);
-  DisableTrigger(gg_trg_spiritDies);
-  DisableTrigger(gg_trg_sheepVamp);
-  EnableTrigger(gg_trg_sheepSwitch);
   vampOn = false;
   president.enabled = false;
   udg_switchOn = true;
@@ -48,6 +39,7 @@ const Trig_switch_Actions = () => {
       );
     } else switchSetting.goalTime = Infinity;
   }
+
   updateLeaderboardSettingsDisplay();
 };
 

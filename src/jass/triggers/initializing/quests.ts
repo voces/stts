@@ -3,7 +3,7 @@ import { setTimeout } from "util/setTimeout";
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   CreateQuestBJ(
-    bj_QUESTTYPE_OPT_DISCOVERED,
+    bj_QUESTTYPE_REQ_DISCOVERED,
     "Sheep Tag ReVoLuTiOn",
     "Join our Discord |CFF00AEEFhttps://dsc.gg/sheeptag|r for more Sheep Tag!",
     "ReplaceableTextures\\CommandButtons\\BTNSheep.blp",
@@ -11,160 +11,9 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
 
   CreateQuestBJ(
     bj_QUESTTYPE_REQ_DISCOVERED,
-    "Host Commands",
-    `|cffffcc00Team Modes:|r
-|cff00aeef-smart |cffed1c24X|cff00aeef:|r Starts the game with |cffed1c24X|r sheep, picking sheep by sheep count and player counts.
-|cff00aeef-start |cffed1c24X|cff00aeef:|r Starts the game with |cffed1c24X|r sheep.
-|cff00aeef-reverse |cffed1c24X|cff00aeef:|r Reverses the teams with |cffed1c24X|r sheep.
-|cff00aeef-pick:|r Let's the host pick the sheep and wolf players.
-|cff00aeef-fair |cffed1c24X|cff00aeef:|r Starts the game with |cffed1c24X|r sheep, picking sheep by sheep count.
-|cff00aeef-captains |cffed1c24X Y|cff00aeef:|r Lets players |cffed1c24X|r and |cffed1c24Y|r take turns picking players.
-|cff00aeef-versus |cffed1c24X Y|cff00aeef:|r Captains mode that auto reverses.
-
-|cffffcc00Game Modes:|r
-|cff00aaef-time |cffed1c24X|cff00aeef:|r Set's the game timer to |cffed1c24X|r minutes.
-|cff00aeef-view:|r Displays the entire map for all players.
-|cff00aeef-vamp:|r Sheep that die turn into wolves.
-|cff00aeef-switch |cffed1c24X Y Z W V:VV|cff00aeef:|r Killing wolf switch places with its captive. |cffed1c24X|r is time sheep are invulnerable. |cffed1c24Y|r is time before wolf spawn. |cffed1c24Z|r is number of dummy spirits. |cffed1c24W|r saves or |cffed1c24V:VV|r survival time required to win.
-|cff00aeef-president |cffed1c24X|cff00aeef:|r Picks a sheep to be president. If that sheep dies, the sheep lose. All other sheep have their handicap set to |cffed1c24X|r.
-|cff00aeef-gold |cffed1c24X Y|cff00aeef:|r Gives sheep |cffed1c24X|r gold and wolves |cffed1c24Y|r gold.
-|cff00aeef-income |cffed1c24X Y Z|cff00aeef:|r Sets sheep income to |cffed1c24X|r, wolf to |cffed1c24Y|r, and money farms to |cffed1c24Z|r.
-|cff00aeef-expand:|r Gives the Sheep more room to build over time.
-|cff00aeef-shrink:|r Gives the Sheep less room to build over time.
-|cff00aeef-farmvision |cffed1c24X|cff00aeef:|r Sets the sight radius of all farms except Sentry Farm to |cffed1c24X|r.
-|cff00aeef-terrain:|r Toggles through terrains.
-|cff00aeef-freespawn:|r Allows sheep to freely pick their start position.
-|cff00aeef-randomspawn:|r Randomizes sheep spawn positions each round.`,
+    "Commands",
+    "An exhaustive list of commands is available in the Help menu inside the main menu, also available with the shortcut Alt + H.",
     "ReplaceableTextures\\PassiveButtons\\PASBTNStatUp.blp",
-  );
-
-  CreateQuestBJ(
-    bj_QUESTTYPE_REQ_DISCOVERED,
-    "Host Commands (cont.)",
-    `|cffffcc00Other Commands:|r
-|cff00aeef-autocancel:|r Toggles the autocancel function on/off.
-|cff00aeef-cancel:|r Cancels the game. In regular games, cannot cancel after wolves spawn. In switch games, can cancel at any time.
-|cff00aeef-continue:|r Continues a |cff00aeef-versus|r game if host uses |cff00aeef-cancel|r.
-|cff00aeef-end:|r Ends the game.
-|cff00aeef-control:|r Toggles sharing control on/off.
-|cff00aeef-fafk |cffed1c24X|cff00aeef:|r Forces player |cffed1c24X|r afk. Only works before a round starts.
-|cff00aeef-reset:|r Resets the scores for leader and loser.
-|cff00aeef-handicap |cffed1c24X Y|cff00aeef:|r Set's player X's handicap to Y. Can type "all" for X to set all handicaps.
-|cff00aeef-pub |cffed1c24X|cff00aeef:|r Toggles player |cffed1c24X|r as a pub, removing them from smart considerations.
-|cff00aeef-rotate:|r Toggles rotating a player out of round selection.
-|cff00aeef-perfect:|r Toggles eprfect smart. Use an ! to reset perfect.
-|cff00aeef-transfer |cffed1c24X|cff00aeef:|r Gives control of game to player |cffed1c24X|r.
-|cff00aeef-kick |cffed1c24X|cff00aeef:|r Kicks player |cffed1c24X|r from the game.
-
-|cffffcc00Captains Commands:|r
-|cff00aeef-draft |cffed1c24X|cff00aeef:|r Picks a player during the picking stage of |cff00aeef-captains|r mode.
-|cff00aeef-give |cffed1c24X|cff00aeef:|r If player is a captain during the picking stage of |cff00aeef-captains|r mode, then gives captain control to player |cffed1c24X|r. If |cffed1c24X|r is not specified, gives control to random player already picked. If no one has been picked, gives control to random unpicked player.
-
-|cffffcc00Sexy Commands:|r
-|cff00aeef-sexy |cffed1c24X Y Z|cff00aeef:|r Sets your sheep color to |cffed1c24X|r for percent red, |cffed1c24Y|r for percent green, and |cffed1c24Z|r for percent blue. If |cffed1c24Y|r and |cffed1c24Z|r are not specified, will set all color levels to |cffed1c24X|r. 0 being no color (black) and 100 being all color (white).
-|cff00aeef-yes sexy:|r Enables the |cff00aeef-sexy|r command for all players.
-|cff00aeef-no sexy:|r Disables the |cff00aeef-sexy|r command for all players.`,
-    "ReplaceableTextures\\PassiveButtons\\PASBTNStatUp.blp",
-  );
-
-  CreateQuestBJ(
-    bj_QUESTTYPE_REQ_DISCOVERED,
-    "Player Commands",
-    `|cffffcc00Game Commands:|r
-|cff00aeef-g |cffed1c24X|cff00aeef:|r Gives all gold to player |cffed1c24X|r. When X is not provided, an algorithm is run to share gold semi-intelligently.
-|cff00aeef-|cffed1c24X Y|cff00aeef:|r Gives |cffed1c24Y|r gold to player |cffed1c24X|r.
-|cff00aeef-g all:|r Splits your gold evenly among living allies.
-|cff00aeef-d:|r Destroys all your farms.
-|cff00aeef-ds:|r Destroys all your farms except Money farms.
-|cff00aeef-u:|r Deselects a unit. Used when a menu palette is blank.
-
-|cffffcc00Settings Commands:|r
-|cff00aeef-afk:|r Goes "away from keyboard." AFK players share control with all allies if they are in a game and will not be included in new games. Type it again to disable AFK mode.
-|cff00aeef-zoom |cffed1c24 X Y Z|cff00aeef:|r Sets camera distance as sheep to |cffed1c24X|r, as wolf to |cffed1c24Y|r, and as wisp to |cffed1c24Z|r.
-|cff00aeef-autocontrol:|r Toggles automatic sharing of control with allied sheep.
-|cff00aeef-noautocontrol:|r Toggles whether allies can automatically share control with you.
-|cff00aeef-teamresources:|r Adjusts how the team resources multiboard hides and shows.
-|cff00aeef-freak:|r Toggles your Wolf ability hotkeys.`,
-    "ReplaceableTextures\\PassiveButtons\\PASBTNStatUp.blp",
-  );
-
-  CreateQuestBJ(
-    bj_QUESTTYPE_REQ_DISCOVERED,
-    "Stats Commands",
-    `|cff00aeef-sc:|r Times every player has played as sheep. Host can optionally provide a value to set the palyer's sheep count.
-|cff00aeef-rounds:|r Shows previous round times.
-|cff00aeef-pc |cffed1c24X|cff00aeef:|r Shows ally count as sheep for player |cffed1c24X|r.
-|cff00aeef-fbc:|r Displays firstblood kills and deaths for each player.
-|cff00aeef-leader:|r Teams with the longest and shortest round times.
-|cff00aeef-wins:|r Total sheep round wins of all players.
-|cff00aeef-tk:|r Total sheep kills of all players.
-|cff00aeef-ts:|r Total saves of all players.
-|cff00aeef-lss:|r Total number of times all players have been the last sheep standing.
-|cff00aeef-qd:|r Quickest death in the game.
-|cff00aeef-qds:|r Everyone's quickest death.
-|cff00aeef-last:|r Last round time.
-|cff00aeef-atimes:|r Everyones average time as sheep.
-|cff00aeef-times:|r Everyones total time as sheep.
-|cff00aeef-maxtimes:|r Everyones best sheep time.
-|cff00aeef-mytimes:|r Percentage of sheep time with each player.
-|cff00aeef-stime:|r Everyones total time alive as sheep.
-|cff00aeef-time:|r Shows how long the game has been running.
-|cff00aeef-tf:|r Shows everyone's total farms.
-|cff00aeef-gc:|r Shows everyone's gold count (priority for |cff00aeef-g|r).
-|cff00aeef-clear:|r Hides all command messages.`,
-    "ReplaceableTextures\\PassiveButtons\\PASBTNStatUp.blp",
-  );
-
-  CreateQuestBJ(
-    bj_QUESTTYPE_REQ_DISCOVERED,
-    "Practice Commands",
-    `|cff00aeef-practice:|r Gives everybody a Sheep and Wolf to practice their skills.
-|cff00aeef-a:|r Forces your wolf to attack your sheep.
-|cff00aeef-s:|r Forces your wolf to hold position.
-|cff00aeef-owner:|r When in practice mode it toggles the owner of your wolf.
-|cff00aeef-disable:|r Toggles |cffed1c24Destroy All Farms|r ability on/off.
-|cff00aeef-mass |cffed1c24X|cff00aeef:|r Creates a timed massing test of |cffed1c24X|r seconds for all players.
-|cff00aeef-stop:|r When in practice mode it stops a timed mass contest.
-|cff00aeef-position |cffed1c24X|cff00aeef:|r Sets your start position to that of slot |cffed1c24X|r.`,
-    "ReplaceableTextures\\PassiveButtons\\PASBTNStatUp.blp",
-  );
-
-  CreateQuestBJ(
-    bj_QUESTTYPE_OPT_DISCOVERED,
-    "Hall Of Fame",
-    `|cffffcc00Winners of Sheep Tag Realm Wars 2009|r
-Drewisfat
-Magoogotbanned
-Duncan(donuts)
-BattleWaRRioR
-Wanna-be-sheep
-|cffffcc00Winners of Sheep Tag World Cup 2009|r
-Drewisfat
-Magoogotbanned
-MasteR-SheP
-XXXandBEER
-Celestial_One
-Wanna-be-sheep
-Duncan(donuts)
-|cffffcc00Winners of Sheep Tag World Cup 2008|r
-Drewisfat
-Magoogotbanned
-Philosophize
-Celestial_One
-BattleWaRRioR
-Wilshire12
-Duncan(donuts) 
-|cffffcc00Winners of Sheep Tag World Cup 2007|r
-IamOnYourSide
-LazdShowOfAmir
-CandyManKiller
-|cffffcc00Winners of Sheep Tag World Cup 2006|r
-Shoop
-IamOnYourSide
-LosingLoser
-Be3r[behh]
-dazzzzeee`,
-    "ReplaceableTextures\\CommandButtons\\BTNRaider.blp",
   );
 
   CreateQuestBJ(
@@ -189,8 +38,51 @@ Heart seal icon: CRAZYRUSSIAN
 Glowing heart icon: Pink_Lotus
 Heart particle: Jaccouille
 Fall in love: Kuhneghetz
-Model editor: Retera`,
+Model editor: Retera
+Help from Hive, especially Tasyen's UI guides`,
     "ReplaceableTextures\\CommandButtons\\BTNPeasant.blp",
+  );
+
+  CreateQuestBJ(
+    bj_QUESTTYPE_OPT_DISCOVERED,
+    "Hall Of Fame",
+    `|cffffcc00Winners of Sheep Tag Realm Wars 2009|r
+Drewisfat
+Magoogotbanned
+Duncan(donuts)
+BattleWaRRioR
+Wanna-be-sheep
+
+|cffffcc00Winners of Sheep Tag World Cup 2009|r
+Drewisfat
+Magoogotbanned
+MasteR-SheP
+XXXandBEER
+Celestial_One
+Wanna-be-sheep
+Duncan(donuts)
+
+|cffffcc00Winners of Sheep Tag World Cup 2008|r
+Drewisfat
+Magoogotbanned
+Philosophize
+Celestial_One
+BattleWaRRioR
+Wilshire12
+Duncan(donuts)
+
+|cffffcc00Winners of Sheep Tag World Cup 2007|r
+IamOnYourSide
+LazdShowOfAmir
+CandyManKiller
+
+|cffffcc00Winners of Sheep Tag World Cup 2006|r
+Shoop
+IamOnYourSide
+LosingLoser
+Be3r[behh]
+dazzzzeee`,
+    "ReplaceableTextures\\CommandButtons\\BTNRaider.blp",
   );
 
   // Makes a noise, but gives us room!

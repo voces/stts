@@ -11,7 +11,7 @@ import {
   spawnSetting,
   switchSetting,
 } from "settings/settings";
-import { checkAutoTimeFlag } from "settings/time";
+import { checkAutoTimeFlag, getDefaultTime } from "settings/time";
 import { setPub } from "teams/smart";
 import { adjustChatFrames, hideIntermission, showIntermission, smart, start } from "ui/api";
 import { updateTerrain } from "ui/api/modes";
@@ -300,7 +300,10 @@ export const initIntermission = () => {
   frames.settings.farmVision = farmVision;
 
   setupSlider("SheepTagTime", {
-    format: (v) => simpleformatTime(v * 60),
+    format: (v) => {
+      const seconds = v * 60;
+      return seconds === getDefaultTime() ? "Default" : simpleformatTime(seconds);
+    },
     onChange: (v) => {
       udg_time = v * 60;
       checkAutoTimeFlag(true);
@@ -404,6 +407,7 @@ export const initIntermission = () => {
         settings.desiredSheep = ForceEx.sheep.size();
         updateDesiredSheep();
         desiredSheep.text = settings.desiredSheep.toFixed(0);
+        defaultTime();
         // Make sheep
       } else if (value === 2) {
         if (p.afk !== AFK_PLAYING) handleAFK(p.handle);
@@ -412,6 +416,7 @@ export const initIntermission = () => {
         settings.desiredSheep = ForceEx.sheep.size();
         updateDesiredSheep();
         desiredSheep.text = settings.desiredSheep.toFixed(0);
+        defaultTime();
         // Make wolf
       } else if (value === 3) {
         if (p.afk !== AFK_PLAYING) handleAFK(p.handle);
@@ -420,6 +425,7 @@ export const initIntermission = () => {
         settings.desiredSheep = ForceEx.sheep.size();
         updateDesiredSheep();
         desiredSheep.text = settings.desiredSheep.toFixed(0);
+        defaultTime();
         // Transfer host
       } else if (value === 4) transferHostTo(p.cid);
       // Kick
@@ -428,6 +434,7 @@ export const initIntermission = () => {
         settings.desiredSheep = ForceEx.sheep.size();
         updateDesiredSheep();
         desiredSheep.text = settings.desiredSheep.toFixed(0);
+        defaultTime();
       }
 
       updatePlayers();

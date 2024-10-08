@@ -6,6 +6,16 @@ import "./owner";
 import "./stop";
 import { president } from "settings/settings";
 
+let prevPresident = false;
+let prevVampOn = false;
+let prevSwitchOn = false;
+
+export const restoreSettings = () => {
+  president.enabled = prevPresident;
+  vampOn = prevVampOn;
+  udg_switchOn = prevSwitchOn;
+};
+
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   gg_trg_practice = CreateTrigger();
   registerAnyPlayerChatEvent(gg_trg_practice, "-practice");
@@ -21,19 +31,13 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   TriggerAddAction(gg_trg_practice, () => {
     udg_lastGameString = GetEventPlayerChatString()?.toLowerCase() ?? "";
     udg_practiceOn = true;
-    udg_dummyWisps = 0;
-    udg_wispPoints = 0;
-    udg_time = 120 * 60;
-    udg_sheepGold = 1000000;
-    udg_wolfGold = 1000000;
-    udg_Teams = TEAMS_LOCK_IE_PLAYING;
+    prevPresident = president.enabled;
+    prevVampOn = vampOn;
+    prevSwitchOn = udg_switchOn;
     president.enabled = false;
-    EnableTrigger(gg_trg_attack);
-    EnableTrigger(gg_trg_stop);
-    EnableTrigger(gg_trg_mass);
-    EnableTrigger(gg_trg_owner);
-    EnableTrigger(gg_trg_speed);
-    autoCancelEnabled = false;
+    vampOn = false;
+    udg_switchOn = false;
+    udg_Teams = TEAMS_LOCK_IE_PLAYING;
     TriggerExecute(gg_trg_createSheep);
   });
 });

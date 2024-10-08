@@ -46,7 +46,6 @@ declare global {
 }
 InitTrig_dummyWisps = () => {
   gg_trg_dummyWisps = CreateTrigger();
-  DisableTrigger(gg_trg_dummyWisps);
   TriggerRegisterAnyUnitEventBJ(gg_trg_dummyWisps, EVENT_PLAYER_UNIT_DEATH);
   TriggerAddCondition(gg_trg_dummyWisps, Condition(Trig_dummyWisps_Conditions));
   TriggerAddAction(gg_trg_dummyWisps, Trig_dummyWisps_Actions);

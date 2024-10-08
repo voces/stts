@@ -4,7 +4,6 @@ import { getActivePlayerCount, getIdealDesiredSheep, isScEven, precisionCompare,
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { GOLD_COLOR, RED_COLOR, WHITE_COLOR } from "../constants";
 import { onUpdateIntermission } from "../hooks";
-import { disableSwitch, disableVamp, enablePresident, enableSwitch, enableVamp } from "./modes";
 import { farmVision, income, president, settings, spawnSetting, switchSetting } from "settings/settings";
 import { getTimes } from "stats/times";
 
@@ -25,13 +24,9 @@ export const updateMode = (value?: number) => {
     value = udg_switchOn ? 2 : vampOn ? 3 : president.enabled ? 1 : 0;
     frames.settings.mode.value = value;
   } else {
-    if (value === 0) {
-      if (udg_switchOn) disableSwitch();
-      if (vampOn) disableVamp();
-      president.enabled = false;
-    } else if (value === 1) enablePresident();
-    else if (value === 2) enableSwitch();
-    else enableVamp();
+    president.enabled = value === 1;
+    udg_switchOn = value === 2;
+    vampOn = value === 3;
   }
 
   frames.settings.president.container.visible = value === 1;
@@ -71,7 +66,7 @@ export const updateDesiredSheep = () => {
   const playerCount = getActivePlayerCount();
   if (previousPlayersCount === playerCount) {
     if (settings.desiredSheep >= playerCount) {
-      settings.desiredSheep = playerCount - 1;
+      settings.desiredSheep = Math.max(playerCount - 1, 1);
       frames.settings.desiredSheep.text = (playerCount - 1).toFixed(0);
     }
     return;

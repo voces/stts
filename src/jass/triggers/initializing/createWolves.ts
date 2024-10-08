@@ -38,6 +38,7 @@ const Trig_createWolves_Actions = () => {
 
   ForForce(udg_Wolf, createWolf);
   ForceEx.sheep.for((s) => udg_totalFarmCountBeforeWolves[s.id].push(udg_farmCount[s.id + 1]));
+  if (!udg_practiceOn) StartSound(gg_snd_WolfriderYesAttack1);
 
   wolvesCreated = true;
   updateScButtons();
@@ -58,8 +59,7 @@ const Trig_createWolves_Actions = () => {
     });
   }
 
-  if (udg_dummyWisps > 0) {
-    EnableTrigger(gg_trg_dummyWisps);
+  if (udg_switchOn && udg_dummyWisps > 0) {
     forEachPlayer((p) => SetPlayerAllianceStateBJ(Player(bj_PLAYER_NEUTRAL_VICTIM)!, p.handle, bj_ALLIANCE_NEUTRAL));
     for (let i = 0; i < udg_dummyWisps; i++) {
       CreateUnit(Player(bj_PLAYER_NEUTRAL_VICTIM)!, wispType, RandomX(terrain.wisp), RandomY(terrain.wisp), 270);

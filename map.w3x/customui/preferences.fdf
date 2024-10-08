@@ -11,15 +11,11 @@ Frame "GLUETEXTBUTTON" "SheepTagPreferencesButton" INHERITS WITHCHILDREN "EscMen
   }
 }
 
-Frame "DIALOG" "SheepTagPreferencesPanel" {
-  SetPoint TOP, "ConsoleUI", TOP, 0, -0.06,
-  Height 0.35,
-  Width 0.34,
-
+Frame "FRAME" "SheepTagPreferencesPanel" {
   TabFocusPush,
 
   Frame "TEXT" "SheepTagPreferencesTitle" INHERITS "EscMenuTitleTextTemplate" {
-    SetPoint TOP, "SheepTagPreferencesPanel", TOP, 0, -0.03,
+    SetPoint TOP, "EscMenuBackdrop", TOP, 0, -0.03,
     FontColor 1 1 1,
     Width 0.2,
     FontJustificationH JUSTIFYCENTER,
@@ -29,7 +25,7 @@ Frame "DIALOG" "SheepTagPreferencesPanel" {
   // Zoom
 
   Frame "TEXT" "SheepZoomLabel" INHERITS "EscMenuButtonTextTemplate" {
-    SetPoint TOPLEFT, "SheepTagPreferencesPanel", TOPLEFT, 0.025, -0.07,
+    SetPoint TOPLEFT, "EscMenuBackdrop", TOPLEFT, 0.025, -0.07,
     Width 0.09,
     FontJustificationH JUSTIFYLEFT,
     Text "Sheep zoom:",
@@ -171,8 +167,8 @@ Frame "DIALOG" "SheepTagPreferencesPanel" {
     }
 
     Frame "TEXT" "TeamResourcesTwinLabel" INHERITS "EscMenuButtonTextTemplate" {
-      SetPoint LEFT, "TeamResourcesTwinRadio", RIGHT, 0.009, 0,
-      Width 0.3,
+      SetPoint TOPLEFT, "TeamResourcesTwinRadio", TOPRIGHT, 0.009, -0.001,
+      Width 0.2,
       FontJustificationH JUSTIFYLEFT,
       Text "Tie team resource visibility with leaderboard",
     }
@@ -188,16 +184,12 @@ Frame "DIALOG" "SheepTagPreferencesPanel" {
   // Return to game
 
   Frame "GLUETEXTBUTTON" "SheepTagPreferencesReturnButton" INHERITS WITHCHILDREN "EscMenuButtonTemplate" {
-    SetPoint BOTTOM, "SheepTagPreferencesPanel", BOTTOM, 0, 0.03,
+    SetPoint BOTTOM, "EscMenuBackdrop", BOTTOM, 0, 0.03,
     ControlShortcutKey "KEY_RETURN_TO_GAME_SHORTCUT",
 
     ButtonText "SheepTagPreferencesReturnButtonText",
     Frame "TEXT" "SheepTagPreferencesReturnButtonText" INHERITS "EscMenuButtonTextTemplate" {
       Text "KEY_RETURN_TO_GAME",
     }
-  }
-
-  DialogBackdrop "SheepTagPreferencesPanelBackdrop",
-  Frame "BACKDROP" "SheepTagPreferencesPanelBackdrop" INHERITS "EscMenuBackdrop" {
   }
 }

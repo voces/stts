@@ -8,14 +8,6 @@ const Trig_vamp_Actions = () => {
   if (vampOn) {
     udg_switchOn = false;
     president.enabled = false;
-    DisableTrigger(gg_trg_sheepDies);
-    DisableTrigger(gg_trg_spiritDies);
-    DisableTrigger(gg_trg_sheepSwitch);
-    EnableTrigger(gg_trg_sheepVamp);
-  } else {
-    EnableTrigger(gg_trg_sheepDies);
-    EnableTrigger(gg_trg_spiritDies);
-    DisableTrigger(gg_trg_sheepVamp);
   }
   updateLeaderboardSettingsDisplay();
 };

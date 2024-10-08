@@ -201,6 +201,10 @@ gg_snd_Overkill = nil
 gg_snd_ReceiveGold = nil
 gg_snd_GyrocopterYesAttack1 = nil
 gg_snd_Error = nil
+gg_snd_KnightNoFood1 = nil
+gg_snd_BattleNetTick = nil
+gg_snd_SheepWhat1 = nil
+gg_snd_WolfriderYesAttack1 = nil
 function InitGlobals()
 end
 
@@ -257,6 +261,23 @@ gg_snd_Error = CreateSound("Sound/Interface/Error.flac", false, false, false, 0,
 SetSoundParamsFromLabel(gg_snd_Error, "InterfaceError")
 SetSoundDuration(gg_snd_Error, 614)
 SetSoundVolume(gg_snd_Error, 127)
+gg_snd_KnightNoFood1 = CreateSound("Sound/Interface/Warning/Human/KnightNoFood1.flac", false, false, false, 0, 0, "DefaultEAXON")
+SetSoundParamsFromLabel(gg_snd_KnightNoFood1, "NoFoodHuman")
+SetSoundDuration(gg_snd_KnightNoFood1, 1503)
+SetSoundVolume(gg_snd_KnightNoFood1, 105)
+gg_snd_BattleNetTick = CreateSound("Sound/Interface/BattleNetTick.flac", false, false, false, 0, 0, "DefaultEAXON")
+SetSoundParamsFromLabel(gg_snd_BattleNetTick, "ChatroomTimerTick")
+SetSoundDuration(gg_snd_BattleNetTick, 476)
+SetSoundVolume(gg_snd_BattleNetTick, 80)
+gg_snd_SheepWhat1 = CreateSound("Units/Critters/Sheep/SheepWhat1.flac", false, false, true, 1, 1, "SpellsEAX")
+SetSoundParamsFromLabel(gg_snd_SheepWhat1, "SheepWhat")
+SetSoundDuration(gg_snd_SheepWhat1, 1105)
+SetSoundChannel(gg_snd_SheepWhat1, 8)
+SetSoundVolume(gg_snd_SheepWhat1, 127)
+gg_snd_WolfriderYesAttack1 = CreateSound("Units/Orc/Wolfrider/WolfriderYesAttack1.flac", false, false, true, 1, 1, "DefaultEAXON")
+SetSoundParamsFromLabel(gg_snd_WolfriderYesAttack1, "WolfriderYesAttack")
+SetSoundDuration(gg_snd_WolfriderYesAttack1, 3041)
+SetSoundVolume(gg_snd_WolfriderYesAttack1, 127)
 end
 
 function CreateRegions()

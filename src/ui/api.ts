@@ -1,6 +1,6 @@
 import { settings } from "settings/settings";
 import { frames } from "./frames";
-import { getPubCount } from "./util";
+import { getActivePlayerCount, getPubCount } from "./util";
 import { adjustSheepTeamSize } from "teams/start";
 import { smart as actualSmart } from "teams/smart";
 import { FrameEx } from "handles/FrameEx";
@@ -19,13 +19,8 @@ export const adjustChatFrames = () => {
   if (frames.settings.container === undefined) return;
 
   if (frames.intermissionFrames[0].visible) {
-    FrameEx.fromOrigin(ORIGIN_FRAME_CHAT_MSG).setPoint(
-      FRAMEPOINT_RIGHT,
-      frames.settings.container,
-      FRAMEPOINT_LEFT,
-      0,
-      0,
-    );
+    FrameEx.fromOrigin(ORIGIN_FRAME_CHAT_MSG)
+      .setPoint(FRAMEPOINT_RIGHT, frames.settings.container, FRAMEPOINT_LEFT, 0, 0);
     FrameEx.fromOrigin(ORIGIN_FRAME_UNIT_MSG)
       .clearPoints()
       .setPoint(FRAMEPOINT_BOTTOMLEFT, frames.intermissionFrames[2], FRAMEPOINT_TOPLEFT, 0, 0)
@@ -37,14 +32,9 @@ export const adjustChatFrames = () => {
         0,
       );
   } else {
-    FrameEx.fromOrigin(ORIGIN_FRAME_CHAT_MSG).setPoint(
-      FRAMEPOINT_RIGHT,
+    FrameEx.fromOrigin(ORIGIN_FRAME_CHAT_MSG)
       // Technically this cuts it off a bit early, but that's fine
-      FrameEx.fromOrigin(ORIGIN_FRAME_WORLD_FRAME),
-      FRAMEPOINT_RIGHT,
-      -0.05,
-      0,
-    );
+      .setPoint(FRAMEPOINT_RIGHT, FrameEx.fromOrigin(ORIGIN_FRAME_WORLD_FRAME), FRAMEPOINT_RIGHT, -0.05, 0);
     FrameEx.fromOrigin(ORIGIN_FRAME_UNIT_MSG)
       .clearPoints()
       .setAbsPoint(FRAMEPOINT_BOTTOMLEFT, 0.25, 0.25)
@@ -95,17 +85,22 @@ addScriptHook(W3TS_HOOK.MAIN_BEFORE, () => {
 });
 
 export const showIntermission = (local = false) => {
-  if (hotkeyTrigger) hotkeyTrigger.enabled = true;
-  if (!local) showingIntermission = true;
+  if (!local) {
+    showingIntermission = true;
+    if (hotkeyTrigger) hotkeyTrigger.enabled = true;
+    updateIntermission();
+  }
   if (frames.intermissionFrames[0].visible === true) return;
-  updateIntermission();
   for (const frame of frames.intermissionFrames) frame.visible = true;
   adjustChatFrames();
 };
 
 export const hideIntermission = (local = false) => {
-  if (hotkeyTrigger) hotkeyTrigger.enabled = false;
-  if (!local) showingIntermission = false;
+  if (!local) {
+    showingIntermission = false;
+    if (hotkeyTrigger) hotkeyTrigger.enabled = false;
+  }
+
   if (frames.intermissionFrames[0].visible === false) return;
   for (const frame of frames.intermissionFrames) frame.visible = false;
   frames.end.confirm.visible = false;
@@ -113,11 +108,17 @@ export const hideIntermission = (local = false) => {
 };
 
 export const start = () => {
+  const activePlayerCount = getActivePlayerCount();
+  if (settings.desiredSheep === 0 || settings.desiredSheep >= activePlayerCount) return;
+
   adjustSheepTeamSize(settings.desiredSheep);
   udg_Teams = TEAMS_LOCK_IE_PLAYING;
   TriggerExecute(gg_trg_createSheep);
 };
 
 export const smart = () => {
+  const activePlayerCount = getActivePlayerCount();
+  if (settings.desiredSheep === 0 || settings.desiredSheep >= activePlayerCount) return;
+
   actualSmart(settings.desiredSheep - Math.floor((getPubCount() + 1) / 2));
 };

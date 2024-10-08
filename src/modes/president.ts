@@ -31,8 +31,8 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     else president.enabled = true;
 
     if (president.enabled) {
-      if (udg_switchOn) udg_switchOn = false;
-      if (vampOn) vampOn = false;
+      udg_switchOn = false;
+      vampOn = false;
 
       if (parts.length > 1) {
         let handicap = parseFloat(

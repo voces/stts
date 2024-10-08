@@ -172,8 +172,10 @@ const Trig_g_Actions = () => {
 
   // Note early returns above; mark when someone speaks
   if (str.startsWith("g")) {
-    if (IsPlayerInForce(GetTriggerPlayer()!, udg_Sheep)) lastSheepReceiver = GetTriggerPlayer()!;
-    else if (IsPlayerInForce(GetTriggerPlayer()!, udg_Wolf)) {
+    if (IsPlayerInForce(GetTriggerPlayer()!, udg_Sheep)) {
+      lastSheepReceiver = GetTriggerPlayer()!;
+      if (GetLocalPlayer() === GetTriggerPlayer()) StartSound(gg_snd_ReceiveGold);
+    } else if (IsPlayerInForce(GetTriggerPlayer()!, udg_Wolf)) {
       let wolf: UnitEx | undefined = undefined as UnitEx | undefined;
       withPlayerUnits(GetTriggerPlayer()!, () => {}, (u) => {
         if (u.typeId === shepType && !u.isIllusion()) wolf = u;

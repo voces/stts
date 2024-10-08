@@ -29,9 +29,9 @@ Ubertip="Brings up a list of the available buildings that you may choose to cons
 Hotkey=B
 
 [CmdBuildNightElf]
-Tip=Create Building
-Ubertip="Brings up a list of the available buildings that you may choose to create."
-Hotkey=B
+Tip=Quick Buy Item
+Ubertip="Brings up a list of the available items that you may choose to purchase remotely for an additional fee."
+Hotkey=Q
 
 [CmdBuildUndead]
 Tip=Summon Building

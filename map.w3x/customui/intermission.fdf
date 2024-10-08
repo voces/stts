@@ -582,7 +582,7 @@ Frame "FRAME" "SheepTagIntermission" {
         SetPoint BOTTOMRIGHT, "SheepTagTime", TOPRIGHT, -0.005, 0,
         Width 0.04,
         FontJustificationH JUSTIFYCENTER,
-        Text "6:00",
+        Text "Default",
       }
 
       // Spawn

@@ -54,7 +54,9 @@ const tick = () => {
     if (ForceEx.sheep.hasPlayer(p)) {
       const u = udg_unit[i + 1];
       if (!UnitAlive(u)) continue;
-      p.bankedGold += income.sheep / 2 * getDistancePenality(u);
+      const rate = getDistancePenality(u);
+      p.setState(PLAYER_STATE_GOLD_UPKEEP_RATE, Math.round((1 - rate) * 100));
+      p.bankedGold += income.sheep / 2 * rate;
       continue;
     }
   }

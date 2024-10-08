@@ -1,4 +1,5 @@
 import "util/debug";
+import "util/HideMinDamage";
 
 import "functions/farms/auraFarmUpgrade";
 import "functions/farms/cancelFarm";
