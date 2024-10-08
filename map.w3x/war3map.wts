@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 24n
+Sheep Tag ReVoLuTiOn 24o
 }
 
 STRING 40
@@ -4378,11 +4378,6 @@ STRING 4193
 Permanently infects nearby enemy structures with Disease Cloud. Disease Cloud deals 1.5 damage per second.|n|cffff0000Cannot kill structures.|r
 }
 
-STRING 4195
-{
-|cff00ff0024n|r
-}
-
 STRING 4196
 // Units: n00F (Invis check), Name (Name)
 {
@@ -4788,5 +4783,10 @@ STRING 4273
 // Abilities: A02Q (Shadowsight), Hotkey (Hotkey - Normal)
 {
 S
+}
+
+STRING 4274
+{
+|cff00ff0024o|r
 }
 

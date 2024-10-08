@@ -18,7 +18,11 @@ let sheepZoomEditBox: FrameEx | undefined;
 let wolfZoomEditBox: FrameEx | undefined;
 let wispZoomEditBox: FrameEx | undefined;
 
-const updateZooms = (cid: number) => {
+const updateZooms = (cid?: number) => {
+  if (typeof cid === "number") {
+    if (GetPlayerId(GetLocalPlayer()) + 1 !== cid) return;
+  } else cid = GetPlayerId(GetLocalPlayer()) + 1;
+
   if (sheepZoomEditBox) sheepZoomEditBox.text = udg_sheepZoom[cid].toFixed(0);
   if (wolfZoomEditBox) wolfZoomEditBox.text = udg_wolfZoom[cid].toFixed(0);
   if (wispZoomEditBox) wispZoomEditBox.text = udg_wispZoom[cid].toFixed(0);
@@ -40,7 +44,6 @@ const handleZoom =
 
 export const initPreferences = () => {
   const pid = GetPlayerId(GetLocalPlayer());
-  const cid = pid + 1;
 
   const escapeTrigger = TriggerEx.create();
   escapeTrigger.registerAnyPlayerKeyEvent(OSKEY_ESCAPE, 0, true);
@@ -89,13 +92,14 @@ export const initPreferences = () => {
   wolfZoomEditBox.onChange(handleZoom("wolf"));
   wispZoomEditBox = FrameEx.fromName("WispZoomEditBox");
   wispZoomEditBox.onChange(handleZoom("wisp"));
-  updateZooms(cid);
+  updateZooms();
 
   const autoControlCheckbox = FrameEx.fromName("AutoControlCheckbox");
   const autoControlCheckboxInverted = FrameEx.fromName("AutoControlCheckboxChecked");
   (udg_autocontrol[pid] ? autoControlCheckbox : autoControlCheckboxInverted).visible = false;
   (udg_autocontrol[pid] ? autoControlCheckboxInverted : autoControlCheckbox).onToggle(({ player, checked }) => {
     udg_autocontrol[player.id] = checked;
+    if (!player.isLocal()) return;
     File.write("revo/autocontrol.txt", B2S(checked));
   });
 
@@ -104,6 +108,7 @@ export const initPreferences = () => {
   (noAutoControl[pid] ? noAutoControlCheckbox : noAutoControlCheckboxInverted).visible = false;
   (noAutoControl[pid] ? noAutoControlCheckboxInverted : noAutoControlCheckbox).onToggle(({ player, checked }) => {
     noAutoControl[player.id] = checked;
+    if (!player.isLocal()) return;
     File.write("revo/noAutoControl.txt", B2S(checked));
   });
 

@@ -9,6 +9,12 @@
 - No leader/loser alert on first 3 rounds
 - Grid display? (with blueprints via invisible units)
 
+# 24o
+
+Bug fixes
+
+- Fixed zoom, autocontrol, and noautocontrol being shared between players
+
 # 24n
 
 ## Feature changes
