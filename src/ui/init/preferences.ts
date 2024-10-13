@@ -3,6 +3,7 @@ import { FrameEx } from "handles/FrameEx";
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { TriggerEx } from "handles/TriggerEx";
 import { onZoomChange, saveZooms } from "jass/triggers/zoomFunctions/zoom";
+import { setShowGuideFarms, showGuideFarms } from "settings/farmGuides";
 import { preferencesShown } from "ui/api";
 import { frames } from "ui/frames";
 import {
@@ -69,19 +70,6 @@ export const initPreferences = () => {
   const preferencesButton = FrameEx.create("SheepTagPreferencesButton", escPanel);
   preferencesButton.setVisible(false).setVisible(true);
 
-  preferencesButton.onClick(({ player }) => {
-    escapeTrigger.enabled = true;
-
-    const mainPanel = FrameEx.fromName("MainPanel");
-    preferencesPanel.setParent(mainPanel.parent);
-
-    if (!player.isLocal()) return;
-
-    mainPanel.setVisible(false);
-    preferencesPanel.visible = true;
-    preferencesShown();
-  });
-
   const preferencesPanel = FrameEx.create("SheepTagPreferencesPanel", "ConsoleUIBackdrop");
   preferencesPanel.visible = false;
   frames.preferences = preferencesPanel;
@@ -96,21 +84,23 @@ export const initPreferences = () => {
 
   const autoControlCheckbox = FrameEx.fromName("AutoControlCheckbox");
   const autoControlCheckboxInverted = FrameEx.fromName("AutoControlCheckboxChecked");
-  (udg_autocontrol[pid] ? autoControlCheckbox : autoControlCheckboxInverted).visible = false;
-  (udg_autocontrol[pid] ? autoControlCheckboxInverted : autoControlCheckbox).onToggle(({ player, checked }) => {
-    udg_autocontrol[player.id] = checked;
-    if (!player.isLocal()) return;
-    File.write("revo/autocontrol.txt", B2S(checked));
-  });
+  [autoControlCheckboxInverted, autoControlCheckbox].forEach((f) =>
+    f.onToggle(({ player, checked }) => {
+      udg_autocontrol[player.id] = checked;
+      if (!player.isLocal()) return;
+      File.write("revo/autocontrol.txt", B2S(checked));
+    })
+  );
 
   const noAutoControlCheckbox = FrameEx.fromName("NoAutoControlCheckbox");
   const noAutoControlCheckboxInverted = FrameEx.fromName("NoAutoControlCheckboxChecked");
-  (noAutoControl[pid] ? noAutoControlCheckbox : noAutoControlCheckboxInverted).visible = false;
-  (noAutoControl[pid] ? noAutoControlCheckboxInverted : noAutoControlCheckbox).onToggle(({ player, checked }) => {
-    noAutoControl[player.id] = checked;
-    if (!player.isLocal()) return;
-    File.write("revo/noAutoControl.txt", B2S(checked));
-  });
+  [noAutoControlCheckboxInverted, noAutoControlCheckbox].forEach((f) =>
+    f.onToggle(({ player, checked }) => {
+      noAutoControl[player.id] = checked;
+      if (!player.isLocal()) return;
+      File.write("revo/noAutoControl.txt", B2S(checked));
+    })
+  );
 
   const teamResourcesShownRadioUnchecked = FrameEx.fromName("TeamResourcesShownRadio");
   const teamResourcesShownRadioChecked = FrameEx.fromName("TeamResourcesShownRadioChecked");
@@ -130,26 +120,72 @@ export const initPreferences = () => {
     : teamResourcesHiddenRadioChecked;
 
   ([
-    [teamResourcesShownRadioUnchecked, TEAM_RESOURCES_DEFAULT, false],
-    [teamResourcesShownRadioChecked, TEAM_RESOURCES_DEFAULT, true],
-    [teamResourcesTwinRadioUnchecked, TEAM_RESOURCES_TWINED, false],
-    [teamResourcesTwinRadioChecked, TEAM_RESOURCES_TWINED, true],
-    [teamResourcesHiddenRadioUnchecked, TEAM_RESOURCES_HIDDEN, false],
-    [teamResourcesHiddenRadioChecked, TEAM_RESOURCES_HIDDEN, true],
-  ] as const).forEach(([radio, value, checked]) => {
-    if (teamResources === value && !checked) radio.visible = false;
-    else if (teamResources !== value && checked) radio.visible = false;
+    [teamResourcesShownRadioUnchecked, TEAM_RESOURCES_DEFAULT],
+    [teamResourcesShownRadioChecked, TEAM_RESOURCES_DEFAULT],
+    [teamResourcesTwinRadioUnchecked, TEAM_RESOURCES_TWINED],
+    [teamResourcesTwinRadioChecked, TEAM_RESOURCES_TWINED],
+    [teamResourcesHiddenRadioUnchecked, TEAM_RESOURCES_HIDDEN],
+    [teamResourcesHiddenRadioChecked, TEAM_RESOURCES_HIDDEN],
+  ] as const).forEach(([radio, value]) => {
     radio.onToggle(({ player, checked }) => {
       if (!checked) return;
       setTeamResources(player.handle, value);
       if (initialRadio && radio !== initialRadio && player.isLocal()) {
         initialRadio.visible = false;
-        if (initialRadio === teamResourcesShownRadioChecked) teamResourcesShownRadioUnchecked.visible = true;
-        else if (initialRadio === teamResourcesTwinRadioChecked) teamResourcesTwinRadioUnchecked.visible = true;
-        else teamResourcesHiddenRadioUnchecked.visible = true;
+        if (initialRadio === teamResourcesShownRadioChecked) teamResourcesShownRadioUnchecked!.visible = true;
+        else if (initialRadio === teamResourcesTwinRadioChecked) teamResourcesTwinRadioUnchecked!.visible = true;
+        else teamResourcesHiddenRadioUnchecked!.visible = true;
         initialRadio = undefined;
       }
     });
+  });
+
+  const guideFarmsChecked = FrameEx.fromName("FarmGuideCheckboxChecked");
+  const guideFarmsUnchecked = FrameEx.fromName("FarmGuideCheckboxUnchecked");
+
+  [guideFarmsChecked, guideFarmsUnchecked].forEach((f) =>
+    f.onToggle(({ player, checked }) => {
+      if (!player.isLocal()) return;
+      setShowGuideFarms(checked);
+    })
+  );
+
+  let initialized = false;
+  preferencesButton.onClick(({ player }) => {
+    escapeTrigger.enabled = true;
+
+    const mainPanel = FrameEx.fromName("MainPanel");
+    preferencesPanel.setParent(mainPanel.parent);
+
+    if (!player.isLocal()) return;
+
+    if (!initialized) {
+      initialized = true;
+      (udg_autocontrol[pid] ? autoControlCheckbox : autoControlCheckboxInverted).visible = false;
+      (noAutoControl[pid] ? noAutoControlCheckbox : noAutoControlCheckboxInverted).visible = false;
+      ([
+        [teamResourcesShownRadioUnchecked, TEAM_RESOURCES_DEFAULT, false],
+        [teamResourcesShownRadioChecked, TEAM_RESOURCES_DEFAULT, true],
+        [teamResourcesTwinRadioUnchecked, TEAM_RESOURCES_TWINED, false],
+        [teamResourcesTwinRadioChecked, TEAM_RESOURCES_TWINED, true],
+        [teamResourcesHiddenRadioUnchecked, TEAM_RESOURCES_HIDDEN, false],
+        [teamResourcesHiddenRadioChecked, TEAM_RESOURCES_HIDDEN, true],
+      ] as const).forEach(([radio, value, checked]) => {
+        if (teamResources === value && !checked) radio.visible = false;
+        else if (teamResources !== value && checked) radio.visible = false;
+
+        initialRadio = teamResources === TEAM_RESOURCES_DEFAULT
+          ? teamResourcesShownRadioChecked
+          : teamResources === TEAM_RESOURCES_TWINED
+          ? teamResourcesTwinRadioChecked
+          : teamResourcesHiddenRadioChecked;
+      });
+      (showGuideFarms() ? guideFarmsUnchecked : guideFarmsChecked).visible = false;
+    }
+
+    mainPanel.setVisible(false);
+    preferencesPanel.visible = true;
+    preferencesShown();
   });
 
   FrameEx.fromName("SheepTagPreferencesReturnButton").onClick(({ player }) => {

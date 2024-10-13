@@ -153,10 +153,13 @@ export const giveAllGold = (sender: player): void => {
 
   if (amount > 3 || changedReceiver) transferDisplay = TRANSFER_DISPLAY_TEAM;
 
-  const gold = GetPlayerState(receiver, PLAYER_STATE_RESOURCE_GOLD) + amount;
+  const before = GetPlayerState(receiver, PLAYER_STATE_RESOURCE_GOLD);
+  const gold = before + amount;
   transferGold(sender, receiver, amount, transferDisplay);
 
-  if (receiver === GetLocalPlayer() && (changedReceiver || (gold >= 112 && amount > 3))) StartSound(gg_snd_ReceiveGold);
+  if (receiver === GetLocalPlayer() && (changedReceiver || (before < 112 && gold >= 112) || amount >= 25)) {
+    StartSound(gg_snd_ReceiveGold);
+  }
 };
 
 const Trig_g_Actions = () => {

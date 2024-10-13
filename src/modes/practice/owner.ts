@@ -8,6 +8,7 @@ const ownNeutrals = new WeakMap<MapPlayerEx, WeakSet<UnitEx>>();
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   gg_trg_owner = CreateTrigger();
+  DisableTrigger(gg_trg_owner);
   registerAnyPlayerChatEvent(gg_trg_owner, "-owner");
   registerAnyPlayerChatEvent(gg_trg_owner, "-o");
   TriggerAddAction(gg_trg_owner, () => {

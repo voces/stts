@@ -6,14 +6,49 @@
 - Selection bug
 - -ff
 - President ward death crash?
-- No leader/loser alert on first 3 rounds
-- Grid display? (with blueprints via invisible units)
+
+# 24p
+
+## Feature Changes
+
+- Increased width of game messages outside of intermission
+- Auto cancel changes
+  - Increased threshold for canceling from 3 to 5 due to increase of automatic orders
+  - Auto cancel no longer AFKs offending players and rather just prints the names of the offenders
+- Added tooltips to various settings
+- Gold UX changes
+  - Automatic golding on death now visible
+  - Gold messages now only shown to receivers and allies if transferred amount is `teamSize + 3` or greater
+  - Gold chime now occurs when crossing 112 gold or transferred amount is 25 or greater
+- Added farm coloring based on handicap for regular Farms, Upgraded Farms, and Strong Farms
+- Removed -perfect; smart will always try perfect in 2v4 and fallback if SC is unbalanced
+- Automatic leader/loser on -last only shown after round 3
+- Added Guide Farms, configurable in Preferences or with -guidefarms
+
+## Balance changes
+
+- Decreased gold cost of Suppression Field from 100 (140) to 90 (126)
+- Decreased gold cost of Claws of Attack +16 from 38 (53) to 35 (49)
+
+## Bug fixes
+
+- Only host can confirm end/cancel
+- Removed numbers from player name in intermission
+- Fixed Suppression Field's Quick Buy duration description
+- Fixed farm count decreasing by 2 when using Destroy
+- Fixed practice commands being enabled before first round begins
 
 # 24o
 
-Bug fixes
+## Balance changes
+
+- Decreased Pocket Factory's hits to kill from 5 to 3
+
+## Bug fixes
 
 - Fixed zoom, autocontrol, and noautocontrol being shared between players
+- Fixed checkbox/radio options not initializing with respect to individual player preferences
+- Fixed Translocation Farm's secondary translations being able to place units in unreachable areas
 
 # 24n
 

@@ -95,6 +95,7 @@ export const updatePlayers = () => {
       team,
       teamBackdrop,
       disabledTeamBackdrop,
+      name,
       sheepCount,
       handicap,
       pubMark,
@@ -114,6 +115,8 @@ export const updatePlayers = () => {
       container.alpha = 255;
       backdrop.alpha = 31;
     }
+
+    name.text = p.coloredName.split(" (")[0] + "|r";
 
     const variant = p.isSheep ? "BTNSheep" : p.isWolf ? "BTNRaider" : "BTNWisp";
     [teamBackdrop, disabledTeamBackdrop].forEach((b) =>
@@ -173,7 +176,7 @@ export const updateScButtons = () => {
   frames.end.button.getChild(4).setTextColor(scEven ? GOLD_COLOR : RED_COLOR);
   frames.end.title.setTextColor(scEven ? WHITE_COLOR : RED_COLOR)
     .setText(scEven ? "End game?" : "End game with uneven sheep counts?");
-  frames.end.confirmButton.getChild(4).setTextColor(scEven ? GOLD_COLOR : RED_COLOR);
+  frames.end.confirmEnd.getChild(4).setTextColor(scEven ? GOLD_COLOR : RED_COLOR);
   FrameEx.fromName("EndGameButtonText").setTextColor(scEven ? GOLD_COLOR : RED_COLOR);
   const quitFrame = FrameEx.fromName("QuitButtonText");
   if (quitCopy === "") quitCopy = quitFrame.text;
@@ -229,6 +232,8 @@ export const updateIntermission = () => {
     frames.smart.enabled =
     frames.practice.enabled =
     frames.end.button.enabled =
+    frames.end.confirmEnd.enabled =
+    frames.end.confirmCancel.enabled =
       MapPlayerEx.fromLocal().isHost;
 };
 onUpdateIntermission(updateIntermission);

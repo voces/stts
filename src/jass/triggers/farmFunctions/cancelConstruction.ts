@@ -2,7 +2,7 @@ const Trig_cancelConstruction_Actions = () => {
   const p = GetOwningPlayer(GetCancelledStructure()!)!;
   const cid = GetConvertedPlayerId(p);
   if (udg_farmCount[cid] > 0) udg_farmCount[cid]--;
-  SetPlayerStateBJ(p, PLAYER_STATE_RESOURCE_LUMBER, udg_farmCount[cid]);
+  SetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER, udg_farmCount[cid]);
   bj_forLoopAIndex = 1;
   bj_forLoopAIndexEnd = udg_lastPlayer;
   if (!udg_switchOn) {

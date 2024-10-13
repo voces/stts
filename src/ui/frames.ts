@@ -52,6 +52,7 @@ export const frames: {
     team: FrameEx;
     teamBackdrop: FrameEx;
     disabledTeamBackdrop: FrameEx;
+    name: FrameEx;
     sheepCount: FrameEx;
     handicap: FrameEx;
     pubMark: FrameEx;
@@ -66,6 +67,7 @@ export const frames: {
     button: FrameEx;
     confirm: FrameEx;
     title: FrameEx;
-    confirmButton: FrameEx;
+    confirmEnd: FrameEx;
+    confirmCancel: FrameEx;
   };
 } = { intermissionFrames: [], settings: { president: {}, switch: {}, terrain: {} }, players: [], end: {} } as any;

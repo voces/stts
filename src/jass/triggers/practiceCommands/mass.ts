@@ -26,6 +26,7 @@ declare global {
 }
 InitTrig_mass = () => {
   gg_trg_mass = CreateTrigger();
+  DisableTrigger(gg_trg_mass);
   registerAnyPlayerChatEvent(gg_trg_mass, "-mass", false);
   TriggerAddCondition(gg_trg_mass, Condition(() => GetTriggerPlayer() === udg_Custom));
   TriggerAddAction(gg_trg_mass, Trig_mass_Actions);

@@ -15,7 +15,7 @@ const Trig_initMassTest_Func008002 = () => {
 
 const Trig_initMassTest_Func010A = () => {
   udg_farmCount[GetConvertedPlayerId(GetEnumPlayer()!)] = 0;
-  SetPlayerStateBJ(GetEnumPlayer()!, PLAYER_STATE_RESOURCE_LUMBER, 0);
+  SetPlayerState(GetEnumPlayer()!, PLAYER_STATE_RESOURCE_LUMBER, 0);
   udg_atemploc = GetRectCenter(terrain.wolf)!;
   SetUnitPositionLocFacingBJ(
     udg_unit2[GetConvertedPlayerId(GetEnumPlayer()!)],

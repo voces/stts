@@ -2,6 +2,8 @@
 // Trigger: suppressionField
 //===========================================================================
 
+import { UNIT_TYPE_ID_STRONG_FARM, UNIT_TYPE_ID_UPGRADED_FARM } from "constants";
+
 const Trig_suppressionField_Actions = () => {
   let u = GetTriggerUnit()!;
   const p = GetOwningPlayer(u);
@@ -35,7 +37,8 @@ const Trig_suppressionField_Actions = () => {
 const Trig_suppressionField_Damage = () => {
   const u = BlzGetEventDamageTarget()!;
   if (
-    UnitHasBuffBJ(u, FourCC("B009")) && (GetUnitTypeId(u) === FourCC("hC07") || GetUnitTypeId(u) === FourCC("h002"))
+    UnitHasBuffBJ(u, FourCC("B009")) &&
+    (GetUnitTypeId(u) === UNIT_TYPE_ID_UPGRADED_FARM || GetUnitTypeId(u) === UNIT_TYPE_ID_STRONG_FARM)
   ) BlzSetEventDamage(GetEventDamage() * 2);
 };
 

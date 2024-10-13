@@ -181,6 +181,30 @@ Frame "FRAME" "SheepTagPreferencesPanel" {
     RadioItem "TeamResourcesTwinRadioChecked",
   }
 
+  // Farm guides
+
+  Frame "GLUECHECKBOX" "FarmGuideCheckboxUnchecked" INHERITS WITHCHILDREN "EscMenuCheckBoxTemplate" {
+    SetPoint TOPLEFT, "TeamResourcesTwinRadio", BOTTOMLEFT, -0.004, -0.02,
+    Height 0.024,
+    Width 0.024,
+    TabFocusNext "FarmGuideCheckboxChecked",
+  }
+
+  Frame "GLUECHECKBOX" "FarmGuideCheckboxChecked" INHERITS WITHCHILDREN "EscMenuCheckBoxTemplate" {
+    Checked,
+    SetPoint TOPLEFT, "TeamResourcesTwinRadio", BOTTOMLEFT, -0.004, -0.02,
+    Height 0.024,
+    Width 0.024,
+    TabFocusNext "TeamResourcesShownRadio",
+  }
+
+  Frame "TEXT" "FarmGuideLabel" INHERITS "EscMenuButtonTextTemplate" {
+    SetPoint LEFT, "FarmGuideCheckboxUnchecked", RIGHT, 0.005, 0,
+    Width 0.3,
+    FontJustificationH JUSTIFYLEFT,
+    Text "Show guide farms",
+  }
+
   // Return to game
 
   Frame "GLUETEXTBUTTON" "SheepTagPreferencesReturnButton" INHERITS WITHCHILDREN "EscMenuButtonTemplate" {

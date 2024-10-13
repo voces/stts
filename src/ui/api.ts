@@ -37,8 +37,8 @@ export const adjustChatFrames = () => {
       .setPoint(FRAMEPOINT_RIGHT, FrameEx.fromOrigin(ORIGIN_FRAME_WORLD_FRAME), FRAMEPOINT_RIGHT, -0.05, 0);
     FrameEx.fromOrigin(ORIGIN_FRAME_UNIT_MSG)
       .clearPoints()
-      .setAbsPoint(FRAMEPOINT_BOTTOMLEFT, 0.25, 0.25)
-      .setAbsPoint(FRAMEPOINT_BOTTOMRIGHT, 0.55, 0.25);
+      .setAbsPoint(FRAMEPOINT_BOTTOMLEFT, 0.22, 0.25)
+      .setAbsPoint(FRAMEPOINT_BOTTOMRIGHT, 0.58, 0.25);
   }
 };
 
@@ -62,8 +62,8 @@ addScriptHook(W3TS_HOOK.MAIN_BEFORE, () => {
 
   FrameEx.fromOrigin(ORIGIN_FRAME_UNIT_MSG)
     .clearPoints()
-    .setAbsPoint(FRAMEPOINT_BOTTOMLEFT, 0.25, 0.25)
-    .setAbsPoint(FRAMEPOINT_BOTTOMRIGHT, 0.55, 0.25);
+    .setAbsPoint(FRAMEPOINT_BOTTOMLEFT, 0.22, 0.25)
+    .setAbsPoint(FRAMEPOINT_BOTTOMRIGHT, 0.58, 0.25);
 
   setTimeout(0.5, () => {
     adjustChatFrames();

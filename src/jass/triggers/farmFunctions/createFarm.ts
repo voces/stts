@@ -1,7 +1,7 @@
 import { Timer } from "w3ts";
 import { withUnitsInRange } from "util/withGroup";
 import { setTimeout } from "util/setTimeout";
-import { UNIT_TYPE_ID_GOLEM } from "constants";
+import { UNIT_TYPE_ID_FARM, UNIT_TYPE_ID_GOLEM, UNIT_TYPE_ID_STRONG_FARM, UNIT_TYPE_ID_UPGRADED_FARM } from "constants";
 import { MapPlayerEx } from "handles/MapPlayerEx";
 
 let translocateTicker: Timer;
@@ -36,8 +36,7 @@ export const translocate = (unit: unit, pivot: unit) => {
   )!;
   const scale = 104 / RMaxBJ(RAbsBJ(dx), RAbsBJ(dy));
 
-  SetUnitX(unit, GetUnitX(pivot) + dx * scale);
-  SetUnitY(unit, GetUnitY(pivot) + dy * scale);
+  SetUnitPosition(unit, GetUnitX(pivot) + dx * scale, GetUnitY(pivot) + dy * scale);
 
   TriggerSleepAction(0);
 
@@ -79,26 +78,56 @@ const translocateTick = () => {
 
 const Trig_createFarm_Actions = () => {
   const u = GetConstructingStructure()!;
-  const playerId = GetConvertedPlayerId(GetOwningPlayer(u));
+  const p = GetOwningPlayer(u);
+  const cid = GetConvertedPlayerId(p);
 
   if (IsUnitIllusion(GetTriggerUnit()!)) return;
 
-  udg_farmCount[playerId]++;
-  udg_totalFarmsBuilt[playerId]++;
-  SetPlayerStateBJ(ConvertedPlayer(playerId)!, PLAYER_STATE_RESOURCE_LUMBER, udg_farmCount[playerId]);
+  udg_farmCount[cid]++;
+  udg_totalFarmsBuilt[cid]++;
+  SetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER, udg_farmCount[cid]);
 
   if (GetUnitTypeId(u) === translocationFarmType) {
-    translocate(udg_unit[GetPlayerId(GetOwningPlayer(u)) + 1], u);
+    translocate(udg_unit[cid], u);
     translocates.push(u);
     if (translocates.length === 1) translocateTicker.start(0.03, true, translocateTick);
+  }
+
+  const unitType = GetUnitTypeId(u);
+  if (
+    unitType === UNIT_TYPE_ID_FARM || unitType === UNIT_TYPE_ID_UPGRADED_FARM || unitType === UNIT_TYPE_ID_STRONG_FARM
+  ) {
+    const handicap = GetPlayerHandicap(p);
+    if (handicap !== 1) {
+      const maxHp = BlzGetUnitMaxHP(u);
+      if (maxHp < 120) SetUnitVertexColor(u, 255, 255, 255, Math.round((maxHp / 240 + 0.5) * 255));
+      else if (maxHp < 240) {
+        const pi = (maxHp - 120) / 120;
+        const p = 1 - pi;
+        SetUnitVertexColor(u, 255, Math.round(255 * p + 100 * pi), Math.round(255 * p + 100 * pi), 255);
+      } else if (maxHp < 360) {
+        const pi = (maxHp - 240) / 240;
+        const p = 1 - pi;
+        SetUnitVertexColor(
+          u,
+          Math.round(255 * p + 125 * pi),
+          Math.round(100 * p + 125 * pi),
+          Math.round(100 * p + 125 * pi),
+          255,
+        );
+      } else {
+        const p = Math.exp(-(maxHp - 360) * Math.log(2) / 180);
+        SetUnitVertexColor(u, Math.round(125 * p), Math.round(125 * p), Math.round(125 * p), 255);
+      }
+    }
   }
 
   if (udg_switchOn) return;
   for (let i = 1; i <= bj_MAX_PLAYERS; i++) {
     LeaderboardSetPlayerItemValueBJ(
-      ConvertedPlayer(playerId)!,
+      ConvertedPlayer(cid)!,
       PlayerGetLeaderboard(ConvertedPlayer(i)!)!,
-      udg_farmCount[playerId],
+      udg_farmCount[cid],
     );
   }
 };

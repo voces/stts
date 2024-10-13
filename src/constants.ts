@@ -19,6 +19,7 @@ export const RESEARCH_TYPE_ID_UPGRADE_AURAS = FourCC("R000");
 export const UNIT_TYPE_ID_AURA_FARM = FourCC("hlum");
 export const UNIT_TYPE_ID_CLOCKWERK = FourCC("n00B");
 export const UNIT_TYPE_ID_FACTORY = FourCC("h00O");
+export const UNIT_TYPE_ID_FARM = FourCC("hhou");
 export const UNIT_TYPE_ID_FEINTING_TOWER = FourCC("n00A");
 export const UNIT_TYPE_ID_FROST_FARM = FourCC("h001");
 export const UNIT_TYPE_ID_GOLEM = FourCC("ngst");
@@ -27,6 +28,8 @@ export const UNIT_TYPE_ID_HAY_TRAP = FourCC("h00N");
 export const UNIT_TYPE_ID_MONEY_FARM = FourCC("h005");
 export const UNIT_TYPE_ID_SAPPER = FourCC("u000");
 export const UNIT_TYPE_ID_START_POSITION = FourCC("h00K");
+export const UNIT_TYPE_ID_STRONG_FARM = FourCC("h002");
+export const UNIT_TYPE_ID_UPGRADED_FARM = FourCC("hC07");
 export const UNIT_TYPE_ID_WARD = FourCC("oeye");
 
 export const TRANSFER_DISPLAY_NONE = 0;

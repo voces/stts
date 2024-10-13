@@ -15,10 +15,10 @@ export const addTime = (playerId: number, mode: string, time: number) => {
   times[playerId][mode].count++;
 };
 
-export const addRound = (sheep: MapPlayerEx[], wolves: MapPlayerEx[], time: number) => {
+export const addRound = (sheep: MapPlayerEx[], wolves: MapPlayerEx[], time: number) =>
   rounds.push({ sheep, wolves, time });
-};
 
 export const getTimes = (playerId: number) => times[playerId] ?? {};
 
-export const getRounds = (...sheep: MapPlayerEx[]) => rounds.filter((r) => sheep.every((s) => r.sheep.includes(s)));
+export const getRounds = (...sheep: MapPlayerEx[]) =>
+  sheep.length > 0 ? rounds.filter((r) => sheep.every((s) => r.sheep.includes(s))) : rounds;

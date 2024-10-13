@@ -165,8 +165,8 @@ const Trig_startRound_Actions = () => {
     p = Player(i)!;
     DestroyLeaderboardBJ(PlayerGetLeaderboard(p)!);
     PauseTimer(udg_sheepTimer[i + 1]);
-    SetPlayerStateBJ(p, PLAYER_STATE_RESOURCE_GOLD, 0);
-    SetPlayerStateBJ(p, PLAYER_STATE_RESOURCE_LUMBER, 0);
+    SetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD, 0);
+    SetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER, 0);
     resetEnumRoundStats(i + 1);
   }
 

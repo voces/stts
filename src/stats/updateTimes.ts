@@ -56,6 +56,7 @@ export const updateTimes = () => {
     }
   }
 
+  let showLeader = false;
   if (!someoneLeft) {
     const mode = `${sheep}v${wolves}`;
     for (let i = 0; i < bj_MAX_PLAYERS; i++) {
@@ -64,20 +65,20 @@ export const updateTimes = () => {
         IsPlayerInForce(Player(i)!, udg_Spirit)
       ) addTime(i, mode, timeElapsed);
     }
-    addRound(sheepPlayers, wolfPlayers, timeElapsed);
+    if (addRound(sheepPlayers, wolfPlayers, timeElapsed) > 3) showLeader = true;
   }
 
   udg_timeString = formatTime(timeElapsed);
   fullTimeString = s + " with " + formatTime(timeElapsed);
 
   if (timeElapsed > recordTime) {
-    if (recordTime !== -Infinity) fullTimeString += " (leader)";
+    if (recordTime !== -Infinity && showLeader) fullTimeString += " (leader)";
     recordTime = timeElapsed;
     recordHolders = s;
   }
 
   if (timeElapsed < loserTime) {
-    if (loserTime !== Infinity) fullTimeString += " (loser)";
+    if (loserTime !== Infinity && showLeader) fullTimeString += " (loser)";
     loserTime = timeElapsed;
     loserHolders = s;
   }

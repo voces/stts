@@ -168,7 +168,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     { name: "beam", cost: 112, id: FourCC("I000"), quick: "n00L" },
     { name: "bomber", cost: 75, id: FourCC("I002"), quick: "n00J" },
     { name: "c8", cost: 21, id: FourCC("I00B") },
-    { name: "c16", cost: 53, id: FourCC("I008") },
+    { name: "c16", cost: 49, id: FourCC("I008") },
     { name: "c55", cost: 200, id: FourCC("I005") },
     { name: "club", cost: 56, id: FourCC("I00Z") },
     { name: "cloak", cost: 200, id: FourCC("I001") },
@@ -189,7 +189,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     { name: "orb", cost: 200, id: FourCC("I00W") }, // alias for forb
     { name: "r110", cost: 112, id: FourCC("I00M") },
     { name: "sheep", cost: 56, id: FourCC("I00G"), one: true },
-    { name: "suppression", cost: 140, id: FourCC("I00V"), quick: "n00R" },
+    { name: "suppression", cost: 126, id: FourCC("I00V"), quick: "n00R" },
     { name: "scythe", cost: 112, id: FourCC("scyt") },
     { name: "scepter", cost: 140, id: FourCC("I00Y") },
     { name: "sobi", cost: 56, id: FourCC("I00N") },

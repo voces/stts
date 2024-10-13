@@ -60,7 +60,7 @@ const Trig_castAbility2_Actions = () => {
       if (!udg_disable[i]) {
         udg_atempgroup = GetUnitsOfPlayerMatching(ConvertedPlayer(i)!, Condition(isFilterUnitStructure))!;
         udg_farmCount[i] = 0;
-        SetPlayerStateBJ(ConvertedPlayer(i)!, PLAYER_STATE_RESOURCE_LUMBER, udg_farmCount[i]);
+        SetPlayerState(ConvertedPlayer(i)!, PLAYER_STATE_RESOURCE_LUMBER, udg_farmCount[i]);
         ForGroupBJ(udg_atempgroup, removeEnumUnit);
         DestroyGroup(udg_atempgroup);
         if (!udg_switchOn) {
@@ -88,14 +88,8 @@ const Trig_castAbility2_Actions = () => {
   if (orderString === "immolation" || orderString === "unimmolation") {
     i = GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()!));
     RemoveUnit(GetBuilding(GetOwningPlayer(GetTriggerUnit()!))!);
-    if (udg_farmCount[i] > 0) {
-      udg_farmCount[i] = udg_farmCount[i] - 1;
-    }
-    SetPlayerStateBJ(
-      ConvertedPlayer(i)!,
-      PLAYER_STATE_RESOURCE_LUMBER,
-      udg_farmCount[i],
-    );
+    if (udg_farmCount[i] > 0) udg_farmCount[i]--;
+    SetPlayerState(ConvertedPlayer(i)!, PLAYER_STATE_RESOURCE_LUMBER, udg_farmCount[i]);
     if (!udg_switchOn) {
       LeaderboardSetPlayerItemValueBJ(ConvertedPlayer(i)!, GetLastCreatedLeaderboard()!, udg_farmCount[i]);
     }

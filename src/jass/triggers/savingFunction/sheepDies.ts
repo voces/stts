@@ -2,7 +2,6 @@ import { president, terrain } from "settings/settings";
 import { withPlayerUnits, withUnitsOfType } from "util/withGroup";
 import { maybeApplySecondWind } from "functions/secondWind";
 import { gsDistributeGold } from "functions/gs";
-import { TRANSFER_DISPLAY_NONE } from "constants";
 import { MapPlayerEx } from "handles/MapPlayerEx";
 
 const Trig_sheepDies_Actions = () => {
@@ -70,14 +69,14 @@ const Trig_sheepDies_Actions = () => {
         dyingPlayer,
         president.president!.handle,
         GetPlayerState(dyingPlayer, PLAYER_STATE_RESOURCE_GOLD),
-        TRANSFER_DISPLAY_NONE,
+        TRANSFER_DISPLAY_INVOLVED,
       );
     }
   } else {
     const u = CreateUnit(dyingPlayer, wispType, RandomX(terrain.wisp), RandomY(terrain.wisp), 270)!;
     PanCameraToTimedForPlayer(dyingPlayer, GetUnitX(u)!, GetUnitY(u)!, 0);
     SelectUnitForPlayerSingle(u, dyingPlayer);
-    gsDistributeGold(dyingPlayer, true, 0);
+    gsDistributeGold(dyingPlayer, true, TRANSFER_DISPLAY_INVOLVED);
   }
 
   TriggerExecute(gg_trg_setupLeaderboard);

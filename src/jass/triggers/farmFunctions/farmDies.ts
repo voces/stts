@@ -6,6 +6,12 @@ const Trig_farmDies_Actions = () => {
   const u = GetDyingUnit()!;
   const dyingPlayer = GetOwningPlayer(u);
   const pid = GetConvertedPlayerId(dyingPlayer);
+
+  if (pid >= bj_MAX_PLAYERS) {
+    RemoveUnit(u);
+    return;
+  }
+
   const killingPlayer = GetOwningPlayer(GetKillingUnit()!);
 
   if (GetUnitTypeId(u) === UNIT_TYPE_ID_HAY_TRAP) {
@@ -26,11 +32,7 @@ const Trig_farmDies_Actions = () => {
   SetPlayerState(dyingPlayer, PLAYER_STATE_RESOURCE_LUMBER, udg_farmCount[pid]);
 
   if (!udg_switchOn) {
-    LeaderboardSetPlayerItemValueBJ(
-      dyingPlayer,
-      PlayerGetLeaderboard(dyingPlayer)!,
-      udg_farmCount[pid],
-    );
+    LeaderboardSetPlayerItemValueBJ(dyingPlayer, PlayerGetLeaderboard(dyingPlayer)!, udg_farmCount[pid]);
   }
 };
 

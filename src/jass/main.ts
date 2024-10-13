@@ -143,6 +143,8 @@ import { getDefaultTime, updateLeaderboardSettingsDisplay } from "settings/time"
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { DisplayType } from "constants";
+import { ForceEx } from "handles/ForceEx";
+import { formatList } from "util/formatList";
 
 declare global {
   //globals from SavingFarms:
@@ -1067,16 +1069,20 @@ transferGold = (
     );
   }
 
-  if (display >= TRANSFER_DISPLAY_INVOLVED) {
+  const teamSize = IsPlayerInForce(receiver, udg_Wolf)
+    ? ForceEx.wolves.size()
+    : ForceEx.sheep.size() + ForceEx.wisps.size();
+
+  if (display >= TRANSFER_DISPLAY_INVOLVED && amount >= 3 + teamSize) {
     DisplayTextToPlayer(
       receiver,
       0,
       0,
-      `|CFFFFCC00Recieved ${I2S(amount)} gold from ${MapPlayerEx.fromHandle(sender)}|CFFFFCC00.|r`,
+      `|CFFFFCC00Received ${I2S(amount)} gold from ${MapPlayerEx.fromHandle(sender)}|CFFFFCC00.|r`,
     );
   }
 
-  if (display >= TRANSFER_DISPLAY_TEAM) {
+  if (display >= TRANSFER_DISPLAY_TEAM && amount >= 3 + teamSize) {
     for (let i = 0; i < bj_MAX_PLAYERS; i++) {
       const p = Player(i);
       if (p && p !== sender && p !== receiver && IsPlayerAlly(sender, p)) {
@@ -1450,28 +1456,23 @@ declare global {
   let autoCancel: () => boolean;
 }
 autoCancel = () => {
-  let flag = false;
+  const afks: MapPlayerEx[] = [];
   if (autoCancelEnabled && !udg_practiceOn && !udg_switchOn && !vampOn) {
     for (let i = 1; i <= bj_MAX_PLAYERS; i++) {
       const p = MapPlayerEx.fromIndex(i - 1);
       if (!p?.isSheep) continue;
-      if (udg_apr[i] < 3) {
-        flag = true;
-        if (!IsPlayerInForce(p.handle, AFKers)) {
-          udg_AFK[i] = AFK_AFK;
-          LeaderboardRemovePlayerItemBJ(p.handle, GetLastCreatedLeaderboard()!);
-          displayTimedTextToAll(`${p} has been set to AFK.`, 5);
-          ForceRemovePlayer(udg_Sheep, p.handle);
-        }
-        ForceAddPlayer(AFKers, p.handle);
-      } else ForceRemovePlayer(AFKers, p.handle);
+      if (udg_apr[i] < 5) afks.push(p);
     }
   }
-  if (flag) {
+
+  if (afks.length > 0) {
     StartSound(gg_snd_KnightNoFood1);
     TriggerExecute(gg_trg_cancel);
+    displayTimedTextToAll(`${formatList(afks)} appear${afks.length === 1 ? "s" : ""} to be AFK!`, 5);
+    return true;
   }
-  return flag;
+
+  return false;
 };
 
 declare global {

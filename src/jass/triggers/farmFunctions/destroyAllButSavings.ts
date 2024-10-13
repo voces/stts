@@ -18,7 +18,7 @@ const Trig_destroyAllButSavings_Actions = () => {
     UNIT_TYPE_ID_MONEY_FARM,
     ConvertedPlayer(cid)!,
   );
-  SetPlayerStateBJ(
+  SetPlayerState(
     ConvertedPlayer(cid)!,
     PLAYER_STATE_RESOURCE_LUMBER,
     udg_farmCount[cid],

@@ -40,13 +40,13 @@ const Trig_sheepSwitch_Actions = () => {
       0,
     );
   }
-  SetPlayerStateBJ(GetOwningPlayer(GetTriggerUnit()!), PLAYER_STATE_RESOURCE_LUMBER, 0);
-  SetPlayerStateBJ(GetOwningPlayer(GetKillingUnit()!), PLAYER_STATE_RESOURCE_LUMBER, 0);
+  SetPlayerState(GetOwningPlayer(GetTriggerUnit()!), PLAYER_STATE_RESOURCE_LUMBER, 0);
+  SetPlayerState(GetOwningPlayer(GetKillingUnit()!), PLAYER_STATE_RESOURCE_LUMBER, 0);
   if (udg_sheepGold > 0 || udg_wolfGold > 0) {
-    SetPlayerStateBJ(GetOwningPlayer(GetKillingUnit()!), PLAYER_STATE_RESOURCE_GOLD, udg_sheepGold);
+    SetPlayerState(GetOwningPlayer(GetKillingUnit()!), PLAYER_STATE_RESOURCE_GOLD, udg_sheepGold);
   }
   if (udg_sheepGold > 0 || udg_wolfGold > 0) {
-    SetPlayerStateBJ(GetOwningPlayer(GetDyingUnit()!), PLAYER_STATE_RESOURCE_GOLD, udg_wolfGold);
+    SetPlayerState(GetOwningPlayer(GetDyingUnit()!), PLAYER_STATE_RESOURCE_GOLD, udg_wolfGold);
   }
   udg_kills[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))] =
     udg_kills[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))] + 1;
@@ -204,6 +204,7 @@ declare global {
 }
 InitTrig_sheepSwitch = () => {
   gg_trg_sheepSwitch = CreateTrigger();
+  DisableTrigger(gg_trg_sheepSwitch);
   TriggerRegisterAnyUnitEventBJ(gg_trg_sheepSwitch, EVENT_PLAYER_UNIT_DEATH);
   TriggerAddCondition(
     gg_trg_sheepSwitch,

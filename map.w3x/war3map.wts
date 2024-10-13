@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 24o
+Sheep Tag ReVoLuTiOn 24q
 }
 
 STRING 40
@@ -28,7 +28,7 @@ STRING 40
 
 STRING 41
 {
-Join our Discord https://dsc.gg/sheeptag or discord.gg/SKvs9C8WA5
+Join our Discord https://dsc.gg/sheeptag or discord.gg/MBJypap23s
 
 Check quests for game modes and commands.
 }
@@ -2180,12 +2180,6 @@ STRING 3237
 // Items: I00A (golem), Description (Description)
 {
 Summons a Golem to help you catch sheep. Can also jump over farms and walls.
-}
-
-STRING 3240
-// Items: I008 (16), Ubertip (Tooltip - Extended)
-{
-Increases the attack damage of this unit by 16 when worn.|n|cffffcc0038 gold.|r |n|cff00aeef-buy c16: 53 gold.|r
 }
 
 STRING 3241
@@ -4719,22 +4713,10 @@ STRING 4262
 Allows this unit to instantly kill the next thing it attacks.|n|cffff0000Does not stack.|r|n|cffffcc0025 gold.|r|n|cff00aeef-buy str: 35 gold.|r
 }
 
-STRING 4263
-// Units: n00R (suppression), Ubertip (Tooltip - Extended)
-{
-Creates a suppression field that causes Upgraded Farms to take extra damage.|n|cffffcc00Lasts 180 seconds.|r|n|cffff0000Does not stack.|r
-}
-
 STRING 4264
 // Items: I00A (golem), Ubertip (Tooltip - Extended)
 {
 Summons a Golem to help you catch sheep. Can also jump over farms and walls.|n|cffffcc00Lasts 180 seconds.|r|n|cffffcc00100 gold.|r |n|cff00aeef-buy golem: 140 gold.|r
-}
-
-STRING 4265
-// Items: I00V (suppression), Ubertip (Tooltip - Extended)
-{
-Creates a suppression field that causes Upgraded Farms to take extra damage.|n|cffffcc00Lasts 45 seconds.|r|n|cffff0000Does not stack.|r|n|cffffcc00100 gold.|r|n|cff00aeef-buy suppression: 140 gold.|r
 }
 
 STRING 4266
@@ -4785,8 +4767,44 @@ STRING 4273
 S
 }
 
-STRING 4274
+STRING 4276
+// Units: n00R (suppression), Ubertip (Tooltip - Extended)
 {
-|cff00ff0024o|r
+Creates a suppression field that causes Upgraded Farms to take extra damage.|n|cffffcc00Lasts 45 seconds.|r|n|cffff0000Does not stack.|r
+}
+
+STRING 4277
+// Items: I00V (suppression), Ubertip (Tooltip - Extended)
+{
+Creates a suppression field that causes Upgraded Farms to take extra damage.|n|cffffcc00Lasts 45 seconds.|r|n|cffff0000Does not stack.|r|n|cffffcc0090 gold.|r|n|cff00aeef-buy suppression: 126 gold.|r
+}
+
+STRING 4278
+// Items: I008 (16), Ubertip (Tooltip - Extended)
+{
+Increases the attack damage of this unit by 16 when worn.|n|cffffcc0035 gold.|r |n|cff00aeef-buy c16: 49 gold.|r
+}
+
+STRING 4279
+// Units: h00P (Guide Farm), Ubertip (Tooltip - Extended)
+{
+A wall of wool
+}
+
+STRING 4280
+// Units: h00P (Guide Farm), Name (Name)
+{
+Guide Farm
+}
+
+STRING 4281
+// Abilities: A02R (Guide Farm), Name (Name)
+{
+Guide Farm
+}
+
+STRING 4282
+{
+|cff00ff0024q|r
 }
 

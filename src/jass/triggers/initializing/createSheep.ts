@@ -12,6 +12,8 @@ import { ForceEx } from "handles/ForceEx";
 import { applyPresidentBuff } from "modes/president";
 import { triggerOnRoundStart } from "util/onRoundStart";
 import { hideIntermission } from "ui/api";
+import { UnitEx } from "handles/UnitEx";
+import { showGuideFarms } from "settings/farmGuides";
 
 let firstRound = true;
 
@@ -279,6 +281,18 @@ const Trig_createSheep_Actions_part4 = () => {
   ForForce(udg_Wolf, Trig_createSheep_wolfActionsB);
 
   if (udg_practiceOn || MapPlayerEx.fromLocal().isSheep) StartSound(gg_snd_SheepWhat1);
+
+  for (let i = 0; i < terrain.guideFarms.length && !udg_switchOn; i++) {
+    const { x, y } = terrain.guideFarms[i];
+    const buildLoc = UnitEx.create(Player(PLAYER_NEUTRAL_AGGRESSIVE)!, "h00P", x, y);
+    if (buildLoc.x !== x || buildLoc.y !== y) {
+      buildLoc.destroy();
+      continue;
+    }
+    buildLoc.addAbility("Aloc");
+    buildLoc.setVertexColor(255, 31, 255, showGuideFarms() ? 91 : 0);
+    buildLoc.applyTimedLife(FourCC("BTFL"), 18);
+  }
 
   TimerStart(udg_Timer, udg_practiceOn ? 120 * 60 : udg_time, false, null);
 

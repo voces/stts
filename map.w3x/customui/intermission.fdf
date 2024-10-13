@@ -451,6 +451,20 @@ Frame "FRAME" "SheepTagIntermission" {
           Width 0.05,
           FontJustificationH JUSTIFYLEFT,
           Text "Shrink",
+
+          ToolTip "SheepTagShrinkLabelTooltip",
+          Frame "BACKDROP" "SheepTagShrinkLabelTooltip" INHERITS "SheepTagTooltip" {
+            SetPoint TOPLEFT, "SheepTagShrinkLabel", TOPRIGHT, -0.005, 0.01,
+            Width 0.142,
+            Height 0.042,
+
+            Frame "TEXT" "SheepTagShrinkLabelTooltipText" INHERITS "SheepTagTooltipText" {
+              SetPoint TOPLEFT, "SheepTagShrinkLabelTooltip", TOPLEFT, 0.006, -0.006,
+              Width 0.13,
+              Height 0.03,
+              Text "Shrink makes it so the buildable area for sheep decreases over time.",
+            }
+          }
         }
         
         // Expand
@@ -466,6 +480,20 @@ Frame "FRAME" "SheepTagIntermission" {
           Width 0.05,
           FontJustificationH JUSTIFYLEFT,
           Text "Expand",
+
+          ToolTip "SheepTagExpandLabelTooltip",
+          Frame "BACKDROP" "SheepTagExpandLabelTooltip" INHERITS "SheepTagTooltip" {
+            SetPoint TOPLEFT, "SheepTagExpandLabel", TOPRIGHT, 0, 0.01,
+            Width 0.142,
+            Height 0.052,
+
+            Frame "TEXT" "SheepTagExpandLabelTooltipText" INHERITS "SheepTagTooltipText" {
+              SetPoint TOPLEFT, "SheepTagExpandLabelTooltip", TOPLEFT, 0.006, -0.006,
+              Width 0.13,
+              Height 0.04,
+              Text "Expand makes it so the buildable area for sheep starts contracted but increases over time.",
+            }
+          }
         }
       }
 
@@ -482,6 +510,20 @@ Frame "FRAME" "SheepTagIntermission" {
         Width 0.13,
         FontJustificationH JUSTIFYLEFT,
         Text "Sheep gold:",
+
+        ToolTip "SheepTagSheepGoldLabelTooltip",
+        Frame "BACKDROP" "SheepTagSheepGoldLabelTooltip" INHERITS "SheepTagTooltip" {
+          SetPoint TOPRIGHT, "SheepTagSheepGoldLabel", TOPLEFT, -0.005, 0.01,
+          Width 0.142,
+          Height 0.032,
+
+          Frame "TEXT" "SheepTagSheepGoldLabelTooltipText" INHERITS "SheepTagTooltipText" {
+            SetPoint TOPLEFT, "SheepTagSheepGoldLabelTooltip", TOPLEFT, 0.006, -0.006,
+            Width 0.13,
+            Height 0.02,
+            Text "How much gold sheep start with.",
+          }
+        }
       }
 
       Frame "EDITBOX" "SheepTagSheepGold" INHERITS WITHCHILDREN "EscMenuEditBoxTemplate" {
@@ -498,6 +540,20 @@ Frame "FRAME" "SheepTagIntermission" {
         Width 0.13,
         FontJustificationH JUSTIFYLEFT,
         Text "Wolf gold:",
+
+        ToolTip "SheepTagWolfGoldLabelTooltip",
+        Frame "BACKDROP" "SheepTagWolfGoldLabelTooltip" INHERITS "SheepTagTooltip" {
+          SetPoint TOPRIGHT, "SheepTagWolfGoldLabel", TOPLEFT, -0.005, 0.01,
+          Width 0.142,
+          Height 0.032,
+
+          Frame "TEXT" "SheepTagWolfGoldLabelTooltipText" INHERITS "SheepTagTooltipText" {
+            SetPoint TOPLEFT, "SheepTagWolfGoldLabelTooltip", TOPLEFT, 0.006, -0.006,
+            Width 0.13,
+            Height 0.02,
+            Text "How much gold wolves start with.",
+          }
+        }
       }
 
       Frame "EDITBOX" "SheepTagWolfGold" INHERITS WITHCHILDREN "EscMenuEditBoxTemplate" {
@@ -514,6 +570,20 @@ Frame "FRAME" "SheepTagIntermission" {
         Width 0.13,
         FontJustificationH JUSTIFYLEFT,
         Text "Sheep income:",
+
+        ToolTip "SheepTagSheepIncomeLabelTooltip",
+        Frame "BACKDROP" "SheepTagSheepIncomeLabelTooltip" INHERITS "SheepTagTooltip" {
+          SetPoint TOPRIGHT, "SheepTagSheepIncomeLabel", TOPLEFT, -0.005, 0.01,
+          Width 0.142,
+          Height 0.052,
+
+          Frame "TEXT" "SheepTagSheepIncomeLabelTooltipText" INHERITS "SheepTagTooltipText" {
+            SetPoint TOPLEFT, "SheepTagSheepIncomeLabelTooltip", TOPLEFT, 0.006, -0.006,
+            Width 0.13,
+            Height 0.04,
+            Text "Passive income multiplier of sheep, where 0 means no income, 1 is standard, and 2 means twice as much.",
+          }
+        }
       }
 
       Frame "EDITBOX" "SheepTagSheepIncome" INHERITS WITHCHILDREN "EscMenuEditBoxTemplate" {
@@ -530,6 +600,20 @@ Frame "FRAME" "SheepTagIntermission" {
         Width 0.13,
         FontJustificationH JUSTIFYLEFT,
         Text "Wolf income:",
+
+        ToolTip "SheepTagWolfIncomeLabelTooltip",
+        Frame "BACKDROP" "SheepTagWolfIncomeLabelTooltip" INHERITS "SheepTagTooltip" {
+          SetPoint TOPRIGHT, "SheepTagWolfIncomeLabel", TOPLEFT, -0.005, 0.01,
+          Width 0.142,
+          Height 0.052,
+
+          Frame "TEXT" "SheepTagWolfIncomeLabelTooltipText" INHERITS "SheepTagTooltipText" {
+            SetPoint TOPLEFT, "SheepTagWolfIncomeLabelTooltip", TOPLEFT, 0.006, -0.006,
+            Width 0.13,
+            Height 0.04,
+            Text "Passive income multiplier of wolves, where 0 means no income, 1 is standard, and 2 means twice as much.",
+          }
+        }
       }
 
       Frame "EDITBOX" "SheepTagWolfIncome" INHERITS WITHCHILDREN "EscMenuEditBoxTemplate" {
@@ -546,6 +630,20 @@ Frame "FRAME" "SheepTagIntermission" {
         Width 0.13,
         FontJustificationH JUSTIFYLEFT,
         Text "Money farm income:",
+
+        ToolTip "SheepTagMoneyFarmIncomeLabelTooltip",
+        Frame "BACKDROP" "SheepTagMoneyFarmIncomeLabelTooltip" INHERITS "SheepTagTooltip" {
+          SetPoint TOPRIGHT, "SheepTagMoneyFarmIncomeLabel", TOPLEFT, -0.005, 0.01,
+          Width 0.142,
+          Height 0.052,
+
+          Frame "TEXT" "SheepTagMoneyFarmIncomeLabelTooltipText" INHERITS "SheepTagTooltipText" {
+            SetPoint TOPLEFT, "SheepTagMoneyFarmIncomeLabelTooltip", TOPLEFT, 0.006, -0.006,
+            Width 0.13,
+            Height 0.04,
+            Text "income multiplier of Money Farms, where 0 means no income, 1 is standard, and 2 means twice as much.",
+          }
+        }
       }
 
       Frame "EDITBOX" "SheepTagMoneyFarmIncome" INHERITS WITHCHILDREN "EscMenuEditBoxTemplate" {

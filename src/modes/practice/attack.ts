@@ -4,6 +4,7 @@ import { addScriptHook, W3TS_HOOK } from "w3ts";
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   gg_trg_attack = CreateTrigger();
+  DisableTrigger(gg_trg_attack);
   registerAnyPlayerChatEvent(gg_trg_attack, "-a");
   TriggerAddAction(gg_trg_attack, () => {
     const p = MapPlayerEx.fromEvent()!;

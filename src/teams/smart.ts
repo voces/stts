@@ -115,7 +115,6 @@ const perfectSmart = (): void => {
 
   if (aSheepHasTwoHigherScThanAWolf()) {
     clearForces();
-    perfectSmartEnabled = false;
     Smart__traditionalSmart(2);
     return;
   }
@@ -283,17 +282,11 @@ export const smart = (sheep?: number) => {
   lastSheepToDraft = sheepToDraft;
   lastActivePlayerCount = activePlayerCount;
   clearForces();
-  if (perfectSmartEnabled) {
-    if (
-      sheepToDraft === 2 && getActivePlayerCount() === 6 &&
-      rotated === Player(PLAYER_NEUTRAL_PASSIVE)!
-    ) perfectSmart();
-    else {
-      perfectSmartEnabled = false;
-      if (sheepToDraft === 1) smart1vX();
-      else Smart__traditionalSmart(sheepToDraft);
-    }
-  } else if (sheepToDraft === 1) smart1vX();
+  if (
+    sheepToDraft === 2 && getActivePlayerCount() === 6 &&
+    rotated === Player(PLAYER_NEUTRAL_PASSIVE)!
+  ) perfectSmart();
+  else if (sheepToDraft === 1) smart1vX();
   else Smart__traditionalSmart(sheepToDraft);
 
   const end = pubStart + bj_MAX_PLAYERS;
@@ -393,17 +386,6 @@ const toggleRotate = () => {
   TriggerExecute(gg_trg_createLists);
 };
 
-let perfectSmartEnabled = true;
-
-const togglePerfect = () => {
-  perfectSmartEnabled = !perfectSmartEnabled;
-  if (perfectSmartEnabled && GetEventPlayerChatString() === "-perfect!") {
-    clearPlayerVariables();
-    perfectSmartIndex = 0;
-  }
-  DisplayTimedTextToForce(GetPlayersAll()!, 5, `Perfect smart ${perfectSmartEnabled ? "enabled" : "disabled"}.`);
-};
-
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   clearPlayerVariables();
 
@@ -432,8 +414,4 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   t = CreateTrigger();
   registerAnyPlayerChatEvent(t, "-rotate");
   TriggerAddAction(t, toggleRotate);
-
-  t = CreateTrigger();
-  registerAnyPlayerChatEvent(t, "-perfect", false);
-  TriggerAddAction(t, togglePerfect);
 });

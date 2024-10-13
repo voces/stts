@@ -75,6 +75,7 @@ declare global {
 }
 InitTrig_speed = () => {
   gg_trg_speed = CreateTrigger();
+  DisableTrigger(gg_trg_speed);
   registerAnyPlayerChatEvent(gg_trg_speed, "-speed", false);
   TriggerAddCondition(gg_trg_speed, Condition(Trig_speed_Conditions));
   TriggerAddAction(gg_trg_speed, Trig_speed_Actions);

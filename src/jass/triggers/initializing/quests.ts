@@ -52,7 +52,6 @@ Magoogotbanned
 Duncan(donuts)
 BattleWaRRioR
 Wanna-be-sheep
-
 |cffffcc00Winners of Sheep Tag World Cup 2009|r
 Drewisfat
 Magoogotbanned
@@ -61,7 +60,6 @@ XXXandBEER
 Celestial_One
 Wanna-be-sheep
 Duncan(donuts)
-
 |cffffcc00Winners of Sheep Tag World Cup 2008|r
 Drewisfat
 Magoogotbanned
@@ -70,12 +68,10 @@ Celestial_One
 BattleWaRRioR
 Wilshire12
 Duncan(donuts)
-
 |cffffcc00Winners of Sheep Tag World Cup 2007|r
 IamOnYourSide
 LazdShowOfAmir
 CandyManKiller
-
 |cffffcc00Winners of Sheep Tag World Cup 2006|r
 Shoop
 IamOnYourSide

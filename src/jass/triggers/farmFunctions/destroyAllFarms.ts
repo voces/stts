@@ -7,7 +7,7 @@ const Trig_destroyAllFarms_Actions = () => {
   cid = GetConvertedPlayerId(GetTriggerPlayer()!);
   udg_atempgroup = GetUnitsOfPlayerMatching(ConvertedPlayer(cid)!, Condition(isFilterUnitStructure))!;
   udg_farmCount[cid] = 0;
-  SetPlayerStateBJ(
+  SetPlayerState(
     ConvertedPlayer(cid)!,
     PLAYER_STATE_RESOURCE_LUMBER,
     udg_farmCount[cid],

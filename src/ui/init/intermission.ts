@@ -444,7 +444,7 @@ export const initIntermission = () => {
     const disabledTeamBackdrop = team.getChild(1);
     disabledTeamBackdrop.setTexture(`ReplaceableTextures/CommandButtons/${p.id > 11 ? "BTNRaider" : "BTNSheep"}.blp`);
 
-    FrameEx.fromName("SheepTagPlayerRowName", i).setText(p.coloredName);
+    const playerName = FrameEx.fromName("SheepTagPlayerRowName", i).setText(p.coloredName).setHeight(rowHeight);
 
     const { label: sheepCountLabel } = setupEditableText("SheepTagPlayerRowSheepCount", {
       context: i,
@@ -484,6 +484,7 @@ export const initIntermission = () => {
       team,
       teamBackdrop,
       disabledTeamBackdrop,
+      name: playerName,
       sheepCount: sheepCountLabel,
       handicap: handicapLabel,
       pubMark: pubMark,
@@ -505,7 +506,8 @@ export const initIntermission = () => {
     button: end,
     confirm: endConfirmationContainer,
     title: endConfirmationTitle,
-    confirmButton: endConfirmEnd,
+    confirmEnd: endConfirmEnd,
+    confirmCancel: endConfirmCancel,
   };
 
   endConfirmationContainer.visible = false;
