@@ -4,9 +4,6 @@ import { gsDistributeGold } from "functions/gs";
 import { giveAllGold } from "../commands/g";
 import { terrain } from "settings/settings";
 import { spawns } from "settings/spawns";
-import { FogModifier } from "w3ts";
-import { MapPlayerEx } from "handles/MapPlayerEx";
-import { setTimeout } from "util/setTimeout";
 import { UNIT_TYPE_ID_START_POSITION } from "constants";
 
 const handleSpawnActions = (orderString: string | undefined) => {
@@ -32,9 +29,6 @@ const handleSpawnActions = (orderString: string | undefined) => {
     y = GetUnitY(u);
     spawns.set(GetOwningPlayer(u), { x, y });
     PanCameraToTimedForPlayer(GetOwningPlayer(u), x, y, 0);
-    const modifier = FogModifier.create(MapPlayerEx.fromEvent()!, FOG_OF_WAR_VISIBLE, x, y, 128, true, true)!;
-    modifier.start();
-    setTimeout(1, () => modifier.destroy());
   }
 };
 

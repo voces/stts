@@ -1,4 +1,4 @@
-import { UNIT_TYPE_ID_HAY_TRAP } from "constants";
+import { UNIT_TYPE_ID_GUIDE_FARM, UNIT_TYPE_ID_HAY_TRAP } from "constants";
 import { setTimeout } from "util/setTimeout";
 import { Effect } from "w3ts";
 
@@ -7,10 +7,7 @@ const Trig_farmDies_Actions = () => {
   const dyingPlayer = GetOwningPlayer(u);
   const pid = GetConvertedPlayerId(dyingPlayer);
 
-  if (pid >= bj_MAX_PLAYERS) {
-    RemoveUnit(u);
-    return;
-  }
+  if (GetUnitTypeId(u) === UNIT_TYPE_ID_GUIDE_FARM) return RemoveUnit(u);
 
   const killingPlayer = GetOwningPlayer(GetKillingUnit()!);
 

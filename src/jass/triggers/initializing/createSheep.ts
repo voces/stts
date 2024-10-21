@@ -4,7 +4,7 @@ import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { clearForces } from "util/clearForces";
 import { spawns } from "settings/spawns";
 import { createCritter } from "misc/critter";
-import { ABILITY_TYPE_ID_RESET_START_POSITION, UNIT_TYPE_ID_START_POSITION } from "constants";
+import { ABILITY_TYPE_ID_RESET_START_POSITION, UNIT_TYPE_ID_GUIDE_FARM, UNIT_TYPE_ID_START_POSITION } from "constants";
 import { switchSheepTimers } from "modes/switch/switch";
 import { startUpdatingLeaderboard } from "modes/switch/updateLeaderboard";
 import { enableIncome } from "functions/farms/savingFarms";
@@ -14,6 +14,7 @@ import { triggerOnRoundStart } from "util/onRoundStart";
 import { hideIntermission } from "ui/api";
 import { UnitEx } from "handles/UnitEx";
 import { showGuideFarms } from "settings/farmGuides";
+import { setTimeout } from "util/setTimeout";
 
 let firstRound = true;
 
@@ -282,17 +283,25 @@ const Trig_createSheep_Actions_part4 = () => {
 
   if (udg_practiceOn || MapPlayerEx.fromLocal().isSheep) StartSound(gg_snd_SheepWhat1);
 
+  const guides: UnitEx[] = [];
   for (let i = 0; i < terrain.guideFarms.length && !udg_switchOn; i++) {
     const { x, y } = terrain.guideFarms[i];
-    const buildLoc = UnitEx.create(Player(PLAYER_NEUTRAL_AGGRESSIVE)!, "h00P", x, y);
-    if (buildLoc.x !== x || buildLoc.y !== y) {
-      buildLoc.destroy();
+    const guide = UnitEx.create(MapPlayerEx.neutralAggressive, UNIT_TYPE_ID_GUIDE_FARM, x, y);
+    if (guide.x !== x || guide.y !== y) {
+      guide.destroy();
       continue;
     }
-    buildLoc.addAbility("Aloc");
-    buildLoc.setVertexColor(255, 31, 255, showGuideFarms() ? 91 : 0);
-    buildLoc.applyTimedLife(FourCC("BTFL"), 18);
+    guide.addAbility("Aloc");
+    guide.setVertexColor(255, 31, 255, showGuideFarms() ? 91 : 0);
+    guides.push(guide);
   }
+  setTimeout(18, () => {
+    for (let i = 0; i < guides.length; i++) {
+      if (!guides[i].isAlive()) continue;
+      guides[i].setField(UNIT_BF_IS_A_BUILDING, false);
+      guides[i].destroy();
+    }
+  });
 
   TimerStart(udg_Timer, udg_practiceOn ? 120 * 60 : udg_time, false, null);
 
@@ -340,13 +349,13 @@ const Trig_createSheep_Actions_part4 = () => {
 
 const Trig_createSheep_Actions_part3 = () => {
   StartSound(gg_snd_BattleNetTick);
-  displayTimedTextToAll("|cffffcc00Game starting in 1...", 1);
+  displayTimedTextToAll("|cffffcc00Game starting in 1...|r", 1);
   TimerStart(createSheepTimer, 1, false, Trig_createSheep_Actions_part4);
 };
 
 const Trig_createSheep_Actions_part2 = () => {
   StartSound(gg_snd_BattleNetTick);
-  displayTimedTextToAll("|cffffcc00Game starting in 2...", 1);
+  displayTimedTextToAll("|cffffcc00Game starting in 2...|r", 1);
   TimerStart(createSheepTimer, 1, false, Trig_createSheep_Actions_part3);
 };
 
@@ -356,11 +365,6 @@ const Trig_createSheep_Actions = () => {
 
   Trig_createSheep_disableTrigs();
   removeAllUnits();
-
-  if (perfectRoundCanceled) {
-    perfectRoundCanceled = false;
-    perfectSmartIndex = perfectSmartIndex + 1;
-  }
 
   udg_firstBlood = udg_switchOn;
 
@@ -379,14 +383,8 @@ const Trig_createSheep_Actions = () => {
   ForForce(udg_Spirit, moveEnumPlayerFromSpiritToSheep);
 
   if (!udg_practiceOn) {
-    if (CountPlayersInForceBJ(udg_Wolf) === 0) {
-      TriggerExecute(gg_trg_sheepWin);
-      return;
-    }
-    if (CountPlayersInForceBJ(udg_Sheep) === 0) {
-      TriggerExecute(gg_trg_wolvesWin);
-      return;
-    }
+    if (CountPlayersInForceBJ(udg_Wolf) === 0) return TriggerExecute(gg_trg_sheepWin);
+    if (CountPlayersInForceBJ(udg_Sheep) === 0) return TriggerExecute(gg_trg_wolvesWin);
   }
 
   for (const [rect, type] of terrain.shops) {
@@ -396,7 +394,7 @@ const Trig_createSheep_Actions = () => {
   if (terrain.name === "Classic") {
     createCritter();
     // CreateUnit(
-    //   Player(PLAYER_NEUTRAL_AGGRESSIVE)!,
+    //   MapPlayerEx.neutralAggressive,
     //   FourCC("o001"),
     //   GetRectCenterX(gg_rct_snowman),
     //   GetRectCenterY(gg_rct_snowman),
@@ -451,21 +449,21 @@ const Trig_createSheep_Actions = () => {
     ForForce(udg_Wolf, () => MapPlayerEx.fromEnum()!.handicap = 1);
   }
 
-  settings.teamConfiguration = { sheep: ForceEx.sheep.size(), wolves: ForceEx.wolves.size() };
+  settings.teamConfiguration = { sheep: ForceEx.sheep.toArray(), wolves: ForceEx.wolves.toArray() };
   hideIntermission();
 
   if (udg_practiceOn) {
     clearForces();
     ForForce(GetPlayersAll()!, Trig_createSheep_addToSheepAndWolf);
-    displayTimedTextToAll("|cff00aeefWelcome to practice mode!", 5);
-    displayTimedTextToAll("Commands: |cffed1c24-a -s -owner -disable -mass -speed 1-5", 5);
+    displayTimedTextToAll("|cff00aeefWelcome to practice mode!|r", 5);
+    displayTimedTextToAll("Commands: |cffed1c24-a -s -owner -disable -mass -speed 1-5|r", 5);
     Trig_createSheep_Actions_part4();
   } else {
-    DisplayTimedTextToForce(udg_Sheep, 4, "|cff00aeefYou are |cffed1c24Sheep|cff00aeef this round.");
-    DisplayTimedTextToForce(udg_Wolf, 4, "|cff00aeefYou are |cffed1c24Wolf|cff00aeef this round.");
+    DisplayTimedTextToForce(udg_Sheep, 4, "|cff00aeefYou are |cffed1c24Sheep|cff00aeef this round.|r");
+    DisplayTimedTextToForce(udg_Wolf, 4, "|cff00aeefYou are |cffed1c24Wolf|cff00aeef this round.|r");
 
     StartSound(gg_snd_BattleNetTick);
-    displayTimedTextToAll("|cffffcc00Game starting in 3...", 1);
+    displayTimedTextToAll("|cffffcc00Game starting in 3...|r", 1);
     TimerStart(createSheepTimer, 1, false, Trig_createSheep_Actions_part2);
   }
 };

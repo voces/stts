@@ -1,5 +1,6 @@
 import { ForceEx } from "handles/ForceEx";
 import { MapPlayerEx } from "handles/MapPlayerEx";
+import { settings } from "settings/settings";
 
 export const getActivePlayerCount = () => ForceEx.all.toArray().reduce((count, p) => count + (p.isActive ? 1 : 0), 0);
 
@@ -50,15 +51,24 @@ const getAdjustedSc = (p: MapPlayerEx) => {
 };
 
 export const isScEven = () => {
-  let count = -1;
+  let totalSc = 0;
+  let minSc = Infinity;
+  let maxSc = -Infinity;
+  let players = 0;
   for (let i = 0; i < bj_MAX_PLAYERS; i++) {
     const p = MapPlayerEx.fromIndex(i);
-    if (p?.isActive && !p.isPub) {
-      if (count === -1) count = getAdjustedSc(p);
-      else if (count !== getAdjustedSc(p)) return false;
-    }
+    if (!p?.isActive || p.isPub) continue;
+    players++;
+
+    const sc = getAdjustedSc(p);
+    totalSc += sc;
+    if (minSc > sc) minSc = sc;
+    if (maxSc < sc) maxSc = sc;
   }
-  return true;
+
+  if (maxSc - minSc > 1) return false;
+
+  return totalSc % players < settings.desiredSheep;
 };
 
 export const precisionCompare = (a: number, b: number, precision = 3) => {

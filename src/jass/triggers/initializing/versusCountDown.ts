@@ -1,85 +1,32 @@
 //===========================================================================
 // Trigger: versusCountDown
 //===========================================================================
-const Trig_versusCountDown_Func002Func001C = () => {
-  if ((!(udg_versus === 1))) {
-    return false;
+
+const addToTeam = () => {
+  const playerId = GetConvertedPlayerId(GetEnumPlayer()!);
+
+  if (udg_AFK[playerId] === AFK_PLAYING && GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING) {
+    ForceAddPlayerSimple(GetEnumPlayer()!, udg_sheepLastGame[playerId] ? udg_Wolf : udg_Sheep);
   }
-  return true;
-};
-
-const Trig_versusCountDown_Func002Func006Func001Func002C = () => {
-  if (!udg_sheepLastGame[GetConvertedPlayerId(GetEnumPlayer()!)]) return false;
-  return true;
-};
-
-const Trig_versusCountDown_Func002Func006Func001C = () => {
-  if ((!(udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === AFK_PLAYING))) {
-    return false;
-  }
-  if (
-    (!(GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING))
-  ) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_versusCountDown_Func002Func006A = () => {
-  if ((Trig_versusCountDown_Func002Func006Func001C())) {
-    if ((Trig_versusCountDown_Func002Func006Func001Func002C())) {
-      ForceAddPlayerSimple(GetEnumPlayer()!, udg_Wolf);
-    } else {
-      ForceAddPlayerSimple(GetEnumPlayer()!, udg_Sheep);
-    }
-  }
-};
-
-const Trig_versusCountDown_Func002C = () => {
-  if (udg_versus !== 2) return false;
-  return true;
-};
-
-const Trig_versusCountDown_Func004C = () => {
-  if (udg_versus <= 0) return false;
-  if (udg_versusOff) return false;
-  return true;
 };
 
 const Trig_versusCountDown_Actions = () => {
   ClearTextMessagesBJ(udg_Sheep);
-  if ((Trig_versusCountDown_Func002C())) {
-    udg_atempstring = (I2S(R2I(udg_gameTime[1] / 60)) + ":") +
-      SubStringBJ(R2S(ModuloReal(udg_gameTime[1], 60))!, 1, 2);
-    if (
-      (SubStringBJ(
-        udg_atempstring,
-        StringLength(udg_atempstring),
-        StringLength(udg_atempstring),
-      ) === ".")
-    ) {
-      udg_atempstring = SubStringBJ(udg_atempstring, 1, StringLength(udg_atempstring) - 2) +
-        ("0" +
-          SubStringBJ(
-            udg_atempstring,
-            StringLength(udg_atempstring) - 1,
-            StringLength(udg_atempstring) - 1,
-          ));
-    } else {
-      DoNothing();
+
+  if (udg_versus === 2) {
+    udg_atempstring = I2S(R2I(udg_gameTime[1] / 60)) + ":" + SubStringBJ(R2S(ModuloReal(udg_gameTime[1], 60))!, 1, 2);
+    if (SubStringBJ(udg_atempstring, StringLength(udg_atempstring), StringLength(udg_atempstring)) === ".") {
+      udg_atempstring = SubStringBJ(udg_atempstring, 1, StringLength(udg_atempstring) - 2) + "0" +
+        SubStringBJ(udg_atempstring, StringLength(udg_atempstring) - 1, StringLength(udg_atempstring) - 1);
     }
     DisplayTextToForce(GetPlayersAll()!, "|cff00aeefTeam 1 lasted " + udg_atempstring);
-    udg_time = 1200;
-    ForForce(GetPlayersAll()!, Trig_versusCountDown_Func002Func006A);
-  } else {
-    if ((Trig_versusCountDown_Func002Func001C())) {
-      udg_time = 1200;
-    }
-  }
+    udg_time = 900;
+    ForForce(GetPlayersAll()!, addToTeam);
+  } else if (udg_versus === 1) udg_time = 900;
+
   TriggerExecute(gg_trg_setupLeaderboard);
-  if ((Trig_versusCountDown_Func004C())) {
-    TriggerExecute(gg_trg_createSheep);
-  }
+
+  if (udg_versus > 0 && !udg_versusOff) TriggerExecute(gg_trg_createSheep);
 };
 
 //===========================================================================

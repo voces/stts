@@ -205,8 +205,8 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     if (!quick) continue;
     TriggerRegisterCommandEvent(t, FourCC("AEbu"), UnitId2String(FourCC(quick))!);
     TriggerAddAction(t, () => {
-      const u = UnitEx.fromEvent()!;
-      if (u.owner.gold < item.cost) return;
+      const u = UnitEx.fromEvent();
+      if (!u || u.owner.gold < item.cost) return;
       if (teamHasTeamItem(item, GetOwningPlayer(u.handle))) return;
       if (u.isSelected(MapPlayerEx.fromLocal())) ForceUICancel();
       u.owner.gold -= item.cost;

@@ -21,4 +21,7 @@ export const switchSetting = { goalTime: Infinity };
 
 export const terrain: Terrain = {} as Terrain;
 
-export const settings = { desiredSheep: 0, teamConfiguration: { sheep: 0, wolves: 0 } };
+export const settings = {
+  desiredSheep: 0,
+  teamConfiguration: { sheep: [] as MapPlayerEx[], wolves: [] as MapPlayerEx[] },
+};

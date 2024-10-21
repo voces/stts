@@ -6,10 +6,34 @@
 - Selection bug
 - -ff
 - President ward death crash?
+- Team gold pools
+- Fix Options menu overlayed by intermission: FrameEx.fromOrigin(ORIGIN_FRAME_GAME_UI).children[16].setLevel(1024);
+
+# 24q
+
+## Feature changes
+
+- Added a 0.5 second wait between showing intermission frames and enabling buttons
+- -do shows two digits instead of up to one
+- Versus button changes to Continue button in intermission after cancel; added red for "incorrect" buttons
+- Red end buttons are a little softer if sc is over by less than desired sheep (e.g., 1 0 0 0 0 0 is not red anymore)
+- Rewrote smart
+
+## Bug fixes
+
+- Fixed "Automatically share control" checkbox not initializing correctly
+- Fixed a Guide Farm on Glory Hills terrain
+- Fixed structures remaining in the fog
+- Fixed Money Farm gold description cutting off after completion
+- Fixed partial -do stats remaining after a -cancel
+- Fixed an issue with time changing to 1 minute with versus
+- Fixed a desync when editing SC or HCP
+- Fixed an error when trying to buy an item right as the round ends
+- Fixed trans farm not subtracting player gold
 
 # 24p
 
-## Feature Changes
+## Feature changes
 
 - Increased width of game messages outside of intermission
 - Auto cancel changes

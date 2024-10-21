@@ -5,7 +5,7 @@ export const modes = new Set<string>();
 
 type Round = { sheep: MapPlayerEx[]; wolves: MapPlayerEx[]; time: number };
 
-const rounds: Round[] = [];
+export const rounds: Round[] = [];
 
 export const addTime = (playerId: number, mode: string, time: number) => {
   modes.add(mode);

@@ -23,6 +23,7 @@ export const UNIT_TYPE_ID_FARM = FourCC("hhou");
 export const UNIT_TYPE_ID_FEINTING_TOWER = FourCC("n00A");
 export const UNIT_TYPE_ID_FROST_FARM = FourCC("h001");
 export const UNIT_TYPE_ID_GOLEM = FourCC("ngst");
+export const UNIT_TYPE_ID_GUIDE_FARM = FourCC("h00P");
 export const UNIT_TYPE_ID_GYRO = FourCC("h00M");
 export const UNIT_TYPE_ID_HAY_TRAP = FourCC("h00N");
 export const UNIT_TYPE_ID_MONEY_FARM = FourCC("h005");

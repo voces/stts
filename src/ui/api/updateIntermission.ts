@@ -68,13 +68,14 @@ export const updateDesiredSheep = () => {
     if (settings.desiredSheep >= playerCount) {
       settings.desiredSheep = Math.max(playerCount - 1, 1);
       frames.settings.desiredSheep.text = (playerCount - 1).toFixed(0);
+      return;
     }
-    return;
   } else {
     settings.desiredSheep = getIdealDesiredSheep();
     previousPlayersCount = playerCount;
   }
-  frames.settings.desiredSheep.text = settings.desiredSheep.toFixed(0);
+  const stringified = settings.desiredSheep.toFixed(0);
+  if (frames.settings.desiredSheep.text !== stringified) frames.settings.desiredSheep.text = stringified;
 };
 
 export const updatePlayers = () => {
@@ -193,6 +194,12 @@ export const updateScButtons = () => {
   );
 };
 
+const updateVersusButtons = () => {
+  frames.versus.text = udg_versus > 0 ? "Cont. (|cffffffffV|r)" : "|cffffffffV|rersus";
+  frames.start.getChild(4).setTextColor(udg_versus > 0 ? RED_COLOR : GOLD_COLOR);
+  frames.smart.getChild(4).setTextColor(udg_versus > 0 ? RED_COLOR : GOLD_COLOR);
+};
+
 export const updateIntermission = () => {
   if (frames.intermissionFrames.length === 0) return;
   updateMode();
@@ -201,6 +208,7 @@ export const updateIntermission = () => {
   updateDesiredSheep();
   updatePlayers();
   updateScButtons();
+  updateVersusButtons();
 
   frames.settings.roundTab.enabled =
     frames.settings.goldTab.enabled =

@@ -51,11 +51,7 @@ const Trig_initialization_forAllPlayersTwo = () => {
   bj_forLoopAIndexEnd = 24;
   while (true) {
     if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-    SetPlayerAllianceStateBJ(
-      ConvertedPlayer(GetForLoopIndexA())!,
-      GetEnumPlayer()!,
-      bj_ALLIANCE_UNALLIED,
-    );
+    SetPlayerAllianceStateBJ(ConvertedPlayer(GetForLoopIndexA())!, GetEnumPlayer()!, bj_ALLIANCE_UNALLIED);
     bj_forLoopAIndex = bj_forLoopAIndex + 1;
   }
 };

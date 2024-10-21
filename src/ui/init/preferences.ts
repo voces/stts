@@ -82,9 +82,9 @@ export const initPreferences = () => {
   wispZoomEditBox.onChange(handleZoom("wisp"));
   updateZooms();
 
-  const autoControlCheckbox = FrameEx.fromName("AutoControlCheckbox");
-  const autoControlCheckboxInverted = FrameEx.fromName("AutoControlCheckboxChecked");
-  [autoControlCheckboxInverted, autoControlCheckbox].forEach((f) =>
+  const autoControlCheckboxUnchecked = FrameEx.fromName("AutoControlCheckbox");
+  const autoControlCheckboxChecked = FrameEx.fromName("AutoControlCheckboxChecked");
+  [autoControlCheckboxChecked, autoControlCheckboxUnchecked].forEach((f) =>
     f.onToggle(({ player, checked }) => {
       udg_autocontrol[player.id] = checked;
       if (!player.isLocal()) return;
@@ -92,9 +92,9 @@ export const initPreferences = () => {
     })
   );
 
-  const noAutoControlCheckbox = FrameEx.fromName("NoAutoControlCheckbox");
-  const noAutoControlCheckboxInverted = FrameEx.fromName("NoAutoControlCheckboxChecked");
-  [noAutoControlCheckboxInverted, noAutoControlCheckbox].forEach((f) =>
+  const noAutoControlCheckboxUnchecked = FrameEx.fromName("NoAutoControlCheckbox");
+  const noAutoControlCheckboxChecked = FrameEx.fromName("NoAutoControlCheckboxChecked");
+  [noAutoControlCheckboxChecked, noAutoControlCheckboxUnchecked].forEach((f) =>
     f.onToggle(({ player, checked }) => {
       noAutoControl[player.id] = checked;
       if (!player.isLocal()) return;
@@ -161,8 +161,8 @@ export const initPreferences = () => {
 
     if (!initialized) {
       initialized = true;
-      (udg_autocontrol[pid] ? autoControlCheckbox : autoControlCheckboxInverted).visible = false;
-      (noAutoControl[pid] ? noAutoControlCheckbox : noAutoControlCheckboxInverted).visible = false;
+      (udg_autocontrol[pid] ? autoControlCheckboxChecked : autoControlCheckboxUnchecked).visible = false;
+      (noAutoControl[pid] ? noAutoControlCheckboxUnchecked : noAutoControlCheckboxChecked).visible = false;
       ([
         [teamResourcesShownRadioUnchecked, TEAM_RESOURCES_DEFAULT, false],
         [teamResourcesShownRadioChecked, TEAM_RESOURCES_DEFAULT, true],

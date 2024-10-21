@@ -53,11 +53,11 @@ addScriptHook(W3TS_HOOK.MAIN_BEFORE, () => {
   hotkeyTrigger.registerAnyPlayerKeyEvent(OSKEY_V, 0, true);
   hotkeyTrigger.registerAnyPlayerKeyEvent(OSKEY_R, 0, true);
   hotkeyTrigger.addAction(() => {
-    if (!MapPlayerEx.fromEvent()?.isHost) return;
+    if (!MapPlayerEx.fromEvent()?.isHost || !frames.start.enabled) return;
     if (BlzGetTriggerPlayerKey() === OSKEY_S) return smart();
     if (BlzGetTriggerPlayerKey() === OSKEY_A) return start();
     if (BlzGetTriggerPlayerKey() === OSKEY_R) return TriggerExecute(gg_trg_practice);
-    if (BlzGetTriggerPlayerKey() === OSKEY_V) return TriggerExecute(gg_trg_versus);
+    if (BlzGetTriggerPlayerKey() === OSKEY_V) return versus();
   });
 
   FrameEx.fromOrigin(ORIGIN_FRAME_UNIT_MSG)
@@ -121,4 +121,21 @@ export const smart = () => {
   if (settings.desiredSheep === 0 || settings.desiredSheep >= activePlayerCount) return;
 
   actualSmart(settings.desiredSheep - Math.floor((getPubCount() + 1) / 2));
+};
+
+export const versus = () => udg_versus > 0 ? TriggerExecute(gg_trg_continue) : TriggerExecute(gg_trg_versus);
+
+export const delayHotkeyButtons = () => {
+  frames.start.enabled =
+    frames.smart.enabled =
+    frames.versus.enabled =
+    frames.practice.enabled =
+      false;
+  setTimeout(0.5, () => {
+    frames.start.enabled =
+      frames.smart.enabled =
+      frames.versus.enabled =
+      frames.practice.enabled =
+        MapPlayerEx.fromLocal().isHost;
+  });
 };

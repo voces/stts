@@ -3736,12 +3736,6 @@ STRING 3957
 Upon first usage, gives your allies some of your gold (-gs). If used a second time within a second, gives all of your gold (-g).
 }
 
-STRING 3967
-// Units: h00K (Start position), Name (Name)
-{
-Start position
-}
-
 STRING 3968
 // Abilities: A02B (Kaleidoscope), Tip (Tooltip - Normal)
 {
@@ -4806,5 +4800,11 @@ Guide Farm
 STRING 4282
 {
 |cff00ff0024q|r
+}
+
+STRING 4283
+// Units: h00K (Start Position), Name (Name)
+{
+Start Position
 }
 

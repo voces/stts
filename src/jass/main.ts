@@ -16,7 +16,6 @@ import "./triggers/farmFunctions/createFarm";
 import "./triggers/zoomFunctions/zoom";
 import "./triggers/zoomFunctions/zoomMsg";
 import "./triggers/zoomFunctions/escFix";
-import "./triggers/itemFunctions/buyFromInventory";
 import "./triggers/itemFunctions/kaleidoscope";
 import "./triggers/itemFunctions/suppressionField";
 import "./triggers/itemFunctions/useItem";
@@ -138,13 +137,13 @@ import "./triggers/shareControl/antishareruin";
 import "./triggers/shareControl/controllall";
 import "./triggers/shareControl/noAutoControl";
 import { setTimeout, Timeout } from "util/setTimeout";
-import { removeEnumUnit } from "util/removeEnumUnit";
 import { getDefaultTime, updateLeaderboardSettingsDisplay } from "settings/time";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { DisplayType } from "constants";
 import { ForceEx } from "handles/ForceEx";
 import { formatList } from "util/formatList";
+import { UnitEx } from "handles/UnitEx";
 
 declare global {
   //globals from SavingFarms:
@@ -167,12 +166,6 @@ declare global {
   let pub: Array<boolean>;
   // deno-lint-ignore prefer-const
   let rotated: player;
-  // deno-lint-ignore prefer-const
-  let perfectSmartIndex: number;
-  // deno-lint-ignore prefer-const
-  let perfectRound: boolean;
-  // deno-lint-ignore prefer-const
-  let perfectRoundCanceled: boolean;
   //endglobals from Smart
   // User-defined
   let udg_Timer: timer;
@@ -306,7 +299,6 @@ declare global {
   // deno-lint-ignore prefer-const
   let udg_wasHere: Array<boolean>;
   let udg_someVersusBoolean: boolean;
-  let udg_versusTime: number;
   // deno-lint-ignore prefer-const
   let udg_firstBlood: boolean;
   // deno-lint-ignore prefer-const
@@ -502,7 +494,6 @@ declare global {
   let gg_trg_instanceIllusion: trigger;
   let gg_trg_castAbilitySpellCast: trigger;
   let gg_trg_castAbilityIssueOrder: trigger;
-  let gg_trg_buyFromInventory: trigger;
   let gg_trg_attackFarmStrPot: trigger;
   let gg_trg_attackFarmBeamPot: trigger;
   let gg_trg_useItem: trigger;
@@ -727,9 +718,6 @@ spiritGoldGiven = Array.from({ length: bj_MAX_PLAYERS }, () => 0);
 //globals from Smart:
 pub = [];
 rotated = Player(PLAYER_NEUTRAL_PASSIVE)!;
-perfectSmartIndex = 0;
-perfectRound = false;
-perfectRoundCanceled = false;
 //endglobals from Smart
 // User-defined
 udg_time = 0;
@@ -799,7 +787,6 @@ udg_accumPartner = [];
 udg_atempint3 = 0;
 udg_wasHere = [];
 udg_someVersusBoolean = false;
-udg_versusTime = 0;
 udg_firstBlood = false;
 udg_humiliationCheck = [];
 udg_firstbloodKillCounter = [];
@@ -1173,7 +1160,7 @@ const InitGlobals = () => {
     udg_roundTimes[i] = "";
     udg_sheepSurvived[i] = "";
   }
-  for (let i = 0; i <= bj_MAX_PLAYERS * bj_MAX_PLAYERS; i++) udg_accumPartner[i] = 0;
+  for (let i = 0; i <= bj_MAX_PLAYERS ** 2; i++) udg_accumPartner[i] = 0;
   udg_Timer = CreateTimer();
   udg_Sheep = CreateForce()!;
   udg_Wolf = CreateForce()!;
@@ -1239,7 +1226,6 @@ const InitGlobals = () => {
   udg_mapName = "";
   udg_atempint3 = 0;
   udg_someVersusBoolean = false;
-  udg_versusTime = 0;
   udg_Force = CreateForce()!;
   udg_IntLoop = 0;
   udg_atempplayer = CreateForce()!;
@@ -1485,7 +1471,11 @@ removeAllUnits = (includingNeutrals = true) => {
   while (true) {
     if (i === (includingNeutrals ? bj_MAX_PLAYER_SLOTS : bj_MAX_PLAYERS)) break;
     GroupEnumUnitsOfPlayer(g, Player(i)!, null);
-    ForGroup(g, removeEnumUnit);
+    ForGroup(g, () => {
+      const u = UnitEx.fromEnum()!;
+      u.setField(UNIT_BF_IS_A_BUILDING, false);
+      u.destroy();
+    });
     i = i + 1;
   }
   DestroyGroup(g);
@@ -1557,7 +1547,6 @@ const InitCustomTriggers = () => {
   InitTrig_instanceIllusion();
   InitTrig_castAbilitySpellCast();
   InitTrig_castAbilityIssueOrder();
-  InitTrig_buyFromInventory();
   InitTrig_attackFarmStrPot();
   InitTrig_attackFarmBeamPot();
   InitTrig_useItem();

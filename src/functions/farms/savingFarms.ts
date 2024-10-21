@@ -100,8 +100,6 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   TriggerAddAction(t, () => {
     const u = UnitEx.fromEvent();
     if (u?.typeId !== UNIT_TYPE_ID_MONEY_FARM) return;
-    u.name = `Money Farm (|cffffcc00${
-      Math.round(getDistancePenality(u.handle) * 15 * income.savings)
-    } gold per minute|r)`; // 15 = 60/4
+    u.name = `Money Farm (|cffffcc00${Math.round(getDistancePenality(u.handle) * 15 * income.savings)} gold/minute|r)`; // 15 = 60/4
   });
 });

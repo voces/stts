@@ -2,17 +2,31 @@ import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { addScriptHook, W3TS_HOOK } from "w3ts";
 import { updateLeaderboardSettingsDisplay } from "./time";
 
-const Trig_view_Actions = () => {
-  udg_viewOn = !udg_viewOn;
+const createFogModifiers = () => {
   for (let i = 0; i < bj_MAX_PLAYERS; i++) {
-    if (udg_viewOn) {
-      if (!udg_view[i + 1]) {
-        udg_view[i + 1] = CreateFogModifierRectBJ(true, Player(i)!, FOG_OF_WAR_VISIBLE, GetWorldBounds()!);
-      }
-    } else {
-      if (udg_view[i + 1]) udg_view[i] = (DestroyFogModifier(udg_view[i + 1]!), undefined);
+    const modifier = udg_view[i + 1];
+    if (!modifier) udg_view[i + 1] = CreateFogModifierRectBJ(true, Player(i)!, FOG_OF_WAR_VISIBLE, GetWorldBounds()!);
+  }
+};
+
+const destroyFogModifiers = () => {
+  for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+    const modifier = udg_view[i + 1];
+    if (modifier) {
+      DestroyFogModifier(modifier);
+      udg_view[i + 1] = undefined;
     }
   }
+};
+
+export const toggleView = (enabled = !udg_viewOn) => {
+  udg_viewOn = enabled;
+  if (udg_viewOn) createFogModifiers();
+  else destroyFogModifiers();
+};
+
+const Trig_view_Actions = () => {
+  toggleView();
   updateLeaderboardSettingsDisplay();
 };
 

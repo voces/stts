@@ -1,5 +1,4 @@
 import { MapPlayerEx } from "handles/MapPlayerEx";
-import { toStringWithPrecision } from "ui/util";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { addScriptHook, W3TS_HOOK } from "w3ts";
 
@@ -17,15 +16,13 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
         self.displayTimedText("|CFFFFCC00Death Order (cont.)|r");
       }
       const p = MapPlayerEx.fromIndex(i)!;
-      const keys = Object.keys(p.deathOrder).sort();
+      const keys = Object.keys(p.deathOrder).sort().filter((k) => (p.deathOrder[k]?.count ?? 0) > 0);
       self.displayTimedText(
         `${MapPlayerEx.fromIndex(i)}: ${
           keys.length === 0
             ? "N/A"
             : keys.map((k) =>
-              `${toStringWithPrecision(p.deathOrder[k]!.total / p.deathOrder[k]!.count, 1)}${
-                keys.length > 1 ? ` (${k})` : ""
-              }`
+              `${(p.deathOrder[k]!.total / p.deathOrder[k]!.count).toFixed(2)}${keys.length > 1 ? ` (${k})` : ""}`
             ).join(", ")
         }`,
       );

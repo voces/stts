@@ -10,13 +10,14 @@ export class MapPlayerEx extends MapPlayer {
 
   readonly deathOrder: Record<string, { total: number; count: number } | undefined> = {};
   diedThisRound = false;
+  private lastDo: number = 0;
   died() {
     if (this.diedThisRound) return;
     this.diedThisRound = true;
     const v = `${settings.teamConfiguration.sheep}v${settings.teamConfiguration.wolves}`;
     const stat = this.deathOrder[v] ?? (this.deathOrder[v] = { total: 0, count: 0 });
     stat.count++;
-    stat.total += settings.teamConfiguration.sheep - deathOrder.deaths++;
+    stat.total += this.lastDo = settings.teamConfiguration.sheep.length - deathOrder.deaths++;
   }
 
   survived() {
@@ -24,6 +25,16 @@ export class MapPlayerEx extends MapPlayer {
     const v = `${settings.teamConfiguration.sheep}v${settings.teamConfiguration.wolves}`;
     const stat = this.deathOrder[v] ?? (this.deathOrder[v] = { total: 0, count: 0 });
     stat.count++;
+  }
+
+  cancel() {
+    if (!this.diedThisRound) return;
+    this.diedThisRound = false;
+    const v = `${settings.teamConfiguration.sheep}v${settings.teamConfiguration.wolves}`;
+    const stat = this.deathOrder[v];
+    if (!stat) return;
+    stat.total -= this.lastDo;
+    stat.count--;
   }
 
   get cid() {
@@ -204,5 +215,14 @@ export class MapPlayerEx extends MapPlayer {
 
   public static get neutralPassive() {
     return MapPlayerEx.fromIndex(PLAYER_NEUTRAL_PASSIVE)!;
+  }
+
+  public static get neutralAggressive() {
+    return MapPlayerEx.fromIndex(PLAYER_NEUTRAL_AGGRESSIVE)!;
+  }
+
+  /** Extra is allied and shares vision with all non-neutrals. */
+  public static get neutralExtra() {
+    return MapPlayerEx.fromIndex(bj_PLAYER_NEUTRAL_EXTRA)!;
   }
 }

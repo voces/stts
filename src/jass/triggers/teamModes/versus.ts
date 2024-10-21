@@ -103,13 +103,6 @@ const Trig_versus_Func006Func004Func026Func006A = () => {
   ForceRemovePlayerSimple(GetEnumPlayer()!, udg_Spirit);
 };
 
-const Trig_versus_Func006Func004Func026C = () => {
-  if ((!(GetEventPlayerChatString() === "-captains"))) {
-    return false;
-  }
-  return true;
-};
-
 const Trig_versus_Func006Func004Func037Func001C = () => {
   if ((!(GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING))) {
     return false;
@@ -141,42 +134,14 @@ const Trig_versus_Func006Func004Func037A = () => {
   }
 };
 
-const Trig_versus_Func006Func004C = () => {
-  if (
-    (!(udg_AFK[
-      GetConvertedPlayerId(
-        ConvertedPlayer(S2I(SubStringBJ(GetEventPlayerChatString()!, 9, 10)!))!,
-      )
-    ] === 0))
-  ) {
-    return false;
-  }
-  if (
-    (!(udg_AFK[
-      GetConvertedPlayerId(
-        ConvertedPlayer(
-          S2I(SubStringBJ(GetEventPlayerChatString()!, 11, 13)!),
-        )!,
-      )
-    ] === 0))
-  ) {
-    return false;
-  }
-  if (
-    (!(GetPlayerSlotState(
-      ConvertedPlayer(S2I(SubStringBJ(GetEventPlayerChatString()!, 9, 10)!))!,
-    ) === PLAYER_SLOT_STATE_PLAYING))
-  ) {
-    return false;
-  }
-  if (
-    (!(GetPlayerSlotState(
-      ConvertedPlayer(S2I(SubStringBJ(GetEventPlayerChatString()!, 11, 13)!))!,
-    ) === PLAYER_SLOT_STATE_PLAYING))
-  ) {
-    return false;
-  }
-  return true;
+const providedPlayersAreActive = () => {
+  const player1 = ConvertedPlayer(S2I(SubStringBJ(GetEventPlayerChatString()!, 9, 10)!))!;
+  const player2 = ConvertedPlayer(S2I(SubStringBJ(GetEventPlayerChatString()!, 11, 13)!))!;
+
+  return udg_AFK[GetConvertedPlayerId(player1)] === 0 &&
+    udg_AFK[GetConvertedPlayerId(player2)] === 0 &&
+    GetPlayerSlotState(player1) === PLAYER_SLOT_STATE_PLAYING &&
+    GetPlayerSlotState(player2) === PLAYER_SLOT_STATE_PLAYING;
 };
 
 const Trig_versus_Func006Func023002 = () => {
@@ -228,49 +193,28 @@ const Trig_versus_Func006Func032A = () => {
   ForceRemovePlayerSimple(GetEnumPlayer()!, udg_Spirit);
 };
 
-const Trig_versus_Func006Func043Func001C = () => {
-  if ((!(GetPlayerSlotState(GetEnumPlayer()!) === PLAYER_SLOT_STATE_PLAYING))) {
-    return false;
-  }
-  if ((!(udg_AFK[GetConvertedPlayerId(GetEnumPlayer()!)] === AFK_PLAYING))) {
-    return false;
-  }
-  if ((!(GetEnumPlayer() !== udg_captains[1]))) {
-    return false;
-  }
-  if ((!(GetEnumPlayer() !== udg_captains[3]))) {
-    return false;
-  }
-  return true;
-};
+const fillDraftPool = () => {
+  const player = GetEnumPlayer()!;
+  const playerId = GetConvertedPlayerId(player);
 
-const Trig_versus_Func006Func043A = () => {
-  if ((Trig_versus_Func006Func043Func001C())) {
-    MultiboardSetItemValueBJ(
-      udg_captainsMultiboard,
-      2,
-      cid,
-      udg_colorString[GetConvertedPlayerId(GetEnumPlayer()!)] +
-        GetPlayerName(GetEnumPlayer()!),
-    );
-    ForceAddPlayerSimple(GetEnumPlayer()!, udg_Draft);
-    udg_multiboardRow[GetConvertedPlayerId(GetEnumPlayer()!)] = cid;
+  if (
+    GetPlayerSlotState(player) === PLAYER_SLOT_STATE_PLAYING &&
+    udg_AFK[playerId] === AFK_PLAYING &&
+    player !== udg_captains[1] &&
+    player !== udg_captains[3]
+  ) {
+    MultiboardSetItemValueBJ(udg_captainsMultiboard, 2, cid, udg_colorString[playerId] + GetPlayerName(player));
+    ForceAddPlayerSimple(player, udg_Draft);
+    udg_multiboardRow[playerId] = cid;
     cid = cid + 1;
   }
-};
-
-const Trig_versus_Func006C = () => {
-  if ((!(GetEventPlayerChatString() === "-versus" || GetEventPlayerChatString() === ""))) {
-    return false;
-  }
-  return true;
 };
 
 const Trig_versus_Actions = () => {
   hideIntermission();
   const s = GetEventPlayerChatString()!;
   TriggerSleepAction(0.01);
-  if ((Trig_versus_Func006C())) {
+  if (GetEventPlayerChatString() === "-versus" || GetEventPlayerChatString() === "") {
     udg_versus = 1;
     udg_versusOff = false;
     udg_someVersusBoolean = true;
@@ -308,6 +252,82 @@ const Trig_versus_Actions = () => {
     udg_sheepLastGame[GetConvertedPlayerId(udg_captains[1])] = true;
     udg_sheepLastGame[GetConvertedPlayerId(udg_captains[3])] = false;
     udg_captainsMultiboard = GetLastCreatedMultiboard()!;
+    for (let i = 1; i <= bj_MAX_PLAYERS; i++) {
+      MultiboardSetItemStyleBJ(udg_captainsMultiboard, 1, i, true, false);
+      MultiboardSetItemStyleBJ(udg_captainsMultiboard, 2, i, true, false);
+      MultiboardSetItemStyleBJ(udg_captainsMultiboard, 3, i, true, false);
+      MultiboardSetItemWidthBJ(udg_captainsMultiboard, 1, i, udg_draftMultiboardWidth);
+      MultiboardSetItemWidthBJ(udg_captainsMultiboard, 2, i, udg_draftMultiboardWidth);
+      MultiboardSetItemWidthBJ(udg_captainsMultiboard, 3, i, udg_draftMultiboardWidth);
+    }
+    MultiboardSetItemValueBJ(
+      udg_captainsMultiboard,
+      1,
+      1,
+      "$" + udg_colorString[GetConvertedPlayerId(udg_captains[1])] + GetPlayerName(udg_captains[1]),
+    );
+    MultiboardSetItemValueBJ(
+      udg_captainsMultiboard,
+      3,
+      1,
+      "$" + udg_colorString[GetConvertedPlayerId(udg_captains[3])] + GetPlayerName(udg_captains[3]),
+    );
+    udg_multiboardRow[GetConvertedPlayerId(udg_captains[1])] = 1;
+    udg_multiboardRow[GetConvertedPlayerId(udg_captains[3])] = 1;
+    cid = 2;
+    ForForce(GetPlayersAll()!, fillDraftPool);
+    MultiboardDisplayBJ(true, udg_captainsMultiboard);
+    MultiboardSuppressDisplay(false);
+    MultiboardMinimizeBJ(false, udg_captainsMultiboard);
+    udg_draftOn = true;
+    udg_captainRow = 2;
+    udg_captainTurn = 1;
+    EnableTrigger(gg_trg_draftVersus);
+    EnableTrigger(gg_trg_giveUpCaptain);
+    DisableTrigger(gg_trg_draftPlayer);
+    removeAllUnits();
+  } else if (providedPlayersAreActive()) {
+    DestroyLeaderboardBJ(GetLastCreatedLeaderboard()!);
+    udg_versus = 1;
+    udg_versusOff = false;
+    udg_pickAgain = false;
+    udg_gameTime[1] = 0;
+    udg_gameTime[2] = 0;
+    DisableTrigger(gg_trg_captains);
+    DisableTrigger(gg_trg_fair);
+    DisableTrigger(gg_trg_versus);
+    DisableTrigger(gg_trg_pick);
+    DisableTrigger(gg_trg_smart);
+    DisableTrigger(gg_trg_reverse);
+    DisableTrigger(gg_trg_start);
+    DisableTrigger(gg_trg_end);
+    udg_lastGameString = s;
+    TriggerExecute(gg_trg_createLists);
+    udg_Teams = TEAMS_CAPTAINS;
+    udg_pickIndex = 1;
+    ForForce(udg_Sheep, Trig_versus_Func006Func004Func020002);
+    ForForce(udg_Wolf, Trig_versus_Func006Func004Func021002);
+    ForForce(udg_Spirit, Trig_versus_Func006Func004Func022002);
+    ForForce(GetPlayersAll()!, Trig_versus_Func006Func004Func023002);
+    TimerStart(udg_Createtimer, 300, false, null);
+    TimerDialogDisplayBJ(true, udg_createTimerWindow);
+    if (GetEventPlayerChatString() === "-captains") {
+      ForForce(GetPlayersAll()!, Trig_versus_Func006Func004Func026Func003A);
+      ForForce(GetForceOfPlayer(ForcePickRandomPlayer(udg_Spirit)!)!, Trig_versus_Func006Func004Func026Func004A);
+      ForForce(GetForceOfPlayer(ForcePickRandomPlayer(udg_Spirit)!)!, Trig_versus_Func006Func004Func026Func005A);
+      ForForce(udg_Spirit, Trig_versus_Func006Func004Func026Func006A);
+    } else {
+      udg_captains[1] = ConvertedPlayer(S2I(SubStringBJ(s, 9, 10)!))!;
+      udg_captains[3] = ConvertedPlayer(S2I(SubStringBJ(s, 11, 13)!))!;
+    }
+    CreateMultiboardBJ(
+      3,
+      25,
+      udg_colorString[GetConvertedPlayerId(udg_captains[1])] + (GetPlayerName(udg_captains[1]) + "'s turn"),
+    );
+    udg_sheepLastGame[GetConvertedPlayerId(udg_captains[1])] = true;
+    udg_sheepLastGame[GetConvertedPlayerId(udg_captains[3])] = false;
+    udg_captainsMultiboard = GetLastCreatedMultiboard()!;
     bj_forLoopAIndex = 1;
     bj_forLoopAIndexEnd = 25;
     while (true) {
@@ -335,7 +355,7 @@ const Trig_versus_Actions = () => {
     udg_multiboardRow[GetConvertedPlayerId(udg_captains[1])] = 1;
     udg_multiboardRow[GetConvertedPlayerId(udg_captains[3])] = 1;
     cid = 2;
-    ForForce(GetPlayersAll()!, Trig_versus_Func006Func043A);
+    ForForce(GetPlayersAll()!, Trig_versus_Func006Func004Func037A);
     MultiboardDisplayBJ(true, udg_captainsMultiboard);
     MultiboardSuppressDisplay(false);
     MultiboardMinimizeBJ(false, udg_captainsMultiboard);
@@ -346,88 +366,6 @@ const Trig_versus_Actions = () => {
     EnableTrigger(gg_trg_giveUpCaptain);
     DisableTrigger(gg_trg_draftPlayer);
     removeAllUnits();
-  } else {
-    if ((Trig_versus_Func006Func004C())) {
-      DestroyLeaderboardBJ(GetLastCreatedLeaderboard()!);
-      udg_versus = 1;
-      udg_versusOff = false;
-      udg_pickAgain = false;
-      udg_gameTime[1] = 0;
-      udg_gameTime[2] = 0;
-      DisableTrigger(gg_trg_captains);
-      DisableTrigger(gg_trg_fair);
-      DisableTrigger(gg_trg_versus);
-      DisableTrigger(gg_trg_pick);
-      DisableTrigger(gg_trg_smart);
-      DisableTrigger(gg_trg_reverse);
-      DisableTrigger(gg_trg_start);
-      DisableTrigger(gg_trg_end);
-      udg_lastGameString = s;
-      TriggerExecute(gg_trg_createLists);
-      udg_Teams = TEAMS_CAPTAINS;
-      udg_pickIndex = 1;
-      ForForce(udg_Sheep, Trig_versus_Func006Func004Func020002);
-      ForForce(udg_Wolf, Trig_versus_Func006Func004Func021002);
-      ForForce(udg_Spirit, Trig_versus_Func006Func004Func022002);
-      ForForce(GetPlayersAll()!, Trig_versus_Func006Func004Func023002);
-      TimerStart(udg_Createtimer, 300, false, null);
-      TimerDialogDisplayBJ(true, udg_createTimerWindow);
-      if ((Trig_versus_Func006Func004Func026C())) {
-        ForForce(GetPlayersAll()!, Trig_versus_Func006Func004Func026Func003A);
-        ForForce(GetForceOfPlayer(ForcePickRandomPlayer(udg_Spirit)!)!, Trig_versus_Func006Func004Func026Func004A);
-        ForForce(GetForceOfPlayer(ForcePickRandomPlayer(udg_Spirit)!)!, Trig_versus_Func006Func004Func026Func005A);
-        ForForce(udg_Spirit, Trig_versus_Func006Func004Func026Func006A);
-      } else {
-        udg_captains[1] = ConvertedPlayer(S2I(SubStringBJ(s, 9, 10)!))!;
-        udg_captains[3] = ConvertedPlayer(S2I(SubStringBJ(s, 11, 13)!))!;
-      }
-      CreateMultiboardBJ(
-        3,
-        25,
-        udg_colorString[GetConvertedPlayerId(udg_captains[1])] + (GetPlayerName(udg_captains[1]) + "'s turn"),
-      );
-      udg_sheepLastGame[GetConvertedPlayerId(udg_captains[1])] = true;
-      udg_sheepLastGame[GetConvertedPlayerId(udg_captains[3])] = false;
-      udg_captainsMultiboard = GetLastCreatedMultiboard()!;
-      bj_forLoopAIndex = 1;
-      bj_forLoopAIndexEnd = 25;
-      while (true) {
-        if (bj_forLoopAIndex > bj_forLoopAIndexEnd) break;
-        MultiboardSetItemStyleBJ(udg_captainsMultiboard, 1, GetForLoopIndexA(), true, false);
-        MultiboardSetItemStyleBJ(udg_captainsMultiboard, 2, GetForLoopIndexA(), true, false);
-        MultiboardSetItemStyleBJ(udg_captainsMultiboard, 3, GetForLoopIndexA(), true, false);
-        MultiboardSetItemWidthBJ(udg_captainsMultiboard, 1, GetForLoopIndexA(), udg_draftMultiboardWidth);
-        MultiboardSetItemWidthBJ(udg_captainsMultiboard, 2, GetForLoopIndexA(), udg_draftMultiboardWidth);
-        MultiboardSetItemWidthBJ(udg_captainsMultiboard, 3, GetForLoopIndexA(), udg_draftMultiboardWidth);
-        bj_forLoopAIndex = bj_forLoopAIndex + 1;
-      }
-      MultiboardSetItemValueBJ(
-        udg_captainsMultiboard,
-        1,
-        1,
-        "$" + udg_colorString[GetConvertedPlayerId(udg_captains[1])] + GetPlayerName(udg_captains[1]),
-      );
-      MultiboardSetItemValueBJ(
-        udg_captainsMultiboard,
-        3,
-        1,
-        "$" + udg_colorString[GetConvertedPlayerId(udg_captains[3])] + GetPlayerName(udg_captains[3]),
-      );
-      udg_multiboardRow[GetConvertedPlayerId(udg_captains[1])] = 1;
-      udg_multiboardRow[GetConvertedPlayerId(udg_captains[3])] = 1;
-      cid = 2;
-      ForForce(GetPlayersAll()!, Trig_versus_Func006Func004Func037A);
-      MultiboardDisplayBJ(true, udg_captainsMultiboard);
-      MultiboardSuppressDisplay(false);
-      MultiboardMinimizeBJ(false, udg_captainsMultiboard);
-      udg_draftOn = true;
-      udg_captainRow = 2;
-      udg_captainTurn = 1;
-      EnableTrigger(gg_trg_draftVersus);
-      EnableTrigger(gg_trg_giveUpCaptain);
-      DisableTrigger(gg_trg_draftPlayer);
-      removeAllUnits();
-    }
   }
 };
 

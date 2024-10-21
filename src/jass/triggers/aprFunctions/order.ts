@@ -17,5 +17,6 @@ InitTrig_order = () => {
   TriggerRegisterAnyUnitEventBJ(gg_trg_order, EVENT_PLAYER_UNIT_ISSUED_ORDER);
   TriggerRegisterAnyUnitEventBJ(gg_trg_order, EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER);
   TriggerRegisterAnyUnitEventBJ(gg_trg_order, EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER);
+  TriggerRegisterAnyUnitEventBJ(gg_trg_order, EVENT_PLAYER_UNIT_ISSUED_UNIT_ORDER);
   TriggerAddAction(gg_trg_order, Trig_order_Actions);
 };

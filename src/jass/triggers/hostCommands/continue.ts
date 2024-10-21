@@ -13,7 +13,6 @@ const Trig_continue_Actions = () => {
       }
     });
   }
-  udg_time = udg_versusTime;
   DisableTrigger(GetTriggeringTrigger()!);
   TriggerExecute(gg_trg_versusCountDown);
 };

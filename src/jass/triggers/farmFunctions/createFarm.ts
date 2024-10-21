@@ -9,7 +9,7 @@ const translocates: unit[] = [];
 
 const recentTranslocates = new Map<unit, Set<unit>>();
 
-export const translocate = (unit: unit, pivot: unit) => {
+export const translocate = (unit: unit, pivot: unit, adjustGold = false) => {
   const mana = GetUnitState(pivot, UNIT_STATE_MANA);
   if (mana < 10) return;
 
@@ -37,6 +37,12 @@ export const translocate = (unit: unit, pivot: unit) => {
   const scale = 104 / RMaxBJ(RAbsBJ(dx), RAbsBJ(dy));
 
   SetUnitPosition(unit, GetUnitX(pivot) + dx * scale, GetUnitY(pivot) + dy * scale);
+  // We need to adjust gold as using SetUnitPosition on the builder in response to EVENT_PLAYER_UNIT_CONSTRUCT_START
+  // cancels the gold cost
+  if (adjustGold) {
+    const p = GetOwningPlayer(pivot);
+    SetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) - 75);
+  }
 
   TriggerSleepAction(0);
 
@@ -88,7 +94,7 @@ const Trig_createFarm_Actions = () => {
   SetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER, udg_farmCount[cid]);
 
   if (GetUnitTypeId(u) === translocationFarmType) {
-    translocate(udg_unit[cid], u);
+    translocate(udg_unit[cid], u, true);
     translocates.push(u);
     if (translocates.length === 1) translocateTicker.start(0.03, true, translocateTick);
   }

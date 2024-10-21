@@ -13,12 +13,13 @@ import {
 } from "settings/settings";
 import { checkAutoTimeFlag, getDefaultTime } from "settings/time";
 import { setPub } from "teams/smart";
-import { adjustChatFrames, hideIntermission, showIntermission, smart, start } from "ui/api";
+import { adjustChatFrames, hideIntermission, showIntermission, smart, start, versus } from "ui/api";
 import { updateTerrain } from "ui/api/modes";
 import { updateDesiredSheep, updateMode, updatePlayers, updateScButtons } from "ui/api/updateIntermission";
 import { frames } from "ui/frames";
 import { parseDesiredSheep, toStringWithPrecision } from "ui/util";
 import { Checkbox, editBoxDelayedOnChange, getFrames, setupEditableText, setupSlider } from "./util";
+import { toggleView } from "settings/view";
 
 export const initIntermission = () => {
   FrameEx.create("SheepTagIntermission", "ConsoleUIBackdrop");
@@ -316,20 +317,7 @@ export const initIntermission = () => {
   spawn.value = 0;
   frames.settings.view = new Checkbox(view, {
     checked: udg_mapExpand,
-    onClick: (v) => {
-      udg_viewOn = v;
-      for (let i = 0; i < bj_MAX_PLAYERS; i++) {
-        const modifier = udg_view[i + 1];
-        if (v) {
-          if (!modifier) {
-            udg_view[i + 1] = CreateFogModifierRectBJ(true, Player(i)!, FOG_OF_WAR_VISIBLE, GetWorldBounds()!);
-          }
-        } else if (modifier) {
-          DestroyFogModifier(modifier);
-          udg_view[i + 1] = undefined;
-        }
-      }
-    },
+    onClick: toggleView,
   });
   setupSlider("SheepTagFarmVision", {
     format: (v) => v === 9 ? "Default" : v === 28 ? "1800" : (v * 64).toFixed(0),
@@ -364,7 +352,7 @@ export const initIntermission = () => {
     },
   });
 
-  versusButton.onClick(() => TriggerExecute(gg_trg_versus));
+  versusButton.onClick(versus);
   startButton.onClick(start);
   smartButton.onClick(smart);
 

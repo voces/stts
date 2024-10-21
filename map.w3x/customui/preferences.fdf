@@ -77,7 +77,7 @@ Frame "FRAME" "SheepTagPreferencesPanel" {
   }
 
   Frame "GLUECHECKBOX" "AutoControlCheckboxChecked" INHERITS WITHCHILDREN "EscMenuCheckBoxTemplate" {
-    SetPoint TOPLEFT, "WispZoomLabel", BOTTOMLEFT, 0, -0.02,
+    SetPoint TOPLEFT, "WispZoomLabel", BOTTOMLEFT, 0, -0.015,
     Height 0.024,
     Width 0.024,
     TabFocusNext "NoAutoControlCheckbox",

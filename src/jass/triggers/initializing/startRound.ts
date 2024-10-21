@@ -3,7 +3,7 @@ import { stopRuneTimers } from "functions/runes";
 import { deathOrder, MapPlayerEx } from "handles/MapPlayerEx";
 import { restoreSettings } from "modes/practice/mode";
 import { switchSheepTimers } from "modes/switch/switch";
-import { showIntermission } from "ui/api";
+import { delayHotkeyButtons, showIntermission } from "ui/api";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { triggerRoundInitHooks } from "util/gameHooks";
 
@@ -111,7 +111,6 @@ const resetRoundStats = () => {
 const Trig_startRound_Actions = () => {
   let p: player;
 
-  perfectRound = false;
   pauseTimers();
   DestroyMultiboardBJ(GetLastCreatedMultiboard()!);
   EnumDestructablesInRectAll(GetPlayableMapRect()!, reviveEnumDestructable);
@@ -194,7 +193,6 @@ const Trig_startRound_Actions = () => {
     ForceClear(udg_Spirit);
     TriggerExecute(gg_trg_versusCountDown);
   } else if (udg_versus === 2 && !udg_versusOff && !udg_someVersusBoolean) {
-    udg_time = 0;
     udg_versus = 0;
 
     displayTimedTextToAll("|cff00aeefTeam 1 lasted " + formatTime(udg_gameTime[1]), 60);
@@ -227,7 +225,11 @@ ${p.isHost ? "New? Type |CFF00AEEF-smart|r." : `Please wait until ${MapPlayerEx.
 
   TriggerSleepAction(0);
 
-  if (udg_versus === 0) showIntermission();
+  if (udg_versus === 0 || udg_versusOff) {
+    showIntermission();
+    delayHotkeyButtons();
+    // BJDebugMsg(udg_accumPartner.join(" "));
+  }
 };
 
 declare global {

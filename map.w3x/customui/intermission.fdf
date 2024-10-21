@@ -836,7 +836,7 @@ Frame "FRAME" "SheepTagIntermission" {
         Text "|cffffffffV|rersus",
       }
     }
-
+    
     Frame "EDITBOX" "SheepTagDesiredSheep" INHERITS WITHCHILDREN "EscMenuEditBoxTemplate" {
       SetPoint BOTTOMRIGHT, "SheepTagSmartButton", TOPRIGHT, 0, 0,
       Height 0.029,

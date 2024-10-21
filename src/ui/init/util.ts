@@ -64,9 +64,9 @@ export const setupEditableText = (
   }, true);
   label.onClick(({ player }) => {
     if (!player.isHost) return;
+    justClicked = true;
     if (player.isLocal()) {
       label.visible = false;
-      justClicked = true;
       editBox.setVisible(true).setFocus(true);
       onFocus?.(frames);
     }
