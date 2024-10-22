@@ -43,8 +43,11 @@ export const adjustChatFrames = () => {
 };
 
 let showingIntermission = false;
+let hotkeysDisabled = false;
 
 let hotkeyTrigger: TriggerEx | undefined;
+
+let menuFrames: FrameEx[] = [];
 
 addScriptHook(W3TS_HOOK.MAIN_BEFORE, () => {
   hotkeyTrigger = TriggerEx.create();
@@ -53,7 +56,7 @@ addScriptHook(W3TS_HOOK.MAIN_BEFORE, () => {
   hotkeyTrigger.registerAnyPlayerKeyEvent(OSKEY_V, 0, true);
   hotkeyTrigger.registerAnyPlayerKeyEvent(OSKEY_R, 0, true);
   hotkeyTrigger.addAction(() => {
-    if (!MapPlayerEx.fromEvent()?.isHost || !frames.start.enabled) return;
+    if (!MapPlayerEx.fromEvent()?.isHost || hotkeysDisabled) return;
     if (BlzGetTriggerPlayerKey() === OSKEY_S) return smart();
     if (BlzGetTriggerPlayerKey() === OSKEY_A) return start();
     if (BlzGetTriggerPlayerKey() === OSKEY_R) return TriggerExecute(gg_trg_practice);
@@ -69,9 +72,14 @@ addScriptHook(W3TS_HOOK.MAIN_BEFORE, () => {
     adjustChatFrames();
 
     if (showingIntermission) {
-      const someVisible = ["EscMenuMainPanel", "QuestDialog", "AllianceDialog", "ChatDialog", "LogDialog"]
-        .some((n) => FrameEx.fromName(n).visible);
-      if (someVisible || FrameEx.fromOrigin(ORIGIN_FRAME_GAME_UI).children[17].visible) hideIntermission(true);
+      if (menuFrames.length === 0) {
+        menuFrames.push(
+          ...["EscMenuMainPanel", "QuestDialog", "AllianceDialog", "ChatDialog", "LogDialog"]
+            .map((n) => FrameEx.fromName(n)),
+          FrameEx.fromOrigin(ORIGIN_FRAME_GAME_UI).children[17],
+        );
+      }
+      if (menuFrames.some((n) => n.visible)) hideIntermission(true);
       else showIntermission(true);
     }
 
@@ -126,12 +134,14 @@ export const smart = () => {
 export const versus = () => udg_versus > 0 ? TriggerExecute(gg_trg_continue) : TriggerExecute(gg_trg_versus);
 
 export const delayHotkeyButtons = () => {
+  hotkeysDisabled = true;
   frames.start.enabled =
     frames.smart.enabled =
     frames.versus.enabled =
     frames.practice.enabled =
       false;
   setTimeout(0.5, () => {
+    hotkeysDisabled = false;
     frames.start.enabled =
       frames.smart.enabled =
       frames.versus.enabled =

@@ -9,6 +9,13 @@
 - Team gold pools
 - WINTER
 
+# 24s
+
+## Bug fixes
+
+- Fixed a desync introduced in 24q related to briefly disabling buttons
+- Fixed a desync introduced in 24r related to clashing Intermission and Options
+
 # 24r
 
 ## Bug fixes
