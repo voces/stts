@@ -71,7 +71,7 @@ addScriptHook(W3TS_HOOK.MAIN_BEFORE, () => {
     if (showingIntermission) {
       const someVisible = ["EscMenuMainPanel", "QuestDialog", "AllianceDialog", "ChatDialog", "LogDialog"]
         .some((n) => FrameEx.fromName(n).visible);
-      if (someVisible) hideIntermission(true);
+      if (someVisible || FrameEx.fromOrigin(ORIGIN_FRAME_GAME_UI).children[17].visible) hideIntermission(true);
       else showIntermission(true);
     }
 

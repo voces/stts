@@ -35,9 +35,7 @@ const Trig_createSheep_sheepActionsA = () => {
     udg_sheepLastGame[enumPlayerId] = true;
     while (true) {
       if (i > bj_MAX_PLAYERS) break;
-      if (IsPlayerInForce(ConvertedPlayer(i)!, udg_Sheep)) {
-        udg_accumPartner[(enumPlayerId - 1) * 24 + i] = udg_accumPartner[(enumPlayerId - 1) * 24 + i] + 1;
-      }
+      if (IsPlayerInForce(ConvertedPlayer(i)!, udg_Sheep)) udg_accumPartner[(enumPlayerId - 1) * 24 + i]++;
       i = i + 1;
     }
   }

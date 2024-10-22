@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 24q
+Sheep Tag ReVoLuTiOn 24r
 }
 
 STRING 40
@@ -4797,14 +4797,14 @@ STRING 4281
 Guide Farm
 }
 
-STRING 4282
-{
-|cff00ff0024q|r
-}
-
 STRING 4283
 // Units: h00K (Start Position), Name (Name)
 {
 Start Position
+}
+
+STRING 4284
+{
+|cff00ff0024r|r
 }
 

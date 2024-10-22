@@ -7,7 +7,14 @@
 - -ff
 - President ward death crash?
 - Team gold pools
-- Fix Options menu overlayed by intermission: FrameEx.fromOrigin(ORIGIN_FRAME_GAME_UI).children[16].setLevel(1024);
+- WINTER
+
+# 24r
+
+## Bug fixes
+
+- Fixed a bug in smart not being smart and reduced explored paths from 1000 to 100 and max depth from 15 to 12
+- Fixed Intermission dialogs showing on top of Options menu
 
 # 24q
 

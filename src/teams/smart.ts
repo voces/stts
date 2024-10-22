@@ -13,7 +13,7 @@ let lastActivePlayerCount = 0;
 let lastSheepToDraft = 0;
 
 const DESIRED_SOLUTIONS = 10;
-const MAX_ATTEMPTS = 6_000;
+const MAX_ATTEMPTS = 600;
 
 const nChooseM = (n: number, m: number): number => {
   if (m > n) return 0; // Not possible to choose more elements than available
@@ -122,7 +122,7 @@ const getRandomTeam = (
 type Solution = [team: number[], pc: number, recency: number[]][];
 
 const solve = (activePlayerCount: number, sheep: number) => {
-  const depth = Math.min(nChooseM(activePlayerCount, sheep), 15);
+  const depth = Math.min(nChooseM(activePlayerCount, sheep), 12);
 
   const solutions: Solution[] = [];
   for (
@@ -138,7 +138,7 @@ const solve = (activePlayerCount: number, sheep: number) => {
       const team = getRandomTeam(sheep, sampleCounts);
 
       for (const a of team) {
-        for (const b of team) sampleCounts[a * activePlayerCount + b]++;
+        for (const b of team) sampleCounts[a * bj_MAX_PLAYERS + b]++;
       }
 
       const pc = sampleCounts.reduce((sum, c) => sum + c ** 2, 0);

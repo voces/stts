@@ -228,7 +228,6 @@ ${p.isHost ? "New? Type |CFF00AEEF-smart|r." : `Please wait until ${MapPlayerEx.
   if (udg_versus === 0 || udg_versusOff) {
     showIntermission();
     delayHotkeyButtons();
-    // BJDebugMsg(udg_accumPartner.join(" "));
   }
 };
 
