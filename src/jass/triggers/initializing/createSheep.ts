@@ -296,7 +296,6 @@ const Trig_createSheep_Actions_part4 = () => {
   setTimeout(18, () => {
     for (let i = 0; i < guides.length; i++) {
       if (!guides[i].isAlive()) continue;
-      guides[i].setField(UNIT_BF_IS_A_BUILDING, false);
       guides[i].destroy();
     }
   });

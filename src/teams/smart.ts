@@ -13,7 +13,7 @@ let lastActivePlayerCount = 0;
 let lastSheepToDraft = 0;
 
 const DESIRED_SOLUTIONS = 10;
-const MAX_ATTEMPTS = 600;
+const MAX_ATTEMPTS = 3000;
 
 const nChooseM = (n: number, m: number): number => {
   if (m > n) return 0; // Not possible to choose more elements than available

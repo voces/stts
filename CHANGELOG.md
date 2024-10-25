@@ -8,6 +8,19 @@
 - President ward death crash?
 - Team gold pools
 - WINTER
+- Dead Feinting Towers till work ??
+- Increase smart attempts
+
+# 24t
+
+## Feature changes
+
+- Spooky theme
+- Increased explored paths for smart from 100 to 500
+
+# Bug fixes
+
+- Reverted attempt to clear removed fogged structures in order to fix pathing mishaps
 
 # 24s
 

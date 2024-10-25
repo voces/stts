@@ -27,17 +27,8 @@ Wrda
 
 |cffffcc00Assets & Tools|r
 HideShow icon: darkdeathknight
-Christmas lights: Vinz @ Hive
-Snowman: Thrikodius @ Hive
-Snowball: Walle @ Hive
-Santa: IamMclovin @ Hive
-Heart item: Carrington2k
-Red & white flowers: kellym0
-Petals: Mr.Goblin
-Heart seal icon: CRAZYRUSSIAN
-Glowing heart icon: Pink_Lotus
-Heart particle: Jaccouille
-Fall in love: Kuhneghetz
+Gilneas buildings: CloudWolf
+Black farm: Val_09
 Model editor: Retera
 Help from Hive, especially Tasyen's UI guides`,
     "ReplaceableTextures\\CommandButtons\\BTNPeasant.blp",

@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 24s
+Sheep Tag ReVoLuTiOn 24t
 }
 
 STRING 40
@@ -4803,8 +4803,20 @@ STRING 4283
 Start Position
 }
 
-STRING 4285
+STRING 4286
 {
-|cff00ff0024s|r
+|cff00ff0024t|r
+}
+
+STRING 4287
+// Doodads: D002 (Hay (Infected, Pathless)), Name (Name)
+{
+Hay (Infected, Pathless)
+}
+
+STRING 4288
+// Doodads: D003 (Elven Building (Spooky)), Name (Name)
+{
+Elven Building (Spooky)
 }
 

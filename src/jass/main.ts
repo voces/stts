@@ -143,7 +143,7 @@ import { MapPlayerEx } from "handles/MapPlayerEx";
 import { DisplayType } from "constants";
 import { ForceEx } from "handles/ForceEx";
 import { formatList } from "util/formatList";
-import { UnitEx } from "handles/UnitEx";
+import { removeEnumUnit } from "util/removeEnumUnit";
 
 declare global {
   //globals from SavingFarms:
@@ -1471,11 +1471,7 @@ removeAllUnits = (includingNeutrals = true) => {
   while (true) {
     if (i === (includingNeutrals ? bj_MAX_PLAYER_SLOTS : bj_MAX_PLAYERS)) break;
     GroupEnumUnitsOfPlayer(g, Player(i)!, null);
-    ForGroup(g, () => {
-      const u = UnitEx.fromEnum()!;
-      u.setField(UNIT_BF_IS_A_BUILDING, false);
-      u.destroy();
-    });
+    ForGroup(g, removeEnumUnit);
     i = i + 1;
   }
   DestroyGroup(g);
