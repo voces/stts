@@ -14,7 +14,7 @@ export class MapPlayerEx extends MapPlayer {
   died() {
     if (this.diedThisRound) return;
     this.diedThisRound = true;
-    const v = `${settings.teamConfiguration.sheep}v${settings.teamConfiguration.wolves}`;
+    const v = `${settings.teamConfiguration.sheep.length}v${settings.teamConfiguration.wolves.length}`;
     const stat = this.deathOrder[v] ?? (this.deathOrder[v] = { total: 0, count: 0 });
     stat.count++;
     stat.total += this.lastDo = settings.teamConfiguration.sheep.length - deathOrder.deaths++;
@@ -22,7 +22,7 @@ export class MapPlayerEx extends MapPlayer {
 
   survived() {
     if (this.diedThisRound) return;
-    const v = `${settings.teamConfiguration.sheep}v${settings.teamConfiguration.wolves}`;
+    const v = `${settings.teamConfiguration.sheep.length}v${settings.teamConfiguration.wolves.length}`;
     const stat = this.deathOrder[v] ?? (this.deathOrder[v] = { total: 0, count: 0 });
     stat.count++;
   }
@@ -30,7 +30,7 @@ export class MapPlayerEx extends MapPlayer {
   cancel() {
     if (!this.diedThisRound) return;
     this.diedThisRound = false;
-    const v = `${settings.teamConfiguration.sheep}v${settings.teamConfiguration.wolves}`;
+    const v = `${settings.teamConfiguration.sheep.length}v${settings.teamConfiguration.wolves.length}`;
     const stat = this.deathOrder[v];
     if (!stat) return;
     stat.total -= this.lastDo;

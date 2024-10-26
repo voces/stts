@@ -1,15 +1,37 @@
 # TODO
 
 - Mana Bomb
-- Area of Suppression crashes game ?
-- -cancel -smart in 1vX
 - Selection bug
 - -ff
 - President ward death crash?
 - Team gold pools
-- WINTER
-- Dead Feinting Towers till work ??
-- Increase smart attempts
+
+# 24u
+
+## Feature changes
+
+- More spooky
+- Can no longer control allied wisps
+- Free spawn enabled by default
+- Added active player count to intermission UI
+- Updating sheep in UI updates stats
+- Added -cls alias for -clear
+
+## Balance changes
+
+- Goblin Support changes
+  - Farm bounties retained by Goblins
+  - Up to 100 gold refunded depending on surviving factories
+- Scepter of Mastery changes
+  - Increased cooldown from 1 second to 1.5 seconds
+  - Increased mana cost from 100 to 150
+  - Decreased cast range from 750 to 600
+
+## Bug fixes
+
+- Fixed -do
+- Fixed a bug where mastery was cancelled if the shepherd had less than 225 mana
+- Fixed True Sight not showing illusions from Feinting Tower
 
 # 24t
 
@@ -18,7 +40,7 @@
 - Spooky theme
 - Increased explored paths for smart from 100 to 500
 
-# Bug fixes
+## Bug fixes
 
 - Reverted attempt to clear removed fogged structures in order to fix pathing mishaps
 

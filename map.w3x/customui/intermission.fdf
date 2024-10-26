@@ -871,6 +871,21 @@ Frame "FRAME" "SheepTagIntermission" {
       Height 0.01396,
       Width 0.266,
 
+      Frame "BACKDROP" "SheepTagActivePlayersIcon" {
+        SetPoint LEFT, "SheepTagPlayersHeader", LEFT, 0.0035, 0,
+        Width 0.015,
+        Height 0.015,
+        BackdropBlendAll,
+        BackdropBackground "ui\widgets\glues\icon-file-melee.blp",
+
+        Frame "TEXT" "SheepTagActivePlayersText" INHERITS "EscMenuLabelTextSmallTemplate" {
+            SetPoint CENTER, "SheepTagActivePlayersIcon", CENTER, -0.0007, -0.0005,
+            DecorateFileNames,
+            FrameFont "EscMenuTextFont", 0.008, "",
+            FontShadowOffset 0.001 -0.001,
+        }
+      }
+
       Frame "TEXT" "SheepTagPlayersHeaderName" INHERITS "EscMenuLabelTextSmallTemplate" {
         SetPoint LEFT, "SheepTagPlayersHeader", LEFT, 0.02, 0,
         Text "Player",

@@ -11,6 +11,7 @@ import "functions/items/itemCommand";
 import "functions/remoteShop";
 import "functions/runes";
 import "jass/main";
+import "misc/halloween";
 import "misc/hideTimers";
 import "misc/regrowTrees";
 import "misc/testmass";

@@ -1,4 +1,10 @@
-import { UNIT_TYPE_ID_GUIDE_FARM, UNIT_TYPE_ID_HAY_TRAP } from "constants";
+import {
+  UNIT_TYPE_ID_CLOCKWERK,
+  UNIT_TYPE_ID_GUIDE_FARM,
+  UNIT_TYPE_ID_GYRO,
+  UNIT_TYPE_ID_HAY_TRAP,
+  UNIT_TYPE_ID_SAPPER,
+} from "constants";
 import { setTimeout } from "util/setTimeout";
 import { Effect } from "w3ts";
 
@@ -9,7 +15,8 @@ const Trig_farmDies_Actions = () => {
 
   if (GetUnitTypeId(u) === UNIT_TYPE_ID_GUIDE_FARM) return RemoveUnit(u);
 
-  const killingPlayer = GetOwningPlayer(GetKillingUnit()!);
+  const killingUnit = GetKillingUnit()!;
+  const killingPlayer = GetOwningPlayer(killingUnit);
 
   if (GetUnitTypeId(u) === UNIT_TYPE_ID_HAY_TRAP) {
     const e = Effect.create("Objects/Spawnmodels/Human/HCancelDeath/HCancelDeath", GetUnitX(u), GetUnitY(u));
@@ -17,12 +24,16 @@ const Trig_farmDies_Actions = () => {
     RemoveUnit(u);
   }
 
-  if (IsPlayerEnemy(dyingPlayer, killingPlayer)) {
+  const typeId = GetUnitTypeId(killingUnit);
+  if (
+    IsPlayerEnemy(dyingPlayer, killingPlayer) && typeId !== UNIT_TYPE_ID_SAPPER && typeId !== UNIT_TYPE_ID_CLOCKWERK &&
+    typeId !== UNIT_TYPE_ID_GYRO
+  ) {
     let amount = GetUnitPointValue(u);
-    if (UnitHasItemOfTypeBJ(GetKillingUnit()!, FourCC("scyt"))) amount = amount * 2 + 1;
+    if (UnitHasItemOfTypeBJ(killingUnit, FourCC("scyt"))) amount = amount * 2 + 1;
 
     AdjustPlayerStateBJ(amount, killingPlayer, PLAYER_STATE_RESOURCE_GOLD);
-    GoldText(amount, GetKillingUnit()!);
+    GoldText(amount, killingUnit);
   }
 
   if (udg_farmCount[pid] > 0) udg_farmCount[pid]--;

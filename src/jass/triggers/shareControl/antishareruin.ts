@@ -15,7 +15,7 @@ InitTrig_antishareruin = () => {
         const owner = GetOwningPlayer(GetFilterUnit()!);
         return owner !== GetTriggerPlayer()! &&
           GetPlayerAlliance(owner, GetTriggerPlayer()!, ALLIANCE_SHARED_CONTROL) &&
-          GetUnitTypeId(GetFilterUnit()!) === sheepType &&
+          (GetUnitTypeId(GetFilterUnit()!) === sheepType || GetUnitTypeId(GetFilterUnit()!) === wispType) &&
           GetPlayerController(owner) !== MAP_CONTROL_COMPUTER;
       }),
     );

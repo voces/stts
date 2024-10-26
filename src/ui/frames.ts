@@ -46,6 +46,7 @@ export const frames: {
     allowShareControl: Checkbox;
     desiredSheep: FrameEx;
   };
+  playerLabel: FrameEx;
   players: {
     container: FrameEx;
     backdrop: FrameEx;

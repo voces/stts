@@ -77,6 +77,10 @@ const Trig_sheepDies_Actions = () => {
     PanCameraToTimedForPlayer(dyingPlayer, GetUnitX(u)!, GetUnitY(u)!, 0);
     SelectUnitForPlayerSingle(u, dyingPlayer);
     gsDistributeGold(dyingPlayer, true, TRANSFER_DISPLAY_INVOLVED);
+    SetUnitAnimation(
+      CreateUnit(killingPlayer, FourCC(GetRandomInt(0, 1) === 0 ? "nska" : "nske"), x, y, f)!,
+      "birth",
+    );
   }
 
   TriggerExecute(gg_trg_setupLeaderboard);

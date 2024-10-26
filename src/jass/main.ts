@@ -140,10 +140,11 @@ import { setTimeout, Timeout } from "util/setTimeout";
 import { getDefaultTime, updateLeaderboardSettingsDisplay } from "settings/time";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { MapPlayerEx } from "handles/MapPlayerEx";
-import { DisplayType } from "constants";
+import { DisplayType, UNIT_TYPE_ID_GHOST } from "constants";
 import { ForceEx } from "handles/ForceEx";
 import { formatList } from "util/formatList";
 import { removeEnumUnit } from "util/removeEnumUnit";
+import { toStringWithPrecision } from "ui/util";
 
 declare global {
   //globals from SavingFarms:
@@ -1409,7 +1410,7 @@ GoldText = (amount: number, u: unit): void => {
       if (!IsVisibleToPlayer(x, y, GetLocalPlayer())) return;
       SetTextTagPermanent(tt, false);
       SetTextTagPos(tt, x, y, 25);
-      SetTextTagText(tt, "+" + I2S(amount), 0.0276);
+      SetTextTagText(tt, "+" + toStringWithPrecision(amount, 1), 0.0276);
       SetTextTagColor(tt, 217, 217, 25, 0);
       SetTextTagFadepoint(tt, 0);
       SetTextTagVelocity(tt, 0, 0.027734375);
@@ -1465,12 +1466,13 @@ declare global {
   // deno-lint-ignore prefer-const
   let removeAllUnits: (includingNeutrals?: boolean) => void;
 }
+const notGhost = Condition(() => GetUnitTypeId(GetFilterUnit()!) !== UNIT_TYPE_ID_GHOST);
 removeAllUnits = (includingNeutrals = true) => {
   let i = 0;
   const g = CreateGroup()!;
   while (true) {
     if (i === (includingNeutrals ? bj_MAX_PLAYER_SLOTS : bj_MAX_PLAYERS)) break;
-    GroupEnumUnitsOfPlayer(g, Player(i)!, null);
+    GroupEnumUnitsOfPlayer(g, Player(i)!, notGhost);
     ForGroup(g, removeEnumUnit);
     i = i + 1;
   }

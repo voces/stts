@@ -5,6 +5,7 @@ import {
   UNIT_TYPE_ID_GYRO,
   UNIT_TYPE_ID_SAPPER,
 } from "constants";
+import { GroupEx } from "handles/GroupEx";
 import { UnitEx } from "handles/UnitEx";
 import { terrain } from "settings/settings";
 import { game } from "util/game";
@@ -21,6 +22,9 @@ const accelerationWindow = 1500;
 const waveCount = 4;
 const waveSize = 6;
 const waveFrequency = 4;
+const deposit = 100;
+
+const recovery = new WeakMap<UnitEx, number>();
 
 game.onItemUsed(({ item, unit }) => {
   if (item.typeId !== ITEM_TYPE_ID_GOBLINS) return;
@@ -30,8 +34,9 @@ game.onItemUsed(({ item, unit }) => {
 
   PlaySoundBJ(gg_snd_GyrocopterYesAttack1);
 
-  withUnitsOfType(sheepType, (sheep) =>
-    sheep.map((s) => {
+  withUnitsOfType(sheepType, (sheep) => {
+    const count = sheep.size;
+    sheep.forEach((s) => {
       if (s.isIllusion()) return;
 
       const start = findRayRectangleIntersection(s, terrain.cameraBounds, direction + Math.PI);
@@ -95,16 +100,46 @@ game.onItemUsed(({ item, unit }) => {
           angleBetweenPoints(u, buildPoint) * bj_RADTODEG,
         );
         sapper.setPathing(true);
+        recovery.set(sapper, Math.round(deposit / count));
+
         BlzQueueBuildOrderById(sapper.handle, UNIT_TYPE_ID_FACTORY, buildPoint.x, buildPoint.y);
         BlzQueueImmediateOrderById(sapper.handle, 852041);
         target = end;
       }, true);
-    }));
+    });
+  });
+});
+
+game.onConstructionStart(({ unit }) => {
+  if (unit.typeId !== UNIT_TYPE_ID_FACTORY) return;
+  const group = GroupEx.create();
+  const x = unit.x;
+  const y = unit.y;
+  group.enumUnitsOfTypeCounted(
+    UnitId2String(UNIT_TYPE_ID_SAPPER)!,
+    () => {
+      const u = UnitEx.fromFilter()!;
+      return (x - u.x) ** 2 + (y - u.y) ** 2 < 62500; // 250
+    },
+    1,
+  );
+  const sapper = group.first;
+  if (sapper) {
+    const sapperRecovery = recovery.get(sapper)!;
+    if (typeof sapperRecovery === "number") recovery.set(unit, sapperRecovery);
+  }
 });
 
 game.onConstructionFinish(({ unit }) => {
   if (unit.typeId !== UNIT_TYPE_ID_FACTORY) return;
   unit.applyTimedLife(FourCC("BTFL"), (waveCount - 1) * waveFrequency + 0.125);
+
+  unit.onDeath(({ killingUnit }) => {
+    if (killingUnit) return;
+    const gold = recovery.get(unit);
+    if (typeof gold === "number") unit.owner.gold += gold;
+  });
+
   const spawnWave = () => {
     for (let i = 0; i < waveSize; i++) {
       const goblin = UnitEx.create(

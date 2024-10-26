@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 24t
+Sheep Tag ReVoLuTiOn 24u
 }
 
 STRING 40
@@ -4175,27 +4175,9 @@ STRING 4135
 }
 
 STRING 4138
-// Buffs/Effects: B00M (Chicken Blessing), EditorSuffix (Editor Suffix)
+// Buffs/Effects: B00M (Spider Blessing), EditorSuffix (Editor Suffix)
 {
 (Critter)
-}
-
-STRING 4143
-// Buffs/Effects: B00M (Chicken Blessing), EditorName (Name (Editor Only))
-{
-Chicken Blessing
-}
-
-STRING 4144
-// Buffs/Effects: B00M (Chicken Blessing), Buffubertip (Tooltip - Extended)
-{
-This unit has been blessed by a chicken; it has greatly increased armor.
-}
-
-STRING 4145
-// Buffs/Effects: B00M (Chicken Blessing), Bufftip (Tooltip)
-{
-Chicken Blessing
 }
 
 STRING 4148
@@ -4803,11 +4785,6 @@ STRING 4283
 Start Position
 }
 
-STRING 4286
-{
-|cff00ff0024t|r
-}
-
 STRING 4287
 // Doodads: D002 (Hay (Infected, Pathless)), Name (Name)
 {
@@ -4818,5 +4795,40 @@ STRING 4288
 // Doodads: D003 (Elven Building (Spooky)), Name (Name)
 {
 Elven Building (Spooky)
+}
+
+STRING 4289
+{
+|cff00ff0024u|r
+}
+
+STRING 4290
+// Buffs/Effects: B00M (Spider Blessing), EditorName (Name (Editor Only))
+{
+Spider Blessing
+}
+
+STRING 4291
+// Buffs/Effects: B00M (Spider Blessing), Buffubertip (Tooltip - Extended)
+{
+This unit has been blessed by a spider; it has greatly increased armor.
+}
+
+STRING 4292
+// Buffs/Effects: B00M (Spider Blessing), Bufftip (Tooltip)
+{
+Spider Blessing
+}
+
+STRING 4294
+// Units: n00S (Dolly), Name (Name)
+{
+Dolly
+}
+
+STRING 4295
+// Units: n00S (Dolly), EditorSuffix (Name - Editor Suffix)
+{
+(Ghost)
 }
 

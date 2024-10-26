@@ -13,7 +13,7 @@ export const president = {
   handicap: 0.75,
 };
 
-export const spawnSetting = { mode: "static" as "static" | "free" | "random" };
+export const spawnSetting = { mode: "free" as "static" | "free" | "random" };
 
 export const farmVision = { vision: -1, trigger: undefined as unknown as trigger };
 

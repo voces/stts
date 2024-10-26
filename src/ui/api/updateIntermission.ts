@@ -80,6 +80,9 @@ export const updateDesiredSheep = () => {
 
 export const updatePlayers = () => {
   const playerCount = getActivePlayerCount();
+  frames.playerLabel.text = playerCount.toFixed(0);
+  frames.playerLabel.setScale(playerCount > 9 ? 0.7 : 1);
+
   const sheep = settings.desiredSheep;
   const wolves = playerCount - sheep;
   const localIsHost = MapPlayerEx.fromLocal().isHost;

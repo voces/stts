@@ -1,5 +1,6 @@
 import { Handle, MapPlayer, Unit } from "w3ts";
 import { MapPlayerEx } from "./MapPlayerEx";
+import { TriggerEx } from "./TriggerEx";
 
 const map = new WeakMap<unit, UnitEx>();
 
@@ -37,10 +38,35 @@ export class UnitEx extends Unit {
     return GetUnitAbilityLevel(this.handle, buffId) > 0;
   }
 
-  static create(owner: MapPlayer | player, unitId: number | string, x: number, y: number, face?: number) {
+  onDeath(fn: (event: { killingUnit?: UnitEx }) => void) {
+    const t = TriggerEx.create();
+    t.registerUnitEvent(this, EVENT_UNIT_DEATH);
+    t.addAction(() => {
+      try {
+        const event = {
+          killingUnit: UnitEx.fromKilling(),
+        };
+        fn(event);
+      } finally {
+        t.destroy();
+      }
+    });
+  }
+
+  static create(
+    owner: MapPlayer | player,
+    unitId: number | string,
+    x: number,
+    y: number,
+    face?: number,
+    skinId?: number,
+  ) {
     face ??= bj_UNIT_FACING;
     const player = owner instanceof MapPlayer ? owner.handle : owner;
-    const handle = CreateUnit(player, typeof unitId === "number" ? unitId : FourCC(unitId), x, y, face);
+    const uid = typeof unitId === "number" ? unitId : FourCC(unitId);
+    const handle = skinId === undefined
+      ? CreateUnit(player, uid, x, y, face)
+      : BlzCreateUnitWithSkin(player, uid, x, y, face, skinId);
     if (!handle) throw `Unable to create unit of type ${unitId} for ${owner} at (${x}, ${y})`;
     return this.fromHandle(handle);
   }

@@ -50,6 +50,10 @@ export class GroupEx extends Group {
     return this;
   }
 
+  get first() {
+    return UnitEx.fromHandle(FirstOfGroup(this.handle));
+  }
+
   public static fromSelectedUnits(selector: MapPlayerEx, filter?: (u: UnitEx) => boolean) {
     const g = this.create();
     g.enumUnitsSelected(selector, filter ? () => filter(UnitEx.fromFilter()!) : null);

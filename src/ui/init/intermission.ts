@@ -15,7 +15,13 @@ import { checkAutoTimeFlag, getDefaultTime } from "settings/time";
 import { setPub } from "teams/smart";
 import { adjustChatFrames, hideIntermission, showIntermission, smart, start, versus } from "ui/api";
 import { updateTerrain } from "ui/api/modes";
-import { updateDesiredSheep, updateMode, updatePlayers, updateScButtons } from "ui/api/updateIntermission";
+import {
+  updateDesiredSheep,
+  updateIntermission,
+  updateMode,
+  updatePlayers,
+  updateScButtons,
+} from "ui/api/updateIntermission";
 import { frames } from "ui/frames";
 import { parseDesiredSheep, toStringWithPrecision } from "ui/util";
 import { Checkbox, editBoxDelayedOnChange, getFrames, setupEditableText, setupSlider } from "./util";
@@ -81,6 +87,8 @@ export const initIntermission = () => {
     startButton,
     smartButton,
 
+    playersLabel,
+
     practice,
     end,
 
@@ -122,6 +130,7 @@ export const initIntermission = () => {
     "SheepTagVersusButton",
     "SheepTagStartButton",
     "SheepTagSmartButton",
+    "SheepTagActivePlayersText",
     "SheepTagPracticeButton",
     "SheepTagEndButton",
     "SheepTagEndConfirmation",
@@ -349,6 +358,7 @@ export const initIntermission = () => {
       const parsed = parseDesiredSheep(value);
       settings.desiredSheep = parsed;
       if (desiredSheep.text !== parsed.toFixed()) desiredSheep.text = parsed.toFixed();
+      updateIntermission();
     },
   });
 
@@ -361,6 +371,8 @@ export const initIntermission = () => {
   frames.smart = smartButton;
 
   // Players
+
+  frames.playerLabel = playersLabel;
 
   let playerCount = 0;
   for (let i = 0; i < bj_MAX_PLAYERS; i++) if (MapPlayerEx.fromIndex(i)?.isHere) playerCount++;

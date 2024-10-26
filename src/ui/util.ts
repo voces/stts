@@ -65,6 +65,7 @@ export const isScEven = () => {
     if (minSc > sc) minSc = sc;
     if (maxSc < sc) maxSc = sc;
   }
+  if (players === 0) return true;
 
   if (maxSc - minSc > 1) return false;
 

@@ -48,10 +48,10 @@ game.onInterval(4, () => {
         clone.mana = u.mana;
         clone.setBaseDamage(-500, 0);
         clone.setBaseDamage(-500, 1);
+
         const local = MapPlayerEx.fromLocal();
-        const check1 = hasTrueVision(u.x, u.y, local);
-        const check2 = u.owner.compareAlliance(local, ALLIANCE_SHARED_VISION);
-        if (check1 || check2) clone.setVertexColor(127, 255, 127, 127);
+        if (u.owner.compareAlliance(local, ALLIANCE_SHARED_VISION)) clone.setVertexColor(127, 255, 127, 127);
+        hasTrueVision(u.x, u.y, local, () => clone.setVertexColor(127, 255, 127, 127));
         if (u.hasBuff(BUFF_TYPE_ID_PRESIDENT)) Effect.createAttachment("war3mapImported/president", clone, "head");
 
         // Make unselectable and not impact pathing, but will follow pathing after 0.1 seconds
