@@ -3,16 +3,6 @@ import { removeEnumUnit } from "util/removeEnumUnit";
 import { logMassingTest } from "../hostCommands/UpdateStats";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 
-const Trig_initMassTest_Func005002002 = () => {
-  return IsUnitType(GetFilterUnit()!, UNIT_TYPE_STRUCTURE) ||
-    IsUnitIllusion(GetFilterUnit()!) ||
-    GetUnitTypeId(GetFilterUnit()!) === FourCC("ngst");
-};
-
-const Trig_initMassTest_Func008002 = () => {
-  RemoveItem(GetEnumItem()!);
-};
-
 const Trig_initMassTest_Func010A = () => {
   udg_farmCount[GetConvertedPlayerId(GetEnumPlayer()!)] = 0;
   SetPlayerState(GetEnumPlayer()!, PLAYER_STATE_RESOURCE_LUMBER, 0);
@@ -55,11 +45,16 @@ const Trig_initMassTest_Actions = () => {
   logMassingTest(R2S(udg_massTime)!);
   udg_atempgroup = GetUnitsInRectMatching(
     GetPlayableMapRect()!,
-    Condition(Trig_initMassTest_Func005002002),
+    Condition(() =>
+      (IsUnitType(GetFilterUnit()!, UNIT_TYPE_STRUCTURE) &&
+        GetOwningPlayer(GetFilterUnit()!) !== Player(PLAYER_NEUTRAL_PASSIVE)) ||
+      IsUnitIllusion(GetFilterUnit()!) ||
+      GetUnitTypeId(GetFilterUnit()!) === FourCC("ngst")
+    ),
   )!;
   ForGroupBJ(udg_atempgroup, removeEnumUnit);
   DestroyGroup(udg_atempgroup);
-  EnumItemsInRectBJ(GetPlayableMapRect()!, Trig_initMassTest_Func008002);
+  EnumItemsInRectBJ(GetPlayableMapRect()!, () => RemoveItem(GetEnumItem()!));
   PauseAllUnitsBJ(true);
   ForForce(GetPlayersAll()!, Trig_initMassTest_Func010A);
   displayTimedTextToAll("|cff00aeef" + udg_massTimeString + " mass test", 5);

@@ -5,7 +5,7 @@ import { initPreferences } from "./init/preferences";
 import { FrameEx } from "handles/FrameEx";
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
-  setTimeout(0.01, () => {
+  setTimeout(0.25, () => {
     BlzLoadTOCFile("customui/main.toc");
     initIntermission();
     initPreferences();

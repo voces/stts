@@ -1,4 +1,5 @@
 import { MapPlayerEx } from "handles/MapPlayerEx";
+import { updateIntermission } from "ui/api/updateIntermission";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
@@ -43,6 +44,7 @@ const Trig_handicap_Actions = () => {
 
   displayTimedTextToAll(`${adjustedPlayer}'s handicap set to ${R2S(handicap)}%.`, 5);
   adjustedPlayer.handicap = handicap / 100;
+  updateIntermission();
 };
 
 declare global {
@@ -52,6 +54,6 @@ declare global {
 InitTrig_handicap = () => {
   gg_trg_handicap = CreateTrigger();
   registerAnyPlayerChatEvent(gg_trg_handicap, "-handicap ", false);
-  TriggerAddCondition(gg_trg_handicap, Condition(() => !udg_gameStarted));
+  TriggerAddCondition(gg_trg_handicap, Condition(() => !udg_gameStarted && MapPlayerEx.fromEvent()?.isHost));
   TriggerAddAction(gg_trg_handicap, Trig_handicap_Actions);
 };

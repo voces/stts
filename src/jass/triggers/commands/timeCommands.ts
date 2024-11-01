@@ -1,5 +1,7 @@
 import { MapPlayerEx } from "handles/MapPlayerEx";
-import { getRounds, getTimes, modes } from "stats/times";
+import { settings } from "settings/settings";
+import { getRounds, getTimes, modes, Round, rounds } from "stats/times";
+import { getActivePlayerCount } from "ui/util";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { formatList } from "util/formatList";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
@@ -146,7 +148,7 @@ const Trig_timeCommands_Actions = () => {
         self.displayTimedText(
           udg_colorString[i + 1] +
             GetPlayerName(Player(i)!) + ": " +
-            formatTime(s__times_pTimeMax[playerTimes[i]]),
+            (s__times_pTimeMax[playerTimes[i]] > 0 ? formatTime(s__times_pTimeMax[playerTimes[i]]) : "N/A"),
           15,
         );
         count = count + 1;
@@ -154,18 +156,101 @@ const Trig_timeCommands_Actions = () => {
       i = i + 1;
     }
   } else if (myArg[0] === "-leader") {
-    if (recordHolders === "") {
-      self.displayTimedText("There are no leaders!", 15);
-      self.displayTimedText("There are no losers!", 15);
+    if (rounds.length === 0) {
+      self.displayTimedText("There are no rounds!", 15);
+      self.displayTimedText("There are no rounds!", 15);
+      return;
+    }
+
+    const wolves = getActivePlayerCount() - settings.desiredSheep;
+    let leaders: Round[] = [];
+    let losers: Round[] = [];
+    const plural = settings.desiredSheep === 1 ? false : true;
+
+    for (const round of rounds) {
+      if (round.sheep.length !== settings.desiredSheep || round.wolves.length !== wolves || round.unranked) continue;
+      if (leaders.length === 0 || round.time > leaders[0].time) leaders = [round];
+      else if (round.time === leaders[0].time) leaders.push(round);
+
+      if (losers.length === 0 || round.time < losers[0].time) losers = [round];
+      else if (round.time === losers[0].time) losers.push(round);
+    }
+
+    if (leaders.length === 0) {
+      self.displayTimedText(
+        `There ${plural ? "are" : "is"} no ${settings.desiredSheep}v${wolves} leader${plural ? "s" : ""}!`,
+        15,
+      );
     } else {
+      for (const leader of leaders) {
+        self.displayTimedText(
+          `Leader${plural ? "s" : ""}: ${leader.sheep.join(", ")} with ${formatTime(leader.time)}`,
+          15,
+        );
+      }
+    }
+
+    if (losers.length === 0) {
       self.displayTimedText(
-        "Leaders: " + recordHolders + " with " + formatTime(recordTime),
+        `There ${plural ? "are" : "is"} no ${settings.desiredSheep}v${wolves} loser${plural ? "s" : ""}!`,
         15,
       );
-      self.displayTimedText(
-        "Losers: " + loserHolders + " with " + formatTime(loserTime),
-        15,
-      );
+    } else {
+      for (const loser of losers) {
+        self.displayTimedText(
+          `Loser${plural ? "s" : ""}: ${loser.sheep.join(", ")} with ${formatTime(loser.time)}`,
+          15,
+        );
+      }
+    }
+  } else if (myArg[0] === "-leaders") {
+    if (rounds.length === 0) {
+      self.displayTimedText("There are no rounds!", 15);
+      self.displayTimedText("There are no rounds!", 15);
+      return;
+    }
+
+    const leaders: Record<string, Round[] | undefined> = {};
+    const losers: Record<string, Round[] | undefined> = {};
+
+    for (const round of rounds) {
+      const config = `${round.sheep.length}v${round.wolves.length}`;
+
+      const configLeaders = leaders[config];
+      if (configLeaders) {
+        if (round.time > configLeaders[0].time) leaders[config] = [round];
+        else if (round.time === configLeaders[0].time) configLeaders.push(round);
+      } else leaders[config] = [round];
+
+      const configLosers = losers[config];
+      if (configLosers) {
+        if (configLosers.length === 0 || round.time < configLosers[0].time) losers[config] = [round];
+        else if (round.time === configLosers[0].time) configLosers.push(round);
+      } else losers[config] = [round];
+    }
+
+    for (let p = 2; p < bj_MAX_PLAYERS; p++) {
+      for (let s = 1; s < p; s++) {
+        const config = `${s}v${p - s}`;
+
+        for (const leader of leaders[config] ?? []) {
+          self.displayTimedText(
+            `${config} leader${leader.sheep.length === 1 ? "" : "s"}: ${leader.sheep.join(", ")} with ${
+              formatTime(leader.time)
+            }`,
+            15,
+          );
+        }
+
+        for (const loser of losers[config] ?? []) {
+          self.displayTimedText(
+            `${config} loser${loser.sheep.length === 1 ? "" : "s"}: ${loser.sheep.join(", ")} with ${
+              formatTime(loser.time)
+            }`,
+            15,
+          );
+        }
+      }
     }
   } else if (myArg[0] === "-stime" || myArg[0] === "-stimes") {
     self.displayTimedText("|CFFFFCC00Total Time Alive as Sheep|r", 15);
@@ -183,10 +268,7 @@ const Trig_timeCommands_Actions = () => {
       i = i + 1;
     }
   } else if (myArg[0] === "-reset" && self.isHost) {
-    recordHolders = "";
-    loserHolders = "";
-    recordTime = -Infinity;
-    loserTime = Infinity;
+    for (const round of rounds) round.unranked = true;
     displayTimedTextToAll("Leaders and losers reset", 15);
     while (true) {
       if (i === 24) break;
@@ -262,6 +344,7 @@ InitTrig_timeCommands = () => {
   registerAnyPlayerChatEvent(gg_trg_timeCommands, "-mytimes");
   registerAnyPlayerChatEvent(gg_trg_timeCommands, "-maxtimes");
   registerAnyPlayerChatEvent(gg_trg_timeCommands, "-leader");
+  registerAnyPlayerChatEvent(gg_trg_timeCommands, "-leaders");
   registerAnyPlayerChatEvent(gg_trg_timeCommands, "-loser");
   registerAnyPlayerChatEvent(gg_trg_timeCommands, "-reset");
   registerAnyPlayerChatEvent(gg_trg_timeCommands, "-atime", false); // -atimes

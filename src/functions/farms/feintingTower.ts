@@ -1,5 +1,5 @@
 import { Effect, MapPlayer, Trigger } from "w3ts";
-import { BUFF_TYPE_ID_PRESIDENT, UNIT_TYPE_ID_FEINTING_TOWER } from "constants";
+import { BUFF_TYPE_ID_PRESIDENT, UNIT_TYPE_ID_FEINTING_TOWER, UNIT_TYPE_ID_TRUE_SIGHT_CHECK } from "constants";
 import { UnitEx } from "handles/UnitEx";
 import { game } from "util/game";
 import { setTimeout } from "util/setTimeout";
@@ -29,7 +29,8 @@ game.onInterval(4, () => {
     withUnitsInRange(tower.x, tower.y, 1200, (units) =>
       units.forEach((u) => {
         if (
-          u.moveSpeed === 0 || !u.isAlive() || u.isIllusion() || !tower.isAlly(u.owner) || !u.isAlly(tower.owner)
+          u.moveSpeed === 0 || !u.isAlive() || u.isIllusion() || !tower.isAlly(u.owner) || !u.isAlly(tower.owner) ||
+          u.typeId === UNIT_TYPE_ID_TRUE_SIGHT_CHECK
         ) return;
 
         if (!madeSpawnEffect) {

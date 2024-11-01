@@ -13,7 +13,15 @@ import {
 } from "settings/settings";
 import { checkAutoTimeFlag, getDefaultTime } from "settings/time";
 import { setPub } from "teams/smart";
-import { adjustChatFrames, hideIntermission, showIntermission, smart, start, versus } from "ui/api";
+import {
+  adjustChatFrames,
+  enforceIntermissionVisibility,
+  hideIntermission,
+  showIntermission,
+  smart,
+  start,
+  versus,
+} from "ui/api";
 import { updateTerrain } from "ui/api/modes";
 import {
   updateDesiredSheep,
@@ -522,6 +530,6 @@ export const initIntermission = () => {
     TriggerExecute(gg_trg_end);
   });
 
-  hideIntermission();
   adjustChatFrames();
+  enforceIntermissionVisibility();
 };

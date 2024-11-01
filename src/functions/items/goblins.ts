@@ -1,5 +1,5 @@
 import {
-  ITEM_TYPE_ID_GOBLINS,
+  ABILITY_TYPE_ID_GOBLINS,
   UNIT_TYPE_ID_CLOCKWERK,
   UNIT_TYPE_ID_FACTORY,
   UNIT_TYPE_ID_GYRO,
@@ -14,23 +14,23 @@ import { setTimeout } from "util/setTimeout";
 import { withUnitsOfType } from "util/withGroup";
 
 const dropDistance = 400;
-const minSpeed = 15;
+const minSpeed = 21;
 const topLoadedSpeed = 30;
 const topUnloadedSpeed = 35;
 const deaccelerationWindow = 2500;
 const accelerationWindow = 1500;
 const waveCount = 4;
-const waveSize = 6;
+const waveSize = 5;
 const waveFrequency = 4;
-const deposit = 100;
+const refund = 100;
 
-const recovery = new WeakMap<UnitEx, number>();
+const refunds = new WeakMap<UnitEx, number>();
 
-game.onItemUsed(({ item, unit }) => {
-  if (item.typeId !== ITEM_TYPE_ID_GOBLINS) return;
+game.onSpell(({ spellId, unit, x, y }) => {
+  if (spellId !== ABILITY_TYPE_ID_GOBLINS) return;
 
   const owner = unit.owner;
-  const direction = Math.random() * Math.PI * 2;
+  const direction = x === unit.x ? GetRandomReal(0, Math.PI * 2) : Math.atan2(y - unit.y, x - unit.x);
 
   PlaySoundBJ(gg_snd_GyrocopterYesAttack1);
 
@@ -99,8 +99,9 @@ game.onItemUsed(({ item, unit }) => {
           u.y,
           angleBetweenPoints(u, buildPoint) * bj_RADTODEG,
         );
+        sapper.setAnimation("birth");
         sapper.setPathing(true);
-        recovery.set(sapper, Math.round(deposit / count));
+        refunds.set(sapper, Math.round(refund / count));
 
         BlzQueueBuildOrderById(sapper.handle, UNIT_TYPE_ID_FACTORY, buildPoint.x, buildPoint.y);
         BlzQueueImmediateOrderById(sapper.handle, 852041);
@@ -125,8 +126,8 @@ game.onConstructionStart(({ unit }) => {
   );
   const sapper = group.first;
   if (sapper) {
-    const sapperRecovery = recovery.get(sapper)!;
-    if (typeof sapperRecovery === "number") recovery.set(unit, sapperRecovery);
+    const sapperRecovery = refunds.get(sapper)!;
+    if (typeof sapperRecovery === "number") refunds.set(unit, sapperRecovery);
   }
 });
 
@@ -136,7 +137,7 @@ game.onConstructionFinish(({ unit }) => {
 
   unit.onDeath(({ killingUnit }) => {
     if (killingUnit) return;
-    const gold = recovery.get(unit);
+    const gold = refunds.get(unit);
     if (typeof gold === "number") unit.owner.gold += gold;
   });
 
@@ -148,6 +149,7 @@ game.onConstructionFinish(({ unit }) => {
         unit.x + 160 * (Math.random() - 0.5),
         unit.y + 160 * (Math.random() - 0.5),
       );
+      goblin.setAnimation("birth");
       goblin.applyTimedLife(FourCC("BTFL"), 10);
       goblin.setPathing(true);
       BlzQueueImmediateOrderById(goblin.handle, 852041);

@@ -3,8 +3,52 @@
 - Mana Bomb
 - Selection bug
 - -ff
-- President ward death crash?
 - Team gold pools
+- AFK check
+- -ap attackpercent
+- Crown for leader in UI
+
+# 24v
+
+## Feature changes
+
+- Players can no longer adjust their own handicap
+- Leader/loser is tracked per sheep vs wolf configuration
+- Added -leaders which shows leader/loser for all configurations (is not -reset)
+- Smart adjustments
+  - Adjusted hyper parameters, hopefully reducing repeat sheep rounds
+  - -smart X is now inclusive of pubs, like the UI
+  - -smart X updates UI (most of the time)
+- Handicaps are restored to 100% when a president round ends
+
+## Balance changes
+
+- Skeleton Warrior changes
+  - Reduced range from 90 to 32
+  - Reduced range motion buffer from 250 to 192
+  - Reduced health from 180 to 40
+- Skeleton Archer changes
+  - Reduced damage from 12 to 9
+  - Reduced health from 180 to 40
+- Goblin Support changes
+  - Reduced Clockwerk Goblins per wave from 6 to 5
+  - Increased cost from 350 (390) to 400 (440)
+  - Increased minimum Gyrocopter speed from 500 to 700
+  - Can be directionally aimed relative to caster's position
+- Increased cast range of Hay Trap from 250 to 400
+
+## Bug fixes
+
+- Fixed smart not reflecting manipulations of sheep counts
+- Fixed an error that occurred when buying an item from the Quick Shop right as the round ends
+- Fixed UI not updating after using -handicap
+- Fixed UI not updating after using -sc X
+- Fixed shops being removed after using -mass
+- Fixed runaway crash with Feinting Tower
+- UI initializes now 0.25 seconds in instead of 0.01 seconds to maybe help with desyncs
+- Changed auto selection logic to use to clear selections first to try to prevent selection bugs
+- An AFK player leaving in middle of a round no longer voids the round
+- Death Order stat voided if someone leaves
 
 # 24u
 

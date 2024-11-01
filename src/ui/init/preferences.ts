@@ -75,12 +75,12 @@ export const initPreferences = () => {
   frames.preferences = preferencesPanel;
 
   sheepZoomEditBox = FrameEx.fromName("SheepZoomEditBox");
-  sheepZoomEditBox.onChange(handleZoom("sheep"));
   wolfZoomEditBox = FrameEx.fromName("WolfZoomEditBox");
-  wolfZoomEditBox.onChange(handleZoom("wolf"));
   wispZoomEditBox = FrameEx.fromName("WispZoomEditBox");
-  wispZoomEditBox.onChange(handleZoom("wisp"));
   updateZooms();
+  sheepZoomEditBox.onChange(handleZoom("sheep"));
+  wolfZoomEditBox.onChange(handleZoom("wolf"));
+  wispZoomEditBox.onChange(handleZoom("wisp"));
 
   const autoControlCheckboxUnchecked = FrameEx.fromName("AutoControlCheckbox");
   const autoControlCheckboxChecked = FrameEx.fromName("AutoControlCheckboxChecked");

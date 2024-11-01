@@ -1,6 +1,7 @@
 export const ABILITY_TYPE_ID_ARMOR_AURA = FourCC("A00C");
 export const ABILITY_TYPE_ID_BLUE_WARD = FourCC("A00M");
 export const ABILITY_TYPE_ID_GIVE_ALLY_GOLD_WOLF = FourCC("A00V");
+export const ABILITY_TYPE_ID_GOBLINS = FourCC("A02S");
 export const ABILITY_TYPE_ID_HIDE_SHOW = FourCC("A00G");
 export const ABILITY_TYPE_ID_MANA_AURA = FourCC("A015");
 export const ABILITY_TYPE_ID_PRESIDENT = FourCC("A028");
@@ -31,6 +32,7 @@ export const UNIT_TYPE_ID_MONEY_FARM = FourCC("h005");
 export const UNIT_TYPE_ID_SAPPER = FourCC("u000");
 export const UNIT_TYPE_ID_START_POSITION = FourCC("h00K");
 export const UNIT_TYPE_ID_STRONG_FARM = FourCC("h002");
+export const UNIT_TYPE_ID_TRUE_SIGHT_CHECK = FourCC("n00G");
 export const UNIT_TYPE_ID_UPGRADED_FARM = FourCC("hC07");
 export const UNIT_TYPE_ID_WARD = FourCC("oeye");
 

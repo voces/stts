@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 24u
+Sheep Tag ReVoLuTiOn 24v
 }
 
 STRING 40
@@ -4043,7 +4043,7 @@ C
 }
 
 STRING 4105
-// Abilities: A02N (Goblin Support), Name (Name)
+// Abilities: A02S (Goblin Support), Tip (Tooltip - Normal)
 {
 Goblin Support
 }
@@ -4304,12 +4304,6 @@ STRING 4178
 // Items: I011 (hay), Ubertip (Tooltip - Extended)
 {
 Tosses a Hay Trap at a target location. Hay Traps block units and are difficult for sheep to kill.|n|cffffcc0030 gold.|r |n|cff00aeef-buy hay: 42 gold.|r
-}
-
-STRING 4183
-// Items: I012 (goblins), Ubertip (Tooltip - Extended)
-{
-Calls for aerial goblin support to help destroy farms.|n|cffffcc00350 gold.|r|n|cff00aeef-buy goblins: 390 gold.|r
 }
 
 STRING 4184
@@ -4797,11 +4791,6 @@ STRING 4288
 Elven Building (Spooky)
 }
 
-STRING 4289
-{
-|cff00ff0024u|r
-}
-
 STRING 4290
 // Buffs/Effects: B00M (Spider Blessing), EditorName (Name (Editor Only))
 {
@@ -4830,5 +4819,22 @@ STRING 4295
 // Units: n00S (Dolly), EditorSuffix (Name - Editor Suffix)
 {
 (Ghost)
+}
+
+STRING 4296
+{
+|cff00ff0024v|r
+}
+
+STRING 4297
+// Items: I012 (goblins), Ubertip (Tooltip - Extended)
+{
+Calls for aerial goblin support to help destroy farms.|n|cffffcc00400 gold.|r|n|cff00aeef-buy goblins: 440 gold.|r
+}
+
+STRING 4298
+// Abilities: A02S (Goblin Support), Name (Name)
+{
+Goblin Support
 }
 

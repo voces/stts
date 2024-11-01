@@ -179,7 +179,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     { name: "forb", cost: 200, id: FourCC("I00W") }, // alias for orb
     { name: "gloves", cost: 112, id: FourCC("I004") },
     { name: "gem", cost: 56, id: FourCC("I00E") },
-    { name: "goblins", cost: 390, id: FourCC("I012") },
+    { name: "goblins", cost: 440, id: FourCC("I012") },
     { name: "golem", cost: 140, id: FourCC("I00A"), quick: "n00I" },
     { name: "hay", cost: 42, id: FourCC("I011"), quick: "n00M" },
     { name: "kaleidoscope", cost: 112, id: FourCC("I00X") },
@@ -206,7 +206,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     TriggerRegisterCommandEvent(t, FourCC("AEbu"), UnitId2String(FourCC(quick))!);
     TriggerAddAction(t, () => {
       const u = UnitEx.fromEvent();
-      if (!u || u.owner.gold < item.cost) return;
+      if (!u || !u.isAlive() || u.owner.gold < item.cost) return;
       if (teamHasTeamItem(item, GetOwningPlayer(u.handle))) return;
       if (u.isSelected(MapPlayerEx.fromLocal())) ForceUICancel();
       u.owner.gold -= item.cost;

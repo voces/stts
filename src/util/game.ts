@@ -35,6 +35,30 @@ export const game = {
     t.addAction(() => fn({ dyingUnit: UnitEx.fromDying()! }));
     return Promise.resolve(t);
   },
+  onSpell: (
+    fn: (
+      event: {
+        spellId: number;
+        unit: UnitEx;
+        target: UnitEx | undefined;
+        x: number;
+        y: number;
+      },
+    ) => void,
+  ) => {
+    const t = Trigger.create();
+    t.registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT);
+    t.addAction(() =>
+      fn({
+        spellId: GetSpellAbilityId()!,
+        unit: UnitEx.fromEvent()!,
+        target: UnitEx.fromHandle(GetSpellTargetUnit()),
+        x: GetSpellTargetX(),
+        y: GetSpellTargetY(),
+      })
+    );
+    return Promise.resolve(t);
+  },
   onSpellEnd: (fn: (event: { spellId: number; unit: UnitEx; target: UnitEx | undefined }) => void) => {
     const t = Trigger.create();
     t.registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_ENDCAST);

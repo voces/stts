@@ -1,3 +1,4 @@
+import { MapPlayerEx } from "handles/MapPlayerEx";
 import { switchSheepTimers } from "modes/switch/switch";
 import { updateLeaderboardSettingsDisplay } from "settings/time";
 
@@ -174,13 +175,6 @@ const playingSheepRows = () => {
   }
 };
 
-const Trig_setupLeaderboard_Func002Func023Func006Func004Func010Func004C = () => {
-  if ((!(udg_AFK[cid] === AFK_AFK_DURING_ROUND))) {
-    return false;
-  }
-  return true;
-};
-
 const playingSpiritRows = () => {
   cid = GetConvertedPlayerId(GetEnumPlayer()!);
   if (udg_switchOn && udg_wispPoints > 0) {
@@ -212,20 +206,13 @@ const playingSpiritRows = () => {
     false,
     false,
   );
-  if ((Trig_setupLeaderboard_Func002Func023Func006Func004Func010Func004C())) {
+  if (udg_AFK[cid] === AFK_AFK_DURING_ROUND) {
     LeaderboardSetPlayerItemLabelBJ(
       GetEnumPlayer()!,
       PlayerGetLeaderboard(ConvertedPlayer(GetForLoopIndexA())!)!,
       GetPlayerName(GetEnumPlayer()!) + " (AFK)",
     );
   }
-};
-
-const Trig_setupLeaderboard_Func002Func023Func006Func004Func014Func003C = () => {
-  if ((!(udg_AFK[cid] === AFK_AFK_DURING_ROUND))) {
-    return false;
-  }
-  return true;
 };
 
 const playingWolfRows = () => {
@@ -252,7 +239,7 @@ const playingWolfRows = () => {
       udg_kills[cid],
     );
   }
-  if ((Trig_setupLeaderboard_Func002Func023Func006Func004Func014Func003C())) {
+  if (udg_AFK[cid] === AFK_AFK_DURING_ROUND) {
     LeaderboardSetPlayerItemLabelBJ(
       GetEnumPlayer()!,
       PlayerGetLeaderboard(ConvertedPlayer(GetForLoopIndexA())!)!,
@@ -261,65 +248,22 @@ const playingWolfRows = () => {
   }
 };
 
-const Trig_setupLeaderboard_Func002Func023Func006Func004Func015Func004Func001Func001C = () => {
-  if ((!(udg_AFK[GetForLoopIndexB()] === AFK_AFK))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_setupLeaderboard_Func002Func023Func006Func004Func015Func004Func001C = () => {
-  if ((!(udg_AFK[GetForLoopIndexB()] === 2))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_setupLeaderboard_Func002Func023Func006Func004Func015C = () => {
-  if ((!(udg_atempint2 === 1))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_setupLeaderboard_Func002Func023Func006Func005A = () => {
+const hideIfShouldHide = () => {
   const shouldHide = udg_hideshow[GetConvertedPlayerId(GetEnumPlayer()!)] ||
     udg_permanentHide[GetConvertedPlayerId(GetEnumPlayer()!)];
 
   LeaderboardDisplay(PlayerGetLeaderboard(GetEnumPlayer()!)!, !shouldHide);
 };
 
-const Trig_setupLeaderboard_Func003Func001Func001C = () => {
-  if ((!(GetEnumPlayer() === udg_Custom))) {
-    return false;
-  }
-  return true;
-};
-
-const Trig_setupLeaderboard_Func003Func001A = () => {
-  if ((Trig_setupLeaderboard_Func003Func001Func001C())) {
-    LeaderboardSetPlayerItemLabelBJ(
-      GetEnumPlayer()!,
-      GetLastCreatedLeaderboard()!,
-      "|CFFFFFFFF$|r" + I2S(GetRandomInt(1000, 9999)),
-    );
-  } else {
-    LeaderboardSetPlayerItemLabelBJ(
-      GetEnumPlayer()!,
-      GetLastCreatedLeaderboard()!,
-      I2S(GetRandomInt(1000, 9999))!,
-    );
-  }
-  LeaderboardSortItemsBJ(
-    PlayerGetLeaderboard(GetEnumPlayer()!)!,
-    bj_SORTTYPE_SORTBYLABEL,
-    true,
+// Don't think this works?
+const anonSortLeaderboard = () => {
+  LeaderboardSetPlayerItemLabelBJ(
+    GetEnumPlayer()!,
+    GetLastCreatedLeaderboard()!,
+    (MapPlayerEx.fromEnum()?.isSheep ? "S" : "W") + I2S(GetRandomInt(1000, 9999)),
   );
-};
 
-const Trig_setupLeaderboard_Func003C = () => {
-  if (!udg_isAnon) return false;
-  return true;
+  LeaderboardSortItemsByLabel(GetLastCreatedLeaderboard()!, true);
 };
 
 const Trig_setupLeaderboard_Actions = () => {
@@ -651,7 +595,7 @@ const Trig_setupLeaderboard_Actions = () => {
         false,
       );
       ForForce(udg_Wolf, playingWolfRows);
-      if ((Trig_setupLeaderboard_Func002Func023Func006Func004Func015C())) {
+      if (udg_atempint2 === 1) {
         LeaderboardAddItemBJ(
           Player(bj_PLAYER_NEUTRAL_EXTRA)!,
           PlayerGetLeaderboard(ConvertedPlayer(GetForLoopIndexA())!)!,
@@ -677,9 +621,7 @@ const Trig_setupLeaderboard_Actions = () => {
         bj_forLoopBIndexEnd = udg_lastPlayer;
         while (true) {
           if (bj_forLoopBIndex > bj_forLoopBIndexEnd) break;
-          if (
-            (Trig_setupLeaderboard_Func002Func023Func006Func004Func015Func004Func001C())
-          ) {
+          if (udg_AFK[GetForLoopIndexB()] === 2) {
             LeaderboardAddItemBJ(
               ConvertedPlayer(GetForLoopIndexB())!,
               PlayerGetLeaderboard(
@@ -697,9 +639,7 @@ const Trig_setupLeaderboard_Actions = () => {
               false,
             );
           } else {
-            if (
-              (Trig_setupLeaderboard_Func002Func023Func006Func004Func015Func004Func001Func001C())
-            ) {
+            if (udg_AFK[GetForLoopIndexB()] === AFK_AFK) {
               LeaderboardAddItemBJ(
                 ConvertedPlayer(GetForLoopIndexB())!,
                 PlayerGetLeaderboard(
@@ -724,12 +664,10 @@ const Trig_setupLeaderboard_Actions = () => {
     }
     ForForce(
       GetPlayersAll()!,
-      Trig_setupLeaderboard_Func002Func023Func006Func005A,
+      hideIfShouldHide,
     );
   }
-  if ((Trig_setupLeaderboard_Func003C())) {
-    ForForce(GetPlayersAll()!, Trig_setupLeaderboard_Func003Func001A);
-  }
+  if (udg_isAnon) ForForce(GetPlayersAll()!, anonSortLeaderboard);
 };
 
 declare global {

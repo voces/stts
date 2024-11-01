@@ -4,8 +4,6 @@ import { settings } from "settings/settings";
 
 export const getActivePlayerCount = () => ForceEx.all.toArray().reduce((count, p) => count + (p.isActive ? 1 : 0), 0);
 
-export const getPubCount = () => ForceEx.all.toArray().reduce((count, p) => count + (p.isActive && p.isPub ? 1 : 0), 0);
-
 const getCounts = () => {
   let regulars = 0;
   let pubs = 0;

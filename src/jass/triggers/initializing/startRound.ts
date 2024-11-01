@@ -1,8 +1,10 @@
 import { disableIncome, resetBankedGold } from "functions/farms/savingFarms";
 import { stopRuneTimers } from "functions/runes";
+import { ForceEx } from "handles/ForceEx";
 import { deathOrder, MapPlayerEx } from "handles/MapPlayerEx";
 import { restoreSettings } from "modes/practice/mode";
 import { switchSheepTimers } from "modes/switch/switch";
+import { president } from "settings/settings";
 import { delayHotkeyButtons, showIntermission } from "ui/api";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { triggerRoundInitHooks } from "util/gameHooks";
@@ -102,6 +104,10 @@ const resetRoundStats = () => {
     udg_practiceOn = false;
     restoreSettings();
   }
+  if (someoneLeft) {
+    ForceEx.sheep.for((p) => p.cancel());
+    ForceEx.wisps.for((p) => p.cancel());
+  }
   someoneLeft = false;
   udg_pickIndex = 1;
   goldRaces = 0;
@@ -133,6 +139,7 @@ const Trig_startRound_Actions = () => {
     const p = MapPlayerEx.fromIndex(i)!;
     p.diedThisRound = false;
     p.setState(PLAYER_STATE_GOLD_UPKEEP_RATE, 0);
+    if (president.enabled) p.handicap = 1;
 
     for (let n = 0; n < bj_MAX_PLAYERS; n++) {
       SetPlayerAllianceStateBJ(

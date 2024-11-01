@@ -1,6 +1,7 @@
 import { MapPlayer } from "w3ts";
 import { setTimeout } from "./setTimeout";
 import { onRoundStart } from "./onRoundStart";
+import { UNIT_TYPE_ID_TRUE_SIGHT_CHECK } from "constants";
 
 const DUMMY_X = 15552;
 const DUMMY_Y = -9536;
@@ -9,7 +10,7 @@ const dummies: unit[] = [];
 
 onRoundStart(() => {
   for (let i = 0; i < 4; i++) {
-    dummies.push(CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE)!, FourCC("n00G"), DUMMY_X, DUMMY_Y, 270)!);
+    dummies.push(CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE)!, UNIT_TYPE_ID_TRUE_SIGHT_CHECK, DUMMY_X, DUMMY_Y, 270)!);
   }
 });
 
@@ -18,7 +19,7 @@ const getDummy = (x: number, y: number) => {
     const dummy = dummies.pop();
     if (dummy && UnitAlive(dummy)) return dummy;
   }
-  return CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE)!, FourCC("n00G"), x, y, 270)!;
+  return CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE)!, UNIT_TYPE_ID_TRUE_SIGHT_CHECK, x, y, 270)!;
 };
 
 export const hasTrueVision = (x: number, y: number, player: MapPlayer, fn: () => void) => {

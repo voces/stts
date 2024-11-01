@@ -4,7 +4,7 @@ const Trig_instanceIllusion_Actions = () => {
     SetUnitVertexColor(replacement, 127, 255, 127, 191);
   }
   AdjustPlayerStateBJ(-20, GetOwningPlayer(GetLastReplacedUnitBJ()!), PLAYER_STATE_RESOURCE_GOLD);
-  SelectUnitAddForPlayer(replacement, GetTriggerPlayer()!);
+  SelectUnitForPlayerSingle(replacement, GetTriggerPlayer()!);
 };
 
 export {};

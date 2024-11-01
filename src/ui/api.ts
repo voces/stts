@@ -1,6 +1,6 @@
 import { settings } from "settings/settings";
 import { frames } from "./frames";
-import { getActivePlayerCount, getPubCount } from "./util";
+import { getActivePlayerCount } from "./util";
 import { adjustSheepTeamSize } from "teams/start";
 import { smart as actualSmart } from "teams/smart";
 import { FrameEx } from "handles/FrameEx";
@@ -8,7 +8,8 @@ import { MapPlayerEx } from "handles/MapPlayerEx";
 import { addScriptHook, W3TS_HOOK } from "w3ts";
 import { setTimeout } from "util/setTimeout";
 import { TriggerEx } from "handles/TriggerEx";
-import { updateIntermission } from "./api/updateIntermission";
+import { updateHotkeys, updateIntermission } from "./api/updateIntermission";
+import { ui } from "./data";
 
 let hidePreferences = false;
 export const preferencesShown = () => {
@@ -43,7 +44,6 @@ export const adjustChatFrames = () => {
 };
 
 let showingIntermission = false;
-let hotkeysDisabled = false;
 
 let hotkeyTrigger: TriggerEx | undefined;
 
@@ -56,7 +56,7 @@ addScriptHook(W3TS_HOOK.MAIN_BEFORE, () => {
   hotkeyTrigger.registerAnyPlayerKeyEvent(OSKEY_V, 0, true);
   hotkeyTrigger.registerAnyPlayerKeyEvent(OSKEY_R, 0, true);
   hotkeyTrigger.addAction(() => {
-    if (!MapPlayerEx.fromEvent()?.isHost || hotkeysDisabled) return;
+    if (!MapPlayerEx.fromEvent()?.isHost || ui.hotkeysDisabled) return;
     if (BlzGetTriggerPlayerKey() === OSKEY_S) return smart();
     if (BlzGetTriggerPlayerKey() === OSKEY_A) return start();
     if (BlzGetTriggerPlayerKey() === OSKEY_R) return TriggerExecute(gg_trg_practice);
@@ -98,6 +98,7 @@ export const showIntermission = (local = false) => {
     if (hotkeyTrigger) hotkeyTrigger.enabled = true;
     updateIntermission();
   }
+  if (frames.intermissionFrames.length === 0) return;
   if (frames.intermissionFrames[0].visible === true) return;
   for (const frame of frames.intermissionFrames) frame.visible = true;
   adjustChatFrames();
@@ -108,11 +109,16 @@ export const hideIntermission = (local = false) => {
     showingIntermission = false;
     if (hotkeyTrigger) hotkeyTrigger.enabled = false;
   }
-
+  if (frames.intermissionFrames.length === 0) return;
   if (frames.intermissionFrames[0].visible === false) return;
   for (const frame of frames.intermissionFrames) frame.visible = false;
   frames.end.confirm.visible = false;
   adjustChatFrames();
+};
+
+export const enforceIntermissionVisibility = () => {
+  if (showingIntermission) showIntermission();
+  else hideIntermission();
 };
 
 export const start = () => {
@@ -128,24 +134,16 @@ export const smart = () => {
   const activePlayerCount = getActivePlayerCount();
   if (settings.desiredSheep === 0 || settings.desiredSheep >= activePlayerCount) return;
 
-  actualSmart(settings.desiredSheep - Math.floor((getPubCount() + 1) / 2));
+  actualSmart(settings.desiredSheep);
 };
 
 export const versus = () => udg_versus > 0 ? TriggerExecute(gg_trg_continue) : TriggerExecute(gg_trg_versus);
 
 export const delayHotkeyButtons = () => {
-  hotkeysDisabled = true;
-  frames.start.enabled =
-    frames.smart.enabled =
-    frames.versus.enabled =
-    frames.practice.enabled =
-      false;
+  ui.hotkeysDisabled = true;
+  updateHotkeys();
   setTimeout(0.5, () => {
-    hotkeysDisabled = false;
-    frames.start.enabled =
-      frames.smart.enabled =
-      frames.versus.enabled =
-      frames.practice.enabled =
-        MapPlayerEx.fromLocal().isHost;
+    ui.hotkeysDisabled = false;
+    updateHotkeys();
   });
 };

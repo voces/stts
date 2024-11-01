@@ -1,7 +1,7 @@
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { logRound } from "jass/triggers/hostCommands/UpdateStats";
-import { addRound, addTime } from "stats/times";
-import { income, president, terrain } from "settings/settings";
+import { addRound, addTime, rounds } from "stats/times";
+import { income, president, settings, terrain } from "settings/settings";
 
 const noHandicaps = () => {
   for (let i = 0; i < bj_MAX_PLAYERS; i++) {
@@ -65,22 +65,36 @@ export const updateTimes = () => {
         IsPlayerInForce(Player(i)!, udg_Spirit)
       ) addTime(i, mode, timeElapsed);
     }
-    if (addRound(sheepPlayers, wolfPlayers, timeElapsed) > 3) showLeader = true;
+    addRound(sheepPlayers, wolfPlayers, timeElapsed);
+    let count = 0;
+    for (const round of rounds) {
+      if (round.sheep.length !== sheepPlayers.length || round.wolves.length !== wolfPlayers.length) continue;
+      count++;
+      if (count > 3) {
+        showLeader = true;
+        break;
+      }
+    }
   }
 
   udg_timeString = formatTime(timeElapsed);
   fullTimeString = s + " with " + formatTime(timeElapsed);
 
-  if (timeElapsed > recordTime) {
-    if (recordTime !== -Infinity && showLeader) fullTimeString += " (leader)";
-    recordTime = timeElapsed;
-    recordHolders = s;
-  }
+  let leader = true;
+  let loser = true;
+  if (showLeader) {
+    for (const round of rounds) {
+      if (
+        round.sheep.length !== settings.teamConfiguration.sheep.length ||
+        round.wolves.length !== settings.teamConfiguration.wolves.length
+      ) continue;
+      if (round.time > timeElapsed) leader = false;
+      if (round.time < timeElapsed) loser = false;
+      if (!leader && !loser) continue;
+    }
 
-  if (timeElapsed < loserTime) {
-    if (loserTime !== Infinity && showLeader) fullTimeString += " (loser)";
-    loserTime = timeElapsed;
-    loserHolders = s;
+    if (leader) fullTimeString += " (leader)";
+    if (loser) fullTimeString += " (loser)";
   }
 
   if (emitRound) logRound(sheepString, wolvesString, R2S(timeElapsed)!);

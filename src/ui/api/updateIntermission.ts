@@ -6,6 +6,7 @@ import { GOLD_COLOR, RED_COLOR, WHITE_COLOR } from "../constants";
 import { onUpdateIntermission } from "../hooks";
 import { farmVision, income, president, settings, spawnSetting, switchSetting } from "settings/settings";
 import { getTimes } from "stats/times";
+import { ui } from "ui/data";
 
 const updatePresidentHandicap = () => {
   frames.settings.president.handicap.text = (president.handicap * 100).toFixed(0);
@@ -203,6 +204,15 @@ const updateVersusButtons = () => {
   frames.smart.getChild(4).setTextColor(udg_versus > 0 ? RED_COLOR : GOLD_COLOR);
 };
 
+export const updateHotkeys = () => {
+  if (!frames.start) return;
+  frames.start.enabled =
+    frames.smart.enabled =
+    frames.versus.enabled =
+    frames.practice.enabled =
+      !ui.hotkeysDisabled && MapPlayerEx.fromLocal().isHost;
+};
+
 export const updateIntermission = () => {
   if (frames.intermissionFrames.length === 0) return;
   updateMode();
@@ -212,6 +222,7 @@ export const updateIntermission = () => {
   updatePlayers();
   updateScButtons();
   updateVersusButtons();
+  updateHotkeys();
 
   frames.settings.roundTab.enabled =
     frames.settings.goldTab.enabled =

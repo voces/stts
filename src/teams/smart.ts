@@ -6,14 +6,15 @@ import { setSc } from "jass/triggers/commands/sc";
 import { getAllHandicap, getPubHandicap } from "jass/triggers/commands/handicap";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { rounds } from "stats/times";
+import { ForceEx } from "handles/ForceEx";
+import { settings } from "settings/settings";
 
 let pubStart = 0;
 
 let lastActivePlayerCount = 0;
-let lastSheepToDraft = 0;
 
-const DESIRED_SOLUTIONS = 10;
-const MAX_ATTEMPTS = 3000;
+const ATTEMPTS_SINCE_LAST_IMPROVEMENT = 100;
+const MAX_DEPTH = 6;
 
 const nChooseM = (n: number, m: number): number => {
   if (m > n) return 0; // Not possible to choose more elements than available
@@ -88,17 +89,14 @@ export const maybeRotate = () => {
   });
 };
 
-const getRandomTeam = (
-  sheep: number,
-  counts: number[],
-): number[] => {
+const getRandomTeam = (sheep: number): number[] => {
   const minScPools: number[][] = [];
   while (minScPools.reduce((count, pool) => count + pool.length, 0) < sheep) {
     let pool: number[] = [];
     let minSc = Infinity;
     for (let i = 0; i < bj_MAX_PLAYERS; i++) {
       if (!isActivePlayer(Player(i)!) || minScPools.some((pool) => pool.includes(i))) continue;
-      const sheepCount = counts[i * bj_MAX_PLAYERS + i];
+      const sheepCount = udg_sheepCount[i + 1];
       if (sheepCount < minSc) {
         minSc = sheepCount;
         pool = [i];
@@ -122,20 +120,21 @@ const getRandomTeam = (
 type Solution = [team: number[], pc: number, recency: number[]][];
 
 const solve = (activePlayerCount: number, sheep: number) => {
-  const depth = Math.min(nChooseM(activePlayerCount, sheep), 12);
+  const depth = Math.min(nChooseM(activePlayerCount, sheep), MAX_DEPTH);
 
   const solutions: Solution[] = [];
+  let attemptsSinceLastImprovement = 0;
   for (
     let i = 0;
-    // We're extremely unlikely to reach DESIRED_SOLUTIONS beyond 2v4
-    solutions.length < DESIRED_SOLUTIONS && i < MAX_ATTEMPTS / activePlayerCount;
+    attemptsSinceLastImprovement < ATTEMPTS_SINCE_LAST_IMPROVEMENT;
     i++
   ) {
+    attemptsSinceLastImprovement++;
     const sampleCounts = normalizeAccum();
     const solution: Solution = [];
     let flag = false;
     for (let n = 0; n < depth; n++) {
-      const team = getRandomTeam(sheep, sampleCounts);
+      const team = getRandomTeam(sheep);
 
       for (const a of team) {
         for (const b of team) sampleCounts[a * bj_MAX_PLAYERS + b]++;
@@ -147,7 +146,10 @@ const solve = (activePlayerCount: number, sheep: number) => {
         if (pc > solutions[0][n][1]) {
           flag = true;
           break;
-        } else if (pc < solutions[0][n][1]) solutions.splice(0);
+        } else if (pc < solutions[0][n][1]) {
+          solutions.splice(0);
+          attemptsSinceLastImprovement = 0;
+        }
       }
 
       const recency = team.map((pid) => {
@@ -194,7 +196,7 @@ const solve = (activePlayerCount: number, sheep: number) => {
 };
 
 const draft = (activePlayerCount: number, sheep: number) => {
-  const team = rounds.length > 0 ? solve(activePlayerCount, sheep) : getRandomTeam(sheep, normalizeAccum());
+  const team = rounds.length > 0 ? solve(activePlayerCount, sheep) : getRandomTeam(sheep);
   for (let i = 0; i < bj_MAX_PLAYERS; i++) {
     const p = Player(i)!;
     if (!isActivePlayer(p)) continue;
@@ -203,20 +205,22 @@ const draft = (activePlayerCount: number, sheep: number) => {
   }
 };
 
+const getPubCount = () => ForceEx.all.toArray().reduce((count, p) => count + (p.isActive && p.isPub ? 1 : 0), 0);
+
 export const smart = (sheep?: number) => {
   let sheepToDraft: number;
   const activePlayerCount = getActivePlayerCount();
   if (typeof sheep !== "number") {
     sheepToDraft = lastActivePlayerCount === activePlayerCount
-      ? lastSheepToDraft
+      ? settings.desiredSheep
       : Math.floor(activePlayerCount / 2 - 1);
   } else sheepToDraft = sheep;
   if (sheepToDraft <= 0) sheepToDraft = 1;
-  lastSheepToDraft = sheepToDraft;
+  settings.desiredSheep = sheepToDraft;
   lastActivePlayerCount = activePlayerCount;
   clearForces();
 
-  draft(activePlayerCount, sheepToDraft);
+  draft(activePlayerCount, sheepToDraft - Math.floor((getPubCount() + 1) / 2));
 
   const end = pubStart + bj_MAX_PLAYERS;
   let addToSheep = true;

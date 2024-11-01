@@ -13,7 +13,9 @@ const Trig_destroyFarm_Actions = () => {
   RemoveUnit(u);
 
   for (const p of desels) {
-    if (p.getSelection().length === 0 && UnitAlive(udg_unit[p.cid])) SelectUnitAddForPlayer(udg_unit[p.cid], p.handle);
+    if (p.getSelection().length === 0 && UnitAlive(udg_unit[p.cid])) {
+      SelectUnitForPlayerSingle(udg_unit[p.cid], p.handle);
+    }
   }
 };
 

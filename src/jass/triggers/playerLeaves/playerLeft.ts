@@ -45,20 +45,21 @@ const Trig_playerLeft_Actions = () => {
     })`,
   );
 
-  // Distribute gold
-  if (udg_gameStarted) {
+  if (udg_gameStarted && (p.isSheep || p.isWisp || p.isWolf)) {
+    someoneLeft = true;
+
+    // Distribute gold
     const team = ForceEx.wolves.hasPlayer(p) ? ForceEx.wolves : ForceEx.sheep;
     const gold = p.gold / team.size();
     team.for((p) => p.bankedGold += gold); // Add to banked gold since it supports decimals
-    someoneLeft = true;
-  }
 
-  // Drop items
-  if (IsPlayerInForce(leaver, udg_Wolf)) {
-    withPlayerUnits(p, (g) =>
-      g.forEach((u) => {
-        for (let i = 0; i < 6; i++) u.removeItemFromSlot(i);
-      }), (u) => u.typeId === shepType && !u.isIllusion);
+    // Drop items
+    if (IsPlayerInForce(leaver, udg_Wolf)) {
+      withPlayerUnits(p, (g) =>
+        g.forEach((u) => {
+          for (let i = 0; i < 6; i++) u.removeItemFromSlot(i);
+        }), (u) => u.typeId === shepType && !u.isIllusion);
+    }
   }
 
   // Fix captains/versus

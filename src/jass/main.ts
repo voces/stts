@@ -640,10 +640,6 @@ declare global {
   // deno-lint-ignore prefer-const
   let sentryFarmType: number;
 
-  let recordTime: number;
-  let loserTime: number;
-  let recordHolders: string;
-  let loserHolders: string;
   let fullTimeString: string;
   // deno-lint-ignore prefer-const
   let wasHere: Array<boolean>;
@@ -862,10 +858,6 @@ hostFarmType = FourCC("h00D");
 giveAlliesGoldSheepAbility = FourCC("A024");
 sentryFarmType = FourCC("eC09");
 
-recordTime = -Infinity;
-loserTime = Infinity;
-recordHolders = "";
-loserHolders = "";
 fullTimeString = "";
 wasHere = [];
 noAutoControl = [];

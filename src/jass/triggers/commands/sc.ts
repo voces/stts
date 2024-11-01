@@ -1,4 +1,5 @@
 import { MapPlayerEx } from "handles/MapPlayerEx";
+import { updateIntermission } from "ui/api/updateIntermission";
 
 const Trig_sc_printSheepCounts = () => {
   const p = MapPlayerEx.fromEvent()!;
@@ -34,6 +35,7 @@ export const setSc = (pId: number, newSC: number) => {
     GetLastCreatedLeaderboard()!,
     udg_sheepCount[pId],
   );
+  updateIntermission();
 };
 
 const Trig_sc_setSheepCount = () => {
