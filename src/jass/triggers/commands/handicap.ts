@@ -1,5 +1,6 @@
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { updateIntermission } from "ui/api/updateIntermission";
+import { toStringWithPrecision } from "ui/util";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
@@ -16,33 +17,32 @@ const Trig_handicap_Actions = () => {
   const handicap = S2R(parts[parts.length === 3 && triggerPlayer.isHost ? 2 : 1]);
   if (handicap < 23 || handicap > 500) return;
 
-  if (triggerPlayer.isHost) {
-    if (parts[1] === "all") {
-      allHandicap = handicap;
-      const appliesToPubs = handicap > pubHandicap;
-      if (appliesToPubs) pubHandicap = handicap;
-      for (let i = 0; i < bj_MAX_PLAYERS; i++) {
-        const p = MapPlayerEx.fromIndex(i)!;
-        if (appliesToPubs || !p.isPub) p.handicap = handicap / 100;
-      }
-      displayTimedTextToAll(`All players' handicap set to ${R2S(handicap)}%.`, 5);
-      return;
-    } else if (parts[1] === "pub") {
-      pubHandicap = handicap;
-      for (let i = 0; i < bj_MAX_PLAYERS; i++) {
-        const p = MapPlayerEx.fromIndex(i)!;
-        if (p.isPub) p.handicap = pubHandicap / 100;
-      }
-      displayTimedTextToAll(`Pubs' handicap set to ${R2S(handicap)}%.`, 5);
+  if (parts[1] === "all" || parts.length === 2) {
+    allHandicap = handicap;
+    const appliesToPubs = handicap > pubHandicap;
+    if (appliesToPubs) pubHandicap = handicap;
+    for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+      const p = MapPlayerEx.fromIndex(i)!;
+      if (appliesToPubs || !p.isPub) p.handicap = handicap / 100;
     }
+    displayTimedTextToAll(`All players' handicap set to ${toStringWithPrecision(handicap)}%.`, 5);
+    updateIntermission();
+    return;
+  } else if (parts[1] === "pub") {
+    pubHandicap = handicap;
+    for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+      const p = MapPlayerEx.fromIndex(i)!;
+      if (p.isPub) p.handicap = pubHandicap / 100;
+    }
+    displayTimedTextToAll(`Pubs' handicap set to ${toStringWithPrecision(handicap)}%.`, 5);
+    updateIntermission();
+    return;
   }
 
-  const adjustedPlayer = parts.length === 3 && triggerPlayer.isHost
-    ? MapPlayerEx.fromIndex(S2I(parts[1]) - 1)
-    : triggerPlayer;
+  const adjustedPlayer = MapPlayerEx.fromIndex(S2I(parts[1]) - 1);
   if (!adjustedPlayer) return;
 
-  displayTimedTextToAll(`${adjustedPlayer}'s handicap set to ${R2S(handicap)}%.`, 5);
+  displayTimedTextToAll(`${adjustedPlayer}'s handicap set to ${toStringWithPrecision(handicap)}%.`, 5);
   adjustedPlayer.handicap = handicap / 100;
   updateIntermission();
 };

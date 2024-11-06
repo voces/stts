@@ -35,11 +35,11 @@ export const adjustChatFrames = () => {
   } else {
     FrameEx.fromOrigin(ORIGIN_FRAME_CHAT_MSG)
       // Technically this cuts it off a bit early, but that's fine
-      .setPoint(FRAMEPOINT_RIGHT, FrameEx.fromOrigin(ORIGIN_FRAME_WORLD_FRAME), FRAMEPOINT_RIGHT, -0.05, 0);
+      .setPoint(FRAMEPOINT_RIGHT, FrameEx.fromOrigin(ORIGIN_FRAME_GAME_UI), FRAMEPOINT_RIGHT, -0.05, 0);
     FrameEx.fromOrigin(ORIGIN_FRAME_UNIT_MSG)
       .clearPoints()
-      .setAbsPoint(FRAMEPOINT_BOTTOMLEFT, 0.22, 0.25)
-      .setAbsPoint(FRAMEPOINT_BOTTOMRIGHT, 0.58, 0.25);
+      .setAbsPoint(FRAMEPOINT_BOTTOMLEFT, 0.22, 0.2)
+      .setAbsPoint(FRAMEPOINT_BOTTOMRIGHT, 0.58, 0.2);
   }
 };
 

@@ -13,7 +13,7 @@ let pubStart = 0;
 
 let lastActivePlayerCount = 0;
 
-const ATTEMPTS_SINCE_LAST_IMPROVEMENT = 100;
+const ATTEMPTS_SINCE_LAST_IMPROVEMENT = 250;
 const MAX_DEPTH = 6;
 
 const nChooseM = (n: number, m: number): number => {
@@ -216,7 +216,6 @@ export const smart = (sheep?: number) => {
       : Math.floor(activePlayerCount / 2 - 1);
   } else sheepToDraft = sheep;
   if (sheepToDraft <= 0) sheepToDraft = 1;
-  settings.desiredSheep = sheepToDraft;
   lastActivePlayerCount = activePlayerCount;
   clearForces();
 

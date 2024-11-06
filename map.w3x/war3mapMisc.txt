@@ -34,6 +34,7 @@ MaxUnitSpeed=522.0
 MinBldgSpeed=1.0
 MinUnitSpeed=0.0
 MissDamageReduction=0.0
+PawnItemRate=0.8
 PickupItemRange=200.0
 StrAttackBonus=0.0
 StructureDecayTime=0.0

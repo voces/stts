@@ -6,7 +6,52 @@
 - Team gold pools
 - AFK check
 - -ap attackpercent
-- Crown for leader in UI
+
+# 24w
+
+## Feature changes
+
+- Winter theme
+- Removed Feinting Tower
+- Removed Kaleidoscope
+- Removed Scepter of Mastery
+- Removed Gem of True Seeing
+- Removed War Club
+- Mirror Images no longer do damage
+- Added gold trim to leaders in intermission UI
+- Desired sheep in UI is updated when manually set via text command (-smart X, -start X, -pick X Y Z, etc)
+- Changes on gold sharing messages
+  - Changed threshold for showing messages from 3+n to 2+3n, where n is the number of players on the team
+  - Changed duration of messages from ~15 seconds to ~5 seconds
+  - Adjusted where system messages are displayed
+- Guard sheep in president mode have a 0.5 stun on attack
+- -handicap X now sets handicap for all players to X
+- Removed day/night being randomized on -cancel
+- Adjusted smart "retries since improvement" from 100 to 250 to prevent repeat sheeping
+
+## Balance changes
+
+- Increased item sell back rate to shop from 50% to 80%
+- Increased remote item cell back rate from 33% to 57% (or 80% - 40, whichever is greater; only effects nuke)
+- Increased remote cost of Bomber from 75 to 77 to align with 40% global remote tax
+- Goblin Support changes
+  - Increased cost from 400 (440) to 450 (490)
+  - Increased max refund from 100 to 150
+  - Refund works off percent life remaining on factories
+- Hay Trap changes
+  - Reduced armor from 80 to 0, making it 1 hit
+  - Removed health regeneration
+  - Increased throw speed from 750 to 1000
+
+## Bug fixes
+
+- Fixed auto-reselect to affect players with Farm selected when upgrading to an Illusion Farm rather than the owner
+- Changed -buy/-sell to only work with the main Shepherd to prevent desyncs (Golem still has Quick Shop)
+- Fixed a bug in which the chat frame would sometimes be narrow during game
+- Fixed a bug in which handicapped Illusion Farms appear differently than regular handicapped Farms
+- Fixed a bug in which canceling an upgrade on a handicapped Farm made it appear unhandicapped
+- Fixed a bug in which remotely selling a stacked item sold at the unstacked rate
+- Added delay to frame hooks to prevent initialization desyncs
 
 # 24v
 
@@ -46,7 +91,7 @@
 - Fixed shops being removed after using -mass
 - Fixed runaway crash with Feinting Tower
 - UI initializes now 0.25 seconds in instead of 0.01 seconds to maybe help with desyncs
-- Changed auto selection logic to use to clear selections first to try to prevent selection bugs
+- Changed auto selection logic clear selections first to try to prevent selection bugs
 - An AFK player leaving in middle of a round no longer voids the round
 - Death Order stat voided if someone leaves
 

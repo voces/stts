@@ -3,6 +3,7 @@ import { withUnitsInRange } from "util/withGroup";
 import { setTimeout } from "util/setTimeout";
 import { UNIT_TYPE_ID_FARM, UNIT_TYPE_ID_GOLEM, UNIT_TYPE_ID_STRONG_FARM, UNIT_TYPE_ID_UPGRADED_FARM } from "constants";
 import { MapPlayerEx } from "handles/MapPlayerEx";
+import { getFarmColor } from "util/getFarmColor";
 
 let translocateTicker: Timer;
 const translocates: unit[] = [];
@@ -104,28 +105,7 @@ const Trig_createFarm_Actions = () => {
     unitType === UNIT_TYPE_ID_FARM || unitType === UNIT_TYPE_ID_UPGRADED_FARM || unitType === UNIT_TYPE_ID_STRONG_FARM
   ) {
     const handicap = GetPlayerHandicap(p);
-    if (handicap !== 1) {
-      const maxHp = BlzGetUnitMaxHP(u);
-      if (maxHp < 120) SetUnitVertexColor(u, 255, 255, 255, Math.round((maxHp / 240 + 0.5) * 255));
-      else if (maxHp < 240) {
-        const pi = (maxHp - 120) / 120;
-        const p = 1 - pi;
-        SetUnitVertexColor(u, 255, Math.round(255 * p + 100 * pi), Math.round(255 * p + 100 * pi), 255);
-      } else if (maxHp < 360) {
-        const pi = (maxHp - 240) / 240;
-        const p = 1 - pi;
-        SetUnitVertexColor(
-          u,
-          Math.round(255 * p + 125 * pi),
-          Math.round(100 * p + 125 * pi),
-          Math.round(100 * p + 125 * pi),
-          255,
-        );
-      } else {
-        const p = Math.exp(-(maxHp - 360) * Math.log(2) / 180);
-        SetUnitVertexColor(u, Math.round(125 * p), Math.round(125 * p), Math.round(125 * p), 255);
-      }
-    }
+    if (handicap !== 1) SetUnitVertexColor(u, ...getFarmColor(u, true));
   }
 
   if (udg_switchOn) return;

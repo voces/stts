@@ -34,6 +34,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     }
     g.forEach((u) => {
       if (ownUnitsSelected && u.owner !== p) return;
+      // This may not be sync safe
       u.setOwner(newOwner, false);
       u[`${addOrRemove}Ability`](FourCC("A01V"));
       if (ownUnitsSelected) set!.add(u);

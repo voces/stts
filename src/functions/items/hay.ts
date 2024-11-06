@@ -48,7 +48,7 @@ game.onItemUsed(({ item, unit }) => {
 
     let traveled = 0;
     const timeout = setTimeout(0.02, () => {
-      traveled += 15;
+      traveled += 20;
       if (traveled > distance || !unit.isAlive()) {
         projectileHay.destroy();
         timeout.cancel();

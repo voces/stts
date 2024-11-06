@@ -82,6 +82,15 @@ Frame "DIALOG" "SheepTagPlayerRowTemplate" {
     SetPoint LEFT, "SheepTagPlayerRowTemplate", LEFT, 0.005, 0,
   }
 
+  Frame "BACKDROP" "SheepTagPlayerTeamCrown" {
+    UseActiveContext,
+    SetPoint LEFT, "SheepTagPlayerRowTemplate", LEFT, 0.0045, 0,
+    Width 0.013,
+    Height 0.013,
+    BackdropBackground "ui\widgets\console\human\commandbutton\human-multipleselection-border.blp",
+    BackdropBlendAll,
+  }
+
   Frame "BACKDROP" "SheepTagPlayerRowPub" {
     UseActiveContext,
     SetPoint TOPRIGHT, "SheepTagPlayerTeam", TOPRIGHT, 0.003, 0.001,

@@ -96,6 +96,19 @@ export class FrameEx extends Frame {
     return parent;
   }
 
+  get text() {
+    return BlzFrameGetText(this.handle) ?? "";
+  }
+
+  set text(text: string) {
+    if (BlzFrameGetText(this.handle) !== text) BlzFrameSetText(this.handle, text);
+  }
+
+  setText(text: string) {
+    if (BlzFrameGetText(this.handle) !== text) BlzFrameSetText(this.handle, text);
+    return this;
+  }
+
   static create(
     name: string,
     owner: FrameEx | Frame | framehandle | string | originframetype,

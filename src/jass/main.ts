@@ -16,7 +16,6 @@ import "./triggers/farmFunctions/createFarm";
 import "./triggers/zoomFunctions/zoom";
 import "./triggers/zoomFunctions/zoomMsg";
 import "./triggers/zoomFunctions/escFix";
-import "./triggers/itemFunctions/kaleidoscope";
 import "./triggers/itemFunctions/suppressionField";
 import "./triggers/itemFunctions/useItem";
 import "./triggers/itemFunctions/attackFarmBeamPot";
@@ -663,8 +662,6 @@ declare global {
   let createSheepTimer: timer;
   // deno-lint-ignore prefer-const
   let gSheepAbilityFlag: Array<number>;
-  // deno-lint-ignore prefer-const
-  let kaleidoscope: number;
   let lastSheepReceiver: player | null;
   let lastWolfReceiver: player | null;
   // deno-lint-ignore prefer-const
@@ -871,7 +868,6 @@ AFKers = CreateForce()!;
 vampOn = false;
 someoneLeft = false;
 gSheepAbilityFlag = [];
-kaleidoscope = FourCC("I00X");
 lastReceivedFrom = [];
 goldCount = Array.from({ length: bj_MAX_PLAYERS }, () => 0);
 
@@ -1041,10 +1037,11 @@ transferGold = (
   }
 
   if (display >= TRANSFER_DISPLAY_SOURCE) {
-    DisplayTextToPlayer(
+    DisplayTimedTextToPlayer(
       sender,
       0,
       0,
+      3,
       `|CFFFFCC00Gave ${I2S(amount)} gold to ${MapPlayerEx.fromHandle(receiver)}|CFFFFCC00.|r`,
     );
   }
@@ -1053,23 +1050,25 @@ transferGold = (
     ? ForceEx.wolves.size()
     : ForceEx.sheep.size() + ForceEx.wisps.size();
 
-  if (display >= TRANSFER_DISPLAY_INVOLVED && amount >= 3 + teamSize) {
-    DisplayTextToPlayer(
+  if (display >= TRANSFER_DISPLAY_INVOLVED && amount >= 2 + teamSize * 3) {
+    DisplayTimedTextToPlayer(
       receiver,
       0,
       0,
+      3,
       `|CFFFFCC00Received ${I2S(amount)} gold from ${MapPlayerEx.fromHandle(sender)}|CFFFFCC00.|r`,
     );
   }
 
-  if (display >= TRANSFER_DISPLAY_TEAM && amount >= 3 + teamSize) {
+  if (display >= TRANSFER_DISPLAY_TEAM && amount >= 2 + teamSize * 3) {
     for (let i = 0; i < bj_MAX_PLAYERS; i++) {
       const p = Player(i);
       if (p && p !== sender && p !== receiver && IsPlayerAlly(sender, p)) {
-        DisplayTextToPlayer(
+        DisplayTimedTextToPlayer(
           p,
           0,
           0,
+          3,
           `${MapPlayerEx.fromHandle(sender)} |CFFFFCC00gave ${I2S(amount)} gold to ${
             MapPlayerEx.fromHandle(receiver)
           }|CFFFFCC00.|r`,
@@ -1541,7 +1540,6 @@ const InitCustomTriggers = () => {
   InitTrig_attackFarmBeamPot();
   InitTrig_useItem();
   InitTrig_suppressionField();
-  InitTrig_kaleidoscope();
   InitTrig_escFix();
   InitTrig_zoom();
   InitTrig_zoomMsg();

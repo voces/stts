@@ -5,6 +5,8 @@ import { TriggerEx } from "./TriggerEx";
 const map = new WeakMap<unit, UnitEx>();
 
 export class UnitEx extends Unit {
+  private triggers: TriggerEx[] = [];
+
   get owner() {
     return MapPlayerEx.fromHandle(GetOwningPlayer(this.handle));
   }
@@ -38,8 +40,16 @@ export class UnitEx extends Unit {
     return GetUnitAbilityLevel(this.handle, buffId) > 0;
   }
 
+  onDamaged(fn: () => void) {
+    const t = TriggerEx.create();
+    this.triggers.push(t);
+    t.registerUnitEvent(this, EVENT_UNIT_DAMAGED);
+    t.addAction(fn);
+  }
+
   onDeath(fn: (event: { killingUnit?: UnitEx }) => void) {
     const t = TriggerEx.create();
+    this.triggers.push(t);
     t.registerUnitEvent(this, EVENT_UNIT_DEATH);
     t.addAction(() => {
       try {
@@ -51,6 +61,11 @@ export class UnitEx extends Unit {
         t.destroy();
       }
     });
+  }
+
+  destroy(): void {
+    for (const t of this.triggers) t.destroy();
+    super.destroy();
   }
 
   static create(

@@ -34,6 +34,7 @@ import { frames } from "ui/frames";
 import { parseDesiredSheep, toStringWithPrecision } from "ui/util";
 import { Checkbox, editBoxDelayedOnChange, getFrames, setupEditableText, setupSlider } from "./util";
 import { toggleView } from "settings/view";
+import { setTimeout } from "util/setTimeout";
 
 export const initIntermission = () => {
   FrameEx.create("SheepTagIntermission", "ConsoleUIBackdrop");
@@ -236,7 +237,7 @@ export const initIntermission = () => {
     onChange: ({ value }) => {
       const parsed = Math.min(Math.max(tonumber(value) ?? 0, 23), 500);
       president.handicap = parsed / 100;
-      if (presidentHandicap.text !== parsed.toFixed(0)) presidentHandicap.text = parsed.toFixed(0);
+      presidentHandicap.text = parsed.toFixed(0);
     },
   });
 
@@ -280,34 +281,34 @@ export const initIntermission = () => {
   editBoxDelayedOnChange(sheepGold, {
     onChange: ({ value }) => {
       udg_sheepGold = Math.min(Math.max(tonumber(value) ?? 0, 0), 9999999);
-      if (sheepGold.text !== udg_sheepGold.toFixed(0)) sheepGold.text = udg_sheepGold.toFixed(0);
+      sheepGold.text = udg_sheepGold.toFixed(0);
     },
   });
   editBoxDelayedOnChange(wolfGold, {
     onChange: ({ value }) => {
       udg_wolfGold = Math.min(Math.max(tonumber(value) ?? 0, 0), 9999999);
-      if (wolfGold.text !== udg_wolfGold.toFixed(0)) wolfGold.text = udg_wolfGold.toFixed(0);
+      wolfGold.text = udg_wolfGold.toFixed(0);
     },
   });
   editBoxDelayedOnChange(sheepIncome, {
     onChange: ({ value }) => {
       income.sheep = Math.min(Math.max(tonumber(value) ?? 1, 0), 999);
       const stringified = toStringWithPrecision(income.sheep);
-      if (sheepIncome.text !== stringified) sheepIncome.text = stringified;
+      sheepIncome.text = stringified;
     },
   });
   editBoxDelayedOnChange(wolfIncome, {
     onChange: ({ value }) => {
       income.wolves = Math.min(Math.max(tonumber(value) ?? 1, 0), 999);
       const stringified = toStringWithPrecision(income.wolves);
-      if (wolfIncome.text !== stringified) wolfIncome.text = stringified;
+      wolfIncome.text = stringified;
     },
   });
   editBoxDelayedOnChange(moneyFarmIncome, {
     onChange: ({ value }) => {
       income.savings = Math.min(Math.max(tonumber(value) ?? 1, 0), 999);
       const stringified = toStringWithPrecision(income.savings);
-      if (moneyFarmIncome.text !== stringified) moneyFarmIncome.text = stringified;
+      moneyFarmIncome.text = stringified;
     },
   });
 
@@ -357,15 +358,16 @@ export const initIntermission = () => {
 
   frames.settings.desiredSheep = desiredSheep;
   updateDesiredSheep();
-  desiredSheep.onChange(({ value }) => {
-    const parsed = parseDesiredSheep(value);
-    settings.desiredSheep = parsed;
-  }, true);
+  setTimeout(0.25, () =>
+    desiredSheep.onChange(({ value }) => {
+      const parsed = parseDesiredSheep(value);
+      settings.desiredSheep = parsed;
+    }, true));
   editBoxDelayedOnChange(desiredSheep, {
     onChange: ({ value }) => {
       const parsed = parseDesiredSheep(value);
       settings.desiredSheep = parsed;
-      if (desiredSheep.text !== parsed.toFixed()) desiredSheep.text = parsed.toFixed();
+      desiredSheep.text = parsed.toFixed();
       updateIntermission();
     },
   });
@@ -451,6 +453,7 @@ export const initIntermission = () => {
     teamBackdrop.setTexture(`ReplaceableTextures/CommandButtons/${p.id > 11 ? "BTNRaider" : "BTNSheep"}.blp`);
     const disabledTeamBackdrop = team.getChild(1);
     disabledTeamBackdrop.setTexture(`ReplaceableTextures/CommandButtons/${p.id > 11 ? "BTNRaider" : "BTNSheep"}.blp`);
+    const crown = FrameEx.fromName("SheepTagPlayerTeamCrown", i).setVisible(false);
 
     const playerName = FrameEx.fromName("SheepTagPlayerRowName", i).setText(p.coloredName).setHeight(rowHeight);
 
@@ -492,6 +495,7 @@ export const initIntermission = () => {
       team,
       teamBackdrop,
       disabledTeamBackdrop,
+      crown,
       name: playerName,
       sheepCount: sheepCountLabel,
       handicap: handicapLabel,

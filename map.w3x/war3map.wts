@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 24v
+Sheep Tag ReVoLuTiOn 24w
 }
 
 STRING 40
@@ -901,7 +901,7 @@ Gray
 }
 
 STRING 2023
-// Abilities: A01F (Freak Mirror Image), Ubertip (Tooltip - Normal - Extended)
+// Abilities: A00S (Mirror Image), Ubertip (Tooltip - Normal - Extended)
 {
 Creates an image of your wolf which can be used to distract or block sheep. Can also be used to jump over walls and boundaries.
 }
@@ -2150,12 +2150,6 @@ STRING 3194
 // Items: scyt (scythe), Ubertip (Tooltip - Extended)
 {
 Increases farm bounty by double + 1 gold.|n|cffff0000Does not stack.|r|n|cffffcc0080 gold.|r |n|cff00aeef-buy scythe: 112 gold.|r
-}
-
-STRING 3225
-// Items: I002 (bomber), Ubertip (Tooltip - Extended)
-{
-Bombs the target area destroying trees and damaging farms.|n|cffffcc0055 gold.|r |n|cff00aeef-buy bomber: 75 gold.|r
 }
 
 STRING 3231
@@ -3616,12 +3610,6 @@ STRING 3884
 Purchase Kaleidoscope
 }
 
-STRING 3887
-// Abilities: A00S (Mirror Image), Ubertip (Tooltip - Normal - Extended)
-{
-Creates an image of your wolf does 25% damage to farms and can be used to distract or block sheep. Can also be used to jump over walls and boundaries.
-}
-
 STRING 3888
 // Abilities: A01I (Far Sight), Hotkey (Hotkey - Normal)
 {
@@ -4175,7 +4163,7 @@ STRING 4135
 }
 
 STRING 4138
-// Buffs/Effects: B00M (Spider Blessing), EditorSuffix (Editor Suffix)
+// Buffs/Effects: B00M (Stag Blessing), EditorSuffix (Editor Suffix)
 {
 (Critter)
 }
@@ -4791,24 +4779,6 @@ STRING 4288
 Elven Building (Spooky)
 }
 
-STRING 4290
-// Buffs/Effects: B00M (Spider Blessing), EditorName (Name (Editor Only))
-{
-Spider Blessing
-}
-
-STRING 4291
-// Buffs/Effects: B00M (Spider Blessing), Buffubertip (Tooltip - Extended)
-{
-This unit has been blessed by a spider; it has greatly increased armor.
-}
-
-STRING 4292
-// Buffs/Effects: B00M (Spider Blessing), Bufftip (Tooltip)
-{
-Spider Blessing
-}
-
 STRING 4294
 // Units: n00S (Dolly), Name (Name)
 {
@@ -4821,20 +4791,68 @@ STRING 4295
 (Ghost)
 }
 
-STRING 4296
-{
-|cff00ff0024v|r
-}
-
-STRING 4297
-// Items: I012 (goblins), Ubertip (Tooltip - Extended)
-{
-Calls for aerial goblin support to help destroy farms.|n|cffffcc00400 gold.|r|n|cff00aeef-buy goblins: 440 gold.|r
-}
-
 STRING 4298
 // Abilities: A02S (Goblin Support), Name (Name)
 {
 Goblin Support
+}
+
+STRING 4299
+{
+|cff00ff0024w|r
+}
+
+STRING 4303
+// Buffs/Effects: B00M (Stag Blessing), EditorName (Name (Editor Only))
+{
+Stag Blessing
+}
+
+STRING 4304
+// Buffs/Effects: B00M (Stag Blessing), Buffubertip (Tooltip - Extended)
+{
+This unit has been blessed by a stag; it has greatly increased armor.
+}
+
+STRING 4305
+// Buffs/Effects: B00M (Stag Blessing), Bufftip (Tooltip)
+{
+Stag Blessing
+}
+
+STRING 4306
+// Abilities: A02N (Bite), Tip (Tooltip - Normal)
+{
+Bite
+}
+
+STRING 4307
+// Abilities: A02N (Bite), Name (Name)
+{
+Bite
+}
+
+STRING 4309
+// Abilities: A02N (Bite), Ubertip (Tooltip - Normal - Extended)
+{
+Attacks the opponent for 0.5 seconds.
+}
+
+STRING 4310
+// Items: I002 (bomber), Ubertip (Tooltip - Extended)
+{
+Bombs the target area destroying trees and damaging farms.|n|cffffcc0055 gold.|r |n|cff00aeef-buy bomber: 77 gold.|r
+}
+
+STRING 4311
+// Abilities: A01F (Freak Mirror Image), Ubertip (Tooltip - Normal - Extended)
+{
+Creates an image of your wolf which can be used to distract or block sheep. Can also be used to jump over walls and boundaries.
+}
+
+STRING 4313
+// Items: I012 (goblins), Ubertip (Tooltip - Extended)
+{
+Calls for aerial goblin support to help destroy farms. Surviving factories grant a total refund up to 150 gold.|n|cffffcc00450 gold.|r|n|cff00aeef-buy goblins: 490 gold.|r
 }
 

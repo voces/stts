@@ -5,7 +5,7 @@ import { MapPlayerEx } from "handles/MapPlayerEx";
 import { GOLD_COLOR, RED_COLOR, WHITE_COLOR } from "../constants";
 import { onUpdateIntermission } from "../hooks";
 import { farmVision, income, president, settings, spawnSetting, switchSetting } from "settings/settings";
-import { getTimes } from "stats/times";
+import { getTimes, Round, rounds } from "stats/times";
 import { ui } from "ui/data";
 
 const updatePresidentHandicap = () => {
@@ -76,7 +76,7 @@ export const updateDesiredSheep = () => {
     previousPlayersCount = playerCount;
   }
   const stringified = settings.desiredSheep.toFixed(0);
-  if (frames.settings.desiredSheep.text !== stringified) frames.settings.desiredSheep.text = stringified;
+  frames.settings.desiredSheep.text = stringified;
 };
 
 export const updatePlayers = () => {
@@ -91,6 +91,13 @@ export const updatePlayers = () => {
   let bestAverage: { players: FrameEx[]; average: number } = { players: [], average: -1 };
   let bestDO: { players: FrameEx[]; do: number } = { players: [], do: 25 };
 
+  let bestRound: Round | undefined;
+  for (const round of rounds) {
+    if (round.sheep.length === sheep && round.wolves.length === wolves && (!bestRound || bestRound.time < round.time)) {
+      bestRound = round;
+    }
+  }
+
   for (let i = 0; i < bj_MAX_PLAYERS; i++) {
     if (!frames.players[i]) continue;
     const p = MapPlayerEx.fromIndex(i)!;
@@ -100,6 +107,7 @@ export const updatePlayers = () => {
       team,
       teamBackdrop,
       disabledTeamBackdrop,
+      crown,
       name,
       sheepCount,
       handicap,
@@ -127,6 +135,8 @@ export const updatePlayers = () => {
     [teamBackdrop, disabledTeamBackdrop].forEach((b) =>
       b.setTexture(`ReplaceableTextures/CommandButtons/${variant}.blp`)
     );
+
+    crown.setVisible(bestRound?.sheep.includes(p) ?? false);
 
     sheepCount.text = p.sheepCount.toFixed(0);
 

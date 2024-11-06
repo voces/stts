@@ -1,4 +1,5 @@
 export const ABILITY_TYPE_ID_ARMOR_AURA = FourCC("A00C");
+export const ABILITY_TYPE_ID_BITE = FourCC("A02N");
 export const ABILITY_TYPE_ID_BLUE_WARD = FourCC("A00M");
 export const ABILITY_TYPE_ID_GIVE_ALLY_GOLD_WOLF = FourCC("A00V");
 export const ABILITY_TYPE_ID_GOBLINS = FourCC("A02S");

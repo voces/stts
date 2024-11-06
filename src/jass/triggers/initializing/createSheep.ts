@@ -4,7 +4,12 @@ import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { clearForces } from "util/clearForces";
 import { spawns } from "settings/spawns";
 import { createCritter } from "misc/critter";
-import { ABILITY_TYPE_ID_RESET_START_POSITION, UNIT_TYPE_ID_GUIDE_FARM, UNIT_TYPE_ID_START_POSITION } from "constants";
+import {
+  ABILITY_TYPE_ID_BITE,
+  ABILITY_TYPE_ID_RESET_START_POSITION,
+  UNIT_TYPE_ID_GUIDE_FARM,
+  UNIT_TYPE_ID_START_POSITION,
+} from "constants";
 import { switchSheepTimers } from "modes/switch/switch";
 import { startUpdatingLeaderboard } from "modes/switch/updateLeaderboard";
 import { enableIncome } from "functions/farms/savingFarms";
@@ -136,32 +141,30 @@ const Trig_createSheep_addToSheepAndWolf = () => {
 };
 
 const Trig_createSheep_sheepActionsB = () => {
-  let i = 1;
-  const enumPlayerId = GetConvertedPlayerId(GetEnumPlayer()!);
+  const p = MapPlayerEx.fromEnum()!;
+  const enumPlayerId = p.cid;
 
-  SetPlayerState(GetEnumPlayer()!, PLAYER_STATE_RESOURCE_GOLD, udg_practiceOn ? 1000000 : udg_sheepGold);
+  SetPlayerState(p.handle, PLAYER_STATE_RESOURCE_GOLD, udg_practiceOn ? 10000 : udg_sheepGold);
 
   if (udg_AFK[enumPlayerId] === AFK_AFK_DURING_ROUND) {
-    while (true) {
-      if (i > udg_lastPlayer) break;
-      SetPlayerAllianceStateBJ(GetEnumPlayer()!, ConvertedPlayer(i)!, bj_ALLIANCE_ALLIED_ADVUNITS);
-      i = i + 1;
+    for (let i = 1; i <= udg_lastPlayer; i++) {
+      SetPlayerAllianceStateBJ(p.handle, ConvertedPlayer(i)!, bj_ALLIANCE_ALLIED_ADVUNITS);
     }
   }
 
   udg_sheepLastGame[enumPlayerId] = true;
 
-  const spawn = spawns.get(GetEnumPlayer()!) ?? { x: 0, y: 0 };
+  const spawn = spawns.get(p.handle) ?? { x: 0, y: 0 };
 
-  PanCameraToTimedForPlayer(GetEnumPlayer()!, spawn.x, spawn.y, 0);
-  const u = CreateUnit(GetEnumPlayer()!, sheepType, spawn.x, spawn.y, 270)!;
-  if (
-    president.enabled &&
-    president.president?.id === GetPlayerId(GetEnumPlayer()!)
-  ) applyPresidentBuff(u);
+  PanCameraToTimedForPlayer(p.handle, spawn.x, spawn.y, 0);
+  const u = CreateUnit(p.handle, sheepType, spawn.x, spawn.y, 270)!;
+  if (president.enabled) {
+    if (president.president?.id === GetPlayerId(p.handle)) applyPresidentBuff(u);
+    else UnitAddAbility(u, ABILITY_TYPE_ID_BITE);
+  }
 
-  SelectUnitForPlayerSingle(u, GetEnumPlayer()!);
-  ForceUICancelBJ(GetEnumPlayer()!);
+  SelectUnitForPlayerSingle(u, p.handle);
+  ForceUICancelBJ(p.handle);
   udg_unit[enumPlayerId] = u;
 
   if (udg_switchOn || udg_practiceOn) {
@@ -174,22 +177,22 @@ const Trig_createSheep_sheepActionsB = () => {
       UnitAddItemById(u, FourCC("I00Q"));
       if (!udg_disable[enumPlayerId]) UnitAddAbility(u, destroyAllFarms);
 
-      CreateUnit(GetEnumPlayer()!, wispType, RandomX(terrain.wisp), RandomY(terrain.wisp), 270);
+      CreateUnit(p.handle, wispType, RandomX(terrain.wisp), RandomY(terrain.wisp), 270);
     } else {
       UnitAddAbility(u, destroyAllFarms);
-      switchSheepTimers[GetPlayerId(GetEnumPlayer()!)].resume();
+      switchSheepTimers[GetPlayerId(p.handle)].resume();
     }
-  } else if (!udg_shareOn) UnitRemoveAbility(u, shareControlAbility);
+  } else if (!udg_shareOn || p.controller === MAP_CONTROL_COMPUTER) UnitRemoveAbility(u, shareControlAbility);
 
   if (udg_sheepZoom[enumPlayerId] > 0) {
-    SetCameraFieldForPlayer(GetEnumPlayer()!, CAMERA_FIELD_TARGET_DISTANCE, udg_sheepZoom[enumPlayerId], 0);
+    SetCameraFieldForPlayer(p.handle, CAMERA_FIELD_TARGET_DISTANCE, udg_sheepZoom[enumPlayerId], 0);
   }
 };
 
 const Trig_createSheep_wolfActionsB = () => {
   const enumPlayerId = GetConvertedPlayerId(GetEnumPlayer()!);
 
-  SetPlayerState(GetEnumPlayer()!, PLAYER_STATE_RESOURCE_GOLD, udg_practiceOn ? 1000000 : udg_wolfGold);
+  SetPlayerState(GetEnumPlayer()!, PLAYER_STATE_RESOURCE_GOLD, udg_practiceOn ? 10000 : udg_wolfGold);
 
   udg_sheepLastGame[enumPlayerId] = false;
 
@@ -382,6 +385,7 @@ const Trig_createSheep_Actions = () => {
   if (!udg_practiceOn) {
     if (CountPlayersInForceBJ(udg_Wolf) === 0) return TriggerExecute(gg_trg_sheepWin);
     if (CountPlayersInForceBJ(udg_Sheep) === 0) return TriggerExecute(gg_trg_wolvesWin);
+    settings.desiredSheep = ForceEx.sheep.size();
   }
 
   for (const [rect, type] of terrain.shops) {

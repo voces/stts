@@ -8,10 +8,6 @@ let trigger: Trigger;
 
 const testMass = new Map<MapPlayerEx, { width: number; height: number; gap: number; owner: number }>();
 
-// const farms = {
-//   farm: "hhou",
-// };
-
 game.onCommand({
   trigger: "-testmass",
   host: false,

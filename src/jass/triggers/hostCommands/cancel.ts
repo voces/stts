@@ -39,7 +39,6 @@ const Trig_cancel_Actions = () => {
   }
 
   if (!udg_switchOn && !vampOn && !udg_practiceOn && udg_Teams === TEAMS_LOCK_IE_PLAYING) {
-    SetTimeOfDay(GetRandomReal(0, 24));
     ForForce(udg_Sheep, Trig_cancel_resetSheepState);
     ForForce(udg_Spirit, Trig_cancel_resetSheepState);
   }

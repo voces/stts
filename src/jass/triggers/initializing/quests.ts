@@ -27,11 +27,6 @@ Wrda
 
 |cffffcc00Assets & Tools|r
 HideShow icon: darkdeathknight
-Gilneas buildings: CloudWolf
-Black farm: Val_09
-Pumpkin: R2D2
-Pumpkin header: Usedwell
-Zombie sheep: VoidLordXtreme
 Model editor: Retera
 Help from Hive, especially Tasyen's UI guides`,
     "ReplaceableTextures\\CommandButtons\\BTNPeasant.blp",
@@ -91,3 +86,13 @@ dazzzzeee`,
     );
   });
 });
+
+/**
+
+Gilneas buildings: CloudWolf
+Black farm: Val_09
+Pumpkin: R2D2
+Pumpkin header: Usedwell
+Zombie sheep: VoidLordXtreme
+
+*/

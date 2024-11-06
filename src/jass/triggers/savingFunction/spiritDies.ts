@@ -1,3 +1,4 @@
+import { ABILITY_TYPE_ID_BITE } from "constants";
 import { president, terrain } from "settings/settings";
 
 const Trig_spiritDies_Conditions = () => {
@@ -37,6 +38,8 @@ const Trig_spiritDies_Actions = () => {
   PanCameraToTimedForPlayer(dyingPlayer, x, y, 0);
   udg_unit[dyingPlayerId] = u;
   SelectUnitForPlayerSingle(u, dyingPlayer);
+  if (president.enabled) UnitAddAbility(u, ABILITY_TYPE_ID_BITE);
+  if (GetPlayerController(dyingPlayer) === MAP_CONTROL_COMPUTER) UnitRemoveAbility(u, shareControlAbility);
 
   AdjustPlayerStateBJ(100, killingPlayer, PLAYER_STATE_RESOURCE_GOLD);
   AdjustPlayerStateBJ(20, dyingPlayer, PLAYER_STATE_RESOURCE_GOLD);

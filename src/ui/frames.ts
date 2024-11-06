@@ -53,6 +53,7 @@ export const frames: {
     team: FrameEx;
     teamBackdrop: FrameEx;
     disabledTeamBackdrop: FrameEx;
+    crown: FrameEx;
     name: FrameEx;
     sheepCount: FrameEx;
     handicap: FrameEx;

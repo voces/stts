@@ -15,23 +15,6 @@ type Item = {
 
 const items: Item[] = [];
 
-const getSelectedInventoryUnit = (allowEmpty: boolean) => {
-  const g = CreateGroup()!;
-  const p = GetTriggerPlayer()!;
-  GroupEnumUnitsSelected(
-    g,
-    p,
-    Filter(() => {
-      const u = UnitEx.fromFilter();
-      return u && !u.isIllusion() && (u.inventorySize - (allowEmpty ? 0 : UnitInventoryCount(u.handle)) > 0) &&
-        u.isAlly(MapPlayerEx.fromHandle(p));
-    }),
-  );
-  const u = FirstOfGroup(g);
-  DestroyGroup(g);
-  return u || udg_unit[GetPlayerId(p) + 1];
-};
-
 const teamHasTeamItem = (item: Item, player: player) => {
   if (!item.one) return false;
 
@@ -70,21 +53,20 @@ const BuySellItem__buyAction = () => {
 
   if ((parts[0] !== "-buy" && parts[0] !== "-b") || parts.length !== 2 || parts[1].length === 0) return;
 
-  const u = getSelectedInventoryUnit(false);
-  if (!u) return;
-
   const p = GetTriggerPlayer()!;
+  const u = (udg_practiceOn ? udg_unit2 : udg_unit)[GetPlayerId(p) + 1];
+  if (!u) return;
 
   for (let i = 0; i < items.length; i++) {
     if (items[i].name.startsWith(parts[1])) {
       if (teamHasTeamItem(items[i], p)) return;
 
-      if (GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) >= items[i].cost) {
+      if (GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) >= items[i].cost * 1.4) {
         UnitAddItemById(u, items[i].id);
-        AdjustPlayerStateSimpleBJ(p, PLAYER_STATE_RESOURCE_GOLD, -items[i].cost);
+        AdjustPlayerStateSimpleBJ(p, PLAYER_STATE_RESOURCE_GOLD, -Math.round(items[i].cost * 1.4));
       } else {
         if (p === GetLocalPlayer()) StartSound(gg_snd_Error);
-        DisplayTimedTextToPlayer(p, 0, 0, 15, "|CFF00AEEFThat item set is " + I2S(items[i].cost) + " gold.");
+        DisplayTimedTextToPlayer(p, 0, 0, 15, "|CFF00AEEFThat item is " + (items[i].cost * 1.4).toFixed() + " gold.");
       }
       break;
     }
@@ -96,7 +78,8 @@ const BuySellItem__sellAction = () => {
 
   if ((parts[0] !== "-sell" && parts[0] !== "-s") || parts.length !== 2 || parts[1].length === 0) return;
 
-  const u = getSelectedInventoryUnit(true);
+  const p = GetTriggerPlayer()!;
+  const u = (udg_practiceOn ? udg_unit2 : udg_unit)[GetPlayerId(p) + 1];
   if (!u) return;
 
   const slot = S2I(parts[1]) - 1;
@@ -106,7 +89,8 @@ const BuySellItem__sellAction = () => {
   const itemId = GetItemTypeId(itm);
   for (let i = 0; i < items.length; i++) {
     if (itemId === items[i].id) {
-      AdjustPlayerStateSimpleBJ(GetTriggerPlayer()!, PLAYER_STATE_RESOURCE_GOLD, R2I(I2R(items[i].cost) / 4.2));
+      const worth = items[i].cost * Math.max(1, GetItemCharges(itm));
+      AdjustPlayerStateSimpleBJ(p, PLAYER_STATE_RESOURCE_GOLD, Math.round(Math.max(worth * 0.57, worth * 0.8 - 40)));
       RemoveItem(itm);
       break;
     }
@@ -115,34 +99,22 @@ const BuySellItem__sellAction = () => {
 
 const BuySellItem__sellAllAction = () => {
   const p = GetTriggerPlayer()!;
-  const g = CreateGroup()!;
-  GroupEnumUnitsSelected(
-    g,
-    p,
-    Filter(() => !IsUnitIllusion(GetFilterUnit()!) && UnitInventoryCount(GetFilterUnit()!) > 0),
-  )!;
-  let u = FirstOfGroup(g);
+  const u = (udg_practiceOn ? udg_unit2 : udg_unit)[GetPlayerId(p) + 1];
 
-  while (u) {
-    for (let i = 0; i < bj_MAX_INVENTORY; i++) {
-      const itm = UnitItemInSlot(u, i);
-      if (!itm) continue;
-      const itemId = GetItemTypeId(itm);
+  for (let i = 0; i < bj_MAX_INVENTORY; i++) {
+    const itm = UnitItemInSlot(u, i);
+    if (!itm) continue;
+    const itemId = GetItemTypeId(itm);
 
-      for (let n = 0; n < items.length; n++) {
-        if (itemId === items[n].id) {
-          AdjustPlayerStateSimpleBJ(p, PLAYER_STATE_RESOURCE_GOLD, R2I(I2R(items[n].cost) / 4.2));
-          RemoveItem(itm);
-          break;
-        }
+    for (let n = 0; n < items.length; n++) {
+      if (itemId === items[n].id) {
+        const worth = items[n].cost * Math.max(1, GetItemCharges(itm));
+        AdjustPlayerStateSimpleBJ(p, PLAYER_STATE_RESOURCE_GOLD, Math.round(Math.max(worth * 0.57, worth * 0.8 - 40)));
+        RemoveItem(itm);
+        break;
       }
     }
-
-    GroupRemoveUnit(g, u);
-    u = FirstOfGroup(g);
   }
-
-  DestroyGroup(g);
 };
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
@@ -161,41 +133,36 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   TriggerAddAction(t, BuySellItem__sellAllAction);
 
   items.push(
-    { name: "1c", cost: 200, id: FourCC("I005") },
-    { name: "boots", cost: 112, id: FourCC("I009"), quick: "n00Q" },
-    { name: "ball", cost: 28, id: FourCC("I006") }, // alias for crystal
-    { name: "bril", cost: 98, id: FourCC("I003"), one: true },
-    { name: "beam", cost: 112, id: FourCC("I000"), quick: "n00L" },
-    { name: "bomber", cost: 75, id: FourCC("I002"), quick: "n00J" },
-    { name: "c8", cost: 21, id: FourCC("I00B") },
-    { name: "c16", cost: 49, id: FourCC("I008") },
-    { name: "c55", cost: 200, id: FourCC("I005") },
-    { name: "club", cost: 56, id: FourCC("I00Z") },
-    { name: "cloak", cost: 200, id: FourCC("I001") },
-    { name: "crystal", cost: 28, id: FourCC("I006") }, // alias for ball
-    { name: "drums", cost: 175, id: FourCC("I00U"), quick: "n00O", one: true },
-    { name: "disease", cost: 140, id: FourCC("I010") },
-    { name: "endur", cost: 112, id: FourCC("I00H"), quick: "n00N", one: true },
-    { name: "forb", cost: 200, id: FourCC("I00W") }, // alias for orb
-    { name: "gloves", cost: 112, id: FourCC("I004") },
-    { name: "gem", cost: 56, id: FourCC("I00E") },
-    { name: "goblins", cost: 440, id: FourCC("I012") },
-    { name: "golem", cost: 140, id: FourCC("I00A"), quick: "n00I" },
-    { name: "hay", cost: 42, id: FourCC("I011"), quick: "n00M" },
-    { name: "kaleidoscope", cost: 112, id: FourCC("I00X") },
-    { name: "mana", cost: 49, id: FourCC("I00D") },
-    { name: "mastery", cost: 140, id: FourCC("I00Y") },
-    { name: "neck", cost: 112, id: FourCC("I00I"), quick: "n00P" },
-    { name: "orb", cost: 200, id: FourCC("I00W") }, // alias for forb
-    { name: "r110", cost: 112, id: FourCC("I00M") },
-    { name: "sheep", cost: 56, id: FourCC("I00G"), one: true },
-    { name: "suppression", cost: 126, id: FourCC("I00V"), quick: "n00R" },
-    { name: "scythe", cost: 112, id: FourCC("scyt") },
-    { name: "scepter", cost: 140, id: FourCC("I00Y") },
-    { name: "sobi", cost: 56, id: FourCC("I00N") },
-    { name: "speed", cost: 42, id: FourCC("I00F"), quick: "n00H" },
-    { name: "str", cost: 35, id: FourCC("I007"), quick: "n00K" },
-    { name: "velocity", cost: 112, id: FourCC("I00T") },
+    { name: "1c", cost: 160, id: FourCC("I005") },
+    { name: "boots", cost: 80, id: FourCC("I009"), quick: "n00Q" },
+    { name: "ball", cost: 20, id: FourCC("I006") }, // alias for crystal
+    { name: "bril", cost: 70, id: FourCC("I003"), one: true },
+    { name: "beam", cost: 80, id: FourCC("I000"), quick: "n00L" },
+    { name: "bomber", cost: 55, id: FourCC("I002"), quick: "n00J" },
+    { name: "c8", cost: 15, id: FourCC("I00B") },
+    { name: "c16", cost: 35, id: FourCC("I008") },
+    { name: "c55", cost: 160, id: FourCC("I005") },
+    { name: "cloak", cost: 160, id: FourCC("I001") },
+    { name: "crystal", cost: 20, id: FourCC("I006") }, // alias for ball
+    { name: "drums", cost: 135, id: FourCC("I00U"), quick: "n00O", one: true },
+    { name: "disease", cost: 100, id: FourCC("I010") },
+    { name: "endur", cost: 80, id: FourCC("I00H"), quick: "n00N", one: true },
+    { name: "forb", cost: 160, id: FourCC("I00W") }, // alias for orb
+    { name: "gloves", cost: 80, id: FourCC("I004") },
+    { name: "goblins", cost: 450, id: FourCC("I012") },
+    { name: "golem", cost: 100, id: FourCC("I00A"), quick: "n00I" },
+    { name: "hay", cost: 30, id: FourCC("I011"), quick: "n00M" },
+    { name: "mana", cost: 35, id: FourCC("I00D") },
+    { name: "neck", cost: 80, id: FourCC("I00I"), quick: "n00P" },
+    { name: "orb", cost: 160, id: FourCC("I00W") }, // alias for forb
+    { name: "r110", cost: 80, id: FourCC("I00M") },
+    { name: "sheep", cost: 40, id: FourCC("I00G"), one: true },
+    { name: "suppression", cost: 90, id: FourCC("I00V"), quick: "n00R" },
+    { name: "scythe", cost: 80, id: FourCC("scyt") },
+    { name: "sobi", cost: 40, id: FourCC("I00N") },
+    { name: "speed", cost: 30, id: FourCC("I00F"), quick: "n00H" },
+    { name: "str", cost: 25, id: FourCC("I007"), quick: "n00K" },
+    { name: "velocity", cost: 80, id: FourCC("I00T") },
   );
 
   for (let i = 0; i < items.length; i++) {
@@ -206,10 +173,10 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     TriggerRegisterCommandEvent(t, FourCC("AEbu"), UnitId2String(FourCC(quick))!);
     TriggerAddAction(t, () => {
       const u = UnitEx.fromEvent();
-      if (!u || !u.isAlive() || u.owner.gold < item.cost) return;
+      if (!u || !u.isAlive() || u.owner.gold < item.cost * 1.4) return;
       if (teamHasTeamItem(item, GetOwningPlayer(u.handle))) return;
       if (u.isSelected(MapPlayerEx.fromLocal())) ForceUICancel();
-      u.owner.gold -= item.cost;
+      u.owner.gold -= Math.round(item.cost * 1.4);
       u.addItemById(item.id);
     });
   }

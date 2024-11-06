@@ -22,7 +22,7 @@ const accelerationWindow = 1500;
 const waveCount = 4;
 const waveSize = 5;
 const waveFrequency = 4;
-const refund = 100;
+const refund = 150;
 
 const refunds = new WeakMap<UnitEx, number>();
 
@@ -127,7 +127,13 @@ game.onConstructionStart(({ unit }) => {
   const sapper = group.first;
   if (sapper) {
     const sapperRecovery = refunds.get(sapper)!;
-    if (typeof sapperRecovery === "number") refunds.set(unit, sapperRecovery);
+    if (typeof sapperRecovery === "number") {
+      refunds.set(unit, sapperRecovery);
+      unit.onDamaged(() => {
+        TriggerSleepAction(0);
+        refunds.set(unit, sapperRecovery * unit.life / unit.maxLife);
+      });
+    }
   }
 });
 

@@ -15,10 +15,11 @@ export const setupSlider = (
 
   display.clearPoints();
   display.setPoint(FRAMEPOINT_BOTTOM, slider.getChild(2), FRAMEPOINT_TOP, 0, 0);
-  slider.onSliderChange(({ value }) => {
-    display.text = format(value);
-    onChange?.(value);
-  }, true);
+  setTimeout(0.25, () =>
+    slider.onSliderChange(({ value }) => {
+      display.text = format(value);
+      onChange?.(value);
+    }, true));
 
   return slider;
 };
@@ -31,10 +32,12 @@ export const editBoxDelayedOnChange = (
   },
 ) => {
   let timer: Timeout | undefined;
-  editBox.onChange(({ value }) => {
-    timer?.cancel();
-    timer = setTimeout(delay, () => onChange?.({ ...frames, value }));
-  }, true);
+  setTimeout(0.25, () => {
+    editBox.onChange(({ value }) => {
+      timer?.cancel();
+      timer = setTimeout(delay, () => onChange?.({ ...frames, value }));
+    }, true);
+  });
 };
 
 export const setupEditableText = (
@@ -53,15 +56,16 @@ export const setupEditableText = (
   editBox.visible = false;
   let timer: Timeout | undefined;
   let justClicked = false;
-  editBox.onChange(({ value }) => {
-    if (justClicked) return justClicked = false;
-    timer?.cancel();
-    timer = setTimeout(1, () => {
-      label.visible = true;
-      editBox.setFocus(false).setVisible(false);
-      onBlur?.({ ...frames, modified: true, value });
-    });
-  }, true);
+  setTimeout(0.25, () =>
+    editBox.onChange(({ value }) => {
+      if (justClicked) return justClicked = false;
+      timer?.cancel();
+      timer = setTimeout(1, () => {
+        label.visible = true;
+        editBox.setFocus(false).setVisible(false);
+        onBlur?.({ ...frames, modified: true, value });
+      });
+    }, true));
   label.onClick(({ player }) => {
     if (!player.isHost) return;
     justClicked = true;
