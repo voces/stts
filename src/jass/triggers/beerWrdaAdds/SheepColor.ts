@@ -80,11 +80,11 @@ const Trig_Sheep_Color_Actions = () => {
     GetForceOfPlayer(GetTriggerPlayer()!)!,
     10,
     "Sheep color changed to " +
-      R2S(udg_SheepColorR[GetConvertedPlayerId(GetTriggerPlayer()!)]) +
+      udg_SheepColorR[GetConvertedPlayerId(GetTriggerPlayer()!)].toFixed(3) +
       "% |CFFFF0000Red|r " +
-      R2S(udg_SheepColorG[GetConvertedPlayerId(GetTriggerPlayer()!)]) +
+      udg_SheepColorG[GetConvertedPlayerId(GetTriggerPlayer()!)].toFixed(3) +
       "% |CFF18BE00Green|r " +
-      R2S(udg_SheepColorB[GetConvertedPlayerId(GetTriggerPlayer()!)]) +
+      udg_SheepColorB[GetConvertedPlayerId(GetTriggerPlayer()!)].toFixed(3) +
       "% |CFF0000FFBlue|r",
   );
   ForGroupBJ(

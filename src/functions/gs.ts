@@ -37,11 +37,11 @@ const gsDistribute = (available: number, players: GSPlayer[]): void => {
 
 export const gsDistributeGold = (
   fromPlayer: player,
-  allGold: boolean,
+  allGoldOrReserve: boolean | number,
   display: DisplayType = TRANSFER_DISPLAY_INVOLVED,
 ): void => {
   const pId = GetPlayerId(fromPlayer);
-  const includeSelf = !allGold;
+  const includeSelf = allGoldOrReserve === false;
   const players: GSPlayer[] = [];
   for (let i = 0; i < bj_MAX_PLAYERS; i++) {
     const isAlly = IsPlayerAlly(fromPlayer, Player(i)!);
@@ -59,7 +59,20 @@ export const gsDistributeGold = (
 
   if (players.length === 0) return;
 
+  let reserved = 0;
+  if (typeof allGoldOrReserve === "number") {
+    const current = GetPlayerState(fromPlayer, PLAYER_STATE_RESOURCE_GOLD);
+    reserved = Math.min(current, allGoldOrReserve);
+    if (reserved > 0) SetPlayerState(fromPlayer, PLAYER_STATE_RESOURCE_GOLD, current - reserved);
+  }
   gsDistribute(GetPlayerState(fromPlayer, PLAYER_STATE_RESOURCE_GOLD), players);
+  if (reserved > 0) {
+    SetPlayerState(
+      fromPlayer,
+      PLAYER_STATE_RESOURCE_GOLD,
+      GetPlayerState(fromPlayer, PLAYER_STATE_RESOURCE_GOLD) + reserved,
+    );
+  }
 
   for (const { player, dist } of players) transferGold(fromPlayer, Player(player)!, dist, display);
 };

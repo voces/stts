@@ -8,7 +8,7 @@ const Trig_Say_Q_Death_Actions = () => {
   if (pid < 0 || pid > 23) return;
   const p = MapPlayerEx.fromIndex(pid);
   if (!p || p.slotState !== PLAYER_SLOT_STATE_PLAYING) return;
-  const time = Number.isFinite(udg_QDeathTime[pid + 1]) ? `a time of ${R2S(udg_QDeathTime[pid + 1])}` : "N/A";
+  const time = Number.isFinite(udg_QDeathTime[pid + 1]) ? `a time of ${udg_QDeathTime[pid + 1].toFixed(3)}` : "N/A";
   MapPlayerEx.fromEvent()!.displayTimedText(`The quickest death for ${p} is ${time}`);
 };
 

@@ -2,6 +2,7 @@ import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { addScriptHook, Trigger, W3TS_HOOK } from "w3ts";
 import { farmVision, income, president, spawnSetting, switchSetting } from "./settings";
 import { triggerIntermissionUpdate } from "ui/hooks";
+import { FrameEx } from "handles/FrameEx";
 
 export const getDefaultTime = () => {
   const i = CountPlayersInForceBJ(udg_Sheep);
@@ -34,7 +35,8 @@ export const checkAutoTimeFlag = (skipIntermission = false) => {
 export const updateLeaderboardSettingsDisplay = (skipIntermission = false) => {
   if (!skipIntermission) triggerIntermissionUpdate();
 
-  let s = "|CFFED1C24Next: " + simpleformatTime(udg_time);
+  let s = "";
+  if (!udg_autoTime) s += ` ${simpleformatTime(udg_time)}`;
   if (udg_switchOn) {
     s += " switch";
     if (udg_wispPoints > 0) {
@@ -45,7 +47,7 @@ export const updateLeaderboardSettingsDisplay = (skipIntermission = false) => {
   if (vampOn) s += " vamp";
   if (president.enabled) s += " pres";
   if (udg_viewOn) s += " view";
-  if (farmVision.vision !== -1) s += ` v${farmVision.vision}`;
+  if (farmVision.vision !== -1) s += ` v${farmVision.vision.toFixed(0)}`;
   if (udg_mapExpand) s += " expand";
   if (udg_mapShrink) s += " shrink";
   if (udg_sheepGold > 0 || udg_wolfGold > 0) {
@@ -57,9 +59,11 @@ export const updateLeaderboardSettingsDisplay = (skipIntermission = false) => {
     else if (income.sheep === income.savings) s += ` i${income.sheep},${income.wolves}`;
     else s += ` i${income.sheep},${income.wolves},${income.savings}`;
   }
-  if (spawnSetting.mode !== "static") s += spawnSetting.mode === "free" ? " fs" : " rs";
+  if (spawnSetting.mode !== "free") s += spawnSetting.mode === "static" ? " ss" : " rs";
 
-  LeaderboardSetPlayerItemLabelBJ(Player(PLAYER_NEUTRAL_PASSIVE)!, GetLastCreatedLeaderboard()!, s);
+  if (s === "") s = " Standard";
+
+  FrameEx.fromName("ResourceBarUpkeepText").setText(string.gsub(s.slice(1), ":00", "m")[0]);
 };
 
 const Trig_time_Actions = () => {

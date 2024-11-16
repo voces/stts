@@ -1,8 +1,11 @@
-import { ABILITY_TYPE_ID_GIVE_ALLY_GOLD_WOLF } from "constants";
+import {
+  ABILITY_TYPE_ID_GIVE_ALLY_GOLD_WOLF,
+  DisplayType,
+  TRANSFER_DISPLAY_SPECIAL as TRANSFER_DISPLAY_CHANGED,
+} from "constants";
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { UnitEx } from "handles/UnitEx";
 import { president, terrain } from "settings/settings";
-import { displayToVerit } from "util/displayTimedTextToAll";
 import { isPointInRect } from "util/geometry";
 import { isUnitSameTeam } from "util/isUnitSameTeam";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
@@ -35,18 +38,6 @@ const Trig_g_showGoldCounts = () => {
     }
     triggerer.displayTimedText(`${p.coloredName_} : ${I2S(R2I(goldCount[i]))}`, 15);
     count++;
-  }
-};
-
-const markReceiver = (sender: player, target: string): void => {
-  const p = Player(S2I(target) - 1);
-
-  if (p == null || sender === p) return;
-
-  if ((IsPlayerInForce(sender, udg_Sheep) || IsPlayerInForce(sender, udg_Spirit)) && IsPlayerInForce(p, udg_Sheep)) {
-    lastSheepReceiver = p;
-  } else if (IsPlayerInForce(sender, udg_Wolf) && IsPlayerInForce(p, udg_Wolf)) {
-    lastWolfReceiver = p;
   }
 };
 
@@ -101,44 +92,37 @@ const Trig_g_leastGoldCount = (forSheep: boolean, last: player): player | null =
 export const giveAllGold = (sender: player): void => {
   const amount = GetPlayerState(sender, PLAYER_STATE_RESOURCE_GOLD);
   let changedReceiver = false;
-  let transferDisplay:
-    | typeof TRANSFER_DISPLAY_SOURCE
-    | typeof TRANSFER_DISPLAY_TEAM = TRANSFER_DISPLAY_SOURCE;
+  let transferDisplay: DisplayType = TRANSFER_DISPLAY_SOURCE;
 
   // Don't transfer 0 gold
   if (amount === 0 || !udg_giveGold) return;
 
   // Select to prioritize
-  let goldStep = "selection";
   let receiver: player | null = selectedPriority[GetPlayerId(sender)]?.[0] ?? null;
   if (receiver && IsPlayerInForce(receiver, udg_Spirit)) receiver = null;
 
   // Priority is last receiver, president, or a random person with least gc
   if (!receiver) {
     if (IsPlayerInForce(sender, udg_Sheep) || IsPlayerInForce(sender, udg_Spirit)) {
-      goldStep = "train";
       receiver = lastSheepReceiver;
       if (
-        receiver == null || receiver === sender || GetPlayerSlotState(receiver) === PLAYER_SLOT_STATE_LEFT ||
+        receiver == null || receiver === sender || GetPlayerSlotState(receiver) !== PLAYER_SLOT_STATE_PLAYING ||
         IsPlayerInForce(receiver, udg_Spirit)
       ) {
-        goldStep = president.enabled ? "president" : "algo";
         receiver = president.enabled
           ? president.president!.handle
           : Trig_g_leastGoldCount(true, lastReceivedFrom[GetPlayerId(sender)]);
       }
     } else if (IsPlayerInForce(sender, udg_Wolf)) {
       receiver = lastWolfReceiver;
-      if (receiver == null || receiver === sender || GetPlayerSlotState(receiver) === PLAYER_SLOT_STATE_LEFT) {
+      if (receiver == null || receiver === sender || GetPlayerSlotState(receiver) !== PLAYER_SLOT_STATE_PLAYING) {
         receiver = Trig_g_leastGoldCount(false, lastReceivedFrom[GetPlayerId(sender)]);
       }
     }
   }
 
   // Don't transfer to self, a leaver, or a wisp
-  if (receiver === sender || receiver == null || GetPlayerSlotState(receiver) === PLAYER_SLOT_STATE_LEFT) return;
-  // TODO: remove in 2025 if no hits
-  if (IsPlayerInForce(receiver, udg_Spirit)) displayToVerit(`Gold given to wisp on step ${goldStep}`);
+  if (receiver === sender || receiver == null || GetPlayerSlotState(receiver) !== PLAYER_SLOT_STATE_PLAYING) return;
 
   // Ensure a train is established
   if ((IsPlayerInForce(sender, udg_Sheep) || IsPlayerInForce(sender, udg_Spirit)) && lastSheepReceiver !== receiver) {
@@ -151,13 +135,17 @@ export const giveAllGold = (sender: player): void => {
 
   lastReceivedFrom[GetPlayerId(receiver)] = sender;
 
-  if (amount > 3 || changedReceiver) transferDisplay = TRANSFER_DISPLAY_TEAM;
+  if (changedReceiver) transferDisplay = TRANSFER_DISPLAY_CHANGED;
+  else if (amount > 3) transferDisplay = TRANSFER_DISPLAY_TEAM;
 
   const before = GetPlayerState(receiver, PLAYER_STATE_RESOURCE_GOLD);
   const gold = before + amount;
   transferGold(sender, receiver, amount, transferDisplay);
 
-  if (receiver === GetLocalPlayer() && (changedReceiver || (before < 112 && gold >= 112) || amount >= 25)) {
+  if (
+    receiver === GetLocalPlayer() &&
+    (changedReceiver || (IsPlayerInForce(receiver, udg_Wolf) && before < 112 && gold >= 112) || amount >= 25)
+  ) {
     StartSound(gg_snd_ReceiveGold);
   }
 };
@@ -167,11 +155,6 @@ const Trig_g_Actions = () => {
 
   // String is just "-g"; give gold intelligently
   if (str === "-g" || str === "-g ") return giveAllGold(GetTriggerPlayer()!);
-
-  const parts = str.split(" ");
-
-  // They typed -g X; mark who received the gold
-  if (parts[0] === "-g" && parts.length > 1) return markReceiver(GetTriggerPlayer()!, parts[1]);
 
   // Note early returns above; mark when someone speaks
   if (str.startsWith("g")) {

@@ -888,10 +888,10 @@ Frame "FRAME" "SheepTagIntermission" {
         BackdropBackground "ui\widgets\glues\icon-file-melee.blp",
 
         Frame "TEXT" "SheepTagActivePlayersText" INHERITS "EscMenuLabelTextSmallTemplate" {
-            SetPoint CENTER, "SheepTagActivePlayersIcon", CENTER, -0.0007, -0.0005,
-            DecorateFileNames,
-            FrameFont "EscMenuTextFont", 0.008, "",
-            FontShadowOffset 0.001 -0.001,
+          SetPoint CENTER, "SheepTagActivePlayersIcon", CENTER, -0.00065, -0.0005,
+          DecorateFileNames,
+          FrameFont "EscMenuTextFont", 0.008, "",
+          FontShadowOffset 0.001 -0.001,
         }
       }
 
@@ -988,38 +988,6 @@ Frame "FRAME" "SheepTagIntermission" {
 
   }
 
-  Frame "DIALOG" "SheepTagExtra" {
-    SetPoint BOTTOMLEFT, "SheepTagPlayers", BOTTOMRIGHT, 0.01, 0,
-    Height 0.11,
-    Width 0.15,
-    DecorateFileNames,
-
-    DialogBackdrop "SheepTagExtraBackdrop",
-    Frame "BACKDROP" "SheepTagExtraBackdrop" INHERITS "EscMenuBackdrop" {
-    }
-
-    Frame "GLUETEXTBUTTON" "SheepTagPracticeButton" INHERITS WITHCHILDREN "EscMenuButtonTemplate" {
-      SetPoint TOPLEFT, "SheepTagExtra", TOPLEFT, 0.02, -0.02,
-      SetPoint TOPRIGHT, "SheepTagExtra", TOPRIGHT, -0.02, -0.02,
-      ControlShortcutKey "KEY_RETURN_TO_GAME_SHORTCUT",
-
-      ButtonText "SheepTagPracticeButtonText",
-      Frame "TEXT" "SheepTagPracticeButtonText" INHERITS "EscMenuButtonTextTemplate" {
-        Text "P|cffffffffr|ractice",
-      }
-    }
-
-    Frame "GLUETEXTBUTTON" "SheepTagEndButton" INHERITS WITHCHILDREN "EscMenuButtonTemplate" {
-      SetPoint BOTTOMLEFT, "SheepTagExtra", BOTTOMLEFT, 0.02, 0.02,
-      SetPoint BOTTOMRIGHT, "SheepTagExtra", BOTTOMRIGHT, -0.02, 0.02,
-
-      ButtonText "SheepTagEndButtonText",
-      Frame "TEXT" "SheepTagEndButtonText" INHERITS "EscMenuButtonTextTemplate" {
-        Text "End",
-      }
-    }
-  }
-
   Frame "DIALOG" "SheepTagEndConfirmation" {
     SetPoint CENTER, "ConsoleUI", CENTER, 0, 0.1,
     Width 0.255,
@@ -1057,6 +1025,38 @@ Frame "FRAME" "SheepTagIntermission" {
       Frame "TEXT" "SheepTagEndConfirmationEndText" INHERITS "EscMenuButtonTextTemplate" {
         Text "End",
       }
+    }
+  }
+}
+
+Frame "DIALOG" "SheepTagExtra" {
+  SetPoint BOTTOMLEFT, "SheepTagPlayers", BOTTOMRIGHT, 0.01, 0,
+  Height 0.11,
+  Width 0.15,
+  DecorateFileNames,
+
+  DialogBackdrop "SheepTagExtraBackdrop",
+  Frame "BACKDROP" "SheepTagExtraBackdrop" INHERITS "EscMenuBackdrop" {
+  }
+
+  Frame "GLUETEXTBUTTON" "SheepTagPracticeButton" INHERITS WITHCHILDREN "EscMenuButtonTemplate" {
+    SetPoint TOPLEFT, "SheepTagExtra", TOPLEFT, 0.02, -0.02,
+    SetPoint TOPRIGHT, "SheepTagExtra", TOPRIGHT, -0.02, -0.02,
+    ControlShortcutKey "KEY_RETURN_TO_GAME_SHORTCUT",
+
+    ButtonText "SheepTagPracticeButtonText",
+    Frame "TEXT" "SheepTagPracticeButtonText" INHERITS "EscMenuButtonTextTemplate" {
+      Text "P|cffffffffr|ractice",
+    }
+  }
+
+  Frame "GLUETEXTBUTTON" "SheepTagEndButton" INHERITS WITHCHILDREN "EscMenuButtonTemplate" {
+    SetPoint BOTTOMLEFT, "SheepTagExtra", BOTTOMLEFT, 0.02, 0.02,
+    SetPoint BOTTOMRIGHT, "SheepTagExtra", BOTTOMRIGHT, -0.02, 0.02,
+
+    ButtonText "SheepTagEndButtonText",
+    Frame "TEXT" "SheepTagEndButtonText" INHERITS "EscMenuButtonTextTemplate" {
+      Text "End",
     }
   }
 }

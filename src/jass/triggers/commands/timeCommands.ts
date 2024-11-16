@@ -56,15 +56,14 @@ const Trig_timeCommands_Actions = () => {
                   s__times_pTime[playerTimes[S2I(myArg[1]) - 1]] + i
                 ],
               ) + "; " +
-              R2S(
+              (s___times_pTime[
+                s__times_pTime[playerTimes[S2I(myArg[1]) - 1]] + i
+              ] /
                 s___times_pTime[
-                  s__times_pTime[playerTimes[S2I(myArg[1]) - 1]] + i
-                ] /
-                  s___times_pTime[
-                    s__times_pTime[playerTimes[S2I(myArg[1]) - 1]] +
-                    S2I(myArg[1]) - 1
-                  ] * 100,
-              ) + "%",
+                  s__times_pTime[playerTimes[S2I(myArg[1]) - 1]] +
+                  S2I(myArg[1]) - 1
+                ] * 100).toFixed(3) +
+              "%",
             15,
           );
         }
@@ -120,10 +119,9 @@ const Trig_timeCommands_Actions = () => {
             udg_colorString[i + 1] +
               GetPlayerName(Player(i)!) + ": " + formatTime(s___times_pTime[s__times_pTime[playerTimes[self.id]] + i]) +
               "; " +
-              R2S(
-                s___times_pTime[s__times_pTime[playerTimes[self.id]] + i] /
-                  s___times_pTime[s__times_pTime[playerTimes[self.id]] + self.id] * 100,
-              ) + "%",
+              (s___times_pTime[s__times_pTime[playerTimes[self.id]] + i] /
+                s___times_pTime[s__times_pTime[playerTimes[self.id]] + self.id] * 100).toFixed(3) +
+              "%",
             15,
           );
         }

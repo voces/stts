@@ -2,9 +2,10 @@ import { removeEnumUnit } from "util/removeEnumUnit";
 import { isFilterUnitStructure } from "../farmFunctions/destroyAllFarms";
 import { gsDistributeGold } from "functions/gs";
 import { giveAllGold } from "../commands/g";
-import { terrain } from "settings/settings";
+import { president, terrain } from "settings/settings";
 import { spawns } from "settings/spawns";
 import { UNIT_TYPE_ID_START_POSITION } from "constants";
+import { ForceEx } from "handles/ForceEx";
 
 const handleSpawnActions = (orderString: string | undefined) => {
   // Free spawn
@@ -66,13 +67,13 @@ const Trig_castAbility2_Actions = () => {
 
     // Ping allies
     for (let i = 1; i <= bj_MAX_PLAYERS; i++) {
-      if (GetUnitTypeId(udg_unit[i]) === sheepType && udg_unit[i] !== GetTriggerUnit()!) {
-        PingMinimapForPlayer(
-          GetOwningPlayer(GetTriggerUnit()!),
-          GetUnitX(udg_unit[i]),
-          GetUnitY(udg_unit[i]),
-          2,
-        );
+      if (
+        GetUnitTypeId(udg_unit[i]) === sheepType && udg_unit[i] !== GetTriggerUnit()! &&
+        GetLocalPlayer() === GetOwningPlayer(GetTriggerUnit()!)
+      ) {
+        if (president.enabled && president.president?.id === i - 1) {
+          PingMinimapEx(GetUnitX(udg_unit[i]), GetUnitY(udg_unit[i]), 2, 255, 204, 0, false);
+        } else PingMinimap(GetUnitX(udg_unit[i]), GetUnitY(udg_unit[i]), 2);
       }
     }
     return;
@@ -114,17 +115,45 @@ const Trig_castAbility2_Actions = () => {
     gSheepAbilityFlag[GetPlayerId(GetOwningPlayer(GetTriggerUnit()!))] = i;
     const u = GetTriggerUnit()!;
     TriggerSleepAction(0.25);
+    if (!UnitAlive(u)) return;
+    p = GetOwningPlayer(u);
     if (gSheepAbilityFlag[GetPlayerId(GetOwningPlayer(u))] === i) {
       gSheepAbilityFlag[GetPlayerId(GetOwningPlayer(u))] = -1;
-      gsDistributeGold(GetOwningPlayer(u), false);
+      if (president.enabled && president.president) {
+        if (president.president.handle === p) gsDistributeGold(GetOwningPlayer(u), 100);
+        else {
+          transferGold(
+            p,
+            president.president.handle,
+            Math.ceil(GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) * 0.5),
+            TRANSFER_DISPLAY_TEAM,
+          );
+        }
+      } else gsDistributeGold(GetOwningPlayer(u), false);
     }
     return;
   }
 
   // g twice (sheep)
   if (orderString === "manashieldoff") {
-    gSheepAbilityFlag[GetPlayerId(GetOwningPlayer(GetTriggerUnit()!))] = -1;
-    giveAllGold(GetOwningPlayer(GetTriggerUnit()!));
+    p = GetOwningPlayer(GetTriggerUnit()!);
+    gSheepAbilityFlag[GetPlayerId(p)] = -1;
+    if (president.enabled && president.president) {
+      if (president.president.handle === p) {
+        ForceEx.sheep.for((p) => {
+          if (p === president.president || !president.president) return;
+          const current = p.gold;
+          if (current > 12) transferGold(p.handle, president.president.handle, current - 12, TRANSFER_DISPLAY_INVOLVED);
+        });
+      } else {
+        transferGold(
+          p,
+          president.president.handle,
+          GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD),
+          TRANSFER_DISPLAY_TEAM,
+        );
+      }
+    } else giveAllGold(p);
     return;
   }
 };

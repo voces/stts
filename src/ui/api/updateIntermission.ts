@@ -7,6 +7,7 @@ import { onUpdateIntermission } from "../hooks";
 import { farmVision, income, president, settings, spawnSetting, switchSetting } from "settings/settings";
 import { getTimes, Round, rounds } from "stats/times";
 import { ui } from "ui/data";
+import { updateLeaderboardSettingsDisplay } from "settings/time";
 
 const updatePresidentHandicap = () => {
   frames.settings.president.handicap.text = (president.handicap * 100).toFixed(0);
@@ -43,6 +44,7 @@ export const updateMode = (value?: number) => {
 
   updatePresidentHandicap();
   updateSwitchSettings();
+  updateLeaderboardSettingsDisplay(true);
 };
 
 const updateGold = () => {
@@ -116,9 +118,9 @@ export const updatePlayers = () => {
       deathOrder,
     } = frames.players[i];
 
-    team.enabled = p.isHere && localIsHost;
+    team.enabled = p.inGame && localIsHost;
 
-    if (!p.isHere) {
+    if (!p.inGame) {
       container.alpha = 63;
       backdrop.alpha = 15;
     } else if (p.afk !== AFK_PLAYING) {

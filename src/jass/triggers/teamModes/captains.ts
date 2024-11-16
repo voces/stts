@@ -257,9 +257,10 @@ const Trig_captains_Actions = () => {
     const pid1 = S2I(parts[1]);
     const pid2 = S2I(parts[2]);
     if (pid1 < 1 || pid1 > bj_MAX_PLAYERS || pid2 < 1 || pid2 > bj_MAX_PLAYERS) return;
-    const p1 = MapPlayerEx.fromIndex(pid1 - 1);
-    const p2 = MapPlayerEx.fromIndex(pid2 - 1);
+    let p1 = MapPlayerEx.fromIndex(pid1 - 1);
+    let p2 = MapPlayerEx.fromIndex(pid2 - 1);
     if (!p1?.isActive || !p2?.isActive) return;
+    if (GetRandomInt(0, 1) === 0) [p1, p2] = [p2, p1];
 
     DestroyLeaderboardBJ(GetLastCreatedLeaderboard()!);
     DisableTrigger(gg_trg_fair);

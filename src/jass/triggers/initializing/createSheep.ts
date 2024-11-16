@@ -144,7 +144,7 @@ const Trig_createSheep_sheepActionsB = () => {
   const p = MapPlayerEx.fromEnum()!;
   const enumPlayerId = p.cid;
 
-  SetPlayerState(p.handle, PLAYER_STATE_RESOURCE_GOLD, udg_practiceOn ? 10000 : udg_sheepGold);
+  SetPlayerState(p.handle, PLAYER_STATE_RESOURCE_GOLD, udg_practiceOn ? 1000000 : udg_sheepGold);
 
   if (udg_AFK[enumPlayerId] === AFK_AFK_DURING_ROUND) {
     for (let i = 1; i <= udg_lastPlayer; i++) {
@@ -159,8 +159,23 @@ const Trig_createSheep_sheepActionsB = () => {
   PanCameraToTimedForPlayer(p.handle, spawn.x, spawn.y, 0);
   const u = CreateUnit(p.handle, sheepType, spawn.x, spawn.y, 270)!;
   if (president.enabled) {
-    if (president.president?.id === GetPlayerId(p.handle)) applyPresidentBuff(u);
-    else UnitAddAbility(u, ABILITY_TYPE_ID_BITE);
+    if (president.president?.id === GetPlayerId(p.handle)) {
+      applyPresidentBuff(u);
+      BlzSetAbilityStringLevelField(
+        BlzGetUnitAbility(u, giveAlliesGoldSheepAbility)!,
+        ABILITY_SLF_TOOLTIP_NORMAL_EXTENDED,
+        0,
+        "Upon first usage, gives your guards some of your gold, leaving you with 100 gold. If used a second time, takes some of their gold, leaving them with 12 gold each.",
+      );
+    } else {
+      UnitAddAbility(u, ABILITY_TYPE_ID_BITE);
+      BlzSetAbilityStringLevelField(
+        BlzGetUnitAbility(u, giveAlliesGoldSheepAbility)!,
+        ABILITY_SLF_TOOLTIP_NORMAL_EXTENDED,
+        0,
+        "Upon first usage, gives the president some of your gold, leaving you with 45 gold. If used a second time, gives them all of your gold.",
+      );
+    }
   }
 
   SelectUnitForPlayerSingle(u, p.handle);
@@ -192,7 +207,7 @@ const Trig_createSheep_sheepActionsB = () => {
 const Trig_createSheep_wolfActionsB = () => {
   const enumPlayerId = GetConvertedPlayerId(GetEnumPlayer()!);
 
-  SetPlayerState(GetEnumPlayer()!, PLAYER_STATE_RESOURCE_GOLD, udg_practiceOn ? 10000 : udg_wolfGold);
+  SetPlayerState(GetEnumPlayer()!, PLAYER_STATE_RESOURCE_GOLD, udg_practiceOn ? 1000000 : udg_wolfGold);
 
   udg_sheepLastGame[enumPlayerId] = false;
 
@@ -263,7 +278,7 @@ const Trig_createSheep_disableTrigs = () => {
   }
 };
 
-const Trig_createSheep_Actions_part4 = () => {
+const Trig_createSheep_Actions_part2 = () => {
   removeAllUnits(false);
 
   if (
@@ -347,16 +362,14 @@ const Trig_createSheep_Actions_part4 = () => {
   if (udg_switchOn && udg_wispPoints === 0) startUpdatingLeaderboard();
 };
 
-const Trig_createSheep_Actions_part3 = () => {
-  StartSound(gg_snd_BattleNetTick);
-  displayTimedTextToAll("|cffffcc00Game starting in 1...|r", 1);
-  TimerStart(createSheepTimer, 1, false, Trig_createSheep_Actions_part4);
-};
-
-const Trig_createSheep_Actions_part2 = () => {
-  StartSound(gg_snd_BattleNetTick);
-  displayTimedTextToAll("|cffffcc00Game starting in 2...|r", 1);
-  TimerStart(createSheepTimer, 1, false, Trig_createSheep_Actions_part3);
+const countdown = async (from: number) => {
+  while (from > 0) {
+    StartSound(gg_snd_BattleNetTick);
+    displayTimedTextToAll(`|cffffcc00Game starting in ${from}...|r`, 1);
+    await new Promise<void>((resolve) => TimerStart(createSheepTimer, 1, false, resolve));
+    from--;
+  }
+  Trig_createSheep_Actions_part2();
 };
 
 const Trig_createSheep_Actions = () => {
@@ -373,7 +386,18 @@ const Trig_createSheep_Actions = () => {
     udg_versusOff = false;
   }
 
+  // Randomize which versus team starts
+  if (udg_versus === 1 && GetRandomInt(0, 1) === 0) {
+    const oldSheep = ForceEx.sheep.toArray();
+    ForceEx.sheep.clear();
+    ForceEx.wolves.for((p) => ForceEx.sheep.addPlayer(p));
+    ForceEx.wolves.clear();
+    oldSheep.forEach((p) => ForceEx.wolves.addPlayer(p));
+    [udg_captains[1], udg_captains[3]] = [udg_captains[3], udg_captains[1]];
+  }
+
   for (let i = 1; i <= bj_MAX_PLAYERS; i++) {
+    udg_apr[i] = 0;
     if (udg_AFK[GetForLoopIndexA()] === AFK_PLAYING_PICK) udg_AFK[GetForLoopIndexA()] = AFK_PLAYING;
     for (let n = 1; n <= bj_MAX_PLAYERS; n++) {
       SetPlayerAllianceStateBJ(ConvertedPlayer(i)!, ConvertedPlayer(n)!, bj_ALLIANCE_UNALLIED);
@@ -438,8 +462,8 @@ const Trig_createSheep_Actions = () => {
     else {
       const all = ForceEx.sheep.toArray();
       const nonPubs = all.filter((p) => !p.isPub);
-      if (nonPubs.length > 0) president.president = nonPubs[Math.floor(nonPubs.length * Math.random())];
-      else president.president = all[Math.floor(all.length * Math.random())];
+      if (nonPubs.length > 0) president.president = nonPubs[GetRandomInt(0, nonPubs.length - 1)];
+      else president.president = all[GetRandomInt(0, all.length - 1)];
     }
 
     ForForce(udg_Sheep, () => {
@@ -458,14 +482,11 @@ const Trig_createSheep_Actions = () => {
     ForForce(GetPlayersAll()!, Trig_createSheep_addToSheepAndWolf);
     displayTimedTextToAll("|cff00aeefWelcome to practice mode!|r", 5);
     displayTimedTextToAll("Commands: |cffed1c24-a -s -owner -disable -mass -speed 1-5|r", 5);
-    Trig_createSheep_Actions_part4();
+    Trig_createSheep_Actions_part2();
   } else {
     DisplayTimedTextToForce(udg_Sheep, 4, "|cff00aeefYou are |cffed1c24Sheep|cff00aeef this round.|r");
     DisplayTimedTextToForce(udg_Wolf, 4, "|cff00aeefYou are |cffed1c24Wolf|cff00aeef this round.|r");
-
-    StartSound(gg_snd_BattleNetTick);
-    displayTimedTextToAll("|cffffcc00Game starting in 3...|r", 1);
-    TimerStart(createSheepTimer, 1, false, Trig_createSheep_Actions_part2);
+    countdown(udg_versus > 0 ? 5 : Math.min(5, Math.max(3, ForceEx.sheep.size())));
   }
 };
 

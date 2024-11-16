@@ -18,14 +18,10 @@ const reviveEnumDestructable = () => {
 };
 
 const resetEnumRoundStats = (i: number): void => {
-  udg_apr[i] = 0;
   udg_switch[i] = 0;
   udg_kills[i] = 0;
   udg_farmCount[i] = 0;
   udg_saves[i] = 0;
-
-  if (udg_AFKOn[i] === 1) udg_AFKOn[i] = 2;
-  else if (udg_AFKOn[i] === 2) udg_AFKOn[i] = 0;
 };
 
 const removeDraft = () => {

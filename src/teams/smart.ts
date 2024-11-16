@@ -8,6 +8,7 @@ import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { rounds } from "stats/times";
 import { ForceEx } from "handles/ForceEx";
 import { settings } from "settings/settings";
+import { updatePlayers } from "ui/api/updateIntermission";
 
 let pubStart = 0;
 
@@ -110,7 +111,7 @@ const getRandomTeam = (sheep: number): number[] => {
 
   const others: number[] = [];
   while (others.length < sheep - primary.length) {
-    const pick = secondary[Math.floor(Math.random() * secondary.length)];
+    const pick = secondary[GetRandomInt(0, secondary.length - 1)];
     if (!others.includes(pick)) others.push(pick);
   }
 
@@ -283,6 +284,7 @@ const togglePub = () => {
   if (GetPlayerSlotState(Player(i)!) !== PLAYER_SLOT_STATE_PLAYING) return;
   const value = !(pub[i]);
   for (let n = 1; n < parts.length; n++) setPub(S2I(parts[n]) - 1, value);
+  updatePlayers();
 };
 
 const toggleRotate = () => {

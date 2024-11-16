@@ -42,7 +42,7 @@ const Trig_initMassTest_Actions = () => {
   DisableTrigger(gg_trg_mass);
   DisableTrigger(gg_trg_redo);
   ClearTextMessages();
-  logMassingTest(R2S(udg_massTime)!);
+  logMassingTest(udg_massTime.toFixed(3));
   udg_atempgroup = GetUnitsInRectMatching(
     GetPlayableMapRect()!,
     Condition(() =>

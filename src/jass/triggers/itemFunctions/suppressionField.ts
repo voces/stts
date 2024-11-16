@@ -4,17 +4,20 @@
 
 import { UNIT_TYPE_ID_STRONG_FARM, UNIT_TYPE_ID_UPGRADED_FARM } from "constants";
 
+let disabled = false;
+
 const Trig_suppressionField_Actions = () => {
+  if (disabled) return;
+  disabled = true;
   let u = GetTriggerUnit()!;
   const p = GetOwningPlayer(u);
   const cx = GetUnitX(u);
   const cy = GetUnitY(u);
 
-  DisableTrigger(GetTriggeringTrigger()!);
-
+  // Doesn't seem to work if I don't do this?
   RemoveUnit(u);
-
   u = CreateUnit(p, FourCC("o000"), cx, cy, 270)!;
+
   UnitAddAbility(u, FourCC("A026"));
   UnitApplyTimedLife(u, FourCC("BTFL"), 45);
 
@@ -31,7 +34,7 @@ const Trig_suppressionField_Actions = () => {
     UnitApplyTimedLife(u, FourCC("BTFL"), 45);
   }
 
-  EnableTrigger(GetTriggeringTrigger()!);
+  disabled = false;
 };
 
 const Trig_suppressionField_Damage = () => {

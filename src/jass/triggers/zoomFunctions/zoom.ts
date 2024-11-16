@@ -1,4 +1,6 @@
+import { MapPlayerEx } from "handles/MapPlayerEx";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+import { setTimeout } from "util/setTimeout";
 import { File } from "w3ts";
 
 const saveZoomListeners: ((cid: number) => void)[] = [];
@@ -6,10 +8,16 @@ export const onZoomChange = (fn: (cid: number) => void) => {
   saveZoomListeners.push(fn);
 };
 
+let zoomSet = false;
+
 export const saveZooms = (p: player): void => {
   if (p !== GetLocalPlayer()) return;
   const cid = GetConvertedPlayerId(GetTriggerPlayer()!);
-  File.write("revo/zooms.txt", `${R2S(udg_sheepZoom[cid])} ${R2S(udg_wolfZoom[cid])} ${R2S(udg_wispZoom[cid])}`);
+  File.write(
+    "revo/zooms.txt",
+    `${udg_sheepZoom[cid].toFixed(0)} ${udg_wolfZoom[cid].toFixed(0)} ${udg_wispZoom[cid].toFixed(0)}`,
+  );
+  zoomSet = true;
 };
 
 const smolNumbers = (val: number): number => {
@@ -30,23 +38,23 @@ const setZooms = (
   val2: number,
   val3: number,
 ): void => {
-  const pId = GetConvertedPlayerId(p);
-  if (values === 1) udg_sheepZoom[pId] = udg_wolfZoom[pId] = udg_wispZoom[pId] = val1;
+  const cid = GetConvertedPlayerId(p);
+  if (values === 1) udg_sheepZoom[cid] = udg_wolfZoom[cid] = udg_wispZoom[cid] = val1;
   else if (values === 2) {
-    udg_sheepZoom[pId] = val1;
-    udg_wolfZoom[pId] = val2;
-    udg_wispZoom[pId] = Math.max(val1, val2);
+    udg_sheepZoom[cid] = val1;
+    udg_wolfZoom[cid] = val2;
+    udg_wispZoom[cid] = Math.max(val1, val2);
   } else if (values === 3) {
-    udg_sheepZoom[pId] = val1;
-    udg_wolfZoom[pId] = val2;
-    udg_wispZoom[pId] = val3;
+    udg_sheepZoom[cid] = val1;
+    udg_wolfZoom[cid] = val2;
+    udg_wispZoom[cid] = val3;
   }
 
-  if (udg_AFK[pId] > 0) SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, udg_wispZoom[pId], 0);
-  else if (udg_sheepLastGame[pId]) {
-    if (IsPlayerInForce(p, udg_Spirit)) SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, udg_wispZoom[pId], 0);
-    else SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, udg_sheepZoom[pId], 0);
-  } else SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, udg_wolfZoom[pId], 0);
+  if (udg_AFK[cid] > 0) SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, udg_wispZoom[cid], 0);
+  else if (udg_sheepLastGame[cid]) {
+    if (IsPlayerInForce(p, udg_Spirit)) SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, udg_wispZoom[cid], 0);
+    else SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, udg_sheepZoom[cid], 0);
+  } else SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, udg_wolfZoom[cid], 0);
 };
 
 const loadZooms = () => {
@@ -61,6 +69,7 @@ const loadZooms = () => {
     val2 = 1650;
     val3 = 1650;
   } else {
+    zoomSet = true;
     [val1, val2, val3] = s.split(" ").map((v) => S2R(v));
     DisplayTextToPlayer(
       GetLocalPlayer(),
@@ -106,4 +115,13 @@ InitTrig_zoom = () => {
   const t = CreateTrigger();
   TriggerRegisterTimerEventSingle(t, 0.01);
   TriggerAddAction(t, loadZooms);
+
+  setTimeout(5, () => {
+    const p = MapPlayerEx.fromLocal();
+    if (zoomSet) return;
+    const camera = GetCameraField(CAMERA_FIELD_TARGET_DISTANCE);
+    if (p.isSheep) udg_sheepZoom[p.cid] = camera;
+    else if (p.isWolf) udg_wolfZoom[p.cid] = camera;
+    else if (p.isWisp) udg_wispZoom[p.cid] = camera;
+  }, true);
 };

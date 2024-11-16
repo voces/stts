@@ -5,12 +5,11 @@ import { MapPlayerEx } from "./MapPlayerEx";
 export class GroupEx extends Group {
   public static create(): GroupEx {
     const handle = CreateGroup();
+
     const obj = this.getObject(handle) as GroupEx;
+    obj.handle = handle;
 
-    const values: Record<string, unknown> = {};
-    values.handle = handle;
-
-    return Object.assign(obj, values);
+    return obj;
   }
 
   public forEach(fn: (unit: UnitEx) => void) {

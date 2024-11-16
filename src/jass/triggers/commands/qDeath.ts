@@ -4,7 +4,7 @@ import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 const Trig_qDeath_Actions = () => {
   const p = MapPlayerEx.fromEvent()!;
   if (udg_qDeath === Infinity) p.displayTimedText("No Sheep have died yet.");
-  else p.displayTimedText(`Quickest Death: ${udg_qDeathString}|r with a time of ${R2S(udg_qDeath)}.`);
+  else p.displayTimedText(`Quickest Death: ${udg_qDeathString}|r with a time of ${udg_qDeath.toFixed(3)}.`);
   DestroyForce(udg_atempplayer);
 };
 

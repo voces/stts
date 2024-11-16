@@ -18,7 +18,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     );
   });
 
-  setTimeout(0.01, () => {
+  setTimeout(0.02, () => {
     const s = File.read("revo/guidefarms.txt");
     if (s != null && s === "false") guideFarms = false;
   });

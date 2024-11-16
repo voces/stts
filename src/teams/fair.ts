@@ -33,7 +33,7 @@ const Trig_fair_Actions = () => {
       min++;
       continue;
     }
-    const pickIndex = Math.floor(Math.random() * groups[min].length);
+    const pickIndex = GetRandomInt(0, groups[min].length - 1);
     const pick = groups[min][pickIndex];
     groups[min].splice(pickIndex, 1);
     ForceEx.sheep.addPlayer(pick);

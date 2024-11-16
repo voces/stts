@@ -8,11 +8,9 @@ export class ForceEx extends Force {
     const handle = CreateForce();
 
     const obj = this.getObject(handle) as ForceEx;
+    obj.handle = handle;
 
-    const values: Record<string, unknown> = {};
-    values.handle = handle;
-
-    return Object.assign(obj, values);
+    return obj;
   }
 
   public enumPlayers(filter: boolexpr | ((player: MapPlayerEx) => boolean)) {

@@ -1,3 +1,4 @@
+import { DisplayType, TRANSFER_DISPLAY_SPECIAL } from "constants";
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
@@ -14,8 +15,18 @@ const Trig_giveAllGold_Actions = () => {
 
   const amount = numParts.length > 1 ? Math.min(source.gold, numParts[1]) : source.gold;
 
+  let display: DisplayType = TRANSFER_DISPLAY_INVOLVED;
+  if (target.isSheep && lastSheepReceiver !== target.handle) {
+    lastSheepReceiver = target.handle;
+    display = TRANSFER_DISPLAY_SPECIAL;
+  } else if (target.isWolf && lastWolfReceiver !== target.handle) {
+    lastWolfReceiver = target.handle;
+    display = TRANSFER_DISPLAY_SPECIAL;
+    if (target.isLocal()) StartSound(gg_snd_ReceiveGold);
+  }
+
   udg_giveGold = false;
-  transferGold(source.handle, target.handle, amount, TRANSFER_DISPLAY_INVOLVED);
+  transferGold(source.handle, target.handle, amount, display);
   udg_giveGold = true;
 };
 

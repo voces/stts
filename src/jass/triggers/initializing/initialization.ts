@@ -20,11 +20,9 @@ const Trig_isWolf = () => {
 
 const Trig_initialization_forAllPlayersOne = () => {
   cid = GetConvertedPlayerId(GetEnumPlayer()!);
-  udg_zoom[cid] = GetCameraField(CAMERA_FIELD_TARGET_DISTANCE);
   playerTimes[cid - 1] = s__times_create();
   udg_AFK[cid] = AFK_PLAYING;
   udg_permanentHide[cid] = false;
-  udg_AFKOn[cid] = 0;
   udg_sheepZoom[cid] = 0;
   udg_wolfZoom[cid] = 0;
   udg_wispZoom[cid] = 0;

@@ -1,3 +1,4 @@
+import { updateIntermission } from "ui/api/updateIntermission";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
 const Trig_controloff_Actions = () => {
@@ -8,6 +9,8 @@ const Trig_controloff_Actions = () => {
     udg_shareOn = true;
     DisplayTimedTextToForce(GetPlayersAll()!, 5, "|cffffcc00Sharing Control has been enabled.");
   }
+
+  updateIntermission();
 };
 
 declare global {

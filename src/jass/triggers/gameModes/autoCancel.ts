@@ -1,3 +1,4 @@
+import { updateIntermission } from "ui/api/updateIntermission";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
 declare global {
@@ -21,5 +22,7 @@ InitTrig_autoCancel = () => {
       10,
       `|CFF00AEEFAutocancel |CFFED1C24${autoCancelEnabled ? "enabled" : "disabled"}|r`,
     );
+
+    updateIntermission();
   });
 };

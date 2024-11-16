@@ -26,12 +26,10 @@ export class TriggerEx extends Trigger {
 
   static create(): TriggerEx {
     const handle = CreateTrigger();
+
     const obj = this.getObject(handle) as TriggerEx;
+    obj.handle = handle;
 
-    const values: Record<string, unknown> = {};
-    values.handle = handle;
-
-    Object.assign(obj, values);
     return obj;
   }
 

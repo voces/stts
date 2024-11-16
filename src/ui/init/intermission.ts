@@ -11,7 +11,7 @@ import {
   spawnSetting,
   switchSetting,
 } from "settings/settings";
-import { checkAutoTimeFlag, getDefaultTime } from "settings/time";
+import { checkAutoTimeFlag, getDefaultTime, updateLeaderboardSettingsDisplay } from "settings/time";
 import { setPub } from "teams/smart";
 import {
   adjustChatFrames,
@@ -31,16 +31,16 @@ import {
   updateScButtons,
 } from "ui/api/updateIntermission";
 import { frames } from "ui/frames";
-import { parseDesiredSheep, toStringWithPrecision } from "ui/util";
+import { getIdealDesiredSheep, parseDesiredSheep, toStringWithPrecision } from "ui/util";
 import { Checkbox, editBoxDelayedOnChange, getFrames, setupEditableText, setupSlider } from "./util";
 import { toggleView } from "settings/view";
 import { setTimeout } from "util/setTimeout";
 
 export const initIntermission = () => {
-  FrameEx.create("SheepTagIntermission", "ConsoleUIBackdrop");
+  FrameEx.create("SheepTagIntermission", ORIGIN_FRAME_GAME_UI);
   const settingsContainer = FrameEx.fromName("SheepTagSettings");
   const players = FrameEx.fromName("SheepTagPlayers");
-  const extra = FrameEx.fromName("SheepTagExtra");
+  const extra = FrameEx.create("SheepTagExtra", "ConsoleUIBackdrop");
   frames.intermissionFrames.push(
     settingsContainer,
     players,
@@ -224,11 +224,17 @@ export const initIntermission = () => {
   frames.settings.switch.spirits = setupSlider("SheepTagSwitchSpirits", { onChange: (v) => udg_dummyWisps = v });
   frames.settings.switch.saves = setupSlider("SheepTagSwitchSaves", {
     format: (v) => v === 26 ? "∞" : v.toFixed(0),
-    onChange: (v) => udg_wispPoints = v === 26 ? 0 : v,
+    onChange: (v) => {
+      udg_wispPoints = v === 26 ? 0 : v;
+      updateLeaderboardSettingsDisplay(true);
+    },
   });
   frames.settings.switch.time = setupSlider("SheepTagSwitchTime", {
     format: (v) => v === 21 ? "∞" : simpleformatTime(v * 30),
-    onChange: (v) => switchSetting.goalTime = v === 21 ? Infinity : v * 30,
+    onChange: (v) => {
+      switchSetting.goalTime = v === 21 ? Infinity : v * 30;
+      updateLeaderboardSettingsDisplay(true);
+    },
   });
 
   presidentOptions.visible = false;
@@ -258,6 +264,7 @@ export const initIntermission = () => {
         udg_mapExpand = false;
         frames.settings.expand.checked = false;
       }
+      updateLeaderboardSettingsDisplay(true);
     },
   });
   frames.settings.expand = new Checkbox(expandCheckbox, {
@@ -268,6 +275,7 @@ export const initIntermission = () => {
         udg_mapShrink = false;
         frames.settings.shrink.checked = false;
       }
+      updateLeaderboardSettingsDisplay(true);
     },
   });
 
@@ -282,12 +290,14 @@ export const initIntermission = () => {
     onChange: ({ value }) => {
       udg_sheepGold = Math.min(Math.max(tonumber(value) ?? 0, 0), 9999999);
       sheepGold.text = udg_sheepGold.toFixed(0);
+      updateLeaderboardSettingsDisplay(true);
     },
   });
   editBoxDelayedOnChange(wolfGold, {
     onChange: ({ value }) => {
       udg_wolfGold = Math.min(Math.max(tonumber(value) ?? 0, 0), 9999999);
       wolfGold.text = udg_wolfGold.toFixed(0);
+      updateLeaderboardSettingsDisplay(true);
     },
   });
   editBoxDelayedOnChange(sheepIncome, {
@@ -295,6 +305,7 @@ export const initIntermission = () => {
       income.sheep = Math.min(Math.max(tonumber(value) ?? 1, 0), 999);
       const stringified = toStringWithPrecision(income.sheep);
       sheepIncome.text = stringified;
+      updateLeaderboardSettingsDisplay(true);
     },
   });
   editBoxDelayedOnChange(wolfIncome, {
@@ -302,6 +313,7 @@ export const initIntermission = () => {
       income.wolves = Math.min(Math.max(tonumber(value) ?? 1, 0), 999);
       const stringified = toStringWithPrecision(income.wolves);
       wolfIncome.text = stringified;
+      updateLeaderboardSettingsDisplay(true);
     },
   });
   editBoxDelayedOnChange(moneyFarmIncome, {
@@ -309,6 +321,7 @@ export const initIntermission = () => {
       income.savings = Math.min(Math.max(tonumber(value) ?? 1, 0), 999);
       const stringified = toStringWithPrecision(income.savings);
       moneyFarmIncome.text = stringified;
+      updateLeaderboardSettingsDisplay(true);
     },
   });
 
@@ -326,10 +339,14 @@ export const initIntermission = () => {
     onChange: (v) => {
       udg_time = v * 60;
       checkAutoTimeFlag(true);
+      updateLeaderboardSettingsDisplay(true);
     },
   });
   spawn.onItemChanged(
-    ({ value }) => spawnSetting.mode = value === 0 ? "static" : value === 1 ? "free" : "random",
+    ({ value }) => {
+      spawnSetting.mode = value === 0 ? "static" : value === 1 ? "free" : "random";
+      updateLeaderboardSettingsDisplay(true);
+    },
     true,
   );
   spawn.value = 0;
@@ -343,6 +360,7 @@ export const initIntermission = () => {
       farmVisionSetting.vision = v === 9 ? -1 : v === 28 ? 1800 : v * 64;
       if (v === 9) DisableTrigger(farmVisionSetting.trigger);
       else EnableTrigger(farmVisionSetting.trigger);
+      updateLeaderboardSettingsDisplay(true);
     },
   });
   frames.settings.autoCancel = new Checkbox(autoCancel, {
@@ -385,14 +403,14 @@ export const initIntermission = () => {
   frames.playerLabel = playersLabel;
 
   let playerCount = 0;
-  for (let i = 0; i < bj_MAX_PLAYERS; i++) if (MapPlayerEx.fromIndex(i)?.isHere) playerCount++;
+  for (let i = 0; i < bj_MAX_PLAYERS; i++) if (MapPlayerEx.fromIndex(i)?.inGame) playerCount++;
 
   const rowHeight = Math.min((0.385 - (2 * 0.018)) / (playerCount + 1), 0.0225);
 
   let prev: FrameEx | undefined = FrameEx.fromName("SheepTagPlayersHeader");
   for (let i = 0; i < bj_MAX_PLAYERS; i++) {
     const p = MapPlayerEx.fromIndex(i);
-    if (!p?.isHere) continue;
+    if (!p?.inGame) continue;
 
     const row = FrameEx.create("SheepTagPlayerRowTemplate", players, 0, i);
     frames.intermissionFrames.push(row);
@@ -414,7 +432,7 @@ export const initIntermission = () => {
         if (p.afk === AFK_PLAYING) handleAFK(p.handle);
         if (ForceEx.wolves.hasPlayer(p)) ForceEx.wolves.removePlayer(p);
         if (ForceEx.sheep.hasPlayer(p)) ForceEx.sheep.removePlayer(p);
-        settings.desiredSheep = ForceEx.sheep.size();
+        settings.desiredSheep = getIdealDesiredSheep();
         updateDesiredSheep();
         desiredSheep.text = settings.desiredSheep.toFixed(0);
         defaultTime();

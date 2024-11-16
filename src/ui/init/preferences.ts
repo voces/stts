@@ -70,7 +70,7 @@ export const initPreferences = () => {
   const preferencesButton = FrameEx.create("SheepTagPreferencesButton", escPanel);
   preferencesButton.setVisible(false).setVisible(true);
 
-  const preferencesPanel = FrameEx.create("SheepTagPreferencesPanel", "ConsoleUIBackdrop");
+  const preferencesPanel = FrameEx.create("SheepTagPreferencesPanel", ORIGIN_FRAME_GAME_UI);
   preferencesPanel.visible = false;
   frames.preferences = preferencesPanel;
 

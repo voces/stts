@@ -112,7 +112,7 @@ const Trig_ScoreboardMultiboard_Func020A = () => {
       12,
       udg_atempint3,
       udg_colorString[GetConvertedPlayerId(GetEnumPlayer()!)] +
-        (R2S(udg_QDeathTime[GetConvertedPlayerId(GetEnumPlayer()!)]) + "s"),
+        udg_QDeathTime[GetConvertedPlayerId(GetEnumPlayer()!)].toFixed(3) + "s",
     );
   } else {
     MultiboardSetItemValueBJ(

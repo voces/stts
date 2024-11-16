@@ -14,7 +14,8 @@ const Trig_versusCountDown_Actions = () => {
   ClearTextMessagesBJ(udg_Sheep);
 
   if (udg_versus === 2) {
-    udg_atempstring = I2S(R2I(udg_gameTime[1] / 60)) + ":" + SubStringBJ(R2S(ModuloReal(udg_gameTime[1], 60))!, 1, 2);
+    udg_atempstring = I2S(R2I(udg_gameTime[1] / 60)) + ":" +
+      SubStringBJ((ModuloReal(udg_gameTime[1], 60)).toFixed(3)!, 1, 2);
     if (SubStringBJ(udg_atempstring, StringLength(udg_atempstring), StringLength(udg_atempstring)) === ".") {
       udg_atempstring = SubStringBJ(udg_atempstring, 1, StringLength(udg_atempstring) - 2) + "0" +
         SubStringBJ(udg_atempstring, StringLength(udg_atempstring) - 1, StringLength(udg_atempstring) - 1);

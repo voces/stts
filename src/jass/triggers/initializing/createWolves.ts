@@ -1,10 +1,14 @@
 import { ABILITY_TYPE_ID_GIVE_ALLY_GOLD_WOLF } from "constants";
+import { spawnGoblins } from "functions/items/goblins";
 import { startRuneTimer } from "functions/runes";
 import { ForceEx } from "handles/ForceEx";
 import { MapPlayerEx } from "handles/MapPlayerEx";
+import { UnitEx } from "handles/UnitEx";
 import { terrain } from "settings/settings";
 import { updateScButtons } from "ui/api/updateIntermission";
 import { forEachPlayer } from "util/forEachPlayer";
+import { onRoundInit } from "util/gameHooks";
+import { setTimeout } from "util/setTimeout";
 
 const createWolf = () => {
   const p = GetEnumPlayer()!;
@@ -71,6 +75,16 @@ const Trig_createWolves_Actions = () => {
       udg_blightAlterations;
     TimerStart(udg_mapSizeChangeTimer, udg_blightAlterationTime, false, null);
     TimerDialogDisplayBJ(true, udg_mapSizeChangeTimerWindow);
+  }
+
+  if (udg_versus === 2) {
+    let remove = () => {};
+    const { cancel } = setTimeout(udg_gameTime[1], () => {
+      const unit = UnitEx.fromHandle(udg_unit[GetPlayerId(udg_captains[1]) + 1]);
+      spawnGoblins({ unit, x: unit.x, y: unit.y });
+      remove();
+    });
+    remove = onRoundInit(() => cancel());
   }
 };
 

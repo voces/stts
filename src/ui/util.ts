@@ -10,7 +10,7 @@ const getCounts = () => {
   let afks = 0;
   for (let i = 0; i < bj_MAX_PLAYERS; i++) {
     const p = MapPlayerEx.fromIndex(i);
-    if (!p || !p.isHere) continue;
+    if (!p || !p.inGame) continue;
     if (p.afk > 0) {
       afks++;
       continue;

@@ -7,6 +7,59 @@
 - AFK check
 - -ap attackpercent
 
+# 24x
+
+## Feature changes
+
+- Light snow theme
+- Restored runes
+- Restored Mirror Image damage (0% -> 25%)
+- Enabled building status display (shows effect of auras)
+- Rewrote leaderboard, simplifying it a bit
+- Can no longer AFK or return from AFK during pick
+- Countdown increases 5 seconds in versus and otherwise up to 5 seconds depending on sheep count
+- Versus changes
+  - Which team plays first is randomized
+  - Which player picks first when using -versus X Y is randomized
+  - Goblin Support is automatically called in when Team 2 surpasses Team 1's time
+- For players that have not used -z or set their zooms via settings, team-specific zoom levels are captured and stored
+  regularly
+- When a "gold train" is set, all players will see the shared gold message regardless of the amount
+- Upkeep resource text used to display settings
+- President changes
+  - Changed how Give Allies Gold (sheep) works
+    - If president, a single tap distributes gold to guards, leaving president with 100. A double tap takes gold from
+      guards, leaving them with 12.
+    - If guard, a single tap gives half your gold to the president. A double tap gives all of it.
+  - President gives a gold ping when using Locate Allies
+
+## Balance changes
+
+- Decreased Rune of Invisibility duration from 45 seconds to 30 seconds
+- Decreased Magic Farm's Bloodlust increased movement speed from 6% to 5%
+- Disease Cloud
+  - Increased damage per second from 1.5 to 2
+  - Increased area of effect from 176 to 272
+- Sentry Ward changes
+  - Wards can attack sheep
+  - Attack cooldown against sheep increased from 1.5 seconds to 3 seconds
+
+## Bug fixes
+
+- Patch 2.0 fixes
+  - Fixed 0.8 scaled farms
+  - Mostly fixed UI scaling
+  - Fixed time rendering (and various other numbers)
+  - Fixed intermission showing up over options
+  - Fixed unit portraits
+- Fixed -buy cost of items with a shop price over 100
+- Restored starter gold in practice to 1000000
+- Attempted to fix suppression field crash
+- Wired various commands to update intermission when used (-pub, -afk, -fafk, -autocancel, -control, -gold X)
+- Adjusted autocancel logic
+- Reverted creep guard distance values to defaults as they can cause desyncs
+- Made other minor changes in an attempt to reduce desyncs
+
 # 24w
 
 ## Feature changes

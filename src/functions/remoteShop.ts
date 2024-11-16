@@ -61,12 +61,13 @@ const BuySellItem__buyAction = () => {
     if (items[i].name.startsWith(parts[1])) {
       if (teamHasTeamItem(items[i], p)) return;
 
-      if (GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) >= items[i].cost * 1.4) {
+      const price = Math.round(Math.min(items[i].cost * 1.4, items[i].cost + 40));
+      if (GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) >= price) {
         UnitAddItemById(u, items[i].id);
-        AdjustPlayerStateSimpleBJ(p, PLAYER_STATE_RESOURCE_GOLD, -Math.round(items[i].cost * 1.4));
+        AdjustPlayerStateSimpleBJ(p, PLAYER_STATE_RESOURCE_GOLD, -price);
       } else {
         if (p === GetLocalPlayer()) StartSound(gg_snd_Error);
-        DisplayTimedTextToPlayer(p, 0, 0, 15, "|CFF00AEEFThat item is " + (items[i].cost * 1.4).toFixed() + " gold.");
+        DisplayTimedTextToPlayer(p, 0, 0, 15, "|CFF00AEEFThat item is " + price.toFixed() + " gold.");
       }
       break;
     }

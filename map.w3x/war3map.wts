@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 24w
+Sheep Tag ReVoLuTiOn 24x
 }
 
 STRING 40
@@ -900,12 +900,6 @@ STRING 2021
 Gray
 }
 
-STRING 2023
-// Abilities: A00S (Mirror Image), Ubertip (Tooltip - Normal - Extended)
-{
-Creates an image of your wolf which can be used to distract or block sheep. Can also be used to jump over walls and boundaries.
-}
-
 STRING 2024
 // Units: hC06 (Hard Farm), Ubertip (Tooltip - Extended)
 {
@@ -1528,18 +1522,6 @@ STRING 2559
 // Abilities: A00J (Claws +8), Name (Name)
 {
 Claws +8
-}
-
-STRING 2620
-// Items: I00O (Rune of Invisibility), Ubertip (Tooltip - Extended)
-{
-Makes you invisible for 45 seconds. If a sheep is close enough, they can see you.
-}
-
-STRING 2621
-// Items: I00O (Rune of Invisibility), Description (Description)
-{
-Makes you invisible for 45 seconds. If a sheep is close enough, they can see you.
 }
 
 STRING 2628
@@ -3412,12 +3394,6 @@ STRING 3775
 Suppression Field
 }
 
-STRING 3776
-// Abilities: A026 (Suppression Field), Ubertip (Tooltip - Normal - Extended)
-{
-Upgraded Farms take additional damage when under a suppression field.
-}
-
 STRING 3777
 // Buffs/Effects: B009 (Suppression Field), EditorSuffix (Editor Suffix)
 {
@@ -3428,12 +3404,6 @@ STRING 3778
 // Buffs/Effects: B009 (Suppression Field), EditorName (Name (Editor Only))
 {
 Suppression Field
-}
-
-STRING 3779
-// Buffs/Effects: B009 (Suppression Field), Buffubertip (Tooltip - Extended)
-{
-Upgraded Farms take additional damage when under a suppression field.
 }
 
 STRING 3780
@@ -3554,12 +3524,6 @@ STRING 3874
 // Items: I00M (r110), Hotkey (Hotkey)
 {
 R
-}
-
-STRING 3875
-// Items: I00V (suppression), Description (Description)
-{
-Creates a suppression field that causes Upgraded Farms to take extra damage.|n|cffff0000Does not stack.|r
 }
 
 STRING 3876
@@ -4294,12 +4258,6 @@ STRING 4178
 Tosses a Hay Trap at a target location. Hay Traps block units and are difficult for sheep to kill.|n|cffffcc0030 gold.|r |n|cff00aeef-buy hay: 42 gold.|r
 }
 
-STRING 4184
-// Items: I010 (disease), Ubertip (Tooltip - Extended)
-{
-Permanently infects nearby enemy structures with Disease Cloud. Disease Cloud deals 1.5 damage per second.|n|cffff0000Cannot kill structures.|r|n|cffffcc00100 gold.|r |n|cff00aeef-buy disease: 140 gold.|r
-}
-
 STRING 4189
 // Items: I00M (r110), Description (Description)
 {
@@ -4322,12 +4280,6 @@ STRING 4192
 // Items: I00W (forb), Description (Description)
 {
 Adds <A021,DataA1> bonus fire damage when carried, damaging nearby farms.
-}
-
-STRING 4193
-// Items: I010 (disease), Description (Description)
-{
-Permanently infects nearby enemy structures with Disease Cloud. Disease Cloud deals 1.5 damage per second.|n|cffff0000Cannot kill structures.|r
 }
 
 STRING 4196
@@ -4731,12 +4683,6 @@ STRING 4276
 Creates a suppression field that causes Upgraded Farms to take extra damage.|n|cffffcc00Lasts 45 seconds.|r|n|cffff0000Does not stack.|r
 }
 
-STRING 4277
-// Items: I00V (suppression), Ubertip (Tooltip - Extended)
-{
-Creates a suppression field that causes Upgraded Farms to take extra damage.|n|cffffcc00Lasts 45 seconds.|r|n|cffff0000Does not stack.|r|n|cffffcc0090 gold.|r|n|cff00aeef-buy suppression: 126 gold.|r
-}
-
 STRING 4278
 // Items: I008 (16), Ubertip (Tooltip - Extended)
 {
@@ -4797,11 +4743,6 @@ STRING 4298
 Goblin Support
 }
 
-STRING 4299
-{
-|cff00ff0024w|r
-}
-
 STRING 4303
 // Buffs/Effects: B00M (Stag Blessing), EditorName (Name (Editor Only))
 {
@@ -4844,15 +4785,80 @@ STRING 4310
 Bombs the target area destroying trees and damaging farms.|n|cffffcc0055 gold.|r |n|cff00aeef-buy bomber: 77 gold.|r
 }
 
-STRING 4311
-// Abilities: A01F (Freak Mirror Image), Ubertip (Tooltip - Normal - Extended)
-{
-Creates an image of your wolf which can be used to distract or block sheep. Can also be used to jump over walls and boundaries.
-}
-
 STRING 4313
 // Items: I012 (goblins), Ubertip (Tooltip - Extended)
 {
 Calls for aerial goblin support to help destroy farms. Surviving factories grant a total refund up to 150 gold.|n|cffffcc00450 gold.|r|n|cff00aeef-buy goblins: 490 gold.|r
+}
+
+STRING 4314
+// Abilities: A02T (Inventory), EditorSuffix (Editor Suffix)
+{
+(Runes)
+}
+
+STRING 4315
+// Items: I00O (Rune of Invisibility), Ubertip (Tooltip - Extended)
+{
+Makes you invisible for 30 seconds. If a sheep is close enough, they can see you.
+}
+
+STRING 4316
+// Items: I00O (Rune of Invisibility), Description (Description)
+{
+Makes you invisible for 30 seconds. If a sheep is close enough, they can see you.
+}
+
+STRING 4317
+// Abilities: A00S (Mirror Image), Ubertip (Tooltip - Normal - Extended)
+{
+Creates an image of your wolf does 25% damage to farms and can be used to distract or block sheep. Can also be used to jump over walls and boundaries.
+}
+
+STRING 4318
+// Abilities: A01F (Freak Mirror Image), Ubertip (Tooltip - Normal - Extended)
+{
+Creates an image of your wolf does 25% damage to farms and can be used to distract or block sheep. Can also be used to jump over walls and boundaries.
+}
+
+STRING 4319
+// Items: I00V (suppression), Ubertip (Tooltip - Extended)
+{
+Creates a suppression field that causes Upgraded and Strong Farms to take extra damage.|n|cffffcc00Lasts 45 seconds.|r|n|cffff0000Does not stack.|r|n|cffffcc0090 gold.|r|n|cff00aeef-buy suppression: 126 gold.|r
+}
+
+STRING 4320
+// Items: I00V (suppression), Description (Description)
+{
+Creates a suppression field that causes Upgraded and Strong Farms to take extra damage.|n|cffff0000Does not stack.|r
+}
+
+STRING 4321
+// Abilities: A026 (Suppression Field), Ubertip (Tooltip - Normal - Extended)
+{
+Upgraded and Strong Farms take additional damage when under a suppression field.
+}
+
+STRING 4322
+// Buffs/Effects: B009 (Suppression Field), Buffubertip (Tooltip - Extended)
+{
+Upgraded and Strong Farms take additional damage when under a suppression field.
+}
+
+STRING 4323
+{
+|cff00ff0024x|r
+}
+
+STRING 4324
+// Items: I010 (disease), Ubertip (Tooltip - Extended)
+{
+Permanently infects nearby enemy structures with Disease Cloud. Disease Cloud deals 2 damage per second.|n|cffff0000Cannot kill structures.|r|n|cffffcc00100 gold.|r |n|cff00aeef-buy disease: 140 gold.|r
+}
+
+STRING 4325
+// Items: I010 (disease), Description (Description)
+{
+Permanently infects nearby enemy structures with Disease Cloud. Disease Cloud deals 2 damage per second.|n|cffff0000Cannot kill structures.|r
 }
 

@@ -102,12 +102,12 @@ export class MapPlayerEx extends MapPlayer {
     return `${udg_colorString[this.cid] ?? ""}${this.name}`;
   }
 
-  get isHere() {
+  get inGame() {
     return this.slotState === PLAYER_SLOT_STATE_PLAYING;
   }
 
   get isActive() {
-    return this.isHere && this.afk === AFK_PLAYING;
+    return this.inGame && this.afk === AFK_PLAYING;
   }
 
   get isActiveHuman() {
@@ -224,5 +224,9 @@ export class MapPlayerEx extends MapPlayer {
   /** Extra is allied and shares vision with all non-neutrals. */
   public static get neutralExtra() {
     return MapPlayerEx.fromIndex(bj_PLAYER_NEUTRAL_EXTRA)!;
+  }
+
+  public static get neutralVictim() {
+    return MapPlayerEx.fromIndex(bj_PLAYER_NEUTRAL_VICTIM)!;
   }
 }

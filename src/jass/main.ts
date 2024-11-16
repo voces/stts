@@ -139,7 +139,7 @@ import { setTimeout, Timeout } from "util/setTimeout";
 import { getDefaultTime, updateLeaderboardSettingsDisplay } from "settings/time";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { MapPlayerEx } from "handles/MapPlayerEx";
-import { DisplayType, UNIT_TYPE_ID_GHOST } from "constants";
+import { DisplayType, TRANSFER_DISPLAY_SPECIAL, UNIT_TYPE_ID_GHOST } from "constants";
 import { ForceEx } from "handles/ForceEx";
 import { formatList } from "util/formatList";
 import { removeEnumUnit } from "util/removeEnumUnit";
@@ -207,8 +207,6 @@ declare global {
   let udg_numSheep: number;
   let udg_numWolf: number;
   let udg_atempgroup: group;
-  // deno-lint-ignore prefer-const
-  let udg_zoom: Array<number>;
   let udg_transfer: number;
   let cid: number;
   let udg_createTimerWindow: timerdialog;
@@ -252,8 +250,6 @@ declare global {
   // deno-lint-ignore prefer-const
   let udg_saves: Array<number>;
   let udg_atempstring: string;
-  // deno-lint-ignore prefer-const
-  let udg_AFKOn: Array<number>;
   let udg_redHideTimer: timer;
   let udg_blueHideTimer: timer;
   let udg_tealHideTimer: timer;
@@ -734,7 +730,6 @@ udg_view = [];
 udg_playerList = [];
 udg_numSheep = 0;
 udg_numWolf = 0;
-udg_zoom = [];
 udg_transfer = 0;
 cid = 0;
 udg_apr = [];
@@ -759,7 +754,6 @@ udg_colorString = [];
 udg_numPick = 0;
 udg_wispPoints = 0;
 udg_saves = [];
-udg_AFKOn = [];
 udg_hideEsc = [];
 udg_wolfZoom = [];
 udg_sheepZoom = [];
@@ -1023,7 +1017,7 @@ transferGold = (
     amount = GetPlayerState(sender, PLAYER_STATE_RESOURCE_GOLD);
   }
 
-  if (amount <= 0) return;
+  if (amount <= 0 && display !== TRANSFER_DISPLAY_SPECIAL) return;
 
   AdjustPlayerStateBJ(-amount, sender, PLAYER_STATE_RESOURCE_GOLD);
   AdjustPlayerStateBJ(amount, receiver, PLAYER_STATE_RESOURCE_GOLD);
@@ -1050,7 +1044,7 @@ transferGold = (
     ? ForceEx.wolves.size()
     : ForceEx.sheep.size() + ForceEx.wisps.size();
 
-  if (display >= TRANSFER_DISPLAY_INVOLVED && amount >= 2 + teamSize * 3) {
+  if ((display >= TRANSFER_DISPLAY_INVOLVED && amount >= 2 + teamSize * 3) || display === TRANSFER_DISPLAY_SPECIAL) {
     DisplayTimedTextToPlayer(
       receiver,
       0,
@@ -1060,7 +1054,7 @@ transferGold = (
     );
   }
 
-  if (display >= TRANSFER_DISPLAY_TEAM && amount >= 2 + teamSize * 3) {
+  if ((display >= TRANSFER_DISPLAY_TEAM && amount >= 2 + teamSize * 3) || display === TRANSFER_DISPLAY_SPECIAL) {
     for (let i = 0; i < bj_MAX_PLAYERS; i++) {
       const p = Player(i);
       if (p && p !== sender && p !== receiver && IsPlayerAlly(sender, p)) {
@@ -1113,7 +1107,6 @@ transferOwnershipOfHostFarm = () => {
 const InitGlobals = () => {
   for (let i = 0; i <= bj_MAX_PLAYERS; i++) {
     udg_switch[i] = 0;
-    udg_zoom[i] = 0;
     udg_apr[i] = 0;
     udg_sheepLastGame[i] = false;
     udg_kills[i] = 0;
@@ -1124,7 +1117,6 @@ const InitGlobals = () => {
     udg_AFK[i] = AFK_PLAYING;
     udg_colorString[i] = "";
     udg_saves[i] = 0;
-    udg_AFKOn[i] = 0;
     udg_hideEsc[i] = false;
     udg_wolfZoom[i] = 0;
     udg_sheepZoom[i] = 0;
@@ -1314,13 +1306,8 @@ simpleformatTime = (r: number, includeMilliseconds = false): string => {
     r = ModuloReal(r, 60);
   } else s += s.length === 0 ? "0" : "00";
   s += ":";
-  if (includeMilliseconds) {
-    if (r >= 10) s += R2S(r);
-    else s += (s.length > 0 ? "0" : "") + R2S(r);
-  } else {
-    if (r >= 10) s += I2S(R2I(r));
-    else s += (s.length > 0 ? "0" : "") + I2S(R2I(r));
-  }
+  if (r >= 10) s += r.toFixed(includeMilliseconds ? 3 : 0);
+  else s += (s.length > 0 ? "0" : "") + r.toFixed(includeMilliseconds ? 3 : 0);
 
   return s;
 };
@@ -1338,24 +1325,17 @@ formatTime = (r: number): string => {
     s = "0" + I2S(R2I(r / 3600));
     r = ModuloReal(r, 3600);
   }
-  if (s !== "") {
-    s = s + ":";
-  }
+  if (s !== "") s += ":";
   if (r >= 600) {
-    s = s + I2S(R2I(r / 60));
+    s += I2S(R2I(r / 60));
     r = ModuloReal(r, 60);
   } else if (r >= 60) {
-    s = s + "0" + I2S(R2I(r / 60));
+    s += "0" + I2S(R2I(r / 60));
     r = ModuloReal(r, 60);
-  } else {
-    s = s + "00";
-  }
-  s = s + ":";
-  if (r >= 10) {
-    s = s + R2S(r);
-  } else {
-    s = s + "0" + R2S(r);
-  }
+  } else s += "00";
+  s += ":";
+  if (r >= 10) s += r.toFixed(3);
+  else s += "0" + r.toFixed(3);
   return s;
 };
 

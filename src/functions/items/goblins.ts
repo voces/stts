@@ -26,9 +26,7 @@ const refund = 150;
 
 const refunds = new WeakMap<UnitEx, number>();
 
-game.onSpell(({ spellId, unit, x, y }) => {
-  if (spellId !== ABILITY_TYPE_ID_GOBLINS) return;
-
+export const spawnGoblins = ({ unit, x, y }: { unit: UnitEx; x: number; y: number }) => {
   const owner = unit.owner;
   const direction = x === unit.x ? GetRandomReal(0, Math.PI * 2) : Math.atan2(y - unit.y, x - unit.x);
 
@@ -109,6 +107,11 @@ game.onSpell(({ spellId, unit, x, y }) => {
       }, true);
     });
   });
+};
+
+game.onSpell(({ spellId, unit, x, y }) => {
+  if (spellId !== ABILITY_TYPE_ID_GOBLINS) return;
+  spawnGoblins({ unit, x, y });
 });
 
 game.onConstructionStart(({ unit }) => {
@@ -149,11 +152,12 @@ game.onConstructionFinish(({ unit }) => {
 
   const spawnWave = () => {
     for (let i = 0; i < waveSize; i++) {
+      const d = GetRandomReal(0, Math.PI * 2);
       const goblin = UnitEx.create(
         unit.owner,
         UNIT_TYPE_ID_CLOCKWERK,
-        unit.x + 160 * (Math.random() - 0.5),
-        unit.y + 160 * (Math.random() - 0.5),
+        unit.x + 160 * Math.cos(d),
+        unit.y + 160 * Math.sin(d),
       );
       goblin.setAnimation("birth");
       goblin.applyTimedLife(FourCC("BTFL"), 10);

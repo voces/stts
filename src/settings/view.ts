@@ -19,24 +19,22 @@ const destroyFogModifiers = () => {
   }
 };
 
-export const toggleView = (enabled = !udg_viewOn) => {
-  udg_viewOn = enabled;
+export const toggleView = (enabled?: boolean) => {
+  const passed = typeof enabled === "boolean";
+  if (!passed) enabled = !udg_viewOn;
+  udg_viewOn = enabled as boolean;
   if (udg_viewOn) createFogModifiers();
   else destroyFogModifiers();
-};
-
-const Trig_view_Actions = () => {
-  toggleView();
-  updateLeaderboardSettingsDisplay();
+  updateLeaderboardSettingsDisplay(passed);
 };
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   gg_trg_view = CreateTrigger();
   registerAnyPlayerChatEvent(gg_trg_view, "-view");
   TriggerAddCondition(gg_trg_view, Condition(() => GetTriggerPlayer() === udg_Custom));
-  TriggerAddAction(gg_trg_view, Trig_view_Actions);
+  TriggerAddAction(gg_trg_view, toggleView);
 
   // Flash map
-  Trig_view_Actions();
-  Trig_view_Actions();
+  toggleView();
+  toggleView();
 });

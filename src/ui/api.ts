@@ -76,7 +76,7 @@ addScriptHook(W3TS_HOOK.MAIN_BEFORE, () => {
         menuFrames.push(
           ...["EscMenuMainPanel", "QuestDialog", "AllianceDialog", "ChatDialog", "LogDialog"]
             .map((n) => FrameEx.fromName(n)),
-          FrameEx.fromOrigin(ORIGIN_FRAME_GAME_UI).children[17],
+          FrameEx.fromOrigin(ORIGIN_FRAME_GAME_UI).children[18],
         );
       }
       if (menuFrames.some((n) => n.visible)) hideIntermission(true);

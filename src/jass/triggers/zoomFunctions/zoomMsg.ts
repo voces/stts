@@ -10,14 +10,14 @@ const Trig_zoomMsg_Actions = () => {
   const format = (arr: number[]) => {
     const val = arr[p.cid];
     if (val === current) atCurrent = true;
-    return `${I2S(val)}${val === current ? "|r (current)" : ""}`;
+    return `${val.toFixed(0)}${val === current ? "|r (current)" : ""}`;
   };
 
   p.displayTimedText(`Your |CFF00AEEFsheep|r zoom is |CFFED1C24${format(udg_sheepZoom)}|r.`, 10);
   p.displayTimedText(`Your |CFF00AEEFwolf|r zoom is |CFFED1C24${format(udg_wolfZoom)}|r.`, 10);
   p.displayTimedText(`Your |CFF00AEEFwisp|r zoom is |CFFED1C24${format(udg_wispZoom)}|r.`, 10);
 
-  if (!atCurrent) p.displayTimedText(`Your current zoom is |CFFED1C24${I2S(R2I(current))}|r.`, 10);
+  if (!atCurrent) p.displayTimedText(`Your current zoom is |CFFED1C24${current.toFixed(0)}|r.`, 10);
 };
 
 declare global {

@@ -40,7 +40,7 @@ export const updateTimes = () => {
       else s = s + ", " + p;
       if (sheep > 0) sheepString += " " + I2S(i);
       else sheepString = I2S(i)!;
-      udg_roundTimes[i + 1] += R2S(timeElapsed) + " | ";
+      udg_roundTimes[i + 1] += timeElapsed.toFixed(3) + " | ";
       if (timeElapsed > s__times_pTimeMax[playerTimes[i]]) s__times_pTimeMax[playerTimes[i]] = timeElapsed;
       for (let n = 0; n < bj_MAX_PLAYERS; n++) {
         if (IsPlayerInForce(Player(n)!, udg_Sheep) || IsPlayerInForce(Player(n)!, udg_Spirit)) {
@@ -97,5 +97,5 @@ export const updateTimes = () => {
     if (loser) fullTimeString += " (loser)";
   }
 
-  if (emitRound) logRound(sheepString, wolvesString, R2S(timeElapsed)!);
+  if (emitRound) logRound(sheepString, wolvesString, timeElapsed.toFixed(3));
 };

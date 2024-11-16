@@ -17,7 +17,13 @@ game.onCommand({
     const width = parts[1] ? parseInt(parts[1]) : 5;
     const height = parts[2] ? parseInt(parts[2]) : width;
     const gap = parts[3] ? parseInt(parts[3]) : 3;
-    const owner = parts[4] ? bj_PLAYER_NEUTRAL_VICTIM : player.id;
+    const owner = parts[4]
+      ? (() => {
+        const raw = tonumber(parts[4]);
+        if (typeof raw === "number") return Math.round(raw - 1);
+        return bj_PLAYER_NEUTRAL_VICTIM;
+      })()
+      : player.id;
 
     if (owner < 0 || owner > bj_MAX_PLAYERS + 4) return;
 

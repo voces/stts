@@ -38,8 +38,10 @@ export const UNIT_TYPE_ID_UPGRADED_FARM = FourCC("hC07");
 export const UNIT_TYPE_ID_WARD = FourCC("oeye");
 
 export const TRANSFER_DISPLAY_NONE = 0;
+export const TRANSFER_DISPLAY_SPECIAL = 4;
 export type DisplayType =
   | typeof TRANSFER_DISPLAY_NONE
   | typeof TRANSFER_DISPLAY_SOURCE
   | typeof TRANSFER_DISPLAY_INVOLVED
-  | typeof TRANSFER_DISPLAY_TEAM;
+  | typeof TRANSFER_DISPLAY_TEAM
+  | typeof TRANSFER_DISPLAY_SPECIAL;

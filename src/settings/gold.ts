@@ -19,7 +19,8 @@ const Trig_gold_Actions = () => {
       5,
       `|cffffcc00Set |cffed1c24wolf|cffffcc00 gold to ${I2S(udg_wolfGold)}.|r`,
     );
-    return;
+
+    return updateLeaderboardSettingsDisplay();
   }
 
   udg_sheepGold = udg_wolfGold = Math.min(parts[0], 9999999);
