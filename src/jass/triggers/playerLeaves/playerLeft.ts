@@ -1,5 +1,6 @@
 import { ForceEx } from "handles/ForceEx";
 import { MapPlayerEx } from "handles/MapPlayerEx";
+import { updateIntermission } from "ui/api/updateIntermission";
 import { enforceTeamResourceMultiboard } from "userSettings/teamResources";
 import { withPlayerUnits } from "util/withGroup";
 
@@ -118,6 +119,7 @@ const Trig_playerLeft_Actions = () => {
   udg_AFK[GetConvertedPlayerId(leaver)] = AFK_PLAYING;
   TriggerExecute(gg_trg_createLists);
   TriggerExecute(gg_trg_setupLeaderboard);
+  updateIntermission();
 };
 
 declare global {

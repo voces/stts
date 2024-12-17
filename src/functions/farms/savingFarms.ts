@@ -18,10 +18,10 @@ const getDistancePenality = (u: unit) => {
   // Return 2.5 if in pen (bonus +1 being inside versus right outside)
   if (x > xMinPen && x < xMaxPen && y > yMinPen && y < yMaxPen) return 2.5;
 
-  const xMaxBounds = GetRectMaxX(terrain.cameraBounds);
-  const xMinBounds = GetRectMinX(terrain.cameraBounds);
-  const yMaxBounds = GetRectMaxY(terrain.cameraBounds);
-  const yMinBounds = GetRectMinY(terrain.cameraBounds);
+  const xMaxBounds = GetRectMaxX(terrain.cameraBounds) + 512;
+  const xMinBounds = GetRectMinX(terrain.cameraBounds) - 512;
+  const yMaxBounds = GetRectMaxY(terrain.cameraBounds) + 512;
+  const yMinBounds = GetRectMinY(terrain.cameraBounds) - 512;
 
   // Return 0.25 if outside camera bounds (edge of map)
   if (x < xMinBounds || x > xMaxBounds || y < yMinBounds || y > yMaxBounds) return 0.25;

@@ -19,7 +19,7 @@ export const handleAFK = (p: player) => {
   if (udg_AFK[cid] < AFK_AFK) { // Leaving
     if (udg_gameStarted) {
       // Cannot AFK in middle of a round
-      if (udg_AFK[cid] === AFK_PLAYING) "Cannot AFK during a round!";
+      if (udg_AFK[cid] === AFK_PLAYING) return "Cannot AFK during a round!";
 
       // Else case: they came back then went AFK again
       udg_AFK[cid] = AFK_AFK;

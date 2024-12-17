@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 24x
+Sheep Tag ReVoLuTiOn 24y
 }
 
 STRING 40
@@ -3455,7 +3455,7 @@ Snowman
 }
 
 STRING 3840
-// Abilities: A027 (Snowball), Name (Name)
+// Units: o002 (Snowball), Name (Name)
 {
 Snowball
 }
@@ -4127,7 +4127,7 @@ STRING 4135
 }
 
 STRING 4138
-// Buffs/Effects: B00M (Stag Blessing), EditorSuffix (Editor Suffix)
+// Buffs/Effects: B00M (Penguin Blessing), EditorSuffix (Editor Suffix)
 {
 (Critter)
 }
@@ -4743,24 +4743,6 @@ STRING 4298
 Goblin Support
 }
 
-STRING 4303
-// Buffs/Effects: B00M (Stag Blessing), EditorName (Name (Editor Only))
-{
-Stag Blessing
-}
-
-STRING 4304
-// Buffs/Effects: B00M (Stag Blessing), Buffubertip (Tooltip - Extended)
-{
-This unit has been blessed by a stag; it has greatly increased armor.
-}
-
-STRING 4305
-// Buffs/Effects: B00M (Stag Blessing), Bufftip (Tooltip)
-{
-Stag Blessing
-}
-
 STRING 4306
 // Abilities: A02N (Bite), Tip (Tooltip - Normal)
 {
@@ -4845,11 +4827,6 @@ STRING 4322
 Upgraded and Strong Farms take additional damage when under a suppression field.
 }
 
-STRING 4323
-{
-|cff00ff0024x|r
-}
-
 STRING 4324
 // Items: I010 (disease), Ubertip (Tooltip - Extended)
 {
@@ -4860,5 +4837,135 @@ STRING 4325
 // Items: I010 (disease), Description (Description)
 {
 Permanently infects nearby enemy structures with Disease Cloud. Disease Cloud deals 2 damage per second.|n|cffff0000Cannot kill structures.|r
+}
+
+STRING 4326
+{
+|cff00ff0024y|r
+}
+
+STRING 4327
+// Buffs/Effects: B00M (Penguin Blessing), EditorName (Name (Editor Only))
+{
+Penguin Blessing
+}
+
+STRING 4328
+// Buffs/Effects: B00M (Penguin Blessing), Buffubertip (Tooltip - Extended)
+{
+This unit has been blessed by a penguin; it has greatly increased armor.
+}
+
+STRING 4329
+// Buffs/Effects: B00M (Penguin Blessing), Bufftip (Tooltip)
+{
+Penguin Blessing
+}
+
+STRING 4330
+// Abilities: A027 (Snowball), Name (Name)
+{
+Snowball
+}
+
+STRING 4331
+// Abilities: A02U (Snowball), Name (Name)
+{
+Snowball
+}
+
+STRING 4333
+// Abilities: A02V (Snowball), Name (Name)
+{
+Snowball
+}
+
+STRING 4334
+// Abilities: A02X (Snowball), Name (Name)
+{
+Snowball
+}
+
+STRING 4335
+// Buffs/Effects: B00O (), Buffubertip (Tooltip - Extended)
+{
+This unit has a snowball!
+}
+
+STRING 4336
+// Abilities: A027 (Snowball), EditorSuffix (Editor Suffix)
+{
+(Snowman)
+}
+
+STRING 4337
+// Abilities: A02U (Snowball), EditorSuffix (Editor Suffix)
+{
+(Buff)
+}
+
+STRING 4339
+{
+Unable to pick up snowballs.
+}
+
+STRING 4340
+// Abilities: A02W (Throw Snowball), Tip (Tooltip - Normal)
+{
+Throw Snowball
+}
+
+STRING 4341
+// Abilities: A02W (Throw Snowball), Hotkey (Hotkey - Normal)
+{
+D
+}
+
+STRING 4342
+// Abilities: A02W (Throw Snowball), Name (Name)
+{
+Throw Snowball
+}
+
+STRING 4343
+// Abilities: A02W (Throw Snowball), Ubertip (Tooltip - Normal - Extended)
+{
+Throws a snowball, slowing hit units.
+}
+
+STRING 4346
+// Abilities: A02Y (Snowball), Name (Name)
+{
+Snowball
+}
+
+STRING 4348
+// Buffs/Effects: B00O (), Bufftip (Tooltip)
+{
+Snowball
+}
+
+STRING 4349
+// Abilities: A02V (Snowball), EditorSuffix (Editor Suffix)
+{
+(Debuff, Sheep)
+}
+
+STRING 4350
+// Abilities: A02X (Snowball), EditorSuffix (Editor Suffix)
+{
+(Debuff, Wolf/Golem)
+}
+
+STRING 4351
+// Abilities: A02Y (Snowball), EditorSuffix (Editor Suffix)
+{
+(Debuff, Frosty)
+}
+
+STRING 4352
+// Doodads: D004 (Candystick), Name (Name)
+{
+Candystick
 }
 

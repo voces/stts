@@ -1,7 +1,7 @@
 import { ForceEx } from "handles/ForceEx";
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { displaySwitchWinner } from "modes/switch/winnerMsg";
-import { settings } from "settings/settings";
+import { president, settings } from "settings/settings";
 import { enforceTeamResourceMultiboard } from "userSettings/teamResources";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
@@ -35,8 +35,10 @@ const Trig_cancel_Actions = () => {
       );
     }
     if (!udg_gameStarted && udg_versus === 1) udg_versus = 0;
-    else settings.desiredSheep = ForceEx.sheep.size() + ForceEx.wisps.size();
+    else settings.desiredSheep = Math.max(ForceEx.sheep.size() + ForceEx.wisps.size(), 1);
   }
+
+  if (president.enabled && president.president) president.president.presidentCount--;
 
   if (!udg_switchOn && !vampOn && !udg_practiceOn && udg_Teams === TEAMS_LOCK_IE_PLAYING) {
     ForForce(udg_Sheep, Trig_cancel_resetSheepState);

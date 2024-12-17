@@ -20,12 +20,13 @@ export const applyPresidentBuff = (target: Unit | unit) => {
 };
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
-  const t = Trigger.create();
+  let t = Trigger.create();
   registerAnyPlayerChatEvent(t, "-president", false);
   t.addAction(() => {
     if (udg_gameStarted || GetTriggerPlayer() !== udg_Custom) return;
 
     const parts = GetEventPlayerChatString()!.split(" ");
+    if (parts[0].toLowerCase() === "-presidentcount") return;
 
     if (parts.length === 1 && president.handicap === 0.75) president.enabled = !president.enabled;
     else president.enabled = true;
@@ -53,5 +54,24 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
       }|r`,
     );
     updateLeaderboardSettingsDisplay();
+  });
+
+  t = Trigger.create();
+  registerAnyPlayerChatEvent(t, "-presidentcount", false);
+  t.addAction(() => {
+    let count = 0;
+    const p = MapPlayerEx.fromEvent()!;
+    p.displayTimedText("|CFFFFCC00President Count|r", 8);
+    for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+      const p2 = MapPlayerEx.fromIndex(i);
+      if (!p2 || p2.slotState === PLAYER_SLOT_STATE_EMPTY) continue;
+      if (count > 0 && (count % 15 === 0)) {
+        TriggerSleepAction(5);
+        count = 0;
+        p.displayTimedText("|CFFFFCC00President Count (cont.)|r", 8);
+      }
+      p.displayTimedText(`${p2.coloredName_} : ${I2S(p2.presidentCount)}`, 8);
+      count++;
+    }
   });
 });

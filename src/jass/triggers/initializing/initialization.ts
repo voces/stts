@@ -1,3 +1,5 @@
+import { setTimeout } from "util/setTimeout";
+
 export {};
 
 const Trig_isSheep = () => {
@@ -27,9 +29,6 @@ const Trig_initialization_forAllPlayersOne = () => {
   udg_wolfZoom[cid] = 0;
   udg_wispZoom[cid] = 0;
   wasHere[cid - 1] = true;
-  if (GetPlayerSlotState(ConvertedPlayer(cid)!) === PLAYER_SLOT_STATE_PLAYING) {
-    udg_wasHere[cid] = true;
-  }
 };
 
 const Trig_initialization_forAllPlayersTwo = () => {
@@ -316,30 +315,26 @@ const Trig_initialization_Actions = () => {
   s__colorsStruct_color2[colors[24]] = 111;
   s__colorsStruct_color3[colors[24]] = 51;
 
-  i = 0;
-  while (true) {
-    if (i === 24) break;
-    if (GetPlayerSlotState(Player(i)!) === PLAYER_SLOT_STATE_PLAYING) {
-      if (i < 12) {
-        ForceAddPlayer(udg_Sheep, Player(i)!);
-      } else {
-        ForceAddPlayer(udg_Wolf, Player(i)!);
-      }
-      SetPlayerName(
-        Player(i)!,
-        GetPlayerName(Player(i)!)?.split("#")[0] + " (" + (I2S(i + 1) + ")"),
-      );
-    }
-    i = i + 1;
+  for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+    SetPlayerName(Player(i)!, `${GetPlayerName(Player(i)!)?.split("#")[0]} (${i})`);
   }
 
-  ForForce(udg_Sheep, Trig_isSheep);
-  ForForce(udg_Wolf, Trig_isWolf);
   TriggerExecute(gg_trg_Create_Timers);
-  TriggerExecute(gg_trg_startRound);
   DisableTrigger(gg_trg_Sheep_Color);
   PlaySoundBJ(gg_snd_GoodJob);
   DestroyTrigger(gg_trg_initialization);
+  setTimeout(0, () => {
+    for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+      if (GetPlayerSlotState(Player(i)!) === PLAYER_SLOT_STATE_PLAYING) {
+        ForceAddPlayer(i < bj_MAX_PLAYERS / 2 ? udg_Sheep : udg_Wolf, Player(i)!);
+      }
+    }
+
+    ForForce(udg_Sheep, Trig_isSheep);
+    ForForce(udg_Wolf, Trig_isWolf);
+
+    TriggerExecute(gg_trg_startRound);
+  });
 };
 
 declare global {

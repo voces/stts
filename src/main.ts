@@ -9,6 +9,7 @@ import "functions/items/hay";
 import "functions/remoteShop";
 import "functions/runes";
 import "jass/main";
+import "misc/christmas.ts";
 import "misc/hideTimers";
 import "misc/regrowTrees";
 import "misc/testmass";

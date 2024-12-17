@@ -292,8 +292,6 @@ declare global {
   // deno-lint-ignore prefer-const
   let udg_accumPartner: Array<number>;
   let udg_atempint3: number;
-  // deno-lint-ignore prefer-const
-  let udg_wasHere: Array<boolean>;
   let udg_someVersusBoolean: boolean;
   // deno-lint-ignore prefer-const
   let udg_firstBlood: boolean;
@@ -773,7 +771,6 @@ udg_sheepGold = 0;
 udg_wolfGold = 0;
 udg_accumPartner = [];
 udg_atempint3 = 0;
-udg_wasHere = [];
 udg_someVersusBoolean = false;
 udg_firstBlood = false;
 udg_humiliationCheck = [];
@@ -1123,7 +1120,6 @@ const InitGlobals = () => {
     udg_multiboardRow[i] = 0;
     udg_wispZoom[i] = 0;
     udg_gameTime[i] = 0;
-    udg_wasHere[i] = false;
     udg_humiliationCheck[i] = false;
     udg_firstbloodKillCounter[i] = 0;
     udg_firstbloodDeathCounter[i] = 0;

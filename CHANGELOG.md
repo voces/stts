@@ -6,6 +6,32 @@
 - Team gold pools
 - AFK check
 - -ap attackpercent
+- Frost Arrows allow a reach
+
+# 24y
+
+## Feature changes
+
+- Christmas theme
+- Removed automatic camera pan on sheep spawn
+- President now works off a count rather than being random
+- Added -presidentcount
+
+## Balance changes
+
+- Adjusted sheep gold income boundaries by 512 in all directions on all terrains
+
+## Bug fixes
+
+- Fixed -restart with versus
+- Fixed which team starting being re-randomized when using -cancel -start with versus
+- Fixed being able to use -afk and -fafk in middle of rounds
+- Increase creep guard distances used in practice mode
+- Fixed a few potential sources of desyncs (checking slot status or controller on init; races for updating value)
+- Fixed UI resetting income to whole numbers
+- Fixed intermission not updating when someone leaves
+- Fixed Translocate not translocating golems
+- Fixed Start Position costing 2 food
 
 # 24x
 
@@ -50,7 +76,6 @@
   - Fixed 0.8 scaled farms
   - Mostly fixed UI scaling
   - Fixed time rendering (and various other numbers)
-  - Fixed intermission showing up over options
   - Fixed unit portraits
 - Fixed -buy cost of items with a shop price over 100
 - Restored starter gold in practice to 1000000

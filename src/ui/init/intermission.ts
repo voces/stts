@@ -34,7 +34,6 @@ import { frames } from "ui/frames";
 import { getIdealDesiredSheep, parseDesiredSheep, toStringWithPrecision } from "ui/util";
 import { Checkbox, editBoxDelayedOnChange, getFrames, setupEditableText, setupSlider } from "./util";
 import { toggleView } from "settings/view";
-import { setTimeout } from "util/setTimeout";
 
 export const initIntermission = () => {
   FrameEx.create("SheepTagIntermission", ORIGIN_FRAME_GAME_UI);
@@ -376,11 +375,6 @@ export const initIntermission = () => {
 
   frames.settings.desiredSheep = desiredSheep;
   updateDesiredSheep();
-  setTimeout(0.25, () =>
-    desiredSheep.onChange(({ value }) => {
-      const parsed = parseDesiredSheep(value);
-      settings.desiredSheep = parsed;
-    }, true));
   editBoxDelayedOnChange(desiredSheep, {
     onChange: ({ value }) => {
       const parsed = parseDesiredSheep(value);
@@ -441,7 +435,7 @@ export const initIntermission = () => {
         if (p.afk !== AFK_PLAYING) handleAFK(p.handle);
         if (ForceEx.wolves.hasPlayer(p)) ForceEx.wolves.removePlayer(p);
         if (!ForceEx.sheep.hasPlayer(p)) ForceEx.sheep.addPlayer(p);
-        settings.desiredSheep = ForceEx.sheep.size();
+        settings.desiredSheep = Math.max(ForceEx.sheep.size(), 1);
         updateDesiredSheep();
         desiredSheep.text = settings.desiredSheep.toFixed(0);
         defaultTime();
@@ -450,7 +444,7 @@ export const initIntermission = () => {
         if (p.afk !== AFK_PLAYING) handleAFK(p.handle);
         if (ForceEx.sheep.hasPlayer(p)) ForceEx.sheep.removePlayer(p);
         if (!ForceEx.wolves.hasPlayer(p)) ForceEx.wolves.addPlayer(p);
-        settings.desiredSheep = ForceEx.sheep.size();
+        settings.desiredSheep = Math.max(ForceEx.sheep.size(), 1);
         updateDesiredSheep();
         desiredSheep.text = settings.desiredSheep.toFixed(0);
         defaultTime();
@@ -459,7 +453,7 @@ export const initIntermission = () => {
       // Kick
       else if (value === 5) {
         CustomDefeatBJ(p.handle, "You were disconnected.");
-        settings.desiredSheep = ForceEx.sheep.size();
+        settings.desiredSheep = Math.max(ForceEx.sheep.size(), 1);
         updateDesiredSheep();
         desiredSheep.text = settings.desiredSheep.toFixed(0);
         defaultTime();

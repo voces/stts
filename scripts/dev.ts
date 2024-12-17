@@ -50,13 +50,13 @@ const debounceReRun = (path: string) => {
 rebuild();
 
 const cwd = Deno.cwd();
-const watcher = Deno.watchFs("");
+const watcher = Deno.watchFs(".");
 for await (const event of watcher) {
   for (const path of event.paths) {
     const cleaned = path.replace(`${cwd}/`, "");
     if (
-      cleaned.startsWith("temp") || cleaned.startsWith("node_modules") ||
-      cleaned.startsWith(".git")
+      cleaned.startsWith("./temp") || cleaned.startsWith("./node_modules") ||
+      cleaned.startsWith("./.git")
     ) {
       continue;
     }

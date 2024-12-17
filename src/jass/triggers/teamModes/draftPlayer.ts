@@ -1,3 +1,4 @@
+import { MapPlayerEx } from "handles/MapPlayerEx";
 import { enforceTeamResourceMultiboard } from "userSettings/teamResources";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 
@@ -238,6 +239,16 @@ const Trig_draftPlayer_Actions = () => {
     ForceRemovePlayerSimple(ConvertedPlayer(cid)!, udg_Draft);
     if ((Trig_draftPlayer_Func006Func009C())) {
       ForForce(udg_Draft, Trig_draftPlayer_Func006Func009Func001A);
+
+      // Randomize which versus team starts
+      if (GetRandomInt(0, 1) === 0) {
+        for (let pid = 0; pid < bj_MAX_PLAYERS; pid++) {
+          const p = MapPlayerEx.fromIndex(pid);
+          if (p?.isActive) p.sheepLastGame != p.sheepLastGame;
+        }
+        [udg_captains[1], udg_captains[3]] = [udg_captains[3], udg_captains[1]];
+      }
+
       ForForce(GetPlayersAll()!, Trig_draftPlayer_Func006Func009Func006A);
       udg_Teams = TEAMS_LOCK_IE_PLAYING;
       MultiboardDisplayBJ(false, udg_captainsMultiboard);

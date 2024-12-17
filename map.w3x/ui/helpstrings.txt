@@ -37,6 +37,7 @@
 |cff00aeef-time:|r Shows how long the game has been running.
 |cff00aeef-tf:|r Shows everyone's total farms.
 |cff00aeef-gc:|r Shows everyone's gold count (priority for |cff00aeef-g|r).
+|cff00aeef-presidentcount:|r Shows how many times each player has been president.
 |cff00aeef-clear:|r Hides all command messages.
 
 |cffffcc00Practice commands|r

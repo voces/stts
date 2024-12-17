@@ -8,6 +8,7 @@ import {
   ABILITY_TYPE_ID_BITE,
   ABILITY_TYPE_ID_RESET_START_POSITION,
   UNIT_TYPE_ID_GUIDE_FARM,
+  UNIT_TYPE_ID_SNOWMAN,
   UNIT_TYPE_ID_START_POSITION,
 } from "constants";
 import { switchSheepTimers } from "modes/switch/switch";
@@ -156,7 +157,6 @@ const Trig_createSheep_sheepActionsB = () => {
 
   const spawn = spawns.get(p.handle) ?? { x: 0, y: 0 };
 
-  PanCameraToTimedForPlayer(p.handle, spawn.x, spawn.y, 0);
   const u = CreateUnit(p.handle, sheepType, spawn.x, spawn.y, 270)!;
   if (president.enabled) {
     if (president.president?.id === GetPlayerId(p.handle)) {
@@ -386,16 +386,6 @@ const Trig_createSheep_Actions = () => {
     udg_versusOff = false;
   }
 
-  // Randomize which versus team starts
-  if (udg_versus === 1 && GetRandomInt(0, 1) === 0) {
-    const oldSheep = ForceEx.sheep.toArray();
-    ForceEx.sheep.clear();
-    ForceEx.wolves.for((p) => ForceEx.sheep.addPlayer(p));
-    ForceEx.wolves.clear();
-    oldSheep.forEach((p) => ForceEx.wolves.addPlayer(p));
-    [udg_captains[1], udg_captains[3]] = [udg_captains[3], udg_captains[1]];
-  }
-
   for (let i = 1; i <= bj_MAX_PLAYERS; i++) {
     udg_apr[i] = 0;
     if (udg_AFK[GetForLoopIndexA()] === AFK_PLAYING_PICK) udg_AFK[GetForLoopIndexA()] = AFK_PLAYING;
@@ -409,7 +399,7 @@ const Trig_createSheep_Actions = () => {
   if (!udg_practiceOn) {
     if (CountPlayersInForceBJ(udg_Wolf) === 0) return TriggerExecute(gg_trg_sheepWin);
     if (CountPlayersInForceBJ(udg_Sheep) === 0) return TriggerExecute(gg_trg_wolvesWin);
-    settings.desiredSheep = ForceEx.sheep.size();
+    settings.desiredSheep = Math.max(ForceEx.sheep.size(), 1);
   }
 
   for (const [rect, type] of terrain.shops) {
@@ -418,13 +408,13 @@ const Trig_createSheep_Actions = () => {
 
   if (terrain.name === "Classic") {
     createCritter();
-    // CreateUnit(
-    //   MapPlayerEx.neutralAggressive,
-    //   FourCC("o001"),
-    //   GetRectCenterX(gg_rct_snowman),
-    //   GetRectCenterY(gg_rct_snowman),
-    //   270,
-    // );
+    CreateUnit(
+      MapPlayerEx.neutralAggressive.handle,
+      UNIT_TYPE_ID_SNOWMAN,
+      GetRectCenterX(gg_rct_snowman),
+      GetRectCenterY(gg_rct_snowman),
+      270,
+    );
   }
 
   if (udg_Teams === TEAMS_OPEN || udg_Teams === TEAMS_PICK) udg_Teams = TEAMS_INIT;
@@ -462,9 +452,15 @@ const Trig_createSheep_Actions = () => {
     else {
       const all = ForceEx.sheep.toArray();
       const nonPubs = all.filter((p) => !p.isPub);
-      if (nonPubs.length > 0) president.president = nonPubs[GetRandomInt(0, nonPubs.length - 1)];
-      else president.president = all[GetRandomInt(0, all.length - 1)];
+      let pool = nonPubs.length > 0 ? nonPubs : all;
+      const minPresidentCount = pool.reduce(
+        (prev, p) => prev < p.presidentCount ? prev : p.presidentCount,
+        Infinity,
+      );
+      pool = pool.filter((p) => p.presidentCount === minPresidentCount);
+      president.president = pool[GetRandomInt(0, pool.length - 1)];
     }
+    president.president.presidentCount++;
 
     ForForce(udg_Sheep, () => {
       const p = MapPlayerEx.fromEnum()!;

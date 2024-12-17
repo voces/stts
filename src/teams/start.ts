@@ -87,7 +87,8 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
   t.addCondition(() => GetTriggerPlayer() === udg_Custom);
   t.addAction(() => {
     TriggerExecute(gg_trg_cancel);
-    TriggerExecute(gg_trg_start);
+    if (udg_versus > 0) TriggerExecute(gg_trg_continue);
+    else TriggerExecute(gg_trg_start);
   });
 
   {

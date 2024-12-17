@@ -91,6 +91,10 @@ export class ForceEx extends Force {
     return this.fromHandle(udg_Spirit)!;
   }
 
+  public static get draft() {
+    return this.fromHandle(udg_Draft)!;
+  }
+
   protected static getObject(force: force) {
     const obj = map.get(force);
     if (obj !== undefined) return obj;

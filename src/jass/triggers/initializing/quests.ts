@@ -27,7 +27,17 @@ Wrda
 
 |cffffcc00Assets & Tools|r
 HideShow icon: darkdeathknight
-Model editor: Retera
+Christmas tree & lights: Vinz
+Frosty: Thrikodius
+Snowball: Walle
+Snow Golem: tillinghast
+Ice Wolfrider: Abeus
+Santa hat: Deolrin
+Present: Mc!
+Snowy house: Thorneon
+Santa: IamMclovin
+Ice Infernal: Dark Hunter1357 & Nety0
+Model editor: Retera & Twilacs
 Help from Hive, especially Tasyen's UI guides`,
     "ReplaceableTextures\\CommandButtons\\BTNPeasant.blp",
   );

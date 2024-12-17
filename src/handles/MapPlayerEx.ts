@@ -7,6 +7,7 @@ const map = new Map<player, MapPlayerEx>();
 
 export class MapPlayerEx extends MapPlayer {
   bankedGold = 0;
+  presidentCount = 0;
 
   readonly deathOrder: Record<string, { total: number; count: number } | undefined> = {};
   diedThisRound = false;

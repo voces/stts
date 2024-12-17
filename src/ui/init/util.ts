@@ -32,7 +32,7 @@ export const editBoxDelayedOnChange = (
   },
 ) => {
   let timer: Timeout | undefined;
-  setTimeout(0.25, () => {
+  setTimeout(0.05, () => {
     editBox.onChange(({ value }) => {
       timer?.cancel();
       timer = setTimeout(delay, () => onChange?.({ ...frames, value }));

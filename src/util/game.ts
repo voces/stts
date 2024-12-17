@@ -111,6 +111,23 @@ export const game = {
     t.addAction(() => fn({ unit: UnitEx.fromEvent()! }));
     return Promise.resolve(t);
   },
+  onAttack: (fn: (event: { attacker: UnitEx; target: UnitEx }) => void) => {
+    const t = Trigger.create();
+    t.registerAnyUnitEvent(EVENT_PLAYER_UNIT_ATTACKED);
+    t.addAction(() => fn({ attacker: UnitEx.fromHandle(GetAttacker()!), target: UnitEx.fromEvent()! }));
+    return Promise.resolve(t);
+  },
+  onDamage: (fn: (event: { attacker?: UnitEx; target: UnitEx }) => void) => {
+    const t = Trigger.create();
+    t.registerAnyUnitEvent(EVENT_PLAYER_UNIT_DAMAGING);
+    t.addAction(() =>
+      fn({
+        attacker: UnitEx.fromHandle(GetEventDamageSource()),
+        target: UnitEx.fromHandle(BlzGetEventDamageTarget()!),
+      })
+    );
+    return Promise.resolve(t);
+  },
   onCommand: (
     { trigger, exact, host = true, intermission = false, fn: callback }: {
       trigger: string;

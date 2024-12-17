@@ -31,6 +31,12 @@ export class GroupEx extends Group {
     return pass;
   }
 
+  public toArray() {
+    const units: UnitEx[] = [];
+    this.forEach((u) => units.push(u));
+    return units;
+  }
+
   public enumUnitsInRect(r: Rectangle | rect, filter?: boolexpr | ((unit: UnitEx) => boolean)) {
     GroupEnumUnitsInRect(
       this.handle,

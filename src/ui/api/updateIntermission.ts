@@ -50,9 +50,9 @@ export const updateMode = (value?: number) => {
 const updateGold = () => {
   frames.settings.sheepGold.text = udg_sheepGold.toFixed(0);
   frames.settings.wolfGold.text = udg_wolfGold.toFixed(0);
-  frames.settings.sheepIncome.text = income.sheep.toFixed(0);
-  frames.settings.wolfIncome.text = income.wolves.toFixed(0);
-  frames.settings.moneyFarmIncome.text = income.savings.toFixed(0);
+  frames.settings.sheepIncome.text = toStringWithPrecision(income.sheep);
+  frames.settings.wolfIncome.text = toStringWithPrecision(income.wolves);
+  frames.settings.moneyFarmIncome.text = toStringWithPrecision(income.savings);
 };
 
 const updateOther = () => {
@@ -70,7 +70,7 @@ export const updateDesiredSheep = () => {
   if (previousPlayersCount === playerCount) {
     if (settings.desiredSheep >= playerCount) {
       settings.desiredSheep = Math.max(playerCount - 1, 1);
-      frames.settings.desiredSheep.text = (playerCount - 1).toFixed(0);
+      frames.settings.desiredSheep.text = settings.desiredSheep.toFixed(0);
       return;
     }
   } else {

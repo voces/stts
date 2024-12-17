@@ -214,3 +214,5 @@ declare let gg_snd_KnightNoFood1: sound;
 declare let gg_snd_BattleNetTick: sound;
 declare let gg_snd_SheepWhat1: sound;
 declare let gg_snd_WolfriderYesAttack1: sound;
+declare let gg_snd_FrostBoltHit1: sound;
+declare let gg_snd_FrostBoltLaunch1: sound;
