@@ -34,7 +34,7 @@ const launchSnowball = (
   target: { x: number; y: number },
   { speed = 30, arc = 0.4, duration = 3 }: { speed?: number; arc?: number; duration?: 3 | 5 | 8 } = {},
 ) => {
-  const projectileSnowball = Effect.create("war3mapImported/snowball", source.x, source.y);
+  const projectileSnowball = Effect.create("christmas/snowball", source.x, source.y);
   if (!projectileSnowball) return;
 
   projectileSnowball.scale = 1;

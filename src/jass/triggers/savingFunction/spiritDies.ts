@@ -1,4 +1,4 @@
-import { ABILITY_TYPE_ID_BITE } from "constants";
+import { ABILITY_TYPE_ID_BITE, UNIT_TYPE_ID_DOLLY } from "constants";
 import { president, terrain } from "settings/settings";
 
 const Trig_spiritDies_Conditions = () => {
@@ -8,19 +8,19 @@ const Trig_spiritDies_Conditions = () => {
 const Trig_spiritDies_Actions = () => {
   const dyingUnit = GetDyingUnit()!;
   const dyingPlayer = GetOwningPlayer(dyingUnit);
-  const dyingPlayerId = GetConvertedPlayerId(dyingPlayer);
+  const dyingPlayerCid = GetConvertedPlayerId(dyingPlayer);
   const killingPlayer = GetOwningPlayer(GetKillingUnit()!);
-  const killingPlayerId = GetConvertedPlayerId(killingPlayer);
+  const killingPlayerCid = GetConvertedPlayerId(killingPlayer);
 
   if (udg_practiceOn) {
     CreateUnit(dyingPlayer, wispType, RandomX(terrain.wisp), RandomY(terrain.wisp), 270);
     return;
   }
 
-  ResumeTimer(udg_sheepTimer[dyingPlayerId]);
+  ResumeTimer(udg_sheepTimer[dyingPlayerCid]);
 
-  if ((udg_sheepZoom[dyingPlayerId] ?? 0) > 0) {
-    SetCameraFieldForPlayer(dyingPlayer, CAMERA_FIELD_TARGET_DISTANCE, udg_sheepZoom[dyingPlayerId], 0);
+  if ((udg_sheepZoom[dyingPlayerCid] ?? 0) > 0) {
+    SetCameraFieldForPlayer(dyingPlayer, CAMERA_FIELD_TARGET_DISTANCE, udg_sheepZoom[dyingPlayerCid], 0);
   }
 
   const { x, y } = (() => {
@@ -35,8 +35,17 @@ const Trig_spiritDies_Actions = () => {
   const facing = GetUnitFacing(dyingUnit);
 
   const u = CreateUnit(dyingPlayer, sheepType, x, y, facing)!;
+  if (!pub[dyingPlayerCid - 1]) {
+    CreateUnit(
+      dyingPlayer,
+      UNIT_TYPE_ID_DOLLY,
+      GetRandomReal(GetRectMinX(terrain.cameraBounds), GetRectMaxX(terrain.cameraBounds)),
+      GetRandomReal(GetRectMinY(terrain.cameraBounds), GetRectMaxY(terrain.cameraBounds)),
+      270,
+    );
+  }
   PanCameraToTimedForPlayer(dyingPlayer, x, y, 0);
-  udg_unit[dyingPlayerId] = u;
+  udg_unit[dyingPlayerCid] = u;
   SelectUnitForPlayerSingle(u, dyingPlayer);
   if (president.enabled) UnitAddAbility(u, ABILITY_TYPE_ID_BITE);
   if (GetPlayerController(dyingPlayer) === MAP_CONTROL_COMPUTER) UnitRemoveAbility(u, shareControlAbility);
@@ -47,21 +56,21 @@ const Trig_spiritDies_Actions = () => {
   DisplayTimedTextToForce(
     GetPlayersAll()!,
     5,
-    udg_colorString[killingPlayerId] +
+    udg_colorString[killingPlayerCid] +
       GetPlayerName(killingPlayer) + "|r has freed " +
-      udg_colorString[dyingPlayerId] + GetPlayerName(dyingPlayer),
+      udg_colorString[dyingPlayerCid] + GetPlayerName(dyingPlayer),
   );
 
-  udg_farmCount[dyingPlayerId] = 0;
-  udg_totalSaves[killingPlayerId] = udg_totalSaves[killingPlayerId] + 1;
+  udg_farmCount[dyingPlayerCid] = 0;
+  udg_totalSaves[killingPlayerCid] = udg_totalSaves[killingPlayerCid] + 1;
 
   ForceRemovePlayer(udg_Spirit, dyingPlayer);
   ForceAddPlayer(udg_Sheep, dyingPlayer);
   TriggerExecute(gg_trg_setupLeaderboard);
 
-  udg_humiliationCheck[dyingPlayerId] = true;
+  udg_humiliationCheck[dyingPlayerCid] = true;
   TriggerSleepAction(2.5);
-  udg_humiliationCheck[dyingPlayerId] = false;
+  udg_humiliationCheck[dyingPlayerCid] = false;
 };
 
 declare global {

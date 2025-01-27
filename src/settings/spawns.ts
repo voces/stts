@@ -3,8 +3,7 @@ import { MapPlayerEx } from "handles/MapPlayerEx";
 import { TriggerEx } from "handles/TriggerEx";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { game } from "util/game";
-import { setTimeout } from "util/setTimeout";
-import { addScriptHook, FogModifier, W3TS_HOOK } from "w3ts";
+import { addScriptHook, W3TS_HOOK } from "w3ts";
 import { spawnSetting } from "./settings";
 import { updateLeaderboardSettingsDisplay } from "./time";
 
@@ -43,7 +42,4 @@ game.onSpellEnd((e) => {
   u.setPosition(x, y);
   spawns.set(p.handle, { x, y });
   PanCameraToTimedForPlayer(p.handle, x, y, 0);
-  const modifier = FogModifier.create(MapPlayerEx.fromEvent()!, FOG_OF_WAR_VISIBLE, x, y, 128, true, true)!;
-  modifier.start();
-  setTimeout(1, () => modifier.destroy());
 });

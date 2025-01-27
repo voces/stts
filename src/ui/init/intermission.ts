@@ -376,6 +376,7 @@ export const initIntermission = () => {
   frames.settings.desiredSheep = desiredSheep;
   updateDesiredSheep();
   editBoxDelayedOnChange(desiredSheep, {
+    delay: 1,
     onChange: ({ value }) => {
       const parsed = parseDesiredSheep(value);
       settings.desiredSheep = parsed;

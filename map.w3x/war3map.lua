@@ -1013,7 +1013,7 @@ local we
 
 SetCameraBounds(-5120.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), -19072.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM), 17664.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), 4352.0 - GetCameraMargin(CAMERA_MARGIN_TOP), -5120.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), 4352.0 - GetCameraMargin(CAMERA_MARGIN_TOP), 17664.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), -19072.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM))
 SetDayNightModels("Environment\\DNC\\DNCLordaeron\\DNCLordaeronTerrain\\DNCLordaeronTerrain.mdl", "Environment\\DNC\\DNCLordaeron\\DNCLordaeronUnit\\DNCLordaeronUnit.mdl")
-we = AddWeatherEffect(Rect(-5632.0, -19456.0, 18944.0, 5120.0), FourCC("SNhs"))
+we = AddWeatherEffect(Rect(-5632.0, -19456.0, 18944.0, 5120.0), FourCC("SNls"))
 EnableWeatherEffect(we, true)
 NewSoundEnvironment("Default")
 SetAmbientDaySound("LordaeronWinterDay")

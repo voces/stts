@@ -316,7 +316,7 @@ const Trig_initialization_Actions = () => {
   s__colorsStruct_color3[colors[24]] = 51;
 
   for (let i = 0; i < bj_MAX_PLAYERS; i++) {
-    SetPlayerName(Player(i)!, `${GetPlayerName(Player(i)!)?.split("#")[0]} (${i})`);
+    SetPlayerName(Player(i)!, `${GetPlayerName(Player(i)!)?.split("#")[0]} (${i + 1})`);
   }
 
   TriggerExecute(gg_trg_Create_Timers);

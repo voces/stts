@@ -1,5 +1,4 @@
 const _getFarmColor = (unit: unit): [r: number, g: number, b: number, a: number] => {
-  if (GetPlayerHandicap(GetOwningPlayer(unit)) === 1) return [1, 1, 1, 1];
   const maxHp = BlzGetUnitMaxHP(unit);
   if (maxHp < 120) return [1, 1, 1, maxHp / 120];
   else if (maxHp < 240) {

@@ -37,7 +37,6 @@ const startRoundToggledTriggers = () => {
   EnableTrigger(gg_trg_pick);
   EnableTrigger(gg_trg_pickwolf);
   EnableTrigger(gg_trg_end);
-  EnableTrigger(gg_trg_view);
   EnableTrigger(gg_trg_fair);
   EnableTrigger(gg_trg_start);
   EnableTrigger(gg_trg_smart);

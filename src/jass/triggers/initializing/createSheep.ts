@@ -7,6 +7,7 @@ import { createCritter } from "misc/critter";
 import {
   ABILITY_TYPE_ID_BITE,
   ABILITY_TYPE_ID_RESET_START_POSITION,
+  UNIT_TYPE_ID_DOLLY,
   UNIT_TYPE_ID_GUIDE_FARM,
   UNIT_TYPE_ID_SNOWMAN,
   UNIT_TYPE_ID_START_POSITION,
@@ -177,6 +178,15 @@ const Trig_createSheep_sheepActionsB = () => {
       );
     }
   }
+  if (!p.isPub) {
+    CreateUnit(
+      p.handle,
+      UNIT_TYPE_ID_DOLLY,
+      GetRandomReal(GetRectMinX(terrain.cameraBounds), GetRectMaxX(terrain.cameraBounds)),
+      GetRandomReal(GetRectMinY(terrain.cameraBounds), GetRectMaxY(terrain.cameraBounds)),
+      270,
+    )!;
+  }
 
   SelectUnitForPlayerSingle(u, p.handle);
   ForceUICancelBJ(p.handle);
@@ -228,7 +238,6 @@ const Trig_createSheep_disableTrigs = () => {
   DisableTrigger(gg_trg_versus);
   DisableTrigger(gg_trg_pick);
   DisableTrigger(gg_trg_start);
-  DisableTrigger(gg_trg_view);
   DisableTrigger(gg_trg_fair);
   DisableTrigger(gg_trg_end);
   DisableTrigger(gg_trg_controloff);

@@ -26,6 +26,7 @@ export const ITEM_TYPE_ID_GOBLINS = FourCC("I012");
 export const RESEARCH_TYPE_ID_UPGRADE_AURAS = FourCC("R000");
 export const UNIT_TYPE_ID_AURA_FARM = FourCC("hlum");
 export const UNIT_TYPE_ID_CLOCKWERK = FourCC("n00B");
+export const UNIT_TYPE_ID_DOLLY = FourCC("nshf");
 export const UNIT_TYPE_ID_FACTORY = FourCC("h00O");
 export const UNIT_TYPE_ID_FARM = FourCC("hhou");
 export const UNIT_TYPE_ID_FEINTING_TOWER = FourCC("n00A");

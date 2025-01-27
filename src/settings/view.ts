@@ -29,10 +29,10 @@ export const toggleView = (enabled?: boolean) => {
 };
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
-  gg_trg_view = CreateTrigger();
-  registerAnyPlayerChatEvent(gg_trg_view, "-view");
-  TriggerAddCondition(gg_trg_view, Condition(() => GetTriggerPlayer() === udg_Custom));
-  TriggerAddAction(gg_trg_view, toggleView);
+  const t = CreateTrigger();
+  registerAnyPlayerChatEvent(t, "-view");
+  TriggerAddCondition(t, Condition(() => GetTriggerPlayer() === udg_Custom && (!udg_gameStarted || udg_practiceOn)));
+  TriggerAddAction(t, toggleView);
 
   // Flash map
   toggleView();

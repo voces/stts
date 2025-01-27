@@ -1,5 +1,8 @@
+import { UNIT_TYPE_ID_DOLLY } from "constants";
+import { MapPlayerEx } from "handles/MapPlayerEx";
 import { UnitEx } from "handles/UnitEx";
 import { switchSheepTimers } from "modes/switch/switch";
+import { terrain } from "settings/settings";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 import { removeEnumUnit } from "util/removeEnumUnit";
 
@@ -73,6 +76,16 @@ const Trig_sheepSwitch_Actions = () => {
     GetUnitY(GetTriggerUnit()!),
     GetUnitFacing(GetTriggerUnit()!),
   )!;
+  const p = MapPlayerEx.fromOwner(GetKillingUnit()!);
+  if (!p.isPub) {
+    CreateUnit(
+      p.handle,
+      UNIT_TYPE_ID_DOLLY,
+      GetRandomReal(GetRectMinX(terrain.cameraBounds), GetRectMaxX(terrain.cameraBounds)),
+      GetRandomReal(GetRectMinY(terrain.cameraBounds), GetRectMaxY(terrain.cameraBounds)),
+      270,
+    );
+  }
   switchSheepTimers[GetPlayerId(GetOwningPlayer(GetKillingUnit()!))].resume();
   switchSheepTimers[GetPlayerId(GetOwningPlayer(GetTriggerUnit()!))].pause();
   udg_unit[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnit()!))] = sheep;

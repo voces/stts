@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 24y
+Sheep Tag ReVoLuTiOn 25
 }
 
 STRING 40
@@ -616,12 +616,6 @@ STRING 1297
 Destroys all your farms.
 }
 
-STRING 1298
-// Abilities: A00N (Buy Golem), Researchtip (Tooltip - Learn)
-{
-Buy Golem
-}
-
 STRING 1301
 // Items: I00B (8), Hotkey (Hotkey)
 {
@@ -632,18 +626,6 @@ STRING 1306
 // Items: I00F (speed), Hotkey (Hotkey)
 {
 W
-}
-
-STRING 1307
-// Abilities: A00O (Buy Speed), Name (Name)
-{
-Buy Speed
-}
-
-STRING 1321
-// Abilities: A00R (Buy Bomber), Researchtip (Tooltip - Learn)
-{
-Buy Bomber
 }
 
 STRING 1353
@@ -869,12 +851,6 @@ STRING 1894
 // Buffs/Effects: B005 (Frost Farm), EditorName (Name (Editor Only))
 {
 Frost Farm
-}
-
-STRING 1899
-// Abilities: A00Q (Buy Invis), Researchtip (Tooltip - Learn)
-{
-Buy Invis
 }
 
 STRING 2017
@@ -1104,22 +1080,10 @@ STRING 2188
 scythe
 }
 
-STRING 2245
-// Abilities: A00P (Buy Strength), Name (Name)
-{
-Buy Strength
-}
-
 STRING 2247
 // Units: n00O (drums), Hotkey (Hotkey)
 {
 D
-}
-
-STRING 2249
-// Abilities: A010 (Buy Beam), Name (Name)
-{
-Buy Beam
 }
 
 STRING 2259
@@ -1557,7 +1521,7 @@ G
 }
 
 STRING 2648
-// Abilities: A00Q (Buy Invis), Researchhotkey (Hotkey - Learn)
+// Abilities: A01E (Anti Stack Stomp), Hotkey (Hotkey - Normal)
 {
 D
 }
@@ -2212,12 +2176,6 @@ STRING 3249
 Increases the mana regen of this unit and nearby allies by 2.15 when worn.|n|cffff0000Does not stack.|r
 }
 
-STRING 3256
-// Items: I001 (cloak), Ubertip (Tooltip - Extended)
-{
-Engulfs this unit in fire which deals 15 damage per second to nearby enemy land units.|n|cffffcc00160 gold.|r |n|cff00aeef-buy cloak: 200 gold.|r
-}
-
 STRING 3258
 // Items: I00Q (Practice), Ubertip (Tooltip - Extended)
 {
@@ -2240,66 +2198,6 @@ STRING 3265
 // Units: n00O (drums), Ubertip (Tooltip - Extended)
 {
 Increases the attack damage of this unit and nearby allies by 16 when worn.|n|cffff0000Does not stack.|r
-}
-
-STRING 3276
-// Abilities: A00N (Buy Golem), Researchubertip (Tooltip - Learn - Extended)
-{
-Summons a Golem to help you catch sheep. Can also jump over farms and walls.|n|cffffcc00140 gold.|r
-}
-
-STRING 3277
-// Abilities: A00N (Buy Golem), Ubertip (Tooltip - Normal - Extended)
-{
-Summons a Golem to help you catch sheep. Can also jump over farms and walls.|n|cffffcc00140 gold.|r
-}
-
-STRING 3280
-// Abilities: A00P (Buy Strength), Researchubertip (Tooltip - Learn - Extended)
-{
-Allows this unit to instantly kill the next thing it attacks.|n|CFFFFCC0042 gold.
-}
-
-STRING 3281
-// Abilities: A00P (Buy Strength), Ubertip (Tooltip - Normal - Extended)
-{
-Allows this unit to instantly kill the next thing it attacks.|n|CFFFFCC0042 gold.
-}
-
-STRING 3282
-// Abilities: A00Q (Buy Invis), Ubertip (Tooltip - Normal - Extended)
-{
-Makes you invisible for 2 minutes. If a sheep is close enough, they can see you.|n|CFFFFCC0042 gold.
-}
-
-STRING 3283
-// Abilities: A00Q (Buy Invis), Researchubertip (Tooltip - Learn - Extended)
-{
-Makes you invisible for 2 minutes. If a sheep is close enough, they can see you.|n|CFFFFCC0042 gold.
-}
-
-STRING 3284
-// Abilities: A00R (Buy Bomber), Researchubertip (Tooltip - Learn - Extended)
-{
-Bombs the target area destroying trees and damaging farms.|n|cffffcc0075 gold.|r
-}
-
-STRING 3285
-// Abilities: A00R (Buy Bomber), Ubertip (Tooltip - Normal - Extended)
-{
-Bombs the target area destroying trees and damaging farms.|n|cffffcc0075 gold.|r
-}
-
-STRING 3286
-// Abilities: A010 (Buy Beam), Researchubertip (Tooltip - Learn - Extended)
-{
-On this units next attack, a shockwave will be cast, damaging all farms immediately in front of this unit.|n|CFFFFCC00112 gold.
-}
-
-STRING 3287
-// Abilities: A010 (Buy Beam), Ubertip (Tooltip - Normal - Extended)
-{
-On this units next attack, a shockwave will be cast, damaging all farms immediately in front of this unit.|n|CFFFFCC00112 gold.
 }
 
 STRING 3291
@@ -2384,18 +2282,6 @@ STRING 3328
 // Abilities: A01A (Claws +110), Name (Name)
 {
 Claws +110
-}
-
-STRING 3334
-// Buffs/Effects: B00H (), Buffubertip (Tooltip - Extended)
-{
-This unit has a Cloak of Flames; nearby enemy buildings will take damage over time.
-}
-
-STRING 3335
-// Buffs/Effects: B00I (Cloak Art), Buffubertip (Tooltip - Extended)
-{
-This unit has a Cloak of Flames; nearby enemy buildings will take damage over time.
 }
 
 STRING 3366
@@ -2608,18 +2494,6 @@ STRING 3504
 Increases nearby friendly units movement speed by 4% and attack rate by 24%.
 }
 
-STRING 3517
-// Abilities: A00O (Buy Speed), Researchubertip (Tooltip - Learn - Extended)
-{
-Increases attack speed by 25% and movement speed by 3% for this unit for 45 seconds.|n|CFFFFCC0042 gold.
-}
-
-STRING 3518
-// Abilities: A00O (Buy Speed), Ubertip (Tooltip - Normal - Extended)
-{
-Increases attack speed by 25% and movement speed by 3% for this unit for 45 seconds.|n|CFFFFCC0042 gold.
-}
-
 STRING 3531
 // Abilities: A01B (True Sight), EditorSuffix (Editor Suffix)
 {
@@ -2758,66 +2632,6 @@ STRING 3560
 Purchase Claws of Attack +16
 }
 
-STRING 3561
-// Abilities: A00N (Buy Golem), Tip (Tooltip - Normal)
-{
-Buy Golem
-}
-
-STRING 3562
-// Abilities: A00N (Buy Golem), Name (Name)
-{
-Buy Golem
-}
-
-STRING 3563
-// Abilities: A00O (Buy Speed), Researchtip (Tooltip - Learn)
-{
-Buy Speed Potion
-}
-
-STRING 3564
-// Abilities: A00O (Buy Speed), Tip (Tooltip - Normal)
-{
-Buy Speed Potion
-}
-
-STRING 3565
-// Abilities: A00P (Buy Strength), Researchtip (Tooltip - Learn)
-{
-Buy Strength Potion
-}
-
-STRING 3566
-// Abilities: A00P (Buy Strength), Tip (Tooltip - Normal)
-{
-Buy Strength Potion
-}
-
-STRING 3567
-// Abilities: A00Q (Buy Invis), Tip (Tooltip - Normal)
-{
-Buy Invis
-}
-
-STRING 3568
-// Abilities: A00Q (Buy Invis), Name (Name)
-{
-Buy Invis
-}
-
-STRING 3569
-// Abilities: A00R (Buy Bomber), Tip (Tooltip - Normal)
-{
-Buy Bomber
-}
-
-STRING 3570
-// Abilities: A00R (Buy Bomber), Name (Name)
-{
-Buy Bomber
-}
-
 STRING 3571
 // Abilities: A00S (Mirror Image), Tip (Tooltip - Normal)
 {
@@ -2864,18 +2678,6 @@ STRING 3578
 // Abilities: A00T (Kill Farm), Name (Name)
 {
 Kill Farm
-}
-
-STRING 3579
-// Abilities: A010 (Buy Beam), Researchtip (Tooltip - Learn)
-{
-Buy Beam
-}
-
-STRING 3580
-// Abilities: A010 (Buy Beam), Tip (Tooltip - Normal)
-{
-Buy Beam
 }
 
 STRING 3581
@@ -3020,12 +2822,6 @@ STRING 3604
 // Items: I00N (sobi), Tip (Tooltip - Basic)
 {
 Purchase Sobi Mask
-}
-
-STRING 3605
-// Items: I001 (cloak), Tip (Tooltip - Basic)
-{
-Purchase Cloak of Flames
 }
 
 STRING 3606
@@ -3551,7 +3347,7 @@ R
 }
 
 STRING 3881
-// Abilities: A01E (Anti Stack Stomp), Hotkey (Hotkey - Normal)
+// Abilities: A01H (Freak Invulnerability), Hotkey (Hotkey - Normal)
 {
 D
 }
@@ -4139,7 +3935,7 @@ Magic Fence
 }
 
 STRING 4152
-// Abilities: A010 (Buy Beam), Researchhotkey (Hotkey - Learn)
+// Abilities: A02P (Reset start position), Hotkey (Hotkey - Normal)
 {
 R
 }
@@ -4151,7 +3947,7 @@ Reset start position
 }
 
 STRING 4154
-// Abilities: A02P (Reset start position), Hotkey (Hotkey - Normal)
+// Abilities: A02P (Reset start position), Unhotkey (Hotkey - Turn Off)
 {
 R
 }
@@ -4178,12 +3974,6 @@ STRING 4158
 // Abilities: A02P (Reset start position), Unubertip (Tooltip - Turn Off - Extended)
 {
 Resets your start position to your initial position or the one you've chosen with -position X.
-}
-
-STRING 4166
-// Units: n005 (Miscellaneous Items), EditorSuffix (Name - Editor Suffix)
-{
-(Inline)
 }
 
 STRING 4167
@@ -4228,22 +4018,10 @@ STRING 4173
 Consumable Items
 }
 
-STRING 4174
-// Units: n00C (Consumable Items), EditorSuffix (Name - Editor Suffix)
-{
-(Inline)
-}
-
 STRING 4175
 // Units: n00D (Permanent Items), Name (Name)
 {
 Permanent Items
-}
-
-STRING 4176
-// Units: n00D (Permanent Items), EditorSuffix (Name - Editor Suffix)
-{
-(Inline)
 }
 
 STRING 4177
@@ -4349,12 +4127,6 @@ STRING 4213
 Increases attack speed by 25% and movement speed by 3% for this unit for 45 seconds.
 }
 
-STRING 4214
-// Abilities: A00O (Buy Speed), Researchhotkey (Hotkey - Learn)
-{
-W
-}
-
 STRING 4215
 // Items: I00F (speed), Name (Name)
 {
@@ -4444,14 +4216,8 @@ STRING 4230
 Purchase Beam of Strength
 }
 
-STRING 4231
-// Abilities: A00N (Buy Golem), Researchhotkey (Hotkey - Learn)
-{
-Q
-}
-
 STRING 4232
-// Abilities: A00R (Buy Bomber), Researchhotkey (Hotkey - Learn)
+// Abilities: A02Q (Shadowsight), Hotkey (Hotkey - Normal)
 {
 S
 }
@@ -4460,12 +4226,6 @@ STRING 4233
 // Abilities: A018 (Invulnerability), Hotkey (Hotkey - Normal)
 {
 E
-}
-
-STRING 4234
-// Abilities: A02P (Reset start position), Unhotkey (Hotkey - Turn Off)
-{
-R
 }
 
 STRING 4235
@@ -4511,7 +4271,7 @@ endur
 }
 
 STRING 4242
-// Abilities: A01H (Freak Invulnerability), Hotkey (Hotkey - Normal)
+// Abilities: A02W (Throw Snowball), Hotkey (Hotkey - Normal)
 {
 D
 }
@@ -4669,12 +4429,6 @@ STRING 4272
 // Buffs/Effects: B00N (), EditorSuffix (Editor Suffix)
 {
 (Sentry Farm)
-}
-
-STRING 4273
-// Abilities: A02Q (Shadowsight), Hotkey (Hotkey - Normal)
-{
-S
 }
 
 STRING 4276
@@ -4839,11 +4593,6 @@ STRING 4325
 Permanently infects nearby enemy structures with Disease Cloud. Disease Cloud deals 2 damage per second.|n|cffff0000Cannot kill structures.|r
 }
 
-STRING 4326
-{
-|cff00ff0024y|r
-}
-
 STRING 4327
 // Buffs/Effects: B00M (Penguin Blessing), EditorName (Name (Editor Only))
 {
@@ -4915,12 +4664,6 @@ STRING 4340
 Throw Snowball
 }
 
-STRING 4341
-// Abilities: A02W (Throw Snowball), Hotkey (Hotkey - Normal)
-{
-D
-}
-
 STRING 4342
 // Abilities: A02W (Throw Snowball), Name (Name)
 {
@@ -4967,5 +4710,59 @@ STRING 4352
 // Doodads: D004 (Candystick), Name (Name)
 {
 Candystick
+}
+
+STRING 4353
+// Units: n005 (Miscellaneous Items), EditorSuffix (Name - Editor Suffix)
+{
+(Small)
+}
+
+STRING 4354
+// Units: n00C (Consumable Items), EditorSuffix (Name - Editor Suffix)
+{
+(Small)
+}
+
+STRING 4355
+// Units: n00D (Permanent Items), EditorSuffix (Name - Editor Suffix)
+{
+(Small)
+}
+
+STRING 4356
+// Items: I001 (cloak), Ubertip (Tooltip - Extended)
+{
+Engulfs this unit in frost which deals 15 damage per second to nearby enemy land units.|n|cffffcc00160 gold.|r |n|cff00aeef-buy cloak: 200 gold.|r
+}
+
+STRING 4357
+// Items: I001 (cloak), Tip (Tooltip - Basic)
+{
+Purchase Cloak of Frost
+}
+
+STRING 4358
+// Buffs/Effects: B00H (), Buffubertip (Tooltip - Extended)
+{
+This unit has a Cloak of Frost; nearby enemy buildings will take damage over time.
+}
+
+STRING 4359
+// Buffs/Effects: B00H (), Bufftip (Tooltip)
+{
+Cloak of Frost
+}
+
+STRING 4360
+// Buffs/Effects: B00I (Cloak Art), Buffubertip (Tooltip - Extended)
+{
+This unit has a Cloak of Frost; nearby enemy buildings will take damage over time.
+}
+
+STRING 4361
+// Buffs/Effects: B00I (Cloak Art), Bufftip (Tooltip)
+{
+Cloak of Frost
 }
 

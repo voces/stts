@@ -14,7 +14,7 @@ let pubStart = 0;
 
 let lastActivePlayerCount = 0;
 
-const ATTEMPTS_SINCE_LAST_IMPROVEMENT = 250;
+const ATTEMPTS_SINCE_LAST_IMPROVEMENT = 500;
 const MAX_DEPTH = 6;
 
 const nChooseM = (n: number, m: number): number => {

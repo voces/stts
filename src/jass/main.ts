@@ -445,7 +445,6 @@ declare global {
   let gg_trg_mapExpand: trigger;
   let gg_trg_switch: trigger;
   let gg_trg_vamp: trigger;
-  let gg_trg_view: trigger;
   let gg_trg_time: trigger;
   let gg_trg_autoCancel: trigger;
   let gg_trg_gold: trigger;

@@ -37,6 +37,7 @@ MinUnitSpeed=0.0
 MissDamageReduction=0.0
 PawnItemRate=0.8
 PickupItemRange=200.0
+RelativeUpgradeCost=1
 StrAttackBonus=0.0
 StructureDecayTime=0.0
 StructureFollowRange=0.0

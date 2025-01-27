@@ -8,13 +8,35 @@
 - -ap attackpercent
 - Frost Arrows allow a reach
 
+# 25
+
+## Feature changes
+
+- Removed Christmas decorations
+- Reduced snow
+- Made Farm a requirement for all other sheep constructions for pubs
+- Decreased delay on updating desired sheep from 2.5 seconds to 1 second
+- Adjusted smart "retries since improvement" from 250 to 500 to reduce repeat sheeping
+- -view works during practice mode
+
+## Bug fixes
+
+- Fixed Player (#)
+- Fixed the color of farms that aborted an upgrade
+- Patch 2.0.1.22490 issues
+  - Fixed Crystal Ball charges
+  - Fixed relative upgrade costs
+  - Fixed upgrading buildings not using new building data
+  - Fixed Give Ally Gold (wolf) requiring Berserker Upgrade
+  - Fixed Share Control requiring Berserker Upgrade
+
 # 24y
 
 ## Feature changes
 
 - Christmas theme
 - Removed automatic camera pan on sheep spawn
-- President now works off a count rather than being random
+- President now works off a count rather than being purely random
 - Added -presidentcount
 
 ## Balance changes
@@ -24,9 +46,9 @@
 ## Bug fixes
 
 - Fixed -restart with versus
-- Fixed which team starting being re-randomized when using -cancel -start with versus
+- Fixed which team stats in versus being re-randomized when using -cancel -start or -restart
 - Fixed being able to use -afk and -fafk in middle of rounds
-- Increase creep guard distances used in practice mode
+- Fixed practice wolf running back by reverting creep guard distance change
 - Fixed a few potential sources of desyncs (checking slot status or controller on init; races for updating value)
 - Fixed UI resetting income to whole numbers
 - Fixed intermission not updating when someone leaves
