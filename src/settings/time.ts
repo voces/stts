@@ -3,8 +3,12 @@ import { addScriptHook, Trigger, W3TS_HOOK } from "w3ts";
 import { farmVision, income, president, spawnSetting, switchSetting } from "./settings";
 import { triggerIntermissionUpdate } from "ui/hooks";
 import { FrameEx } from "handles/FrameEx";
+import { bulldog } from "bulldog/settings";
+import { defaultGold, defaultIncome } from "bulldog/defaults";
 
 export const getDefaultTime = () => {
+  if (bulldog.enabled) return 90;
+
   const i = CountPlayersInForceBJ(udg_Sheep);
   const n = CountPlayersInForceBJ(udg_Wolf);
 
@@ -46,18 +50,37 @@ export const updateLeaderboardSettingsDisplay = (skipIntermission = false) => {
   }
   if (vampOn) s += " vamp";
   if (president.enabled) s += " pres";
+  if (bulldog.enabled) s += " bd";
   if (udg_viewOn) s += " view";
   if (farmVision.vision !== -1) s += ` v${farmVision.vision.toFixed(0)}`;
   if (udg_mapExpand) s += " expand";
   if (udg_mapShrink) s += " shrink";
-  if (udg_sheepGold > 0 || udg_wolfGold > 0) {
-    if (udg_sheepGold === udg_wolfGold) s += ` g${udg_sheepGold}`;
-    else s += ` g${udg_sheepGold},${udg_wolfGold}`;
-  }
-  if (income.sheep !== 1 || income.wolves !== 1 || income.savings !== 1) {
-    if (income.sheep === income.wolves && income.sheep === income.savings) s += ` i${income.sheep}`;
-    else if (income.sheep === income.savings) s += ` i${income.sheep},${income.wolves}`;
-    else s += ` i${income.sheep},${income.wolves},${income.savings}`;
+  if (bulldog.enabled) {
+    const dGold = defaultGold();
+    if (udg_sheepGold !== dGold || udg_wolfGold !== 0) {
+      if (udg_sheepGold === udg_wolfGold) s += ` g${udg_sheepGold}`;
+      else s += ` g${udg_sheepGold},${udg_wolfGold}`;
+    }
+    const dIncome = defaultIncome();
+    if (
+      Math.abs(income.sheep - dIncome) >= 0.0005 ||
+      Math.abs(income.wolves - 2) >= 0.0005 ||
+      Math.abs(income.savings - dIncome * 3) >= 0.0005
+    ) {
+      if (income.sheep === income.wolves && income.sheep === income.savings) s += ` i${income.sheep}`;
+      else if (income.sheep === income.savings) s += ` i${income.sheep},${income.wolves}`;
+      else s += ` i${income.sheep},${income.wolves},${income.savings}`;
+    }
+  } else {
+    if (udg_sheepGold > 0 || udg_wolfGold > 0) {
+      if (udg_sheepGold === udg_wolfGold) s += ` g${udg_sheepGold}`;
+      else s += ` g${udg_sheepGold},${udg_wolfGold}`;
+    }
+    if (income.sheep !== 1 || income.wolves !== 1 || income.savings !== 1) {
+      if (income.sheep === income.wolves && income.sheep === income.savings) s += ` i${income.sheep}`;
+      else if (income.sheep === income.savings) s += ` i${income.sheep},${income.wolves}`;
+      else s += ` i${income.sheep},${income.wolves},${income.savings}`;
+    }
   }
   if (spawnSetting.mode !== "free") s += spawnSetting.mode === "static" ? " ss" : " rs";
 

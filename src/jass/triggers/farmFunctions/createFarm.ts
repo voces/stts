@@ -43,21 +43,20 @@ export const translocate = (unit: unit, pivot: unit, adjustGold = false) => {
   if (adjustGold) {
     const p = GetOwningPlayer(pivot);
     SetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) - 75);
+
+    setTimeout(0, () => UnitSetConstructionProgress(pivot, 100));
   }
 
-  TriggerSleepAction(0);
-
-  UnitSetConstructionProgress(pivot, 100);
   const e2 = AddSpecialEffect(
     "Abilities\\Spells\\Human\\Polymorph\\PolyMorphTarget.mdl",
     GetUnitX(unit),
     GetUnitY(unit),
   )!;
 
-  TriggerSleepAction(1);
-
-  DestroyEffect(e1);
-  DestroyEffect(e2);
+  setTimeout(1, () => {
+    DestroyEffect(e1);
+    DestroyEffect(e2);
+  });
 };
 
 // TODO: would scale better if we went unit -> translocate rather than translocate -> unit

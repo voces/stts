@@ -178,6 +178,33 @@ Frame "DIALOG" "SheepTagPlayerRowTemplate" {
     Text "-",
   }
 
+  Frame "TEXT" "SheepTagPlayerRowPoints" INHERITS "EscMenuInfoTextTemplate" {
+    UseActiveContext,
+    SetPoint LEFT, "SheepTagPlayerRowHandicap", RIGHT, 0, 0,
+    Width 0.034,
+    FontJustificationH JUSTIFYRIGHT,
+    FontColor 1 1 1,
+    Text "-",
+  }
+
+  Frame "TEXT" "SheepTagPlayerRowScore" INHERITS "EscMenuInfoTextTemplate" {
+    UseActiveContext,
+    SetPoint LEFT, "SheepTagPlayerRowPoints", RIGHT, 0, 0,
+    Width 0.027,
+    FontJustificationH JUSTIFYRIGHT,
+    FontColor 1 1 1,
+    Text "-",
+  }
+
+  Frame "TEXT" "SheepTagPlayerRowLeaks" INHERITS "EscMenuInfoTextTemplate" {
+    UseActiveContext,
+    SetPoint LEFT, "SheepTagPlayerRowScore", RIGHT, 0, 0,
+    Width 0.031,
+    FontJustificationH JUSTIFYRIGHT,
+    FontColor 1 1 1,
+    Text "-",
+  }
+
   DialogBackdrop "SheepTagPlayerRowBackdrop",
   Frame "BACKDROP" "SheepTagPlayerRowBackdrop" {
     UseActiveContext,
@@ -273,6 +300,8 @@ Frame "FRAME" "SheepTagIntermission" {
           MenuItem "President", -2,
           MenuItem "Switch", -2,
           MenuItem "Vamp", -2,
+          MenuItem "Bulldog", -2,
+          MenuItem "Kat'ma", -2,
           FrameFont "MasterFont", 0.009, "",
         }
       }
@@ -981,6 +1010,69 @@ Frame "FRAME" "SheepTagIntermission" {
             Width 0.1,
             Height 0.04,
             Text "The averaged death order during sheep rounds, where 1 indicates last to die.",
+          }
+        }
+      }
+
+      Frame "TEXT" "SheepTagPlayersHeaderPoints" INHERITS "EscMenuLabelTextSmallTemplate" {
+        SetPoint LEFT, "SheepTagPlayersHeaderHandicap", RIGHT, 0, 0,
+        Text "Team",
+        Width 0.034,
+        FontJustificationH JUSTIFYRIGHT,
+
+        ToolTip "SheepTagPlayersHeaderPointsTooltip",
+        Frame "BACKDROP" "SheepTagPlayersHeaderPointsTooltip" INHERITS "SheepTagTooltip" {
+          SetPoint TOPLEFT, "SheepTagPlayersHeaderPoints", TOPRIGHT, 0.005, 0.01,
+          Width 0.132,
+          Height 0.042,
+
+          Frame "TEXT" "SheepTagPlayersHeaderPointsTooltipText" INHERITS "SheepTagTooltipText" {
+            SetPoint TOPLEFT, "SheepTagPlayersHeaderPointsTooltip", TOPLEFT, 0.006, -0.006,
+            Width 0.12,
+            Height 0.03,
+            Text "Number of times allied sheep have made it to the end.",
+          }
+        }
+      }
+
+      Frame "TEXT" "SheepTagPlayersHeaderScores" INHERITS "EscMenuLabelTextSmallTemplate" {
+        SetPoint LEFT, "SheepTagPlayersHeaderPoints", RIGHT, 0, 0,
+        Text "Solo",
+        Width 0.027,
+        FontJustificationH JUSTIFYRIGHT,
+
+        ToolTip "SheepTagPlayersHeaderScoresTooltip",
+        Frame "BACKDROP" "SheepTagPlayersHeaderScoresTooltip" INHERITS "SheepTagTooltip" {
+          SetPoint TOPLEFT, "SheepTagPlayersHeaderScores", TOPRIGHT, 0.005, 0.01,
+          Width 0.132,
+          Height 0.042,
+
+          Frame "TEXT" "SheepTagPlayersHeaderScoresTooltipText" INHERITS "SheepTagTooltipText" {
+            SetPoint TOPLEFT, "SheepTagPlayersHeaderScoresTooltip", TOPLEFT, 0.006, -0.006,
+            Width 0.12,
+            Height 0.03,
+            Text "Number of times this player has made it to the end.",
+          }
+        }
+      }
+
+      Frame "TEXT" "SheepTagPlayersHeaderLeaks" INHERITS "EscMenuLabelTextSmallTemplate" {
+        SetPoint LEFT, "SheepTagPlayersHeaderScores", RIGHT, 0, 0,
+        Text "Leaks",
+        Width 0.031,
+        FontJustificationH JUSTIFYRIGHT,
+
+        ToolTip "SheepTagPlayersHeaderLeaksTooltip",
+        Frame "BACKDROP" "SheepTagPlayersHeaderLeaksTooltip" INHERITS "SheepTagTooltip" {
+          SetPoint TOPLEFT, "SheepTagPlayersHeaderLeaks", TOPRIGHT, 0.005, 0.01,
+          Width 0.132,
+          Height 0.042,
+
+          Frame "TEXT" "SheepTagPlayersHeaderLeaksTooltipText" INHERITS "SheepTagTooltipText" {
+            SetPoint TOPLEFT, "SheepTagPlayersHeaderLeaksTooltip", TOPLEFT, 0.006, -0.006,
+            Width 0.12,
+            Height 0.03,
+            Text "Number of times opposing sheep have made it to the end.",
           }
         }
       }

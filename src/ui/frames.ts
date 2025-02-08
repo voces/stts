@@ -47,6 +47,15 @@ export const frames: {
     desiredSheep: FrameEx;
   };
   playerLabel: FrameEx;
+  playerHeaders: {
+    average: FrameEx;
+    deathOrder: FrameEx;
+    points: FrameEx;
+    pointsTooltip: FrameEx;
+    scores: FrameEx;
+    scoresTooltip: FrameEx;
+    leaks: FrameEx;
+  };
   players: {
     container: FrameEx;
     backdrop: FrameEx;
@@ -60,6 +69,9 @@ export const frames: {
     pubMark: FrameEx;
     average: FrameEx;
     deathOrder: FrameEx;
+    points: FrameEx;
+    score: FrameEx;
+    leaks: FrameEx;
   }[];
   versus: FrameEx;
   start: FrameEx;
@@ -72,4 +84,10 @@ export const frames: {
     confirmEnd: FrameEx;
     confirmCancel: FrameEx;
   };
-} = { intermissionFrames: [], settings: { president: {}, switch: {}, terrain: {} }, players: [], end: {} } as any;
+} = {
+  intermissionFrames: [],
+  settings: { president: {}, switch: {}, terrain: {} },
+  playerHeaders: {},
+  players: [],
+  end: {},
+} as any;

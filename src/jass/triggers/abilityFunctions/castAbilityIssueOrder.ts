@@ -81,8 +81,12 @@ const Trig_castAbility2_Actions = () => {
 
   // Destroy last farm
   if (orderString === "immolation" || orderString === "unimmolation") {
-    i = GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()!));
-    RemoveUnit(GetBuilding(GetOwningPlayer(GetTriggerUnit()!))!);
+    const p = GetOwningPlayer(GetTriggerUnit()!);
+    if (BlzForceHasPlayer(udg_Spirit, p)) return;
+    i = GetConvertedPlayerId(p);
+    const last = GetBuilding(p);
+    if (!last) return;
+    RemoveUnit(last);
     if (udg_farmCount[i] > 0) udg_farmCount[i]--;
     SetPlayerState(ConvertedPlayer(i)!, PLAYER_STATE_RESOURCE_LUMBER, udg_farmCount[i]);
     if (!udg_switchOn) {

@@ -7,6 +7,7 @@ import { createCritter } from "misc/critter";
 import {
   ABILITY_TYPE_ID_BITE,
   ABILITY_TYPE_ID_RESET_START_POSITION,
+  ABILITY_TYPE_ID_WISP_GIVE_ALLIES_GOLD,
   UNIT_TYPE_ID_DOLLY,
   UNIT_TYPE_ID_GUIDE_FARM,
   UNIT_TYPE_ID_SNOWMAN,
@@ -22,6 +23,9 @@ import { hideIntermission } from "ui/api";
 import { UnitEx } from "handles/UnitEx";
 import { showGuideFarms } from "settings/farmGuides";
 import { setTimeout } from "util/setTimeout";
+import { getCenter } from "settings/terrain";
+import { bulldog } from "bulldog/settings";
+import { bulldogMaps } from "bulldog/maps";
 
 let firstRound = true;
 
@@ -67,7 +71,10 @@ const Trig_createSheep_sheepActionsA = () => {
     x: GetRectCenterX(udg_startLocation[createSheepSpawnIndex]),
     y: GetRectCenterY(udg_startLocation[createSheepSpawnIndex]),
   };
-  if (spawnSetting.mode === "random") {
+  if (bulldog.enabled) {
+    spawn.x = GetRandomReal(GetRectMinX(bulldogMaps[bulldog.map].start), GetRectMaxX(bulldogMaps[bulldog.map].start));
+    spawn.y = GetRandomReal(GetRectMinY(bulldogMaps[bulldog.map].start), GetRectMaxY(bulldogMaps[bulldog.map].start));
+  } else if (spawnSetting.mode === "random") {
     const xOuterMax = GetRectMaxX(terrain.spawnBounds);
     const yOuterMax = GetRectMaxY(terrain.spawnBounds);
     const xOuterMin = GetRectMinX(terrain.spawnBounds);
@@ -202,7 +209,9 @@ const Trig_createSheep_sheepActionsB = () => {
       UnitAddItemById(u, FourCC("I00Q"));
       if (!udg_disable[enumPlayerId]) UnitAddAbility(u, destroyAllFarms);
 
-      CreateUnit(p.handle, wispType, RandomX(terrain.wisp), RandomY(terrain.wisp), 270);
+      const wisp = CreateUnit(p.handle, wispType, RandomX(terrain.wisp), RandomY(terrain.wisp), 270)!;
+      UnitRemoveAbility(wisp, ABILITY_TYPE_ID_WISP_GIVE_ALLIES_GOLD);
+      UnitRemoveAbility(wisp, locateAlliesAbility);
     } else {
       UnitAddAbility(u, destroyAllFarms);
       switchSheepTimers[GetPlayerId(p.handle)].resume();
@@ -308,28 +317,33 @@ const Trig_createSheep_Actions_part2 = () => {
 
   if (udg_practiceOn || MapPlayerEx.fromLocal().isSheep) StartSound(gg_snd_SheepWhat1);
 
-  const guides: UnitEx[] = [];
-  for (let i = 0; i < terrain.guideFarms.length && !udg_switchOn; i++) {
-    const { x, y } = terrain.guideFarms[i];
-    const guide = UnitEx.create(MapPlayerEx.neutralAggressive, UNIT_TYPE_ID_GUIDE_FARM, x, y);
-    if (guide.x !== x || guide.y !== y) {
-      guide.destroy();
-      continue;
+  if (!bulldog.enabled) {
+    const center = getCenter();
+    const guides: UnitEx[] = [];
+    for (let i = 0; i < terrain.guideFarms.length && !udg_switchOn; i++) {
+      const pos = terrain.guideFarms[i];
+      const x = center.x + pos.x;
+      const y = center.y + pos.y;
+      const guide = UnitEx.create(MapPlayerEx.neutralAggressive, UNIT_TYPE_ID_GUIDE_FARM, x, y);
+      if (guide.x !== x || guide.y !== y) {
+        guide.destroy();
+        continue;
+      }
+      guide.addAbility("Aloc");
+      guide.setVertexColor(255, 31, 255, showGuideFarms() ? 91 : 0);
+      guides.push(guide);
     }
-    guide.addAbility("Aloc");
-    guide.setVertexColor(255, 31, 255, showGuideFarms() ? 91 : 0);
-    guides.push(guide);
+    setTimeout(18, () => {
+      for (let i = 0; i < guides.length; i++) {
+        if (!guides[i].isAlive()) continue;
+        guides[i].destroy();
+      }
+    });
   }
-  setTimeout(18, () => {
-    for (let i = 0; i < guides.length; i++) {
-      if (!guides[i].isAlive()) continue;
-      guides[i].destroy();
-    }
-  });
 
   TimerStart(udg_Timer, udg_practiceOn ? 120 * 60 : udg_time, false, null);
 
-  if (udg_switchOn || udg_practiceOn) TriggerExecute(gg_trg_createWolves);
+  if (udg_switchOn || udg_practiceOn || bulldog.enabled) TriggerExecute(gg_trg_createWolves);
   else {
     PauseTimerBJ(false, udg_wolfTimer);
     TimerDialogDisplayBJ(true, udg_wolfTimerWindow);
@@ -415,15 +429,10 @@ const Trig_createSheep_Actions = () => {
     CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE)!, type, GetRectCenterX(rect), GetRectCenterY(rect), 270);
   }
 
-  if (terrain.name === "Classic") {
+  if (terrain.critter) {
     createCritter();
-    CreateUnit(
-      MapPlayerEx.neutralAggressive.handle,
-      UNIT_TYPE_ID_SNOWMAN,
-      GetRectCenterX(gg_rct_snowman),
-      GetRectCenterY(gg_rct_snowman),
-      270,
-    );
+    const center = getCenter();
+    CreateUnit(MapPlayerEx.neutralAggressive.handle, UNIT_TYPE_ID_SNOWMAN, center.x + 704, center.y + 2880, 270);
   }
 
   if (udg_Teams === TEAMS_OPEN || udg_Teams === TEAMS_PICK) udg_Teams = TEAMS_INIT;
@@ -477,6 +486,9 @@ const Trig_createSheep_Actions = () => {
     });
 
     ForForce(udg_Wolf, () => MapPlayerEx.fromEnum()!.handicap = 1);
+  }
+
+  if (bulldog.enabled) {
   }
 
   settings.teamConfiguration = { sheep: ForceEx.sheep.toArray(), wolves: ForceEx.wolves.toArray() };

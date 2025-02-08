@@ -1,4 +1,4 @@
-import { ABILITY_TYPE_ID_BITE, UNIT_TYPE_ID_DOLLY } from "constants";
+import { ABILITY_TYPE_ID_BITE, ABILITY_TYPE_ID_WISP_GIVE_ALLIES_GOLD, UNIT_TYPE_ID_DOLLY } from "constants";
 import { president, terrain } from "settings/settings";
 
 const Trig_spiritDies_Conditions = () => {
@@ -13,7 +13,9 @@ const Trig_spiritDies_Actions = () => {
   const killingPlayerCid = GetConvertedPlayerId(killingPlayer);
 
   if (udg_practiceOn) {
-    CreateUnit(dyingPlayer, wispType, RandomX(terrain.wisp), RandomY(terrain.wisp), 270);
+    const wisp = CreateUnit(dyingPlayer, wispType, RandomX(terrain.wisp), RandomY(terrain.wisp), 270)!;
+    UnitRemoveAbility(wisp, ABILITY_TYPE_ID_WISP_GIVE_ALLIES_GOLD);
+    UnitRemoveAbility(wisp, locateAlliesAbility);
     return;
   }
 

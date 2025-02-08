@@ -2,6 +2,7 @@ import { updateLeaderboardSettingsDisplay } from "settings/time";
 import { president, switchSetting } from "settings/settings";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
 import { addScriptHook, Timer, W3TS_HOOK } from "w3ts";
+import { bulldog } from "bulldog/settings";
 
 export const switchSheepTimers = Array.from({ length: bj_MAX_PLAYERS }, () => Timer.create());
 
@@ -15,6 +16,7 @@ const Trig_switch_Actions = () => {
 
   vampOn = false;
   president.enabled = false;
+  bulldog.enabled = false;
   udg_switchOn = true;
 
   if (s === "-switch") {

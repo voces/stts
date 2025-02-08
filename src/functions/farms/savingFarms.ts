@@ -4,10 +4,13 @@ import { MapPlayerEx } from "handles/MapPlayerEx";
 import { UnitEx } from "handles/UnitEx";
 import { UNIT_TYPE_ID_MONEY_FARM } from "constants";
 import { income, terrain } from "settings/settings";
+import { bulldog } from "bulldog/settings";
 
 const g = CreateGroup();
 
 const getDistancePenality = (u: unit) => {
+  if (bulldog.enabled) return 1;
+
   const x = GetUnitX(u);
   const y = GetUnitY(u);
   const xMaxPen = GetRectMaxX(terrain.wisp);

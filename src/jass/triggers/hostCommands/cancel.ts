@@ -1,3 +1,5 @@
+import { defaultGold } from "bulldog/defaults";
+import { bulldog } from "bulldog/settings";
 import { ForceEx } from "handles/ForceEx";
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { displaySwitchWinner } from "modes/switch/winnerMsg";
@@ -16,7 +18,7 @@ const Trig_cancel_resetSheepState = () => {
 
 const Trig_cancel_Actions = () => {
   if (udg_practiceOn) {
-    udg_sheepGold = 0;
+    udg_sheepGold = bulldog.enabled ? defaultGold() : 0;
     udg_wolfGold = 0;
     udg_time = 0;
     defaultTime();

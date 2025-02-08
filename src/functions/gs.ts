@@ -1,6 +1,6 @@
 // Adapted from https://softwareengineering.stackexchange.com/q/291117
 
-import { DisplayType } from "constants";
+import { ABILITY_TYPE_ID_WISP_GIVE_ALLIES_GOLD, DisplayType } from "constants";
 import { giveAllGold } from "jass/triggers/commands/g";
 import { president } from "settings/settings";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
@@ -80,7 +80,7 @@ export const gsDistributeGold = (
 const wispGAbility = () => {
   const p = GetOwningPlayer(GetTriggerUnit()!);
   if (
-    udg_giveGold && GetSpellAbilityId() === FourCC("A020") &&
+    udg_giveGold && GetSpellAbilityId() === ABILITY_TYPE_ID_WISP_GIVE_ALLIES_GOLD &&
     GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) > 0 &&
     !(IsPlayerInForce(p, udg_Wolf))
   ) {

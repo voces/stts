@@ -144,6 +144,7 @@ import { ForceEx } from "handles/ForceEx";
 import { formatList } from "util/formatList";
 import { removeEnumUnit } from "util/removeEnumUnit";
 import { toStringWithPrecision } from "ui/util";
+import { bulldog } from "bulldog/settings";
 
 declare global {
   //globals from SavingFarms:
@@ -598,8 +599,6 @@ declare global {
   let TEAMS_CAPTAINS: 4;
 
   // deno-lint-ignore prefer-const
-  let colors: Array<number>;
-  // deno-lint-ignore prefer-const
   let playerTimes: Array<number>;
   // deno-lint-ignore prefer-const
   let sheepType: number;
@@ -827,7 +826,6 @@ AFK_RETURNED_DURING_ROUND = 2;
 AFK_AFK = 3;
 AFK_AFK_DURING_ROUND = 4;
 
-colors = [];
 playerTimes = Array.from({ length: bj_MAX_PLAYERS }, () => 0);
 sheepType = FourCC("uC04");
 shepType = FourCC("EC03");
@@ -895,25 +893,25 @@ const s__times__allocate = (): number => {
 };
 
 //Generated allocator of colorsStruct
-declare global {
-  // deno-lint-ignore prefer-const
-  let s__colorsStruct__allocate: () => number;
-}
-s__colorsStruct__allocate = (): number => {
-  let _this = si__colorsStruct_F;
-  if ((_this !== 0)) {
-    si__colorsStruct_F = si__colorsStruct_V[_this];
-  } else {
-    si__colorsStruct_I = si__colorsStruct_I + 1;
-    _this = si__colorsStruct_I;
-  }
-  if ((_this > 8190)) {
-    return 0;
-  }
+// declare global {
+//   // deno-lint-ignore prefer-const
+//   let s__colorsStruct__allocate: () => number;
+// }
+// s__colorsStruct__allocate = (): number => {
+//   let _this = si__colorsStruct_F;
+//   if ((_this !== 0)) {
+//     si__colorsStruct_F = si__colorsStruct_V[_this];
+//   } else {
+//     si__colorsStruct_I = si__colorsStruct_I + 1;
+//     _this = si__colorsStruct_I;
+//   }
+//   if ((_this > 8190)) {
+//     return 0;
+//   }
 
-  si__colorsStruct_V[_this] = -1;
-  return _this;
-};
+//   si__colorsStruct_V[_this] = -1;
+//   return _this;
+// };
 
 //library Util:
 
@@ -1409,13 +1407,13 @@ declare global {
   let autoCancel: () => boolean;
 }
 autoCancel = () => {
+  if (!autoCancelEnabled || udg_practiceOn || udg_switchOn || vampOn || bulldog.enabled) return false;
+
   const afks: MapPlayerEx[] = [];
-  if (autoCancelEnabled && !udg_practiceOn && !udg_switchOn && !vampOn) {
-    for (let i = 1; i <= bj_MAX_PLAYERS; i++) {
-      const p = MapPlayerEx.fromIndex(i - 1);
-      if (!p?.isSheep) continue;
-      if (udg_apr[i] < 5) afks.push(p);
-    }
+  for (let i = 1; i <= bj_MAX_PLAYERS; i++) {
+    const p = MapPlayerEx.fromIndex(i - 1);
+    if (!p?.isSheep) continue;
+    if (udg_apr[i] < 5) afks.push(p);
   }
 
   if (afks.length > 0) {

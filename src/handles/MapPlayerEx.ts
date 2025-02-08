@@ -9,6 +9,16 @@ export class MapPlayerEx extends MapPlayer {
   bankedGold = 0;
   presidentCount = 0;
 
+  bulldog: Record<
+    string,
+    {
+      team: 0;
+      solo: 0;
+      leaks: 0;
+      deaths: 0;
+    } | undefined
+  > = {};
+
   readonly deathOrder: Record<string, { total: number; count: number } | undefined> = {};
   diedThisRound = false;
   private lastDo: number = 0;

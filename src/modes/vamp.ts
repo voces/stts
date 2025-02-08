@@ -2,12 +2,14 @@ import { addScriptHook, W3TS_HOOK } from "w3ts";
 import { updateLeaderboardSettingsDisplay } from "settings/time";
 import { president } from "settings/settings";
 import { registerAnyPlayerChatEvent } from "util/registerAnyPlayerChatEvent";
+import { bulldog } from "bulldog/settings";
 
 const Trig_vamp_Actions = () => {
   vampOn = !vampOn;
   if (vampOn) {
     udg_switchOn = false;
     president.enabled = false;
+    bulldog.enabled = false;
   }
   updateLeaderboardSettingsDisplay();
 };

@@ -96,6 +96,13 @@ export const initIntermission = () => {
     smartButton,
 
     playersLabel,
+    average,
+    deathOrder,
+    points,
+    pointsTooltip,
+    scores,
+    scoresTooltip,
+    leaks,
 
     practice,
     end,
@@ -139,6 +146,13 @@ export const initIntermission = () => {
     "SheepTagStartButton",
     "SheepTagSmartButton",
     "SheepTagActivePlayersText",
+    "SheepTagPlayersHeaderAverage",
+    "SheepTagPlayersHeaderDeathOrder",
+    "SheepTagPlayersHeaderPoints",
+    "SheepTagPlayersHeaderPointsTooltipText",
+    "SheepTagPlayersHeaderScores",
+    "SheepTagPlayersHeaderScoresTooltipText",
+    "SheepTagPlayersHeaderLeaks",
     "SheepTagPracticeButton",
     "SheepTagEndButton",
     "SheepTagEndConfirmation",
@@ -216,7 +230,10 @@ export const initIntermission = () => {
   // Round settings
 
   mode.value = 0;
-  mode.onItemChanged(({ value }) => updateMode(value), true);
+  mode.onItemChanged(({ value }) => {
+    updateMode(value);
+    updatePlayers();
+  }, true);
 
   frames.settings.switch.invul = setupSlider("SheepTagSwitchInvul", { onChange: (v) => udg_sheepInvul = v });
   frames.settings.switch.wolf = setupSlider("SheepTagSwitchWolf", { onChange: (v) => udg_wolfSpawn = v });
@@ -248,8 +265,8 @@ export const initIntermission = () => {
 
   switchOptions.visible = false;
 
-  frames.settings.terrain.select = terrain;
   frames.settings.terrain.label = terrainLabel;
+  frames.settings.terrain.select = terrain;
   frames.settings.terrain.options = classicTerrainOptions;
 
   terrain.value = 0;
@@ -396,6 +413,10 @@ export const initIntermission = () => {
   // Players
 
   frames.playerLabel = playersLabel;
+  frames.playerHeaders = { average, deathOrder, points, pointsTooltip, scores, scoresTooltip, leaks };
+  points.visible = false;
+  scores.visible = false;
+  leaks.visible = false;
 
   let playerCount = 0;
   for (let i = 0; i < bj_MAX_PLAYERS; i++) if (MapPlayerEx.fromIndex(i)?.inGame) playerCount++;
@@ -515,6 +536,9 @@ export const initIntermission = () => {
       pubMark: pubMark,
       average: FrameEx.fromName("SheepTagPlayerRowAverage", i),
       deathOrder: FrameEx.fromName("SheepTagPlayerRowDeathOrder", i),
+      points: FrameEx.fromName("SheepTagPlayerRowPoints", i),
+      score: FrameEx.fromName("SheepTagPlayerRowScore", i),
+      leaks: FrameEx.fromName("SheepTagPlayerRowLeaks", i),
     };
 
     prev = row;

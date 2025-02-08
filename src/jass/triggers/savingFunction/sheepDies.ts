@@ -3,6 +3,8 @@ import { withPlayerUnits, withUnitsOfType } from "util/withGroup";
 import { maybeApplySecondWind } from "functions/secondWind";
 import { gsDistributeGold } from "functions/gs";
 import { MapPlayerEx } from "handles/MapPlayerEx";
+import { bulldog } from "bulldog/settings";
+import { died as bulldogDied } from "bulldog/stats";
 
 const Trig_sheepDies_Actions = () => {
   const dyingPlayer = GetOwningPlayer(GetTriggerUnit()!);
@@ -13,7 +15,7 @@ const Trig_sheepDies_Actions = () => {
   const y = GetUnitY(GetDyingUnit()!);
   const f = GetUnitFacing(GetDyingUnit()!);
 
-  if (!president.enabled) MapPlayerEx.fromHandle(dyingPlayer).died();
+  if (!president.enabled && !bulldog.enabled) MapPlayerEx.fromHandle(dyingPlayer).died();
 
   PauseTimer(udg_sheepTimer[dyingPlayerId]);
 
@@ -35,8 +37,8 @@ const Trig_sheepDies_Actions = () => {
     const sheepAndSpiritCount = sheepCount + CountPlayersInForceBJ(udg_Spirit);
 
     // double division because this baked logic was broken; in 2v4, all wolves get 6 gold
-    const teamIncome = Math.floor(100 / wolfCount / wolfCount);
-    const killerIncome = teamIncome + 10 * sheepAndSpiritCount;
+    const teamIncome = Math.floor((bulldog.enabled ? 20 : 100) / wolfCount / wolfCount);
+    const killerIncome = teamIncome + (bulldog.enabled ? 2 : 10) * sheepAndSpiritCount;
 
     withUnitsOfType(shepType, (g) =>
       g.forEach((u) => {
@@ -47,13 +49,19 @@ const Trig_sheepDies_Actions = () => {
       }));
   }
 
-  withPlayerUnits(dyingPlayer, (g) => g.forEach((u) => u.destroy()));
+  withPlayerUnits(dyingPlayer, (g) =>
+    g.forEach((u) => {
+      if ((bulldog.enabled || vampOn) && u.typeId === sheepType) return;
+      u.destroy();
+    }));
 
   ForceRemovePlayerSimple(dyingPlayer, udg_Sheep);
   ForceAddPlayerSimple(dyingPlayer, udg_Spirit);
 
-  if (sheepCount === 1) TriggerExecute(gg_trg_wolvesWin);
-  else if (president.enabled) {
+  if (sheepCount === 1 || (bulldog.enabled && bulldog.katma)) {
+    if (bulldog.enabled && bulldog.katma) bulldogDied(MapPlayerEx.fromHandle(dyingPlayer));
+    TriggerExecute(gg_trg_wolvesWin);
+  } else if (president.enabled) {
     if (president.president!.handle === dyingPlayer) {
       ForForce(udg_Sheep, () => {
         const p = GetEnumPlayer()!;
@@ -73,9 +81,12 @@ const Trig_sheepDies_Actions = () => {
       );
     }
   } else {
-    const u = CreateUnit(dyingPlayer, wispType, RandomX(terrain.wisp), RandomY(terrain.wisp), 270)!;
-    PanCameraToTimedForPlayer(dyingPlayer, GetUnitX(u)!, GetUnitY(u)!, 0);
-    SelectUnitForPlayerSingle(u, dyingPlayer);
+    if (!bulldog.enabled) {
+      const u = CreateUnit(dyingPlayer, wispType, RandomX(terrain.wisp), RandomY(terrain.wisp), 270)!;
+      PanCameraToTimedForPlayer(dyingPlayer, GetUnitX(u)!, GetUnitY(u)!, 0);
+      SelectUnitForPlayerSingle(u, dyingPlayer);
+    }
+
     gsDistributeGold(dyingPlayer, true, TRANSFER_DISPLAY_INVOLVED);
     // SetUnitAnimation(
     //   CreateUnit(killingPlayer, FourCC(GetRandomInt(0, 1) === 0 ? "nska" : "nske"), x, y, f)!,

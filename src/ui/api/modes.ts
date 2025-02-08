@@ -1,3 +1,4 @@
+import { bulldog } from "bulldog/settings";
 import { terrain } from "settings/settings";
 import { setTerrain } from "settings/terrain";
 import { frames } from "ui/frames";
@@ -9,6 +10,6 @@ export const updateTerrain = (value?: number) => {
     value = terrain.index;
     frames.settings.terrain.select.value = terrain.index;
   }
-  frames.settings.terrain.options.visible = value === 0;
+  frames.settings.terrain.options.visible = value === 0 && !bulldog.enabled;
 };
 onTerrainUpdatedViaCommand(updateTerrain);

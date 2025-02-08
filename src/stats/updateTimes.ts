@@ -2,6 +2,7 @@ import { MapPlayerEx } from "handles/MapPlayerEx";
 import { logRound } from "jass/triggers/hostCommands/UpdateStats";
 import { addRound, addTime, rounds } from "stats/times";
 import { income, president, settings, terrain } from "settings/settings";
+import { bulldog } from "bulldog/settings";
 
 const noHandicaps = () => {
   for (let i = 0; i < bj_MAX_PLAYERS; i++) {
@@ -28,7 +29,7 @@ export const updateTimes = () => {
 
   if (timeElapsed <= 0.01) timeElapsed = udg_time;
 
-  if (udg_switchOn || vampOn || udg_practiceOn) return;
+  if (udg_switchOn || vampOn || udg_practiceOn || bulldog.enabled) return;
 
   for (let i = 0; i < bj_MAX_PLAYERS; i++) {
     const p = MapPlayerEx.fromIndex(i);

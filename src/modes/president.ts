@@ -5,6 +5,7 @@ import { updateLeaderboardSettingsDisplay } from "settings/time";
 import { withDummy } from "util/withDummy";
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { ABILITY_TYPE_ID_PRESIDENT } from "constants";
+import { bulldog } from "bulldog/settings";
 
 export const applyPresidentBuff = (target: Unit | unit) => {
   const handle = target instanceof Unit ? target.handle : target;
@@ -34,6 +35,7 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     if (president.enabled) {
       udg_switchOn = false;
       vampOn = false;
+      bulldog.enabled = false;
 
       if (parts.length > 1) {
         let handicap = parseFloat(

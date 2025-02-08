@@ -9,6 +9,7 @@ import { rounds } from "stats/times";
 import { ForceEx } from "handles/ForceEx";
 import { settings } from "settings/settings";
 import { updatePlayers } from "ui/api/updateIntermission";
+import { bulldog } from "bulldog/settings";
 
 let pubStart = 0;
 
@@ -214,6 +215,8 @@ export const smart = (sheep?: number) => {
   if (typeof sheep !== "number") {
     sheepToDraft = lastActivePlayerCount === activePlayerCount
       ? settings.desiredSheep
+      : bulldog.enabled
+      ? Math.round(activePlayerCount / 1.75)
       : Math.floor(activePlayerCount / 2 - 1);
   } else sheepToDraft = sheep;
   if (sheepToDraft <= 0) sheepToDraft = 1;

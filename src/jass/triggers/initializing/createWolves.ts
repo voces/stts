@@ -1,3 +1,4 @@
+import { bulldog } from "bulldog/settings";
 import { ABILITY_TYPE_ID_GIVE_ALLY_GOLD_WOLF } from "constants";
 import { spawnGoblins } from "functions/items/goblins";
 import { startRuneTimer } from "functions/runes";
@@ -42,12 +43,13 @@ const Trig_createWolves_Actions = () => {
 
   ForForce(udg_Wolf, createWolf);
   ForceEx.sheep.for((s) => udg_totalFarmCountBeforeWolves[s.id].push(udg_farmCount[s.id + 1]));
-  if (!udg_practiceOn) StartSound(gg_snd_WolfriderYesAttack1);
+  if (!udg_practiceOn && !bulldog.enabled) {
+    StartSound(gg_snd_WolfriderYesAttack1);
+    DisplayTimedTextToForce(udg_Sheep, 5, "The wolves have been set free!");
+  }
 
   wolvesCreated = true;
   updateScButtons();
-
-  DisplayTimedTextToForce(udg_Sheep, 5, "The wolves have been set free!");
 
   TimerDialogDisplayBJ(false, udg_wolfTimerWindow);
   PauseTimerBJ(false, udg_Timer);

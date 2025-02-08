@@ -1,3 +1,4 @@
+import { bulldog } from "bulldog/settings";
 import { ForceEx } from "handles/ForceEx";
 import { MapPlayerEx } from "handles/MapPlayerEx";
 import { settings } from "settings/settings";
@@ -26,6 +27,7 @@ const getCounts = () => {
 
 export const getIdealDesiredSheep = () => {
   const { regulars, pubs } = getCounts();
+  if (bulldog.enabled) return Math.max(Math.round(regulars / 1.75 + (pubs > 0 ? Math.ceil(pubs + 1) / 2 : 0)), 1);
   if (pubs % 2 === 0) return Math.max(Math.floor((regulars + pubs) / 2 - 1), 1);
   return Math.max(Math.floor((regulars + pubs + 1) / 2 - 1), 1);
 };

@@ -4,7 +4,7 @@ const _getFarmColor = (unit: unit): [r: number, g: number, b: number, a: number]
   else if (maxHp < 240) {
     const pi = (maxHp - 120) / 120;
     const p = 1 - pi;
-    return [1, p + 0.4 * pi, p + 0.4 * pi, 255];
+    return [1, p + 0.4 * pi, p + 0.4 * pi, 1];
   } else if (maxHp < 360) {
     const pi = (maxHp - 240) / 240;
     const p = 1 - pi;

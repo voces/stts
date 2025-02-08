@@ -1,3 +1,4 @@
+import { clear as clearBulldog } from "bulldog/stats";
 import { disableIncome, resetBankedGold } from "functions/farms/savingFarms";
 import { stopRuneTimers } from "functions/runes";
 import { ForceEx } from "handles/ForceEx";
@@ -119,6 +120,7 @@ const Trig_startRound_Actions = () => {
   const init = udg_Teams === TEAMS_INIT;
   resetRoundStats();
   ForForce(udg_Draft, removeDraft);
+  clearBulldog();
 
   if (TimerGetElapsed(udg_Timer) >= 60 && udg_gameStarted) TriggerExecute(gg_trg_setafk);
 
@@ -182,6 +184,7 @@ const Trig_startRound_Actions = () => {
   TimerDialogDisplayBJ(false, udg_createTimerWindow);
   TimerDialogDisplayBJ(false, udg_mapSizeChangeTimerWindow);
   TimerDialogDisplayBJ(false, udg_wolfTimerWindow);
+  8;
   TimerDialogDisplayBJ(false, udg_TimerWindow);
   TimerDialogDisplayBJ(false, udg_massTimerWindow);
 

@@ -5,6 +5,8 @@ import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 
 export const logRound = defineEvent("round", "{0} vs {1}: lasted {2}", "sheep", "wolves", "time");
 export const logMassingTest = defineEvent("massingTest", "{0}", "time");
+export const logBulldog = defineEvent("bulldog", "{0} vs {1}: lasted {2}", "sheep", "wolves", "points");
+export const logKatma = defineEvent("katma", "{0} vs {1}: lasted {2}", "sheep", "wolves", "point");
 const logEnd = defineEvent("end", "The game was ended");
 
 const logTimes = defineNumberValue("Times", "high", "leaderboard", "real");

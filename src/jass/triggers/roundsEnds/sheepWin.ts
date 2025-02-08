@@ -1,3 +1,5 @@
+import { bulldog } from "bulldog/settings";
+import { end as endBulldog } from "bulldog/stats";
 import { ForceEx } from "handles/ForceEx";
 import { displaySwitchWinner } from "modes/switch/winnerMsg";
 import { president } from "settings/settings";
@@ -22,20 +24,26 @@ const updateSheepStats = () => {
 };
 
 const Trig_sheepWin_Actions = () => {
+  // Timer expiring is a wolf win, not sheep win
+  if (GetExpiredTimer() && bulldog.enabled) return TriggerExecute(gg_trg_wolvesWin);
+
   if (!president.enabled) ForceEx.sheep.for((p) => p.survived());
   if (!udg_practiceOn && !udg_switchOn) {
     udg_atempgroup = GetUnitsOfTypeIdAll(sheepType)!;
     udg_atempstring = I2S(CountUnitsInGroup(udg_atempgroup))!;
-    ForGroupBJ(udg_atempgroup, updateLastSurvivorStats);
+    if (!bulldog.enabled) {
+      ForGroupBJ(udg_atempgroup, updateLastSurvivorStats);
+      ForForce(udg_Spirit, updateSheepStats);
+    }
     DestroyGroup(udg_atempgroup);
-    ForForce(udg_Spirit, updateSheepStats);
     maybeRotate();
   }
   if (udg_switchOn) displaySwitchWinner();
+  endBulldog();
   if (udg_Teams === TEAMS_LOCK_IE_PLAYING) {
     if (udg_versus === 1) udg_gameTime[1] = udg_time;
     else if (udg_versus === 2) udg_gameTime[2] = udg_time;
-    else setTimeout(0.05, () => displayTimedTextToAll(`\n${fullTimeString}.`, 18));
+    else if (!vampOn && !bulldog.enabled) setTimeout(0.05, () => displayTimedTextToAll(`\n${fullTimeString}.`, 18));
     updateTimes();
     TriggerExecute(gg_trg_startRound);
   }

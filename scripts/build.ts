@@ -3,17 +3,34 @@ import Map from "npm:mdx-m3-viewer-th/dist/cjs/parsers/w3x/map.js";
 
 const War3Map = Map.default;
 
+try {
+  await Deno.mkdir("map.w3x/minimaps");
+} catch {}
+
+try {
+  await Deno.lstat("map.w3x/minimaps/bulldog1.tga");
+} catch {
+  const command = new Deno.Command("deno", {
+    args: ["task", "build-minimaps"],
+    stdout: "inherit",
+    stderr: "inherit",
+  });
+  command.outputSync();
+}
+
 const files: string[] = [];
-for await (const entry of walk("map.w3x")) if (entry.isFile) files.push(entry.path);
+for await (const entry of walk("map.w3x")) if (entry.isFile && entry.name !== "war3mapMap.blp") files.push(entry.path);
 
 const map = new War3Map();
-map.archive.resizeHashtable(files.length);
+map.archive.resizeHashtable(files.length + 1);
 
 await Promise.all(files.map(async (fileName) => {
   if (!map.import(fileName.slice(8).replace(/\//g, "\\"), await Deno.readFile(fileName))) {
     throw new Error(`Could not import file "${fileName}"`);
   }
 }));
+
+map.import("war3mapMap.blp", await Deno.readFile("assets/classic.blp"));
 
 const scriptFile = map.getScriptFile();
 if (!scriptFile) throw new Error("Could not find script file");

@@ -8,6 +8,20 @@
 - -ap attackpercent
 - Frost Arrows allow a reach
 
+# 25a
+
+## Feature changes
+
+- Added Bulldog & Kat'ma modes
+- Replaced Sheep, Wolf, and Golem displays on minimap with new, larger pips
+
+## Bug fixes
+
+- Fixed Illusion Farm not being 25% transparent to allies
+- Fixed Crystal Ball having a cooldown
+- Fixed Sheep Spirit having Give Allies Gold and Locate Allies in practice
+- Fixed a few minor animation issue with Translocate Farm
+
 # 25
 
 ## Feature changes

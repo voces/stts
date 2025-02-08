@@ -1,3 +1,4 @@
+import { bulldog } from "bulldog/settings";
 import { UnitEx } from "handles/UnitEx";
 import { displayTimedTextToAll } from "util/displayTimedTextToAll";
 
@@ -18,7 +19,7 @@ const Trig_First_Blood_Actions = () => {
     }
   }
 
-  PlaySoundBJ(gg_snd_firstblood);
+  if (!bulldog.enabled) PlaySoundBJ(gg_snd_firstblood);
 };
 
 declare global {

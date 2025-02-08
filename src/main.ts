@@ -1,11 +1,13 @@
 import "util/debug";
 import "util/HideMinDamage";
 
+import "bulldog/init";
 import "functions/farms/auraFarmUpgrade";
 import "functions/farms/cancelFarm";
 import "functions/items/goblins";
 import "functions/items/golemDeath";
 import "functions/items/hay";
+import "functions/minimap";
 import "functions/remoteShop";
 import "functions/runes";
 import "jass/main";

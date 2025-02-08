@@ -12,11 +12,14 @@
   },
   "devDependencies": {
     "@types/node": "^20.3.1",
+    "lua-types": "^2.13.1",
     "mdx-m3-viewer-th": "^5.13.0",
     "patch-package": "^8.0.0",
+    "tga": "^1.0.7",
     "typescript": "^5.1.3",
     "typescript-to-lua": "^1.23.0",
     "w3ts": "^3.0.2",
-    "w3ts-w3mmd": "^2.1.0"
+    "w3ts-w3mmd": "^2.1.0",
+    "war3-types-strict": "^0.1.3"
   }
 }

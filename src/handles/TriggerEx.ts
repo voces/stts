@@ -24,6 +24,14 @@ export class TriggerEx extends Trigger {
     return this;
   }
 
+  registerAnyPlayerEvent(whichPlayerEvent: playerevent) {
+    for (let i = 0; i < bj_MAX_PLAYERS; i++) {
+      this.registerPlayerEvent(MapPlayerEx.fromIndex(i)!, whichPlayerEvent);
+    }
+
+    return this;
+  }
+
   static create(): TriggerEx {
     const handle = CreateTrigger();
 
