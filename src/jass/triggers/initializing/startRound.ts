@@ -184,7 +184,6 @@ const Trig_startRound_Actions = () => {
   TimerDialogDisplayBJ(false, udg_createTimerWindow);
   TimerDialogDisplayBJ(false, udg_mapSizeChangeTimerWindow);
   TimerDialogDisplayBJ(false, udg_wolfTimerWindow);
-  8;
   TimerDialogDisplayBJ(false, udg_TimerWindow);
   TimerDialogDisplayBJ(false, udg_massTimerWindow);
 

@@ -10,7 +10,6 @@ import {
   ABILITY_TYPE_ID_WISP_GIVE_ALLIES_GOLD,
   UNIT_TYPE_ID_DOLLY,
   UNIT_TYPE_ID_GUIDE_FARM,
-  UNIT_TYPE_ID_SNOWMAN,
   UNIT_TYPE_ID_START_POSITION,
 } from "constants";
 import { switchSheepTimers } from "modes/switch/switch";
@@ -431,8 +430,8 @@ const Trig_createSheep_Actions = () => {
 
   if (terrain.critter) {
     createCritter();
-    const center = getCenter();
-    CreateUnit(MapPlayerEx.neutralAggressive.handle, UNIT_TYPE_ID_SNOWMAN, center.x + 704, center.y + 2880, 270);
+    // const center = getCenter();
+    // CreateUnit(MapPlayerEx.neutralAggressive.handle, UNIT_TYPE_ID_SNOWMAN, center.x + 704, center.y + 2880, 270);
   }
 
   if (udg_Teams === TEAMS_OPEN || udg_Teams === TEAMS_PICK) udg_Teams = TEAMS_INIT;

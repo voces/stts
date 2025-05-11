@@ -23,6 +23,8 @@ export const getMode = () =>
   }`;
 
 export const end = () => {
+  if (!bulldog.enabled) return;
+
   const mode = getMode();
   if (bulldog.katma) {
     const sheepWon = scores.length === ForceEx.wisps.size();

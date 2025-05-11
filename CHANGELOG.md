@@ -8,6 +8,18 @@
 - -ap attackpercent
 - Frost Arrows allow a reach
 
+# 25b
+
+## Feature changes
+
+- Summer theme
+- Updated Bulldog minimaps
+
+## Bug fixes
+
+- Fixed Bulldog rounds being emitted when Bulldog is not enabled
+- Fixed minimap start locations
+
 # 25a
 
 ## Feature changes

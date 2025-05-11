@@ -892,27 +892,6 @@ const s__times__allocate = (): number => {
   return _this;
 };
 
-//Generated allocator of colorsStruct
-// declare global {
-//   // deno-lint-ignore prefer-const
-//   let s__colorsStruct__allocate: () => number;
-// }
-// s__colorsStruct__allocate = (): number => {
-//   let _this = si__colorsStruct_F;
-//   if ((_this !== 0)) {
-//     si__colorsStruct_F = si__colorsStruct_V[_this];
-//   } else {
-//     si__colorsStruct_I = si__colorsStruct_I + 1;
-//     _this = si__colorsStruct_I;
-//   }
-//   if ((_this > 8190)) {
-//     return 0;
-//   }
-
-//   si__colorsStruct_V[_this] = -1;
-//   return _this;
-// };
-
 //library Util:
 
 //Splits a string into arguments around string c. If bb true, first argument is ignored.

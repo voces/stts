@@ -4,29 +4,46 @@ const formatDuration = (ms: number) => {
   return `${Math.round(ms / 100) / 10}s`;
 };
 
-const rebuild = () => {
+let currentTimings: Record<string, number> = {};
+const withTiming = (description: string, fn: () => void, timings?: Record<string, number>) => {
+  let oldTimings = currentTimings;
+  if (timings) currentTimings = timings;
   const start = performance.now();
-
-  {
-    const command = new Deno.Command("deno", {
-      args: ["task", "build-lua"],
-      stdout: "inherit",
-      stderr: "inherit",
-    });
-    command.outputSync();
+  currentTimings[description] = -1;
+  fn();
+  currentTimings[description] = performance.now() - start;
+  try {
+    return currentTimings;
+  } finally {
+    currentTimings = oldTimings;
   }
+};
 
-  {
-    const command = new Deno.Command("deno", {
-      args: ["task", "build-w3x"],
-      stdout: "inherit",
-      stderr: "inherit",
+const rebuild = () => {
+  const timings = withTiming("total", () => {
+    withTiming("build-lua", () => {
+      const command = new Deno.Command("deno", {
+        args: ["task", "build-lua"],
+        stdout: "inherit",
+        stderr: "inherit",
+      });
+      command.outputSync();
     });
-    command.outputSync();
-  }
+
+    withTiming("build-w3x", () => {
+      const command = new Deno.Command("deno", {
+        args: ["task", "build-w3x"],
+        stdout: "inherit",
+        stderr: "inherit",
+      });
+      command.outputSync();
+    });
+  }, {});
 
   console.log(
-    `Completed in ${formatDuration(performance.now() - start)}. Watching for more changes...`,
+    `Completed in ${
+      Object.entries(timings).map(([k, v]) => `${k}: ${formatDuration(v)}`).join(", ")
+    }. Watching for more changes...`,
   );
 };
 

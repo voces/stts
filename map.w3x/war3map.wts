@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 25a
+Sheep Tag ReVoLuTiOn 25b
 }
 
 STRING 40
@@ -3923,7 +3923,7 @@ STRING 4135
 }
 
 STRING 4138
-// Buffs/Effects: B00M (Penguin Blessing), EditorSuffix (Editor Suffix)
+// Buffs/Effects: B00M (Rabbit Blessing), EditorSuffix (Editor Suffix)
 {
 (Critter)
 }
@@ -4593,24 +4593,6 @@ STRING 4325
 Permanently infects nearby enemy structures with Disease Cloud. Disease Cloud deals 2 damage per second.|n|cffff0000Cannot kill structures.|r
 }
 
-STRING 4327
-// Buffs/Effects: B00M (Penguin Blessing), EditorName (Name (Editor Only))
-{
-Penguin Blessing
-}
-
-STRING 4328
-// Buffs/Effects: B00M (Penguin Blessing), Buffubertip (Tooltip - Extended)
-{
-This unit has been blessed by a penguin; it has greatly increased armor.
-}
-
-STRING 4329
-// Buffs/Effects: B00M (Penguin Blessing), Bufftip (Tooltip)
-{
-Penguin Blessing
-}
-
 STRING 4330
 // Abilities: A027 (Snowball), Name (Name)
 {
@@ -4730,39 +4712,45 @@ STRING 4355
 (Small)
 }
 
-STRING 4356
+STRING 4362
 // Items: I001 (cloak), Ubertip (Tooltip - Extended)
 {
-Engulfs this unit in frost which deals 15 damage per second to nearby enemy land units.|n|cffffcc00160 gold.|r |n|cff00aeef-buy cloak: 200 gold.|r
+Engulfs this unit in flames which deals 15 damage per second to nearby enemy land units.|n|cffffcc00160 gold.|r |n|cff00aeef-buy cloak: 200 gold.|r
 }
 
-STRING 4357
+STRING 4363
 // Items: I001 (cloak), Tip (Tooltip - Basic)
 {
-Purchase Cloak of Frost
+Purchase Cloak of Flames
 }
 
-STRING 4358
+STRING 4364
 // Buffs/Effects: B00H (), Buffubertip (Tooltip - Extended)
 {
-This unit has a Cloak of Frost; nearby enemy buildings will take damage over time.
+This unit has a Cloak of Flames; nearby enemy buildings will take damage over time.
 }
 
-STRING 4359
-// Buffs/Effects: B00H (), Bufftip (Tooltip)
-{
-Cloak of Frost
-}
-
-STRING 4360
+STRING 4365
 // Buffs/Effects: B00I (Cloak Art), Buffubertip (Tooltip - Extended)
 {
-This unit has a Cloak of Frost; nearby enemy buildings will take damage over time.
+This unit has a Cloak of Flames; nearby enemy buildings will take damage over time.
 }
 
-STRING 4361
-// Buffs/Effects: B00I (Cloak Art), Bufftip (Tooltip)
+STRING 4366
+// Buffs/Effects: B00M (Rabbit Blessing), EditorName (Name (Editor Only))
 {
-Cloak of Frost
+Rabbit Blessing
+}
+
+STRING 4367
+// Buffs/Effects: B00M (Rabbit Blessing), Buffubertip (Tooltip - Extended)
+{
+This unit has been blessed by a rabbit; it has greatly increased armor.
+}
+
+STRING 4368
+// Buffs/Effects: B00M (Rabbit Blessing), Bufftip (Tooltip)
+{
+Rabbit Blessing
 }
 
