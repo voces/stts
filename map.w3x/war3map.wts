@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 25b
+Sheep Tag ReVoLuTiOn 25c
 }
 
 STRING 40
@@ -4581,18 +4581,6 @@ STRING 4322
 Upgraded and Strong Farms take additional damage when under a suppression field.
 }
 
-STRING 4324
-// Items: I010 (disease), Ubertip (Tooltip - Extended)
-{
-Permanently infects nearby enemy structures with Disease Cloud. Disease Cloud deals 2 damage per second.|n|cffff0000Cannot kill structures.|r|n|cffffcc00100 gold.|r |n|cff00aeef-buy disease: 140 gold.|r
-}
-
-STRING 4325
-// Items: I010 (disease), Description (Description)
-{
-Permanently infects nearby enemy structures with Disease Cloud. Disease Cloud deals 2 damage per second.|n|cffff0000Cannot kill structures.|r
-}
-
 STRING 4330
 // Abilities: A027 (Snowball), Name (Name)
 {
@@ -4752,5 +4740,17 @@ STRING 4368
 // Buffs/Effects: B00M (Rabbit Blessing), Bufftip (Tooltip)
 {
 Rabbit Blessing
+}
+
+STRING 4369
+// Items: I010 (disease), Ubertip (Tooltip - Extended)
+{
+Permanently infects nearby enemy structures with Disease Cloud. Disease Cloud deals 1.5 damage per second.|n|cffff0000Cannot kill structures.|r|n|cffffcc00100 gold.|r |n|cff00aeef-buy disease: 140 gold.|r
+}
+
+STRING 4370
+// Items: I010 (disease), Description (Description)
+{
+Permanently infects nearby enemy structures with Disease Cloud. Disease Cloud deals 1.5 damage per second.|n|cffff0000Cannot kill structures.|r
 }
 

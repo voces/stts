@@ -5,6 +5,8 @@ import {
   UNIT_TYPE_ID_HAY_TRAP,
   UNIT_TYPE_ID_SAPPER,
 } from "constants";
+import { ForceEx } from "handles/ForceEx";
+import { income } from "settings/settings";
 import { setTimeout } from "util/setTimeout";
 import { Effect } from "w3ts";
 
@@ -26,11 +28,17 @@ const Trig_farmDies_Actions = () => {
 
   const typeId = GetUnitTypeId(killingUnit);
   if (
-    IsPlayerEnemy(dyingPlayer, killingPlayer) && typeId !== UNIT_TYPE_ID_SAPPER && typeId !== UNIT_TYPE_ID_CLOCKWERK &&
-    typeId !== UNIT_TYPE_ID_GYRO
+    IsPlayerEnemy(dyingPlayer, killingPlayer) &&
+    typeId !== UNIT_TYPE_ID_SAPPER && typeId !== UNIT_TYPE_ID_CLOCKWERK && typeId !== UNIT_TYPE_ID_GYRO
   ) {
     let amount = GetUnitPointValue(u);
     if (UnitHasItemOfTypeBJ(killingUnit, FourCC("scyt"))) amount = amount * 2 + 1;
+    amount *= ForceEx.wolves.hasPlayer(killingPlayer) ? income.wolves : income.sheep;
+
+    if (!Number.isInteger(amount)) {
+      const fraction = amount - Math.floor(amount);
+      amount = GetRandomReal(0, 1) < fraction ? Math.floor(amount) : Math.ceil(amount);
+    }
 
     AdjustPlayerStateBJ(amount, killingPlayer, PLAYER_STATE_RESOURCE_GOLD);
     GoldText(amount, killingUnit);

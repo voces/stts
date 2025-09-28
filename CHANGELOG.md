@@ -8,6 +8,28 @@
 - -ap attackpercent
 - Frost Arrows allow a reach
 
+# 25c
+
+## Balance changes
+
+- Disease Cloud
+  - Increased area of effect from 272 to 416
+  - Increased damage per second from 1 to 1.5
+- Pocket Factory (Goblin Support)
+  - Decreased hit points from 1000 to 620
+  - Increased armor from 10 to 28
+  - Increased gold bounty from 15 to 20
+- Hay Trap
+  - Increased throw speed from 1000 to 1500
+  - Increased range from 400 to 500
+- Decreased Magic Farm and Tiny Magic Farm upgrade time from 10 to 7 seconds
+- Decreased Shadowsight mana cost from 100 to 50
+- Decrease Invisible Farm and variants gold cost from 8 to 6
+
+## Bug fixes
+
+- Drums in Quick Shop correctly charges stated 175 instead of 189
+
 # 25b
 
 ## Feature changes

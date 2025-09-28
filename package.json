@@ -13,7 +13,7 @@
   "devDependencies": {
     "@types/node": "^20.3.1",
     "lua-types": "^2.13.1",
-    "mdx-m3-viewer-th": "^5.13.0",
+    "mdx-m3-viewer-th": "^5.13.1",
     "patch-package": "^8.0.0",
     "tga": "^1.0.7",
     "typescript": "^5.1.3",

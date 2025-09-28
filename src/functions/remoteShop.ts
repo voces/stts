@@ -171,13 +171,14 @@ addScriptHook(W3TS_HOOK.MAIN_AFTER, () => {
     t = CreateTrigger();
     const quick = item.quick;
     if (!quick) continue;
+    const price = Math.round(Math.min(item.cost * 1.4, item.cost + 40));
     TriggerRegisterCommandEvent(t, FourCC("AEbu"), UnitId2String(FourCC(quick))!);
     TriggerAddAction(t, () => {
       const u = UnitEx.fromEvent();
-      if (!u || !u.isAlive() || u.owner.gold < item.cost * 1.4) return;
+      if (!u || !u.isAlive() || u.owner.gold < price) return;
       if (teamHasTeamItem(item, GetOwningPlayer(u.handle))) return;
       if (u.isSelected(MapPlayerEx.fromLocal())) ForceUICancel();
-      u.owner.gold -= Math.round(item.cost * 1.4);
+      u.owner.gold -= price;
       u.addItemById(item.id);
     });
   }
