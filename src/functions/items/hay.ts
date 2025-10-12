@@ -21,7 +21,7 @@ game.onItemUsed(({ item, unit }) => {
   const target = recentHays.shift();
   if (!target) return;
 
-  const hayInHand = Effect.createAttachment("Doodads/LordaeronSummer/Props/Hay/Hay1", unit, "left hand");
+  const hayInHand = Effect.createAttachment("Doodads/LordaeronSummer/Props/RottenHay/RottenHay1", unit, "left hand");
   if (!hayInHand) return;
   hayInHand.scale = 0.35;
   setTimeout(0.43, () => {
@@ -33,7 +33,7 @@ game.onItemUsed(({ item, unit }) => {
     const throwerY = unit.y;
     const originX = throwerX + 60 * Math.cos(facing + Math.PI / 2);
     const originY = throwerY + 60 * Math.sin(facing + Math.PI / 2);
-    const projectileHay = Effect.create("Doodads/LordaeronSummer/Props/Hay/Hay1", originX, originY);
+    const projectileHay = Effect.create("Doodads/LordaeronSummer/Props/RottenHay/RottenHay1", originX, originY);
     if (!projectileHay) return;
 
     projectileHay.scale = 0.35;

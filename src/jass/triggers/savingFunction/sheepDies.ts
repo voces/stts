@@ -88,10 +88,10 @@ const Trig_sheepDies_Actions = () => {
     }
 
     gsDistributeGold(dyingPlayer, true, TRANSFER_DISPLAY_INVOLVED);
-    // SetUnitAnimation(
-    //   CreateUnit(killingPlayer, FourCC(GetRandomInt(0, 1) === 0 ? "nska" : "nske"), x, y, f)!,
-    //   "birth",
-    // );
+    SetUnitAnimation(
+      CreateUnit(killingPlayer, FourCC(GetRandomInt(0, 1) === 0 ? "nska" : "nske"), x, y, f)!,
+      "birth",
+    );
   }
 
   TriggerExecute(gg_trg_setupLeaderboard);

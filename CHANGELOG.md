@@ -8,6 +8,12 @@
 - -ap attackpercent
 - Frost Arrows allow a reach
 
+# 25d
+
+## Feature changes
+
+- Spooky theme
+
 # 25c
 
 ## Balance changes

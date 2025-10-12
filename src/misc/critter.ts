@@ -1,6 +1,7 @@
 import { addScriptHook, W3TS_HOOK } from "w3ts";
 import { isPointInPolygon, Point } from "util/geometry";
 import { getCenter } from "settings/terrain";
+import { UNIT_TYPE_ID_CRITTER } from "constants";
 
 let critter: unit | undefined;
 
@@ -20,7 +21,7 @@ const getCritterPoint = () => {
 
 export const createCritter = () => {
   const { x, y } = getCritterPoint();
-  critter = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE)!, FourCC("n009"), x, y, GetRandomReal(0, 360));
+  critter = CreateUnit(Player(PLAYER_NEUTRAL_AGGRESSIVE)!, UNIT_TYPE_ID_CRITTER, x, y, GetRandomReal(0, 360));
 };
 
 const moveCritter = () => {

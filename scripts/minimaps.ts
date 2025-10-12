@@ -26,6 +26,14 @@ const tiles: Record<string, [number, number, number] | undefined> = {
   Ldrt: [152, 99, 57],
   Ldro: [140, 100, 57],
   CLdi: [137, 104, 71],
+  //
+  CCgr: [14, 60, 33],
+  Jgsb: [25, 33, 15],
+  Cdrt: [45, 59, 54],
+  Cgrs: [14, 60, 33],
+  Cdrd: [24, 38, 27],
+  Crck: [15, 94, 52],
+  CCdi: [23, 68, 42],
 };
 
 const doodadData: Record<
@@ -50,7 +58,8 @@ const doodadData: Record<
   // LTba: { color: [154, 107, 40] }, // Barricade
   // LOcg: { color: [49, 48, 47] }, // Cage
   // LOce: { color: [49, 48, 47] }, // Cage Empty
-  LSwl: { color: [124, 119, 84] }, // Well
+  // LSwl: { color: [124, 119, 84] }, // Well (Normal)
+  LSwl: { color: [1164, 47, 7] }, // Well (Halloween Pumpkin)
   // LOtr: { color: [[94, 168, 210], [144, 89, 65]], size: [0.5, 1] }, // Trough
   LSwb: { color: [41, 10, 0] }, // Windmill Burned
   LSba: { color: [108, 62, 33], size: [2.5, 1.5, Math.PI / 4] }, // Barn
@@ -113,6 +122,7 @@ const doodadData: Record<
   APms: { color: [54, 188, 139], size: 0.25 }, // Mushroom
   LPrs: { color: [101, 112, 38], size: 0.4 }, // River Rushes
   LPcw: { color: [29, 33, 16], size: 0.4 }, // Grain Scorched
+  Ytsc: { color: [57, 59, 57] }, // Scorched Tree Wall
 };
 
 const decor = new Set(["LOth", "LOhc", "YOtf", "YOfs", "NObt", "YOr2", "YOf2", "AObd"]);
@@ -359,7 +369,15 @@ for (const region of regionFile.regions) {
 
     if (corner.water && corner.waterHeight > corner.groundHeight) {
       const a = Math.min(1, ((corner.waterHeight - corner.groundHeight) - 3.95) / 2);
-      color = [color[0] * (1 - a), color[1] * (1 - a), Math.round(color[2] * (1 - a) + 255 * a)];
+      color = [
+        // Normal
+        // color[0] * (1 - a),
+        // color[1] * (1 - a),
+        // Halloween
+        Math.round(color[0] * (1 - a) + 60 * a),
+        Math.round(color[1] * (1 - a) + 80 * a),
+        Math.round(color[2] * (1 - a) + 255 * a),
+      ];
     }
 
     if (
