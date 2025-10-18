@@ -3,13 +3,16 @@ import { logRound } from "jass/triggers/hostCommands/UpdateStats";
 import { addRound, addTime, rounds } from "stats/times";
 import { income, president, settings, terrain } from "settings/settings";
 import { bulldog } from "bulldog/settings";
+import { emitCustom } from "w3ts-w3mmd";
 
 const noHandicaps = () => {
   for (let i = 0; i < bj_MAX_PLAYERS; i++) {
     const playing = IsPlayerInForce(Player(i)!, udg_Sheep) ||
       IsPlayerInForce(Player(i)!, udg_Spirit) ||
       IsPlayerInForce(Player(i)!, udg_Wolf);
-    if (GetPlayerHandicap(Player(i)!) !== 1 && playing) return false;
+    if (GetPlayerHandicap(Player(i)!) !== 1 && playing) {
+      return (emitCustom("emitRound", `handicap: ${i}=${GetPlayerHandicap(Player(i)!)}`), false);
+    }
   }
   return true;
 };
@@ -17,9 +20,18 @@ const noHandicaps = () => {
 export const updateTimes = () => {
   let s = "";
   let timeElapsed = TimerGetElapsed(udg_Timer);
-  const emitRound = !someoneLeft && udg_sheepGold === 0 && udg_wolfGold === 0 &&
-    noHandicaps() && terrain.name === "Classic" && !president.enabled && income.sheep === 1 &&
-    income.wolves === 1 && income.savings === 1;
+  const emitRound = (() => {
+    if (someoneLeft) return (emitCustom("emitRound", "someone left"), false);
+    if (udg_sheepGold !== 0) return (emitCustom("emitRound", "sheep gold set"), false);
+    if (udg_wolfGold !== 0) return (emitCustom("emitRound", "wolf gold set"), false);
+    if (!noHandicaps()) return false;
+    if (terrain.name !== "Classic") return (emitCustom("emitRound", `terrain: ${terrain.name}`), false);
+    if (president.enabled) return (emitCustom("emitRound", "president"), false);
+    if (income.sheep !== 1) return (emitCustom("emitRound", `sheep income: ${income.sheep}`), false);
+    if (income.wolves !== 1) return (emitCustom("emitRound", `wolves income: ${income.wolves}`), false);
+    if (income.savings !== 1) return (emitCustom("emitRound", `savings income: ${income.savings}`), false);
+    return true;
+  })();
   let sheepString = "";
   let sheep = 0;
   const sheepPlayers: MapPlayerEx[] = [];

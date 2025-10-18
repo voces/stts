@@ -8,6 +8,13 @@
 - -ap attackpercent
 - Frost Arrows allow a reach
 
+# 25e
+
+## Bug fixes
+
+- Skeleton Warrior damage no longer 1 hit kills Sheep
+- Added logging for why rounds are not emitted
+
 # 25d
 
 ## Feature changes
