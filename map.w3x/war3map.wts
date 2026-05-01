@@ -18,7 +18,7 @@ These furry creatures are fun to slaughter!
 
 STRING 39
 {
-Sheep Tag ReVoLuTiOn 25e
+Sheep Tag ReVoLuTiOn 26
 }
 
 STRING 40
@@ -4736,26 +4736,8 @@ STRING 4370
 Permanently infects nearby enemy structures with Disease Cloud. Disease Cloud deals 1.5 damage per second.|n|cffff0000Cannot kill structures.|r
 }
 
-STRING 4371
-// Buffs/Effects: B00M (Spider Blessing), EditorName (Name (Editor Only))
-{
-Spider Blessing
-}
-
-STRING 4372
-// Buffs/Effects: B00M (Spider Blessing), Buffubertip (Tooltip - Extended)
-{
-This unit has been blessed by a spider; it has greatly increased armor.
-}
-
-STRING 4373
-// Buffs/Effects: B00M (Spider Blessing), Bufftip (Tooltip)
-{
-Spider Blessing
-}
-
 STRING 4377
-// Buffs/Effects: B00M (Spider Blessing), EditorSuffix (Editor Suffix)
+// Buffs/Effects: B00M (Chicken Blessing), EditorSuffix (Editor Suffix)
 {
 (Critter)
 }
@@ -4782,5 +4764,23 @@ STRING 4381
 // Buffs/Effects: B00Q (), Buffubertip (Tooltip - Extended)
 {
 This unit was stung by a spider! Its movement speed has been reduced and it will take damage over time.
+}
+
+STRING 4382
+// Buffs/Effects: B00M (Chicken Blessing), EditorName (Name (Editor Only))
+{
+Chicken Blessing
+}
+
+STRING 4383
+// Buffs/Effects: B00M (Chicken Blessing), Buffubertip (Tooltip - Extended)
+{
+This unit has been blessed by a chicken; it has greatly increased armor.
+}
+
+STRING 4384
+// Buffs/Effects: B00M (Chicken Blessing), Bufftip (Tooltip)
+{
+Chicken Blessing
 }
 

@@ -386,7 +386,7 @@
       "dependencies": [
         "npm:@types/node@^20.3.1",
         "npm:lua-types@^2.13.1",
-        "npm:mdx-m3-viewer-th@^5.13.3",
+        "npm:mdx-m3-viewer-th@^5.13.4",
         "npm:patch-package@8",
         "npm:tga@^1.0.7",
         "npm:typescript-to-lua@^1.23.0",

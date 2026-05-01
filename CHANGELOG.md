@@ -8,6 +8,12 @@
 - -ap attackpercent
 - Frost Arrows allow a reach
 
+# 26
+
+## Feature changes
+
+- Summer theme
+
 # 25e
 
 ## Bug fixes
