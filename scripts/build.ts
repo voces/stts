@@ -1,22 +1,7 @@
 import { walk } from "https://deno.land/std@0.214.0/fs/walk.ts";
-import Map from "npm:mdx-m3-viewer-th/dist/cjs/parsers/w3x/map.js";
+import Map from "npm:mdx-m3-viewer/dist/cjs/parsers/w3x/map.js";
 
 const War3Map = Map.default;
-
-try {
-  await Deno.mkdir("map.w3x/minimaps");
-} catch {}
-
-try {
-  await Deno.lstat("map.w3x/minimaps/bulldog1.tga");
-} catch {
-  const command = new Deno.Command("deno", {
-    args: ["task", "build-minimaps"],
-    stdout: "inherit",
-    stderr: "inherit",
-  });
-  command.outputSync();
-}
 
 const files: string[] = [];
 for await (const entry of walk("map.w3x")) if (entry.isFile && entry.name !== "war3mapMap.blp") files.push(entry.path);

@@ -8,6 +8,19 @@
 - -ap attackpercent
 - Frost Arrows allow a reach
 
+# 26a
+
+## Feature changes
+
+- Removed custom terrain minimaps in favor of the new dynamic minimap option
+
+## Bug fixes
+
+- 3.0.0 compatibility
+  - Fixed repeated error messages during intermission
+  - Fixed intermission not hiding when opening in-game menus
+  - Fixed some trees not rendering correctly
+
 # 26
 
 ## Feature changes

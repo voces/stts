@@ -13,7 +13,6 @@ import { bulldog } from "bulldog/settings";
 export type Terrain = {
   index: number;
   name: "Classic" | "Glory Hills" | "Experimental" | "Tiny" | "Compact";
-  minimap: string;
   cameraBounds: rect;
   spawnType: "playerColor" | "team";
   wisp: rect;
@@ -50,7 +49,6 @@ export const setTerrain = (terrainIndex: number, notify = false): void => {
   Object.assign(terrain, terrains[terrainIndex]);
 
   SetCameraBoundsToRect(terrain.cameraBounds);
-  BlzChangeMinimapTerrainTex(terrain.minimap);
   PanCameraToTimed(GetRectCenterX(terrain.wolf), GetRectCenterY(terrain.wolf), 0);
   for (let i = 0; i < terrain.spawns.length; i++) {
     udg_masterStartLocation[i + 1] = udg_startLocation[i + 1] = terrain.spawns[i];
@@ -103,7 +101,6 @@ const initTerrains = () => {
   terrains.push({
     index: terrains.length,
     name: "Classic",
-    minimap: "war3mapMap.blp",
     cameraBounds: gg_rct_Revo_Camera_Bounds,
     spawnType: "playerColor",
     wisp: gg_rct_Fence_Zone,
@@ -191,7 +188,6 @@ const initTerrains = () => {
   terrains.push({
     index: terrains.length,
     name: "Glory Hills",
-    minimap: "war3mapImported\\gloryhills.blp",
     cameraBounds: gg_rct_Glory_Hill_Camera_Bounds,
     spawnType: "team",
     wisp: gg_rct_Glory_Hill_Fence,
@@ -273,7 +269,6 @@ const initTerrains = () => {
   terrains.push({
     index: terrains.length,
     name: "Experimental",
-    minimap: "war3mapImported\\experimental.blp",
     cameraBounds: gg_rct_Vro_Camera_Bounds,
     spawnType: "playerColor",
     wisp: gg_rct_Vro_Fence,
@@ -361,7 +356,6 @@ const initTerrains = () => {
   terrains.push({
     index: terrains.length,
     name: "Tiny",
-    minimap: "war3mapImported\\tiny.blp",
     cameraBounds: gg_rct_tcamera,
     spawnType: "playerColor",
     wisp: gg_rct_tfence,
@@ -432,7 +426,6 @@ const initTerrains = () => {
   terrains.push({
     index: terrains.length,
     name: "Compact",
-    minimap: "war3mapImported\\compact.blp",
     cameraBounds: gg_rct_compactCamera,
     spawnType: "playerColor",
     wisp: gg_rct_compactFence,

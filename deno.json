@@ -1,13 +1,13 @@
 {
+  "nodeModulesDir": "manual",
   "tasks": {
     "append": "deno run -A scripts/append.ts",
     "build-lua": "npm --silent run build-lua",
-    "build-minimaps": "deno run -A scripts/minimaps.ts",
     "build-w3x": "deno run -A scripts/build.ts",
     "build": "npm --silent run build-lua && deno task build-w3x",
     "clean": "deno run -A scripts/clean.ts",
     "dev": "deno run -A scripts/dev.ts",
-    "launch": "/mnt/d/Warcraft\\ III/_retail_/x86_64/Warcraft\\ III.exe -loadfile \"$(wslpath -w temp/release.w3x)\" -launch -windowmode windowed -nowfpause",
+    "launch": "/mnt/d/Warcraft\\ III/_retail_/x86_64/Warcraft\\ III.exe -loadfile \"$(wslpath -w temp/release.w3x)\" -launch -editor -windowmode windowed -nowfpause",
     "release-and-launch": "deno task release && deno task launch-release",
     "run": "deno run -A scripts/run.ts"
   },

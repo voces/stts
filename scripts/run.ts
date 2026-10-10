@@ -1,4 +1,4 @@
-import Map from "npm:mdx-m3-viewer-th/dist/cjs/parsers/w3x/map.js";
+import Map from "npm:mdx-m3-viewer/dist/cjs/parsers/w3x/map.js";
 
 const War3Map = Map.default;
 

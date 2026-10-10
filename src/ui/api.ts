@@ -47,7 +47,29 @@ let showingIntermission = false;
 
 let hotkeyTrigger: TriggerEx | undefined;
 
-let menuFrames: FrameEx[] = [];
+const menuFrames: FrameEx[] = [];
+
+// Not every menu dialog exists when this first runs (ChatDialog is missing in 3.0), so pick them up as they appear
+let missingMenuFrameNames = ["EscMenuMainPanel", "QuestDialog", "AllianceDialog", "ChatDialog", "LogDialog"];
+let gameUiMenuFrameChecked = false;
+
+const updateMenuFrames = () => {
+  if (missingMenuFrameNames.length > 0) {
+    missingMenuFrameNames = missingMenuFrameNames.filter((name) => {
+      const frame = BlzGetFrameByName(name, 0);
+      if (!frame) return true;
+      menuFrames.push(FrameEx.fromHandle(frame));
+      return false;
+    });
+  }
+
+  if (!gameUiMenuFrameChecked) {
+    gameUiMenuFrameChecked = true;
+    // This index shifted in 2.0 and may have shifted again with 3.0's console changes
+    const gameUiMenuFrame = FrameEx.fromOrigin(ORIGIN_FRAME_GAME_UI).children[18];
+    if (gameUiMenuFrame !== undefined) menuFrames.push(gameUiMenuFrame);
+  }
+};
 
 addScriptHook(W3TS_HOOK.MAIN_BEFORE, () => {
   hotkeyTrigger = TriggerEx.create();
@@ -72,13 +94,7 @@ addScriptHook(W3TS_HOOK.MAIN_BEFORE, () => {
     adjustChatFrames();
 
     if (showingIntermission) {
-      if (menuFrames.length === 0) {
-        menuFrames.push(
-          ...["EscMenuMainPanel", "QuestDialog", "AllianceDialog", "ChatDialog", "LogDialog"]
-            .map((n) => FrameEx.fromName(n)),
-          FrameEx.fromOrigin(ORIGIN_FRAME_GAME_UI).children[18],
-        );
-      }
+      updateMenuFrames();
       if (menuFrames.some((n) => n.visible)) hideIntermission(true);
       else showIntermission(true);
     }
